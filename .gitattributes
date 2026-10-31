@@ -1,0 +1,33 @@
+# Let git detect text files and store them with LF line endings.
+# Unity saves scenes, prefabs and assets as text (Force Text), so they diff and merge as text.
+* text=auto
+*.cs diff=csharp
+
+# Binary files: never convert line endings or try to diff them.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.tga binary
+*.tif binary
+*.tiff binary
+*.psd binary
+*.psb binary
+*.exr binary
+*.hdr binary
+*.ttf binary
+*.otf binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.aif binary
+*.aiff binary
+*.mp4 binary
+*.mov binary
+*.webm binary
+*.fbx binary
+*.blend binary
+*.dll binary
+*.so binary
+*.zip binary

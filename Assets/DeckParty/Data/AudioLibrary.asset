@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4840249710ec5e84ebcfc561d1e87e59, type: 3}
+  m_Name: AudioLibrary
+  m_EditorClassIdentifier: 
+  menuMusic: {fileID: 0}
+  partyMusic: {fileID: 0}
+  planningMusic: {fileID: 0}
+  sounds:
+  - name: Click
+    sfx: 0
+    clip: {fileID: 0}
+    volume: 1
+  - name: Hover
+    sfx: 1
+    clip: {fileID: 0}
+    volume: 1
+  - name: DoorKnock
+    sfx: 2
+    clip: {fileID: 0}
+    volume: 1
+  - name: GuestArrive
+    sfx: 3
+    clip: {fileID: 0}
+    volume: 1
+  - name: StarArrive
+    sfx: 4
+    clip: {fileID: 0}
+    volume: 1
+  - name: Boot
+    sfx: 5
+    clip: {fileID: 0}
+    volume: 1
+  - name: Ability
+    sfx: 6
+    clip: {fileID: 0}
+    volume: 1
+  - name: Coin
+    sfx: 7
+    clip: {fileID: 0}
+    volume: 1
+  - name: Purchase
+    sfx: 8
+    clip: {fileID: 0}
+    volume: 1
+  - name: Expand
+    sfx: 9
+    clip: {fileID: 0}
+    volume: 1
+  - name: PartySuccess
+    sfx: 10
+    clip: {fileID: 0}
+    volume: 1
+  - name: Raid
+    sfx: 11
+    clip: {fileID: 0}
+    volume: 1
+  - name: FireMarshal
+    sfx: 12
+    clip: {fileID: 0}
+    volume: 1
+  - name: Victory
+    sfx: 13
+    clip: {fileID: 0}
+    volume: 1
+  - name: Defeat
+    sfx: 14
+    clip: {fileID: 0}
+    volume: 1
+  - name: Error
+    sfx: 15
+    clip: {fileID: 0}
+    volume: 1
+  - name: Notify
+    sfx: 16
+    clip: {fileID: 0}
+    volume: 1
+  - name: Peek
+    sfx: 17
+    clip: {fileID: 0}
+    volume: 1

@@ -1,0 +1,241 @@
+using System;
+using System.Collections.Generic;
+
+namespace DeckParty.Core
+{
+    public enum GamePhase : byte
+    {
+        Party = 0,      // Doors are open.
+        RaidBlame = 1,  // The SWAT team came; choose who gets the Temporary Ban.
+        Planning = 2,   // Spend Gifted Subs and Cash, then start the next night.
+        Victory = 3,
+        Defeat = 4,
+    }
+
+    public enum PartyOutcome : byte
+    {
+        None = 0,
+        Success = 1,
+        Raid = 2,
+        FireMarshal = 3,
+    }
+
+    public enum PepeMood : byte
+    {
+        None = 0,
+        Happy = 1,
+        Sad = 2,
+        Angry = 3,
+    }
+
+    /// <summary>One specific guest card in a Squad. Permanent upgrades and tonight's modifiers live here.</summary>
+    public sealed class GuestInstance
+    {
+        public const byte NoDisguise = 255;
+        public const int AttachPending = -2;
+
+        public int Id;
+        public GuestType Type;
+
+        // Permanent
+        public int BonusPop;        // Permanent Subs change (Chad vs Virgin, Tung Tung, Bad Luck Brian).
+        public int TrolledCount;    // Times Trollface has trolled this guest.
+        public int StrikeCount;     // Tung Tung Tung Sahur strikes so far (0-2).
+        public bool Temporary;      // Ugandan Knuckles copy: vanishes when the party ends.
+
+        // Tonight only (cleared when the party ends)
+        public int PartyPop;               // Subs this guest gained tonight.
+        public int PartyCash;              // Cash this guest gained tonight.
+        public int PartyTrouble;           // Extra Swatting Risk added tonight.
+        public bool TroubleCleared;        // Printed Swatting Risk removed for the rest of the party.
+        public byte Disguise = NoDisguise; // Rickroll: the character this guest is pretending to be.
+        public bool HasCopy;               // NPC Wojak copied stats.
+        public int CopyPop;
+        public int CopyCash;
+        public bool HasOverride;           // Ballerina Cappuccina exchanged printed Subs.
+        public int PrintedOverride;
+        public bool Infected;              // Skibidi Toilet.
+        public bool Zeroed;                // Drakeposting: earns nothing tonight.
+        public byte DoubleMode;            // Drakeposting: 1 doubles printed Subs, 2 doubles printed Cash.
+        public byte ConvertMode;           // Confused Math Lady: 1 Subs to Cash, 2 Cash to Subs.
+        public bool Immune;                // Roll Safe.
+        public int AttachedTo = -1;        // Overly Attached Girlfriend's partner (or AttachPending).
+        public PepeMood Mood;
+        public int Counter;                // Nyan chain / Bongo beat / Pop Cat action count.
+        public int Gained;                 // Dancing Baby combo Subs so far.
+        public bool ShieldUsed;            // Bad Luck Brian's once-per-party shield.
+
+        /// <summary>The character this guest acts as tonight (differs from <see cref="Type"/> while Rickrolled).</summary>
+        public GuestType Kind => Disguise != NoDisguise ? (GuestType)Disguise : Type;
+
+        /// <summary>Rules for how this guest behaves right now (follows a Rickroll disguise).</summary>
+        public GuestInfo Info => GuestCatalog.Get(Kind);
+
+        /// <summary>The card's real identity, used for ownership, shop limits and refunds.</summary>
+        public GuestInfo BaseInfo => GuestCatalog.Get(Type);
+
+        public bool IsDisguised => Disguise != NoDisguise;
+
+        public void ResetParty()
+        {
+            PartyPop = 0;
+            PartyCash = 0;
+            PartyTrouble = 0;
+            TroubleCleared = false;
+            Disguise = NoDisguise;
+            HasCopy = false;
+            CopyPop = 0;
+            CopyCash = 0;
+            HasOverride = false;
+            PrintedOverride = 0;
+            Infected = false;
+            Zeroed = false;
+            DoubleMode = 0;
+            ConvertMode = 0;
+            Immune = false;
+            AttachedTo = -1;
+            Mood = PepeMood.None;
+            Counter = 0;
+            Gained = 0;
+            ShieldUsed = false;
+        }
+    }
+
+    /// <summary>
+    /// Complete state of one player's season. Everything needed to resume (including RNG) is here;
+    /// the PartyEngine is the only thing that mutates it.
+    /// </summary>
+    public sealed class PlayerState
+    {
+        // Setup
+        public int ScenarioId;
+        public uint Seed;
+        public int TotalNights = GameRules.DefaultNights;
+        public readonly List<GuestType> Shop = new List<GuestType>();
+
+        // Economy
+        public int Night;
+        public int Pop;
+        public int Cash;
+        public int Capacity = GameRules.StartingCapacity;
+        public int Expansions;
+
+        // Collection
+        public readonly List<GuestInstance> Rolodex = new List<GuestInstance>();
+        public int NextInstanceId = 1;
+        public int BannedNextParty = -1;
+        public int BannedThisParty = -1;
+
+        // Current party
+        public GamePhase Phase;
+        public readonly List<int> House = new List<int>();
+        /// <summary>The waiting line, in arrival order: the door always admits Pool[0].</summary>
+        public readonly List<int> Pool = new List<int>();
+        public readonly List<int> Excluded = new List<int>();
+        public readonly List<int> UsedAbilities = new List<int>();
+        public int PeekedId = -1;
+        public int PartyPop;
+        public int PartyCash;
+        public int InvestPop;
+        public int InvestCash;
+        public ActionCategory LastActionCategory;
+        public int LastRandomArrival = -1;
+        public int AttractionActor = -1;
+        public readonly List<int> AttractionCandidates = new List<int>();
+
+        // Last party summary
+        public PartyOutcome LastOutcome;
+        public int LastPop;
+        public int LastCash;
+        public int LastDiamonds;
+        public int LastPenalty;
+        public int LastBlamedId = -1;
+        public readonly List<int> RaidSuspects = new List<int>();
+
+        // Stats
+        public int BestDiamonds;
+        public int TotalPopEarned;
+        public int TotalCashEarned;
+        public int SuccessfulParties;
+        public int Raids;
+        public int FireMarshals;
+        public int WinNight;
+
+        // Randomness
+        public ulong RngState;
+
+        /// <summary>House spaces in use (Big Chungus takes 3).</summary>
+        public int Occupancy
+        {
+            get
+            {
+                int total = 0;
+                for (int i = 0; i < House.Count; i++)
+                {
+                    var g = Find(House[i]);
+                    total += g != null ? g.Info.Size : 1;
+                }
+                return total;
+            }
+        }
+
+        public bool HouseFull => Occupancy >= Capacity;
+        public int EmptySpaces => Math.Max(0, Capacity - Occupancy);
+        public bool IsGameOver => Phase == GamePhase.Victory || Phase == GamePhase.Defeat;
+        public bool IsFinalNight => Night >= TotalNights;
+        public int NightsRemaining => Math.Max(0, TotalNights - Night);
+        public bool AttractionPending => AttractionActor >= 0;
+
+        /// <summary>True while a peek or a New Attraction choice must be answered before anything else.</summary>
+        public bool DecisionPending => PeekedId >= 0 || AttractionActor >= 0;
+
+        public GuestInstance Find(int id)
+        {
+            for (int i = 0; i < Rolodex.Count; i++)
+                if (Rolodex[i].Id == id) return Rolodex[i];
+            return null;
+        }
+
+        /// <summary>Guests at the party acting as <paramref name="kind"/> (Rickroll disguises count).</summary>
+        public int CountInHouse(GuestType kind)
+        {
+            int count = 0;
+            for (int i = 0; i < House.Count; i++)
+            {
+                var g = Find(House[i]);
+                if (g != null && g.Kind == kind) count++;
+            }
+            return count;
+        }
+
+        /// <summary>Permanent cards of this type (temporary copies don't count toward shop limits).</summary>
+        public int CountOwned(GuestType type)
+        {
+            int count = 0;
+            for (int i = 0; i < Rolodex.Count; i++)
+                if (Rolodex[i].Type == type && !Rolodex[i].Temporary) count++;
+            return count;
+        }
+
+        public int PermanentCount
+        {
+            get
+            {
+                int count = 0;
+                for (int i = 0; i < Rolodex.Count; i++)
+                    if (!Rolodex[i].Temporary) count++;
+                return count;
+            }
+        }
+
+        public int DiamondsOwned()
+        {
+            int count = 0;
+            for (int i = 0; i < Rolodex.Count; i++)
+                if (!Rolodex[i].Temporary && Rolodex[i].BaseInfo.IsDiamond) count++;
+            return count;
+        }
+
+        public PlayerState Clone() => StateSerializer.Deserialize(StateSerializer.Serialize(this));
+    }
+}
