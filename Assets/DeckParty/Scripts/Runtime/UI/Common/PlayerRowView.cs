@@ -1,4 +1,5 @@
 using System;
+using DeckParty.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,16 +16,28 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text rankLabel;
         [SerializeField] internal GameObject readyIcon;
         [SerializeField] internal GameObject hostIcon;
+        [Tooltip("Optional: the player's streamer portrait.")]
+        [SerializeField] internal Image streamerPortrait;
+        [SerializeField] internal Image streamerPlaceholder;
+        [SerializeField] internal TMP_Text streamerInitials;
 
         public event Action Clicked;
 
         Button m_Button;
         Outline m_Outline;
+        string m_Name;
+        string m_Status;
+        bool m_IsLocal;
+        StreamerType m_Streamer;
+        string m_Presence;
 
         public void Set(string playerName, string status, Color color, bool ready, bool host, int rank = 0, bool isLocal = false)
         {
-            nameLabel.text = isLocal ? playerName + "  <size=70%><color=#B9AED6>(you)</color></size>" : playerName;
-            statusLabel.text = status;
+            m_Name = playerName;
+            m_Status = status;
+            m_IsLocal = isLocal;
+            RefreshName();
+            RefreshStatus();
             colorSwatch.color = color;
             readyIcon.SetActive(ready);
             hostIcon.SetActive(host);
@@ -33,7 +46,51 @@ namespace DeckParty.UI
             if (background != null) background.color = isLocal ? Color.Lerp(UIPalette.PanelAlt, color, 0.15f) : UIPalette.PanelAlt;
         }
 
-        /// <summary>Turns the row into a button (the in-game Players panel uses it to watch someone's party).</summary>
+        /// <summary>Shows the player's streamer (portrait if the row has one, otherwise after the name).</summary>
+        public void SetStreamer(StreamerType streamer)
+        {
+            m_Streamer = streamer;
+            bool show = streamer != StreamerType.None;
+            if (streamerPortrait != null)
+            {
+                var sprite = show ? StreamerVisuals.Portrait(streamer) : null;
+                streamerPortrait.transform.parent.gameObject.SetActive(show);
+                streamerPortrait.enabled = sprite != null;
+                streamerPortrait.sprite = sprite;
+                if (streamerPlaceholder != null)
+                {
+                    streamerPlaceholder.gameObject.SetActive(sprite == null);
+                    streamerPlaceholder.color = StreamerVisuals.Color(streamer);
+                }
+                if (streamerInitials != null) streamerInitials.text = show ? StreamerVisuals.Initials(streamer) : string.Empty;
+            }
+            RefreshName();
+        }
+
+        /// <summary>Multiplayer presence: what the player is doing right now, shown under their status. Null clears it.</summary>
+        public void SetPresence(string line)
+        {
+            if (line == m_Presence) return;
+            m_Presence = line;
+            RefreshStatus();
+        }
+
+        void RefreshName()
+        {
+            if (nameLabel == null || m_Name == null) return;
+            string text = m_Name;
+            if (m_Streamer != StreamerType.None) text += $"  <size=75%>{StreamerVisuals.NameTag(m_Streamer)}</size>";
+            if (m_IsLocal) text += $"  <size=70%><color=#B9AED6>{Loc.Get("players.you")}</color></size>";
+            nameLabel.text = text;
+        }
+
+        void RefreshStatus()
+        {
+            if (statusLabel == null) return;
+            statusLabel.text = string.IsNullOrEmpty(m_Presence) ? m_Status : m_Status + $"\n<i><color=#FF9AD5>{m_Presence}</color></i>";
+        }
+
+        /// <summary>Turns the row into a button (the in-game Players panel uses it to watch someone's stream).</summary>
         public void MakeClickable()
         {
             if (m_Button != null || background == null) return;
@@ -51,7 +108,7 @@ namespace DeckParty.UI
             m_Button.onClick.AddListener(() => Clicked?.Invoke());
         }
 
-        /// <summary>Outlines the row whose party is on screen. Call after <see cref="Set"/>.</summary>
+        /// <summary>Outlines the row whose stream is on screen. Call after <see cref="Set"/>.</summary>
         public void SetViewed(bool viewed, Color color)
         {
             if (background == null) return;

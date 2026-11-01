@@ -11,7 +11,9 @@
         "Unity.InputSystem",
         "Unity.Services.Core",
         "Unity.Services.Authentication",
-        "Unity.Services.Multiplayer"
+        "Unity.Services.Multiplayer",
+        "Unity.Localization",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -25,6 +27,11 @@
             "name": "com.unity.services.multiplayer",
             "expression": "1.0.0",
             "define": "DECKPARTY_RELAY"
+        },
+        {
+            "name": "com.unity.localization",
+            "expression": "1.0.0",
+            "define": "DECKPARTY_LOCALIZATION"
         }
     ],
     "noEngineReferences": false

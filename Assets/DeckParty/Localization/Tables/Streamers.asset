@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: Streamers
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: 4a63c487877c3a4418d58efd9ecfa0bd, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: 34bea9c4aa175e949891150a0d7e9a70, type: 2}
+  - {fileID: 11400000, guid: 9e0425e17b6857342b83ef31c4006999, type: 2}
+  - {fileID: 11400000, guid: e15f5b7b53cc8134b812a29c630417fd, type: 2}
+  - {fileID: 11400000, guid: 53d75af887211e94eb63bd8fe1d07ff6, type: 2}
+  - {fileID: 11400000, guid: f7505c35177f48b4d9a914eed7225e4a, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds: []

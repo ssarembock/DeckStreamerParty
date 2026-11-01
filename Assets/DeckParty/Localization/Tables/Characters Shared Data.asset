@@ -1,0 +1,636 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Characters Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Characters
+  m_TableCollectionNameGuidString: 1fa38d83ab85fd1488504705cf0d4c4c
+  m_Entries:
+  - m_Id: 433274880
+    m_Key: char.LoyalFan.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383744
+    m_Key: char.LoyalFan.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383745
+    m_Key: char.Whale.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383746
+    m_Key: char.Whale.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383747
+    m_Key: char.BotFarm.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383748
+    m_Key: char.BotFarm.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383749
+    m_Key: char.SocialMediaManager.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383750
+    m_Key: char.SocialMediaManager.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383751
+    m_Key: char.SocialMediaManager.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383752
+    m_Key: char.Moderator.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383753
+    m_Key: char.Moderator.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383754
+    m_Key: char.Moderator.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383755
+    m_Key: char.AutoMod.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383756
+    m_Key: char.AutoMod.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383757
+    m_Key: char.Collaborator.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383758
+    m_Key: char.Collaborator.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383759
+    m_Key: char.Hodl.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383760
+    m_Key: char.Hodl.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383761
+    m_Key: char.Hodl.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383762
+    m_Key: char.Vips.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383763
+    m_Key: char.Vips.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383764
+    m_Key: char.Parasocialite.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383765
+    m_Key: char.Parasocialite.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383766
+    m_Key: char.Doge.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383767
+    m_Key: char.Doge.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383768
+    m_Key: char.Trollface.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383769
+    m_Key: char.Trollface.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383770
+    m_Key: char.Trollface.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383771
+    m_Key: char.Pepe.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383772
+    m_Key: char.Pepe.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383773
+    m_Key: char.Pepe.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383774
+    m_Key: char.Gigachad.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383775
+    m_Key: char.Gigachad.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383776
+    m_Key: char.ThisIsFineDog.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383777
+    m_Key: char.ThisIsFineDog.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383778
+    m_Key: char.Wojak.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383779
+    m_Key: char.Wojak.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578048
+    m_Key: char.GrumpyCat.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578049
+    m_Key: char.GrumpyCat.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578050
+    m_Key: char.GrumpyCat.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578051
+    m_Key: char.NyanCat.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578052
+    m_Key: char.NyanCat.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578053
+    m_Key: char.StonksGuy.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578054
+    m_Key: char.StonksGuy.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578055
+    m_Key: char.StonksGuy.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578056
+    m_Key: char.Cheems.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578057
+    m_Key: char.Cheems.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578058
+    m_Key: char.ChadVsVirgin.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578059
+    m_Key: char.ChadVsVirgin.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578060
+    m_Key: char.ChadVsVirgin.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578061
+    m_Key: char.Doomer.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578062
+    m_Key: char.Doomer.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578063
+    m_Key: char.NpcWojak.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578064
+    m_Key: char.NpcWojak.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578065
+    m_Key: char.ForeverAlone.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578066
+    m_Key: char.ForeverAlone.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578067
+    m_Key: char.MeGusta.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578068
+    m_Key: char.MeGusta.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578069
+    m_Key: char.KeyboardCat.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578070
+    m_Key: char.KeyboardCat.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578071
+    m_Key: char.KeyboardCat.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578072
+    m_Key: char.BongoCat.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578073
+    m_Key: char.BongoCat.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578074
+    m_Key: char.PopCat.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578075
+    m_Key: char.PopCat.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578076
+    m_Key: char.BigChungus.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578077
+    m_Key: char.BigChungus.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578078
+    m_Key: char.UgandanKnuckles.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578079
+    m_Key: char.UgandanKnuckles.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578080
+    m_Key: char.OverlyAttachedGirlfriend.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578081
+    m_Key: char.OverlyAttachedGirlfriend.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578082
+    m_Key: char.DisasterGirl.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578083
+    m_Key: char.DisasterGirl.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578084
+    m_Key: char.DisasterGirl.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578085
+    m_Key: char.HideThePainHarold.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578086
+    m_Key: char.HideThePainHarold.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578087
+    m_Key: char.SuccessKid.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578088
+    m_Key: char.SuccessKid.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578089
+    m_Key: char.SuccessKid.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578090
+    m_Key: char.BadLuckBrian.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578091
+    m_Key: char.BadLuckBrian.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578092
+    m_Key: char.TungTungTungSahur.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578093
+    m_Key: char.TungTungTungSahur.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578094
+    m_Key: char.TungTungTungSahur.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578095
+    m_Key: char.TralaleroTralala.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578096
+    m_Key: char.TralaleroTralala.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578097
+    m_Key: char.TralaleroTralala.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578098
+    m_Key: char.BombardiroCrocodilo.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578099
+    m_Key: char.BombardiroCrocodilo.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578100
+    m_Key: char.BombardiroCrocodilo.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578101
+    m_Key: char.BallerinaCappuccina.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578102
+    m_Key: char.BallerinaCappuccina.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578103
+    m_Key: char.BallerinaCappuccina.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578104
+    m_Key: char.SkibidiToilet.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578105
+    m_Key: char.SkibidiToilet.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578106
+    m_Key: char.SigmaMale.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578107
+    m_Key: char.SigmaMale.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578108
+    m_Key: char.Karen.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578109
+    m_Key: char.Karen.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578110
+    m_Key: char.Karen.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578111
+    m_Key: char.Rickroll.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578112
+    m_Key: char.Rickroll.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578113
+    m_Key: char.Rickroll.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578114
+    m_Key: char.DistractedBoyfriend.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578115
+    m_Key: char.DistractedBoyfriend.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578116
+    m_Key: char.Drakeposting.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578117
+    m_Key: char.Drakeposting.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578118
+    m_Key: char.Drakeposting.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578119
+    m_Key: char.ConfusedMathLady.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578120
+    m_Key: char.ConfusedMathLady.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578121
+    m_Key: char.ConfusedMathLady.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578122
+    m_Key: char.SideEyeChloe.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578123
+    m_Key: char.SideEyeChloe.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578124
+    m_Key: char.SideEyeChloe.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578125
+    m_Key: char.RollSafe.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578126
+    m_Key: char.RollSafe.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578127
+    m_Key: char.RollSafe.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578128
+    m_Key: char.CryingCat.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578129
+    m_Key: char.CryingCat.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578130
+    m_Key: char.DancingBaby.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578131
+    m_Key: char.DancingBaby.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578132
+    m_Key: char.DramaChannel.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578133
+    m_Key: char.DramaChannel.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578134
+    m_Key: char.DivaStreamer.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578135
+    m_Key: char.DivaStreamer.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578136
+    m_Key: char.RaidLeader.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578137
+    m_Key: char.RaidLeader.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578138
+    m_Key: char.MysteryVTuber.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578139
+    m_Key: char.MysteryVTuber.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578140
+    m_Key: char.WholesomeIcon.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578141
+    m_Key: char.WholesomeIcon.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578142
+    m_Key: char.PlatformAdmin.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578143
+    m_Key: char.PlatformAdmin.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578144
+    m_Key: char.PlatformAdmin.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578145
+    m_Key: char.MegaInfluencer.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578146
+    m_Key: char.MegaInfluencer.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578147
+    m_Key: char.BrandSponsor.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578148
+    m_Key: char.BrandSponsor.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578149
+    m_Key: char.Algorithm.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578150
+    m_Key: char.Algorithm.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578151
+    m_Key: char.Algorithm.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578152
+    m_Key: ability.Mood.opt0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578153
+    m_Key: ability.Mood.opt1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578154
+    m_Key: ability.Mood.opt2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578155
+    m_Key: ability.Invest.opt0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578156
+    m_Key: ability.Invest.opt1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578157
+    m_Key: ability.Reroll.opt0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578158
+    m_Key: ability.Reroll.opt1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578159
+    m_Key: ability.Drake.opt0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578160
+    m_Key: ability.Drake.opt1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578161
+    m_Key: ability.Convert.opt0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 508772352
+    m_Key: ability.Convert.opt1
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2741550451676152063
+  references:
+    version: 2
+    RefIds:
+    - rid: 2741550451676152063
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1793475808040

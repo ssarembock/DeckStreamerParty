@@ -42,6 +42,9 @@ namespace DeckParty.EditorTools
             var settings = Resources.Load<TMP_Settings>("TMP Settings");
             Font = settings != null ? TMP_Settings.defaultFontAsset : null;
             if (Font == null) Font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset");
+            // The multi-language body font (Noto Sans with a Chinese fallback) once Localization setup has made it.
+            var skin = AssetDatabase.LoadAssetAtPath<UISkin>(DeckPartyPaths.Skin);
+            if (skin != null && skin.bodyFont != null) Font = skin.bodyFont;
 
             Rounded = PlaceholderArt.Load(PlaceholderArt.RoundedName);
             RoundedSmall = PlaceholderArt.Load(PlaceholderArt.RoundedSmallName);
@@ -157,6 +160,12 @@ namespace DeckParty.EditorTools
             var rt = Rect(parent, name);
             var t = rt.gameObject.AddComponent<TextMeshProUGUI>();
             if (Font != null) t.font = Font;
+            // Captions written as keys ("menu.quit") show their English text and follow the in-game language.
+            if (EditorLoc.IsKey(text))
+            {
+                rt.gameObject.AddComponent<LocalizedLabel>().key = text;
+                text = EditorLoc.Get(text);
+            }
             t.text = text;
             t.fontSize = size;
             t.color = color;
@@ -166,6 +175,10 @@ namespace DeckParty.EditorTools
             t.richText = true;
             t.textWrappingMode = wrap ? TextWrappingModes.Normal : TextWrappingModes.NoWrap;
             t.overflowMode = TextOverflowModes.Overflow;
+            // Translations run 20-35% longer than English: every caption may shrink a little to fit.
+            t.enableAutoSizing = true;
+            t.fontSizeMax = size;
+            t.fontSizeMin = Mathf.Max(11f, Mathf.Round(size * 0.6f));
             rt.gameObject.AddComponent<SkinnedText>().header = header;
             return t;
         }

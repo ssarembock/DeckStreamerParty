@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
-    /// <summary>Host or join a party, online through Unity Relay or directly by IP.</summary>
+    /// <summary>Host or join a game, online through Unity Relay or directly by IP.</summary>
     public sealed class MultiplayerScreen : UIScreen
     {
         [SerializeField] internal TMP_InputField nameInput;
@@ -39,18 +39,13 @@ namespace DeckParty.UI
 
         protected override void OnShow()
         {
-            var subtitle = transform.Find("Subtitle");
-            if (subtitle != null && subtitle.TryGetComponent<TMPro.TMP_Text>(out var subtitleText))
-                subtitleText.text = $"Up to 6 players. Same character set, separate parties. First {DeckParty.Core.GameRules.DiamondsToWin}-{Terms.Diamond} party wins.";
             nameInput.text = AppSettings.PlayerName;
             codeInput.text = AppSettings.LastJoinCode;
             ipInput.text = AppSettings.LastIp;
             portInput.text = AppSettings.LastPort.ToString();
 
-            onlineNote.text = NetworkService.RelaySupported
-                ? "Play over the internet with a join code (Unity Relay). No port forwarding needed."
-                : "<color=#FF9A3D>Online play needs the Multiplayer Services package.</color>";
-            lanNote.text = $"Same Wi-Fi / LAN, or a forwarded port. Your address: <color=#3DDBD9>{NetworkService.GetLocalIPv4()}</color>";
+            onlineNote.text = NetworkService.RelaySupported ? Loc.Get("mp.online_note") : $"<color=#FF9A3D>{Loc.Get("net.no_services")}</color>";
+            lanNote.text = Loc.Get("mp.lan_note", "address", $"<color=#3DDBD9>{NetworkService.GetLocalIPv4()}</color>");
 
             DeckPartyNetSession.Spawned += OnSessionSpawned;
             NetworkService.Instance.SessionEnded += OnSessionEnded;
@@ -68,6 +63,7 @@ namespace DeckParty.UI
 
         public void SetStatus(string message, bool error)
         {
+            if (!string.IsNullOrEmpty(message)) message = Loc.Error(message);
             statusLabel.text = string.IsNullOrEmpty(message) ? string.Empty : (error ? $"<color=#FF5A5A>{message}</color>" : message);
         }
 
@@ -98,7 +94,7 @@ namespace DeckParty.UI
         async void HostOnline()
         {
             if (m_Busy) return;
-            SetBusy(true, "Creating an online party...");
+            SetBusy(true, Loc.Get("mp.creating"));
             var result = await NetworkService.Instance.HostRelayAsync(PlayerName());
             if (this == null) return;
             SetBusy(false, null);
@@ -110,7 +106,7 @@ namespace DeckParty.UI
             if (m_Busy) return;
             var code = codeInput.text.Trim().ToUpperInvariant();
             AppSettings.LastJoinCode = code;
-            SetBusy(true, $"Joining {code}...");
+            SetBusy(true, Loc.Get("mp.joining", "code", code));
             var result = await NetworkService.Instance.JoinRelayAsync(code, PlayerName());
             if (this == null) return;
             if (!result.Ok)
@@ -119,7 +115,7 @@ namespace DeckParty.UI
                 SetStatus(result.Error, true);
                 return;
             }
-            SetStatus("Connected to Relay. Waiting for the host...", false);
+            SetStatus(Loc.Get("mp.connected_relay"), false);
         }
 
         void HostLan()
@@ -140,7 +136,7 @@ namespace DeckParty.UI
                 SetStatus(result.Error, true);
                 return;
             }
-            SetBusy(true, $"Connecting to {AppSettings.LastIp}:{port}...");
+            SetBusy(true, Loc.Get("mp.connecting", "address", $"{AppSettings.LastIp}:{port}"));
         }
 
         void OnSessionSpawned(DeckPartyNetSession session)
@@ -159,7 +155,7 @@ namespace DeckParty.UI
         {
             if (NetworkService.Instance.IsActive) NetworkService.Instance.Leave();
             SetBusy(false, string.Empty);
-            m_Menu.ShowMain();
+            m_Menu.ShowStreamerSelect(StreamerSelectMode.Multiplayer);
         }
     }
 }

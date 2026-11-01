@@ -1,0 +1,321 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Multiplayer_pt-BR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pt-BR
+  m_SharedData: {fileID: 11400000, guid: 2518f7e7796258c4bb3a2e0ccbbaf139, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 370360320
+    m_Localized: de olho em {viewer}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469184
+    m_Localized: pensando em {viewer}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469185
+    m_Localized: escolhendo o alvo de {viewer}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469186
+    m_Localized: decidindo a jogada de {viewer}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469187
+    m_Localized: escolhendo da fila
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469188
+    m_Localized: olhando a loja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469189
+    m_Localized: escolhendo qual rival atacar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469190
+    m_Localized: prestes a deixar um espectador entrar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469191
+    m_Localized: prestes a encerrar a live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469192
+    m_Localized: decidindo sobre o espectador esperando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469193
+    m_Localized: pensando em aumentar o limite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469194
+    m_Localized: prestes a encerrar a vez
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469195
+    m_Localized: de olho no poder de streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469196
+    m_Localized: "conferindo a Audi\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469197
+    m_Localized: 'Sua vez: {seconds} s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469198
+    m_Localized: '{player}: {seconds} s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469199
+    m_Localized: Em turnos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469200
+    m_Localized: Noites sincronizadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469201
+    m_Localized: Corrida (no seu ritmo)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469202
+    m_Localized: em turnos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469203
+    m_Localized: noites sincronizadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469204
+    m_Localized: corrida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469205
+    m_Localized: Desligado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469206
+    m_Localized: "Dif\xEDcil ({seconds} s)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469207
+    m_Localized: "M\xE9dio ({seconds} s)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469208
+    m_Localized: "F\xE1cil ({seconds} s)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469209
+    m_Localized: Personalizado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469210
+    m_Localized: '{seconds} segundos por turno'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469211
+    m_Localized: "J\xE1 est\xE1 conectando..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469212
+    m_Localized: "Voc\xEA j\xE1 est\xE1 numa partida. Saia primeiro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469213
+    m_Localized: "A sess\xE3o anterior ainda est\xE1 fechando. Tente de novo daqui
+      a pouco."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469214
+    m_Localized: "N\xE3o deu pra criar na porta {0}. J\xE1 tem outra c\xF3pia do
+      jogo hospedando?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469215
+    m_Localized: "'{0}' n\xE3o \xE9 um endere\xE7o IP v\xE1lido."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469216
+    m_Localized: "N\xE3o deu pra iniciar o cliente de rede."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469217
+    m_Localized: "N\xE3o deu pra hospedar pelo Relay."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469218
+    m_Localized: O jogo online precisa do pacote Multiplayer Services (com.unity.services.multiplayer).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469219
+    m_Localized: "Digite o c\xF3digo que o host compartilhou."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469220
+    m_Localized: "O jogo online ainda n\xE3o est\xE1 configurado: vincule este projeto
+      ao Unity Cloud e ative o Relay (veja INSTRUCTIONS.md), ou use IP direto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469221
+    m_Localized: "Nenhuma partida encontrada com esse c\xF3digo. Confira e tente
+      de novo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469222
+    m_Localized: "N\xE3o deu pra alcan\xE7ar os servidores da Unity. Confira sua
+      conex\xE3o com a internet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469223
+    m_Localized: "N\xE3o deu pra criar uma partida online: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469224
+    m_Localized: "N\xE3o deu pra entrar: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469225
+    m_Localized: O host fechou o lobby.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469226
+    m_Localized: "Vers\xF5es diferentes: todo mundo precisa da mesma vers\xE3o de
+      Batalha pela Audi\xEAncia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469227
+    m_Localized: "Essa partida j\xE1 come\xE7ou."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469228
+    m_Localized: "Essa partida est\xE1 cheia ({0} jogadores)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469229
+    m_Localized: "A conex\xE3o de rede falhou."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469230
+    m_Localized: "A conex\xE3o com o host caiu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469231
+    m_Localized: "N\xE3o deu pra conectar. Confira o c\xF3digo ou o endere\xE7o e
+      tente de novo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469232
+    m_Localized: "S\xF3 o host pode come\xE7ar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469233
+    m_Localized: "A partida j\xE1 come\xE7ou."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469234
+    m_Localized: Esperando {0} {0:plural:jogador ficar pronto|jogadores ficarem prontos}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469235
+    m_Localized: "A temporada come\xE7a: {0}, {1} noites. Vence a primeira live de
+      {2} Diamantes!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469236
+    m_Localized: "Sua vez est\xE1 acabando."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469237
+    m_Localized: "\xC9 a vez de {0}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469238
+    m_Localized: Espere a sua vez.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469239
+    m_Localized: "Voc\xEA marcou que est\xE1 pronto. Cancele o pronto pra continuar
+      comprando."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469240
+    m_Localized: '{0} entrou na partida.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469241
+    m_Localized: '{0} saiu da partida.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469242
+    m_Localized: "A pol\xEDcia chegou na live de {0}!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469243
+    m_Localized: '{0} estourou o limite e a live caiu!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469244
+    m_Localized: '{0} teve {1} Diamantes numa live. Mais um e vence!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469245
+    m_Localized: '{0} contratou {1}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469246
+    m_Localized: '{1} de {0} usou {2}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469247
+    m_Localized: "{0} deu raid em {1}! A pr\xF3xima live come\xE7a com +1 de risco
+      de pol\xEDcia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469248
+    m_Localized: '{0} cobrou imposto sobre fortunas de {1}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469249
+    m_Localized: '{0} fez uma live de {1} Diamantes e vence!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469250
+    m_Localized: '{0} fez uma live de {1} Diamantes! Terminando a noite {2}...'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469251
+    m_Localized: "Come\xE7a a noite {0}!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469252
+    m_Localized: O tempo de {0} acabou! A live termina e a vez passa.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469253
+    m_Localized: '{0} vence a temporada com uma live de {1} Diamantes na noite {2}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469254
+    m_Localized: "Ningu\xE9m chegou a {1} Diamantes. {0} leva com um recorde de {2}."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

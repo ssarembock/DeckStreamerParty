@@ -16,6 +16,11 @@ namespace DeckParty
         const string KeyJoinCode = "dp.lastJoinCode";
         const string KeyIp = "dp.lastIp";
         const string KeyPort = "dp.lastPort";
+        const string KeyShake = "dp.screenShake";
+        const string KeyReduceFlashing = "dp.reduceFlashing";
+        const string KeyFakeChat = "dp.fakeChat";
+        const string KeyStreamer = "dp.streamer";
+        const string KeyTurnTimer = "dp.turnTimer";
 
         public const string VenueAuto = "auto";
         public const string VenueEvolving = "evolving";
@@ -54,6 +59,41 @@ namespace DeckParty
 
         /// <summary>Multiplier applied to every UI animation duration.</summary>
         public static float AnimationTimeScale => FastAnimations ? 0.5f : 1f;
+
+        /// <summary>Screen shake strength, 0 (off) to 1 (full).</summary>
+        public static float ScreenShake
+        {
+            get => PlayerPrefs.GetFloat(KeyShake, 1f);
+            set { PlayerPrefs.SetFloat(KeyShake, Mathf.Clamp01(value)); Notify(); }
+        }
+
+        /// <summary>Tones down flashes, strobes and glitches.</summary>
+        public static bool ReduceFlashing
+        {
+            get => PlayerPrefs.GetInt(KeyReduceFlashing, 0) == 1;
+            set { PlayerPrefs.SetInt(KeyReduceFlashing, value ? 1 : 0); Notify(); }
+        }
+
+        /// <summary>The fake live-chat feed in the game screen.</summary>
+        public static bool FakeChat
+        {
+            get => PlayerPrefs.GetInt(KeyFakeChat, 1) == 1;
+            set { PlayerPrefs.SetInt(KeyFakeChat, value ? 1 : 0); Notify(); }
+        }
+
+        /// <summary>The last streamer picked on the select screen (a StreamerType, or 255 for Random).</summary>
+        public static byte LastStreamer
+        {
+            get => (byte)Mathf.Clamp(PlayerPrefs.GetInt(KeyStreamer, 0), 0, 255);
+            set => PlayerPrefs.SetInt(KeyStreamer, value);
+        }
+
+        /// <summary>The host's last turn timer choice in seconds (0 = off).</summary>
+        public static int LastTurnTimer
+        {
+            get => Mathf.Clamp(PlayerPrefs.GetInt(KeyTurnTimer, 0), 0, 3600);
+            set => PlayerPrefs.SetInt(KeyTurnTimer, value);
+        }
 
         public static string PlayerName
         {

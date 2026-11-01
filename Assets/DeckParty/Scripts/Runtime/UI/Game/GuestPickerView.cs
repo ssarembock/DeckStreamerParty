@@ -8,8 +8,8 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// Modal grid for choosing a guest that isn't at the party (Shoutout, Grumpy Cat, Distracted Boyfriend...).
-    /// Identical guests are stacked unless grouping is turned off.
+    /// Modal grid for choosing a viewer who isn't in chat (Shoutout, Grumpy Cat, Distracted Boyfriend...).
+    /// Identical viewers are stacked unless grouping is turned off.
     /// </summary>
     public sealed class GuestPickerView : MonoBehaviour
     {
@@ -21,7 +21,6 @@ namespace DeckParty.UI
         [SerializeField] internal Button cancelButton;
 
         const float CardScale = 0.72f;
-        const string DefaultCancelLabel = "Cancel  [Esc]";
 
         readonly List<GuestCardView> m_Cards = new List<GuestCardView>();
         Action<int> m_OnPick;
@@ -29,6 +28,15 @@ namespace DeckParty.UI
         TMP_Text m_CancelLabel;
 
         public bool IsOpen => root.activeSelf;
+        /// <summary>A card in the picker was hovered (viewer id) or left (-1). Used for multiplayer presence.</summary>
+        public event Action<int> CardHovered;
+
+        public GuestCardView FindCard(int guestId)
+        {
+            foreach (var card in m_Cards)
+                if (card.gameObject.activeSelf && card.GuestId == guestId) return card;
+            return null;
+        }
 
         void Awake()
         {
@@ -48,7 +56,7 @@ namespace DeckParty.UI
             m_OnCancel = onCancel;
             titleLabel.text = title;
             hintLabel.text = hint;
-            if (m_CancelLabel != null) m_CancelLabel.text = string.IsNullOrEmpty(cancelLabel) ? DefaultCancelLabel : cancelLabel;
+            if (m_CancelLabel != null) m_CancelLabel.text = string.IsNullOrEmpty(cancelLabel) ? Loc.Get("common.cancel_esc") : cancelLabel;
             GuestCardView.FitGrid(grid, CardScale);
 
             var groups = new List<(GuestInstance guest, int count)>();
@@ -85,6 +93,7 @@ namespace DeckParty.UI
                 {
                     var created = Instantiate(cardPrefab, grid);
                     created.Clicked += Pick;
+                    created.Hovered += (c, on) => CardHovered?.Invoke(on ? c.GuestId : -1);
                     m_Cards.Add(created);
                 }
                 var card = m_Cards[i];

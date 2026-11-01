@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aea01b8ed943514aa70273e3bd73bd7, type: 3}
   m_Name: UISkin
   m_EditorClassIdentifier: 
-  bodyFont: {fileID: 0}
-  headerFont: {fileID: 0}
+  bodyFont: {fileID: 11400000, guid: 7944fe5997cd29d49a5c3083e7245904, type: 2}
+  headerFont: {fileID: 11400000, guid: 3f4a3bfd53cd0b34c81bba2c874219f6, type: 2}
   entries:
   - name: Panel
     slot: 0

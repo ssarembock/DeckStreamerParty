@@ -1,0 +1,262 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Content_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: fe08c675884f17142aef311dafa6f47f, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 370360320
+    m_Localized: Starter Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274880
+    m_Localized: Learn the ropes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274881
+    m_Localized: Your first season live. Dependable regulars, a couple of moderators,
+      Doge and Cheems, and three friendly Diamonds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274882
+    m_Localized: Cat Cafe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274883
+    m_Localized: The internet runs on animals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274884
+    m_Localized: Every animal meme in one room. Bongo Cat buffs the whole zoo, Nyan
+      Cat chains arrivals, Doge rewards variety and Big Chungus needs a big Sub Cap.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274885
+    m_Localized: Doomscroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274886
+    m_Localized: Swatting Risk is good content
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274887
+    m_Localized: Wojaks feed on suffering. Doomer and Me Gusta love Swatting Risk,
+      Gigachad and Sigma want the spotlight alone, and This Is Fine Dog keeps the
+      SWAT team guessing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274888
+    m_Localized: Italian Brainrot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274889
+    m_Localized: Tung tung tung tung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274890
+    m_Localized: Chaos on a loop. Strikes, shuffles, bombardments and infections.
+      Pop Cat and Dancing Baby turn every action into Subs.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274891
+    m_Localized: Reaction Channel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274892
+    m_Localized: Control the narrative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274893
+    m_Localized: Manipulators and schemers. Rearrange the queue, swap, zero and double
+      stats, convert Subs to Cash and back, and protect your stars from bad luck.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274894
+    m_Localized: Random Mix
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274895
+    m_Localized: A fresh character set every time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274896
+    m_Localized: Eleven random viewers and three random Diamonds. Win five in a row
+      to earn the Cherry.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274897
+    m_Localized: Open Lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274898
+    m_Localized: Everyone's welcome (sandbox)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274899
+    m_Localized: Every recruitable viewer is in the shop. Great for experimenting;
+      does not count toward progress.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274900
+    m_Localized: Bedroom Setup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274901
+    m_Localized: RGB strips, a ring light and a bed that's definitely in frame.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274902
+    m_Localized: IRL Beach Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274903
+    m_Localized: Sunset, seagulls and a phone on a selfie stick.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274904
+    m_Localized: Neon City IRL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274905
+    m_Localized: Streaming from a rooftop. The skyline glows. So does chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274906
+    m_Localized: Content House
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274907
+    m_Localized: Ten creators, one kitchen, zero privacy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274908
+    m_Localized: Cursed 3AM Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274909
+    m_Localized: Don't read the chat. Don't look behind you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274910
+    m_Localized: Metaverse Lounge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274911
+    m_Localized: Everyone is a floating torso. Nobody has legs.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274912
+    m_Localized: Studio Stage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274913
+    m_Localized: Green screen, smoke machine, legendary clips.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274914
+    m_Localized: Debate Bunker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274915
+    m_Localized: Three monitors, two arguments, one very loud microphone.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274916
+    m_Localized: Podcast Studio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274917
+    m_Localized: Wood panels, neon sign, elk jerky. Episode four hundred and twenty.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274918
+    m_Localized: Pro Gamer Dojo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274919
+    m_Localized: Blue LEDs, an energy drink fridge and a headband on a pedestal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274920
+    m_Localized: Screaming Room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274921
+    m_Localized: Acoustic foam, a football and something on fire.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274922
+    m_Localized: Giveaway Warehouse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274923
+    m_Localized: Pallets of cash, a countdown clock and a lot of very nervous contestants.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274924
+    m_Localized: The Mansion (Socialist Edition)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274925
+    m_Localized: A two-million-dollar living room with a hammer-and-sickle throw
+      pillow.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274926
+    m_Localized: Gym of Feelings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274927
+    m_Localized: Dumbbells, a punching bag and a box of tissues. For the punching
+      bag.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274928
+    m_Localized: Chessboard Arena
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274929
+    m_Localized: Sixty-four squares, two heads and zero inside voices.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274930
+    m_Localized: Pal Meadow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274931
+    m_Localized: Pastel hills, fluffy creatures and a suspicious number of capture
+      spheres.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274932
+    m_Localized: Blackboard Void
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274933
+    m_Localized: An infinite dark canvas where vectors gently rotate.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274934
+    m_Localized: Champions Club Arena
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274935
+    m_Localized: Smoke, lasers, a lightbox of X-rays and a very large trophy.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

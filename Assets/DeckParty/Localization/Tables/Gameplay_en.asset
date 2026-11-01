@@ -1,0 +1,1279 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Gameplay_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: d723f8508718bec46b4afcfbe53d2ca7, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 408109056
+    m_Localized: SHOUTOUT!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412224
+    m_Localized: BANNED!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412225
+    m_Localized: HODL!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412226
+    m_Localized: U MAD?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412227
+    m_Localized: FEELS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412228
+    m_Localized: NO.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412229
+    m_Localized: STONKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412230
+    m_Localized: MOGGED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412231
+    m_Localized: PLAYED OFF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412232
+    m_Localized: OOPS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412233
+    m_Localized: NAILED IT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412234
+    m_Localized: BONK!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412235
+    m_Localized: SPLASH!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412236
+    m_Localized: KABOOM!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412237
+    m_Localized: PIROUETTE!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412238
+    m_Localized: MANAGER!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412239
+    m_Localized: RICKROLLED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412240
+    m_Localized: YEAH.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412241
+    m_Localized: ???
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412242
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412243
+    m_Localized: BIG BRAIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412244
+    m_Localized: BAN WAVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412245
+    m_Localized: TRENDING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412246
+    m_Localized: SKIBIDI!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412247
+    m_Localized: SAME.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412248
+    m_Localized: MINE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412249
+    m_Localized: FOLLOW ME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412250
+    m_Localized: OOH...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412251
+    m_Localized: THIS IS FINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412252
+    m_Localized: first
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412253
+    m_Localized: hi chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412254
+    m_Localized: what game is this
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412255
+    m_Localized: mods are asleep post memes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412256
+    m_Localized: LUL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412257
+    m_Localized: can we get a hype train
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412258
+    m_Localized: streamer is cooking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412259
+    m_Localized: o7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412260
+    m_Localized: W viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412261
+    m_Localized: welcome welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412262
+    m_Localized: new frien :)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412263
+    m_Localized: lets gooo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412264
+    m_Localized: who invited them KEKW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412265
+    m_Localized: F
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412266
+    m_Localized: F F F F
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412267
+    m_Localized: NOOOOO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412268
+    m_Localized: clip it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412269
+    m_Localized: he got got
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412270
+    m_Localized: unlucky
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412271
+    m_Localized: buffering...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412272
+    m_Localized: stream died
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412273
+    m_Localized: too many people LUL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412274
+    m_Localized: refresh refresh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412275
+    m_Localized: GG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412276
+    m_Localized: good stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412277
+    m_Localized: W stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412278
+    m_Localized: see you tomorrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412279
+    m_Localized: POG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412280
+    m_Localized: POGGERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412281
+    m_Localized: HISTORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412282
+    m_Localized: GOAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412283
+    m_Localized: I was here
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412284
+    m_Localized: L
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412285
+    m_Localized: next season for sure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412286
+    m_Localized: copium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412287
+    m_Localized: big brain play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412288
+    m_Localized: what was that
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412289
+    m_Localized: KEKW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412290
+    m_Localized: calculated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412291
+    m_Localized: actual 200 IQ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412292
+    m_Localized: BANNED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412293
+    m_Localized: get out LUL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412294
+    m_Localized: rip bozo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412295
+    m_Localized: monkaS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412296
+    m_Localized: uh oh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412297
+    m_Localized: this is getting spicy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412298
+    m_Localized: someone call the mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412299
+    m_Localized: new sub hype
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412300
+    m_Localized: big spender
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412301
+    m_Localized: W recruit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412302
+    m_Localized: HE DID IT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412303
+    m_Localized: ultimate ability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412304
+    m_Localized: clip that
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412305
+    m_Localized: Subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412306
+    m_Localized: Gifted Subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412307
+    m_Localized: Cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412308
+    m_Localized: Swatting Risk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412309
+    m_Localized: SWATTED!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412310
+    m_Localized: Temporary Ban
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412311
+    m_Localized: Diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412312
+    m_Localized: Diamonds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412313
+    m_Localized: Audience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412314
+    m_Localized: Sub Cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412315
+    m_Localized: Raise Sub Cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412316
+    m_Localized: SUB CAP EXCEEDED!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412317
+    m_Localized: Character Set
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412318
+    m_Localized: '{count} {count:plural:Diamond|Diamonds}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412319
+    m_Localized: '{value} Subs'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412320
+    m_Localized: '{value} Swatting Risk'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412321
+    m_Localized: '{value} Gifted Subs'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412322
+    m_Localized: someone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412323
+    m_Localized: a rival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412324
+    m_Localized: You
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412325
+    m_Localized: Community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412326
+    m_Localized: Animal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412327
+    m_Localized: Wojak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412328
+    m_Localized: Rage Comic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412329
+    m_Localized: Reaction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412330
+    m_Localized: Brainrot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412331
+    m_Localized: Diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412332
+    m_Localized: Recruit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412333
+    m_Localized: Remove
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412334
+    m_Localized: Modify
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412335
+    m_Localized: Shuffle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412336
+    m_Localized: Scout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412337
+    m_Localized: Economy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412338
+    m_Localized: Copies the viewer before him
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412339
+    m_Localized: Grows during the stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412340
+    m_Localized: Action viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412341
+    m_Localized: No base Subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412342
+    m_Localized: DIAMOND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412343
+    m_Localized: SWATTING RISK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412344
+    m_Localized: CANCELS RISK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412345
+    m_Localized: BRINGS {count}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412346
+    m_Localized: TAKES {count} SPACES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412347
+    m_Localized: 'ACTION: {action}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412348
+    m_Localized: '{family} family'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412349
+    m_Localized: '{type} action'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412350
+    m_Localized: Rickrolled! Really {viewer}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412351
+    m_Localized: 'Permanent: {value}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412352
+    m_Localized: 'Tung Tung strikes: {count}/3'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412353
+    m_Localized: Trolled {count} {count:plural:time|times}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412354
+    m_Localized: 'Temporary copy: gone after tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412355
+    m_Localized: <b>Now:</b> {stats}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412356
+    m_Localized: 'Temporary Ban: sitting out tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412357
+    m_Localized: Used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412358
+    m_Localized: Infected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412359
+    m_Localized: Immune
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412360
+    m_Localized: Zeroed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412361
+    m_Localized: Double Subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412362
+    m_Localized: Double $
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412363
+    m_Localized: Subs to $
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412364
+    m_Localized: $ to Subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412365
+    m_Localized: Printed Subs {value}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412366
+    m_Localized: Copied {subs} Subs / {cash} $
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412367
+    m_Localized: Risk cleared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412368
+    m_Localized: Bad luck used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412369
+    m_Localized: Attached (can't be kicked)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412370
+    m_Localized: Attached to {viewer}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412371
+    m_Localized: Waiting for someone to attach to
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412372
+    m_Localized: Happy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412373
+    m_Localized: Sad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412374
+    m_Localized: Angry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412375
+    m_Localized: Neutral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412376
+    m_Localized: '- Night {night} -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412377
+    m_Localized: You're live.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412378
+    m_Localized: '{player} is live.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412379
+    m_Localized: '{viewer} joins the chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412380
+    m_Localized: '{viewer} joins thanks to {source}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412381
+    m_Localized: '{viewer} is sent back to the queue.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412382
+    m_Localized: '{viewer} is swapped out for the night.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412383
+    m_Localized: '{viewer} storms out after their partner.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412384
+    m_Localized: '{viewer} leaves your Audience for good.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412385
+    m_Localized: '{viewer} leaves {player}''s Audience for good.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412386
+    m_Localized: '{viewer} is kicked from chat by {source}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412387
+    m_Localized: '{viewer} is kicked from chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412388
+    m_Localized: '{viewer} is denied for tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412389
+    m_Localized: '{source} spots {viewer} in the queue.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412390
+    m_Localized: '{viewer} scores {values} right now.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412391
+    m_Localized: '{viewer} uses {action}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412392
+    m_Localized: '{viewer} uses {action} ({choice}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412393
+    m_Localized: '{viewer} resets the stream: {count} {count:plural:viewer|viewers}
+      sent back to the queue!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412394
+    m_Localized: SWATTED! Swatting Risk hit {risk}. The SWAT team ends the stream.
+      No payout tonight.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412395
+    m_Localized: SUB CAP EXCEEDED! {filled} spaces filled with a Sub Cap of {cap}.
+      Stream crashed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412396
+    m_Localized: 'Stream ends: {values} with {diamonds}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412397
+    m_Localized: 'Couldn''t pay {cash} $ in fees: -{penalty} Gifted Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412398
+    m_Localized: '{viewer} gets a Temporary Ban and sits out the next stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412399
+    m_Localized: '{viewer} joins your Audience.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606528
+    m_Localized: '{viewer} joins {player}''s Audience.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606529
+    m_Localized: Sub Cap raised to {cap}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606530
+    m_Localized: '{count} DIAMONDS IN ONE STREAM! You win!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606531
+    m_Localized: '{count} DIAMONDS IN ONE STREAM! {player} wins!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606532
+    m_Localized: The season is over.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606533
+    m_Localized: '{viewer} gains {values}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606534
+    m_Localized: '{viewer} earns {values} for tonight''s take.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606535
+    m_Localized: '{viewer} adds {risk}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606536
+    m_Localized: '{viewer} loses their Swatting Risk.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606537
+    m_Localized: This is fine. {viewer} calls off the SWAT team and clears {count}
+      Swatting Risk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606538
+    m_Localized: '{viewer} catches the Skibidi infection!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606539
+    m_Localized: '{viewer} attaches herself to {source}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606540
+    m_Localized: '{viewer} copies {source}: {values}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606541
+    m_Localized: Another {viewer} joins the queue. Follow me!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606542
+    m_Localized: '{viewer}''s bad luck holds: it doesn''t work, and he permanently
+      gains +1 Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606543
+    m_Localized: '{viewer} is evenly matched. Nothing changes.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606544
+    m_Localized: '{viewer} permanently gains {amount} Subs (now {total}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606545
+    m_Localized: '{viewer} permanently loses {amount} Subs (now {total}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606546
+    m_Localized: '{viewer} takes strike {count}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606547
+    m_Localized: '{viewer} gets Rickrolled into {other}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606548
+    m_Localized: '{a} and {b} swap places.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606549
+    m_Localized: '{a} and {b} swap their printed Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606550
+    m_Localized: '{viewer} is feeling {mood}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606551
+    m_Localized: 'Invested so far tonight: {values}. Triple back if the stream succeeds.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606552
+    m_Localized: Stonks! The investment pays {values}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606553
+    m_Localized: '{viewer} gets the side eye and goes to the back of the queue.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606554
+    m_Localized: '{viewer} is now immune to actions tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606555
+    m_Localized: '{viewer} will turn their Subs into $ tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606556
+    m_Localized: '{viewer} will turn their $ into Subs tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606557
+    m_Localized: '{viewer} earns nothing tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606558
+    m_Localized: '{viewer}''s printed Subs are doubled tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606559
+    m_Localized: '{viewer}''s printed $ are doubled tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606560
+    m_Localized: '{viewer} spots {count} new {count:plural:attraction|attractions}
+      in the queue...'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606561
+    m_Localized: Nobody gets replaced.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606562
+    m_Localized: '{a} is out, {b} is in.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606563
+    m_Localized: '{count} temporary Knuckles {count:plural:copy wanders|copies wander}
+      off.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606564
+    m_Localized: '{streamer} uses {power}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606565
+    m_Localized: A rival's raid hits! This stream starts with {risk}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606566
+    m_Localized: Smoke Bomb! This stream ignores {count} Swatting Risk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606567
+    m_Localized: Giveaway is live! Every viewer earns +{count} Subs this stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606568
+    m_Localized: Pal Sphere! {viewer} was caught and joins the Audience.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606569
+    m_Localized: 'Soft landing: {value} Gifted Subs banked anyway.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606570
+    m_Localized: 'Beautiful Sequence: {count} great {count:plural:stream|streams}
+      in a row. +{bonus} Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606571
+    m_Localized: Double Move! {viewer}'s action is ready again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606572
+    m_Localized: 'Double Move is armed: the first action used this stream can be
+      used again.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606573
+    m_Localized: 'X-Ray Vision: the next {count} viewers in the queue are visible.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606574
+    m_Localized: '{raider} raided this stream! +{count} Swatting Risk next stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606575
+    m_Localized: '{taxer} collected a Wealth Tax: -{amount} $.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606576
+    m_Localized: 'Wealth Tax collected from {payer}: +{amount} $.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606577
+    m_Localized: No game in progress.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606578
+    m_Localized: The season is over.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606579
+    m_Localized: Unknown command.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606580
+    m_Localized: The stream is over.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606581
+    m_Localized: Decide on the waiting viewer first.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606582
+    m_Localized: Decide on the New Attraction first.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606583
+    m_Localized: You've hit your Sub Cap.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606584
+    m_Localized: Nobody is left in the queue.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606585
+    m_Localized: That viewer isn't in chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606586
+    m_Localized: Unknown viewer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606587
+    m_Localized: '{0} has no action.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606588
+    m_Localized: '{0} was already used tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606589
+    m_Localized: Needs at least 2 viewers in the queue.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606590
+    m_Localized: You have nothing to invest.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606591
+    m_Localized: Nothing to reroll and nobody in the queue.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606592
+    m_Localized: That would bring the SWAT team.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606593
+    m_Localized: No viewer can be chosen right now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606594
+    m_Localized: Needs {0} viewers that can be chosen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606595
+    m_Localized: Pick one of the options.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606596
+    m_Localized: Needs {0} Gifted Subs.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606597
+    m_Localized: Needs {0} $.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606598
+    m_Localized: There's no random arrival to reroll.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606599
+    m_Localized: Pick one of the next viewers to deny.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606600
+    m_Localized: Pick who comes in next.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606601
+    m_Localized: Pick {0} {0:plural:viewer|viewers}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606602
+    m_Localized: Pick {0} to {1} viewers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606603
+    m_Localized: That's not a valid choice.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606604
+    m_Localized: You can only recruit between streams.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606605
+    m_Localized: Not available in this character set.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606606
+    m_Localized: '{0} can''t be bought.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606607
+    m_Localized: You already have {0} {1}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606608
+    m_Localized: You can only upgrade between streams.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606609
+    m_Localized: Your Sub Cap is maxed out.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606610
+    m_Localized: Nobody is waiting to join.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606611
+    m_Localized: You've hit your Sub Cap. You'll have to deny them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606612
+    m_Localized: There's nothing to decide.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606613
+    m_Localized: Pick one of the revealed viewers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606614
+    m_Localized: That viewer can't be replaced.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606615
+    m_Localized: There's nobody to ban.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606616
+    m_Localized: That viewer wasn't in the swatted stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606617
+    m_Localized: Finish tonight's stream first.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606618
+    m_Localized: That was the final night.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606619
+    m_Localized: You're streaming without a streamer power.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606620
+    m_Localized: 'This power is passive: it''s always on.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606621
+    m_Localized: Streamer powers are used in the shop, after your stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606622
+    m_Localized: This power needs a rival to hit (multiplayer only).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606623
+    m_Localized: 'Recharging: ready in {0} {0:plural:turn|turns}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606624
+    m_Localized: Already armed for your next stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606625
+    m_Localized: There's no next stream to use it on.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606626
+    m_Localized: There's no viewer in the shop to catch.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606627
+    m_Localized: Pick a rival who's still in the season.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606628
+    m_Localized: That rival has no Cash to tax.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606629
+    m_Localized: Automatic (your streamer's setup)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606630
+    m_Localized: Evolving (grows with your Sub Cap)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606631
+    m_Localized: The goal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606632
+    m_Localized: 'Pull off one stream with <b>4 Diamond viewers in chat at the same
+      time</b>, and end it successfully before your final night (25 by default).
+      Recruiting four Diamonds isn''t enough: they have to show up together.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606633
+    m_Localized: A night has two halves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606634
+    m_Localized: <b>1. The stream.</b> Press <b>Add Viewer to Chat</b> to let the
+      next viewer from your Audience join. Each viewer can join once per stream.
+      Viewers with a purple <b>action</b> button can use it once per stream. When
+      you're happy, press <b>End the Stream</b> to bank what everyone in chat brought
+      in.\n<b>2. The shop.</b> Viewers bring in <color=#FFC94A>Subs</color>; when
+      the stream ends they're banked as <color=#FFC94A>Gifted Subs</color>, which
+      recruit new viewers into your Audience. <color=#6BE38B>Cash</color> raises
+      your <b>Sub Cap</b> (how many viewers fit in chat at once).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606635
+    m_Localized: Swatting Risk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606636
+    m_Localized: 'Viewers with a red X add Swatting Risk. Up to 2 net Swatting Risk
+      is fine; at <b>3 the SWAT team shows up</b>: the stream ends with no payout
+      and you give one viewer a <b>Temporary Ban</b> (they sit out the next stream).
+      AutoMod, VIPS and the Wholesome Icon <b>cancel</b> 1 Swatting Risk each while
+      in chat (Cheems does too when a Doge is around). Some viewers add Swatting
+      Risk with their actions; This Is Fine Dog calls off the SWAT team once.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606637
+    m_Localized: Sub Cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606638
+    m_Localized: You can't add viewers once you've hit your Sub Cap, but viewers
+      who <b>bring</b> others (Parasocialite, Raid Leader) or take extra space (Big
+      Chungus takes 3) can push you over it. If that happens the stream crashes with
+      no payout. Leave spare room!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606639
+    m_Localized: Money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606640
+    m_Localized: Raising your Sub Cap costs 2 Cash, then 1 more each time (max 12
+      per space, up to 34). Some viewers charge fees (negative Cash). Fees are paid
+      from your Cash; any unpaid amount costs <b>7 Gifted Subs per Cash</b>.\nNormal
+      viewers are limited to 4 copies each; Diamonds are unlimited. You can't remove
+      viewers from your Audience, so every recruit changes your odds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606641
+    m_Localized: Actions and families
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606642
+    m_Localized: Every viewer belongs to a family (Community, Animal, Wojak, Rage
+      Comic, Reaction, Brainrot, Diamond) and every action has a type (Recruit, Remove,
+      Modify, Shuffle, Scout, Economy). Doge loves mixed families, Bongo Cat buffs
+      Animals and Dancing Baby rewards two actions of the same type in a row. Some
+      actions ask you to pick an option first, then one or more viewers; actions
+      that take several viewers show a Confirm button. Permanent changes (Chad vs
+      Virgin, Tung Tung, Bad Luck Brian) stay with that viewer card forever. Hover
+      any viewer to see its family, action type and tonight's effects.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606643
+    m_Localized: Streamers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606644
+    m_Localized: 'Before a season you <b>Select Your Streamer</b>. Each one has a
+      power: <b>passive</b> powers are always on; <b>active</b> powers are used from
+      the shop after your stream (on your turn), cost Gifted Subs and/or Cash, get
+      more expensive every time and may need a few turns to recharge. <b>Rival</b>
+      powers (Raid, Wealth Tax) hit another player, so they only work in multiplayer.
+      Pick <b>No Streamer</b> to play the classic rules. Your streamer also brings
+      their own stream setup.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606645
+    m_Localized: Controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606646
+    m_Localized: <b>Space</b> add viewer / confirm picks / next night   <b>E</b>
+      end the stream   <b>R</b> Audience   <b>Esc</b> cancel / menu   <b>F11</b>
+      fullscreen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606647
+    m_Localized: Multiplayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606648
+    m_Localized: 'Everyone gets the same character set and starts with the same Audience,
+      and everyone can watch every stream: click a player in the Players panel to
+      see their board live. In <b>Take Turns</b> mode (the default) players stream
+      one after another each night while everyone else watches what they point at,
+      pick and buy, and the season ends after the first night someone pulls off a
+      4-Diamond stream. The host can set a turn timer. In <b>Synchronized Nights</b>
+      mode everyone plays the same night at once and the next night starts when every
+      player is ready. In <b>Race</b> mode everyone plays at their own pace and the
+      first 4-Diamond stream wins instantly. If nobody wins, the best Diamond count
+      in a successful stream takes it.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606649
+    m_Localized: <b>Win:</b> 4 Diamonds in one successful stream.\n<b>Add Viewer:</b>
+      the next viewer in the queue joins chat.  <b>End the Stream:</b> banks Subs
+      as Gifted Subs, plus Cash.\n<b>3 net Swatting Risk</b> = SWAT team (no payout,
+      one viewer gets a Temporary Ban).\n<b>Over your Sub Cap</b> = stream crashes
+      (no payout).\n<b>Shop:</b> Gifted Subs recruit viewers, Cash raises your Sub
+      Cap, streamer powers live here too.\n<b>Keys:</b> Space add viewer/confirm/next
+      night, E end the stream, R Audience, Esc menu, F11 fullscreen.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

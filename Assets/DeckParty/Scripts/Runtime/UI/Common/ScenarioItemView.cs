@@ -34,8 +34,9 @@ namespace DeckParty.UI
         {
             Hook();
             ScenarioId = scenario.Id;
-            titleLabel.text = scenario.Name;
-            subtitleLabel.text = string.IsNullOrEmpty(extra) ? scenario.Tagline : scenario.Tagline + "  -  " + extra;
+            string tagline = ContentText.ScenarioTagline(scenario.Id);
+            titleLabel.text = ContentText.ScenarioName(scenario.Id);
+            subtitleLabel.text = string.IsNullOrEmpty(extra) ? tagline : tagline + "  -  " + extra;
             clearedIcon.SetActive(cleared);
         }
 

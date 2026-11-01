@@ -12,6 +12,7 @@ namespace DeckParty.UI
         [SerializeField] internal LobbyScreen lobbyScreen;
         [SerializeField] internal SettingsScreen settingsScreen;
         [SerializeField] internal HowToPlayScreen howToPlayScreen;
+        [SerializeField] internal StreamerSelectScreen streamerSelectScreen;
         [SerializeField] internal VenueBackgroundView background;
         [SerializeField] internal float venueCycleSeconds = 9f;
 
@@ -30,9 +31,10 @@ namespace DeckParty.UI
             lobbyScreen.Init(this);
             settingsScreen.Init(this);
             howToPlayScreen.Init(this);
+            if (streamerSelectScreen != null) streamerSelectScreen.Init(this);
 
-            foreach (var screen in new UIScreen[] { mainScreen, singlePlayerScreen, multiplayerScreen, lobbyScreen, settingsScreen, howToPlayScreen })
-                screen.gameObject.SetActive(false);
+            foreach (var screen in new UIScreen[] { mainScreen, singlePlayerScreen, multiplayerScreen, lobbyScreen, settingsScreen, howToPlayScreen, streamerSelectScreen })
+                if (screen != null) screen.gameObject.SetActive(false);
 
             var venues = GameDatabase.Instance.Venues;
             if (venues.Count > 0) background.Apply(venues[0]);
@@ -42,12 +44,12 @@ namespace DeckParty.UI
             NetworkService.Instance.SessionEnded += OnSessionEnded;
 
             if (NetworkService.Instance.IsActive && DeckPartyNetSession.Instance != null) ShowLobby();
-            else if (SceneFlow.OpenMultiplayerOnMenu) ShowMultiplayer();
+            else if (SceneFlow.OpenMultiplayerOnMenu) ShowMultiplayerConnect();
             else ShowMain();
             SceneFlow.OpenMultiplayerOnMenu = false;
 
             var message = SceneFlow.TakePendingMessage();
-            if (!string.IsNullOrEmpty(message)) ModalDialog.Show("Heads up", message, null, "OK", null);
+            if (!string.IsNullOrEmpty(message)) ModalDialog.Show(Loc.Get("menu.heads_up"), Loc.Error(message), null, Loc.Get("common.ok"), null);
         }
 
         void OnDestroy()
@@ -70,8 +72,10 @@ namespace DeckParty.UI
 
             if (InputHelper.Pressed(HotKey.Escape) && !InputHelper.IsTyping && !ModalDialog.IsOpen)
             {
-                if (m_Current == singlePlayerScreen || m_Current == settingsScreen || m_Current == howToPlayScreen || m_Current == multiplayerScreen)
-                    ShowMain();
+                if (m_Current == settingsScreen || m_Current == howToPlayScreen) ShowMain();
+                else if (m_Current == singlePlayerScreen) ShowStreamerSelect(StreamerSelectMode.SinglePlayer);
+                else if (m_Current == multiplayerScreen) ShowStreamerSelect(StreamerSelectMode.Multiplayer);
+                // The select screen handles its own Esc (back).
             }
         }
 
@@ -79,8 +83,8 @@ namespace DeckParty.UI
         {
             if (m_Current == lobbyScreen || m_Current == multiplayerScreen)
             {
-                ShowMultiplayer();
-                if (!string.IsNullOrEmpty(reason)) multiplayerScreen.SetStatus(reason, true);
+                ShowMultiplayerConnect();
+                if (!string.IsNullOrEmpty(reason)) multiplayerScreen.SetStatus(Loc.Error(reason), true);
             }
         }
 
@@ -102,8 +106,58 @@ namespace DeckParty.UI
         }
 
         public void ShowMain() => Switch(mainScreen);
-        public void ShowSinglePlayer() => Switch(singlePlayerScreen);
-        public void ShowMultiplayer() => Switch(multiplayerScreen);
+
+        /// <summary>Single Player starts with Select Your Streamer, then the character set screen.</summary>
+        public void ShowSinglePlayer() => ShowStreamerSelect(StreamerSelectMode.SinglePlayer);
+
+        /// <summary>Multiplayer starts with Select Your Streamer, then host / join.</summary>
+        public void ShowMultiplayer() => ShowStreamerSelect(StreamerSelectMode.Multiplayer);
+
+        /// <summary>The host / join screen itself (after a streamer is picked, or when a connection drops).</summary>
+        public void ShowMultiplayerConnect() => Switch(multiplayerScreen);
+
+        public void ShowStreamerSelect(StreamerSelectMode mode)
+        {
+            if (streamerSelectScreen == null)
+            {
+                // Scenes built before the select screen existed: skip straight on.
+                if (mode == StreamerSelectMode.SinglePlayer) Switch(singlePlayerScreen);
+                else if (mode == StreamerSelectMode.Multiplayer) Switch(multiplayerScreen);
+                else Switch(lobbyScreen);
+                return;
+            }
+
+            if (m_Current != null && m_Current != streamerSelectScreen) m_Current.Hide();
+            m_Current = streamerSelectScreen;
+            m_BackgroundLocked = false;
+            streamerSelectScreen.Open(mode, pick => OnStreamerPicked(mode, pick), () =>
+            {
+                if (mode == StreamerSelectMode.Lobby) Switch(lobbyScreen);
+                else Switch(mainScreen);
+            });
+        }
+
+        void OnStreamerPicked(StreamerSelectMode mode, byte pick)
+        {
+            NetworkService.LocalStreamer = pick;
+            switch (mode)
+            {
+                case StreamerSelectMode.SinglePlayer:
+                    singlePlayerScreen.Streamer = pick;
+                    Switch(singlePlayerScreen);
+                    break;
+                case StreamerSelectMode.Multiplayer:
+                    Switch(multiplayerScreen);
+                    break;
+                default:
+                    if (DeckPartyNetSession.Instance != null) DeckPartyNetSession.Instance.SetStreamer(pick);
+                    Switch(lobbyScreen);
+                    break;
+            }
+            // A streamer brings their own stream setup: preview it behind the menu.
+            var venue = StreamerVisuals.Venue((Core.StreamerType)pick);
+            if (venue != null) PreviewVenue(venue);
+        }
         public void ShowLobby() => Switch(lobbyScreen);
         public void ShowSettings() => Switch(settingsScreen);
         public void ShowHowToPlay() => Switch(howToPlayScreen);

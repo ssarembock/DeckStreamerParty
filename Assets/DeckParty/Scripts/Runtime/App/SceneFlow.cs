@@ -16,6 +16,8 @@ namespace DeckParty
         public uint Seed;
         public string VenueChoice = AppSettings.VenueAuto;
         public bool ContinueSave;
+        /// <summary>The streamer picked on the select screen (a StreamerType; the Random pick is resolved when the game is created).</summary>
+        public byte Streamer;
     }
 
     /// <summary>Local (non-networked) scene transitions plus hand-off data between scenes.</summary>
@@ -42,7 +44,7 @@ namespace DeckParty
         {
             if (Application.CanStreamedLevelBeLoaded(sceneName)) return true;
 
-            const string fix = "In the Unity editor run Deck Party > Setup > Build Everything. It generates the scenes and adds MainMenu and Game to File > Build Profiles > Scene List.";
+            const string fix = "In the Unity editor run Deck Party > Setup > Build Everything. It generates the scenes and adds MainMenu and Game to File > Build Profiles > Scene List."; // developer-only message, not localized
             Debug.LogError($"[DeckParty] Scene '{sceneName}' isn't in the build scene list. {fix}");
             UI.ModalDialog.Show("Scene missing", $"The '{sceneName}' scene isn't in the build list yet.\n\n{fix}", null, "OK", null);
             return false;

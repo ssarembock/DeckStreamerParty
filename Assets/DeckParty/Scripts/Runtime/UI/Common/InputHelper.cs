@@ -16,6 +16,11 @@ namespace DeckParty.UI
         R,
         Tab,
         F9,
+        F11,
+        Left,
+        Right,
+        Up,
+        Down,
     }
 
     /// <summary>Keyboard / pointer access that works with either input backend.</summary>
@@ -51,6 +56,11 @@ namespace DeckParty.UI
                 case HotKey.R: return keyboard.rKey.wasPressedThisFrame;
                 case HotKey.Tab: return keyboard.tabKey.wasPressedThisFrame;
                 case HotKey.F9: return keyboard.f9Key.wasPressedThisFrame;
+                case HotKey.F11: return keyboard.f11Key.wasPressedThisFrame;
+                case HotKey.Left: return keyboard.leftArrowKey.wasPressedThisFrame || keyboard.aKey.wasPressedThisFrame;
+                case HotKey.Right: return keyboard.rightArrowKey.wasPressedThisFrame || keyboard.dKey.wasPressedThisFrame;
+                case HotKey.Up: return keyboard.upArrowKey.wasPressedThisFrame || keyboard.wKey.wasPressedThisFrame;
+                case HotKey.Down: return keyboard.downArrowKey.wasPressedThisFrame || keyboard.sKey.wasPressedThisFrame;
             }
             return false;
 #else
@@ -63,9 +73,28 @@ namespace DeckParty.UI
                 case HotKey.R: return Input.GetKeyDown(KeyCode.R);
                 case HotKey.Tab: return Input.GetKeyDown(KeyCode.Tab);
                 case HotKey.F9: return Input.GetKeyDown(KeyCode.F9);
+                case HotKey.F11: return Input.GetKeyDown(KeyCode.F11);
+                case HotKey.Left: return Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A);
+                case HotKey.Right: return Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D);
+                case HotKey.Up: return Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W);
+                case HotKey.Down: return Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S);
             }
             return false;
 #endif
+        }
+
+        /// <summary>Alt+Enter (the usual fullscreen toggle on PC).</summary>
+        public static bool AltEnterPressed
+        {
+            get
+            {
+#if ENABLE_INPUT_SYSTEM
+                var keyboard = Keyboard.current;
+                return keyboard != null && keyboard.altKey.isPressed && (keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame);
+#else
+                return (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetKeyDown(KeyCode.Return);
+#endif
+            }
         }
 
         /// <summary>True while a text field has keyboard focus (hotkeys should be ignored).</summary>

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace DeckParty.UI
 {
-    /// <summary>Live summary of every player in a multiplayer season. Click a player to watch their party.</summary>
+    /// <summary>Live summary of every player in a multiplayer season. Click a player to watch their stream.</summary>
     public sealed class OpponentsView : MonoBehaviour
     {
         [SerializeField] internal TMP_Text titleLabel;
@@ -25,7 +25,7 @@ namespace DeckParty.UI
             var players = session.PlayersSnapshot();
             var mode = session.Settings.Mode;
             string modeColor = mode == MatchMode.Race ? "#FF9A3D" : mode == MatchMode.Turns ? "#FF4F8B" : "#B9AED6";
-            titleLabel.text = $"Players  <size=70%><color={modeColor}>{MatchModes.ShortName(mode)}</color></size>";
+            titleLabel.text = Loc.Get("players.title") + $"  <size=70%><color={modeColor}>{MatchModes.ShortName(mode)}</color></size>";
 
             for (int i = 0; i < players.Count; i++)
             {
@@ -44,9 +44,21 @@ namespace DeckParty.UI
                 m_Rows[i].gameObject.SetActive(true);
                 m_Rows[i].Set(p.DisplayName, Status(p, mode, session.ActivePlayer == p.ClientId), color, mode != MatchMode.Race && p.ReadyNextNight,
                     session.IsHostPlayer(p.ClientId), p.Rank, p.ClientId == session.LocalClientId);
+                m_Rows[i].SetStreamer((StreamerType)p.Streamer);
                 m_Rows[i].SetViewed(p.ClientId == viewedId, color);
+                m_Rows[i].SetPresence(PresenceLine != null ? PresenceLine(p.ClientId) : null);
             }
             for (int i = players.Count; i < m_Rows.Count; i++) m_Rows[i].gameObject.SetActive(false);
+        }
+
+        /// <summary>Multiplayer presence: what a player is doing right now ("choosing Trollface's target..."), or null.</summary>
+        public Func<ulong, string> PresenceLine;
+
+        public PlayerRowView RowFor(ulong clientId)
+        {
+            for (int i = 0; i < m_RowIds.Count && i < m_Rows.Count; i++)
+                if (m_RowIds[i] == clientId && m_Rows[i].gameObject.activeSelf) return m_Rows[i];
+            return null;
         }
 
         void OnRowClicked(int index)
@@ -56,20 +68,21 @@ namespace DeckParty.UI
 
         public static string Status(NetPlayer p, MatchMode mode, bool activeTurn)
         {
-            if (!p.Connected) return "<color=#B9AED6>Left the game</color>";
-            string partying = $"({p.Guests}/{p.Capacity}, <color=#FFC94A>{p.DiamondsInHouse} {Terms.Diamonds}</color>, risk {p.Trouble})";
+            if (!p.Connected) return $"<color=#B9AED6>{Loc.Get("players.left")}</color>";
+            string streaming = Loc.Get("players.live_detail", ("viewers", p.Guests), ("cap", p.Capacity),
+                ("diamonds", $"<color=#FFC94A>{Terms.DiamondCount(p.DiamondsInHouse)}</color>"), ("risk", p.Trouble));
             string phase;
             if (mode == MatchMode.Turns && !p.Finished)
             {
                 if (activeTurn)
                 {
-                    phase = p.GamePhase == GamePhase.Party ? $"<color=#FF4F8B>Playing now</color> {partying}"
-                        : p.GamePhase == GamePhase.RaidBlame ? "<color=#FF5A5A>Swatted!</color>"
-                        : "<color=#FF4F8B>Shopping now</color>";
+                    phase = p.GamePhase == GamePhase.Party ? $"<color=#FF4F8B>{Loc.Get("players.streaming_now")}</color> {streaming}"
+                        : p.GamePhase == GamePhase.RaidBlame ? $"<color=#FF5A5A>{Terms.Raid}</color>"
+                        : $"<color=#FF4F8B>{Loc.Get("players.shopping_now")}</color>";
                 }
                 else
                 {
-                    phase = p.ReadyNextNight ? "<color=#6BE38B>Done tonight</color>" : "Waiting for their turn";
+                    phase = p.ReadyNextNight ? $"<color=#6BE38B>{Loc.Get("players.done_tonight")}</color>" : Loc.Get("players.waiting_turn");
                 }
             }
             else
@@ -77,14 +90,16 @@ namespace DeckParty.UI
                 bool sync = mode == MatchMode.SyncNights;
                 switch (p.GamePhase)
                 {
-                    case GamePhase.Party: phase = $"Partying {partying}"; break;
-                    case GamePhase.RaidBlame: phase = "<color=#FF5A5A>Swatted!</color>"; break;
-                    case GamePhase.Planning: phase = sync && p.ReadyNextNight ? "<color=#6BE38B>Ready</color>" : "Planning"; break;
-                    case GamePhase.Victory: phase = $"<color=#FFC94A>WON on night {p.WinNight}!</color>"; break;
-                    default: phase = "Season over"; break;
+                    case GamePhase.Party: phase = Loc.Get("players.streaming") + " " + streaming; break;
+                    case GamePhase.RaidBlame: phase = $"<color=#FF5A5A>{Terms.Raid}</color>"; break;
+                    case GamePhase.Planning: phase = sync && p.ReadyNextNight ? $"<color=#6BE38B>{Loc.Get("players.ready")}</color>" : Loc.Get("players.planning"); break;
+                    case GamePhase.Victory: phase = $"<color=#FFC94A>{Loc.Get("players.won", "night", p.WinNight)}</color>"; break;
+                    default: phase = Loc.Get("players.season_over"); break;
                 }
             }
-            return $"Night {p.Night}  -  {phase}\n<color=#FFC94A>{p.Pop} {Terms.GiftedSubs}</color>  <color=#6BE38B>{p.Cash} $</color>  {Terms.Diamonds} owned {p.DiamondsOwned}  best {p.BestDiamonds}";
+            return Loc.Get("players.night", "night", p.Night) + "  -  " + phase + "\n" +
+                   Loc.Get("players.wallet", ("subs", $"<color=#FFC94A>{GuestVisuals.GiftedSubsText(p.Pop)}</color>"), ("cash", $"<color=#6BE38B>{p.Cash} $</color>"),
+                       ("owned", p.DiamondsOwned), ("best", p.BestDiamonds));
         }
     }
 }

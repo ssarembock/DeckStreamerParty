@@ -56,6 +56,21 @@ namespace DeckParty.Core
         AttractionRevealed = 40, // Guest = Distracted Boyfriend, A = count
         AttractionResolved = 41, // A = replaced id (-1 = skipped), B = chosen id
         TemporaryCopiesLeft = 42,// A = count
+
+        // Streamer powers
+        PowerUsed = 43,        // A = streamer, B = Gifted Subs paid, C = Cash paid
+        HeatApplied = 44,      // A = Swatting Risk from rivals' raids at the start of this stream
+        ShieldApplied = 45,    // A = Swatting Risk ignored this stream (Smoke Bomb)
+        GiveawayActive = 46,   // A = extra Subs per viewer this stream
+        PalCaught = 47,        // Guest = the viewer caught from the shop
+        SoftLanding = 48,      // A = Gifted Subs banked despite the SWAT team
+        StreakBonus = 49,      // A = bonus Subs, B = streak length
+        FreeActionUsed = 50,   // Guest = the viewer whose action refreshed (Double Move)
+        XRayActive = 51,       // A = how many queued viewers are visible
+        RaidReceived = 52,     // A = Swatting Risk added to your next stream, B = raider's player index
+        TaxPaid = 53,          // A = Cash paid, B = taxer's player index
+        TaxReceived = 54,      // A = Cash received, B = payer's player index
+        DoubleMoveActive = 55, // A = free action refreshes this stream
     }
 
     public struct GameEvent

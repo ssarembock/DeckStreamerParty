@@ -29,6 +29,10 @@ namespace DeckParty.UI
             rulesTab.onClick.AddListener(() => ShowTab(true));
             guestsTab.onClick.AddListener(() => ShowTab(false));
             backButton.onClick.AddListener(() => m_Menu.ShowMain());
+            Loc.Changed += () =>
+            {
+                if (IsVisible) OnShow();
+            };
         }
 
         protected override void OnShow()

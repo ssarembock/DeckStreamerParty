@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: "Localization-String-Tables-Espa\xF1ol (Latinoam\xE9rica)"
+  m_EditorClassIdentifier: 
+  m_GroupName: "Localization-String-Tables-Espa\xF1ol (Latinoam\xE9rica)"
+  m_GUID: a0f83c44a14be5445a672691c3e895d9
+  m_SerializeEntries:
+  - m_GUID: 37c683936987a0045a88a494cdd92f74
+    m_Address: Characters_es-419
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es-419
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53d75af887211e94eb63bd8fe1d07ff6
+    m_Address: Streamers_es-419
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es-419
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58d066f3c50bea24994f7023e4d5c17f
+    m_Address: Multiplayer_es-419
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es-419
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75fb199b652f42c49bc62fac68f49a60
+    m_Address: UI_es-419
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es-419
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d85fdca5d22539d47bb09dcc9fbf9a93
+    m_Address: Gameplay_es-419
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es-419
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7829b019c5b1c840826e73c5a60b8fc
+    m_Address: Content_es-419
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es-419
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 3ebf2177ef15f954dbacc13bcd6fe205, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: f8a73b32a2a2a1e4d8cd462b013ccf8c, type: 2}
+    - {fileID: 11400000, guid: 904f3e141b3853e4ba723eb50b70f772, type: 2}

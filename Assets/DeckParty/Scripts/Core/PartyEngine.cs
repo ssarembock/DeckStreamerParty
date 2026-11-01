@@ -14,8 +14,9 @@ namespace DeckParty.Core
 
         // ================================================================== setup
 
-        public static PlayerState CreateGame(int scenarioId, uint seed, int nights = GameRules.DefaultNights)
+        public static PlayerState CreateGame(int scenarioId, uint seed, int nights = GameRules.DefaultNights, StreamerType streamer = StreamerType.None)
         {
+            if (!StreamerCatalog.IsValid(streamer)) streamer = StreamerType.None;
             var s = new PlayerState
             {
                 ScenarioId = scenarioId,
@@ -24,7 +25,10 @@ namespace DeckParty.Core
                 Capacity = GameRules.StartingCapacity,
                 RngState = DeterministicRandom.Seed(seed),
                 Night = 1,
+                Streamer = streamer,
             };
+            // Bro Jogan's Three-Hour Episode: one extra seat from the start.
+            if (streamer == StreamerType.BroJogan) s.Capacity += StreamerCatalog.BigStudioCapacity;
             s.Shop.AddRange(ScenarioCatalog.BuildShop(scenarioId, seed));
 
             for (int i = 0; i < 4; i++) AddGuest(s, GuestType.LoyalFan);
@@ -46,13 +50,18 @@ namespace DeckParty.Core
 
         public static CommandResult Execute(PlayerState s, GameCommand cmd, List<GameEvent> events)
         {
-            if (s == null) return CommandResult.Fail("No game in progress.");
-            if (s.IsGameOver) return CommandResult.Fail("The season is over.");
+            if (s == null) return CommandResult.Fail(Err.Of("err.no_game"));
+            if (s.IsGameOver) return CommandResult.Fail(Err.Of("err.season_over"));
 
             switch (cmd.Type)
             {
                 case CommandType.OpenDoor: return OpenDoor(s, events);
-                case CommandType.UseAbility: return UseAbility(s, cmd, events);
+                case CommandType.UseAbility:
+                {
+                    var result = UseAbility(s, cmd, events);
+                    if (result.Ok) RefreshFreeAction(s, cmd.Actor, events);
+                    return result;
+                }
                 case CommandType.AdmitPeeked: return AdmitPeeked(s, events);
                 case CommandType.RejectPeeked: return RejectPeeked(s, events);
                 case CommandType.ResolveAttraction: return ResolveAttraction(s, cmd.TargetA, cmd.TargetB, events);
@@ -61,7 +70,8 @@ namespace DeckParty.Core
                 case CommandType.BuyGuest: return Buy(s, cmd.Guest, events);
                 case CommandType.ExpandHouse: return Expand(s, events);
                 case CommandType.StartNextNight: return StartNextNight(s, events);
-                default: return CommandResult.Fail("Unknown command.");
+                case CommandType.UseStreamerPower: return UsePower(s, events);
+                default: return CommandResult.Fail(Err.Of("err.unknown_command"));
             }
         }
 
@@ -77,9 +87,10 @@ namespace DeckParty.Core
 
         public static bool HasTroubleProperty(PlayerState s, GuestInstance g) => GuestTrouble(s, g) > 0;
 
+        /// <summary>Swatting Risk from everyone in chat, plus heat from rivals' raids.</summary>
         public static int TroubleTotal(PlayerState s)
         {
-            int total = 0;
+            int total = s.PartyHeat;
             for (int i = 0; i < s.House.Count; i++) total += GuestTrouble(s, s.Find(s.House[i]));
             return total;
         }
@@ -100,9 +111,10 @@ namespace DeckParty.Core
             return g.Kind == GuestType.Cheems && s.CountInHouse(GuestType.Doge) > 0;
         }
 
+        /// <summary>Swatting Risk cancelled by viewers, plus Shinobi's Smoke Bomb.</summary>
         public static int CancelCount(PlayerState s)
         {
-            int count = 0;
+            int count = s.PartyShield;
             for (int i = 0; i < s.House.Count; i++)
                 if (CancelsTroubleNow(s, s.Find(s.House[i]))) count++;
             return count;
@@ -205,6 +217,8 @@ namespace DeckParty.Core
                 int cash = baseCash;
 
                 ApplyPassive(g, i, ctx, ref pop, ref cash);
+                pop += s.PartyViewerBonus;
+                if (s.Streamer == StreamerType.IRunFast && GuestTrouble(s, g) > 0) pop += 1;
                 pop += g.PartyPop;
                 cash += g.PartyCash;
                 if (g.Infected) pop += InfectionPop;
@@ -363,68 +377,69 @@ namespace DeckParty.Core
             return available < 0 ? -available * GameRules.CashShortfallPopPenalty : 0;
         }
 
-        public static int ExpansionCost(PlayerState s) => GameRules.ExpansionCost(s.Expansions);
+        public static int ExpansionCost(PlayerState s) =>
+            GameRules.ExpansionCost(s.Expansions) + (s.Streamer == StreamerType.BroJogan ? StreamerCatalog.BigStudioUpgradeTax : 0);
 
         // ================================================================== queries: what can be done
 
         public static string GetDoorBlocker(PlayerState s)
         {
-            if (s.Phase != GamePhase.Party) return "The party is over.";
-            if (s.PeekedId >= 0) return "Decide on the guest at the door first.";
-            if (s.AttractionPending) return "Decide on the New Attraction first.";
-            if (s.HouseFull) return "You've hit your Sub Cap.";
-            if (s.Pool.Count == 0) return "Nobody is left waiting outside.";
+            if (s.Phase != GamePhase.Party) return Err.Of("err.stream_over");
+            if (s.PeekedId >= 0) return Err.Of("err.decide_waiting");
+            if (s.AttractionPending) return Err.Of("err.decide_attraction");
+            if (s.HouseFull) return Err.Of("err.sub_cap");
+            if (s.Pool.Count == 0) return Err.Of("err.queue_empty");
             return null;
         }
 
         public static string GetEndPartyBlocker(PlayerState s)
         {
-            if (s.Phase != GamePhase.Party) return "The party is over.";
-            if (s.PeekedId >= 0) return "Decide on the guest at the door first.";
-            if (s.AttractionPending) return "Decide on the New Attraction first.";
+            if (s.Phase != GamePhase.Party) return Err.Of("err.stream_over");
+            if (s.PeekedId >= 0) return Err.Of("err.decide_waiting");
+            if (s.AttractionPending) return Err.Of("err.decide_attraction");
             return null;
         }
 
         /// <summary>Null when the guest's action can be started (targets are validated separately).</summary>
         public static string GetAbilityBlocker(PlayerState s, int actorId)
         {
-            if (s.Phase != GamePhase.Party) return "The party is over.";
-            if (s.PeekedId >= 0) return "Decide on the guest at the door first.";
-            if (s.AttractionPending) return "Decide on the New Attraction first.";
-            if (!s.House.Contains(actorId)) return "That guest isn't at the party.";
+            if (s.Phase != GamePhase.Party) return Err.Of("err.stream_over");
+            if (s.PeekedId >= 0) return Err.Of("err.decide_waiting");
+            if (s.AttractionPending) return Err.Of("err.decide_attraction");
+            if (!s.House.Contains(actorId)) return Err.Of("err.not_in_chat");
 
             var actor = s.Find(actorId);
-            if (actor == null) return "Unknown guest.";
+            if (actor == null) return Err.Of("err.unknown_viewer");
             var info = actor.Info;
-            if (!info.HasAbility) return $"{info.Name} has no action.";
-            if (s.UsedAbilities.Contains(actorId)) return $"{info.AbilityName} was already used tonight.";
+            if (!info.HasAbility) return Err.Of("err.no_action", Err.Guest(actor.Kind));
+            if (s.UsedAbilities.Contains(actorId)) return Err.Of("err.action_used", Err.Action(actor.Kind));
 
             switch (info.Ability)
             {
                 case AbilityKind.Fetch:
-                    if (s.Pool.Count == 0) return "Nobody is left waiting outside.";
-                    if (s.HouseFull) return "You've hit your Sub Cap.";
+                    if (s.Pool.Count == 0) return Err.Of("err.queue_empty");
+                    if (s.HouseFull) return Err.Of("err.sub_cap");
                     break;
                 case AbilityKind.Inspect:
-                    if (s.Pool.Count < 2) return "Needs at least 2 guests waiting outside.";
+                    if (s.Pool.Count < 2) return Err.Of("err.needs_two_queued");
                     break;
                 case AbilityKind.SideEye:
-                    if (s.Pool.Count < 2) return "Needs at least 2 guests waiting outside.";
+                    if (s.Pool.Count < 2) return Err.Of("err.needs_two_queued");
                     break;
                 case AbilityKind.Invest:
-                    if (s.Pop < GameRules.StonksInvestPop && s.Cash < GameRules.StonksInvestCash) return "You have nothing to invest.";
+                    if (s.Pop < GameRules.StonksInvestPop && s.Cash < GameRules.StonksInvestCash) return Err.Of("err.nothing_to_invest");
                     break;
                 case AbilityKind.Reroll:
-                    if (!CanReroll(s) && s.Pool.Count == 0) return "Nothing to reroll and nobody waiting outside.";
+                    if (!CanReroll(s) && s.Pool.Count == 0) return Err.Of("err.nothing_to_reroll");
                     break;
                 case AbilityKind.Arson:
-                    if (WouldRaidWithExtraTrouble(s)) return "That would bring the SWAT team.";
+                    if (WouldRaidWithExtraTrouble(s)) return Err.Of("err.would_swat");
                     break;
             }
 
             GuestInfo.TargetCount(info.Ability, out int min, out _);
             if (info.Target != TargetMode.WaitingGuest && min > 0 && CountValidTargets(s, actorId) < min)
-                return min == 1 ? "No guest can be chosen right now." : $"Needs {min} guests that can be chosen.";
+                return min == 1 ? Err.Of("err.no_target") : Err.Of("err.needs_targets", min);
             return null;
         }
 
@@ -491,32 +506,32 @@ namespace DeckParty.Core
         public static string ValidateCommand(PlayerState s, GameCommand cmd)
         {
             var actor = s.Find(cmd.Actor);
-            if (actor == null) return "Unknown guest.";
+            if (actor == null) return Err.Of("err.unknown_viewer");
             var info = actor.Info;
             var kind = info.Ability;
 
             var options = info.Options;
-            if (options != null && (cmd.Option < 0 || cmd.Option >= options.Length)) return "Pick one of the options.";
+            if (options != null && (cmd.Option < 0 || cmd.Option >= options.Length)) return Err.Of("err.pick_option");
 
             switch (kind)
             {
                 case AbilityKind.Invest:
-                    if (cmd.Option == 0 && s.Pop < GameRules.StonksInvestPop) return $"Needs {GameRules.StonksInvestPop} Gifted Subs.";
-                    if (cmd.Option == 1 && s.Cash < GameRules.StonksInvestCash) return $"Needs {GameRules.StonksInvestCash} $.";
+                    if (cmd.Option == 0 && s.Pop < GameRules.StonksInvestPop) return Err.Of("err.needs_gifted_subs", GameRules.StonksInvestPop);
+                    if (cmd.Option == 1 && s.Cash < GameRules.StonksInvestCash) return Err.Of("err.needs_cash", GameRules.StonksInvestCash);
                     return null;
                 case AbilityKind.Reroll:
-                    if (cmd.Option == 0 && !CanReroll(s)) return "There's no random arrival to reroll.";
-                    if (cmd.Option == 1 && s.Pool.Count == 0) return "Nobody is waiting outside.";
+                    if (cmd.Option == 0 && !CanReroll(s)) return Err.Of("err.no_reroll");
+                    if (cmd.Option == 1 && s.Pool.Count == 0) return Err.Of("err.queue_empty");
                     return null;
                 case AbilityKind.Inspect:
                 {
                     int looked = Math.Min(GameRules.GrumpyInspectCount, s.Pool.Count);
                     int rejected = s.Pool.IndexOf(cmd.TargetA);
-                    if (rejected < 0 || rejected >= looked) return "Pick one of the next guests to reject.";
+                    if (rejected < 0 || rejected >= looked) return Err.Of("err.pick_reject");
                     if (cmd.TargetB >= 0)
                     {
                         int first = s.Pool.IndexOf(cmd.TargetB);
-                        if (first < 0 || first >= looked || cmd.TargetB == cmd.TargetA) return "Pick who comes in next.";
+                        if (first < 0 || first >= looked || cmd.TargetB == cmd.TargetA) return Err.Of("err.pick_next");
                     }
                     return null;
                 }
@@ -530,12 +545,12 @@ namespace DeckParty.Core
             if (cmd.TargetB >= 0) picks.Add(cmd.TargetB);
             if (cmd.TargetC >= 0) picks.Add(cmd.TargetC);
             if (picks.Count < min || picks.Count > max)
-                return min == max ? $"Pick {min} guest{(min == 1 ? "" : "s")}." : $"Pick {min} to {max} guests.";
+                return min == max ? Err.Of("err.pick_exact", min) : Err.Of("err.pick_range", min, max);
 
             var chosen = new List<int>(3);
             foreach (var id in picks)
             {
-                if (!IsValidTarget(s, cmd.Actor, id, chosen)) return "That's not a valid choice.";
+                if (!IsValidTarget(s, cmd.Actor, id, chosen)) return Err.Of("err.invalid_target");
                 chosen.Add(id);
             }
             return null;
@@ -574,21 +589,21 @@ namespace DeckParty.Core
 
         public static string GetBuyBlocker(PlayerState s, GuestType type)
         {
-            if (s.Phase != GamePhase.Planning) return "You can only recruit between parties.";
-            if (!s.Shop.Contains(type)) return "Not available in this character set.";
+            if (s.Phase != GamePhase.Planning) return Err.Of("err.recruit_between");
+            if (!s.Shop.Contains(type)) return Err.Of("err.not_in_set");
             var info = GuestCatalog.Get(type);
-            if (!info.Purchasable) return $"{info.Name} can't be bought.";
-            if (s.CountOwned(type) >= info.MaxCopies) return $"You already have {info.MaxCopies} {info.Name}s.";
-            if (s.Pop < info.Cost) return $"Needs {info.Cost} Gifted Subs.";
+            if (!info.Purchasable) return Err.Of("err.cant_buy", Err.Guest(type));
+            if (s.CountOwned(type) >= info.MaxCopies) return Err.Of("err.max_copies", info.MaxCopies, Err.Guest(type));
+            if (s.Pop < info.Cost) return Err.Of("err.needs_gifted_subs", info.Cost);
             return null;
         }
 
         public static string GetExpandBlocker(PlayerState s)
         {
-            if (s.Phase != GamePhase.Planning) return "You can only upgrade between parties.";
-            if (s.Capacity >= GameRules.MaxCapacity) return "Your Sub Cap is maxed out.";
+            if (s.Phase != GamePhase.Planning) return Err.Of("err.upgrade_between");
+            if (s.Capacity >= GameRules.MaxCapacity) return Err.Of("err.sub_cap_maxed");
             int cost = ExpansionCost(s);
-            if (s.Cash < cost) return $"Needs {cost} $.";
+            if (s.Cash < cost) return Err.Of("err.needs_cash", cost);
             return null;
         }
 
@@ -610,6 +625,7 @@ namespace DeckParty.Core
 
             s.Phase = GamePhase.Party;
             Emit(ev, GameEventType.NightStarted, null, s.Night);
+            ApplyStreamerEffects(s, ev);
         }
 
         static void ClearParty(PlayerState s)
@@ -628,6 +644,11 @@ namespace DeckParty.Core
             s.AttractionActor = -1;
             s.AttractionCandidates.Clear();
             s.BannedThisParty = -1;
+            s.PartyHeat = 0;
+            s.PartyShield = 0;
+            s.PartyViewerBonus = 0;
+            s.PartyFreeActions = 0;
+            s.PartyXRay = false;
 
             foreach (var g in s.Rolodex) g.ResetParty();
             s.Rolodex.RemoveAll(g => g.Temporary);
@@ -659,8 +680,8 @@ namespace DeckParty.Core
 
         static CommandResult AdmitPeeked(PlayerState s, List<GameEvent> ev)
         {
-            if (s.Phase != GamePhase.Party || s.PeekedId < 0) return CommandResult.Fail("Nobody is waiting at the door.");
-            if (s.HouseFull) return CommandResult.Fail("You've hit your Sub Cap. You'll have to turn them away.");
+            if (s.Phase != GamePhase.Party || s.PeekedId < 0) return CommandResult.Fail(Err.Of("err.nobody_waiting"));
+            if (s.HouseFull) return CommandResult.Fail(Err.Of("err.cap_deny"));
             int id = s.PeekedId;
             s.PeekedId = -1;
             Arrive(s, id, -1, -1, false, ev);
@@ -669,7 +690,7 @@ namespace DeckParty.Core
 
         static CommandResult RejectPeeked(PlayerState s, List<GameEvent> ev)
         {
-            if (s.Phase != GamePhase.Party || s.PeekedId < 0) return CommandResult.Fail("Nobody is waiting at the door.");
+            if (s.Phase != GamePhase.Party || s.PeekedId < 0) return CommandResult.Fail(Err.Of("err.nobody_waiting"));
             int id = s.PeekedId;
             s.PeekedId = -1;
             s.Pool.Remove(id);
@@ -870,13 +891,13 @@ namespace DeckParty.Core
 
         static CommandResult ResolveAttraction(PlayerState s, int replacedId, int chosenId, List<GameEvent> ev)
         {
-            if (s.Phase != GamePhase.Party || !s.AttractionPending) return CommandResult.Fail("There's nothing to decide.");
+            if (s.Phase != GamePhase.Party || !s.AttractionPending) return CommandResult.Fail(Err.Of("err.nothing_to_decide"));
 
             bool skip = replacedId < 0 || chosenId < 0;
             if (!skip)
             {
-                if (!s.AttractionCandidates.Contains(chosenId)) return CommandResult.Fail("Pick one of the revealed guests.");
-                if (!IsValidAttractionTarget(s, replacedId)) return CommandResult.Fail("That guest can't be replaced.");
+                if (!s.AttractionCandidates.Contains(chosenId)) return CommandResult.Fail(Err.Of("err.pick_revealed"));
+                if (!IsValidAttractionTarget(s, replacedId)) return CommandResult.Fail(Err.Of("err.cant_replace"));
             }
 
             int actor = s.AttractionActor;
@@ -1055,6 +1076,8 @@ namespace DeckParty.Core
             }
 
             int trouble = NetTrouble(s);
+            SoftLanding(s, ev);
+            s.Streak = 0;
             s.RaidSuspects.Clear();
             foreach (var id in s.House)
             {
@@ -1076,6 +1099,7 @@ namespace DeckParty.Core
         {
             int occupancy = s.Occupancy;
             s.FireMarshals++;
+            s.Streak = 0;
             RecordOutcome(s, PartyOutcome.FireMarshal, 0, 0, DiamondsPresent(s), 0);
             Emit(ev, GameEventType.FireMarshal, null, occupancy, s.Capacity);
             ClearParty(s);
@@ -1420,6 +1444,14 @@ namespace DeckParty.Core
             int diamonds = DiamondsPresent(s);
             int penalty = 0;
 
+            s.Streak++;
+            if (s.Streamer == StreamerType.ManimMakethMan)
+            {
+                int bonus = Math.Min(StreamerCatalog.StreakMaxBonus, s.Streak);
+                pop += bonus;
+                Emit(ev, GameEventType.StreakBonus, null, bonus, s.Streak);
+            }
+
             int unpaid;
             if (GameRules.FeesDrawFromBank)
             {
@@ -1488,8 +1520,8 @@ namespace DeckParty.Core
 
         static CommandResult Blame(PlayerState s, int guestId, List<GameEvent> ev)
         {
-            if (s.Phase != GamePhase.RaidBlame) return CommandResult.Fail("There's nobody to ban.");
-            if (!s.RaidSuspects.Contains(guestId) || s.Find(guestId) == null) return CommandResult.Fail("That guest wasn't at the swatted party.");
+            if (s.Phase != GamePhase.RaidBlame) return CommandResult.Fail(Err.Of("err.nobody_to_ban"));
+            if (!s.RaidSuspects.Contains(guestId) || s.Find(guestId) == null) return CommandResult.Fail(Err.Of("err.not_swatted"));
 
             s.BannedNextParty = guestId;
             s.LastBlamedId = guestId;
@@ -1503,7 +1535,7 @@ namespace DeckParty.Core
 
         static CommandResult Buy(PlayerState s, GuestType type, List<GameEvent> ev)
         {
-            if (!GuestCatalog.IsValid(type)) return CommandResult.Fail("Unknown guest.");
+            if (!GuestCatalog.IsValid(type)) return CommandResult.Fail(Err.Of("err.unknown_viewer"));
             var blocker = GetBuyBlocker(s, type);
             if (blocker != null) return CommandResult.Fail(blocker);
 
@@ -1529,11 +1561,185 @@ namespace DeckParty.Core
 
         static CommandResult StartNextNight(PlayerState s, List<GameEvent> ev)
         {
-            if (s.Phase != GamePhase.Planning) return CommandResult.Fail("Finish tonight's party first.");
-            if (s.IsFinalNight) return CommandResult.Fail("That was the final night.");
+            if (s.Phase != GamePhase.Planning) return CommandResult.Fail(Err.Of("err.finish_stream"));
+            if (s.IsFinalNight) return CommandResult.Fail(Err.Of("err.final_night"));
             s.Night++;
             BeginParty(s, ev);
             return CommandResult.Success;
+        }
+
+        // ================================================================== streamer powers
+
+        /// <summary>Null when the streamer's active power can be used now. Rival powers also need a rival to hit.</summary>
+        public static string GetPowerBlocker(PlayerState s, bool rivalsAvailable = false)
+        {
+            var info = s.StreamerInfo;
+            if (s.Streamer == StreamerType.None || info.Kind == PowerKind.None) return Err.Of("err.power_none");
+            if (info.IsPassive) return Err.Of("err.power_passive");
+            if (s.IsGameOver) return Err.Of("err.season_over");
+            if (s.Phase != GamePhase.Planning) return Err.Of("err.power_shop_only");
+            if (info.NeedsRival && !rivalsAvailable) return Err.Of("err.power_needs_rival");
+            if (s.PowerCooldown > 0) return Err.Of("err.power_cooldown", s.PowerCooldown);
+            if (info.Kind == PowerKind.NextStream)
+            {
+                if (s.PowerArmed) return Err.Of("err.power_armed");
+                if (s.IsFinalNight) return Err.Of("err.power_no_next");
+            }
+            if (s.Streamer == StreamerType.Palmane && PalSphereChoices(s).Count == 0) return Err.Of("err.power_no_pals");
+
+            StreamerCatalog.Cost(s, out int giftedSubs, out int cash);
+            if (s.Pop < giftedSubs) return Err.Of("err.needs_gifted_subs", giftedSubs);
+            if (s.Cash < cash) return Err.Of("err.needs_cash", cash);
+            return null;
+        }
+
+        /// <summary>Null when <paramref name="target"/> can be hit by the actor's rival power.</summary>
+        public static string GetRivalTargetBlocker(PlayerState actor, PlayerState target)
+        {
+            if (target == null || target == actor || target.IsGameOver) return Err.Of("err.power_no_rival");
+            if (actor.Streamer == StreamerType.EthicalFboi && target.Cash <= 0) return Err.Of("err.power_rival_broke");
+            return null;
+        }
+
+        /// <summary>Viewer types Palmane's Pal Sphere could catch from the shop.</summary>
+        public static List<GuestType> PalSphereChoices(PlayerState s)
+        {
+            var result = new List<GuestType>();
+            foreach (var type in s.Shop)
+            {
+                var info = GuestCatalog.Get(type);
+                if (!info.Purchasable || info.IsDiamond || info.Cost > StreamerCatalog.PalSphereMaxCost) continue;
+                if (s.CountOwned(type) >= info.MaxCopies || result.Contains(type)) continue;
+                result.Add(type);
+            }
+            return result;
+        }
+
+        static CommandResult UsePower(PlayerState s, List<GameEvent> ev)
+        {
+            var blocker = GetPowerBlocker(s);
+            if (blocker != null) return CommandResult.Fail(blocker);
+
+            PayForPower(s, ev);
+            if (s.StreamerInfo.Kind == PowerKind.NextStream)
+            {
+                s.PowerArmed = true;
+            }
+            else if (s.Streamer == StreamerType.Palmane)
+            {
+                var choices = PalSphereChoices(s);
+                var type = choices[DeterministicRandom.Range(ref s.RngState, choices.Count)];
+                var g = AddGuest(s, type);
+                Emit(ev, GameEventType.PalCaught, g);
+            }
+            return CommandResult.Success;
+        }
+
+        /// <summary>
+        /// A rival power (Fate's Raid, Ethical F**kboi's Wealth Tax). The host calls this with both players' states, since
+        /// the rules engine only ever sees one player at a time. Indexes are the players' positions, used for the log.
+        /// </summary>
+        public static CommandResult UseRivalPower(PlayerState actor, int actorIndex, PlayerState target, int targetIndex,
+            List<GameEvent> actorEvents, List<GameEvent> targetEvents)
+        {
+            if (actor == null) return CommandResult.Fail(Err.Of("err.no_game"));
+            var blocker = GetPowerBlocker(actor, true) ?? GetRivalTargetBlocker(actor, target);
+            if (blocker != null) return CommandResult.Fail(blocker);
+
+            PayForPower(actor, actorEvents);
+            switch (actor.Streamer)
+            {
+                case StreamerType.Fate:
+                    target.IncomingHeat += StreamerCatalog.RaidHeat;
+                    Emit(targetEvents, GameEventType.RaidReceived, null, StreamerCatalog.RaidHeat, actorIndex);
+                    break;
+                case StreamerType.EthicalFboi:
+                {
+                    int amount = Math.Min(StreamerCatalog.WealthTaxAmount, target.Cash);
+                    target.Cash -= amount;
+                    actor.Cash += amount;
+                    Emit(targetEvents, GameEventType.TaxPaid, null, amount, actorIndex);
+                    Emit(actorEvents, GameEventType.TaxReceived, null, amount, targetIndex);
+                    break;
+                }
+            }
+            return CommandResult.Success;
+        }
+
+        static void PayForPower(PlayerState s, List<GameEvent> ev)
+        {
+            StreamerCatalog.Cost(s, out int giftedSubs, out int cash);
+            s.Pop -= giftedSubs;
+            s.Cash -= cash;
+            s.PowerUses++;
+            int cooldown = s.StreamerInfo.Cooldown;
+            // Stored one higher: it counts down as the next stream starts, so "2" means two turns without it.
+            s.PowerCooldown = cooldown > 0 ? cooldown + 1 : 0;
+            Emit(ev, GameEventType.PowerUsed, null, (int)s.Streamer, giftedSubs, cash);
+        }
+
+        /// <summary>Applies armed powers and rivals' raids as a stream starts, and ticks the cooldown.</summary>
+        static void ApplyStreamerEffects(PlayerState s, List<GameEvent> ev)
+        {
+            if (s.PowerCooldown > 0) s.PowerCooldown--;
+
+            if (s.IncomingHeat > 0)
+            {
+                s.PartyHeat = Math.Min(StreamerCatalog.MaxRaidHeat, s.IncomingHeat);
+                s.IncomingHeat = 0;
+                Emit(ev, GameEventType.HeatApplied, null, s.PartyHeat);
+            }
+
+            if (!s.PowerArmed) return;
+            s.PowerArmed = false;
+            switch (s.Streamer)
+            {
+                case StreamerType.Shinobi:
+                    s.PartyShield = StreamerCatalog.SmokeBombShield;
+                    Emit(ev, GameEventType.ShieldApplied, null, s.PartyShield);
+                    break;
+                case StreamerType.MrShark:
+                    s.PartyViewerBonus = StreamerCatalog.GiveawayBonus;
+                    Emit(ev, GameEventType.GiveawayActive, null, s.PartyViewerBonus);
+                    break;
+                case StreamerType.StrategicAbomination:
+                    s.PartyFreeActions = 1;
+                    Emit(ev, GameEventType.DoubleMoveActive, null, s.PartyFreeActions);
+                    break;
+                case StreamerType.RudeRadiologist:
+                    s.PartyXRay = true;
+                    Emit(ev, GameEventType.XRayActive, null, StreamerCatalog.XRayCount);
+                    break;
+            }
+        }
+
+        /// <summary>Strategic Abomination's Double Move: the first action used this stream can be used again.</summary>
+        static void RefreshFreeAction(PlayerState s, int actorId, List<GameEvent> ev)
+        {
+            if (s.PartyFreeActions <= 0 || s.Phase != GamePhase.Party || !s.UsedAbilities.Remove(actorId)) return;
+            s.PartyFreeActions--;
+            Emit(ev, GameEventType.FreeActionUsed, s.Find(actorId));
+        }
+
+        /// <summary>Soft Hard Body Man: a swatted stream still banks half its Subs.</summary>
+        static void SoftLanding(PlayerState s, List<GameEvent> ev)
+        {
+            if (s.Streamer != StreamerType.SoftHardBodyMan) return;
+            ProjectScore(s, out int pop, out _);
+            int banked = Math.Max(0, pop) / 2;
+            if (banked <= 0) return;
+            s.Pop += banked;
+            s.TotalPopEarned += banked;
+            Emit(ev, GameEventType.SoftLanding, null, banked);
+        }
+
+        /// <summary>The next viewers in the queue that X-Ray Vision reveals this stream (empty without it).</summary>
+        public static List<int> XRayQueue(PlayerState s)
+        {
+            var result = new List<int>();
+            if (!s.PartyXRay || s.Phase != GamePhase.Party) return result;
+            for (int i = 0; i < s.Pool.Count && i < StreamerCatalog.XRayCount; i++) result.Add(s.Pool[i]);
+            return result;
         }
 
         // ================================================================== events

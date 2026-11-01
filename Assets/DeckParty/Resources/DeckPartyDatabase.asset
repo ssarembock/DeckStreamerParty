@@ -14,300 +14,706 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guests:
   - name: Loyal Fan
+    key: LoyalFan
     type: 0
     portrait: {fileID: 2408035347343583912, guid: f2248c449efb82747bb5106359d41f34, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Whale
+    key: Whale
     type: 1
     portrait: {fileID: 541896646, guid: f2248c449efb82747bb5106359d41f34, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Bot Farm
+    key: BotFarm
     type: 2
     portrait: {fileID: -2092036663, guid: f2248c449efb82747bb5106359d41f34, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Social Media Manager
+    key: SocialMediaManager
     type: 3
     portrait: {fileID: 541896646, guid: f2248c449efb82747bb5106359d41f34, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Moderator
+    key: Moderator
     type: 4
     portrait: {fileID: 1557067447, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: AutoMod
+    key: AutoMod
     type: 5
     portrait: {fileID: -2107843817, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Collaborator
+    key: Collaborator
     type: 6
     portrait: {fileID: 1804695789, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: HODL
+    key: Hodl
     type: 7
     portrait: {fileID: 785415261557809399, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: VIPS
+    key: Vips
     type: 8
     portrait: {fileID: -2119688159, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Parasocialite
+    key: Parasocialite
     type: 9
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Doge
+    key: Doge
     type: 10
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Trollface
+    key: Trollface
     type: 11
     portrait: {fileID: 1464234329955669435, guid: 22737974618bd104dac319073f2a3f14, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Pepe
+    key: Pepe
     type: 12
     portrait: {fileID: 541896646, guid: f2248c449efb82747bb5106359d41f34, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Gigachad
+    key: Gigachad
     type: 13
     portrait: {fileID: -2088211175, guid: f2248c449efb82747bb5106359d41f34, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: This Is Fine Dog
+    key: ThisIsFineDog
     type: 14
     portrait: {fileID: -2092036663, guid: f2248c449efb82747bb5106359d41f34, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Wojak
+    key: Wojak
     type: 15
     portrait: {fileID: 7193592329560644690, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Grumpy Cat
+    key: GrumpyCat
     type: 16
     portrait: {fileID: 1557067447, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Nyan Cat
+    key: NyanCat
     type: 17
     portrait: {fileID: -2107843817, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Stonks Guy
+    key: StonksGuy
     type: 18
     portrait: {fileID: 1804695789, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Cheems
+    key: Cheems
     type: 19
     portrait: {fileID: 1189930840, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Chad vs Virgin
+    key: ChadVsVirgin
     type: 20
     portrait: {fileID: 785415261557809399, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Doomer
+    key: Doomer
     type: 21
     portrait: {fileID: -2119688159, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: NPC Wojak
+    key: NpcWojak
     type: 22
     portrait: {fileID: 692109619, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Forever Alone
+    key: ForeverAlone
     type: 23
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Me Gusta
+    key: MeGusta
     type: 24
     portrait: {fileID: 1661188788, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Keyboard Cat
+    key: KeyboardCat
     type: 25
     portrait: {fileID: 1464234329955669435, guid: 22737974618bd104dac319073f2a3f14, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Bongo Cat
+    key: BongoCat
     type: 26
     portrait: {fileID: 1587852471, guid: 22737974618bd104dac319073f2a3f14, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Pop Cat
+    key: PopCat
     type: 27
     portrait: {fileID: 1567478799, guid: 22737974618bd104dac319073f2a3f14, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Big Chungus
+    key: BigChungus
     type: 28
     portrait: {fileID: 1645326131, guid: 22737974618bd104dac319073f2a3f14, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Ugandan Knuckles
+    key: UgandanKnuckles
     type: 29
     portrait: {fileID: -162210258, guid: 22737974618bd104dac319073f2a3f14, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Overly Attached Girlfriend
+    key: OverlyAttachedGirlfriend
     type: 30
     portrait: {fileID: 9205303203659863379, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Disaster Girl
+    key: DisasterGirl
     type: 31
     portrait: {fileID: -1577711586, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Hide the Pain Harold
+    key: HideThePainHarold
     type: 32
     portrait: {fileID: 28286594, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Success Kid
+    key: SuccessKid
     type: 33
     portrait: {fileID: -570074226, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Bad Luck Brian
+    key: BadLuckBrian
     type: 34
     portrait: {fileID: 1211086218, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Tung Tung Tung Sahur
+    key: TungTungTungSahur
     type: 35
     portrait: {fileID: 5649303986351544168, guid: 71ad138068d067f48ab2b13065017c03, type: 3}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Tralalero Tralala
+    key: TralaleroTralala
     type: 36
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Bombardiro Crocodilo
+    key: BombardiroCrocodilo
     type: 37
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Ballerina Cappuccina
+    key: BallerinaCappuccina
     type: 38
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Skibidi Toilet
+    key: SkibidiToilet
     type: 39
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Sigma Male
+    key: SigmaMale
     type: 40
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Karen
+    key: Karen
     type: 41
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Rickroll
+    key: Rickroll
     type: 42
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Distracted Boyfriend
+    key: DistractedBoyfriend
     type: 43
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Drakeposting
+    key: Drakeposting
     type: 44
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Confused Math Lady
+    key: ConfusedMathLady
     type: 45
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Side Eye Chloe
+    key: SideEyeChloe
     type: 46
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Roll Safe
+    key: RollSafe
     type: 47
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Crying Cat
+    key: CryingCat
     type: 48
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Dancing Baby
+    key: DancingBaby
     type: 49
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Drama Channel
+    key: DramaChannel
     type: 50
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Diva Streamer
+    key: DivaStreamer
     type: 51
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Raid Leader
+    key: RaidLeader
     type: 52
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Mystery VTuber
+    key: MysteryVTuber
     type: 53
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Wholesome Icon
+    key: WholesomeIcon
     type: 54
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Platform Admin
+    key: PlatformAdmin
     type: 55
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Mega Influencer
+    key: MegaInfluencer
     type: 56
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: Brand Sponsor
+    key: BrandSponsor
     type: 57
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   - name: The Algorithm
+    key: Algorithm
     type: 58
     portrait: {fileID: 0}
-    displayNameOverride: 
     tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  streamers:
+  - name: Fate
+    type: 1
+    portrait: {fileID: 5939000425473442714, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: e3c32a2a35d2877498821d1a19b54f11, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - Debate me, bro.
+    quotesSeeded: 1
+  - name: BroJogan
+    type: 2
+    portrait: {fileID: -1581881588, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: a3b19b4f1f38a804c8318afe3115cc0e, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - Jamie, pull that up.
+    quotesSeeded: 1
+  - name: Shinobi
+    type: 3
+    portrait: {fileID: 345372882, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: 65d7e3e1d1686fe4eab873a6cb1b2fc8, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - You didn't see that. Nobody did.
+    quotesSeeded: 1
+  - name: IRunFast
+    type: 4
+    portrait: {fileID: 530116710, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: 0ad9f64671f715240baf1d25555a71d4, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - SIUUUUUUU!
+    quotesSeeded: 1
+  - name: MrShark
+    type: 5
+    portrait: {fileID: -7370818230038034924, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: 47441aaa016e7f0478868c96347476dd, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - Last viewer to leave chat wins!
+    quotesSeeded: 1
+  - name: EthicalFboi
+    type: 6
+    portrait: {fileID: 2010778748, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: 43bdcb9fdb8a1b34496f101b3760c194, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - Eat the rich. Not me, though.
+    quotesSeeded: 1
+  - name: SoftHardBodyMan
+    type: 7
+    portrait: {fileID: 862293246, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: 8e7fb000acf9e52439c24329987f771b, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - REFORMED. And a little bit squishy.
+    quotesSeeded: 1
+  - name: StrategicAbomination
+    type: 8
+    portrait: {fileID: -2112622103, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: d3ae4620800c373428979f11c8561d45, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - The rook! THE ROOK!
+    quotesSeeded: 1
+  - name: Palmane
+    type: 9
+    portrait: {fileID: -6066641247672683931, guid: 76f9156630a8aec4f98759a0773065ce, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: b77b850d9976d4b44a3699a982190195, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - Hiii chat, who wants to be my pal?
+    quotesSeeded: 1
+  - name: ManimMakethMan
+    type: 10
+    portrait: {fileID: -6216498727382737166, guid: 4840cbe81dc6bcb49a4382169e07ac35, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: a4314b960d66b6b4a882979bcc16f8f3, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - Let's visualize that.
+    quotesSeeded: 1
+  - name: RudeRadiologist
+    type: 11
+    portrait: {fileID: -127041018, guid: 4840cbe81dc6bcb49a4382169e07ac35, type: 3}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    venue: {fileID: 11400000, guid: 672b7d3c34c954f4689f74de010f836b, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - Violence. Speed. Radiology.
+    quotesSeeded: 1
   venues:
   - {fileID: 11400000, guid: 9002b8f75c284d545a1546e75e1faf38, type: 2}
   - {fileID: 11400000, guid: 57a97ba0bf6f2014090485abfa1141c0, type: 2}
@@ -316,6 +722,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8473c4dfc4a8a7e47a22d6712b21137e, type: 2}
   - {fileID: 11400000, guid: 6a3990ec215ae1544be9499feef71a8a, type: 2}
   - {fileID: 11400000, guid: f58f911a10ceabf4484d6ede518a19e9, type: 2}
+  - {fileID: 11400000, guid: e3c32a2a35d2877498821d1a19b54f11, type: 2}
+  - {fileID: 11400000, guid: a3b19b4f1f38a804c8318afe3115cc0e, type: 2}
+  - {fileID: 11400000, guid: 65d7e3e1d1686fe4eab873a6cb1b2fc8, type: 2}
+  - {fileID: 11400000, guid: 0ad9f64671f715240baf1d25555a71d4, type: 2}
+  - {fileID: 11400000, guid: 47441aaa016e7f0478868c96347476dd, type: 2}
+  - {fileID: 11400000, guid: 43bdcb9fdb8a1b34496f101b3760c194, type: 2}
+  - {fileID: 11400000, guid: 8e7fb000acf9e52439c24329987f771b, type: 2}
+  - {fileID: 11400000, guid: d3ae4620800c373428979f11c8561d45, type: 2}
+  - {fileID: 11400000, guid: b77b850d9976d4b44a3699a982190195, type: 2}
+  - {fileID: 11400000, guid: a4314b960d66b6b4a882979bcc16f8f3, type: 2}
+  - {fileID: 11400000, guid: 672b7d3c34c954f4689f74de010f836b, type: 2}
   evolvingVenue:
   - minCapacity: 0
     venue: {fileID: 11400000, guid: 9002b8f75c284d545a1546e75e1faf38, type: 2}
@@ -329,3 +746,5 @@ MonoBehaviour:
     venue: {fileID: 11400000, guid: 6a3990ec215ae1544be9499feef71a8a, type: 2}
   skin: {fileID: 11400000, guid: 31020c4141f714b46b2e067bbf53aec3, type: 2}
   audio: {fileID: 11400000, guid: 93270d33cd5806648b9a504b8edb25ce, type: 2}
+  fx: {fileID: 11400000, guid: 4d3f5767d94834b47868635c30c55b64, type: 2}
+  portraitStage: {fileID: 3230262368666778877, guid: 37ba0a174d98f9e4f97a33e4ee04f39f, type: 3}

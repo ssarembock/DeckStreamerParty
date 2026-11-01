@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab204480c86566540b91b06faaa369a4, type: 3}
+  m_Name: Venue_stage_ethicalfboi
+  m_EditorClassIdentifier: 
+  id: stage_ethicalfboi
+  displayName: The Mansion (Socialist Edition)
+  description: A two-million-dollar living room with a hammer-and-sickle throw pillow.
+  background: {fileID: 0}
+  foreground: {fileID: 0}
+  thumbnail: {fileID: 0}
+  skyTop: {r: 0.16470589, g: 0.023529412, b: 0.0627451, a: 1}
+  skyBottom: {r: 0.47843137, g: 0.078431375, b: 0.15686275, a: 1}
+  wallColor: {r: 0.23921569, g: 0.039215688, b: 0.09411765, a: 1}
+  floorColor: {r: 0.22745098, g: 0.14117648, b: 0.09411765, a: 1}
+  accentA: {r: 0.9098039, g: 0.21176471, b: 0.30980393, a: 1}
+  accentB: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
+  style: 3
+  partyLights: 1
+  music: {fileID: 0}

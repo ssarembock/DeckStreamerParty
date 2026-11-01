@@ -64,8 +64,8 @@ namespace DeckParty
         public static string Describe()
         {
             if (!TryLoad(out var state, out _)) return null;
-            var scenario = ScenarioCatalog.Get(state.ScenarioId);
-            return $"{scenario.Name} - Night {state.Night}/{state.TotalNights}";
+            string text = Loc.Get("menu.save_desc", ("set", ContentText.ScenarioName(state.ScenarioId)), ("night", state.Night), ("total", state.TotalNights));
+            return state.Streamer != StreamerType.None ? StreamerVisuals.Name(state.Streamer) + " - " + text : text;
         }
 
         public static void Delete()

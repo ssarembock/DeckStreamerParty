@@ -1,169 +1,220 @@
+using System;
 using DeckParty.Core;
 
 namespace DeckParty
 {
-    /// <summary>Turns engine events into party-log lines.</summary>
+    /// <summary>Turns engine events into Stream Log lines (keys "log.*").</summary>
     public static class EventText
     {
-        /// <param name="owner">Whose party this is when it isn't yours (multiplayer watching); null for your own.</param>
+        /// <summary>Multiplayer: turns a player index from a rival-power event into a (coloured) name.</summary>
+        public static Func<int, string> PlayerName;
+
+        /// <param name="owner">Whose stream this is when it isn't yours (multiplayer watching); null for your own.</param>
         public static string Describe(GameEvent e, PlayerState state, string owner = null)
         {
-            string guest = e.GuestId >= 0 ? GuestVisuals.NameTag(e.Guest) : string.Empty;
-            string their = owner == null ? "your" : owner + "'s";
+            string viewer = e.GuestId >= 0 ? GuestVisuals.NameTag(e.Guest) : string.Empty;
+            bool mine = owner == null;
 
             switch (e.Type)
             {
                 case GameEventType.NightStarted:
-                    return GuestVisuals.Colored($"- Night {e.A} -", UIPalette.Purple) + (owner == null ? " You're live." : $" {owner} is live.");
+                    return GuestVisuals.Colored(Loc.Get("log.night", "night", e.A), UIPalette.Purple) + " " +
+                           (mine ? Loc.Get("log.live_you") : Loc.Get("log.live_other", "player", owner));
 
                 case GameEventType.GuestArrived:
-                    if (e.A < 0) return $"{guest} joins the party.";
-                    return $"{guest} comes in thanks to {Source(e.A, state)}.";
+                    if (e.A < 0) return Loc.Get("log.joined", "viewer", viewer);
+                    return Loc.Get("log.joined_via", "viewer", viewer, "source", Source(e.A, state));
 
                 case GameEventType.GuestRemoved:
                     switch ((LeaveReason)e.B)
                     {
-                        case LeaveReason.SentOutside: return $"{guest} is sent back outside.";
-                        case LeaveReason.Replaced: return $"{guest} is swapped out for the night.";
-                        case LeaveReason.Followed: return $"{guest} storms out after their partner.";
-                        case LeaveReason.Gone: return $"{guest} leaves {their} {Terms.Squad} for good.";
-                        default: return e.A >= 0 ? $"{guest} is removed from chat by {Source(e.A, state)}." : $"{guest} is removed from chat.";
+                        case LeaveReason.SentOutside: return Loc.Get("log.sent_back", "viewer", viewer);
+                        case LeaveReason.Replaced: return Loc.Get("log.replaced", "viewer", viewer);
+                        case LeaveReason.Followed: return Loc.Get("log.followed", "viewer", viewer);
+                        case LeaveReason.Gone: return mine ? Loc.Get("log.gone_you", "viewer", viewer) : Loc.Get("log.gone_other", "viewer", viewer, "player", owner);
+                        default: return e.A >= 0 ? Loc.Get("log.removed_by", "viewer", viewer, "source", Source(e.A, state)) : Loc.Get("log.removed", "viewer", viewer);
                     }
 
                 case GameEventType.GuestRejected:
-                    return $"{guest} is turned away for tonight.";
+                    return Loc.Get("log.denied", "viewer", viewer);
 
                 case GameEventType.GuestPeeked:
-                    return $"{Source(e.A, state)} spots {guest} waiting outside.";
+                    return Loc.Get("log.peeked", "source", Source(e.A, state), "viewer", viewer);
 
                 case GameEventType.GuestScored:
-                    if (e.C != 0) return null; // end-of-party breakdown is summarised separately
-                    return $"{guest} scores {Values(e.A, e.B)} right now.";
+                    if (e.C != 0) return null; // the end-of-stream breakdown is summarised separately
+                    return Loc.Get("log.scores_now", "viewer", viewer, "values", Values(e.A, e.B));
 
                 case GameEventType.AbilityUsed:
                 {
-                    var info = GuestCatalog.Get(e.Guest);
-                    var options = info.Options;
-                    string choice = options != null && e.C >= 0 && e.C < options.Length ? $" ({options[e.C]})" : string.Empty;
-                    return $"{guest} uses {GuestVisuals.Colored(info.AbilityName, UIPalette.Purple)}{choice}.";
+                    string action = GuestVisuals.Colored(GuestVisuals.ActionName(e.Guest), UIPalette.Purple);
+                    string choice = GuestVisuals.OptionLabel(e.Guest, e.C);
+                    return choice.Length > 0
+                        ? Loc.Get("log.action_used_choice", ("viewer", viewer), ("action", action), ("choice", choice))
+                        : Loc.Get("log.action_used", "viewer", viewer, "action", action);
                 }
 
                 case GameEventType.EveryoneOutside:
-                    return $"{guest} resets the stream: {e.A} guest{(e.A == 1 ? "" : "s")} sent outside!";
+                    return Loc.Get("log.everyone_out", "viewer", viewer, "count", e.A);
 
                 case GameEventType.PoliceRaid:
-                    return GuestVisuals.Colored($"{Terms.Raid} {Terms.Risk} hit {e.A}. The SWAT team ends the party. No payout tonight.", UIPalette.Red);
+                    return GuestVisuals.Colored(Loc.Get("log.swatted", "risk", e.A), UIPalette.Red);
 
                 case GameEventType.FireMarshal:
-                    return GuestVisuals.Colored($"{Terms.Overload} {e.A} spaces filled with a {Terms.SubCap} of {e.B}. Party shut down.", UIPalette.Orange);
+                    return GuestVisuals.Colored(Loc.Get("log.overload", "filled", e.A, "cap", e.B), UIPalette.Orange);
 
                 case GameEventType.PartyEnded:
-                    return $"Party wraps up: {Values(e.A, e.B)} with {Terms.DiamondCount(e.C)}.";
+                    return Loc.Get("log.stream_ended", "values", Values(e.A, e.B), "diamonds", Terms.DiamondCount(e.C));
 
                 case GameEventType.CashShortfall:
-                    return GuestVisuals.Colored($"Couldn't pay {e.A} $ in fees: -{e.B} {Terms.GiftedSubs}.", UIPalette.Red);
+                    return GuestVisuals.Colored(Loc.Get("log.shortfall", "cash", e.A, "penalty", e.B), UIPalette.Red);
 
                 case GameEventType.GuestBlamed:
-                    return $"{guest} gets a {Terms.Ban} and sits out the next party.";
+                    return Loc.Get("log.banned", "viewer", viewer);
 
                 case GameEventType.GuestPurchased:
-                    return $"{guest} joins {their} {Terms.Squad}.";
+                    return mine ? Loc.Get("log.purchased_you", "viewer", viewer) : Loc.Get("log.purchased_other", "viewer", viewer, "player", owner);
 
                 case GameEventType.HouseExpanded:
-                    return $"{Terms.SubCap} raised to {e.A}.";
+                    return Loc.Get("log.sub_cap_raised", "cap", e.A);
 
                 case GameEventType.Victory:
-                    return GuestVisuals.Colored($"{GameRules.DiamondsToWin} {Terms.Diamonds.ToUpperInvariant()} AT ONE PARTY! {(owner == null ? "You win!" : owner + " wins!")}", UIPalette.Gold);
+                    return GuestVisuals.Colored(mine
+                        ? Loc.Get("log.victory_you", "count", GameRules.DiamondsToWin)
+                        : Loc.Get("log.victory_other", "count", GameRules.DiamondsToWin, "player", owner), UIPalette.Gold);
 
                 case GameEventType.Defeat:
-                    return GuestVisuals.Colored("The season is over.", UIPalette.TextDim);
+                    return GuestVisuals.Colored(Loc.Get("log.defeat"), UIPalette.TextDim);
 
                 case GameEventType.GuestGained:
-                    return $"{guest} gains {Values(e.A, e.B)}.";
+                    return Loc.Get("log.gained", "viewer", viewer, "values", Values(e.A, e.B));
 
                 case GameEventType.PartyPotGained:
-                    return $"{guest} earns {Values(e.A, e.B)} for tonight's take.";
+                    return Loc.Get("log.pot", "viewer", viewer, "values", Values(e.A, e.B));
 
                 case GameEventType.TroubleAdded:
-                    return $"{guest} adds {GuestVisuals.RiskText(e.A)}.";
+                    return Loc.Get("log.risk_added", "viewer", viewer, "risk", GuestVisuals.RiskText(e.A));
 
                 case GameEventType.TroubleRemoved:
-                    return $"{guest} loses their {Terms.Risk}.";
+                    return Loc.Get("log.risk_removed", "viewer", viewer);
 
                 case GameEventType.ThisIsFine:
-                    return GuestVisuals.Colored("This is fine.", UIPalette.Orange) + $" {guest} calls off the SWAT team and clears {e.A} {Terms.Risk}.";
+                    return GuestVisuals.Colored(Loc.Get("log.this_is_fine", "viewer", viewer, "count", e.A), UIPalette.Orange);
 
                 case GameEventType.Infected:
-                    return $"{guest} catches the Skibidi infection!";
+                    return Loc.Get("log.infected", "viewer", viewer);
 
                 case GameEventType.Attached:
-                    return $"{guest} attaches herself to {Source(e.A, state)}.";
+                    return Loc.Get("log.attached", "viewer", viewer, "source", Source(e.A, state));
 
                 case GameEventType.StatsCopied:
-                    return $"{guest} copies {Source(e.A, state)}: {Values(e.B, e.C)}.";
+                    return Loc.Get("log.copied", ("viewer", viewer), ("source", Source(e.A, state)), ("values", Values(e.B, e.C)));
 
                 case GameEventType.TemporaryCopy:
-                    return $"Another {guest} joins the waiting line. Follow me!";
+                    return Loc.Get("log.temp_copy", "viewer", viewer);
 
                 case GameEventType.ShieldBlocked:
-                    return $"{guest}'s bad luck holds: it doesn't work, and he permanently gains +1 {Terms.Subs}.";
+                    return Loc.Get("log.shield", "viewer", viewer);
 
                 case GameEventType.PermanentChange:
-                    if (e.A == 0) return $"{guest} is evenly matched. Nothing changes.";
-                    return $"{guest} permanently {(e.A > 0 ? "gains" : "loses")} {System.Math.Abs(e.A)} {Terms.Subs} (now {(e.B >= 0 ? "+" : "")}{e.B}).";
+                    if (e.A == 0) return Loc.Get("log.even_match", "viewer", viewer);
+                    return Loc.Get(e.A > 0 ? "log.permanent_gain" : "log.permanent_loss",
+                        ("viewer", viewer), ("amount", Math.Abs(e.A)), ("total", (e.B >= 0 ? "+" : "") + e.B));
 
                 case GameEventType.Struck:
-                    return $"{guest} takes strike {e.A}!";
+                    return Loc.Get("log.struck", "viewer", viewer, "count", e.A);
 
                 case GameEventType.Transformed:
-                    return $"{guest} gets Rickrolled into {GuestVisuals.NameTag((GuestType)e.A)}!";
+                    return Loc.Get("log.rickrolled", "viewer", viewer, "other", GuestVisuals.NameTag((GuestType)e.A));
 
                 case GameEventType.PositionsSwapped:
-                    return $"{Source(e.A, state)} and {Source(e.B, state)} swap places.";
+                    return Loc.Get("log.swapped", "a", Source(e.A, state), "b", Source(e.B, state));
 
                 case GameEventType.PrintedExchanged:
-                    return $"{Source(e.A, state)} and {Source(e.B, state)} swap their printed {Terms.Subs}.";
+                    return Loc.Get("log.printed_swapped", "a", Source(e.A, state), "b", Source(e.B, state));
 
                 case GameEventType.MoodChosen:
-                    return $"{guest} is feeling {((PepeMood)e.A).ToString().ToLowerInvariant()}.";
+                    return Loc.Get("log.mood", "viewer", viewer, "mood", GuestVisuals.MoodName((PepeMood)e.A));
 
                 case GameEventType.Invested:
-                    return $"Invested so far tonight: {Values(e.A, e.B)}. Triple back if the party succeeds.";
+                    return Loc.Get("log.invested", "values", Values(e.A, e.B));
 
                 case GameEventType.InvestmentPaid:
-                    return GuestVisuals.Colored("Stonks!", UIPalette.Green) + $" The investment pays {Values(e.A, e.B)}.";
+                    return GuestVisuals.Colored(Loc.Get("log.investment_paid", "values", Values(e.A, e.B)), UIPalette.Green);
 
                 case GameEventType.MovedToBack:
-                    return $"{guest} gets the side eye and goes to the back of the line.";
+                    return Loc.Get("log.moved_back", "viewer", viewer);
 
                 case GameEventType.ImmunityGranted:
-                    return $"{guest} is now immune to actions tonight.";
+                    return Loc.Get("log.immune", "viewer", viewer);
 
                 case GameEventType.Converted:
-                    return e.A == 1 ? $"{guest} will turn their {Terms.Subs} into $ tonight." : $"{guest} will turn their $ into {Terms.Subs} tonight.";
+                    return Loc.Get(e.A == 1 ? "log.convert_cash" : "log.convert_subs", "viewer", viewer);
 
                 case GameEventType.Zeroed:
-                    return $"{guest} earns nothing tonight.";
+                    return Loc.Get("log.zeroed", "viewer", viewer);
 
                 case GameEventType.Doubled:
-                    return $"{guest}'s printed {(e.A == 1 ? Terms.Subs : "$")} are doubled tonight.";
+                    return Loc.Get(e.A == 1 ? "log.doubled_subs" : "log.doubled_cash", "viewer", viewer);
 
                 case GameEventType.AttractionRevealed:
-                    return $"{guest} spots {e.A} new attraction{(e.A == 1 ? "" : "s")} outside...";
+                    return Loc.Get("log.attraction", "viewer", viewer, "count", e.A);
 
                 case GameEventType.AttractionResolved:
-                    return e.A < 0 ? "Nobody gets replaced." : $"{Source(e.A, state)} is out, {Source(e.B, state)} is in.";
+                    return e.A < 0 ? Loc.Get("log.attraction_skip") : Loc.Get("log.attraction_swap", "a", Source(e.A, state), "b", Source(e.B, state));
 
                 case GameEventType.TemporaryCopiesLeft:
-                    return $"{e.A} temporary Knuckles cop{(e.A == 1 ? "y" : "ies")} wander off.";
+                    return Loc.Get("log.temp_left", "count", e.A);
+
+                // --- streamer powers ---
+                case GameEventType.PowerUsed:
+                {
+                    var streamer = (StreamerType)e.A;
+                    return GuestVisuals.Colored(Loc.Get("log.power_used", "streamer", StreamerVisuals.Name(streamer), "power", StreamerVisuals.PowerName(streamer)), UIPalette.Gold)
+                           + CostSuffix(e.B, e.C);
+                }
+                case GameEventType.HeatApplied:
+                    return GuestVisuals.Colored(Loc.Get("log.heat_applied", "risk", GuestVisuals.RiskText(e.A)), UIPalette.Red);
+                case GameEventType.ShieldApplied:
+                    return GuestVisuals.Colored(Loc.Get("log.shield_applied", "count", e.A), UIPalette.Teal);
+                case GameEventType.GiveawayActive:
+                    return GuestVisuals.Colored(Loc.Get("log.giveaway", "count", e.A), UIPalette.Gold);
+                case GameEventType.PalCaught:
+                    return Loc.Get("log.pal_caught", "viewer", viewer);
+                case GameEventType.SoftLanding:
+                    return GuestVisuals.Colored(Loc.Get("log.soft_landing", "value", e.A), UIPalette.Pink);
+                case GameEventType.StreakBonus:
+                    return GuestVisuals.Colored(Loc.Get("log.streak", "count", e.B, "bonus", e.A), UIPalette.Teal);
+                case GameEventType.FreeActionUsed:
+                    return Loc.Get("log.free_action", "viewer", viewer);
+                case GameEventType.DoubleMoveActive:
+                    return GuestVisuals.Colored(Loc.Get("log.double_move"), UIPalette.Purple);
+                case GameEventType.XRayActive:
+                    return GuestVisuals.Colored(Loc.Get("log.xray", "count", e.A), UIPalette.Teal);
+                case GameEventType.RaidReceived:
+                    return GuestVisuals.Colored(Loc.Get("log.raid_received", "raider", Player(e.B), "count", e.A), UIPalette.Red);
+                case GameEventType.TaxPaid:
+                    return GuestVisuals.Colored(Loc.Get("log.tax_paid", "taxer", Player(e.B), "amount", e.A), UIPalette.Red);
+                case GameEventType.TaxReceived:
+                    return GuestVisuals.Colored(Loc.Get("log.tax_received", "payer", Player(e.B), "amount", e.A), UIPalette.Green);
             }
             return null;
         }
 
+        static string CostSuffix(int giftedSubs, int cash)
+        {
+            if (giftedSubs <= 0 && cash <= 0) return string.Empty;
+            string cost = giftedSubs > 0 && cash > 0 ? GuestVisuals.GiftedSubsText(giftedSubs) + " + " + cash + " $"
+                : giftedSubs > 0 ? GuestVisuals.GiftedSubsText(giftedSubs) : cash + " $";
+            return "  " + GuestVisuals.Colored("(-" + cost + ")", UIPalette.TextDim);
+        }
+
+        static string Player(int index) => PlayerName != null ? PlayerName(index) : Loc.Get("common.rival");
+
         static string Source(int guestId, PlayerState state)
         {
             var g = state?.Find(guestId);
-            return g != null ? GuestVisuals.NameTag(g.Kind) : "someone";
+            return g != null ? GuestVisuals.NameTag(g.Kind) : Loc.Get("common.someone");
         }
 
         static string Values(int pop, int cash)

@@ -1,0 +1,269 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Content_pt-BR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pt-BR
+  m_SharedData: {fileID: 11400000, guid: fe08c675884f17142aef311dafa6f47f, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 370360320
+    m_Localized: Live de iniciante
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274880
+    m_Localized: "Aprenda o b\xE1sico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274881
+    m_Localized: "Sua primeira temporada ao vivo. Fi\xE9is de confian\xE7a, uns moderadores,
+      Doge e Cheems e tr\xEAs Diamantes amig\xE1veis."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274882
+    m_Localized: "Caf\xE9 dos Gatos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274883
+    m_Localized: "A internet roda \xE0 base de bichos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274884
+    m_Localized: "Todos os memes de bicho numa sala s\xF3. O Bongo Cat fortalece
+      o zool\xF3gico inteiro, o Nyan Cat encadeia chegadas, o Doge premia a variedade
+      e o Big Chungus precisa de um limite grande."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274885
+    m_Localized: Doomscroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274886
+    m_Localized: "Risco de pol\xEDcia \xE9 conte\xFAdo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274887
+    m_Localized: "Os Wojaks se alimentam de sofrimento. Doomer e Me Gusta amam risco
+      de pol\xEDcia, Gigachad e o Macho Sigma querem os holofotes s\xF3 pra eles,
+      e o Cachorro \"T\xE1 tudo bem\" deixa a pol\xEDcia na d\xFAvida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274888
+    m_Localized: Brainrot Italiano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274889
+    m_Localized: Tung tung tung tung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274890
+    m_Localized: "Caos em loop. Pancadas, embaralhadas, bombardeios e infec\xE7\xF5es.
+      Pop Cat e o Beb\xEA Dan\xE7ante transformam cada a\xE7\xE3o em Subs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274891
+    m_Localized: Canal de React
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274892
+    m_Localized: Controle a narrativa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274893
+    m_Localized: Manipuladores e articuladores. Reorganize a fila, troque, zere e
+      dobre status, converta Subs em Grana e vice-versa, e proteja suas estrelas
+      do azar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274894
+    m_Localized: "Mistura aleat\xF3ria"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274895
+    m_Localized: Um elenco novo toda vez
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274896
+    m_Localized: "Onze espectadores aleat\xF3rios e tr\xEAs Diamantes aleat\xF3rios.
+      Ven\xE7a cinco seguidas pra ganhar a Cereja."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274897
+    m_Localized: Lobby aberto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274898
+    m_Localized: "Todo mundo \xE9 bem-vindo (sandbox)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274899
+    m_Localized: "Todos os espectadores recrut\xE1veis est\xE3o na loja. \xD3timo
+      pra experimentar; n\xE3o conta pro progresso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274900
+    m_Localized: Setup no quarto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274901
+    m_Localized: "Fitas RGB, um ring light e uma cama que com certeza aparece no
+      v\xEDdeo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274902
+    m_Localized: Live IRL na praia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274903
+    m_Localized: "P\xF4r do sol, gaivotas e um celular num pau de selfie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274904
+    m_Localized: Cidade Neon IRL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274905
+    m_Localized: "Fazendo live de um terra\xE7o. O horizonte brilha. O chat tamb\xE9m."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274906
+    m_Localized: Casa de criadores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274907
+    m_Localized: Dez criadores, uma cozinha, zero privacidade.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274908
+    m_Localized: "Live amaldi\xE7oada das 3h"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274909
+    m_Localized: "N\xE3o leia o chat. N\xE3o olhe pra tr\xE1s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274910
+    m_Localized: Lounge do Metaverso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274911
+    m_Localized: "Todo mundo \xE9 um torso flutuante. Ningu\xE9m tem pernas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274912
+    m_Localized: "Palco de est\xFAdio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274913
+    m_Localized: "Tela verde, m\xE1quina de fuma\xE7a, clipes lend\xE1rios."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274914
+    m_Localized: Bunker do Debate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274915
+    m_Localized: "Tr\xEAs monitores, duas discuss\xF5es e um microfone muito alto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274916
+    m_Localized: "Est\xFAdio de Podcast"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274917
+    m_Localized: "Pain\xE9is de madeira, letreiro neon, carne seca de alce. Epis\xF3dio
+      quatrocentos e vinte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274918
+    m_Localized: Dojo do Pro Gamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274919
+    m_Localized: "LEDs azuis, uma geladeira de energ\xE9tico e uma bandana num pedestal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274920
+    m_Localized: Sala dos Gritos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274921
+    m_Localized: "Espuma ac\xFAstica, uma bola de futebol e alguma coisa pegando
+      fogo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274922
+    m_Localized: "Galp\xE3o dos Sorteios"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274923
+    m_Localized: "Paletes de dinheiro, um rel\xF3gio de contagem regressiva e muitos
+      participantes bem nervosos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274924
+    m_Localized: "A Mans\xE3o (edi\xE7\xE3o socialista)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274925
+    m_Localized: "Uma sala de dois milh\xF5es de d\xF3lares com uma almofada de foice
+      e martelo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274926
+    m_Localized: Academia dos Sentimentos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274927
+    m_Localized: "Halteres, um saco de pancada e uma caixa de len\xE7os. Pro saco
+      de pancada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274928
+    m_Localized: Arena do Tabuleiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274929
+    m_Localized: "Sessenta e quatro casas, duas cabe\xE7as e zero voz baixa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274930
+    m_Localized: Campina Pal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274931
+    m_Localized: Colinas pastel, criaturas fofinhas e uma quantidade suspeita de
+      esferas de captura.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274932
+    m_Localized: Vazio do Quadro-negro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274933
+    m_Localized: Uma tela escura infinita onde vetores giram suavemente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274934
+    m_Localized: "Arena do Clube dos Campe\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274935
+    m_Localized: "Fuma\xE7a, lasers, um negatosc\xF3pio com raios X e um trof\xE9u
+      enorme."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

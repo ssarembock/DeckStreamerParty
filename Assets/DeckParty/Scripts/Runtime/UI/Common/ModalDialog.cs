@@ -40,8 +40,12 @@ namespace DeckParty.UI
             if (s_Active == this) s_Active = null;
         }
 
+        /// <summary>Default button labels (replaced by the localized OK / Cancel).</summary>
+        public const string DefaultConfirm = "\u0001ok";
+        public const string DefaultCancel = "\u0001cancel";
+
         /// <summary>Shows a dialog. Pass a null <paramref name="cancel"/> label for a single-button message.</summary>
-        public static void Show(string title, string message, Action onConfirm, string confirm = "OK", string cancel = "Cancel", Action onCancel = null)
+        public static void Show(string title, string message, Action onConfirm, string confirm = DefaultConfirm, string cancel = DefaultCancel, Action onCancel = null)
         {
             if (s_Active == null)
             {
@@ -81,10 +85,10 @@ namespace DeckParty.UI
             m_OnChoice = null;
             titleLabel.text = title;
             messageLabel.text = message;
-            confirmLabel.text = confirm;
+            confirmLabel.text = confirm == DefaultConfirm ? Loc.Get("common.ok") : confirm;
             confirmButton.interactable = true;
             cancelButton.gameObject.SetActive(!string.IsNullOrEmpty(cancel));
-            if (!string.IsNullOrEmpty(cancel)) cancelLabel.text = cancel;
+            if (!string.IsNullOrEmpty(cancel)) cancelLabel.text = cancel == DefaultCancel ? Loc.Get("common.cancel") : cancel;
             Present();
         }
 
@@ -112,7 +116,7 @@ namespace DeckParty.UI
             }
 
             cancelButton.gameObject.SetActive(true);
-            cancelLabel.text = "Cancel";
+            cancelLabel.text = Loc.Get("common.cancel");
             cancelButton.transform.SetAsFirstSibling();
             Present();
         }

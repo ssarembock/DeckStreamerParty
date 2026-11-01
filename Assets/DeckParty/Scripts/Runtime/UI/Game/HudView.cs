@@ -39,16 +39,25 @@ namespace DeckParty.UI
             if (troubleTooltip != null) troubleTooltip.Provider = TroubleTooltip;
             if (starsTooltip != null) starsTooltip.Provider = DiamondsTooltip;
             ApplyCaptions();
+            Loc.Changed += OnLanguageChanged;
         }
 
-        /// <summary>Static captions are set here too, so scenes generated before a rename still show the new terms.</summary>
+        void OnDestroy() => Loc.Changed -= OnLanguageChanged;
+
+        void OnLanguageChanged()
+        {
+            ApplyCaptions();
+            if (m_State != null) Render(m_State);
+        }
+
+        /// <summary>Static captions and their tooltips (captions are upper-cased by the font style, not in code).</summary>
         void ApplyCaptions()
         {
-            SetCaption("Pop", Terms.GiftedSubs.ToUpperInvariant(), $"{Terms.GiftedSubs}: spend them to recruit new guests.");
-            SetCaption("Cash", Terms.Cash.ToUpperInvariant(), $"{Terms.Cash}: spend it to raise your {Terms.SubCap}.");
-            SetCaption("House", Terms.SubCap.ToUpperInvariant(), $"Spaces in use / your {Terms.SubCap}.");
-            var squadLabel = rolodexButton != null ? rolodexButton.GetComponentInChildren<TMP_Text>(true) : null;
-            if (squadLabel != null) squadLabel.text = $"{Terms.Squad} [R]";
+            SetCaption("Pop", Terms.GiftedSubs, Loc.Get("hud.tip.gifted_subs"));
+            SetCaption("Cash", Terms.Cash, Loc.Get("hud.tip.cash"));
+            SetCaption("House", Terms.SubCap, Loc.Get("hud.tip.sub_cap"));
+            var audienceLabel = rolodexButton != null ? rolodexButton.GetComponentInChildren<TMP_Text>(true) : null;
+            if (audienceLabel != null) audienceLabel.text = Loc.Get("hud.audience_button");
         }
 
         void SetCaption(string block, string caption, string tooltip)
@@ -63,9 +72,8 @@ namespace DeckParty.UI
         public void Render(PlayerState s)
         {
             m_State = s;
-            var scenario = ScenarioCatalog.Get(s.ScenarioId);
-            scenarioLabel.text = scenario.Name;
-            nightLabel.text = $"Night <b>{s.Night}</b><size=70%>/{s.TotalNights}</size>";
+            scenarioLabel.text = ContentText.ScenarioName(s.ScenarioId);
+            nightLabel.text = Loc.Get("hud.night", "night", s.Night, "total", s.TotalNights);
 
             popLabel.text = s.Pop.ToString();
             cashLabel.text = s.Cash.ToString();
@@ -75,7 +83,7 @@ namespace DeckParty.UI
             m_LastCash = s.Cash;
 
             bool party = s.Phase == GamePhase.Party;
-            capacityLabel.text = party ? $"{s.Occupancy}<size=70%>/{s.Capacity}</size>" : $"{s.Capacity}<size=70%> cap</size>";
+            capacityLabel.text = party ? $"{s.Occupancy}<size=70%>/{s.Capacity}</size>" : Loc.Get("hud.cap_only", "cap", s.Capacity);
 
             int trouble = party ? PartyEngine.NetTrouble(s) : 0;
             int diamonds = party ? PartyEngine.DiamondsPresent(s) : 0;
@@ -87,13 +95,12 @@ namespace DeckParty.UI
             }
             troubleLabel.enableAutoSizing = true;
             troubleLabel.fontSizeMin = 14;
-            troubleLabel.text = trouble >= GameRules.RaidTroubleThreshold - 1 && party
-                ? $"<color=#FF5A5A>{Terms.Risk} {trouble}/{GameRules.RaidTroubleThreshold}</color>"
-                : $"{Terms.Risk} {trouble}/{GameRules.RaidTroubleThreshold}";
+            string riskText = Loc.Get("hud.risk", "risk", trouble, "max", GameRules.RaidTroubleThreshold);
+            troubleLabel.text = trouble >= GameRules.RaidTroubleThreshold - 1 && party ? $"<color=#FF5A5A>{riskText}</color>" : riskText;
 
             for (int i = 0; i < starPips.Length; i++)
                 starPips[i].color = i < diamonds ? UIPalette.Gold : UIPalette.Border;
-            starsLabel.text = $"{Terms.Diamonds} {diamonds}/{GameRules.DiamondsToWin}";
+            starsLabel.text = Loc.Get("hud.diamonds", "count", diamonds, "max", GameRules.DiamondsToWin);
 
             if (m_LastTrouble >= 0 && trouble > m_LastTrouble) UITween.Punch(this, troubleLabel.transform, 0.3f);
             if (m_LastDiamonds >= 0 && diamonds > m_LastDiamonds) UITween.Punch(this, starsLabel.transform, 0.3f);
@@ -104,17 +111,19 @@ namespace DeckParty.UI
         string TroubleTooltip()
         {
             if (m_State == null || m_State.Phase != GamePhase.Party)
-                return $"<b>{Terms.Risk}</b>\n{GameRules.RaidTroubleThreshold} net {Terms.Risk} at a party and {Terms.RaidTeam} shows up.";
-            return $"<b>{Terms.Risk}</b>\nAdded by guests: {PartyEngine.TroubleTotal(m_State)}\nCancelled: -{PartyEngine.CancelCount(m_State)}\n" +
-                   $"Net: {PartyEngine.NetTrouble(m_State)} (SWAT team at {GameRules.RaidTroubleThreshold})";
+                return Loc.Get("hud.tip.risk_idle", "max", GameRules.RaidTroubleThreshold);
+            string text = Loc.Get("hud.tip.risk", ("added", PartyEngine.TroubleTotal(m_State) - m_State.PartyHeat), ("cancelled", PartyEngine.CancelCount(m_State) - m_State.PartyShield),
+                ("net", PartyEngine.NetTrouble(m_State)), ("max", GameRules.RaidTroubleThreshold));
+            if (m_State.PartyHeat > 0) text += "\n" + Loc.Get("hud.tip.risk_heat", "count", m_State.PartyHeat);
+            if (m_State.PartyShield > 0) text += "\n" + Loc.Get("hud.tip.risk_shield", "count", m_State.PartyShield);
+            return text;
         }
 
         string DiamondsTooltip()
         {
             if (m_State == null) return null;
-            return $"<b>{Terms.Diamonds}</b>\nAt this party: {(m_State.Phase == GamePhase.Party ? PartyEngine.DiamondsPresent(m_State) : 0)}\n" +
-                   $"In your {Terms.Squad}: {m_State.DiamondsOwned()}\nBest ever at one party: {m_State.BestDiamonds}\n" +
-                   $"Get {GameRules.DiamondsToWin} at one party to win!";
+            return Loc.Get("hud.tip.diamonds", ("now", m_State.Phase == GamePhase.Party ? PartyEngine.DiamondsPresent(m_State) : 0),
+                ("owned", m_State.DiamondsOwned()), ("best", m_State.BestDiamonds), ("goal", GameRules.DiamondsToWin));
         }
     }
 }

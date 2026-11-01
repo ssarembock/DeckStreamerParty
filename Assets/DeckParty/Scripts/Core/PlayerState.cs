@@ -152,6 +152,25 @@ namespace DeckParty.Core
         public int LastBlamedId = -1;
         public readonly List<int> RaidSuspects = new List<int>();
 
+        // Streamer (the character you play as) and their power
+        public StreamerType Streamer;
+        public int PowerUses;
+        /// <summary>Nights until the power can be used again (counts down when a stream starts).</summary>
+        public int PowerCooldown;
+        /// <summary>A next-stream power bought in the shop, waiting for the next stream to start.</summary>
+        public bool PowerArmed;
+        /// <summary>Swatting Risk rivals' raids will add to your next stream.</summary>
+        public int IncomingHeat;
+        /// <summary>Successful streams in a row (Manim Maketh Man's bonus).</summary>
+        public int Streak;
+
+        // Current stream: streamer power effects
+        public int PartyHeat;          // Swatting Risk from rivals' raids.
+        public int PartyShield;        // Swatting Risk ignored (Smoke Bomb).
+        public int PartyViewerBonus;   // Extra Subs per viewer (Giveaway).
+        public int PartyFreeActions;   // Viewer actions that refresh after use (Double Move).
+        public bool PartyXRay;         // The next viewers in the queue are visible (X-Ray Vision).
+
         // Stats
         public int BestDiamonds;
         public int TotalPopEarned;
@@ -235,6 +254,8 @@ namespace DeckParty.Core
                 if (!Rolodex[i].Temporary && Rolodex[i].BaseInfo.IsDiamond) count++;
             return count;
         }
+
+        public StreamerInfo StreamerInfo => StreamerCatalog.Get(Streamer);
 
         public PlayerState Clone() => StateSerializer.Deserialize(StateSerializer.Serialize(this));
     }

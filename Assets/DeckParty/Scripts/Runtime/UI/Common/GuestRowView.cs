@@ -2,12 +2,13 @@ using System;
 using DeckParty.Core;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
-    /// <summary>A wide guest row used by the shop (with Buy button) and the guest glossary (without).</summary>
-    public sealed class GuestRowView : MonoBehaviour
+    /// <summary>A wide viewer row used by the shop (with Buy button) and the viewer glossary (without).</summary>
+    public sealed class GuestRowView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] internal Image background;
         [SerializeField] internal Image portrait;
@@ -27,6 +28,10 @@ namespace DeckParty.UI
 
         public GuestType Type { get; private set; }
         public event Action<GuestType> BuyClicked;
+        /// <summary>The pointer entered (true) or left (false) this row. Used for multiplayer presence signals.</summary>
+        public event Action<GuestRowView, bool> Hovered;
+
+        public RectTransform PortraitRect => portrait != null ? (RectTransform)portrait.transform.parent : (RectTransform)transform;
 
         bool m_Hooked;
 
@@ -39,6 +44,9 @@ namespace DeckParty.UI
             if (buyButton != null) buyButton.onClick.AddListener(() => BuyClicked?.Invoke(Type));
         }
 
+        public void OnPointerEnter(PointerEventData eventData) => Hovered?.Invoke(this, true);
+        public void OnPointerExit(PointerEventData eventData) => Hovered?.Invoke(this, false);
+
         public void Bind(GuestType type, bool shopMode)
         {
             Hook();
@@ -46,19 +54,26 @@ namespace DeckParty.UI
             var info = GuestCatalog.Get(type);
 
             var sprite = GuestVisuals.Portrait(type);
-            portrait.enabled = sprite != null;
-            portrait.sprite = sprite;
-            placeholder.gameObject.SetActive(sprite == null);
+            var art = GameDatabase.Instance.GetGuestArt(type);
+            var character = portrait.GetComponent<CharacterPortrait>();
+            if (character == null)
+            {
+                character = portrait.gameObject.AddComponent<CharacterPortrait>();
+                character.image = portrait;
+            }
+            // Shop, Audience and glossary rest in Idle_Pre_Active for viewers with an action.
+            character.ShowViewer(type, info.HasAbility ? CharacterState.IdlePreActive : CharacterState.Idle);
+            placeholder.gameObject.SetActive(sprite == null && (art == null || !art.IsAnimated));
             placeholder.color = GuestVisuals.Tint(type);
             initialsLabel.text = GuestVisuals.Initials(type);
 
             nameLabel.text = GuestVisuals.DisplayName(type);
             if (tagsLabel != null) tagsLabel.text = GuestVisuals.Tags(info);
-            descriptionLabel.text = info.Description;
+            descriptionLabel.text = GuestVisuals.Description(type);
             statsLabel.text = GuestVisuals.BaseStats(info);
             costLabel.enableAutoSizing = true;
             costLabel.fontSizeMin = 14;
-            costLabel.text = info.Purchasable ? $"{info.Cost} {Terms.GiftedSubs}" : "Starter";
+            costLabel.text = info.Purchasable ? Loc.Get("fmt.gifted_subs", "value", info.Cost, "n", info.Cost) : Loc.Get("shop.starter");
             if (starTag != null) starTag.SetActive(info.IsDiamond);
 
             buyButton.gameObject.SetActive(shopMode);
@@ -66,12 +81,13 @@ namespace DeckParty.UI
             if (tooltip != null) tooltip.Provider = () => GuestVisuals.Tooltip(type);
         }
 
+        /// <param name="blocker">Why it can't be bought (already localized), or null.</param>
         public void SetShopState(int owned, int max, string blocker)
         {
-            ownedLabel.text = max == int.MaxValue ? $"Owned {owned}" : $"Owned {owned}/{max}";
+            ownedLabel.text = max == int.MaxValue ? Loc.Get("shop.owned", "count", owned) : Loc.Get("shop.owned_max", "count", owned, "max", max);
             bool canBuy = blocker == null;
             buyButton.interactable = canBuy;
-            buyLabel.text = canBuy ? "Buy" : (owned >= max ? "Maxed" : "Buy");
+            buyLabel.text = Loc.Get(!canBuy && owned >= max ? "shop.maxed" : "shop.buy");
             if (buyTooltip != null) buyTooltip.Text = blocker;
         }
     }

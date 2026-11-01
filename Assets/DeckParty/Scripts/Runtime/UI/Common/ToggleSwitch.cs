@@ -17,7 +17,13 @@ namespace DeckParty.UI
 
         public event Action<bool> Changed;
 
-        void Awake() => Hook();
+        void Awake()
+        {
+            Hook();
+            Loc.Changed += Refresh;
+        }
+
+        void OnDestroy() => Loc.Changed -= Refresh;
 
         void Hook()
         {
@@ -44,7 +50,7 @@ namespace DeckParty.UI
 
         void Refresh()
         {
-            if (stateLabel != null) stateLabel.text = m_Value ? "ON" : "OFF";
+            if (stateLabel != null) stateLabel.text = Loc.Get(m_Value ? "common.on" : "common.off");
             if (fill != null) fill.color = m_Value ? UIPalette.Green : UIPalette.Border;
         }
     }

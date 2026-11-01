@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,6 +17,18 @@ namespace DeckParty.UI
 
         readonly Queue<TMP_Text> m_Lines = new Queue<TMP_Text>();
         Coroutine m_Scroll;
+
+        /// <summary>Fires for every line added (the side panel's tabs count unread lines with it).</summary>
+        public event Action LineAdded;
+
+        // Lines added while hidden (an inactive tab) land at the bottom once it's shown again.
+        void OnEnable()
+        {
+            if (m_Lines.Count > 0) m_Scroll = StartCoroutine(ScrollToEnd());
+        }
+
+        // Disabling stops the coroutine.
+        void OnDisable() => m_Scroll = null;
 
         public void Add(string richText)
         {
@@ -41,6 +54,7 @@ namespace DeckParty.UI
                 if (m_Scroll != null) StopCoroutine(m_Scroll);
                 m_Scroll = StartCoroutine(ScrollToEnd());
             }
+            LineAdded?.Invoke();
         }
 
         public void Clear()

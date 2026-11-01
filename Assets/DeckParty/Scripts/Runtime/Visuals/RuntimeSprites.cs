@@ -36,6 +36,26 @@ namespace DeckParty
 
         public static Sprite Square => s_Square != null ? s_Square : (s_Square = Build("dp_square", 8, Vector4.zero, (x, y) => 1f));
 
+        static Sprite s_Vignette;
+
+        /// <summary>Transparent centre fading to opaque edges (the danger vignette).</summary>
+        public static Sprite Vignette => s_Vignette != null ? s_Vignette : (s_Vignette = Build("dp_vignette", 128, Vector4.zero, (x, y) =>
+        {
+            float edge = Mathf.Max(Mathf.Abs(x), Mathf.Abs(y));
+            float t = Mathf.Clamp01((edge - 0.55f) / 0.45f);
+            return t * t;
+        }));
+
+        static Sprite s_Arrow;
+
+        /// <summary>A soft horizontal bar with a pointed right end (targeting arrows and link lines).</summary>
+        public static Sprite Arrow => s_Arrow != null ? s_Arrow : (s_Arrow = Build("dp_arrow", 64, Vector4.zero, (x, y) =>
+        {
+            float body = Mathf.Clamp01((0.35f - Mathf.Abs(y)) * 12f);
+            float head = x > 0.4f ? Mathf.Clamp01(((1f - x) * 1.6f - Mathf.Abs(y)) * 12f) : body;
+            return Mathf.Max(body * (x <= 0.4f ? 1f : 0f), head);
+        }));
+
         static Sprite Build(string name, int size, Vector4 border, Func<float, float, float> alpha)
         {
             var tex = new Texture2D(size, size, TextureFormat.RGBA32, false)

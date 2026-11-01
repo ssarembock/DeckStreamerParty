@@ -22,9 +22,26 @@ namespace DeckParty.EditorTools
         public TMP_Text TextLine;
     }
 
+    /// <summary>
+    /// Card layout (200x290 design size). Change these to resize the portrait area, then run
+    /// Deck Party > Setup > Rebuild Scenes and UI Prefabs. The old prefabs are backed up first.
+    /// </summary>
+    internal static class CardLayout
+    {
+        public const float PortraitTop = 10f;
+        public const float PortraitHeight = 178f;
+        public const float PlaceholderSize = 140f;
+        public const float NameTop = 192f;
+        public const float StatsTop = 221f;
+        public const float BadgeRowTop = 152f;
+        public const float ShopRowHeight = 140f;
+        public const float ShopPortrait = 116f;
+    }
+
     /// <summary>Creates folders, data assets, the network session prefab and the UI prefabs.</summary>
     internal static class DeckPartyAssets
     {
+        public const string PrefabBackupFolder = "Assets/DeckParty/Prefabs/Backup";
         // ------------------------------------------------------------------ folders
 
         public static void EnsureFolders()
@@ -32,7 +49,7 @@ namespace DeckParty.EditorTools
             foreach (var path in new[]
                      {
                          DeckPartyPaths.Data, DeckPartyPaths.Venues, DeckPartyPaths.Resources, DeckPartyPaths.NetworkResources,
-                         DeckPartyPaths.Prefabs, DeckPartyPaths.Scenes, DeckPartyPaths.ArtCharacters, DeckPartyPaths.ArtBackgrounds,
+                         DeckPartyPaths.Prefabs, DeckPartyPaths.Scenes, DeckPartyPaths.ArtCharacters, DeckPartyPaths.ArtStreamers, DeckPartyPaths.ArtBackgrounds,
                          DeckPartyPaths.ArtUI, DeckPartyPaths.Audio + "/Music", DeckPartyPaths.Audio + "/SFX", PlaceholderArt.Folder,
                      })
             {
@@ -108,7 +125,24 @@ namespace DeckParty.EditorTools
             var db = LoadOrCreate<GameDatabase>(DeckPartyPaths.Database);
             int reset = db.EnsureAllGuests();
             if (reset > 0)
-                Debug.LogWarning($"[DeckParty] The guest roster changed: {reset} portrait/rename setting(s) belonged to removed characters and were cleared. Re-assign portraits with Deck Party > Art.");
+                Debug.LogWarning($"[DeckParty] The viewer roster changed: {reset} portrait/animation setting(s) belonged to removed characters and were cleared. Re-assign them with Deck Party > Select Game Database.");
+
+            // One stream setup per streamer, linked in the database (art you assign is kept).
+            db.EnsureAllStreamers();
+            foreach (var preset in VenuePresets.StreamerStages)
+            {
+                string path = $"{DeckPartyPaths.Venues}/Venue_{preset.Id}.asset";
+                var venue = AssetDatabase.LoadAssetAtPath<VenueDefinition>(path);
+                if (venue == null)
+                {
+                    venue = ScriptableObject.CreateInstance<VenueDefinition>();
+                    VenuePresets.Apply(venue, preset);
+                    AssetDatabase.CreateAsset(venue, path);
+                }
+                venues.Add(venue);
+            }
+            foreach (var art in db.streamers)
+                if (art.venue == null) art.venue = venues.Find(v => v.id == VenuePresets.StreamerStageId(art.type));
 
             // Built-in venues first (in preset order), then any venues you made yourself.
             var custom = db.venues.FindAll(v => v != null && !venues.Contains(v));
@@ -271,15 +305,21 @@ namespace DeckParty.EditorTools
 
         static void Ensure<T>(string path, System.Func<GameObject> build, bool overwrite) where T : Component
         {
-            if (!overwrite)
-            {
-                var existing = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-                if (existing != null && existing.GetComponent<T>() != null) return;
-            }
+            var existing = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (!overwrite && existing != null && existing.GetComponent<T>() != null) return;
+            if (existing != null) BackupPrefab(path);
 
             var go = build();
             PrefabUtility.SaveAsPrefabAsset(go, path);
             Object.DestroyImmediate(go);
+        }
+
+        /// <summary>Copies a prefab to Prefabs/Backup (dated) before it's regenerated, so hand edits can be recovered.</summary>
+        static void BackupPrefab(string path)
+        {
+            EnsureFolder(PrefabBackupFolder);
+            string target = $"{PrefabBackupFolder}/{Path.GetFileNameWithoutExtension(path)}_{System.DateTime.Now:yyyyMMdd_HHmmss}.prefab";
+            if (!AssetDatabase.CopyAsset(path, target)) Debug.LogWarning($"[DeckParty] Couldn't back up {path}.");
         }
 
         static GameObject BuildGuestCard()
@@ -300,15 +340,19 @@ namespace DeckParty.EditorTools
             var content = EditorUI.Rect(anim, "Content").Stretch();
 
             var portraitBg = EditorUI.Image(content, "PortraitBg", UIPalette.PanelDeep, EditorUI.Rounded);
-            portraitBg.rectTransform.TopBand(10, 148, 10, 10);
+            portraitBg.rectTransform.TopBand(CardLayout.PortraitTop, CardLayout.PortraitHeight, 10, 10);
             var placeholder = EditorUI.Image(portraitBg.transform, "Placeholder", UIPalette.Teal, EditorUI.Circle, SkinSlot.Circle);
-            placeholder.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(118, 118));
-            var initials = EditorUI.Text(placeholder.transform, "Initials", "Gu", 50, UIPalette.Night, TextAlignmentOptions.Center, true, true, false);
+            placeholder.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(CardLayout.PlaceholderSize, CardLayout.PlaceholderSize));
+            var initials = EditorUI.Text(placeholder.transform, "Initials", "Gu", 56, UIPalette.Night, TextAlignmentOptions.Center, true, true, false);
             initials.rectTransform.Stretch();
             var portrait = EditorUI.Image(portraitBg.transform, "Portrait", Color.white);
-            portrait.rectTransform.Stretch(4, 4, 4, 4);
+            portrait.rectTransform.Stretch(3, 3, 3, 3);
             portrait.preserveAspect = true;
             portrait.enabled = false;
+            // Animated characters (prefab / controller in the Game Database) replace the sprite; SSU status effects sit on top.
+            var characterPortrait = portrait.gameObject.AddComponent<CharacterPortrait>();
+            characterPortrait.image = portrait;
+            portrait.gameObject.AddComponent<CardFx>();
 
             var star = EditorUI.Icon(content, "StarBadge", EditorUI.Star, UIPalette.Gold, SkinSlot.IconStar, 46);
             star.rectTransform.Place(new Vector2(0, 1), new Vector2(4, -4), new Vector2(46, 46), new Vector2(0, 1));
@@ -318,29 +362,29 @@ namespace DeckParty.EditorTools
             calm.rectTransform.Place(new Vector2(1, 1), new Vector2(-6, -50), new Vector2(40, 40), new Vector2(1, 1));
 
             var bonus = EditorUI.Image(content, "BonusBadge", UIPalette.Pink, EditorUI.RoundedSmall, SkinSlot.Badge);
-            bonus.rectTransform.Place(new Vector2(1, 1), new Vector2(-8, -122), new Vector2(64, 34), new Vector2(1, 1));
+            bonus.rectTransform.Place(new Vector2(1, 1), new Vector2(-8, -CardLayout.BadgeRowTop), new Vector2(64, 34), new Vector2(1, 1));
             var bonusLabel = EditorUI.Text(bonus.transform, "Label", "+1", 21, UIPalette.Text, TextAlignmentOptions.Center, true, false, false);
             bonusLabel.rectTransform.Stretch();
 
             var count = EditorUI.Image(content, "CountBadge", UIPalette.Purple, EditorUI.RoundedSmall, SkinSlot.Badge);
-            count.rectTransform.Place(new Vector2(0, 1), new Vector2(8, -122), new Vector2(60, 34), new Vector2(0, 1));
+            count.rectTransform.Place(new Vector2(0, 1), new Vector2(8, -CardLayout.BadgeRowTop), new Vector2(60, 34), new Vector2(0, 1));
             var countLabel = EditorUI.Text(count.transform, "Label", "x2", 21, UIPalette.Text, TextAlignmentOptions.Center, true, false, false);
             countLabel.rectTransform.Stretch();
             count.gameObject.SetActive(false);
 
-            var nameLabel = EditorUI.Text(content, "Name", "Guest", 22, UIPalette.Text, TextAlignmentOptions.Center, true, false, false);
-            nameLabel.rectTransform.TopBand(160, 30, 6, 6);
+            var nameLabel = EditorUI.Text(content, "Name", "-", 22, UIPalette.Text, TextAlignmentOptions.Center, true, false, false);
+            nameLabel.rectTransform.TopBand(CardLayout.NameTop, 28, 6, 6);
             nameLabel.enableAutoSizing = true;
             nameLabel.fontSizeMin = 14;
             nameLabel.fontSizeMax = 22;
 
-            var stats = EditorUI.Text(content, "Stats", "+1 Subs", 19, UIPalette.Text, TextAlignmentOptions.Center, false, false, false);
-            stats.rectTransform.TopBand(190, 26, 4, 4);
+            var stats = EditorUI.Text(content, "Stats", "-", 19, UIPalette.Text, TextAlignmentOptions.Center, false, false, false);
+            stats.rectTransform.TopBand(CardLayout.StatsTop, 24, 4, 4);
             stats.enableAutoSizing = true;
             stats.fontSizeMin = 11;
             stats.fontSizeMax = 19;
 
-            var ability = EditorUI.Button(content, "Ability", "Action", ButtonStyle.Secondary, 18, out var abilityLabel);
+            var ability = EditorUI.Button(content, "Ability", "-", ButtonStyle.Secondary, 18, out var abilityLabel);
             ability.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0), new Vector2(0, 6), new Vector2(184, 38), new Vector2(0.5f, 0));
             abilityLabel.enableAutoSizing = true;
             abilityLabel.fontSizeMin = 12;
@@ -350,7 +394,7 @@ namespace DeckParty.EditorTools
             var empty = EditorUI.Rect(anim, "Empty").Stretch();
             var emptyFrame = EditorUI.Image(empty, "Frame", UIPalette.Border.WithAlpha(0.7f), EditorUI.Frame, SkinSlot.SlotEmpty);
             emptyFrame.rectTransform.Stretch(6, 6, 6, 6);
-            var emptyLabel = EditorUI.Text(empty, "Label", "Empty", 22, UIPalette.TextDim.WithAlpha(0.6f), TextAlignmentOptions.Center, false, false, false);
+            var emptyLabel = EditorUI.Text(empty, "Label", "-", 22, UIPalette.TextDim.WithAlpha(0.6f), TextAlignmentOptions.Center, false, false, false);
             emptyLabel.rectTransform.Stretch();
             empty.gameObject.SetActive(false);
 
@@ -393,47 +437,50 @@ namespace DeckParty.EditorTools
             view.abilityTooltip = abilityTooltip;
             view.dim = dim;
             view.tooltip = tooltip;
+            view.characterPortrait = characterPortrait;
             return root.gameObject;
         }
 
         static GameObject BuildGuestRow()
         {
             var bg = EditorUI.Image(null, "GuestRow", UIPalette.PanelAlt, EditorUI.Rounded, SkinSlot.PanelAlt, true);
-            bg.rectTransform.sizeDelta = new Vector2(900, 124);
-            EditorUI.Layout(bg, -1, 124);
+            bg.rectTransform.sizeDelta = new Vector2(900, CardLayout.ShopRowHeight);
+            EditorUI.Layout(bg, -1, CardLayout.ShopRowHeight);
 
             var portraitBg = EditorUI.Image(bg.transform, "PortraitBg", UIPalette.PanelDeep, EditorUI.Rounded);
-            portraitBg.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(14, 0), new Vector2(96, 96), new Vector2(0, 0.5f));
+            portraitBg.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(12, 0), new Vector2(CardLayout.ShopPortrait, CardLayout.ShopPortrait), new Vector2(0, 0.5f));
             var placeholder = EditorUI.Image(portraitBg.transform, "Placeholder", UIPalette.Teal, EditorUI.Circle, SkinSlot.Circle);
             placeholder.rectTransform.Stretch(8, 8, 8, 8);
             var initials = EditorUI.Text(placeholder.transform, "Initials", "Gu", 34, UIPalette.Night, TextAlignmentOptions.Center, true, true, false);
             initials.rectTransform.Stretch();
             var portrait = EditorUI.Image(portraitBg.transform, "Portrait", Color.white);
-            portrait.rectTransform.Stretch(4, 4, 4, 4);
+            portrait.rectTransform.Stretch(3, 3, 3, 3);
             portrait.preserveAspect = true;
             portrait.enabled = false;
+            portrait.gameObject.AddComponent<CharacterPortrait>().image = portrait;
 
             var star = EditorUI.Icon(bg.transform, "StarTag", EditorUI.Star, UIPalette.Gold, SkinSlot.IconStar, 34);
             star.rectTransform.Place(new Vector2(0, 1), new Vector2(6, -6), new Vector2(34, 34), new Vector2(0, 1));
 
-            var name = EditorUI.Text(bg.transform, "Name", "Guest", 26, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
-            name.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(126, -42), new Vector2(-250, -8));
-            var stats = EditorUI.Text(bg.transform, "Stats", "+1 Subs", 20, UIPalette.Text, TextAlignmentOptions.MidlineLeft, false, false, false);
-            stats.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(126, -68), new Vector2(-250, -42));
-            var description = EditorUI.Text(bg.transform, "Description", "Description", 19, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
-            description.rectTransform.Box(new Vector2(0, 0), new Vector2(1, 1), new Vector2(126, 6), new Vector2(-250, -70));
+            float textLeft = CardLayout.ShopPortrait + 28f;
+            var name = EditorUI.Text(bg.transform, "Name", "-", 26, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
+            name.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(textLeft, -42), new Vector2(-250, -8));
+            var stats = EditorUI.Text(bg.transform, "Stats", "-", 20, UIPalette.Text, TextAlignmentOptions.MidlineLeft, false, false, false);
+            stats.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(textLeft, -68), new Vector2(-250, -42));
+            var description = EditorUI.Text(bg.transform, "Description", "-", 19, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
+            description.rectTransform.Box(new Vector2(0, 0), new Vector2(1, 1), new Vector2(textLeft, 6), new Vector2(-250, -70));
             description.enableAutoSizing = true;
             description.fontSizeMin = 14;
             description.fontSizeMax = 19;
 
-            var cost = EditorUI.Text(bg.transform, "Cost", "5 Gifted Subs", 26, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
+            var cost = EditorUI.Text(bg.transform, "Cost", "-", 26, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
             cost.enableAutoSizing = true;
             cost.fontSizeMin = 14;
             cost.fontSizeMax = 26;
             cost.rectTransform.Place(new Vector2(1, 1), new Vector2(-122, -10), new Vector2(220, 34), new Vector2(0.5f, 1));
-            var owned = EditorUI.Text(bg.transform, "Owned", "Owned 0/4", 18, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
+            var owned = EditorUI.Text(bg.transform, "Owned", "-", 18, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
             owned.rectTransform.Place(new Vector2(1, 1), new Vector2(-122, -44), new Vector2(220, 24), new Vector2(0.5f, 1));
-            var buy = EditorUI.Button(bg.transform, "Buy", "Buy", ButtonStyle.Primary, 24, out var buyLabel);
+            var buy = EditorUI.Button(bg.transform, "Buy", "-", ButtonStyle.Primary, 24, out var buyLabel);
             buy.GetComponent<RectTransform>().Place(new Vector2(1, 0), new Vector2(-122, 10), new Vector2(200, 48), new Vector2(0.5f, 0));
             var buyTooltip = EditorUI.Tooltip(buy);
             var tooltip = EditorUI.Tooltip(bg);
@@ -467,9 +514,9 @@ namespace DeckParty.EditorTools
             outline.rectTransform.Stretch(-4, -4, -4, -4);
             outline.gameObject.SetActive(false);
 
-            var title = EditorUI.Text(bg.transform, "Title", "Scenario", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
+            var title = EditorUI.Text(bg.transform, "Title", "-", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
             title.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(24, -54), new Vector2(-70, -10));
-            var subtitle = EditorUI.Text(bg.transform, "Subtitle", "Tagline", 20, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
+            var subtitle = EditorUI.Text(bg.transform, "Subtitle", "-", 20, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
             subtitle.rectTransform.Box(new Vector2(0, 0), new Vector2(1, 1), new Vector2(24, 8), new Vector2(-70, -54));
             subtitle.overflowMode = TextOverflowModes.Ellipsis;
 
@@ -497,19 +544,31 @@ namespace DeckParty.EditorTools
         static GameObject BuildPlayerRow()
         {
             var bg = EditorUI.Image(null, "PlayerRow", UIPalette.PanelAlt, EditorUI.Rounded, SkinSlot.PanelAlt, true);
-            bg.rectTransform.sizeDelta = new Vector2(500, 84);
-            EditorUI.Layout(bg, -1, 84);
+            // Tall enough for the presence line (what the player is doing right now) under the status.
+            bg.rectTransform.sizeDelta = new Vector2(500, 100);
+            EditorUI.Layout(bg, -1, 100);
 
             var rank = EditorUI.Text(bg.transform, "Rank", "#1", 28, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
             rank.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(6, 0), new Vector2(56, 56), new Vector2(0, 0.5f));
             var swatch = EditorUI.Image(bg.transform, "Swatch", UIPalette.Pink, EditorUI.Circle, SkinSlot.Circle);
             swatch.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(66, 0), new Vector2(30, 30), new Vector2(0, 0.5f));
 
-            var name = EditorUI.Text(bg.transform, "Name", "Player", 26, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
-            name.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(108, -40), new Vector2(-92, -6));
+            // Streamer portrait next to the colour swatch (hidden for players without a streamer).
+            var streamerFrame = EditorUI.Rect(bg.transform, "Streamer").Place(new Vector2(0, 0.5f), new Vector2(104, 0), new Vector2(48, 48), new Vector2(0, 0.5f));
+            var streamerPlaceholder = EditorUI.Image(streamerFrame, "Placeholder", UIPalette.Purple, EditorUI.Circle);
+            streamerPlaceholder.rectTransform.Stretch();
+            var streamerInitials = EditorUI.Text(streamerPlaceholder.transform, "Initials", "?", 20, Color.white, TextAlignmentOptions.Center, true, true, false);
+            streamerInitials.rectTransform.Stretch();
+            var streamerArt = EditorUI.Image(streamerFrame, "Art", Color.white);
+            streamerArt.rectTransform.Stretch();
+            streamerArt.preserveAspect = true;
+            streamerFrame.gameObject.SetActive(false);
+
+            var name = EditorUI.Text(bg.transform, "Name", "-", 26, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
+            name.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(160, -40), new Vector2(-92, -6));
             name.overflowMode = TextOverflowModes.Ellipsis;
-            var status = EditorUI.Text(bg.transform, "Status", "Status", 16, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
-            status.rectTransform.Box(new Vector2(0, 0), new Vector2(1, 1), new Vector2(108, 4), new Vector2(-92, -40));
+            var status = EditorUI.Text(bg.transform, "Status", "-", 16, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
+            status.rectTransform.Box(new Vector2(0, 0), new Vector2(1, 1), new Vector2(160, 4), new Vector2(-92, -40));
             status.enableAutoSizing = true;
             status.fontSizeMin = 11;
             status.fontSizeMax = 16;
@@ -527,6 +586,9 @@ namespace DeckParty.EditorTools
             view.rankLabel = rank;
             view.readyIcon = ready.gameObject;
             view.hostIcon = host.gameObject;
+            view.streamerPortrait = streamerArt;
+            view.streamerPlaceholder = streamerPlaceholder;
+            view.streamerInitials = streamerInitials;
             return bg.gameObject;
         }
 

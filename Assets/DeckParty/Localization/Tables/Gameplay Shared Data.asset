@@ -1,0 +1,1224 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Gameplay Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Gameplay
+  m_TableCollectionNameGuidString: d723f8508718bec46b4afcfbe53d2ca7
+  m_Entries:
+  - m_Id: 408109056
+    m_Key: stamp.SocialMediaManager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412224
+    m_Key: stamp.Moderator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412225
+    m_Key: stamp.Hodl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412226
+    m_Key: stamp.Trollface
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412227
+    m_Key: stamp.Pepe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412228
+    m_Key: stamp.GrumpyCat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412229
+    m_Key: stamp.StonksGuy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412230
+    m_Key: stamp.ChadVsVirgin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412231
+    m_Key: stamp.KeyboardCat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412232
+    m_Key: stamp.DisasterGirl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412233
+    m_Key: stamp.SuccessKid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412234
+    m_Key: stamp.TungTungTungSahur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412235
+    m_Key: stamp.TralaleroTralala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412236
+    m_Key: stamp.BombardiroCrocodilo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412237
+    m_Key: stamp.BallerinaCappuccina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412238
+    m_Key: stamp.Karen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412239
+    m_Key: stamp.Rickroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412240
+    m_Key: stamp.Drakeposting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412241
+    m_Key: stamp.ConfusedMathLady
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412242
+    m_Key: stamp.SideEyeChloe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412243
+    m_Key: stamp.RollSafe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412244
+    m_Key: stamp.PlatformAdmin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412245
+    m_Key: stamp.Algorithm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412246
+    m_Key: stamp.SkibidiToilet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412247
+    m_Key: stamp.NpcWojak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412248
+    m_Key: stamp.OverlyAttachedGirlfriend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412249
+    m_Key: stamp.UgandanKnuckles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412250
+    m_Key: stamp.DistractedBoyfriend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412251
+    m_Key: stamp.ThisIsFineDog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412252
+    m_Key: fakechat.ambient.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412253
+    m_Key: fakechat.ambient.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412254
+    m_Key: fakechat.ambient.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412255
+    m_Key: fakechat.ambient.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412256
+    m_Key: fakechat.ambient.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412257
+    m_Key: fakechat.ambient.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412258
+    m_Key: fakechat.ambient.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412259
+    m_Key: fakechat.ambient.7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412260
+    m_Key: fakechat.join.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412261
+    m_Key: fakechat.join.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412262
+    m_Key: fakechat.join.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412263
+    m_Key: fakechat.join.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412264
+    m_Key: fakechat.join.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412265
+    m_Key: fakechat.swatted.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412266
+    m_Key: fakechat.swatted.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412267
+    m_Key: fakechat.swatted.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412268
+    m_Key: fakechat.swatted.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412269
+    m_Key: fakechat.swatted.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412270
+    m_Key: fakechat.swatted.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412271
+    m_Key: fakechat.crashed.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412272
+    m_Key: fakechat.crashed.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412273
+    m_Key: fakechat.crashed.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412274
+    m_Key: fakechat.crashed.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412275
+    m_Key: fakechat.ended.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412276
+    m_Key: fakechat.ended.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412277
+    m_Key: fakechat.ended.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412278
+    m_Key: fakechat.ended.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412279
+    m_Key: fakechat.victory.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412280
+    m_Key: fakechat.victory.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412281
+    m_Key: fakechat.victory.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412282
+    m_Key: fakechat.victory.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412283
+    m_Key: fakechat.victory.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412284
+    m_Key: fakechat.defeat.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412285
+    m_Key: fakechat.defeat.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412286
+    m_Key: fakechat.defeat.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412287
+    m_Key: fakechat.action.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412288
+    m_Key: fakechat.action.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412289
+    m_Key: fakechat.action.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412290
+    m_Key: fakechat.action.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412291
+    m_Key: fakechat.action.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412292
+    m_Key: fakechat.kick.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412293
+    m_Key: fakechat.kick.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412294
+    m_Key: fakechat.kick.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412295
+    m_Key: fakechat.risk.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412296
+    m_Key: fakechat.risk.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412297
+    m_Key: fakechat.risk.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412298
+    m_Key: fakechat.risk.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412299
+    m_Key: fakechat.buy.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412300
+    m_Key: fakechat.buy.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412301
+    m_Key: fakechat.buy.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412302
+    m_Key: fakechat.power.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412303
+    m_Key: fakechat.power.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412304
+    m_Key: fakechat.power.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412305
+    m_Key: term.subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412306
+    m_Key: term.gifted_subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412307
+    m_Key: term.cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412308
+    m_Key: term.risk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412309
+    m_Key: term.raid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412310
+    m_Key: term.ban
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412311
+    m_Key: term.diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412312
+    m_Key: term.diamonds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412313
+    m_Key: term.audience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412314
+    m_Key: term.sub_cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412315
+    m_Key: term.raise_sub_cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412316
+    m_Key: term.overload
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412317
+    m_Key: term.character_set
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412318
+    m_Key: term.diamond_count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412319
+    m_Key: fmt.subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412320
+    m_Key: fmt.risk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412321
+    m_Key: fmt.gifted_subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412322
+    m_Key: common.someone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412323
+    m_Key: common.rival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412324
+    m_Key: common.you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412325
+    m_Key: family.Community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412326
+    m_Key: family.Animal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412327
+    m_Key: family.Wojak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412328
+    m_Key: family.RageComic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412329
+    m_Key: family.Reaction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412330
+    m_Key: family.Brainrot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412331
+    m_Key: family.Diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412332
+    m_Key: actiontype.Recruit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412333
+    m_Key: actiontype.Remove
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412334
+    m_Key: actiontype.Modify
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412335
+    m_Key: actiontype.Shuffle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412336
+    m_Key: actiontype.Scout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412337
+    m_Key: actiontype.Economy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412338
+    m_Key: card.copies_previous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412339
+    m_Key: card.grows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412340
+    m_Key: card.action_viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412341
+    m_Key: card.no_base
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412342
+    m_Key: card.tag.diamond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412343
+    m_Key: card.tag.risk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412344
+    m_Key: card.tag.cancels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412345
+    m_Key: card.tag.brings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412346
+    m_Key: card.tag.size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412347
+    m_Key: card.tag.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412348
+    m_Key: card.family
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412349
+    m_Key: card.action_type
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412350
+    m_Key: card.rickrolled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412351
+    m_Key: card.permanent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412352
+    m_Key: card.strikes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412353
+    m_Key: card.trolled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412354
+    m_Key: card.temporary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412355
+    m_Key: card.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412356
+    m_Key: card.banned_tonight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412357
+    m_Key: card.used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412358
+    m_Key: status.infected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412359
+    m_Key: status.immune
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412360
+    m_Key: status.zeroed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412361
+    m_Key: status.double_subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412362
+    m_Key: status.double_cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412363
+    m_Key: status.subs_to_cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412364
+    m_Key: status.cash_to_subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412365
+    m_Key: status.printed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412366
+    m_Key: status.copied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412367
+    m_Key: status.risk_cleared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412368
+    m_Key: status.bad_luck_used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412369
+    m_Key: status.protected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412370
+    m_Key: status.attached_to
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412371
+    m_Key: status.attach_pending
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412372
+    m_Key: status.mood.Happy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412373
+    m_Key: status.mood.Sad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412374
+    m_Key: status.mood.Angry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412375
+    m_Key: status.mood.None
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412376
+    m_Key: log.night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412377
+    m_Key: log.live_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412378
+    m_Key: log.live_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412379
+    m_Key: log.joined
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412380
+    m_Key: log.joined_via
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412381
+    m_Key: log.sent_back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412382
+    m_Key: log.replaced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412383
+    m_Key: log.followed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412384
+    m_Key: log.gone_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412385
+    m_Key: log.gone_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412386
+    m_Key: log.removed_by
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412387
+    m_Key: log.removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412388
+    m_Key: log.denied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412389
+    m_Key: log.peeked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412390
+    m_Key: log.scores_now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412391
+    m_Key: log.action_used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412392
+    m_Key: log.action_used_choice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412393
+    m_Key: log.everyone_out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412394
+    m_Key: log.swatted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412395
+    m_Key: log.overload
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412396
+    m_Key: log.stream_ended
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412397
+    m_Key: log.shortfall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412398
+    m_Key: log.banned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 479412399
+    m_Key: log.purchased_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606528
+    m_Key: log.purchased_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606529
+    m_Key: log.sub_cap_raised
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606530
+    m_Key: log.victory_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606531
+    m_Key: log.victory_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606532
+    m_Key: log.defeat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606533
+    m_Key: log.gained
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606534
+    m_Key: log.pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606535
+    m_Key: log.risk_added
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606536
+    m_Key: log.risk_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606537
+    m_Key: log.this_is_fine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606538
+    m_Key: log.infected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606539
+    m_Key: log.attached
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606540
+    m_Key: log.copied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606541
+    m_Key: log.temp_copy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606542
+    m_Key: log.shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606543
+    m_Key: log.even_match
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606544
+    m_Key: log.permanent_gain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606545
+    m_Key: log.permanent_loss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606546
+    m_Key: log.struck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606547
+    m_Key: log.rickrolled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606548
+    m_Key: log.swapped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606549
+    m_Key: log.printed_swapped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606550
+    m_Key: log.mood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606551
+    m_Key: log.invested
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606552
+    m_Key: log.investment_paid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606553
+    m_Key: log.moved_back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606554
+    m_Key: log.immune
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606555
+    m_Key: log.convert_cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606556
+    m_Key: log.convert_subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606557
+    m_Key: log.zeroed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606558
+    m_Key: log.doubled_subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606559
+    m_Key: log.doubled_cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606560
+    m_Key: log.attraction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606561
+    m_Key: log.attraction_skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606562
+    m_Key: log.attraction_swap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606563
+    m_Key: log.temp_left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606564
+    m_Key: log.power_used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606565
+    m_Key: log.heat_applied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606566
+    m_Key: log.shield_applied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606567
+    m_Key: log.giveaway
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606568
+    m_Key: log.pal_caught
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606569
+    m_Key: log.soft_landing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606570
+    m_Key: log.streak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606571
+    m_Key: log.free_action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606572
+    m_Key: log.double_move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606573
+    m_Key: log.xray
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606574
+    m_Key: log.raid_received
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606575
+    m_Key: log.tax_paid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606576
+    m_Key: log.tax_received
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606577
+    m_Key: err.no_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606578
+    m_Key: err.season_over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606579
+    m_Key: err.unknown_command
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606580
+    m_Key: err.stream_over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606581
+    m_Key: err.decide_waiting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606582
+    m_Key: err.decide_attraction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606583
+    m_Key: err.sub_cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606584
+    m_Key: err.queue_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606585
+    m_Key: err.not_in_chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606586
+    m_Key: err.unknown_viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606587
+    m_Key: err.no_action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606588
+    m_Key: err.action_used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606589
+    m_Key: err.needs_two_queued
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606590
+    m_Key: err.nothing_to_invest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606591
+    m_Key: err.nothing_to_reroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606592
+    m_Key: err.would_swat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606593
+    m_Key: err.no_target
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606594
+    m_Key: err.needs_targets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606595
+    m_Key: err.pick_option
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606596
+    m_Key: err.needs_gifted_subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606597
+    m_Key: err.needs_cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606598
+    m_Key: err.no_reroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606599
+    m_Key: err.pick_reject
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606600
+    m_Key: err.pick_next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606601
+    m_Key: err.pick_exact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606602
+    m_Key: err.pick_range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606603
+    m_Key: err.invalid_target
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606604
+    m_Key: err.recruit_between
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606605
+    m_Key: err.not_in_set
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606606
+    m_Key: err.cant_buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606607
+    m_Key: err.max_copies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606608
+    m_Key: err.upgrade_between
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606609
+    m_Key: err.sub_cap_maxed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606610
+    m_Key: err.nobody_waiting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606611
+    m_Key: err.cap_deny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606612
+    m_Key: err.nothing_to_decide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606613
+    m_Key: err.pick_revealed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606614
+    m_Key: err.cant_replace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606615
+    m_Key: err.nobody_to_ban
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606616
+    m_Key: err.not_swatted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606617
+    m_Key: err.finish_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606618
+    m_Key: err.final_night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606619
+    m_Key: err.power_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606620
+    m_Key: err.power_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606621
+    m_Key: err.power_shop_only
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606622
+    m_Key: err.power_needs_rival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606623
+    m_Key: err.power_cooldown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606624
+    m_Key: err.power_armed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606625
+    m_Key: err.power_no_next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606626
+    m_Key: err.power_no_pals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606627
+    m_Key: err.power_no_rival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606628
+    m_Key: err.power_rival_broke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606629
+    m_Key: venue.auto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606630
+    m_Key: venue.evolving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606631
+    m_Key: rules.goal.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606632
+    m_Key: rules.goal.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606633
+    m_Key: rules.night.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606634
+    m_Key: rules.night.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606635
+    m_Key: rules.risk.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606636
+    m_Key: rules.risk.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606637
+    m_Key: rules.subcap.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606638
+    m_Key: rules.subcap.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606639
+    m_Key: rules.money.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606640
+    m_Key: rules.money.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606641
+    m_Key: rules.actions.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606642
+    m_Key: rules.actions.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606643
+    m_Key: rules.streamers.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606644
+    m_Key: rules.streamers.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606645
+    m_Key: rules.controls.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606646
+    m_Key: rules.controls.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606647
+    m_Key: rules.multiplayer.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606648
+    m_Key: rules.multiplayer.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 483606649
+    m_Key: rules.quick
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2741550451676152062
+  references:
+    version: 2
+    RefIds:
+    - rid: 2741550451676152062
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1793475807923

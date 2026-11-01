@@ -1,0 +1,681 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Characters_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 1fa38d83ab85fd1488504705cf0d4c4c, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 433274880
+    m_Localized: Loyal Fan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383744
+    m_Localized: Always shows up. Never misses a stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383745
+    m_Localized: Whale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383746
+    m_Localized: Funds your first Sub Cap upgrades.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383747
+    m_Localized: Bot Farm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383748
+    m_Localized: Cheap views, risky attention. Starting viewer only.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383749
+    m_Localized: Social Media Manager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383750
+    m_Localized: 'Action: choose any viewer in the queue to join chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383751
+    m_Localized: Shoutout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383752
+    m_Localized: Moderator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383753
+    m_Localized: 'Action: kick one viewer from chat for the rest of the stream (even
+      the Moderator).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383754
+    m_Localized: Remove From Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383755
+    m_Localized: AutoMod
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383756
+    m_Localized: Cancels 1 Swatting Risk while in chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383757
+    m_Localized: Collaborator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383758
+    m_Localized: Big numbers, bigger risk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383759
+    m_Localized: HODL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383760
+    m_Localized: 'Action: send everyone back to the queue so they can join again.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383761
+    m_Localized: Reset the Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383762
+    m_Localized: VIPS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383763
+    m_Localized: Cancels 1 Swatting Risk while in chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383764
+    m_Localized: Parasocialite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383765
+    m_Localized: Brings one random viewer along.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383766
+    m_Localized: Doge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383767
+    m_Localized: 'Such Synergy: +1 Subs for each different character family in chat
+      (max +5). Other Doges don''t count.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383768
+    m_Localized: Trollface
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383769
+    m_Localized: 'Action: send another viewer back to the queue (they can join again
+      tonight). Gains +2 Subs for every time that viewer has been trolled, including
+      this one.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383770
+    m_Localized: U Mad?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383771
+    m_Localized: Pepe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383772
+    m_Localized: 'Action: choose Happy (+3 Subs), Sad (+3 $) or Angry (+6 Subs and
+      +1 Swatting Risk) until the stream ends.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383773
+    m_Localized: Mood Swing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383774
+    m_Localized: Gigachad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383775
+    m_Localized: 'Alpha Energy: +3 Subs if he''s the only viewer with 5+ printed
+      Subs. Each extra Gigachad gives every Gigachad -2 Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383776
+    m_Localized: This Is Fine Dog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383777
+    m_Localized: 'Denial: the first time Swatting Risk would reach 3, the SWAT team
+      is called off and all Swatting Risk is cleared. This copy then leaves your
+      Audience for good.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383778
+    m_Localized: Wojak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383779
+    m_Localized: 'Shared Suffering: +2 Subs for every other viewer who is suffering
+      (Swatting Risk, negative stats, infected, zeroed or penalised), max +6.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578048
+    m_Localized: Grumpy Cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578049
+    m_Localized: 'Action: look at the next 3 viewers in the queue. Deny one for the
+      night and choose who joins next.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578050
+    m_Localized: Absolutely Not
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578051
+    m_Localized: Nyan Cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578052
+    m_Localized: 'Rainbow Trail: every viewer without Swatting Risk who joins after
+      her in an unbroken row earns +1, +2, +3... Subs (max +6 each). A Swatting Risk
+      arrival breaks the chain.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578053
+    m_Localized: Stonks Guy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578054
+    m_Localized: 'Action: invest 2 Gifted Subs or 1 $. If the stream succeeds you
+      get triple back; if it fails, it''s gone.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578055
+    m_Localized: Market Manipulation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578056
+    m_Localized: Cheems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578057
+    m_Localized: 'Don''t Bonk Me: with a Doge in chat, cancels 1 Swatting Risk and
+      both Doge and Cheems get +2 Subs. Without one, -1 Subs per Swatting Risk.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578058
+    m_Localized: Chad vs Virgin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578059
+    m_Localized: 'Action: compare printed Subs with another viewer. If theirs is
+      lower, they permanently give Chad 1. If higher, Chad permanently loses 1.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578060
+    m_Localized: Know Your Place
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578061
+    m_Localized: Doomer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578062
+    m_Localized: 'Doomscroll: +2 Subs per Swatting Risk in chat. At exactly 2 Swatting
+      Risk, also +2 $.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578063
+    m_Localized: NPC Wojak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578064
+    m_Localized: 'Current Thing: on joining, copies the printed Subs and $ of the
+      viewer who joined just before him. Not their action, Swatting Risk or Diamond.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578065
+    m_Localized: Forever Alone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578066
+    m_Localized: 'Table for One: +6 Subs if he''s the only viewer when the stream
+      ends. Otherwise +1 Subs per empty space.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578067
+    m_Localized: Me Gusta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578068
+    m_Localized: 'I Like That: gains +2 Subs whenever another viewer adds Swatting
+      Risk, and +1 $ for each Swatting Risk removed.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578069
+    m_Localized: Keyboard Cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578070
+    m_Localized: 'Action: kick another viewer. Gains +2 Subs if they had Swatting
+      Risk, otherwise +1 $. Their exit effects still happen.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578071
+    m_Localized: Play Him Off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578072
+    m_Localized: Bongo Cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578073
+    m_Localized: 'The Beat Goes On: every third viewer to join after Bongo Cat gives
+      every Animal viewer in chat +2 Subs for the night.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578074
+    m_Localized: Pop Cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578075
+    m_Localized: 'Pop Pop Pop: gains +1 Subs whenever any viewer uses an action.
+      Every third action also earns +1 $.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578076
+    m_Localized: Big Chungus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578077
+    m_Localized: 'Absolute Chungus: takes up 3 spaces. +1 Subs for each point of
+      Sub Cap above 10 (max +5).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578078
+    m_Localized: Ugandan Knuckles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578079
+    m_Localized: 'Follow Me: on joining, adds a temporary copy of himself to tonight''s
+      queue (copies don''t make more copies). +1 Subs per other Knuckles in chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578080
+    m_Localized: Overly Attached Girlfriend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578081
+    m_Localized: 'Forever Yours: on joining, attaches to the best other viewer. Their
+      Subs are doubled and they can''t be kicked while she''s here. If they''re forced
+      out, she leaves too.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578082
+    m_Localized: Disaster Girl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578083
+    m_Localized: 'Action: another viewer gets +1 Swatting Risk and +3 Subs, and she
+      gets +2 Subs. Can''t be used if it would bring the SWAT team.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578084
+    m_Localized: Accidental Fire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578085
+    m_Localized: Hide the Pain Harold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578086
+    m_Localized: 'Smile Through It: viewers in chat can''t drop below their printed
+      Subs. Gains +1 Subs for each drop he prevents (max +5).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578087
+    m_Localized: Success Kid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578088
+    m_Localized: 'Action: reroll the last viewer who joined at random (they go back
+      to the queue and someone new joins), or peek at the next viewer and decide
+      whether to approve them.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578089
+    m_Localized: Against All Odds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578090
+    m_Localized: Bad Luck Brian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578091
+    m_Localized: 'What Could Go Wrong?: once per stream, the first attempt to kick
+      him or clear his Swatting Risk fails, and he permanently gains +1 Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578092
+    m_Localized: Tung Tung Tung Sahur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578093
+    m_Localized: 'Action: strike another viewer. 1st strike: +2 Subs. 2nd: clears
+      their Swatting Risk. 3rd: kicks them and Tung Tung permanently gains +1 Subs.
+      Strikes are remembered between streams.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578094
+    m_Localized: Three Strikes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578095
+    m_Localized: Tralalero Tralala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578096
+    m_Localized: 'Action: swap two viewers'' places in the joining order. Position-based
+      bonuses update; join effects don''t replay.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578097
+    m_Localized: Tralalero Shuffle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578098
+    m_Localized: Bombardiro Crocodilo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578099
+    m_Localized: 'Action: kick up to 3 other viewers and replace each one with a
+      random viewer from the queue. Join and exit effects happen normally.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578100
+    m_Localized: Bombardment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578101
+    m_Localized: Ballerina Cappuccina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578102
+    m_Localized: 'Action: two viewers swap their printed Subs for the rest of the
+      night.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578103
+    m_Localized: Pirouette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578104
+    m_Localized: Skibidi Toilet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578105
+    m_Localized: 'Skibidi Invasion: on joining, infects another viewer (+2 Subs,
+      +1 Swatting Risk). Every time another viewer joins, the infection spreads to
+      one more. Ends after the stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578106
+    m_Localized: Sigma Male
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578107
+    m_Localized: 'The Grindset: +1 Subs per empty space (max +8). -1 Subs for every
+      other Sigma Male in chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578108
+    m_Localized: Karen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578109
+    m_Localized: 'Action: kick another viewer for the night and earn half their cost
+      as Subs (max 8).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578110
+    m_Localized: I Demand a Refund
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578111
+    m_Localized: Rickroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578112
+    m_Localized: 'Action: another non-Diamond viewer temporarily becomes a random
+      different character from the queue, with its stats and action. Back to normal
+      after the stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578113
+    m_Localized: Surprise!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578114
+    m_Localized: Distracted Boyfriend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578115
+    m_Localized: 'New Attraction: on joining, reveals 3 viewers in the queue. You
+      may swap one viewer in chat for one of them; the replaced viewer sits out tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578116
+    m_Localized: Drakeposting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578117
+    m_Localized: 'Action: pick two viewers. The first earns nothing tonight; the
+      second doubles their printed Subs or $.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578118
+    m_Localized: I Prefer This
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578119
+    m_Localized: Confused Math Lady
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578120
+    m_Localized: 'Action: for tonight, convert a viewer''s Subs into $ (2 Subs =
+      1 $) or their $ into Subs (1 $ = 2 Subs).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578121
+    m_Localized: The Numbers Don't Add Up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578122
+    m_Localized: Side Eye Chloe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578123
+    m_Localized: 'While she''s here you can see the next viewer in the queue. Action:
+      send that viewer to the back of the queue.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578124
+    m_Localized: Side Eye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578125
+    m_Localized: Roll Safe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578126
+    m_Localized: 'Action: a viewer becomes immune to further action effects tonight,
+      good or bad. What they already have stays.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578127
+    m_Localized: Can't Lose If You Don't Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578128
+    m_Localized: Crying Cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578129
+    m_Localized: 'Everyone Leaves Me: gains +2 Subs and +1 $ whenever another viewer
+      leaves or is kicked.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578130
+    m_Localized: Dancing Baby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578131
+    m_Localized: 'Looping Animation: whenever two actions in a row are the same type,
+      gains +3 Subs (max +9 per stream).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578132
+    m_Localized: Drama Channel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578133
+    m_Localized: DIAMOND. Brings the drama.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578134
+    m_Localized: Diva Streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578135
+    m_Localized: DIAMOND. Expensive taste.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578136
+    m_Localized: Raid Leader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578137
+    m_Localized: DIAMOND. Brings one random viewer along.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578138
+    m_Localized: Mystery VTuber
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578139
+    m_Localized: DIAMOND. No fees, no face, no fuss.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578140
+    m_Localized: Wholesome Icon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578141
+    m_Localized: DIAMOND. Cancels 1 Swatting Risk while in chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578142
+    m_Localized: Platform Admin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578143
+    m_Localized: 'DIAMOND. Action: kick one viewer for the rest of the stream (even
+      itself).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578144
+    m_Localized: Ban Wave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578145
+    m_Localized: Mega Influencer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578146
+    m_Localized: DIAMOND. Pure reach.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578147
+    m_Localized: Brand Sponsor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578148
+    m_Localized: DIAMOND. Pays to be seen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578149
+    m_Localized: The Algorithm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578150
+    m_Localized: 'DIAMOND. Action: summon any viewer from the queue.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578151
+    m_Localized: Trending
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578152
+    m_Localized: Happy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578153
+    m_Localized: Sad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578154
+    m_Localized: Angry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578155
+    m_Localized: Invest 2 Gifted Subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578156
+    m_Localized: Invest 1 $
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578157
+    m_Localized: Reroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578158
+    m_Localized: Peek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578159
+    m_Localized: Double Subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578160
+    m_Localized: Double $
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578161
+    m_Localized: Subs to $
+    m_Metadata:
+      m_Items: []
+  - m_Id: 508772352
+    m_Localized: $ to Subs
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

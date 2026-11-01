@@ -6,9 +6,9 @@ using UnityEditor;
 namespace DeckParty.EditorTools
 {
     /// <summary>
-    /// Makes adding art a drag-and-drop job. Images dropped into Assets/DeckParty/Art/Characters, Backgrounds or UI
-    /// are imported as sprites (first import only; your own Inspector changes are kept afterwards), then the
-    /// auto-assigner hooks them up to guests and venues by file name.
+    /// Makes adding art a drag-and-drop job. Images dropped into Assets/DeckParty/Art/Characters, Streamers,
+    /// Backgrounds or UI are imported as sprites (first import only; your own Inspector changes are kept afterwards),
+    /// then the auto-assigner hooks them up to guests, streamers and venues by file name.
     /// </summary>
     public sealed class DeckPartyArtImporter : AssetPostprocessor
     {
@@ -37,6 +37,7 @@ namespace DeckParty.EditorTools
         {
             path = path.Replace('\\', '/');
             bool inFolder = path.StartsWith(DeckPartyPaths.ArtCharacters + "/", StringComparison.OrdinalIgnoreCase) ||
+                            path.StartsWith(DeckPartyPaths.ArtStreamers + "/", StringComparison.OrdinalIgnoreCase) ||
                             path.StartsWith(DeckPartyPaths.ArtBackgrounds + "/", StringComparison.OrdinalIgnoreCase) ||
                             path.StartsWith(DeckPartyPaths.ArtUI + "/", StringComparison.OrdinalIgnoreCase);
             return inFolder && s_ImageExtensions.Contains(Path.GetExtension(path).ToLowerInvariant());

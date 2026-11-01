@@ -1,0 +1,312 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Multiplayer_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 2518f7e7796258c4bb3a2e0ccbbaf139, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 370360320
+    m_Localized: eyeing {viewer}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469184
+    m_Localized: considering {viewer}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469185
+    m_Localized: choosing {viewer}'s target
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469186
+    m_Localized: deciding {viewer}'s move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469187
+    m_Localized: picking from the queue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469188
+    m_Localized: browsing the shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469189
+    m_Localized: choosing a rival to hit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469190
+    m_Localized: about to add a viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469191
+    m_Localized: about to end the stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469192
+    m_Localized: deciding on the waiting viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469193
+    m_Localized: thinking about a Sub Cap upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469194
+    m_Localized: about to end their turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469195
+    m_Localized: eyeing their streamer power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469196
+    m_Localized: checking their Audience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469197
+    m_Localized: 'Your turn: {seconds}s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469198
+    m_Localized: '{player}: {seconds}s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469199
+    m_Localized: Take Turns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469200
+    m_Localized: Synchronized Nights
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469201
+    m_Localized: Race (own pace)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469202
+    m_Localized: take turns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469203
+    m_Localized: synchronized nights
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469204
+    m_Localized: race
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469205
+    m_Localized: Off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469206
+    m_Localized: Hard ({seconds}s)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469207
+    m_Localized: Medium ({seconds}s)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469208
+    m_Localized: Easy ({seconds}s)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469209
+    m_Localized: Custom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469210
+    m_Localized: '{seconds} seconds per turn'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469211
+    m_Localized: Already connecting...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469212
+    m_Localized: You're already in a game. Leave it first.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469213
+    m_Localized: Still closing the last session. Try again in a moment.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469214
+    m_Localized: Couldn't host on port {0}. Is another copy of the game already hosting?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469215
+    m_Localized: '''{0}'' isn''t a valid IP address.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469216
+    m_Localized: Couldn't start the network client.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469217
+    m_Localized: Couldn't start hosting through Relay.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469218
+    m_Localized: Online play needs the Multiplayer Services package (com.unity.services.multiplayer).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469219
+    m_Localized: Enter the join code your host shared.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469220
+    m_Localized: 'Online play isn''t set up yet: link this project to Unity Cloud
+      and enable Relay (see INSTRUCTIONS.md), or use Direct IP.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469221
+    m_Localized: No game found with that code. Check it and try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469222
+    m_Localized: Couldn't reach Unity's servers. Check your internet connection.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469223
+    m_Localized: 'Couldn''t create an online game: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469224
+    m_Localized: 'Couldn''t join: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469225
+    m_Localized: The host closed the lobby.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469226
+    m_Localized: 'Version mismatch: everyone needs the same build of Audience Capture.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469227
+    m_Localized: That game has already started.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469228
+    m_Localized: That game is full ({0} players).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469229
+    m_Localized: The network connection failed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469230
+    m_Localized: Lost connection to the host.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469231
+    m_Localized: Couldn't connect. Check the code or address and try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469232
+    m_Localized: Only the host can start.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469233
+    m_Localized: The match already started.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469234
+    m_Localized: Waiting for {0} {0:plural:player|players} to ready up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469235
+    m_Localized: 'The season begins: {0}, {1} nights. First {2}-Diamond stream wins!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469236
+    m_Localized: Your turn is ending.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469237
+    m_Localized: It's {0}'s turn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469238
+    m_Localized: Wait for your turn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469239
+    m_Localized: You're marked ready. Cancel ready to keep shopping.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469240
+    m_Localized: '{0} joined the game.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469241
+    m_Localized: '{0} left the game.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469242
+    m_Localized: '{0} got swatted!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469243
+    m_Localized: '{0} blew past their Sub Cap and the stream crashed!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469244
+    m_Localized: '{0} had {1} Diamonds in one stream. One more and they win!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469245
+    m_Localized: '{0} signed {1}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469246
+    m_Localized: '{0}''s {1} used {2}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469247
+    m_Localized: '{0} raided {1}! Their next stream starts with +1 Swatting Risk.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469248
+    m_Localized: '{0} collected a Wealth Tax from {1}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469249
+    m_Localized: '{0} pulled off a {1}-Diamond stream and wins!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469250
+    m_Localized: '{0} pulled off a {1}-Diamond stream! Finishing night {2}...'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469251
+    m_Localized: Night {0} begins!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469252
+    m_Localized: '{0} ran out of time! Their stream ends and the turn passes.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469253
+    m_Localized: '{0} wins the season with a {1}-Diamond stream on night {2}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 437469254
+    m_Localized: Nobody hit {1} Diamonds. {0} takes it with a best of {2}.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

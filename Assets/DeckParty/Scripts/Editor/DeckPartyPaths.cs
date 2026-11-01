@@ -11,6 +11,7 @@ namespace DeckParty.EditorTools
         public const string Scenes = Root + "/Scenes";
         public const string Art = Root + "/Art";
         public const string ArtCharacters = Art + "/Characters";
+        public const string ArtStreamers = Art + "/Streamers";
         public const string ArtBackgrounds = Art + "/Backgrounds";
         public const string ArtUI = Art + "/UI";
         public const string Audio = Root + "/Audio";

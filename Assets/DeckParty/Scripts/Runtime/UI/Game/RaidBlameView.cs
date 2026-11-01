@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace DeckParty.UI
 {
-    /// <summary>After the SWAT team shows up: pick which guest gets a Temporary Ban (they sit out the next party).</summary>
+    /// <summary>After the SWAT team shows up: pick which viewer gets a Temporary Ban (they sit out the next stream).</summary>
     public sealed class RaidBlameView : MonoBehaviour
     {
         [SerializeField] internal TMP_Text titleLabel;
@@ -25,8 +25,8 @@ namespace DeckParty.UI
         {
             titleLabel.text = Terms.Raid;
             messageLabel.text = watching != null
-                ? $"{Terms.Risk} got too high and the SWAT team ended the party. Nobody gets paid tonight.\n{watching}"
-                : $"{Terms.Risk} got too high and the SWAT team ended the party. Nobody gets paid tonight.\nChoose who gets a {Terms.Ban}. They'll sit out the next party.";
+                ? Loc.Get("ban.message") + "\n" + watching
+                : Loc.Get("ban.message") + "\n" + Loc.Get("ban.choose");
             GuestCardView.FitGrid(grid, CardScale);
 
             for (int i = 0; i < s.RaidSuspects.Count; i++)

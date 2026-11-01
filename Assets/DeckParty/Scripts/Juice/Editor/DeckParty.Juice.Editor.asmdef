@@ -1,0 +1,22 @@
+{
+    "name": "DeckParty.Juice.Editor",
+    "rootNamespace": "DeckParty.Juice.EditorTools",
+    "references": [
+        "DeckParty.Core",
+        "DeckParty.Runtime",
+        "DeckParty.Editor",
+        "DeckParty.Juice",
+        "MoreMountains.Tools"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

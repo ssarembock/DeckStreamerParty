@@ -32,17 +32,22 @@ namespace DeckParty.UI
 
         public void Init(MainMenuController menu) => m_Menu = menu;
 
+        /// <summary>The streamer picked on the select screen before this one.</summary>
+        public byte Streamer { get; set; }
+
         void Awake()
         {
             startButton.onClick.AddListener(StartSeason);
-            backButton.onClick.AddListener(() => m_Menu.ShowMain());
+            backButton.onClick.AddListener(() => m_Menu.ShowStreamerSelect(StreamerSelectMode.SinglePlayer));
             venueSelector.Changed += OnVenueChanged;
+            Loc.Changed += () =>
+            {
+                if (IsVisible) OnShow();
+            };
         }
 
         protected override void OnShow()
         {
-            SetText("Subtitle", "Pick a character set and a venue, then start your season.");
-            SetText("Scenarios/Header", "Character Sets");
             BuildScenarioList();
 
             m_VenueChoices = GameDatabase.Instance.VenueChoices();
@@ -53,20 +58,13 @@ namespace DeckParty.UI
                 labels.Add(m_VenueChoices[i].label);
                 if (m_VenueChoices[i].id == AppSettings.VenueId) venueIndex = i;
             }
-            venueSelector.SetTitle("Venue");
+            venueSelector.SetTitle(Loc.Get("pause.setup"));
             venueSelector.SetOptions(labels, venueIndex);
 
             Select(m_Selected >= 0 ? m_Selected : AppSettings.LastScenario);
         }
 
         protected override void OnHide() => m_Menu.PreviewVenue(null);
-
-        /// <summary>Static captions are set here too, so scenes generated before a rename show the new terms.</summary>
-        void SetText(string path, string text)
-        {
-            var child = transform.Find(path);
-            if (child != null && child.TryGetComponent<TMP_Text>(out var label)) label.text = text;
-        }
 
         void BuildScenarioList()
         {
@@ -84,7 +82,7 @@ namespace DeckParty.UI
             for (int i = 0; i < m_Items.Count; i++)
             {
                 var scenario = ScenarioCatalog.All[i];
-                string extra = scenario.IsRandom ? $"streak {ProgressStore.RandomStreak}" : null;
+                string extra = scenario.IsRandom ? Loc.Get("single.streak_short", "count", ProgressStore.RandomStreak) : null;
                 m_Items[i].Bind(scenario, ProgressStore.IsCleared(scenario.Id), extra);
             }
         }
@@ -95,27 +93,29 @@ namespace DeckParty.UI
             m_Selected = scenario.Id;
             foreach (var item in m_Items) item.SetSelected(item.ScenarioId == m_Selected);
 
-            titleLabel.text = scenario.Name;
-            taglineLabel.text = scenario.Tagline;
-            descriptionLabel.text = scenario.Description;
+            titleLabel.text = ContentText.ScenarioName(scenario.Id);
+            taglineLabel.text = ContentText.ScenarioTagline(scenario.Id);
+            descriptionLabel.text = ContentText.ScenarioDescription(scenario.Id);
 
             var progress = new StringBuilder();
-            if (scenario.IsPreset) progress.Append(ProgressStore.IsCleared(scenario.Id) ? "<color=#6BE38B>Cleared!</color>" : "<color=#B9AED6>Not cleared yet</color>");
+            if (scenario.IsPreset) progress.Append(ProgressStore.IsCleared(scenario.Id) ? $"<color=#6BE38B>{Loc.Get("single.cleared")}</color>" : $"<color=#B9AED6>{Loc.Get("single.not_cleared")}</color>");
             else if (scenario.IsRandom)
-                progress.Append($"Win streak: <color=#3DDBD9>{ProgressStore.RandomStreak}</color>/{ProgressStore.CherryStreak} for the Cherry (best {ProgressStore.BestRandomStreak})");
-            else progress.Append("<color=#B9AED6>Sandbox - progress isn't recorded.</color>");
-            progress.Append($"    {GameRules.DefaultNights} nights");
+                progress.Append(Loc.Get("single.streak", ("streak", $"<color=#3DDBD9>{ProgressStore.RandomStreak}</color>"), ("goal", ProgressStore.CherryStreak), ("best", ProgressStore.BestRandomStreak)));
+            else progress.Append($"<color=#B9AED6>{Loc.Get("single.sandbox")}</color>");
+            progress.Append("    ").Append(Loc.Get("single.nights", "count", GameRules.DefaultNights));
+            if (Streamer != (byte)StreamerType.None && Streamer != StreamerCatalog.RandomPick)
+                progress.Append("    ").Append(Loc.Get("audience.streamer", "streamer", StreamerVisuals.NameTag((StreamerType)Streamer), "power", StreamerVisuals.PowerName((StreamerType)Streamer)));
             progressLabel.text = progress.ToString();
 
             foreach (var row in m_Rows) row.gameObject.SetActive(false);
             if (scenario.IsRandom)
             {
-                shopHeader.text = $"Character set: <color=#FFC94A>11 random guests + 3 random {Terms.Diamonds}</color>, rolled when the season starts.";
+                shopHeader.text = Loc.Get("single.random_set");
             }
             else
             {
                 var shop = ScenarioCatalog.BuildShop(scenario.Id, 1);
-                shopHeader.text = $"Character set ({shop.Count} guests). Hover a guest for details.";
+                shopHeader.text = Loc.Get("single.set_header", "count", shop.Count);
                 for (int i = 0; i < shop.Count; i++)
                 {
                     if (i >= m_Rows.Count) m_Rows.Add(Instantiate(guestRowPrefab, shopList));
@@ -139,7 +139,7 @@ namespace DeckParty.UI
         {
             if (m_VenueChoices == null) return;
             var choice = m_VenueChoices[Mathf.Clamp(venueSelector.Index, 0, m_VenueChoices.Count - 1)].id;
-            var preview = PartyEngine.CreateGame(m_Selected, 1);
+            var preview = PartyEngine.CreateGame(m_Selected, 1, GameRules.DefaultNights, PreviewStreamer);
             var venue = GameDatabase.Instance.ResolveVenue(choice, preview);
             if (venue == null) return;
 
@@ -147,10 +147,12 @@ namespace DeckParty.UI
             venuePreview.sprite = sprite;
             venuePreview.color = sprite != null ? Color.white : venue.skyBottom;
 
-            string note = choice == AppSettings.VenueAuto ? " (character set default)" : choice == AppSettings.VenueEvolving ? " (upgrades as your house grows)" : string.Empty;
-            venueDescription.text = $"<b>{venue.displayName}</b>{note}\n<color=#B9AED6>{venue.description}</color>";
+            string note = choice == AppSettings.VenueEvolving ? " " + Loc.Get("single.evolving_note") : string.Empty;
+            venueDescription.text = $"<b>{GameDatabase.VenueName(venue)}</b>{note}\n<color=#B9AED6>{ContentText.VenueDescription(venue)}</color>";
             m_Menu.PreviewVenue(venue);
         }
+
+        StreamerType PreviewStreamer => Streamer == StreamerCatalog.RandomPick || !StreamerCatalog.IsValid((StreamerType)Streamer) ? StreamerType.None : (StreamerType)Streamer;
 
         void StartSeason()
         {
@@ -159,13 +161,14 @@ namespace DeckParty.UI
                 ScenarioId = m_Selected,
                 Seed = (uint)Random.Range(1, int.MaxValue),
                 VenueChoice = AppSettings.VenueId,
+                Streamer = Streamer,
             };
             AppSettings.LastScenario = m_Selected;
 
             if (SaveSystem.HasSave && SaveSystem.Describe() != null)
             {
-                ModalDialog.Show("Start a new season?", "You have a season in progress. Starting a new one will replace that save.",
-                    () => SceneFlow.StartSinglePlayer(launch), "Start New", "Cancel");
+                ModalDialog.Show(Loc.Get("single.replace_title"), Loc.Get("single.replace_body"),
+                    () => SceneFlow.StartSinglePlayer(launch), Loc.Get("single.start_new"));
                 return;
             }
             SceneFlow.StartSinglePlayer(launch);

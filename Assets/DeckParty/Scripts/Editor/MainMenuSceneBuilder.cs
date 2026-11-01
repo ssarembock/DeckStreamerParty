@@ -6,7 +6,10 @@ using UnityEngine.UI;
 
 namespace DeckParty.EditorTools
 {
-    /// <summary>Builds Assets/DeckParty/Scenes/MainMenu.unity: title, single player, multiplayer, lobby, settings, how to play.</summary>
+    /// <summary>
+    /// Builds Assets/DeckParty/Scenes/MainMenu.unity: title, Select Your Streamer, single player, multiplayer, lobby,
+    /// settings, how to play. Static captions are localization keys (see EditorLoc).
+    /// </summary>
     internal static class MainMenuSceneBuilder
     {
         public static void Build()
@@ -31,6 +34,7 @@ namespace DeckParty.EditorTools
             var lobby = BuildLobbyScreen(screens, prefabs);
             var settings = BuildSettingsScreen(screens);
             var howTo = BuildHowToPlayScreen(screens, prefabs);
+            var select = StreamerSelectBuilder.Build(screens);
 
             var overlay = SceneCommon.CreateCanvas("OverlayCanvas", 100);
             SceneCommon.CreateOverlays(overlay);
@@ -43,6 +47,7 @@ namespace DeckParty.EditorTools
             controller.lobbyScreen = lobby;
             controller.settingsScreen = settings;
             controller.howToPlayScreen = howTo;
+            controller.streamerSelectScreen = select;
             controller.background = background;
 
             EditorSceneManager.SaveScene(scene, DeckPartyPaths.MainMenuScene);
@@ -55,39 +60,40 @@ namespace DeckParty.EditorTools
             var screen = SceneCommon.Screen(parent, "MainScreen");
 
             var titleGroup = EditorUI.Rect(screen, "TitleGroup").Place(new Vector2(0.5f, 1), new Vector2(0, -70), new Vector2(1500, 210), new Vector2(0.5f, 1));
-            var shadow = EditorUI.Text(titleGroup, "TitleShadow", "DECK PARTY", 156, UIPalette.Pink.WithAlpha(0.85f), TextAlignmentOptions.Center, true, true, false);
+            var shadow = EditorUI.Text(titleGroup, "TitleShadow", "menu.title", 156, UIPalette.Pink.WithAlpha(0.85f), TextAlignmentOptions.Center, true, true, false);
             shadow.rectTransform.Stretch(0, 8, -8, -8);
-            var title = EditorUI.Text(titleGroup, "Title", "DECK PARTY", 156, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
+            var title = EditorUI.Text(titleGroup, "Title", "menu.title", 156, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
             title.rectTransform.Stretch();
+            title.gameObject.AddComponent<TitleShine>();
 
             var logo = EditorUI.Image(screen, "Logo", Color.white, null, SkinSlot.Logo);
             logo.rectTransform.Place(new Vector2(0.5f, 1), new Vector2(0, -40), new Vector2(900, 280), new Vector2(0.5f, 1));
             logo.preserveAspect = true;
             logo.gameObject.SetActive(false);
 
-            var tagline = EditorUI.Text(screen, "Tagline", "Go live, build your Squad and get 4 Diamonds to one party.", 32, UIPalette.Text, TextAlignmentOptions.Center, false, false, false);
+            var tagline = EditorUI.Text(screen, "Tagline", "-", 32, UIPalette.Text, TextAlignmentOptions.Center, false, false, false);
             tagline.rectTransform.Place(new Vector2(0.5f, 1), new Vector2(0, -292), new Vector2(1500, 50), new Vector2(0.5f, 1));
 
             var column = EditorUI.Panel(screen, "Buttons", UIPalette.Panel.WithAlpha(0.75f));
             column.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(0, -120), new Vector2(640, 600));
             EditorUI.VLayout(column, 16, EditorUI.Pad(36, 32), TextAnchor.UpperCenter, true, true, true, false);
 
-            var continueButton = EditorUI.Button(column.transform, "Continue", "Continue", ButtonStyle.Gold, 30, out var continueLabel);
+            var continueButton = EditorUI.Button(column.transform, "Continue", "-", ButtonStyle.Gold, 30, out var continueLabel);
             EditorUI.Layout(continueButton, -1, 86);
-            var singleButton = EditorUI.Button(column.transform, "SinglePlayer", "Single Player", ButtonStyle.Primary, 34);
+            var singleButton = EditorUI.Button(column.transform, "SinglePlayer", "menu.single_player", ButtonStyle.Primary, 34);
             EditorUI.Layout(singleButton, -1, 86);
-            var multiButton = EditorUI.Button(column.transform, "Multiplayer", "Multiplayer", ButtonStyle.Secondary, 34);
+            var multiButton = EditorUI.Button(column.transform, "Multiplayer", "menu.multiplayer", ButtonStyle.Secondary, 34);
             EditorUI.Layout(multiButton, -1, 86);
-            var howButton = EditorUI.Button(column.transform, "HowToPlay", "How to Play", ButtonStyle.Normal, 30);
+            var howButton = EditorUI.Button(column.transform, "HowToPlay", "menu.how_to_play", ButtonStyle.Normal, 30);
             EditorUI.Layout(howButton, -1, 72);
-            var settingsButton = EditorUI.Button(column.transform, "Settings", "Settings", ButtonStyle.Normal, 30);
+            var settingsButton = EditorUI.Button(column.transform, "Settings", "menu.settings", ButtonStyle.Normal, 30);
             EditorUI.Layout(settingsButton, -1, 72);
-            var quitButton = EditorUI.Button(column.transform, "Quit", "Quit", ButtonStyle.Ghost, 28);
+            var quitButton = EditorUI.Button(column.transform, "Quit", "menu.quit", ButtonStyle.Ghost, 28);
             EditorUI.Layout(quitButton, -1, 66);
 
             var progress = EditorUI.Text(screen, "Progress", string.Empty, 24, UIPalette.Text, TextAlignmentOptions.Center, false, false, false);
             progress.rectTransform.Place(new Vector2(0.5f, 0), new Vector2(0, 40), new Vector2(1700, 40), new Vector2(0.5f, 0));
-            var version = EditorUI.Text(screen, "Version", "v1.0", 20, UIPalette.TextDim, TextAlignmentOptions.BottomRight, false, false, false);
+            var version = EditorUI.Text(screen, "Version", "v", 20, UIPalette.TextDim, TextAlignmentOptions.BottomRight, false, false, false);
             version.rectTransform.Place(new Vector2(1, 0), new Vector2(-24, 16), new Vector2(300, 30), new Vector2(1, 0));
 
             var view = screen.gameObject.AddComponent<MainMenuScreen>();
@@ -112,33 +118,33 @@ namespace DeckParty.EditorTools
         static SinglePlayerScreen BuildSinglePlayerScreen(Transform parent, UIPrefabs prefabs)
         {
             var screen = SceneCommon.Screen(parent, "SinglePlayerScreen");
-            SceneCommon.Header(screen, "Single Player", "Pick a character set and a venue, then start your season.");
+            SceneCommon.Header(screen, "single.title", "single.subtitle");
 
             var left = EditorUI.Panel(screen, "Scenarios");
             left.rectTransform.Box(new Vector2(0, 0), new Vector2(0, 1), new Vector2(60, 150), new Vector2(640, -170));
-            var leftTitle = EditorUI.Text(left.transform, "Header", "Character Sets", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
+            var leftTitle = EditorUI.Text(left.transform, "Header", "single.sets_header", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
             leftTitle.rectTransform.TopBand(18, 40, 26, 26);
             EditorUI.Scroll(left.transform, "List", out var scenarioList, 10, EditorUI.Pad(6)).GetComponent<RectTransform>()
                 .Box(Vector2.zero, Vector2.one, new Vector2(16, 16), new Vector2(-16, -70));
 
             var right = EditorUI.Panel(screen, "Details");
             right.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(680, 150), new Vector2(-60, -170));
-            var title = EditorUI.Text(right.transform, "Title", "Character Set", 52, UIPalette.Gold, TextAlignmentOptions.MidlineLeft, true, true, false);
+            var title = EditorUI.Text(right.transform, "Title", "-", 52, UIPalette.Gold, TextAlignmentOptions.MidlineLeft, true, true, false);
             title.rectTransform.TopBand(20, 64, 32, 32);
-            var tagline = EditorUI.Text(right.transform, "Tagline", "Tagline", 28, UIPalette.Teal, TextAlignmentOptions.MidlineLeft, false, false, false);
+            var tagline = EditorUI.Text(right.transform, "Tagline", "-", 28, UIPalette.Teal, TextAlignmentOptions.MidlineLeft, false, false, false);
             tagline.rectTransform.TopBand(86, 38, 32, 32);
-            var description = EditorUI.Text(right.transform, "Description", "Description", 25, UIPalette.Text, TextAlignmentOptions.TopLeft);
+            var description = EditorUI.Text(right.transform, "Description", "-", 25, UIPalette.Text, TextAlignmentOptions.TopLeft);
             description.rectTransform.TopBand(130, 70, 32, 32);
             var progress = EditorUI.Text(right.transform, "Progress", string.Empty, 23, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
             progress.rectTransform.TopBand(204, 34, 32, 32);
-            var shopHeader = EditorUI.Text(right.transform, "ShopHeader", "Character set", 23, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
+            var shopHeader = EditorUI.Text(right.transform, "ShopHeader", "-", 23, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
             shopHeader.rectTransform.TopBand(244, 34, 32, 32);
             EditorUI.Scroll(right.transform, "Shop", out var shopList, 10, EditorUI.Pad(6)).GetComponent<RectTransform>()
                 .Box(Vector2.zero, Vector2.one, new Vector2(20, 18), new Vector2(-20, -284));
 
             var back = SceneCommon.BackButton(screen);
 
-            var venueSelector = EditorUI.Selector(screen, "VenueSelector", "Venue");
+            var venueSelector = EditorUI.Selector(screen, "VenueSelector", "pause.setup");
             venueSelector.GetComponent<RectTransform>().Place(new Vector2(0, 0), new Vector2(320, 24), new Vector2(520, 100), new Vector2(0, 0));
             var preview = EditorUI.Image(screen, "VenuePreview", UIPalette.PanelAlt, EditorUI.Rounded);
             preview.rectTransform.Place(new Vector2(0, 0), new Vector2(862, 30), new Vector2(156, 88), new Vector2(0, 0));
@@ -146,7 +152,7 @@ namespace DeckParty.EditorTools
             var venueDescription = EditorUI.Text(screen, "VenueDescription", string.Empty, 21, UIPalette.Text, TextAlignmentOptions.MidlineLeft);
             venueDescription.rectTransform.Place(new Vector2(0, 0), new Vector2(1036, 26), new Vector2(460, 96), new Vector2(0, 0));
 
-            var start = EditorUI.Button(screen, "Start", "Start Season", ButtonStyle.Primary, 34);
+            var start = EditorUI.Button(screen, "Start", "single.start", ButtonStyle.Primary, 34);
             start.GetComponent<RectTransform>().Place(new Vector2(1, 0), new Vector2(-60, 34), new Vector2(340, 88), new Vector2(1, 0));
 
             var view = screen.gameObject.AddComponent<SinglePlayerScreen>();
@@ -172,56 +178,56 @@ namespace DeckParty.EditorTools
         static MultiplayerScreen BuildMultiplayerScreen(Transform parent)
         {
             var screen = SceneCommon.Screen(parent, "MultiplayerScreen");
-            SceneCommon.Header(screen, "Multiplayer", "Up to 6 players. Same character set, separate parties. First 4-Diamond party wins.");
+            SceneCommon.Header(screen, "mp.title", "mp.subtitle");
 
             var nameRow = EditorUI.Rect(screen, "NameRow").Place(new Vector2(0.5f, 1), new Vector2(0, -186), new Vector2(820, 70), new Vector2(0.5f, 1));
             EditorUI.HLayout(nameRow, 16, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, false, true);
-            var nameLabel = EditorUI.Text(nameRow, "Label", "Your name", 28, UIPalette.Text, TextAlignmentOptions.MidlineRight, true, false, false);
+            var nameLabel = EditorUI.Text(nameRow, "Label", "mp.your_name", 28, UIPalette.Text, TextAlignmentOptions.MidlineRight, true, false, false);
             EditorUI.Layout(nameLabel, 220, -1, 0);
-            var nameInput = EditorUI.Input(nameRow, "NameInput", "Player name", 28, 16);
+            var nameInput = EditorUI.Input(nameRow, "NameInput", "settings.player_name", 28, 16);
             EditorUI.Layout(nameInput, -1, 70, 1);
 
             // Online card
             var online = EditorUI.Panel(screen, "OnlineCard");
             online.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(-410, -40), new Vector2(780, 540));
             EditorUI.VLayout(online, 16, EditorUI.Pad(36, 30), TextAnchor.UpperCenter, true, true, true, false);
-            var onlineTitle = EditorUI.Text(online.transform, "Title", "Online (Unity Relay)", 38, UIPalette.Teal, TextAlignmentOptions.MidlineLeft, true, true, false);
+            var onlineTitle = EditorUI.Text(online.transform, "Title", "mp.online_header", 38, UIPalette.Teal, TextAlignmentOptions.MidlineLeft, true, true, false);
             EditorUI.Layout(onlineTitle, -1, 52);
-            var onlineNote = EditorUI.Text(online.transform, "Note", "Play over the internet with a join code.", 22, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
+            var onlineNote = EditorUI.Text(online.transform, "Note", "-", 22, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
             EditorUI.Layout(onlineNote, -1, 62);
-            var hostOnline = EditorUI.Button(online.transform, "HostOnline", "Host Online Party", ButtonStyle.Primary, 32);
+            var hostOnline = EditorUI.Button(online.transform, "HostOnline", "mp.host_online", ButtonStyle.Primary, 32);
             EditorUI.Layout(hostOnline, -1, 88);
-            var orOnline = EditorUI.Text(online.transform, "Or", "- or join a friend's party -", 22, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
+            var orOnline = EditorUI.Text(online.transform, "Or", "mp.or_join", 22, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
             EditorUI.Layout(orOnline, -1, 34);
             var codeRow = EditorUI.Rect(online.transform, "CodeRow");
             EditorUI.Layout(codeRow, -1, 76);
             EditorUI.HLayout(codeRow, 12, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, false, true);
-            var codeInput = EditorUI.Input(codeRow, "CodeInput", "Join code", 30, 12);
+            var codeInput = EditorUI.Input(codeRow, "CodeInput", "mp.code_placeholder", 30, 12);
             EditorUI.Layout(codeInput, -1, 76, 1);
-            var joinOnline = EditorUI.Button(codeRow, "JoinOnline", "Join", ButtonStyle.Secondary, 30);
+            var joinOnline = EditorUI.Button(codeRow, "JoinOnline", "mp.join_online", ButtonStyle.Secondary, 30);
             EditorUI.Layout(joinOnline, 200, 76, 0);
 
             // LAN card
             var lan = EditorUI.Panel(screen, "LanCard");
             lan.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(410, -40), new Vector2(780, 540));
             EditorUI.VLayout(lan, 16, EditorUI.Pad(36, 30), TextAnchor.UpperCenter, true, true, true, false);
-            var lanTitle = EditorUI.Text(lan.transform, "Title", "Local Network / Direct IP", 38, UIPalette.Orange, TextAlignmentOptions.MidlineLeft, true, true, false);
+            var lanTitle = EditorUI.Text(lan.transform, "Title", "mp.lan_header", 38, UIPalette.Orange, TextAlignmentOptions.MidlineLeft, true, true, false);
             EditorUI.Layout(lanTitle, -1, 52);
-            var lanNote = EditorUI.Text(lan.transform, "Note", "Same Wi-Fi / LAN, or a forwarded port.", 22, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
+            var lanNote = EditorUI.Text(lan.transform, "Note", "-", 22, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
             EditorUI.Layout(lanNote, -1, 62);
-            var hostLan = EditorUI.Button(lan.transform, "HostLan", "Host on this Network", ButtonStyle.Primary, 32);
+            var hostLan = EditorUI.Button(lan.transform, "HostLan", "mp.host_lan", ButtonStyle.Primary, 32);
             EditorUI.Layout(hostLan, -1, 88);
-            var orLan = EditorUI.Text(lan.transform, "Or", "- or join by address -", 22, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
+            var orLan = EditorUI.Text(lan.transform, "Or", "mp.or_address", 22, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
             EditorUI.Layout(orLan, -1, 34);
             var ipRow = EditorUI.Rect(lan.transform, "IpRow");
             EditorUI.Layout(ipRow, -1, 76);
             EditorUI.HLayout(ipRow, 12, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, false, true);
-            var ipInput = EditorUI.Input(ipRow, "IpInput", "Host IP (e.g. 192.168.1.20)", 26, 64);
+            var ipInput = EditorUI.Input(ipRow, "IpInput", "mp.ip_placeholder", 26, 64);
             EditorUI.Layout(ipInput, -1, 76, 1);
-            var portInput = EditorUI.Input(ipRow, "PortInput", "Port", 26, 5);
+            var portInput = EditorUI.Input(ipRow, "PortInput", "mp.port_placeholder", 26, 5);
             portInput.contentType = TMP_InputField.ContentType.IntegerNumber;
             EditorUI.Layout(portInput, 130, 76, 0);
-            var joinLan = EditorUI.Button(ipRow, "JoinLan", "Join", ButtonStyle.Secondary, 30);
+            var joinLan = EditorUI.Button(ipRow, "JoinLan", "mp.join_online", ButtonStyle.Secondary, 30);
             EditorUI.Layout(joinLan, 150, 76, 0);
 
             var status = EditorUI.Text(screen, "Status", string.Empty, 26, UIPalette.Text, TextAlignmentOptions.Center);
@@ -249,63 +255,73 @@ namespace DeckParty.EditorTools
         static LobbyScreen BuildLobbyScreen(Transform parent, UIPrefabs prefabs)
         {
             var screen = SceneCommon.Screen(parent, "LobbyScreen");
-            var title = SceneCommon.Header(screen, "Party Lobby", null);
+            var title = SceneCommon.Header(screen, "-", null);
 
             var codePanel = EditorUI.Panel(screen, "CodePanel");
             codePanel.rectTransform.Place(new Vector2(1, 1), new Vector2(-60, -30), new Vector2(680, 150), new Vector2(1, 1));
-            var codeHint = EditorUI.Text(codePanel.transform, "Hint", "Share this join code with your friends.", 21, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
+            var codeHint = EditorUI.Text(codePanel.transform, "Hint", "-", 21, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
             codeHint.rectTransform.TopBand(14, 30, 24, 24);
             var code = EditorUI.Text(codePanel.transform, "Code", "------", 54, UIPalette.Gold, TextAlignmentOptions.MidlineLeft, true, true, false);
             code.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(24, 14), new Vector2(-190, -48));
             code.enableAutoSizing = true;
             code.fontSizeMin = 24;
             code.fontSizeMax = 54;
-            var copy = EditorUI.Button(codePanel.transform, "Copy", "Copy", ButtonStyle.Normal, 26);
+            var copy = EditorUI.Button(codePanel.transform, "Copy", "lobby.copy", ButtonStyle.Normal, 26);
             copy.GetComponent<RectTransform>().Place(new Vector2(1, 0), new Vector2(-20, 22), new Vector2(150, 64), new Vector2(1, 0));
 
             // Players
             var players = EditorUI.Panel(screen, "Players");
             players.rectTransform.Box(new Vector2(0, 0), new Vector2(0, 1), new Vector2(60, 150), new Vector2(620, -200));
-            var playerCount = EditorUI.Text(players.transform, "Header", "Players", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
+            var playerCount = EditorUI.Text(players.transform, "Header", "-", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
             playerCount.rectTransform.TopBand(18, 40, 24, 24);
-            var list = EditorUI.Rect(players.transform, "List").Box(Vector2.zero, Vector2.one, new Vector2(16, 16), new Vector2(-16, -70));
+            var list = EditorUI.Rect(players.transform, "List").Box(Vector2.zero, Vector2.one, new Vector2(16, 104), new Vector2(-16, -70));
             EditorUI.VLayout(list, 10, EditorUI.Pad(0), TextAnchor.UpperCenter, true, true, true, false);
+            var streamerButton = EditorUI.Button(players.transform, "Streamer", "-", ButtonStyle.Secondary, 24, out var streamerLabel);
+            streamerButton.GetComponent<RectTransform>().BottomBand(16, 76, 16, 16);
 
             // Settings
             var settings = EditorUI.Panel(screen, "Settings");
             settings.rectTransform.Box(new Vector2(0, 0), new Vector2(0, 1), new Vector2(660, 150), new Vector2(1260, -200));
             EditorUI.VLayout(settings, 12, EditorUI.Pad(28, 22), TextAnchor.UpperCenter, true, true, true, false);
-            var settingsTitle = EditorUI.Text(settings.transform, "Header", "Match Settings", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
+            var settingsTitle = EditorUI.Text(settings.transform, "Header", "lobby.match_settings", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
             EditorUI.Layout(settingsTitle, -1, 40);
-            var scenario = EditorUI.Selector(settings.transform, "Scenario", "Character Set");
+            var scenario = EditorUI.Selector(settings.transform, "Scenario", "term.character_set");
             EditorUI.Layout(scenario, -1, 96);
-            var mode = EditorUI.Selector(settings.transform, "Mode", "Mode");
+            var mode = EditorUI.Selector(settings.transform, "Mode", "lobby.mode");
             EditorUI.Layout(mode, -1, 96);
-            var nights = EditorUI.Selector(settings.transform, "Nights", "Season length");
+            var nights = EditorUI.Selector(settings.transform, "Nights", "lobby.season_length");
             EditorUI.Layout(nights, -1, 96);
+            var timerRow = EditorUI.Rect(settings.transform, "TimerRow");
+            EditorUI.Layout(timerRow, -1, 96);
+            EditorUI.HLayout(timerRow, 10, EditorUI.Pad(0), TextAnchor.LowerCenter, true, true, false, false);
+            var timer = EditorUI.Selector(timerRow, "TurnTimer", "lobby.turn_timer");
+            EditorUI.Layout(timer, -1, 96, 1);
+            var customTimer = EditorUI.Input(timerRow, "CustomSeconds", "lobby.custom_seconds", 24, 3);
+            customTimer.contentType = TMP_InputField.ContentType.IntegerNumber;
+            EditorUI.Layout(customTimer, 130, 60, 0);
             var summary = EditorUI.Text(settings.transform, "Summary", string.Empty, 19, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
             EditorUI.Layout(summary, -1, 110, -1, 1);
             summary.enableAutoSizing = true;
             summary.fontSizeMin = 13;
             summary.fontSizeMax = 19;
-            var venue = EditorUI.Selector(settings.transform, "Venue", "Your venue");
+            var venue = EditorUI.Selector(settings.transform, "Venue", "lobby.your_setup");
             EditorUI.Layout(venue, -1, 96);
 
             // Chat
             var chatPanel = EditorUI.Panel(screen, "Chat");
             chatPanel.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(1300, 150), new Vector2(-60, -200));
-            var chatTitle = EditorUI.Text(chatPanel.transform, "Header", "Chat", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
+            var chatTitle = EditorUI.Text(chatPanel.transform, "Header", "chat.panel_title", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
             chatTitle.rectTransform.TopBand(18, 40, 24, 24);
             var chat = SceneCommon.Chat(chatPanel.rectTransform, 70, prefabs.TextLine);
 
             // Bottom bar
-            var leave = EditorUI.Button(screen, "Leave", "Leave", ButtonStyle.Ghost, 28);
+            var leave = EditorUI.Button(screen, "Leave", "lobby.leave_button", ButtonStyle.Ghost, 28);
             leave.GetComponent<RectTransform>().Place(new Vector2(0, 0), new Vector2(60, 40), new Vector2(240, 84), new Vector2(0, 0));
             var status = EditorUI.Text(screen, "Status", string.Empty, 26, UIPalette.Text, TextAlignmentOptions.Center);
             status.rectTransform.Place(new Vector2(0.5f, 0), new Vector2(-40, 44), new Vector2(900, 76), new Vector2(0.5f, 0));
-            var ready = EditorUI.Button(screen, "Ready", "Ready!", ButtonStyle.Secondary, 32, out var readyLabel);
+            var ready = EditorUI.Button(screen, "Ready", "-", ButtonStyle.Secondary, 32, out var readyLabel);
             ready.GetComponent<RectTransform>().Place(new Vector2(1, 0), new Vector2(-60, 40), new Vector2(340, 88), new Vector2(1, 0));
-            var start = EditorUI.Button(screen, "Start", "Start Season", ButtonStyle.Primary, 32);
+            var start = EditorUI.Button(screen, "Start", "lobby.start", ButtonStyle.Primary, 32);
             start.GetComponent<RectTransform>().Place(new Vector2(1, 0), new Vector2(-60, 40), new Vector2(340, 88), new Vector2(1, 0));
 
             var view = screen.gameObject.AddComponent<LobbyScreen>();
@@ -320,6 +336,10 @@ namespace DeckParty.EditorTools
             view.modeSelector = mode;
             view.nightsSelector = nights;
             view.venueSelector = venue;
+            view.timerSelector = timer;
+            view.customTimerInput = customTimer;
+            view.streamerButton = streamerButton;
+            view.streamerLabel = streamerLabel;
             view.settingsSummary = summary;
             view.readyButton = ready;
             view.readyLabel = readyLabel;
@@ -335,29 +355,35 @@ namespace DeckParty.EditorTools
         static SettingsScreen BuildSettingsScreen(Transform parent)
         {
             var screen = SceneCommon.Screen(parent, "SettingsScreen");
-            SceneCommon.Header(screen, "Settings", null);
+            SceneCommon.Header(screen, "settings.title", null);
 
+            // Left: name, audio, animations, reset. Right: display and language.
             var panel = EditorUI.Panel(screen, "Panel");
-            panel.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(0, -20), new Vector2(1040, 720));
-            EditorUI.VLayout(panel, 18, EditorUI.Pad(50, 40), TextAnchor.UpperCenter, true, true, true, false);
+            panel.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(-470, -20), new Vector2(900, 720));
+            EditorUI.VLayout(panel, 18, EditorUI.Pad(44, 40), TextAnchor.UpperCenter, true, true, true, false);
 
-            EditorUI.LabelledRow(panel.transform, "NameRow", "Player name", 70, out var nameSlot);
-            var nameInput = EditorUI.Input(nameSlot, "NameInput", "Player name", 28, 16);
+            EditorUI.LabelledRow(panel.transform, "NameRow", "settings.player_name", 70, out var nameSlot, 260);
+            var nameInput = EditorUI.Input(nameSlot, "NameInput", "settings.player_name", 28, 16);
             nameInput.GetComponent<RectTransform>().Stretch(0, 2, 0, 2);
 
-            var master = SliderRow(panel.transform, "Master", "Master volume");
-            var music = SliderRow(panel.transform, "Music", "Music volume");
-            var sfx = SliderRow(panel.transform, "Sfx", "Sound effects");
+            var master = SliderRow(panel.transform, "Master", "settings.master", 260);
+            var music = SliderRow(panel.transform, "Music", "settings.music", 260);
+            var sfx = SliderRow(panel.transform, "Sfx", "settings.sfx", 260);
 
-            var fullscreen = EditorUI.Toggle(panel.transform, "Fullscreen", "Fullscreen");
-            EditorUI.Layout(fullscreen, -1, 62);
-            var fast = EditorUI.Toggle(panel.transform, "FastAnimations", "Fast animations");
+            var fast = EditorUI.Toggle(panel.transform, "FastAnimations", "settings.fast_animations");
             EditorUI.Layout(fast, -1, 62);
 
             var spacer = EditorUI.Rect(panel.transform, "Spacer");
-            EditorUI.Layout(spacer, -1, 10);
-            var reset = EditorUI.Button(panel.transform, "ResetProgress", "Reset Progress", ButtonStyle.Danger, 28);
+            EditorUI.Layout(spacer, -1, 10, -1, 1);
+            var reset = EditorUI.Button(panel.transform, "ResetProgress", "settings.reset_progress", ButtonStyle.Danger, 28);
             EditorUI.Layout(reset, -1, 72);
+
+            var displayPanel = EditorUI.Panel(screen, "DisplayPanel");
+            displayPanel.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(470, -20), new Vector2(900, 720));
+            EditorUI.VLayout(displayPanel, 10, EditorUI.Pad(44, 30), TextAnchor.UpperCenter, true, true, true, false);
+            var displayHeader = EditorUI.Text(displayPanel.transform, "Header", "settings.display", 30, UIPalette.Gold, TextAlignmentOptions.MidlineLeft, true, true, false);
+            EditorUI.Layout(displayHeader, -1, 40);
+            var display = SceneCommon.DisplayBlock(displayPanel.transform);
 
             var back = SceneCommon.BackButton(screen);
 
@@ -366,8 +392,8 @@ namespace DeckParty.EditorTools
             view.masterSlider = master;
             view.musicSlider = music;
             view.sfxSlider = sfx;
-            view.fullscreenToggle = fullscreen;
             view.fastAnimationsToggle = fast;
+            view.display = display;
             view.resetProgressButton = reset;
             view.backButton = back;
             return view;
@@ -386,12 +412,12 @@ namespace DeckParty.EditorTools
         static HowToPlayScreen BuildHowToPlayScreen(Transform parent, UIPrefabs prefabs)
         {
             var screen = SceneCommon.Screen(parent, "HowToPlayScreen");
-            SceneCommon.Header(screen, "How to Play", null);
+            SceneCommon.Header(screen, "howto.title", null);
 
-            var tabs = EditorUI.Rect(screen, "Tabs").Place(new Vector2(0, 1), new Vector2(80, -136), new Vector2(560, 64), new Vector2(0, 1));
+            var tabs = EditorUI.Rect(screen, "Tabs").Place(new Vector2(0, 1), new Vector2(80, -136), new Vector2(620, 64), new Vector2(0, 1));
             EditorUI.HLayout(tabs, 12, EditorUI.Pad(0), TextAnchor.MiddleLeft, true, true, true, true);
-            var rulesTab = EditorUI.Button(tabs, "RulesTab", "Rules", ButtonStyle.Primary, 28);
-            var guestsTab = EditorUI.Button(tabs, "GuestsTab", "All 46 Guests", ButtonStyle.Normal, 28);
+            var rulesTab = EditorUI.Button(tabs, "RulesTab", "howto.rules_tab", ButtonStyle.Primary, 28);
+            var guestsTab = EditorUI.Button(tabs, "GuestsTab", "howto.viewers_tab", ButtonStyle.Normal, 28);
 
             var content = EditorUI.Panel(screen, "Content");
             content.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(80, 140), new Vector2(-80, -220));

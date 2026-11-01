@@ -1,44 +1,42 @@
 namespace DeckParty
 {
     /// <summary>
-    /// Every player-facing name for a game mechanic, in one place. The rules code keeps its original internal
-    /// names (Pop, Trouble, Star, Rolodex, House...); change the wording here to re-theme the whole UI.
+    /// Standalone names for game mechanics (HUD captions, stat labels). The rules code keeps its original internal names
+    /// (Pop, Trouble, Star, Rolodex, House...). Inside sentences each language writes its own wording in the string
+    /// tables, so grammar works; edit the "term.*" keys in AudienceCapture_Strings.csv to rename a mechanic.
     /// </summary>
     public static class Terms
     {
-        /// <summary>What guests bring in during a party (was Pop).</summary>
-        public const string Subs = "Subs";
-        /// <summary>The banked currency you recruit guests with.</summary>
-        public const string GiftedSubs = "Gifted Subs";
-        public const string Cash = "Cash";
+        /// <summary>What viewers bring in during a stream (was Pop).</summary>
+        public static string Subs => Loc.Get("term.subs");
+        /// <summary>The banked currency you recruit viewers with.</summary>
+        public static string GiftedSubs => Loc.Get("term.gifted_subs");
+        public static string Cash => Loc.Get("term.cash");
         public const string CashSymbol = "$";
 
-        /// <summary>Was Trouble.</summary>
-        public const string Risk = "Swatting Risk";
+        /// <summary>Was Trouble. Other languages call it "Police Arrival Risk".</summary>
+        public static string Risk => Loc.Get("term.risk");
         /// <summary>Was the police raid.</summary>
-        public const string Raid = "SWATTED!";
-        public const string RaidTeam = "the SWAT team";
+        public static string Raid => Loc.Get("term.raid");
         /// <summary>Was "taking the blame" after a raid.</summary>
-        public const string Ban = "Temporary Ban";
+        public static string Ban => Loc.Get("term.ban");
 
         /// <summary>Was Star.</summary>
-        public const string Diamond = "Diamond";
-        public const string Diamonds = "Diamonds";
+        public static string Diamond => Loc.Get("term.diamond");
+        public static string Diamonds => Loc.Get("term.diamonds");
 
-        /// <summary>Was Rolodex: every guest card you own.</summary>
-        public const string Squad = "Squad";
+        /// <summary>Was Rolodex: every viewer card you own.</summary>
+        public static string Audience => Loc.Get("term.audience");
 
         /// <summary>Was the house size.</summary>
-        public const string SubCap = "Sub Cap";
-        public const string RaiseSubCap = "Raise Sub Cap";
+        public static string SubCap => Loc.Get("term.sub_cap");
+        public static string RaiseSubCap => Loc.Get("term.raise_sub_cap");
         /// <summary>Was the fire marshal shutting the party down.</summary>
-        public const string Overload = "SUB CAP EXCEEDED!";
+        public static string Overload => Loc.Get("term.overload");
 
-        /// <summary>A preset scenario (its guest shop).</summary>
-        public const string CharacterSet = "Character Set";
+        /// <summary>A preset scenario (its viewer shop).</summary>
+        public static string CharacterSet => Loc.Get("term.character_set");
 
-        public static string Plural(int count, string singular, string plural) => count == 1 ? singular : plural;
-
-        public static string DiamondCount(int count) => $"{count} {Plural(count, Diamond, Diamonds)}";
+        public static string DiamondCount(int count) => Loc.Get("term.diamond_count", "count", count);
     }
 }

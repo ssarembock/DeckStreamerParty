@@ -1,0 +1,685 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Characters_pt-BR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pt-BR
+  m_SharedData: {fileID: 11400000, guid: 1fa38d83ab85fd1488504705cf0d4c4c, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 433274880
+    m_Localized: "F\xE3 de carteirinha"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383744
+    m_Localized: Sempre aparece. Nunca perde uma live.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383745
+    m_Localized: Baleia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383746
+    m_Localized: Banca os seus primeiros aumentos de limite.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383747
+    m_Localized: Fazenda de bots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383748
+    m_Localized: "Views baratas, aten\xE7\xE3o arriscada. S\xF3 espectador inicial."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383749
+    m_Localized: Social Media
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383750
+    m_Localized: "A\xE7\xE3o: escolha qualquer espectador da fila pra entrar no chat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383751
+    m_Localized: Salve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383752
+    m_Localized: Moderador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383753
+    m_Localized: "A\xE7\xE3o: expulse um espectador do chat at\xE9 o fim da live
+      (at\xE9 o pr\xF3prio Moderador)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383754
+    m_Localized: Remover do chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383755
+    m_Localized: AutoMod
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383756
+    m_Localized: "Enquanto est\xE1 no chat, anula 1 de risco de pol\xEDcia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383757
+    m_Localized: Collab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383758
+    m_Localized: "N\xFAmeros grandes, risco maior ainda."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383759
+    m_Localized: HODL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383760
+    m_Localized: "A\xE7\xE3o: mande todo mundo de volta pra fila pra entrarem de
+      novo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383761
+    m_Localized: Reiniciar a live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383762
+    m_Localized: VIPs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383763
+    m_Localized: "Enquanto est\xE1 no chat, anula 1 de risco de pol\xEDcia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383764
+    m_Localized: Parassocial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383765
+    m_Localized: "Traz um espectador aleat\xF3rio junto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383766
+    m_Localized: Doge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383767
+    m_Localized: "Tanta sinergia: +1 Sub por cada fam\xEDlia de personagem diferente
+      no chat (m\xE1x. +5). Outros Doge n\xE3o contam."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383768
+    m_Localized: Trollface
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383769
+    m_Localized: "A\xE7\xE3o: mande outro espectador de volta pra fila (ele pode
+      voltar hoje). Ganha +2 Subs por cada vez que esse espectador foi trollado,
+      incluindo esta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383770
+    m_Localized: Ficou bravinho?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383771
+    m_Localized: Sapo Pepe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383772
+    m_Localized: "A\xE7\xE3o: escolha Feliz (+3 Subs), Triste (+3 $) ou Bravo (+6
+      Subs e +1 de risco de pol\xEDcia) at\xE9 o fim da live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383773
+    m_Localized: "Mudan\xE7a de humor"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383774
+    m_Localized: Gigachad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383775
+    m_Localized: "Energia alfa: +3 Subs se for o \xFAnico espectador com 5+ Subs
+      base. Cada Gigachad extra d\xE1 -2 Subs pra todos os Gigachads."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383776
+    m_Localized: "Cachorro \"T\xE1 tudo bem\""
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383777
+    m_Localized: "Nega\xE7\xE3o: na primeira vez que o risco chegaria a 3, a pol\xEDcia
+      vai embora e todo o risco zera. Depois essa c\xF3pia sai da sua Audi\xEAncia
+      pra sempre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383778
+    m_Localized: Wojak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 500383779
+    m_Localized: "Sofrimento compartilhado: +2 Subs por cada outro espectador sofrendo
+      (risco de pol\xEDcia, status negativo, infectado, zerado ou penalizado), m\xE1x.
+      +6."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578048
+    m_Localized: Gato Rabugento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578049
+    m_Localized: "A\xE7\xE3o: veja os pr\xF3ximos 3 espectadores da fila. Barre um
+      por esta noite e escolha quem entra depois."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578050
+    m_Localized: Nem pensar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578051
+    m_Localized: Nyan Cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578052
+    m_Localized: "Rastro de arco-\xEDris: cada espectador sem risco que entra depois
+      dela sem quebrar a sequ\xEAncia ganha +1, +2, +3... Subs (m\xE1x. +6 cada).
+      Uma chegada com risco quebra a corrente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578053
+    m_Localized: Cara do Stonks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578054
+    m_Localized: "A\xE7\xE3o: invista 2 Subs de presente ou 1 $. Se a live der certo
+      volta o triplo; se der errado, j\xE1 era."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578055
+    m_Localized: "Manipula\xE7\xE3o de mercado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578056
+    m_Localized: Cheems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578057
+    m_Localized: "N\xE3o me bonka: com um Doge no chat, anula 1 de risco e Doge e
+      Cheems ganham +2 Subs. Sem Doge, -1 Sub por ponto de risco."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578058
+    m_Localized: Chad vs Virgem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578059
+    m_Localized: "A\xE7\xE3o: compare Subs base com outro espectador. Se ele tiver
+      menos, d\xE1 1 pro Chad pra sempre. Se tiver mais, o Chad perde 1 pra sempre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578060
+    m_Localized: "Conhe\xE7a seu lugar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578061
+    m_Localized: Doomer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578062
+    m_Localized: "Doomscroll: +2 Subs por ponto de risco no chat. Com exatamente
+      2 de risco, tamb\xE9m +2 $."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578063
+    m_Localized: NPC Wojak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578064
+    m_Localized: "A modinha: ao entrar, copia os Subs base e o $ de quem entrou logo
+      antes. N\xE3o a a\xE7\xE3o, o risco nem o Diamante."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578065
+    m_Localized: Forever Alone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578066
+    m_Localized: "Mesa pra um: +6 Subs se ele for o \xFAnico espectador quando a
+      live acabar. Sen\xE3o, +1 Sub por vaga vazia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578067
+    m_Localized: Me Gusta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578068
+    m_Localized: 'Gostei disso: ganha +2 Subs quando outro espectador adiciona risco
+      e +1 $ por ponto de risco removido.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578069
+    m_Localized: Gato Tecladista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578070
+    m_Localized: "A\xE7\xE3o: expulse outro espectador. Ganha +2 Subs se ele tinha
+      risco; sen\xE3o, +1 $. Os efeitos de sa\xEDda dele acontecem igual."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578071
+    m_Localized: Tocar ele pra fora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578072
+    m_Localized: Bongo Cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578073
+    m_Localized: "O ritmo continua: cada terceiro espectador que entra depois do
+      Bongo Cat d\xE1 +2 Subs a todos os Bichos do chat nesta noite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578074
+    m_Localized: Pop Cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578075
+    m_Localized: "Pop pop pop: ganha +1 Sub sempre que algu\xE9m usa uma a\xE7\xE3o.
+      A cada tr\xEAs a\xE7\xF5es tamb\xE9m ganha +1 $."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578076
+    m_Localized: Big Chungus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578077
+    m_Localized: "Chungus absoluto: ocupa 3 vagas. +1 Sub por ponto de limite acima
+      de 10 (m\xE1x. +5)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578078
+    m_Localized: Knuckles de Uganda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578079
+    m_Localized: "Me sigam: ao entrar, adiciona uma c\xF3pia tempor\xE1ria de si
+      na fila desta noite (c\xF3pias n\xE3o se copiam). +1 Sub por cada outro Knuckles
+      no chat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578080
+    m_Localized: Namorada Grudenta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578081
+    m_Localized: "Pra sempre sua: ao entrar, gruda no melhor espectador. Os Subs
+      dele dobram e ele n\xE3o pode ser expulso enquanto ela estiver aqui. Se ele
+      for for\xE7ado a sair, ela vai junto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578082
+    m_Localized: "Menina do Inc\xEAndio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578083
+    m_Localized: "A\xE7\xE3o: outro espectador ganha +1 de risco e +3 Subs, e ela
+      +2 Subs. N\xE3o d\xE1 pra usar se trouxer a pol\xEDcia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578084
+    m_Localized: "Inc\xEAndio acidental"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578085
+    m_Localized: Harold Escondendo a Dor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578086
+    m_Localized: "Sorrindo por fora: os espectadores do chat n\xE3o caem abaixo dos
+      Subs base. Ganha +1 Sub por queda evitada (m\xE1x. +5)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578087
+    m_Localized: Menino do Sucesso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578088
+    m_Localized: "A\xE7\xE3o: sorteie de novo o \xFAltimo que entrou aleatoriamente
+      (ele volta pra fila e entra outro) ou espie o pr\xF3ximo espectador e decida
+      se aprova."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578089
+    m_Localized: Contra todas as chances
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578090
+    m_Localized: Brian Azarado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578091
+    m_Localized: "O que pode dar errado?: uma vez por live, a primeira tentativa
+      de expuls\xE1-lo ou tirar o risco dele falha, e ele ganha +1 Sub pra sempre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578092
+    m_Localized: Tung Tung Tung Sahur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578093
+    m_Localized: "A\xE7\xE3o: d\xEA uma pancada em outro espectador. 1\xAA: +2 Subs.
+      2\xAA: tira o risco dele. 3\xAA: expulsa ele e o Tung Tung ganha +1 Sub pra
+      sempre. As pancadas ficam salvas entre lives."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578094
+    m_Localized: "Tr\xEAs pancadas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578095
+    m_Localized: Tralalero Tralala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578096
+    m_Localized: "A\xE7\xE3o: troque dois espectadores de lugar na ordem de entrada.
+      B\xF4nus de posi\xE7\xE3o atualizam; efeitos de entrada n\xE3o se repetem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578097
+    m_Localized: Embaralhada Tralalero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578098
+    m_Localized: Bombardiro Crocodilo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578099
+    m_Localized: "A\xE7\xE3o: expulse at\xE9 3 espectadores e troque cada um por
+      um aleat\xF3rio da fila. Efeitos de entrada e sa\xEDda acontecem normalmente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578100
+    m_Localized: Bombardeio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578101
+    m_Localized: Ballerina Cappuccina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578102
+    m_Localized: "A\xE7\xE3o: dois espectadores trocam os Subs base pelo resto da
+      noite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578103
+    m_Localized: Pirueta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578104
+    m_Localized: Skibidi Toilet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578105
+    m_Localized: "Invas\xE3o Skibidi: ao entrar, infecta outro espectador (+2 Subs,
+      +1 de risco). Toda vez que algu\xE9m entra, a infec\xE7\xE3o passa pra mais
+      um. Acaba com a live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578106
+    m_Localized: Macho Sigma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578107
+    m_Localized: "Grindset: +1 Sub por vaga vazia (m\xE1x. +8). -1 Sub por cada outro
+      Macho Sigma no chat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578108
+    m_Localized: Karen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578109
+    m_Localized: "A\xE7\xE3o: expulse outro espectador por esta noite e ganhe metade
+      do custo dele em Subs (m\xE1x. 8)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578110
+    m_Localized: Quero meu dinheiro de volta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578111
+    m_Localized: Rickroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578112
+    m_Localized: "A\xE7\xE3o: outro espectador que n\xE3o seja Diamante vira temporariamente
+      outro personagem aleat\xF3rio da fila, com status e a\xE7\xE3o dele. Volta
+      ao normal depois da live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578113
+    m_Localized: Surpresa!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578114
+    m_Localized: "Namorado Distra\xEDdo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578115
+    m_Localized: "Nova tenta\xE7\xE3o: ao entrar, revela 3 espectadores da fila.
+      Voc\xEA pode trocar algu\xE9m do chat por um deles; o trocado fica de fora
+      esta noite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578116
+    m_Localized: Drakeposting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578117
+    m_Localized: "A\xE7\xE3o: escolha dois espectadores. O primeiro n\xE3o ganha
+      nada esta noite; o segundo dobra os Subs base ou o $."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578118
+    m_Localized: Prefiro isso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578119
+    m_Localized: "Nazar\xE9 Confusa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578120
+    m_Localized: "A\xE7\xE3o: por esta noite, troque os Subs de um espectador por
+      $ (2 Subs = 1 $) ou o $ dele por Subs (1 $ = 2 Subs)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578121
+    m_Localized: "As contas n\xE3o batem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578122
+    m_Localized: Chloe Desconfiada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578123
+    m_Localized: "Enquanto ela est\xE1 aqui, d\xE1 pra ver o pr\xF3ximo espectador
+      da fila. A\xE7\xE3o: mandar ele pro fim da fila."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578124
+    m_Localized: Olhar de canto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578125
+    m_Localized: Roll Safe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578126
+    m_Localized: "A\xE7\xE3o: um espectador fica imune a novos efeitos de a\xE7\xF5es
+      esta noite, bons ou ruins. O que ele j\xE1 tem continua."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578127
+    m_Localized: "Quem n\xE3o joga n\xE3o perde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578128
+    m_Localized: Gato Chorando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578129
+    m_Localized: "Todo mundo me abandona: ganha +2 Subs e +1 $ sempre que outro espectador
+      sai ou \xE9 expulso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578130
+    m_Localized: "Beb\xEA Dan\xE7ante"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578131
+    m_Localized: "Anima\xE7\xE3o em loop: sempre que duas a\xE7\xF5es seguidas s\xE3o
+      do mesmo tipo, ganha +3 Subs (m\xE1x. +9 por live)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578132
+    m_Localized: Canal de Fofoca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578133
+    m_Localized: DIAMANTE. Traz a fofoca.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578134
+    m_Localized: Streamer Diva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578135
+    m_Localized: DIAMANTE. Gosto caro.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578136
+    m_Localized: "L\xEDder de Raid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578137
+    m_Localized: "DIAMANTE. Traz um espectador aleat\xF3rio junto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578138
+    m_Localized: VTuber Misteriosa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578139
+    m_Localized: DIAMANTE. Sem taxa, sem rosto, sem treta.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578140
+    m_Localized: "\xCDcone Fofo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578141
+    m_Localized: "DIAMANTE. Enquanto est\xE1 no chat, anula 1 de risco de pol\xEDcia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578142
+    m_Localized: Admin da Plataforma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578143
+    m_Localized: "DIAMANTE. A\xE7\xE3o: expulse um espectador at\xE9 o fim da live
+      (at\xE9 a si mesmo)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578144
+    m_Localized: Onda de banimentos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578145
+    m_Localized: Megainfluencer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578146
+    m_Localized: DIAMANTE. Puro alcance.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578147
+    m_Localized: Patrocinador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578148
+    m_Localized: DIAMANTE. Paga pra ser visto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578149
+    m_Localized: O Algoritmo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578150
+    m_Localized: "DIAMANTE. A\xE7\xE3o: invoque qualquer espectador da fila."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578151
+    m_Localized: Em alta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578152
+    m_Localized: Feliz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578153
+    m_Localized: Triste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578154
+    m_Localized: Bravo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578155
+    m_Localized: Investir 2 Subs de presente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578156
+    m_Localized: Investir 1 $
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578157
+    m_Localized: Sortear de novo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578158
+    m_Localized: Espiar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578159
+    m_Localized: Subs em dobro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578160
+    m_Localized: $ em dobro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504578161
+    m_Localized: Subs em $
+    m_Metadata:
+      m_Items: []
+  - m_Id: 508772352
+    m_Localized: $ em Subs
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

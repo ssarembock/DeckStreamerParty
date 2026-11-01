@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab204480c86566540b91b06faaa369a4, type: 3}
+  m_Name: Venue_stage_fate
+  m_EditorClassIdentifier: 
+  id: stage_fate
+  displayName: Debate Bunker
+  description: Three monitors, two arguments, one very loud microphone.
+  background: {fileID: 0}
+  foreground: {fileID: 0}
+  thumbnail: {fileID: 0}
+  skyTop: {r: 0.07058824, g: 0.05882353, b: 0.22745098, a: 1}
+  skyBottom: {r: 0.20784314, g: 0.16862746, b: 0.47843137, a: 1}
+  wallColor: {r: 0.11764706, g: 0.09803922, b: 0.3137255, a: 1}
+  floorColor: {r: 0.16470589, g: 0.13725491, b: 0.2509804, a: 1}
+  accentA: {r: 0.4862745, g: 0.42352942, b: 1, a: 1}
+  accentB: {r: 1, g: 0.30980393, b: 0.41960785, a: 1}
+  style: 0
+  partyLights: 1
+  music: {fileID: 0}

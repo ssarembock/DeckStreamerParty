@@ -30,8 +30,9 @@ namespace DeckParty.EditorTools
         public static void RebuildAll()
         {
             if (!EditorUtility.DisplayDialog("Rebuild Deck Party scenes?",
-                    "This regenerates MainMenu.unity, Game.unity and the UI prefabs, discarding any edits you made to them.\n\n" +
-                    "Your art, venues, UI Skin, audio and database assets are kept.", "Rebuild", "Cancel"))
+                    "This regenerates MainMenu.unity, Game.unity and the UI prefabs, discarding any edits you made to them " +
+                    "(the old prefabs are backed up to Prefabs/Backup first).\n\n" +
+                    "Your art, animations, stream setups, UI Skin, audio, FX and database assets are kept.", "Rebuild", "Cancel"))
                 return;
             BuildEverything(true);
         }
@@ -63,6 +64,12 @@ namespace DeckParty.EditorTools
 
         [MenuItem("Deck Party/Open V1 Instructions (sprites and backgrounds)", priority = 61)]
         public static void OpenV1Instructions() => OpenDoc("V1Instructions.md");
+
+        [MenuItem("Deck Party/Open V2 Instructions (Audience Capture update)", priority = 62)]
+        public static void OpenV2Instructions() => OpenDoc("V2Instructions.md");
+
+        [MenuItem("Deck Party/Open UI Guide", priority = 63)]
+        public static void OpenUIGuide() => OpenDoc("UIGuide.md");
 
         static void OpenDoc(string fileName)
         {
@@ -117,8 +124,20 @@ namespace DeckParty.EditorTools
                 PlaceholderArt.GenerateAll(false);
                 EditorUI.LoadArt();
 
-                EditorUtility.DisplayProgressBar("Deck Party", "Creating data assets...", 0.25f);
+                EditorUtility.DisplayProgressBar("Deck Party", "Creating data assets...", 0.2f);
                 DeckPartyAssets.EnsureDataAssets();
+
+                EditorUtility.DisplayProgressBar("Deck Party", "Setting up languages, fonts and string tables...", 0.25f);
+                LocalizationSetup.EnsureAll();
+                EditorLoc.Reset();
+
+                EditorUtility.DisplayProgressBar("Deck Party", "Setting up character animation...", 0.3f);
+                CharacterAnimationTools.EnsureAll();
+
+                EditorUtility.DisplayProgressBar("Deck Party", "Generating Feel feedbacks and shader materials...", 0.33f);
+                FxSetup.Ensure(false);
+                // Fonts may have changed: builders pick up the UI Skin's body font for new text.
+                EditorUI.LoadArt();
 
                 EditorUtility.DisplayProgressBar("Deck Party", "Creating the network session prefab...", 0.35f);
                 DeckPartyAssets.EnsureNetworkPrefab();
@@ -146,10 +165,10 @@ namespace DeckParty.EditorTools
 
                 EditorSceneManager.OpenScene(DeckPartyPaths.MainMenuScene);
                 Debug.Log("[DeckParty] Setup complete. Open Assets/DeckParty/Scenes/MainMenu.unity and press Play. See INSTRUCTIONS.md for art and multiplayer.");
-                EditorUtility.DisplayDialog("Deck Party is ready",
-                    "Scenes, prefabs, placeholder art and data assets were generated.\n\n" +
-                    "Press Play in the MainMenu scene to try it. See INSTRUCTIONS.md (Deck Party > Open Instructions) for adding your sprite sheets and testing multiplayer.",
-                    "Let's party");
+                EditorUtility.DisplayDialog("Audience Capture is ready",
+                    "Scenes, prefabs, placeholder art, languages, FX and data assets were generated.\n\n" +
+                    "Press Play in the MainMenu scene to try it. UIGuide.md (Deck Party > Open UI Guide) explains where to change everything.",
+                    "Let's go live");
             }
             catch (Exception e)
             {

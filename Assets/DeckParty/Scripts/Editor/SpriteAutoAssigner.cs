@@ -11,16 +11,26 @@ namespace DeckParty.EditorTools
 {
     /// <summary>
     /// Hooks art up to the game:
-    ///  - by name: guests ("Doge", "guest_this_is_fine_dog", "tungtung"), venues ("bg_bedroom", "bg_bedroom_fg",
-    ///    "bg_bedroom_thumb", or just "bedroom" inside Art/Backgrounds) and UI skin slots ("ui_panel", "icon_star");
+    ///  - by name: guests ("Doge", "guest_this_is_fine_dog", "tungtung"), streamers ("streamer_bro_jogan", or just
+    ///    "brojogan" inside Art/Streamers), venues ("bg_bedroom", "bg_bedroom_fg", "bg_bedroom_thumb", "bg_stage_fate",
+    ///    or just "bedroom" inside Art/Backgrounds) and UI skin slots ("ui_panel", "icon_star");
     ///  - by order: assign a character sheet's sprites to the guests in roster order.
     /// Runs automatically whenever images are imported into Assets/DeckParty/Art (see <see cref="DeckPartyArtImporter"/>).
     /// </summary>
     public static class SpriteAutoAssigner
     {
         static readonly string[] s_GuestPrefixes = { "guest", "character", "char", "portrait", "dp" };
+        static readonly string[] s_StreamerPrefixes = { "streamer" };
         static readonly string[] s_VenuePrefixes = { "background", "bg", "venue" };
         static readonly string[] s_SkinPrefixes = { "ui", "skin" };
+
+        /// <summary>Spellings of the streamer names that don't normalise to the enum name.</summary>
+        static readonly (string alias, StreamerType type)[] s_StreamerAliases =
+        {
+            ("ethicalfkboi", StreamerType.EthicalFboi), ("ethicalfuckboi", StreamerType.EthicalFboi), ("ethicalfboy", StreamerType.EthicalFboi),
+            ("softhardbody", StreamerType.SoftHardBodyMan), ("abomination", StreamerType.StrategicAbomination),
+            ("manim", StreamerType.ManimMakethMan), ("radiologist", StreamerType.RudeRadiologist), ("jogan", StreamerType.BroJogan),
+        };
 
         /// <summary>Short names people are likely to use for files, on top of the full names and enum names.</summary>
         static readonly (string alias, GuestType type)[] s_Aliases =
@@ -68,16 +78,18 @@ namespace DeckParty.EditorTools
             foreach (var (alias, type) in s_Aliases)
                 if (!guestKeys.ContainsKey(alias)) guestKeys[alias] = type;
 
-            int guests = 0, venues = 0, skins = 0;
+            int guests = 0, streamers = 0, venues = 0, skins = 0;
             var unmatched = new List<string>();
 
             foreach (var (sprite, path) in FindSprites(DeckPartyPaths.Art))
             {
                 string key = Normalize(StripIndex(sprite.name));
                 bool inBackgrounds = path.StartsWith(DeckPartyPaths.ArtBackgrounds + "/", StringComparison.OrdinalIgnoreCase);
+                bool inStreamers = path.StartsWith(DeckPartyPaths.ArtStreamers + "/", StringComparison.OrdinalIgnoreCase);
 
                 if (TryAssignSkin(db, key, sprite)) { skins++; continue; }
                 if (TryAssignVenue(db, key, sprite, inBackgrounds)) { venues++; continue; }
+                if (TryAssignStreamer(db, key, sprite, inStreamers)) { streamers++; continue; }
 
                 string guestKey = StripPrefix(key, s_GuestPrefixes);
                 if (guestKeys.TryGetValue(guestKey, out var guestType) || guestKeys.TryGetValue(key, out guestType))
@@ -100,7 +112,7 @@ namespace DeckParty.EditorTools
             GameDatabase.ResetCache();
 
             var report = new StringBuilder();
-            report.AppendLine($"Assigned {guests} guest portrait(s), {venues} background image(s) and {skins} UI skin sprite(s).");
+            report.AppendLine($"Assigned {guests} guest portrait(s), {streamers} streamer portrait(s), {venues} background image(s) and {skins} UI skin sprite(s).");
             if (unmatched.Count > 0)
             {
                 report.AppendLine();
@@ -111,7 +123,7 @@ namespace DeckParty.EditorTools
 
             if (quiet) Debug.Log("[DeckParty] Art auto-assign: " + report.ToString().Split('\n')[0].Trim());
             else EditorUtility.DisplayDialog("Deck Party: sprites assigned", report.ToString(), "OK");
-            return guests + venues + skins;
+            return guests + streamers + venues + skins;
         }
 
         [MenuItem("Deck Party/Art/Assign Selected Sheet to Guests in Roster Order", priority = 1)]
@@ -180,12 +192,16 @@ namespace DeckParty.EditorTools
                 var info = GuestCatalog.Get((GuestType)i);
                 sb.AppendLine($"  {i + 1,2}. {info.Name}  ->  {FileName(info.Name)}.png");
             }
+            sb.AppendLine("\nStreamers (Assets/DeckParty/Art/Characters or Art/Streamers):");
+            foreach (var type in StreamerCatalog.Roster) sb.AppendLine($"  {type}  ->  streamer_{FileName(SplitWords(type.ToString()))}.png");
             sb.AppendLine("\nBackgrounds (Assets/DeckParty/Art/Backgrounds):");
-            foreach (var preset in VenuePresets.All) sb.AppendLine($"  {preset.Name}  ->  bg_{preset.Id}.png  (optional: bg_{preset.Id}_fg.png, bg_{preset.Id}_thumb.png)");
+            foreach (var preset in VenuePresets.AllWithStages()) sb.AppendLine($"  {preset.Name}  ->  bg_{preset.Id}.png  (optional: bg_{preset.Id}_fg.png, bg_{preset.Id}_thumb.png)");
             Debug.Log(sb.ToString());
         }
 
         static string FileName(string name) => Regex.Replace(name.ToLowerInvariant(), "[^a-z0-9]+", "_").Trim('_');
+
+        static string SplitWords(string pascal) => Regex.Replace(pascal, "(?<=[a-z])(?=[A-Z])", " ");
 
         // ------------------------------------------------------------------ matching
 
@@ -222,6 +238,26 @@ namespace DeckParty.EditorTools
                 if (stripped == id || stripped == name) { venue.background = sprite; return true; }
                 if (stripped == id + "fg" || stripped == id + "foreground") { venue.foreground = sprite; return true; }
                 if (stripped == id + "thumb" || stripped == id + "thumbnail" || stripped == id + "preview") { venue.thumbnail = sprite; return true; }
+            }
+            return false;
+        }
+
+        static bool TryAssignStreamer(GameDatabase db, string key, Sprite sprite, bool inStreamersFolder)
+        {
+            string stripped = StripPrefix(key, s_StreamerPrefixes);
+            if (stripped == key && !inStreamersFolder) return false;
+
+            foreach (var type in StreamerCatalog.Roster)
+            {
+                bool match = stripped == Normalize(type.ToString());
+                foreach (var (alias, aliasType) in s_StreamerAliases)
+                    match |= aliasType == type && stripped == alias;
+                if (!match) continue;
+
+                var art = db.GetStreamerArt(type);
+                if (art == null) return false;
+                art.portrait = sprite;
+                return true;
             }
             return false;
         }

@@ -4,6 +4,21 @@ This covers the streaming/meme update from `MajorUpdate.md`: the renames, the 40
 
 Section 6 covers making a build you can send to a friend, and testing multiplayer together over the internet.
 
+> **Updated for V2 (Audience Capture).** Sections 2, 3 and 6 use the current labels. Sections 0, 1 and 4 describe the V1 update as it was, so a few names there have changed since:
+>
+> | V1 name | Now |
+> |---|---|
+> | guest | viewer |
+> | Squad | Audience |
+> | Party Log | Stream Log |
+> | venue | stream setup |
+> | Open the Door | Add Viewer to Chat |
+> | End Party | End the Stream |
+> | Recruit Guests | Recruit Viewers |
+> | Admit / Reject | Approve / Deny |
+>
+> On-screen text now lives in the strings CSV (see `UIGuide.md` section 7), not in `Terms.cs`. Streamers, languages, animation and the new test passes are in `V2Instructions.md`.
+
 ---
 
 ## 0. Get the update into Unity (about 2 minutes)
@@ -40,7 +55,7 @@ Renamed characters: Old Friend → **Loyal Fan**, Wild Buddy → **Bot Farm**, R
 
 The 9 Star characters are now Diamonds: Dinosaur → **Drama Channel**, Dragon → **Diva Streamer**, Mermaid → **Raid Leader**, Alien → **Mystery VTuber**, Unicorn → **Wholesome Icon**, Ghost → **Platform Admin** ("Ban Wave"), Superhero → **Mega Influencer**, Leprechaun → **Brand Sponsor**, Genie → **The Algorithm** ("Trending").
 
-All on-screen wording lives in `Assets/DeckParty/Scripts/Runtime/Visuals/Terms.cs`. To re-theme the UI again, edit that file.
+On-screen wording now lives in `Assets/DeckParty/Resources/Localization/AudienceCapture_Strings.csv`, one column per language. See `UIGuide.md` section 7.
 
 ---
 
@@ -48,7 +63,7 @@ All on-screen wording lives in `Assets/DeckParty/Scripts/Runtime/Visuals/Terms.c
 
 **Folder:** `Assets/DeckParty/Art/Characters`
 
-**Recommended art:** square-ish PNGs with transparent backgrounds, 512x512 (256x256 minimum). The portrait area in a card is about 180x140 and keeps your aspect ratio.
+**Recommended art:** square-ish PNGs with transparent backgrounds, 512x512 (256x256 minimum). The portrait area in a card is about 180x178 and keeps your aspect ratio. Streamer portraits go in the same folder (or `Art/Streamers`) named `streamer_<name>`, e.g. `streamer_bro_jogan.png` (see `V2Instructions.md` section 2).
 
 ### Option A (easiest): one image per character
 1. Name each file after the character using the **File name** column below. Case, spaces, `-` and `_` don't matter, so `this_is_fine_dog.png`, `ThisIsFineDog.png` and `This Is Fine Dog.png` all work.
@@ -66,11 +81,11 @@ All on-screen wording lives in `Assets/DeckParty/Scripts/Runtime/Visuals/Terms.c
 Lay the characters out left to right, top to bottom, in the **#** order below. Slice the sheet as in Option B (names don't matter), select the texture, then run **Deck Party > Art > Assign Selected Sheet to Guests in Roster Order**.
 
 ### Option D: by hand
-Use **Deck Party > Select Game Database**. In the **Guests** list, drag a sprite into each character's **Portrait**. **Display Name Override** renames a character on screen only.
+Use **Deck Party > Select Game Database**. In the **Guests** list, drag a sprite into each character's **Portrait**. To rename a character on screen, edit its `char.<Type>.name` row in the strings CSV.
 
 **Pixel art:** after importing, set **Filter Mode: Point (no filter)** and **Compression: None**, then click **Apply**. Your changes are kept; the importer only sets defaults on the first import.
 
-**Check it worked:** in Play mode, go to **How to Play > Guests**, or **Single Player > Open Lobby**, which lists every character. **Deck Party > Art > Log Expected File Names** prints this list in the Console.
+**Check it worked:** in Play mode, go to **How to Play > All 59 Viewers**, or **Single Player > Open Lobby**, which lists every character. **Deck Party > Art > Log Expected File Names** prints this list in the Console.
 
 | # | Character | File name | Family | | # | Character | File name | Family |
 |---|---|---|---|---|---|---|---|---|
@@ -113,7 +128,7 @@ Until a character has a portrait, its card shows a coloured disc with initials. 
 
 **Folder:** `Assets/DeckParty/Art/Backgrounds`
 
-**Recommended art:** 1920x1080 or larger, 16:9, PNG or JPG. Backgrounds fill the whole screen while keeping their aspect ratio, so on non-16:9 windows the edges get cropped. Keep the important parts of the image near the centre.
+**Recommended art:** 21:9, 2520x1080 or larger, PNG or JPG. Backgrounds fill the whole screen while keeping their aspect ratio: ultrawide screens show the full width and 16:9 crops the sides. Keep the important parts inside the central 16:9. Each streamer also has a stage (`bg_stage_<streamer>.png`, e.g. `bg_stage_fate.png`); see `V2Instructions.md` section 2.
 
 1. Name each image `bg_<id>.png` using the table below. Inside the Backgrounds folder the plain id also works (`bedroom.png`).
 2. Drag the images into `Assets/DeckParty/Art/Backgrounds`.
@@ -142,7 +157,7 @@ Until a character has a portrait, its card shows a coloured disc with initials. 
 
 **New background:** right-click in `Data/Venues`, choose **Create > Deck Party > Venue**, give it a unique **Id**, then add it to the database's **Venues** list. Name the image `bg_<that id>`.
 
-**Check it worked:** **Single Player** shows the selected venue's preview in the bottom bar. In game, open **Menu > Venue** to switch backgrounds live.
+**Check it worked:** **Single Player** shows the selected stream setup's preview in the bottom bar. In game, open **Menu > Stream Setup** to switch backgrounds live.
 
 ---
 
@@ -212,7 +227,7 @@ Use F9, buy 4 Diamonds in Open Lobby and play until all 4 are at one party. **En
 | Dancing Baby | Use two actions of the same type in a row (e.g. two Remove actions): +3 each time, max +9. The action type is in each tooltip. |
 
 ### E. Multiplayer
-Use **Window > Multiplayer > Multiplayer Play Mode** with Player 2, host on the network, then join `127.0.0.1:7777`. The choice popups, multi-picks and Distracted Boyfriend decisions all go through the host, and each player sees only their own decisions.
+Use **Window > Multiplayer > Multiplayer Play Mode** with Player 2, host under Direct IP / LAN, then join `127.0.0.1:7777`. The choice popups, multi-picks and Distracted Boyfriend decisions all go through the host, and each player sees only their own decisions.
 
 The lobby defaults to **Take Turns**: both windows show the active player's party, and the turn passes when they click **End Turn**. Click a player in the Players panel to watch their board in any mode (see section 6D).
 
@@ -278,9 +293,9 @@ The account button at the top left of the Unity editor should show the account y
 
 **Step 5: check it works in the editor**
 1. Open the MainMenu scene, press **Play** and click **Multiplayer**.
-2. Under **Online (Unity Relay)**, the note should say "Play over the internet with a join code (Unity Relay)..." and **Host Online Party** should be clickable. An orange "Online play needs the Multiplayer Services package" message means step 1 isn't done.
-3. Click **Host Online Party**. After a few seconds the lobby opens with a 6-character join code, which means this project can reach Relay.
-4. To check joining as well: stop Play and open **Window > Multiplayer > Multiplayer Play Mode**. Tick **Player 2**, then press Play. Host online in the main window. In the Player 2 window, click **Multiplayer**, paste the code into **Join code** and click **Join**. Player 2 should appear in the lobby's player list.
+2. Pick any streamer. Under **Online (Join Code)**, the note should say "Play over the internet with a join code (Unity Relay)..." and **Host Online Game** should be clickable. An orange "Online play needs the Multiplayer Services package" message means step 1 isn't done.
+3. Click **Host Online Game**. After a few seconds the lobby opens with a 6-character join code, which means this project can reach Relay.
+4. To check joining as well: stop Play and open **Window > Multiplayer > Multiplayer Play Mode**. Tick **Player 2**, then press Play. Host online in the main window. In the Player 2 window, click **Multiplayer**, pick a streamer, paste the code into **Join code** and click **Join**. Player 2 should appear in the lobby's player list.
 
 **If step 5 fails**
 
@@ -303,7 +318,7 @@ Once step 5 works, make the build (section B). If you ever link a different proj
 
 If the build fails with an IL2CPP error, set **Player > Other Settings > Scripting Backend** to **Mono** and build again. Mono needs no extra installs.
 
-**Check the build on your PC:** run `Deck Party.exe` and click **Multiplayer > Host Online Party**. Then press Play in the editor and join that code from there. If you both reach the lobby, the build is ready to share.
+**Check the build on your PC:** run `Deck Party.exe`, click **Multiplayer**, pick a streamer and click **Host Online Game**. Then press Play in the editor and join that code from there. If you both reach the lobby, the build is ready to share.
 
 ### C. Send it to your friend
 
@@ -315,15 +330,15 @@ If the build fails with an IL2CPP error, set **Player > Other Settings > Scripti
 > 1. Download the zip, right-click it and choose **Extract All**, then open the extracted folder. Don't run the game from inside the zip, because it can't find its files that way. If Google Drive says it can't scan the file for viruses, click **Download anyway** (it says that for every large file). If your browser warns about the download, choose **Keep**.
 > 2. Double-click **Deck Party.exe**. Windows will probably say "Windows protected your PC" because the game isn't from a registered publisher. Click **More info**, then **Run anyway**.
 > 3. If Windows Firewall asks about Deck Party, click **Allow**.
-> 4. Click **Multiplayer**, type your name in **Your name**, paste the join code I send you into **Join code**, and click **Join**.
-> 5. In the lobby, click **Ready!**. You can pick your own background under **Your venue**; I choose everything else.
+> 4. Click **Multiplayer** and pick a streamer on the **Select Your Streamer** screen (Enter or **GO LIVE!**). Type your name in **Your Name**, paste the join code I send you into **Join code**, and click **Join**.
+> 5. In the lobby, click **Ready!**. You can change your streamer there, and pick your own background under **Your stream setup**; I choose everything else.
 > 6. When I send a new version, delete the old folder and extract the new zip. The version number is in the corner of the main menu, and ours must match.
 
 ### D. Playing online
 
-1. **You (host):** click **Multiplayer**, type your name, then click **Host Online Party**. The lobby shows a 6-character join code. Click **Copy** and send it to your friend (Discord, WhatsApp, a text). You get a new code every time you host.
+1. **You (host):** click **Multiplayer**, pick a streamer, type your name, then click **Host Online Game**. The lobby shows a 6-character join code. Click **Copy** and send it to your friend (Discord, WhatsApp, a text). You get a new code every time you host.
 2. **Your friend** joins with the code and appears in the **Players** list.
-3. You choose the **Character Set**, **Mode** and **Season length**. Your friend sees your choices but can't change them. Each of you picks your own venue.
+3. You choose the **Character Set**, **Mode**, **Season length** and **Turn Timer**. Your friend sees your choices but can't change them. Each of you picks your own streamer and stream setup.
 4. When your friend shows **Ready**, click **Start Season**.
 5. Keep your game running while you play, because your PC runs both games. Minimising or alt-tabbing is fine. Closing the game, or **Menu > Leave Game**, ends the season for both of you. If your friend leaves, they can't rejoin that season.
 
@@ -342,7 +357,7 @@ Do the steps in order: the first ones check the connection, and the later ones c
 
 | # | Do this | What should happen |
 |---|---|---|
-| 1 | You host online and your friend joins with the code. Each of you sends a chat message in the lobby. | Your friend appears in **Players (2/6)** as "Not ready", with a "joined the party" headline. Both messages appear on both screens. |
+| 1 | You host online and your friend joins with the code. Each of you sends a chat message in the lobby. | Your friend appears in **Players (2/6)** as "Not ready", with a "joined the game" headline. Both messages appear on both screens. |
 | 2 | You change the Character Set, Mode and Season length. | Your friend's lobby updates straight away, and their selectors are greyed out. |
 | 3 | Pick **Starter Stream**, **Take Turns**, **10** nights. Your friend clicks **Ready!**, then you click **Start Season**. | Both screens show **your** board. You get a "YOUR TURN" banner; your friend gets "<your name>'S TURN". The strip above the board says whose turn it is. |
 | 4 | Play your turn: open the door a few times, use an action, end the party, buy a guest, then click **End Turn**. | Your friend sees every arrival, action, banner and purchase live, and their Party Log narrates it. Their buttons stay greyed out. After End Turn, both screens switch to your friend's board and they get "YOUR TURN". |
@@ -354,8 +369,8 @@ Do the steps in order: the first ones check the connection, and the later ones c
 | 10 | In the lobby, pick **Open Lobby** and **Synchronized Nights**, then start. Play night 1 at the same time, and click the other player's row in **Players**. | Their board appears with "Watching <name>'s party". **Back to My Party** returns to yours. When you're both ready, night 2 starts and you're both put back on your own boards. |
 | 11 | Your friend buys characters with special choices: Pepe (8), Karen (8), Grumpy Cat (9) and Distracted Boyfriend (9), then Tralalero Tralala (11) and Bombardiro Crocodilo (15) once they can afford them. You watch their board while they use them. | Popups, target picks, **Confirm** and Distracted Boyfriend's picker appear only on your friend's screen, and behave exactly as in single player (section 4D). You see the results live: log lines and card changes. |
 | 12 | Leave, host again with **Race (own pace)**, and play a couple of nights at different speeds. | Neither of you waits for the other between nights. |
-| 13 | You click **Menu > Leave Game**. | Your friend is sent back to the Multiplayer screen with "The host closed the party." |
-| 14 | Host again (new code). Your friend joins and you start. Your friend clicks **Menu > Leave Game**, then tries to join again with the same code. | You see "left the party" and can keep playing (in Take Turns, their turns are skipped). Your friend gets "That party has already started." |
+| 13 | You click **Menu > Leave Game**. | Your friend is sent back to the Multiplayer screen with "The host closed the lobby." |
+| 14 | Host again (new code). Your friend joins and you start. Your friend clicks **Menu > Leave Game**, then tries to join again with the same code. | You see "left the game" and can keep playing (in Take Turns, their turns are skipped). Your friend gets "That game has already started." |
 
 ### F. If something goes wrong
 
@@ -363,9 +378,9 @@ Do the steps in order: the first ones check the connection, and the later ones c
 |---|---|
 | "Online play isn't set up yet..." | Relay isn't enabled, or the build was made before the project was linked. Do section A, then rebuild and resend. |
 | "Couldn't reach Unity's servers..." | That PC is offline, or a VPN, school or work network is blocking the connection. Try another network, or use the Tailscale fallback below. |
-| "No party found with that code." | There's a typo, or the host left and hosted again (each hosting gets a new code). Ask for the current code. |
+| "No game found with that code." | There's a typo, or the host left and hosted again (each hosting gets a new code). Ask for the current code. |
 | "Version mismatch..." | You're running different builds. Both of you should use the newest zip. |
-| "That party has already started." | You can only join while the host is in the lobby. |
+| "That game has already started." | You can only join while the host is in the lobby. |
 | The game won't start, or says it can't find `Deck Party_Data` | It was run from inside the zip. Use **Extract All** first. |
 | Antivirus removes `Deck Party.exe` | This sometimes happens with unsigned indie games. Restore the file and allow it in the antivirus. |
 | Something breaks during a game | Send me what you were doing, who was hosting, and the log files from **both** PCs (see below). |
@@ -374,8 +389,8 @@ Do the steps in order: the first ones check the connection, and the later ones c
 
 **Fallback if Relay won't connect: Tailscale (free)**
 1. You both install Tailscale from https://tailscale.com and sign in. From the Tailscale admin console, share your PC with your friend, or invite them to your network.
-2. You click **Host on this Network**. Your Tailscale address (it starts with `100.`) is shown in the Tailscale app. The address the game shows is your home network address, so don't send that one.
-3. Your friend types your `100.x.x.x` address and port `7777` under **Local Network / Direct IP**, then clicks **Join**.
+2. You click **Host** (under Direct IP / LAN). Your Tailscale address (it starts with `100.`) is shown in the Tailscale app. The address the game shows is your home network address, so don't send that one.
+3. Your friend types your `100.x.x.x` address and port `7777` under **Direct IP / LAN**, then clicks **Join by IP**.
 4. If Windows Firewall asks on your PC, allow Deck Party on both private and public networks.
 
 Port forwarding also works without any accounts; see section 11e of `INSTRUCTIONS.md`.
@@ -384,4 +399,4 @@ Port forwarding also works without any accounts; see section 11e of `INSTRUCTION
 
 1. Change **Version**, build into a new folder, then zip and send it as in B and C.
 2. Before hosting, check that the main-menu version matches on both PCs.
-3. The game only turns away a copy with a different network version, which I change whenever the rules or save format change. Smaller changes can still connect, so the matching menu version is what keeps you both on the same rules. If you edit the rules code yourself, change `ProtocolVersion` in `Assets/DeckParty/Scripts/Runtime/Networking/NetworkService.cs` (it's currently `deckparty-3`; change it to `deckparty-4`, and so on) so older copies get the "Version mismatch" message.
+3. The game only turns away a copy with a different network version, which I change whenever the rules or save format change. Smaller changes can still connect, so the matching menu version is what keeps you both on the same rules. If you edit the rules code yourself, change `ProtocolVersion` in `Assets/DeckParty/Scripts/Runtime/Networking/NetworkService.cs` (it's currently `deckparty-4`; change it to `deckparty-5`, and so on) so older copies get the "Version mismatch" message.

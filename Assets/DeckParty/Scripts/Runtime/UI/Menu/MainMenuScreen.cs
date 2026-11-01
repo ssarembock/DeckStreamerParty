@@ -28,6 +28,10 @@ namespace DeckParty.UI
 
         void Awake()
         {
+            Loc.Changed += () =>
+            {
+                if (IsVisible) OnShow();
+            };
             continueButton.onClick.AddListener(() => SceneFlow.StartSinglePlayer(new SinglePlayerLaunch { ContinueSave = true }));
             singlePlayerButton.onClick.AddListener(() => m_Menu.ShowSinglePlayer());
             multiplayerButton.onClick.AddListener(() => m_Menu.ShowMultiplayer());
@@ -46,15 +50,16 @@ namespace DeckParty.UI
                 logoImage.sprite = logo;
             }
             if (titleGroup != null) titleGroup.SetActive(logo == null);
-            if (taglineLabel != null) taglineLabel.text = $"Go live, build your {Terms.Squad} and get {GameRules.DiamondsToWin} {Terms.Diamonds} to one party.";
+            if (titleLabel != null) titleLabel.text = Loc.Get("menu.title");
+            if (taglineLabel != null) taglineLabel.text = Loc.Get("menu.tagline", "count", GameRules.DiamondsToWin);
 
             var save = SaveSystem.Describe();
             continueButton.gameObject.SetActive(save != null);
-            if (save != null) continueLabel.text = $"Continue  <size=65%><color=#B9AED6>{save}</color></size>";
+            if (save != null) continueLabel.text = Loc.Get("menu.continue") + $"  <size=65%><color=#B9AED6>{save}</color></size>";
 
-            var progress = $"Character sets cleared: <color=#FFC94A>{ProgressStore.PresetsCleared}/{ScenarioCatalog.PresetCount}</color>" +
-                           $"     Random streak: <color=#3DDBD9>{ProgressStore.RandomStreak}</color> (best {ProgressStore.BestRandomStreak})";
-            if (ProgressStore.HasCherry) progress += "     <color=#FF4F8B>Cherry earned!</color>";
+            var progress = Loc.Get("menu.progress", ("cleared", $"<color=#FFC94A>{ProgressStore.PresetsCleared}/{ScenarioCatalog.PresetCount}</color>"),
+                ("streak", $"<color=#3DDBD9>{ProgressStore.RandomStreak}</color>"), ("best", ProgressStore.BestRandomStreak));
+            if (ProgressStore.HasCherry) progress += $"     <color=#FF4F8B>{Loc.Get("over.cherry")}</color>";
             progressLabel.text = progress;
             versionLabel.text = "v" + Application.version;
         }

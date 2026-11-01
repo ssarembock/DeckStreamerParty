@@ -46,7 +46,8 @@ namespace DeckParty.Networking
     /// </summary>
     public sealed class NetworkService : MonoBehaviour
     {
-        public const string ProtocolVersion = "deckparty-3";
+        /// <summary>Bump on any breaking network change. deckparty-4: streamers, localized message keys, presence, emotes, turn timer.</summary>
+        public const string ProtocolVersion = "deckparty-4";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";
@@ -57,6 +58,14 @@ namespace DeckParty.Networking
 #endif
 
         readonly Dictionary<ulong, string> m_PendingNames = new Dictionary<ulong, string>();
+        readonly Dictionary<ulong, byte> m_PendingStreamers = new Dictionary<ulong, byte>();
+
+        /// <summary>The streamer this player picked on the select screen; sent to the host when connecting.</summary>
+        public static byte LocalStreamer
+        {
+            get => AppSettings.LastStreamer;
+            set => AppSettings.LastStreamer = value;
+        }
         GameObject m_SessionPrefab;
         bool m_LeavingOnPurpose;
         bool m_WasConnected;
@@ -156,19 +165,20 @@ namespace DeckParty.Networking
         bool CanStart(out string error)
         {
             error = null;
-            if (IsBusy) error = "Already connecting...";
-            else if (IsActive) error = "You're already in a party. Leave it first.";
-            else if (Manager != null && Manager.ShutdownInProgress) error = "Still closing the last session. Try again in a moment.";
+            if (IsBusy) error = "net.busy";
+            else if (IsActive) error = "net.already_in_game";
+            else if (Manager != null && Manager.ShutdownInProgress) error = "net.still_closing";
             return error == null;
         }
 
         void PrepareConnection(string playerName)
         {
-            Manager.NetworkConfig.ConnectionData = Encoding.UTF8.GetBytes(ProtocolVersion + "|" + AppSettings.SanitizeName(playerName));
+            Manager.NetworkConfig.ConnectionData = Encoding.UTF8.GetBytes(ProtocolVersion + "|" + AppSettings.SanitizeName(playerName) + "|" + LocalStreamer);
             m_LeavingOnPurpose = false;
             m_WasConnected = false;
             m_LastDisconnectReason = null;
             m_PendingNames.Clear();
+            m_PendingStreamers.Clear();
         }
 
         void SpawnSession()
@@ -190,7 +200,7 @@ namespace DeckParty.Networking
             PrepareConnection(playerName);
 
             if (!Manager.StartHost())
-                return NetResult.Fail($"Couldn't host on port {port}. Is another copy of the game already hosting?");
+                return NetResult.Fail(Core.Err.Of("net.port_busy", port));
 
             Mode = ConnectionMode.Direct;
             JoinCode = $"{GetLocalIPv4()}:{port}";
@@ -205,13 +215,13 @@ namespace DeckParty.Networking
             if (!CanStart(out var error)) return NetResult.Fail(error);
 
             if (!TryResolveIPv4(address, out var ip))
-                return NetResult.Fail($"'{address}' isn't a valid IP address.");
+                return NetResult.Fail(Core.Err.Of("net.bad_ip", address));
 
             Transport.SetConnectionData(ip, port);
             PrepareConnection(playerName);
 
             if (!Manager.StartClient())
-                return NetResult.Fail("Couldn't start the network client.");
+                return NetResult.Fail("net.client_failed");
 
             Mode = ConnectionMode.Direct;
             JoinCode = $"{ip}:{port}";
@@ -235,7 +245,7 @@ namespace DeckParty.Networking
                 Transport.SetRelayServerData(allocation.ToRelayServerData("dtls"));
                 PrepareConnection(playerName);
 
-                if (!Manager.StartHost()) return NetResult.Fail("Couldn't start hosting through Relay.");
+                if (!Manager.StartHost()) return NetResult.Fail("net.relay_host_failed");
 
                 Mode = ConnectionMode.Relay;
                 JoinCode = code;
@@ -254,7 +264,7 @@ namespace DeckParty.Networking
             }
 #else
             await Task.CompletedTask;
-            return NetResult.Fail("Online play needs the Multiplayer Services package (com.unity.services.multiplayer).");
+            return NetResult.Fail("net.no_services");
 #endif
         }
 
@@ -264,7 +274,7 @@ namespace DeckParty.Networking
             if (!CanStart(out var error)) return NetResult.Fail(error);
 
             joinCode = (joinCode ?? string.Empty).Trim().ToUpperInvariant();
-            if (joinCode.Length < 4) return NetResult.Fail("Enter the join code your host shared.");
+            if (joinCode.Length < 4) return NetResult.Fail("net.enter_code");
 #if DECKPARTY_RELAY
             IsBusy = true;
             try
@@ -275,7 +285,7 @@ namespace DeckParty.Networking
                 Transport.SetRelayServerData(allocation.ToRelayServerData("dtls"));
                 PrepareConnection(playerName);
 
-                if (!Manager.StartClient()) return NetResult.Fail("Couldn't start the network client.");
+                if (!Manager.StartClient()) return NetResult.Fail("net.client_failed");
 
                 Mode = ConnectionMode.Relay;
                 JoinCode = joinCode;
@@ -292,7 +302,7 @@ namespace DeckParty.Networking
             }
 #else
             await Task.CompletedTask;
-            return NetResult.Fail("Online play needs the Multiplayer Services package (com.unity.services.multiplayer).");
+            return NetResult.Fail("net.no_services");
 #endif
         }
 
@@ -318,12 +328,12 @@ namespace DeckParty.Networking
             var message = e.Message ?? string.Empty;
             var lower = message.ToLowerInvariant();
             if (lower.Contains("project") || lower.Contains("cloud") || lower.Contains("unauthorized") || lower.Contains("forbidden"))
-                return "Online play isn't set up yet: link this project to Unity Cloud and enable Relay (see INSTRUCTIONS.md), or use Direct IP.";
+                return "net.not_set_up";
             if (!hosting && (lower.Contains("not found") || lower.Contains("join code") || lower.Contains("invalid")))
-                return "No party found with that code. Check it and try again.";
+                return "net.code_not_found";
             if (lower.Contains("network") || lower.Contains("timeout") || lower.Contains("connect"))
-                return "Couldn't reach Unity's servers. Check your internet connection.";
-            return (hosting ? "Couldn't create an online party: " : "Couldn't join: ") + message;
+                return "net.unreachable";
+            return Core.Err.Of(hosting ? "net.host_failed" : "net.join_failed", message.Replace(Core.Err.Separator, '/'));
         }
 
         // ------------------------------------------------------------------ leaving
@@ -337,7 +347,7 @@ namespace DeckParty.Networking
             {
                 var clients = new List<ulong>(Manager.ConnectedClientsIds);
                 foreach (var id in clients)
-                    if (id != NetworkManager.ServerClientId) Manager.DisconnectClient(id, "The host closed the party.");
+                    if (id != NetworkManager.ServerClientId) Manager.DisconnectClient(id, "net.host_closed");
             }
 
             Manager.Shutdown();
@@ -350,14 +360,17 @@ namespace DeckParty.Networking
             response.CreatePlayerObject = false;
             response.Pending = false;
 
+            // Payload: "protocol|name|streamer"
             string payload = request.Payload != null ? Encoding.UTF8.GetString(request.Payload) : string.Empty;
-            int split = payload.IndexOf('|');
-            string version = split >= 0 ? payload.Substring(0, split) : payload;
-            string name = AppSettings.SanitizeName(split >= 0 ? payload.Substring(split + 1) : string.Empty);
+            var parts = payload.Split('|');
+            string version = parts.Length > 0 ? parts[0] : string.Empty;
+            string name = AppSettings.SanitizeName(parts.Length > 1 ? parts[1] : string.Empty);
+            byte streamer = parts.Length > 2 && byte.TryParse(parts[2], out var parsed) ? parsed : (byte)0;
 
             if (request.ClientNetworkId == NetworkManager.ServerClientId)
             {
                 m_PendingNames[request.ClientNetworkId] = name;
+                m_PendingStreamers[request.ClientNetworkId] = streamer;
                 response.Approved = true;
                 return;
             }
@@ -365,7 +378,7 @@ namespace DeckParty.Networking
             if (version != ProtocolVersion)
             {
                 response.Approved = false;
-                response.Reason = "Version mismatch: everyone needs the same build of Deck Party.";
+                response.Reason = "net.version_mismatch";
                 return;
             }
 
@@ -373,19 +386,28 @@ namespace DeckParty.Networking
             if (session != null && session.Phase != MatchPhase.Lobby)
             {
                 response.Approved = false;
-                response.Reason = "That party has already started.";
+                response.Reason = "net.already_started";
                 return;
             }
 
             if (Manager.ConnectedClientsIds.Count >= MaxPlayers)
             {
                 response.Approved = false;
-                response.Reason = $"That party is full ({MaxPlayers} players).";
+                response.Reason = Core.Err.Of("net.full", MaxPlayers);
                 return;
             }
 
             m_PendingNames[request.ClientNetworkId] = name;
+            m_PendingStreamers[request.ClientNetworkId] = streamer;
             response.Approved = true;
+        }
+
+        /// <summary>Server: the streamer a connecting client picked (a StreamerType, or the Random pick).</summary>
+        public byte TakePendingStreamer(ulong clientId)
+        {
+            if (!m_PendingStreamers.TryGetValue(clientId, out var streamer)) return 0;
+            m_PendingStreamers.Remove(clientId);
+            return streamer;
         }
 
         /// <summary>Server: the name a connecting client sent in its approval payload.</summary>
@@ -411,7 +433,7 @@ namespace DeckParty.Networking
 
         void OnTransportFailure()
         {
-            m_LastDisconnectReason = "The network connection failed.";
+            m_LastDisconnectReason = "net.transport_failed";
         }
 
         void OnClientStopped(bool wasHost)
@@ -421,13 +443,14 @@ namespace DeckParty.Networking
             {
                 if (!string.IsNullOrEmpty(m_LastDisconnectReason)) reason = m_LastDisconnectReason;
                 else if (!string.IsNullOrEmpty(Manager.DisconnectReason)) reason = Manager.DisconnectReason;
-                else reason = m_WasConnected ? "Lost connection to the host." : "Couldn't connect. Check the code or address and try again.";
+                else reason = m_WasConnected ? "net.lost_connection" : "net.could_not_connect";
             }
 
             m_LeavingOnPurpose = false;
             m_WasConnected = false;
             m_LastDisconnectReason = null;
             m_PendingNames.Clear();
+            m_PendingStreamers.Clear();
             Mode = ConnectionMode.None;
             JoinCode = null;
 

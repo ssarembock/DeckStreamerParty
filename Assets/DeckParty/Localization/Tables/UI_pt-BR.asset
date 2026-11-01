@@ -1,0 +1,1503 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI_pt-BR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pt-BR
+  m_SharedData: {fileID: 11400000, guid: ca96b39389ed7e341b0e7f8dbab94f2e, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1486045184
+    m_Localized: Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125568
+    m_Localized: Registro da live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125569
+    m_Localized: Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125570
+    m_Localized: 'Fechar  [R]'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125571
+    m_Localized: 'Continuar  [Esc]'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125572
+    m_Localized: "Classifica\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125573
+    m_Localized: '- ou entre na partida de um amigo -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125574
+    m_Localized: "- ou entre pelo endere\xE7o -"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125575
+    m_Localized: "Configura\xE7\xF5es da partida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125576
+    m_Localized: 'Subs de presente: gaste pra recrutar novos espectadores.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125577
+    m_Localized: 'Grana: gaste pra aumentar seu limite do chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125578
+    m_Localized: Vagas ocupadas / seu limite do chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125579
+    m_Localized: "Audi\xEAncia [R]"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125580
+    m_Localized: Noite <b>{night}</b><size=70%>/{total}</size>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125581
+    m_Localized: '{cap}<size=70%> limite</size>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125582
+    m_Localized: "Risco de pol\xEDcia {risk}/{max}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125583
+    m_Localized: Diamantes {count}/{max}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125584
+    m_Localized: "<b>Risco de pol\xEDcia</b>\\nCom {max} de risco l\xEDquido em uma
+      live a pol\xEDcia chega."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125585
+    m_Localized: "<b>Risco de pol\xEDcia</b>\\nAdicionado por espectadores: {added}\\nAnulado:
+      -{cancelled}\\nL\xEDquido: {net} (a pol\xEDcia chega com {max})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125586
+    m_Localized: 'Do raid de um rival: +{count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125587
+    m_Localized: "Bomba de fuma\xE7a: -{count}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125588
+    m_Localized: "<b>Diamantes</b>\\nNesta live: {now}\\nNa sua Audi\xEAncia: {owned}\\nRecorde
+      em uma live: {best}\\nJunte {goal} em uma live pra vencer!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125589
+    m_Localized: Vazio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125590
+    m_Localized: Chat ao vivo  <size=75%><color=#B9AED6>{filled}/{cap} do limite 
+      -  {queue} na fila</color></size>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125591
+    m_Localized: "Os {count} Diamantes est\xE3o aqui! Encerre a live agora pra vencer!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125592
+    m_Localized: "Mais um de risco e a pol\xEDcia chega."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125593
+    m_Localized: "Voc\xEA bateu o limite do chat. Use a\xE7\xF5es ou encerre a live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125594
+    m_Localized: Deixar um espectador entrar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125595
+    m_Localized: "Deixa o pr\xF3ximo espectador da fila entrar no chat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125596
+    m_Localized: '{count} {count:plural:espectador|espectadores} na fila'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125597
+    m_Localized: Encerrar a live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125598
+    m_Localized: Encerrar a live e VENCER!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125599
+    m_Localized: Guarde os Subs e a Grana de todo mundo no chat como Subs de presente
+      e $.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125600
+    m_Localized: (-{count} de taxas)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125601
+    m_Localized: Um espectador quer entrar...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125602
+    m_Localized: "Pr\xF3ximo: {viewer}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125603
+    m_Localized: 'Raio X: {viewers}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125604
+    m_Localized: "Chance de pol\xEDcia: {percent}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125605
+    m_Localized: '{count} {count:plural:espectador|espectadores} com risco na fila'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125606
+    m_Localized: 'Chance de estourar o limite: {percent}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125607
+    m_Localized: Aprovar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125608
+    m_Localized: Barrar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125609
+    m_Localized: Inicial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125610
+    m_Localized: "Voc\xEA tem {count}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125611
+    m_Localized: "Voc\xEA tem {count}/{max}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125612
+    m_Localized: Comprar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125613
+    m_Localized: "No m\xE1ximo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125614
+    m_Localized: Recrutar espectadores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125615
+    m_Localized: "Gaste Subs de presente pra colocar espectadores na sua Audi\xEAncia
+      pra todas as pr\xF3ximas lives. Passe o mouse para ver detalhes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125616
+    m_Localized: '{count:plural:Falta|Faltam} {count} {count:plural:noite|noites}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125617
+    m_Localized: A noite {night} de {total} acabou.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125618
+    m_Localized: A noite {night} de {total} de {player} acabou.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125619
+    m_Localized: "Voc\xEA tem {subs} e {cash}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125620
+    m_Localized: '{player} tem {subs} e {cash}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125621
+    m_Localized: "Essa \xE9 a loja de {player}. Voc\xEA est\xE1 assistindo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125622
+    m_Localized: Espere a sua vez.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125623
+    m_Localized: "Voc\xEA j\xE1 marcou que est\xE1 pronto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125624
+    m_Localized: "O limite do chat est\xE1 no m\xE1ximo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125625
+    m_Localized: Aumentar limite ({from} -> {to})  {cost}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125626
+    m_Localized: "Um limite maior cabe mais espectadores ao mesmo tempo (e mais espa\xE7o
+      pra quem traz amigos)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125627
+    m_Localized: "Ver Audi\xEAncia ({count})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125628
+    m_Localized: "Ver a Audi\xEAncia de {player} ({count})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125629
+    m_Localized: "{player} est\xE1 comprando"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125630
+    m_Localized: Assistindo {player}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125631
+    m_Localized: A vez dele acaba quando terminar de comprar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125632
+    m_Localized: Clique no seu nome na lista de jogadores pra voltar pra sua live.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125633
+    m_Localized: Encerrar vez
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125634
+    m_Localized: "A noite {night} come\xE7a depois da sua vez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125635
+    m_Localized: "Pr\xF3ximo: {player}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125636
+    m_Localized: Esperando a sua vez
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125637
+    m_Localized: "\xC9 a vez de {player}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125638
+    m_Localized: Cancelar pronto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125639
+    m_Localized: Pronto para a noite {night}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125640
+    m_Localized: "Come\xE7ando..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125641
+    m_Localized: 'Esperando: {players}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125642
+    m_Localized: "A pr\xF3xima noite come\xE7a quando todo mundo estiver pronto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514176
+    m_Localized: "Come\xE7ar a noite {night}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514177
+    m_Localized: Que live!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514178
+    m_Localized: Que live! Apareceram {diamonds}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514179
+    m_Localized: "Voc\xEA ganhou {subs} e {cash}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514180
+    m_Localized: "Taxas n\xE3o pagas custaram {count} Subs de presente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514181
+    m_Localized: "A POL\xCDCIA CHEGOU!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514182
+    m_Localized: Sem pagamento esta noite.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514183
+    m_Localized: "{viewer} levou ban tempor\xE1rio e fica fora da pr\xF3xima live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514184
+    m_Localized: A live caiu! Limite estourado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514185
+    m_Localized: Espectadores demais pro seu limite. Sem pagamento esta noite.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514186
+    m_Localized: Planejamento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514187
+    m_Localized: '{player}: {text}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514188
+    m_Localized: 'Cancelar  [Esc]'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514189
+    m_Localized: Confirmar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514190
+    m_Localized: Cancelar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514191
+    m_Localized: Voltar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514192
+    m_Localized: Fechar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514193
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514194
+    m_Localized: Sim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514195
+    m_Localized: "N\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514196
+    m_Localized: Lig.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514197
+    m_Localized: Desl.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514198
+    m_Localized: '[Esc] cancela'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514199
+    m_Localized: "O risco ficou alto demais e a pol\xEDcia encerrou a live. Ningu\xE9m
+      recebe esta noite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514200
+    m_Localized: "Escolha quem leva um ban tempor\xE1rio. Ele fica fora da pr\xF3xima
+      live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514201
+    m_Localized: "{player} precisa escolher quem leva um ban tempor\xE1rio."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514202
+    m_Localized: "Sua Audi\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514203
+    m_Localized: "A Audi\xEAncia de {player}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514204
+    m_Localized: '{count} {count:plural:espectador|espectadores}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514205
+    m_Localized: 'Diamantes: {owned}    Recorde de Diamantes em uma live: {best}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514206
+    m_Localized: 'Na fila: {queue}    No chat: {chat}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514207
+    m_Localized: "{viewer} est\xE1 de ban tempor\xE1rio esta noite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514208
+    m_Localized: "{viewer} est\xE1 de ban tempor\xE1rio na pr\xF3xima live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514209
+    m_Localized: 'Streamer: {streamer} ({power})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514210
+    m_Localized: "Espectadores escurecidos n\xE3o podem entrar esta noite. Passe
+      o mouse para ver detalhes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514211
+    m_Localized: Jogadores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514212
+    m_Localized: Saiu do jogo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514213
+    m_Localized: ({viewers}/{cap}, {diamonds}, risco {risk})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514214
+    m_Localized: Ao vivo agora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514215
+    m_Localized: Comprando agora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514216
+    m_Localized: Acabou por hoje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514217
+    m_Localized: Esperando a vez
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514218
+    m_Localized: Ao vivo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514219
+    m_Localized: Pronto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514220
+    m_Localized: Planejando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514221
+    m_Localized: VENCEU na noite {night}!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514222
+    m_Localized: Temporada encerrada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514223
+    m_Localized: Noite {night}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514224
+    m_Localized: '{subs}  {cash}  Diamantes {owned}  recorde {best}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514225
+    m_Localized: "VIT\xD3RIA!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514226
+    m_Localized: FIM DA TEMPORADA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514227
+    m_Localized: "{count} Diamantes juntos numa live na noite {night} de {total}.
+      {set} conclu\xEDdo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514228
+    m_Localized: "Sequ\xEAncia aleat\xF3ria: {streak}/{goal}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514229
+    m_Localized: Cereja conquistada!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514230
+    m_Localized: "Dessa vez n\xE3o rolou live de {count} Diamantes. Seu melhor foi
+      {best} de uma vez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514231
+    m_Localized: Jogar de novo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514232
+    m_Localized: Menu principal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514233
+    m_Localized: "VOC\xCA VENCEU!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514234
+    m_Localized: '{player} VENCE!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514235
+    m_Localized: Uma live de {count} Diamantes na noite {night}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514236
+    m_Localized: "Ningu\xE9m chegou a {count} Diamantes. Melhor marca: {best}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514237
+    m_Localized: LIVE DE {count} DIAMANTES!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514238
+    m_Localized: SUA TEMPORADA ACABOU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514239
+    m_Localized: Esperando os outros jogadores terminarem...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514240
+    m_Localized: "\xD3timas lives: {great}    Pol\xEDcia: {swatted}    Quedas: {crashed}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514241
+    m_Localized: "Subs de presente ganhos: {subs}    Grana ganha: {cash}    Audi\xEAncia:
+      {viewers} espectadores ({diamonds} Diamantes)    Limite: {cap}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514242
+    m_Localized: 'Streamer: {streamer}    Poder usado: {uses} {uses:plural:vez|vezes}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514243
+    m_Localized: Voltar ao lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514244
+    m_Localized: Fechar o lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514245
+    m_Localized: Sair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514246
+    m_Localized: Continuar assistindo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514247
+    m_Localized: "Esperando o host come\xE7ar outra rodada..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514248
+    m_Localized: O placar atualiza ao vivo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514249
+    m_Localized: Pausado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514250
+    m_Localized: Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514251
+    m_Localized: (o jogo continua rodando)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514252
+    m_Localized: "Cen\xE1rio da live"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514253
+    m_Localized: Sair do jogo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514254
+    m_Localized: Salvar e voltar ao menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514255
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514256
+    m_Localized: "\xC1udio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514257
+    m_Localized: "Regras r\xE1pidas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514258
+    m_Localized: "Configura\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514259
+    m_Localized: Tela e idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514260
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514261
+    m_Localized: Modo de janela
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514262
+    m_Localized: Janela
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514263
+    m_Localized: Tela cheia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514264
+    m_Localized: "Resolu\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514265
+    m_Localized: Aplicar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514266
+    m_Localized: "Manter essas configura\xE7\xF5es? ({seconds})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514267
+    m_Localized: "Configura\xE7\xF5es de tela revertidas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514268
+    m_Localized: "Mudan\xE7as de resolu\xE7\xE3o s\xF3 valem numa build (no editor
+      quem manda \xE9 a janela Game)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514269
+    m_Localized: Tremor de tela
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514270
+    m_Localized: Reduzir flashes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514271
+    m_Localized: Chat falso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514272
+    m_Localized: Nome do jogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514273
+    m_Localized: Volume geral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514274
+    m_Localized: "M\xFAsica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514275
+    m_Localized: Efeitos sonoros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514276
+    m_Localized: "Anima\xE7\xF5es r\xE1pidas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514277
+    m_Localized: Zerar progresso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514278
+    m_Localized: Zerar o progresso?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514279
+    m_Localized: "Isso apaga os elencos conclu\xEDdos e a sequ\xEAncia aleat\xF3ria.
+      Suas configura\xE7\xF5es ficam."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514280
+    m_Localized: Progresso zerado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514281
+    m_Localized: F11 ou Alt+Enter alterna a tela cheia.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514282
+    m_Localized: CONECTANDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514283
+    m_Localized: Esperando o host...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514284
+    m_Localized: Bem-vindo de volta! Continuando {set} na noite {night}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514285
+    m_Localized: Bem-vindo a {set}! Junte {count} Diamantes numa live em {nights}
+      noites.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514286
+    m_Localized: "Voc\xEA est\xE1 jogando de {streamer}. Poder: {power}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514287
+    m_Localized: 'Temporada multijogador: {set}, {nights} noites, {mode}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514288
+    m_Localized: NOITE {night}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514289
+    m_Localized: '{set}  -  {count:plural:resta|restam} {count} {count:plural:noite|noites}
+      depois desta'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514290
+    m_Localized: '{count:plural:Resta|Restam} {count} {count:plural:noite|noites}
+      depois desta'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514291
+    m_Localized: "A \xFAltima noite!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514292
+    m_Localized: A live de {player}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514293
+    m_Localized: "A live de {player} ainda est\xE1 carregando."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514294
+    m_Localized: Noite {night} de {total}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514295
+    m_Localized: SUA VEZ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514296
+    m_Localized: "todo mundo est\xE1 assistindo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514297
+    m_Localized: VEZ DE {player}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514298
+    m_Localized: assistindo ao vivo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514299
+    m_Localized: "Espere a sua vez. \xC9 a vez de {player}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514300
+    m_Localized: "Essa \xE9 a live de {player}. Voc\xEA est\xE1 assistindo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514301
+    m_Localized: Encerrar uma live vazia?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514302
+    m_Localized: "N\xE3o tem ningu\xE9m no chat, ent\xE3o voc\xEA n\xE3o ganha nada
+      esta noite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514303
+    m_Localized: Encerrar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514304
+    m_Localized: Continuar a live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514305
+    m_Localized: Sair do jogo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514306
+    m_Localized: "Voc\xEA \xE9 o host: se sair a temporada acaba pra todo mundo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514307
+    m_Localized: "Voc\xEA n\xE3o vai poder voltar pra esta temporada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514308
+    m_Localized: "T\xC1 TUDO BEM."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514309
+    m_Localized: "A pol\xEDcia foi embora. Risco zerado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514310
+    m_Localized: "A pol\xEDcia chegou. Sem pagamento esta noite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514311
+    m_Localized: "A pol\xEDcia chegou na live de {player}. Sem pagamento esta noite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514312
+    m_Localized: '{filled} vagas ocupadas com limite de {cap}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514313
+    m_Localized: "Voc\xEA n\xE3o conseguiu pagar {cash} $ de taxas e perdeu {penalty}
+      Subs de presente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514314
+    m_Localized: "{player} n\xE3o conseguiu pagar {cash} $ de taxas e perdeu {penalty}
+      Subs de presente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514315
+    m_Localized: "Esta live come\xE7a com +{count} de risco de pol\xEDcia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514316
+    m_Localized: '{count} Diamantes numa live!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514317
+    m_Localized: "Dessa vez n\xE3o rolou live de {count} Diamantes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514318
+    m_Localized: A temporada de {player} acabou
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514319
+    m_Localized: Guardou {subs} e {cash}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514320
+    m_Localized: "<b>Sua vez!</b>  Todo mundo est\xE1 assistindo a sua live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514321
+    m_Localized: "<b>Sua vez!</b>  Voc\xEA est\xE1 vendo a live de {player}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514322
+    m_Localized: Voltar pra minha vez
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514323
+    m_Localized: "<b>Vez de {player}</b>  Assistindo ao vivo. Voc\xEA n\xE3o pode
+      agir at\xE9 a sua vez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514324
+    m_Localized: Minha live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514325
+    m_Localized: Sua live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514326
+    m_Localized: A live de {player}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514327
+    m_Localized: "{whose}  -  \xE9 a vez de {player}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514328
+    m_Localized: Assistir {player}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514329
+    m_Localized: "<b>Sua live</b>  <color=#B9AED6>Clique num jogador \xE0 direita
+      pra assistir a live dele ao vivo.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514330
+    m_Localized: "<b>Assistindo a live de {player}</b>  ao vivo e s\xF3 leitura."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514331
+    m_Localized: Voltar pra minha live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514332
+    m_Localized: '{count} assistindo'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514333
+    m_Localized: "<b>Feliz:</b> +3 Subs.   <b>Triste:</b> +3 $.   <b>Bravo:</b> +6
+      Subs e +1 de risco de pol\xEDcia.\\nDura at\xE9 o fim da live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514334
+    m_Localized: "Aposte {subs} Subs de presente ou {cash} $ do seu banco. Se a live
+      der certo voc\xEA recebe {mult}x de volta; se a pol\xEDcia chegar ou cair,
+      j\xE1 era.\\nVoc\xEA tem {have_subs} Subs de presente e {have_cash} $."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514335
+    m_Localized: "<b>Sortear de novo:</b> {viewer} volta pra fila e um novo espectador
+      aleat\xF3rio entra no lugar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514336
+    m_Localized: <b>Sortear de novo:</b> nada pra sortear agora.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514337
+    m_Localized: "<b>Espiar:</b> veja o pr\xF3ximo espectador e decida se aprova."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514338
+    m_Localized: "Voc\xEA vai escolher dois espectadores: o primeiro n\xE3o ganha
+      nada esta noite, o segundo dobra os Subs base ou o $.\\nO que o segundo deve
+      dobrar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514339
+    m_Localized: "Voc\xEA vai escolher um espectador pra esta noite.\\n<b>Subs em
+      $:</b> cada 2 Subs viram 1 $.   <b>$ em Subs:</b> cada 1 $ vira 2 Subs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514340
+    m_Localized: Escolha um espectador da fila pra trazer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514341
+    m_Localized: "Esses s\xE3o os pr\xF3ximos espectadores da fila. Escolha um pra
+      barrar esta noite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514342
+    m_Localized: Quem entra depois?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514343
+    m_Localized: "{viewer}: nova tenta\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514344
+    m_Localized: "Escolha algu\xE9m pra entrar e depois quem ele substitui. Pule
+      pra manter todo mundo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514345
+    m_Localized: 'Pular  [Esc]'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514346
+    m_Localized: "Nova tenta\xE7\xE3o: escolha quem {viewer} substitui. Essa pessoa
+      fica de fora esta noite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514347
+    m_Localized: Confirmar ({count}/{max})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514348
+    m_Localized: "{actor}: escolha um espectador pra expulsar do chat (pode ser {self}
+      tamb\xE9m)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514349
+    m_Localized: '{actor}: escolha um espectador pra mandar de volta pra fila.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514350
+    m_Localized: '{actor}: escolha um espectador pra tocar pra fora.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514351
+    m_Localized: "{actor}: escolha um espectador pra expulsar. Voc\xEA ganha metade
+      do custo dele em Subs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514352
+    m_Localized: '{actor}: escolha um espectador pra comparar Subs base.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514353
+    m_Localized: "{actor}: escolha um espectador pra ganhar +1 de risco de pol\xEDcia
+      e +3 Subs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514354
+    m_Localized: '{actor}: escolha um espectador pra levar a pancada.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514355
+    m_Localized: "{actor}: escolha um espectador que n\xE3o seja Diamante pra dar
+      Rickroll."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514356
+    m_Localized: '{actor}: escolha um espectador pra converter ({option}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514357
+    m_Localized: '{actor}: escolha um espectador pra ficar imune esta noite.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514358
+    m_Localized: '{actor}: escolha o primeiro espectador a mover.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514359
+    m_Localized: '{actor}: escolha com quem {first} troca de lugar.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514360
+    m_Localized: "{actor}: escolha o primeiro dan\xE7arino."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514361
+    m_Localized: '{actor}: escolha com quem {first} troca os Subs base.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514362
+    m_Localized: "{actor}: escolha o espectador que n\xE3o ganha nada esta noite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514363
+    m_Localized: '{actor}: escolha quem dobra os Subs base.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514364
+    m_Localized: '{actor}: escolha quem dobra o $ base.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514365
+    m_Localized: "{actor}: escolha at\xE9 3 espectadores pra trocar por espectadores
+      aleat\xF3rios da fila, depois Confirme."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514366
+    m_Localized: '{actor}: escolha um alvo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514367
+    m_Localized: 'Quem pontuou:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514368
+    m_Localized: "N\xE3o tinha ningu\xE9m no chat quando a live acabou."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514369
+    m_Localized: AO VIVO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514370
+    m_Localized: '{count} assistindo'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514371
+    m_Localized: "BATALHA PELA AUDI\xCANCIA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514372
+    m_Localized: "Entre ao vivo, aumente sua Audi\xEAncia e junte {count} Diamantes
+      numa \xFAnica live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514373
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514374
+    m_Localized: '{set} - Noite {night}/{total}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514375
+    m_Localized: "Elencos conclu\xEDdos: {cleared}     Sequ\xEAncia aleat\xF3ria:
+      {streak} (melhor {best})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514376
+    m_Localized: Um jogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514377
+    m_Localized: Multijogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514378
+    m_Localized: Como jogar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514379
+    m_Localized: "Configura\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514380
+    m_Localized: Sair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514381
+    m_Localized: "Aten\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514382
+    m_Localized: Um jogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514383
+    m_Localized: "Escolha um elenco e um cen\xE1rio, e comece sua temporada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514384
+    m_Localized: Elencos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514385
+    m_Localized: Ao vivo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514386
+    m_Localized: "sequ\xEAncia {count}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514387
+    m_Localized: "Conclu\xEDdo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514388
+    m_Localized: "Ainda n\xE3o conclu\xEDdo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514389
+    m_Localized: "Sequ\xEAncia de vit\xF3rias: {streak}/{goal} pra Cereja (melhor
+      {best})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514390
+    m_Localized: "Sandbox: o progresso n\xE3o \xE9 salvo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514391
+    m_Localized: '{count} {count:plural:noite|noites}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514392
+    m_Localized: "Elenco: <color=#FFC94A>11 espectadores aleat\xF3rios + 3 Diamantes
+      aleat\xF3rios</color>, sorteados quando a temporada come\xE7a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514393
+    m_Localized: Elenco ({count} espectadores). Passe o mouse para ver detalhes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514394
+    m_Localized: (melhora conforme o limite cresce)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514395
+    m_Localized: "Come\xE7ar uma nova temporada?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514396
+    m_Localized: "Voc\xEA tem uma temporada em andamento. Come\xE7ar uma nova vai
+      substituir esse save."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514397
+    m_Localized: "Come\xE7ar nova"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514398
+    m_Localized: Multijogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514399
+    m_Localized: "At\xE9 6 jogadores. Mesmo elenco, lives separadas. Vence a primeira
+      live de 4 Diamantes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514400
+    m_Localized: Seu nome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514401
+    m_Localized: "Online (c\xF3digo)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514402
+    m_Localized: Criar partida online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514403
+    m_Localized: Entrar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514404
+    m_Localized: "C\xF3digo pra entrar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514405
+    m_Localized: IP direto / LAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514406
+    m_Localized: Criar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514407
+    m_Localized: Entrar por IP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514408
+    m_Localized: "Endere\xE7o do host"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514409
+    m_Localized: Porta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514410
+    m_Localized: "Jogue pela internet com um c\xF3digo (Unity Relay). N\xE3o precisa
+      abrir portas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514411
+    m_Localized: "Mesmo Wi-Fi / LAN, ou uma porta liberada. Seu endere\xE7o: {address}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514412
+    m_Localized: Criando uma partida online...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514413
+    m_Localized: Entrando em {code}...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514414
+    m_Localized: Conectado ao Relay. Esperando o host...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514415
+    m_Localized: Conectando a {address}...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514416
+    m_Localized: Lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514417
+    m_Localized: Seu lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514418
+    m_Localized: "Compartilhe esse c\xF3digo com seus amigos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514419
+    m_Localized: "C\xF3digo pra entrar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514420
+    m_Localized: "Seus amigos entram com esse endere\xE7o (IP direto). A porta precisa
+      estar acess\xEDvel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514421
+    m_Localized: "Endere\xE7o do host"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514422
+    m_Localized: Copiar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514423
+    m_Localized: Host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514424
+    m_Localized: "N\xE3o pronto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514425
+    m_Localized: Jogadores ({count}/{max})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514426
+    m_Localized: Modo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514427
+    m_Localized: "Dura\xE7\xE3o da temporada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514428
+    m_Localized: "Cron\xF4metro de turno"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514429
+    m_Localized: Segundos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514430
+    m_Localized: "Seu cen\xE1rio (s\xF3 voc\xEA v\xEA)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514431
+    m_Localized: "Cron\xF4metro de turno: {timer}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514432
+    m_Localized: 'Streamer: {streamer}  (trocar)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514433
+    m_Localized: Pronto!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514434
+    m_Localized: "N\xE3o pronto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514435
+    m_Localized: "Come\xE7ar temporada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514436
+    m_Localized: Sair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514437
+    m_Localized: "Voc\xEA pode come\xE7ar sozinho, ou esperar seus amigos entrarem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514438
+    m_Localized: Todo mundo pronto!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514439
+    m_Localized: "Esperando o host come\xE7ar..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514440
+    m_Localized: Aperte Pronto quando estiver preparado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514441
+    m_Localized: "a cada noite os jogadores fazem live um depois do outro enquanto
+      os outros assistem ao vivo. A temporada acaba depois da primeira noite em que
+      algu\xE9m junta {count} Diamantes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514442
+    m_Localized: jogue no seu ritmo. A primeira live de {count} Diamantes vence na
+      hora. Clique num jogador pra assistir.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514443
+    m_Localized: "todo mundo joga a mesma noite ao mesmo tempo. A primeira noite
+      em que algu\xE9m junta {count} Diamantes encerra a temporada. Clique num jogador
+      pra assistir."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514444
+    m_Localized: "{code} copiado pra \xE1rea de transfer\xEAncia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514445
+    m_Localized: Fechar o lobby?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514446
+    m_Localized: Sair do lobby?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514447
+    m_Localized: Todo mundo no lobby vai ser desconectado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514448
+    m_Localized: "Voc\xEA pode voltar com o mesmo c\xF3digo enquanto o lobby estiver
+      aberto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514449
+    m_Localized: Ficar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514450
+    m_Localized: Fala alguma coisa...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514451
+    m_Localized: Enviar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514452
+    m_Localized: "(voc\xEA)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514453
+    m_Localized: Zerar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514454
+    m_Localized: Como jogar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514455
+    m_Localized: Regras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514456
+    m_Localized: Os 59 espectadores
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

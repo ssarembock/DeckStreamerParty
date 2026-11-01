@@ -1,0 +1,256 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Content Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Content
+  m_TableCollectionNameGuidString: fe08c675884f17142aef311dafa6f47f
+  m_Entries:
+  - m_Id: 370360320
+    m_Key: scenario.0.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274880
+    m_Key: scenario.0.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274881
+    m_Key: scenario.0.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274882
+    m_Key: scenario.1.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274883
+    m_Key: scenario.1.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274884
+    m_Key: scenario.1.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274885
+    m_Key: scenario.2.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274886
+    m_Key: scenario.2.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274887
+    m_Key: scenario.2.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274888
+    m_Key: scenario.3.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274889
+    m_Key: scenario.3.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274890
+    m_Key: scenario.3.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274891
+    m_Key: scenario.4.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274892
+    m_Key: scenario.4.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274893
+    m_Key: scenario.4.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274894
+    m_Key: scenario.5.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274895
+    m_Key: scenario.5.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274896
+    m_Key: scenario.5.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274897
+    m_Key: scenario.6.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274898
+    m_Key: scenario.6.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274899
+    m_Key: scenario.6.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274900
+    m_Key: venue.bedroom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274901
+    m_Key: venue.bedroom.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274902
+    m_Key: venue.irl_beach
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274903
+    m_Key: venue.irl_beach.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274904
+    m_Key: venue.city_irl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274905
+    m_Key: venue.city_irl.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274906
+    m_Key: venue.content_house
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274907
+    m_Key: venue.content_house.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274908
+    m_Key: venue.cursed_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274909
+    m_Key: venue.cursed_stream.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274910
+    m_Key: venue.metaverse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274911
+    m_Key: venue.metaverse.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274912
+    m_Key: venue.studio_stage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274913
+    m_Key: venue.studio_stage.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274914
+    m_Key: venue.stage_fate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274915
+    m_Key: venue.stage_fate.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274916
+    m_Key: venue.stage_brojogan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274917
+    m_Key: venue.stage_brojogan.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274918
+    m_Key: venue.stage_shinobi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274919
+    m_Key: venue.stage_shinobi.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274920
+    m_Key: venue.stage_irunfast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274921
+    m_Key: venue.stage_irunfast.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274922
+    m_Key: venue.stage_mrshark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274923
+    m_Key: venue.stage_mrshark.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274924
+    m_Key: venue.stage_ethicalfboi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274925
+    m_Key: venue.stage_ethicalfboi.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274926
+    m_Key: venue.stage_softhardbodyman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274927
+    m_Key: venue.stage_softhardbodyman.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274928
+    m_Key: venue.stage_strategicabomination
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274929
+    m_Key: venue.stage_strategicabomination.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274930
+    m_Key: venue.stage_palmane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274931
+    m_Key: venue.stage_palmane.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274932
+    m_Key: venue.stage_manimmakethman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274933
+    m_Key: venue.stage_manimmakethman.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274934
+    m_Key: venue.stage_ruderadiologist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433274935
+    m_Key: venue.stage_ruderadiologist.desc
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2741550451676152065
+  references:
+    version: 2
+    RefIds:
+    - rid: 2741550451676152065
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1793475808281

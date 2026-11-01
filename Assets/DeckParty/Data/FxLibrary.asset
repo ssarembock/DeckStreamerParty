@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db5ffe347599e4468d45ed45c90b551, type: 3}
+  m_Name: FxLibrary
+  m_EditorClassIdentifier: 
+  durationMultiplier: 1
+  shakeMultiplier: 1
+  cues:
+  - name: ViewerJoined
+    cue: 0
+    feedback: {fileID: 6433066588931621686, guid: fbad86dae46e32e43a05077d58e27ec4, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: DiamondJoined
+    cue: 1
+    feedback: {fileID: 1132559627779795123, guid: 7a785dd9cd1768a49afbf2b20e7330ce, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: CardHover
+    cue: 2
+    feedback: {fileID: 2278505156876446869, guid: 79957951dc00a5b4fad31532faf3e156, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ButtonPress
+    cue: 3
+    feedback: {fileID: 7018984609638985686, guid: f76603eb910d3044aa78419bc908b0e4, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ButtonDenied
+    cue: 4
+    feedback: {fileID: 6184171197804093092, guid: 88379b7cf176d98419422f8faecc4115, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: AbilityUsed
+    cue: 5
+    feedback: {fileID: 3753244887747854357, guid: 8371687c21183f84c9d033f4781d968b, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ImpactRecruit
+    cue: 6
+    feedback: {fileID: 5269935567898083602, guid: f5604abad676d3b47be0abc36aaddb12, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ImpactRemove
+    cue: 7
+    feedback: {fileID: 3938014397856547635, guid: 773fb188630bae34a8f2fb9598427ef5, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ImpactModify
+    cue: 8
+    feedback: {fileID: 1490661024151179527, guid: 0be20e539aef4b84596e88cdfdf6f9ee, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ImpactShuffle
+    cue: 9
+    feedback: {fileID: 4342822097870683564, guid: ba361383c9fc2f54eaa3036c31e1248d, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ImpactScout
+    cue: 10
+    feedback: {fileID: 1922105523713041254, guid: 5daccadb84930b241a5832e189812047, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ImpactEconomy
+    cue: 11
+    feedback: {fileID: 8366869258034989680, guid: 5cc85f1b4a646e74fa0482be048e85b7, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: CounterPunch
+    cue: 12
+    feedback: {fileID: 7162956753002505067, guid: 8af49788ad8bd364b83240c2a0035bc1, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: RiskPip
+    cue: 13
+    feedback: {fileID: 2897480329556897256, guid: 1cb1b5408e11c854a887b3c6de72b9c2, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: SubCapFull
+    cue: 14
+    feedback: {fileID: 7011136039716305692, guid: b4b6316952d97b44fa9db6e5453c846e, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: DiamondTracker
+    cue: 15
+    feedback: {fileID: 5018930730727092404, guid: 120c8862eabd29b43a37a35f73e807a5, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: Swatted
+    cue: 16
+    feedback: {fileID: 5334793438735782184, guid: 23cdf0064062f6247adea1a9cfbf79ca, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: Crashed
+    cue: 17
+    feedback: {fileID: 3387904191657230564, guid: 085b1536ef1ae08448376bc41cd03972, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ScoreTick
+    cue: 18
+    feedback: {fileID: 3472917551382561910, guid: f3ca2b8df05badc4f850d20cba78854b, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: Victory
+    cue: 19
+    feedback: {fileID: 2404106298227185248, guid: 87e366f70d249814eac87d0baef478fd, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: Defeat
+    cue: 20
+    feedback: {fileID: 8134521348963207256, guid: e65227429cba4be47bbd0049f0aae7c4, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: TurnBanner
+    cue: 21
+    feedback: {fileID: 4373318571398035077, guid: 737ab4e86c54b1441805771829c89011, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: BoardSwitch
+    cue: 22
+    feedback: {fileID: 2038420010487485111, guid: 7be28869ccc03da449bca065be0319c0, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: BannerSlam
+    cue: 23
+    feedback: {fileID: 8706089093042507872, guid: 912d0ed50ec74824e9402d84d6721992, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ToastIn
+    cue: 24
+    feedback: {fileID: 6206159818869296800, guid: 893ec1c48dd2ed8429824c5cacb5c36b, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: MenuIn
+    cue: 25
+    feedback: {fileID: 4407053941049477593, guid: 01b9f596f5469844088de50815eeab22, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: StreamerAnxious
+    cue: 26
+    feedback: {fileID: 1994194850240221510, guid: f23e8862ee62a7547b52a016a1ddff9b, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: PowerUsed
+    cue: 27
+    feedback: {fileID: 4024241975107884412, guid: 0b773e07a8093bc4c842b317d09620ed, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: Purchase
+    cue: 28
+    feedback: {fileID: 3925031066434068082, guid: c98f3c52971275744b44e281195b5940, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: Stamp
+    cue: 29
+    feedback: {fileID: 5286062760552800691, guid: 2c425aeecbcc05b40afec0e284eae714, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: ScreenShake
+    cue: 30
+    feedback: {fileID: 1093729567415107810, guid: 92e6e04659bae7b459af8d10a1896920, type: 3}
+    intensity: 1
+    enabled: 1
+  - name: SelectConfirm
+    cue: 31
+    feedback: {fileID: 3719436664000365623, guid: 9a07657b71e5a0348adec5ed81ee677c, type: 3}
+    intensity: 1
+    enabled: 1
+  portraitUber: {fileID: 2100000, guid: beece83524283664f88905486e044d1f, type: 2}
+  shineUber: {fileID: 2100000, guid: 325d39a66eb1e7d438b20e0b787807ed, type: 2}
+  statusEffects: 1
+  scoringSequence: 1
+  presenceSignals: 1
+  streamerAnxiety: 1
+  signatureEffects: 1
+  fakeChat: 1
+  streamOverlay: 1
+  emotes: 1
+  ghostCursor: 1
+  cardTilt: 1
+  idleBreathing: 1
+  reactiveBackground: 1
+  shinyTitle: 1
+  audioJuice: 1
+  musicalHover: 1
+  comicStamps: 1
+  linkLines: 1

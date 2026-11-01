@@ -1,0 +1,472 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Streamers_es-419
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es-419
+  m_SharedData: {fileID: 11400000, guid: 4a63c487877c3a4418d58efd9ecfa0bd, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 429080576
+    m_Localized: "\xA1TE HICIERON RAID!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 491995136
+    m_Localized: "\xA1IMPUESTAZO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189440
+    m_Localized: "\xA1{player} us\xF3 {power} contra ti!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189441
+    m_Localized: Sin streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189442
+    m_Localized: "Reglas cl\xE1sicas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189443
+    m_Localized: Sin poder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189444
+    m_Localized: "Juega el modo cl\xE1sico sin poder de streamer. Tu espacio de poder
+      queda vac\xEDo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189445
+    m_Localized: Solo vine por la vibra.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189446
+    m_Localized: Al azar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189447
+    m_Localized: Que decida el chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189448
+    m_Localized: Se elige un streamer al azar cuando sales en vivo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189449
+    m_Localized: Fate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189450
+    m_Localized: "El Se\xF1or del Debate"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189451
+    m_Localized: Raid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189452
+    m_Localized: "Elige un rival: su pr\xF3ximo stream empieza con +1 de riesgo de
+      polic\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189453
+    m_Localized: Debate conmigo, bro.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189454
+    m_Localized: Bro Jogan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189455
+    m_Localized: El Podcastero de Tres Horas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189456
+    m_Localized: Episodio de tres horas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189457
+    m_Localized: "Pasivo: empiezas con +1 de cupo del chat. Las mejoras de cupo cuestan
+      1 $ m\xE1s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189458
+    m_Localized: "Jamie, b\xFAscalo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189459
+    m_Localized: Shinobi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189460
+    m_Localized: La Leyenda de la Bandana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189461
+    m_Localized: Bomba de humo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189462
+    m_Localized: "Tu pr\xF3ximo stream ignora 1 de riesgo de polic\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189463
+    m_Localized: No viste nada. Nadie vio nada.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189464
+    m_Localized: IRunFast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189465
+    m_Localized: La Sirena Humana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189466
+    m_Localized: Ladrarle al chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189467
+    m_Localized: "Pasivo: los espectadores con riesgo de polic\xEDa ganan +1 Subs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189468
+    m_Localized: "\xA1SIUUUUUUU!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189469
+    m_Localized: MrShark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189470
+    m_Localized: El Rey de los Sorteos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189471
+    m_Localized: Sorteo de $10,000
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189472
+    m_Localized: "En tu pr\xF3ximo stream, cada espectador gana +1 Subs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189473
+    m_Localized: "\xA1El \xFAltimo en salir del chat gana!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189474
+    m_Localized: "F**kboy \xC9tico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189475
+    m_Localized: "El Socialista de Mansi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189476
+    m_Localized: Impuesto a la riqueza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189477
+    m_Localized: "El rival m\xE1s rico te paga hasta 2 $."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189478
+    m_Localized: "C\xF3manse a los ricos. A m\xED no, eso s\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189479
+    m_Localized: "Se\xF1or Cuerpo Duro Blandito"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189480
+    m_Localized: Parece duro, es blandito
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189481
+    m_Localized: Aterrizaje suave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189482
+    m_Localized: "Pasivo: si llega la polic\xEDa, igual te quedas con la mitad de
+      los Subs de ese stream."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189483
+    m_Localized: REFORMADO. Y un poquito blandito.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189484
+    m_Localized: "Abominaci\xF3n Estrat\xE9gica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189485
+    m_Localized: Dos cabezas, cero calma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189486
+    m_Localized: Doble movimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189487
+    m_Localized: "En tu pr\xF3ximo stream, la primera acci\xF3n de espectador que
+      uses se puede usar otra vez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189488
+    m_Localized: "\xA1La torre! \xA1LA TORRE!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189489
+    m_Localized: Palmane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189490
+    m_Localized: "Atr\xE1palos a todos (legalmente)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189491
+    m_Localized: Esfera Pal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189492
+    m_Localized: Atrapa gratis a un espectador al azar de la tienda (costo 6 o menos,
+      que no sea Diamante).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189493
+    m_Localized: "Holiii chat, \xBFqui\xE9n quiere ser mi pal?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189494
+    m_Localized: Manim Maketh Man
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189495
+    m_Localized: "La Demostraci\xF3n Animada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189496
+    m_Localized: Secuencia hermosa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189497
+    m_Localized: "Pasivo: cada gran stream seguido da +1, +2, +3... Subs (m\xE1x.
+      +5). Un stream fallido la reinicia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189498
+    m_Localized: Visualicemos eso.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189499
+    m_Localized: "Radi\xF3logo Grosero"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189500
+    m_Localized: "Diagnosticador Bicampe\xF3n Consecutivo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189501
+    m_Localized: "Visi\xF3n de rayos X"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189502
+    m_Localized: "En tu pr\xF3ximo stream, ves a los pr\xF3ximos 3 espectadores de
+      tu fila."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189503
+    m_Localized: "Violencia. Velocidad. Radiolog\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189504
+    m_Localized: PASIVO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189505
+    m_Localized: ACTIVO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189506
+    m_Localized: "ACTIVO \xB7 PR\xD3XIMO STREAM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189507
+    m_Localized: "ACTIVO \xB7 RIVAL (MULTIJUGADOR)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189508
+    m_Localized: Cuesta {cost} (+{step} por uso)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189509
+    m_Localized: Cuesta {cost}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189510
+    m_Localized: 'Enfriamiento: {count} {count:plural:turno|turnos}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189511
+    m_Localized: Una vez por turno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189512
+    m_Localized: ELIGE A TU STREAMER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189513
+    m_Localized: "Elige qui\xE9n sale en vivo contra EL ALGORITMO."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189514
+    m_Localized: Elige a tu luchador. Digo, streamer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189515
+    m_Localized: VS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189516
+    m_Localized: EL ALGORITMO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189517
+    m_Localized: Invicto. Incognoscible. Imposible de saltar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189518
+    m_Localized: SE ACERCA UN RETADOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189519
+    m_Localized: Tus rivales eligen en el lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189520
+    m_Localized: "\xA1EN VIVO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189521
+    m_Localized: Volver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189522
+    m_Localized: PODER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189523
+    m_Localized: "\xA1{streamer} ENTRA AL STREAM!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189524
+    m_Localized: 'Poder de rival: no hace nada en un jugador.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189525
+    m_Localized: "Flechas o clic para elegir \xB7 Enter para salir en vivo \xB7 Esc
+      para volver"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189526
+    m_Localized: J1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189527
+    m_Localized: 99
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189528
+    m_Localized: RIZZ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189529
+    m_Localized: DRAMA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189530
+    m_Localized: AURA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189531
+    m_Localized: COPIUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189532
+    m_Localized: Poder del streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189533
+    m_Localized: Usar ({cost})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189534
+    m_Localized: Listo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189535
+    m_Localized: 'Recargando: {count} {count:plural:turno|turnos}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189536
+    m_Localized: "Listo para tu pr\xF3ximo stream"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189537
+    m_Localized: Siempre activo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189538
+    m_Localized: Sin poder de streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189539
+    m_Localized: '{power}: elige un rival'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189540
+    m_Localized: "Elige a qu\xE9 rival atacar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189541
+    m_Localized: '{player} ({cash} $)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189542
+    m_Localized: Necesita un rival (solo multijugador)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189543
+    m_Localized: "\xA1{player} us\xF3 {power}!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189544
+    m_Localized: "RAYOS X: LOS PR\xD3XIMOS EN LA FILA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189545
+    m_Localized: "\xA1UNO M\xC1S Y LLEGA LA POLIC\xCDA!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189546
+    m_Localized: "{streamer} est\xE1 sudando..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189547
+    m_Localized: "El chat se est\xE1 poniendo picante..."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

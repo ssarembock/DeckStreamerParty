@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
-    /// <summary>Modal view of every guest you own, with permanent upgrades and tonight's availability.</summary>
+    /// <summary>The Audience: every viewer you own, with permanent upgrades and tonight's availability.</summary>
     public sealed class RolodexView : MonoBehaviour
     {
         [SerializeField] internal GameObject root;
@@ -28,7 +28,7 @@ namespace DeckParty.UI
             root.SetActive(false);
         }
 
-        /// <param name="owner">Whose Squad this is when watching another player; null for your own.</param>
+        /// <param name="owner">Whose Audience this is when watching another player; null for your own.</param>
         public void Toggle(PlayerState s, string owner = null)
         {
             if (IsOpen) Close();
@@ -72,13 +72,15 @@ namespace DeckParty.UI
             }
             for (int i = guests.Count; i < m_Cards.Count; i++) m_Cards[i].gameObject.SetActive(false);
 
-            titleLabel.text = $"{(owner == null ? "Your" : owner + "'s")} {Terms.Squad}  <size=70%><color=#B9AED6>{s.PermanentCount} guests</color></size>";
-            var summary = $"{Terms.Diamonds} owned: <color=#FFC94A>{s.DiamondsOwned()}</color>    Best {Terms.Diamonds} at one party: <color=#FFC94A>{s.BestDiamonds}</color>";
-            if (party) summary += $"    Waiting outside: {s.Pool.Count}    At the party: {s.House.Count}";
+            string count = $"<size=70%><color=#B9AED6>{Loc.Get("audience.count", "count", s.PermanentCount)}</color></size>";
+            titleLabel.text = (owner == null ? Loc.Get("audience.title_you") : Loc.Get("audience.title_other", "player", owner)) + "  " + count;
+            var summary = Loc.Get("audience.summary", "owned", $"<color=#FFC94A>{s.DiamondsOwned()}</color>", "best", $"<color=#FFC94A>{s.BestDiamonds}</color>");
+            if (party) summary += "    " + Loc.Get("audience.summary_live", "queue", s.Pool.Count, "chat", s.House.Count);
             var banned = s.BannedThisParty >= 0 ? s.Find(s.BannedThisParty) : null;
-            if (banned != null) summary += $"\n{GuestVisuals.NameTag(banned.Type)} is on a {Terms.Ban} tonight.";
-            else if (s.BannedNextParty >= 0 && s.Find(s.BannedNextParty) != null) summary += $"\n{GuestVisuals.NameTag(s.Find(s.BannedNextParty).Type)} has a {Terms.Ban} for the next party.";
-            summaryLabel.text = summary + "\n<color=#B9AED6>Dimmed guests can't arrive tonight. Hover for details.</color>";
+            if (banned != null) summary += "\n" + Loc.Get("audience.banned_now", "viewer", GuestVisuals.NameTag(banned.Type));
+            else if (s.BannedNextParty >= 0 && s.Find(s.BannedNextParty) != null) summary += "\n" + Loc.Get("audience.banned_next", "viewer", GuestVisuals.NameTag(s.Find(s.BannedNextParty).Type));
+            if (s.Streamer != StreamerType.None) summary += "\n" + Loc.Get("audience.streamer", "streamer", StreamerVisuals.NameTag(s.Streamer), "power", StreamerVisuals.PowerName(s.Streamer));
+            summaryLabel.text = summary + $"\n<color=#B9AED6>{Loc.Get("audience.hint")}</color>";
         }
 
         public void Close() => root.SetActive(false);

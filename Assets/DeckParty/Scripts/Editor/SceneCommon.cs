@@ -153,7 +153,7 @@ namespace DeckParty.EditorTools
 
         public static Button BackButton(Transform screen)
         {
-            var back = EditorUI.Button(screen, "Back", "Back", ButtonStyle.Ghost, 28);
+            var back = EditorUI.Button(screen, "Back", "common.back", ButtonStyle.Ghost, 28);
             back.GetComponent<RectTransform>().Place(new Vector2(0, 0), new Vector2(60, 40), new Vector2(220, 80), new Vector2(0, 0));
             return back;
         }
@@ -177,9 +177,9 @@ namespace DeckParty.EditorTools
 
             var row = EditorUI.Rect(host, "InputRow").BottomBand(0, 60);
             EditorUI.HLayout(row, 10, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, false, true);
-            var input = EditorUI.Input(row, "Input", "Say something...", 22, 100);
+            var input = EditorUI.Input(row, "Input", "lobby.chat_placeholder", 22, 100);
             EditorUI.Layout(input, -1, 60, 1);
-            var send = EditorUI.Button(row, "Send", "Send", ButtonStyle.Primary, 24);
+            var send = EditorUI.Button(row, "Send", "lobby.send", ButtonStyle.Primary, 24);
             EditorUI.Layout(send, 120, 60, 0);
 
             var chat = host.gameObject.AddComponent<ChatView>();
@@ -200,8 +200,11 @@ namespace DeckParty.EditorTools
             message.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(56, 136), new Vector2(-56, -104));
             var buttons = EditorUI.Rect(panel, "Buttons").BottomBand(36, 84, 70, 70);
             EditorUI.HLayout(buttons, 24, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, true, true);
-            var cancel = EditorUI.Button(buttons, "Cancel", "Cancel", ButtonStyle.Normal, 28, out var cancelLabel);
-            var confirm = EditorUI.Button(buttons, "Confirm", "OK", ButtonStyle.Primary, 28, out var confirmLabel);
+            var cancel = EditorUI.Button(buttons, "Cancel", "common.cancel", ButtonStyle.Normal, 28, out var cancelLabel);
+            var confirm = EditorUI.Button(buttons, "Confirm", "common.ok", ButtonStyle.Primary, 28, out var confirmLabel);
+            // The dialog sets these per use, so they must not be overwritten by their localized captions.
+            Object.DestroyImmediate(cancelLabel.GetComponent<LocalizedLabel>());
+            Object.DestroyImmediate(confirmLabel.GetComponent<LocalizedLabel>());
             var dialog = host.gameObject.AddComponent<ModalDialog>();
             dialog.root = root;
             dialog.titleLabel = title;
@@ -243,6 +246,50 @@ namespace DeckParty.EditorTools
             tooltip.panel = tipPanel.rectTransform;
             tooltip.label = tipLabel;
             tooltip.group = tipGroup;
+        }
+
+        /// <summary>
+        /// The Display &amp; Language block (language, window mode, resolution + Apply, screen shake, reduce flashing, fake chat),
+        /// shared by the Settings screen and the in-game menu.
+        /// </summary>
+        public static DisplaySettingsView DisplayBlock(Transform parent, float labelWidth = 260f)
+        {
+            var root = EditorUI.Rect(parent, "Display");
+            EditorUI.VLayout(root, 10, EditorUI.Pad(0), TextAnchor.UpperCenter, true, true, true, false);
+
+            var language = EditorUI.Selector(root, "Language", "settings.language");
+            EditorUI.Layout(language, -1, 96);
+            var mode = EditorUI.Selector(root, "WindowMode", "settings.window_mode");
+            EditorUI.Layout(mode, -1, 96);
+
+            var resolutionRow = EditorUI.Rect(root, "ResolutionRow");
+            EditorUI.Layout(resolutionRow, -1, 96);
+            EditorUI.HLayout(resolutionRow, 12, EditorUI.Pad(0), TextAnchor.LowerCenter, true, true, false, false);
+            var resolution = EditorUI.Selector(resolutionRow, "Resolution", "settings.resolution");
+            EditorUI.Layout(resolution, -1, 96, 1);
+            var apply = EditorUI.Button(resolutionRow, "Apply", "settings.apply", ButtonStyle.Secondary, 22, out var applyLabel);
+            EditorUI.Layout(apply, 200, 60, 0);
+            Object.DestroyImmediate(applyLabel.GetComponent<LocalizedLabel>());
+
+            var hint = EditorUI.Text(root, "Hint", "settings.fullscreen_hint", 18, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
+            EditorUI.Layout(hint, -1, 24);
+
+            var shake = MainMenuSceneBuilder.SliderRow(root, "Shake", "settings.shake", labelWidth);
+            var reduce = EditorUI.Toggle(root, "ReduceFlashing", "settings.reduce_flashing");
+            EditorUI.Layout(reduce, -1, 56);
+            var fakeChat = EditorUI.Toggle(root, "FakeChat", "settings.fake_chat");
+            EditorUI.Layout(fakeChat, -1, 56);
+
+            var view = root.gameObject.AddComponent<DisplaySettingsView>();
+            view.languageSelector = language;
+            view.modeSelector = mode;
+            view.resolutionSelector = resolution;
+            view.applyButton = apply;
+            view.applyLabel = applyLabel;
+            view.shakeSlider = shake;
+            view.reduceFlashingToggle = reduce;
+            view.fakeChatToggle = fakeChat;
+            return view;
         }
     }
 }

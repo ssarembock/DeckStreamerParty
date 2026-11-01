@@ -31,6 +31,8 @@ namespace DeckParty.Networking
         readonly NetworkVariable<MatchSettings> m_Settings = new NetworkVariable<MatchSettings>(MatchSettings.Default);
         readonly NetworkVariable<MatchPhase> m_Phase = new NetworkVariable<MatchPhase>(MatchPhase.Lobby);
         readonly NetworkVariable<ulong> m_ActivePlayer = new NetworkVariable<ulong>(NoPlayer);
+        /// <summary>Take Turns timer: server time when the active player's turn runs out (0 = no timer running).</summary>
+        readonly NetworkVariable<double> m_TurnDeadline = new NetworkVariable<double>(0);
 
         // Client-side view: the latest snapshot of every player's season.
         readonly Dictionary<ulong, PlayerState> m_States = new Dictionary<ulong, PlayerState>();
@@ -43,6 +45,10 @@ namespace DeckParty.Networking
         readonly List<GameEvent> m_Scratch = new List<GameEvent>();
         Coroutine m_TurnRoutine;
         bool m_TurnEnding;
+        // Which board each player is looking at (for the "watching" count) and emote spam protection.
+        readonly Dictionary<ulong, ulong> m_Viewing = new Dictionary<ulong, ulong>();
+        readonly Dictionary<ulong, float> m_LastEmote = new Dictionary<ulong, float>();
+        readonly Dictionary<ulong, float> m_LastPresence = new Dictionary<ulong, float>();
 
         public event Action PlayersChanged;
         public event Action SettingsChanged;
@@ -55,13 +61,34 @@ namespace DeckParty.Networking
         public event Action<ulong> ActivePlayerChanged;
         public event Action<string> CommandRejected;
         public event Action<ChatMessage> ChatReceived;
+        /// <summary>A headline (localization key with arguments; show it with Loc.Error).</summary>
         public event Action<string> HeadlineReceived;
+        /// <summary>Another player's presence signal (what they're pointing at or choosing).</summary>
+        public event Action<ulong, PresenceMessage> PresenceReceived;
+        /// <summary>A player sent an emote (index into <see cref="Emotes.All"/>).</summary>
+        public event Action<ulong, int> EmoteReceived;
+        /// <summary>A rival power hit someone: (actor, target, streamer).</summary>
+        public event Action<ulong, ulong, StreamerType> RivalPowerUsed;
 
         public NetworkList<NetPlayer> Players => m_Players;
         public MatchSettings Settings => m_Settings.Value;
         public MatchPhase Phase => m_Phase.Value;
         public ulong ActivePlayer => m_ActivePlayer.Value;
         public bool TakingTurns => Settings.Mode == MatchMode.Turns;
+
+        /// <summary>Seconds left in the active player's turn, or -1 when there's no timer.</summary>
+        public float TurnSecondsLeft
+        {
+            get
+            {
+                double deadline = m_TurnDeadline.Value;
+                if (deadline <= 0 || NetworkManager == null) return -1f;
+                return Mathf.Max(0f, (float)(deadline - NetworkManager.ServerTime.Time));
+            }
+        }
+
+        /// <summary>A player's position in the player list, as used by rival-power events.</summary>
+        public ulong ClientAtIndex(int index) => index >= 0 && index < m_Players.Count ? m_Players[index].ClientId : NoPlayer;
         public PlayerState LocalState => GetState(LocalClientId);
         public ulong LocalClientId => NetworkManager != null ? NetworkManager.LocalClientId : 0;
 
@@ -202,7 +229,18 @@ namespace DeckParty.Networking
 
         public bool IsHostPlayer(ulong clientId) => clientId == NetworkManager.ServerClientId;
 
-        public string PlayerName(ulong clientId) => TryGetPlayer(clientId, out var p) ? p.DisplayName : "Someone";
+        public string PlayerName(ulong clientId) => TryGetPlayer(clientId, out var p) ? p.DisplayName : Loc.Get("common.someone");
+
+        /// <summary>Whether <paramref name="clientId"/> has a rival still in the season (rival powers need one).</summary>
+        public bool HasRival(ulong clientId)
+        {
+            for (int i = 0; i < m_Players.Count; i++)
+            {
+                var p = m_Players[i];
+                if (p.ClientId != clientId && p.Connected && !p.Finished) return true;
+            }
+            return false;
+        }
 
         /// <summary>Take Turns: who plays after the current player this round (null when the round ends with them).</summary>
         public string NextTurnName()
@@ -220,6 +258,17 @@ namespace DeckParty.Networking
         // ================================================================== client API
 
         public void SetLobbyReady(bool ready) => SetLobbyReadyRpc(ready);
+        /// <summary>Changes your streamer in the lobby (a StreamerType, or the Random pick).</summary>
+        public void SetStreamer(byte streamer) => SetStreamerRpc(streamer);
+        /// <summary>Tells the host whose stream you're looking at (for the "watching" count).</summary>
+        public void ReportViewing(ulong viewed) => ViewingRpc(viewed);
+        public void SendPresence(PresenceMessage message) => PresenceRpc(message);
+
+        public void SendEmote(int index)
+        {
+            if (index < 0 || index >= Emotes.All.Length) return;
+            EmoteRpc((byte)index);
+        }
         public void SubmitCommand(GameCommand command) => SubmitCommandRpc(NetCommand.From(command));
         public void RequestState() => RequestStateRpc();
         public void CancelNextNightReady() => CancelNextNightRpc();
@@ -244,8 +293,8 @@ namespace DeckParty.Networking
         public bool ServerCanStart(out string reason)
         {
             reason = null;
-            if (!IsServer) { reason = "Only the host can start."; return false; }
-            if (Phase != MatchPhase.Lobby) { reason = "The match already started."; return false; }
+            if (!IsServer) { reason = "mp.host_only"; return false; }
+            if (Phase != MatchPhase.Lobby) { reason = "mp.already_started"; return false; }
 
             int waiting = 0;
             for (int i = 0; i < m_Players.Count; i++)
@@ -256,7 +305,7 @@ namespace DeckParty.Networking
             }
             if (waiting > 0)
             {
-                reason = waiting == 1 ? "Waiting for 1 player to ready up." : $"Waiting for {waiting} players to ready up.";
+                reason = Core.Err.Of("mp.waiting_ready", waiting);
                 return false;
             }
             return true;
@@ -272,11 +321,14 @@ namespace DeckParty.Networking
             m_Games.Clear();
             m_ReadyNextNight.Clear();
 
+            var random = new System.Random((int)seed);
             for (int i = 0; i < m_Players.Count; i++)
             {
                 var p = m_Players[i];
                 if (!p.Connected) continue;
-                m_Games[p.ClientId] = PartyEngine.CreateGame(settings.ScenarioId, seed, settings.Nights);
+                var streamer = StreamerCatalog.Resolve(p.Streamer, random);
+                p.Streamer = (byte)streamer;
+                m_Games[p.ClientId] = PartyEngine.CreateGame(settings.ScenarioId, seed, settings.Nights, streamer);
                 p.Rank = 0;
                 p.ReadyNextNight = false;
                 m_Players[i] = p;
@@ -288,8 +340,7 @@ namespace DeckParty.Networking
             // Everyone starts on night 1 with the doors open, so the first player's turn needs no setup.
             m_ActivePlayer.Value = settings.Mode == MatchMode.Turns ? NextTurnPlayer() : NoPlayer;
 
-            var scenario = ScenarioCatalog.Get(settings.ScenarioId);
-            ServerHeadline($"The season begins: {scenario.Name}, {settings.Nights} nights. First {GameRules.DiamondsToWin}-{Terms.Diamond} party wins!");
+            ServerHeadline(Core.Err.Of("mp.season_begins", "@s" + settings.ScenarioId, settings.Nights) + Core.Err.Separator + GameRules.DiamondsToWin);
             NetworkManager.SceneManager.LoadScene(SceneNames.Game, LoadSceneMode.Single);
         }
 
@@ -309,7 +360,7 @@ namespace DeckParty.Networking
                     m_Players.RemoveAt(i);
                     continue;
                 }
-                m_Players[i] = NetPlayer.Create(p.ClientId, p.DisplayName, p.ColorIndex);
+                m_Players[i] = NetPlayer.Create(p.ClientId, p.DisplayName, p.ColorIndex, p.Streamer);
             }
 
             m_Phase.Value = MatchPhase.Lobby;
@@ -331,6 +382,52 @@ namespace DeckParty.Networking
         }
 
         [Rpc(SendTo.Server)]
+        void SetStreamerRpc(byte streamer, RpcParams rpcParams = default)
+        {
+            if (Phase != MatchPhase.Lobby) return;
+            if (streamer != StreamerCatalog.RandomPick && !StreamerCatalog.IsValid((StreamerType)streamer)) return;
+            int index = IndexOfPlayer(rpcParams.Receive.SenderClientId);
+            if (index < 0) return;
+            var p = m_Players[index];
+            if (p.Streamer == streamer) return;
+            p.Streamer = streamer;
+            m_Players[index] = p;
+        }
+
+        [Rpc(SendTo.Server)]
+        void ViewingRpc(ulong viewed, RpcParams rpcParams = default)
+        {
+            ulong sender = rpcParams.Receive.SenderClientId;
+            m_Viewing[sender] = viewed;
+            ServerUpdateWatchers();
+        }
+
+        [Rpc(SendTo.Server)]
+        void PresenceRpc(PresenceMessage message, RpcParams rpcParams = default)
+        {
+            ulong sender = rpcParams.Receive.SenderClientId;
+            if (Phase != MatchPhase.InGame || !IsConnectedPlayer(sender)) return;
+            // In Take Turns only the active player has anything to show; the others are watching.
+            if (TakingTurns && sender != ActivePlayer && message.Kind != PresenceKind.None) return;
+            // Updates up to a second late are fine (turn-based), so a generous flood guard costs nothing.
+            float now = Time.unscaledTime;
+            if (m_LastPresence.TryGetValue(sender, out var last) && now - last < 0.05f && message.Kind != PresenceKind.None) return;
+            m_LastPresence[sender] = now;
+            ReceivePresenceRpc(sender, message);
+        }
+
+        [Rpc(SendTo.Server)]
+        void EmoteRpc(byte index, RpcParams rpcParams = default)
+        {
+            ulong sender = rpcParams.Receive.SenderClientId;
+            if (index >= Emotes.All.Length || !IsConnectedPlayer(sender)) return;
+            float now = Time.unscaledTime;
+            if (m_LastEmote.TryGetValue(sender, out var last) && now - last < Emotes.Cooldown) return;
+            m_LastEmote[sender] = now;
+            ReceiveEmoteRpc(sender, index);
+        }
+
+        [Rpc(SendTo.Server)]
         void SubmitCommandRpc(NetCommand command, RpcParams rpcParams = default)
         {
             ulong sender = rpcParams.Receive.SenderClientId;
@@ -342,8 +439,8 @@ namespace DeckParty.Networking
             {
                 if (sender != ActivePlayer || m_TurnEnding)
                 {
-                    ServerReject(sender, sender == ActivePlayer ? "Your turn is ending."
-                        : ActivePlayer != NoPlayer ? $"It's {PlayerName(ActivePlayer)}'s turn." : "Wait for your turn.");
+                    ServerReject(sender, sender == ActivePlayer ? "mp.turn_ending"
+                        : ActivePlayer != NoPlayer ? Core.Err.Of("mp.their_turn", PlayerName(ActivePlayer)) : "mp.wait_turn");
                     return;
                 }
                 if (cmd.Type == CommandType.StartNextNight)
@@ -351,7 +448,7 @@ namespace DeckParty.Networking
                     // In Take Turns, "next night" ends your turn; the night itself starts when your next turn does.
                     if (state.Phase != GamePhase.Planning)
                     {
-                        ServerReject(sender, "Finish tonight's party first.");
+                        ServerReject(sender, "err.finish_stream");
                         return;
                     }
                     ServerEndTurn(sender, 0f);
@@ -362,7 +459,7 @@ namespace DeckParty.Networking
             {
                 if (state.Phase != GamePhase.Planning || state.IsFinalNight)
                 {
-                    ServerReject(sender, "Finish tonight's party first.");
+                    ServerReject(sender, "err.finish_stream");
                     return;
                 }
                 m_ReadyNextNight.Add(sender);
@@ -372,9 +469,16 @@ namespace DeckParty.Networking
             }
 
             if (Settings.Mode == MatchMode.SyncNights && m_ReadyNextNight.Contains(sender) &&
-                (cmd.Type == CommandType.BuyGuest || cmd.Type == CommandType.ExpandHouse))
+                (cmd.Type == CommandType.BuyGuest || cmd.Type == CommandType.ExpandHouse || cmd.Type == CommandType.UseStreamerPower))
             {
-                ServerReject(sender, "You're marked ready. Cancel ready to keep shopping.");
+                ServerReject(sender, "mp.marked_ready");
+                return;
+            }
+
+            // Rival powers touch two players' seasons, so the host resolves them here.
+            if (cmd.Type == CommandType.UseStreamerPower && state.StreamerInfo.NeedsRival)
+            {
+                ServerUseRivalPower(sender, state, cmd.TargetA);
                 return;
             }
 
@@ -457,6 +561,25 @@ namespace DeckParty.Networking
             Raise(HeadlineReceived, message);
         }
 
+        [Rpc(SendTo.ClientsAndHost)]
+        void ReceivePresenceRpc(ulong sender, PresenceMessage message)
+        {
+            if (sender == LocalClientId) return;
+            Raise(PresenceReceived, sender, message);
+        }
+
+        [Rpc(SendTo.ClientsAndHost)]
+        void ReceiveEmoteRpc(ulong sender, byte index)
+        {
+            Raise(EmoteReceived, sender, (int)index);
+        }
+
+        [Rpc(SendTo.ClientsAndHost)]
+        void RivalPowerRpc(ulong actor, ulong target, byte streamer)
+        {
+            Raise(RivalPowerUsed, actor, target, (StreamerType)streamer);
+        }
+
         void AddChat(ChatMessage message)
         {
             ChatHistory.Add(message);
@@ -473,11 +596,12 @@ namespace DeckParty.Networking
             if (!IsServer || IndexOfPlayer(clientId) >= 0) return;
 
             string name = NetworkService.HasInstance ? NetworkService.Instance.TakePendingName(clientId) : null;
+            byte streamer = NetworkService.HasInstance ? NetworkService.Instance.TakePendingStreamer(clientId) : (byte)0;
             if (string.IsNullOrEmpty(name)) name = "Player " + (m_Players.Count + 1);
             name = UniqueName(name);
 
-            m_Players.Add(NetPlayer.Create(clientId, name, NextColorIndex()));
-            if (!IsHostPlayer(clientId)) ServerHeadline($"{name} joined the party.");
+            m_Players.Add(NetPlayer.Create(clientId, name, NextColorIndex(), streamer));
+            if (!IsHostPlayer(clientId)) ServerHeadline(Core.Err.Of("mp.joined", name));
         }
 
         void ServerOnClientDisconnected(ulong clientId)
@@ -500,7 +624,9 @@ namespace DeckParty.Networking
                 m_ReadyNextNight.Remove(clientId);
             }
 
-            ServerHeadline($"{name} left the party.");
+            m_Viewing.Remove(clientId);
+            ServerHeadline(Core.Err.Of("mp.left", name));
+            ServerUpdateWatchers();
             ServerEvaluateProgress();
         }
 
@@ -546,7 +672,74 @@ namespace DeckParty.Networking
             ReceiveStateRpc(owner, packet, target);
         }
 
-        void ServerHeadline(string text) => HeadlineRpc(NetStrings.Fs128(text));
+        /// <summary>Sends a headline as a localization key with arguments, so each player reads it in their own language.</summary>
+        void ServerHeadline(string key) => HeadlineRpc(NetStrings.Fs128(key));
+
+        /// <summary>Fate's Raid / Ethical F**kboi's Wealth Tax: picks the rival (or uses the one chosen) and applies the power to both seasons.</summary>
+        void ServerUseRivalPower(ulong sender, PlayerState state, int requestedIndex)
+        {
+            ulong target = ClientAtIndex(requestedIndex);
+            if (target == sender || !IsConnectedPlayer(target) || !m_Games.ContainsKey(target)) target = AutoRivalFor(sender, state);
+            if (target == NoPlayer || !m_Games.TryGetValue(target, out var targetState))
+            {
+                ServerReject(sender, "err.power_no_rival");
+                return;
+            }
+
+            var actorEvents = new List<GameEvent>();
+            var targetEvents = new List<GameEvent>();
+            var result = PartyEngine.UseRivalPower(state, IndexOfPlayer(sender), targetState, IndexOfPlayer(target), actorEvents, targetEvents);
+            if (!result.Ok)
+            {
+                ServerReject(sender, result.Error);
+                return;
+            }
+
+            ServerBroadcastState(sender, actorEvents);
+            ServerBroadcastState(target, targetEvents);
+            ServerUpdateSummary(sender);
+            ServerUpdateSummary(target);
+            RivalPowerRpc(sender, target, (byte)state.Streamer);
+            ServerHeadline(Core.Err.Of(state.Streamer == StreamerType.Fate ? "mp.raided" : "mp.taxed", PlayerName(sender), PlayerName(target)));
+        }
+
+        /// <summary>Raid hits whoever plays next (in Take Turns) or the leader; Wealth Tax hits the richest rival.</summary>
+        ulong AutoRivalFor(ulong sender, PlayerState state)
+        {
+            ulong best = NoPlayer;
+            int bestScore = int.MinValue;
+            int senderIndex = IndexOfPlayer(sender);
+            for (int i = 0; i < m_Players.Count; i++)
+            {
+                var p = m_Players[i];
+                if (p.ClientId == sender || !p.Connected || !m_Games.TryGetValue(p.ClientId, out var s) || s.IsGameOver) continue;
+                int score;
+                if (state.Streamer == StreamerType.EthicalFboi) score = s.Cash * 1000 - i;
+                else if (TakingTurns) score = -((i - senderIndex + m_Players.Count) % m_Players.Count);
+                else score = s.BestDiamonds * 1000 + s.TotalPopEarned;
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    best = p.ClientId;
+                }
+            }
+            return best;
+        }
+
+        void ServerUpdateWatchers()
+        {
+            if (!IsServer) return;
+            for (int i = 0; i < m_Players.Count; i++)
+            {
+                var p = m_Players[i];
+                int watchers = 0;
+                foreach (var kv in m_Viewing)
+                    if (kv.Key != p.ClientId && kv.Value == p.ClientId && IsConnectedPlayer(kv.Key)) watchers++;
+                if (p.Watchers == watchers) continue;
+                p.Watchers = (byte)Mathf.Clamp(watchers, 0, 255);
+                m_Players[i] = p;
+            }
+        }
 
         void ServerUpdateSummary(ulong clientId)
         {
@@ -583,21 +776,24 @@ namespace DeckParty.Networking
                 switch (e.Type)
                 {
                     case GameEventType.PoliceRaid:
-                        ServerHeadline($"{name} got swatted!");
+                        ServerHeadline(Core.Err.Of("mp.swatted", name));
                         break;
                     case GameEventType.FireMarshal:
-                        ServerHeadline($"{name} blew past their {Terms.SubCap} and got shut down!");
+                        ServerHeadline(Core.Err.Of("mp.crashed", name));
                         break;
                     case GameEventType.PartyEnded:
-                        if (e.C == GameRules.DiamondsToWin - 1) ServerHeadline($"{name} had {e.C} {Terms.Diamonds} at one party. One more and they win!");
+                        if (e.C == GameRules.DiamondsToWin - 1) ServerHeadline(Core.Err.Of("mp.one_more", name, e.C));
                         break;
                     case GameEventType.GuestPurchased:
-                        if (GuestCatalog.Get(e.Guest).IsDiamond) ServerHeadline($"{name} signed a {GuestVisuals.DisplayName(e.Guest)}!");
+                        if (GuestCatalog.Get(e.Guest).IsDiamond) ServerHeadline(Core.Err.Of("mp.signed", name, Core.Err.Guest(e.Guest)));
+                        break;
+                    case GameEventType.PowerUsed:
+                        if (!StreamerCatalog.Get((StreamerType)e.A).NeedsRival) ServerHeadline(Core.Err.Of("mp.power", name, "@t" + e.A) + Core.Err.Separator + "@w" + e.A);
                         break;
                     case GameEventType.Victory:
                         ServerHeadline(Settings.Mode == MatchMode.Race
-                            ? $"{name} threw a {GameRules.DiamondsToWin}-{Terms.Diamond} party and wins!"
-                            : $"{name} threw a {GameRules.DiamondsToWin}-{Terms.Diamond} party! Finishing night {e.A}...");
+                            ? Core.Err.Of("mp.won_race", name, GameRules.DiamondsToWin)
+                            : Core.Err.Of("mp.won_finishing", name, GameRules.DiamondsToWin) + Core.Err.Separator + e.A);
                         break;
                 }
             }
@@ -668,7 +864,7 @@ namespace DeckParty.Networking
 
             m_ReadyNextNight.Clear();
             foreach (var id in ids) ServerUpdateSummary(id);
-            if (night > 0) ServerHeadline($"Night {night} begins!");
+            if (night > 0) ServerHeadline(Core.Err.Of("mp.night_begins", night));
         }
 
         // ------------------------------------------------------------------ Take Turns
@@ -677,6 +873,7 @@ namespace DeckParty.Networking
         void ServerEndTurn(ulong clientId, float delay)
         {
             m_ReadyNextNight.Add(clientId);
+            m_TurnDeadline.Value = 0;
             ServerUpdateSummary(clientId);
 
             if (delay <= 0f)
@@ -702,6 +899,47 @@ namespace DeckParty.Networking
             if (m_TurnRoutine != null) StopCoroutine(m_TurnRoutine);
             m_TurnRoutine = null;
             m_TurnEnding = false;
+            if (IsServer) m_TurnDeadline.Value = 0;
+        }
+
+        void Update()
+        {
+            if (!IsServer || Phase != MatchPhase.InGame || !TakingTurns || m_TurnEnding) return;
+            double deadline = m_TurnDeadline.Value;
+            if (deadline > 0 && NetworkManager.ServerTime.Time >= deadline) ServerTurnTimedOut(ActivePlayer);
+        }
+
+        /// <summary>
+        /// The turn timer ran out: the host finishes the turn the safest way. A waiting viewer is denied, a pending New
+        /// Attraction is skipped, the stream ends (and is scored normally), a Temporary Ban goes to the first suspect,
+        /// and the turn passes.
+        /// </summary>
+        void ServerTurnTimedOut(ulong clientId)
+        {
+            m_TurnDeadline.Value = 0;
+            if (!m_Games.TryGetValue(clientId, out var s))
+            {
+                ServerAdvanceTurn();
+                return;
+            }
+            ServerHeadline(Core.Err.Of("mp.timeout", PlayerName(clientId)));
+
+            for (int guard = 0; guard < 8 && !s.IsGameOver && s.Phase != GamePhase.Planning; guard++)
+            {
+                GameCommand cmd;
+                if (s.Phase == GamePhase.RaidBlame) cmd = GameCommand.Blame(s.RaidSuspects.Count > 0 ? s.RaidSuspects[0] : -1);
+                else if (s.PeekedId >= 0) cmd = GameCommand.RejectPeeked();
+                else if (s.AttractionPending) cmd = GameCommand.ResolveAttraction(-1, -1);
+                else cmd = GameCommand.EndParty();
+
+                m_Scratch.Clear();
+                if (!PartyEngine.Execute(s, cmd, m_Scratch).Ok) break;
+                ServerBroadcastState(clientId, m_Scratch);
+                ServerAnnounce(clientId, m_Scratch);
+            }
+            ServerUpdateSummary(clientId);
+            ServerEndTurn(clientId, s.IsGameOver ? GameOverTurnDelay : 0f);
+            ServerEvaluateProgress();
         }
 
         /// <summary>The next connected player (in lobby order) who's still in the season and hasn't played this round.</summary>
@@ -755,6 +993,8 @@ namespace DeckParty.Networking
             }
             // Set after the state goes out, so clients already have the new night when they switch to this board.
             m_ActivePlayer.Value = clientId;
+            int seconds = Settings.TurnSeconds;
+            m_TurnDeadline.Value = seconds > 0 ? NetworkManager.ServerTime.Time + seconds : 0;
         }
 
         void ServerEndMatch()
@@ -781,8 +1021,8 @@ namespace DeckParty.Networking
             {
                 var winner = snapshot[order[0]];
                 ServerHeadline(winner.Won
-                    ? $"{winner.DisplayName} wins the season with a {GameRules.DiamondsToWin}-{Terms.Diamond} party on night {winner.WinNight}!"
-                    : $"Nobody hit {GameRules.DiamondsToWin} {Terms.Diamonds}. {winner.DisplayName} takes it with a best of {Terms.DiamondCount(winner.BestDiamonds)}.");
+                    ? Core.Err.Of("mp.season_won", winner.DisplayName, GameRules.DiamondsToWin) + Core.Err.Separator + winner.WinNight
+                    : Core.Err.Of("mp.season_best", winner.DisplayName, GameRules.DiamondsToWin) + Core.Err.Separator + winner.BestDiamonds);
             }
         }
 

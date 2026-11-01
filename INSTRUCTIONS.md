@@ -1,22 +1,42 @@
-# Deck Party: Setup, Art & Multiplayer Guide
+# Deck Party (Audience Capture): Setup, Art & Multiplayer Guide
 
-Deck Party is built on the rules in `Party_House_UFO50_Complete_Rules.md`, re-themed for streaming and memes (see `.claude/MajorUpdate.md`): 59 guests (10 renamed classics, 40 meme guests, 9 Diamonds), 5 character sets, a Random Mix (with the 5-in-a-row Cherry goal), an Open Lobby sandbox, 7 backgrounds plus "Character Set Default" and "Evolving", single player with autosave, and online/LAN multiplayer built on **Netcode for GameObjects** with **Unity Relay**.
+Deck Party is built on the rules in `Party_House_UFO50_Complete_Rules.md`, re-themed for streaming and memes. Players see it as **Audience Capture**; the project, repo and product name stay "Deck Party". It has:
 
-Everything works out of the box with generated placeholder art. This guide covers setup and multiplayer. **For adding character sprites and background images, and for testing the V1 update, see `V1Instructions.md`** (Deck Party > Open V1 Instructions).
+- **Viewers:** 59 (10 renamed classics, 40 meme viewers, 9 Diamonds).
+- **Streamers:** 11 playable streamers with powers, plus Random and No Streamer.
+- **Character sets:** 5, plus a Random Mix (with the 5-in-a-row Cherry goal) and an Open Lobby sandbox.
+- **Stream setups:** 7, plus one stage per streamer.
+- **Languages:** 5 (English, Simplified Chinese, Russian, Latin-American Spanish, Brazilian Portuguese).
+- **Modes:** single player with autosave, and online/LAN multiplayer built on **Netcode for GameObjects** with **Unity Relay**.
+
+Everything works out of the box with generated placeholder art.
+
+| Guide | Covers | Menu |
+|---|---|---|
+| This file | Setup, project layout, multiplayer, code map | Deck Party > Open Instructions |
+| `V1Instructions.md` | Adding character sprites and backgrounds; building and sharing a copy; testing online with a friend | Deck Party > Open V1 Instructions |
+| `V2Instructions.md` | The Audience Capture update: getting it into Unity, streamers, languages, animation, test passes | Deck Party > Open V2 Instructions |
+| `UIGuide.md` | "To change X, open Y": menus, HUD, cards, backgrounds, animation, text, Feel, shaders, display | Deck Party > Open UI Guide |
 
 ---
 
 ## 1. First launch
 
-1. Open the project in **Unity 6000.0.73f1**. Package Manager downloads the new packages listed in `Packages/manifest.json`:
+1. Open the project in **Unity 6000.0.73f1**. Package Manager downloads the packages listed in `Packages/manifest.json`:
    - `com.unity.netcode.gameobjects` 2.13.3 (networking)
    - `com.unity.transport` 2.7.4
    - `com.unity.services.multiplayer` 2.4.1 (Unity Relay, for online play)
    - `com.unity.multiplayer.playmode` 1.6.3 (test several players inside the editor)
+   - `com.unity.localization` 1.5.8 (languages; it brings Addressables)
+
+   Two Asset Store packages live in `Assets/`: **Feel** (game-feel feedbacks) and **Sprite Shaders Ultimate** (card shader effects). The game still runs without them, with simpler effects.
 2. When compilation finishes, a **"Welcome to Deck Party"** dialog appears. Click **Build now**. It will:
    - import the TextMeshPro Essential Resources,
    - generate placeholder sprites in `Assets/DeckParty/Art/Placeholders`,
-   - create the data assets (database, venues, UI skin, audio library),
+   - create the data assets (database, stream setups, UI skin, audio library, FX library),
+   - set up the languages (locales, string tables from the CSV, Addressables) and the fonts,
+   - set up character animation (templates, portrait stage, the **CardPortraits** layer),
+   - generate the Feel feedback prefabs and the shader materials,
    - create the network session prefab and the UI prefabs,
    - build `Assets/DeckParty/Scenes/MainMenu.unity` and `Game.unity`,
    - add both scenes to the build list and set the player settings (product name "Deck Party", run in background, windowed 1600x900).
@@ -30,15 +50,21 @@ If the dialog doesn't appear (or you clicked Later), use **Deck Party > Setup > 
 
 | Menu item | What it does |
 |---|---|
-| Setup > Build Everything (keeps existing scenes) | Creates anything missing. Never overwrites your scenes or prefabs. Safe to run any time. |
-| Setup > Rebuild Scenes and UI Prefabs (overwrites) | Regenerates both scenes and the 5 UI prefabs from scratch, discarding your edits to them. Art, venues, skin, audio and database are kept. |
+| Setup > Build Everything (keeps existing scenes) | Creates anything missing and re-imports the strings CSV. Never overwrites your scenes or prefabs. Safe to run any time. |
+| Setup > Rebuild Scenes and UI Prefabs (overwrites) | Regenerates both scenes and the 5 UI prefabs from scratch, discarding your edits to them. The old prefabs are backed up to `Prefabs/Backup`. Art, animations, stream setups, skin, audio, FX and the database are kept. |
 | Setup > Regenerate Placeholder Art | Rewrites the generated placeholder PNGs. |
-| Art > Auto-Assign Sprites by Name | Hooks up every sprite under `Assets/DeckParty/Art` using the naming rules in `V1Instructions.md`. |
-| Art > Assign Selected Sheet to Guests in Roster Order | Select a sliced character sheet, then run this. Sprites become portraits in roster order. |
-| Art > Clear Guest Portraits | Reverts all guests to placeholders. |
-| Art > Log Expected File Names | Prints every character and background file name the auto-assigner recognises. |
-| Art > Auto-Assign When Images Are Imported | On by default: images dropped into `Art/Characters`, `Art/Backgrounds` or `Art/UI` are set up as sprites and assigned automatically. |
-| Open Instructions / Open V1 Instructions | Opens this guide / the V1 art and testing guide. |
+| Art > Auto-Assign Sprites by Name | Hooks up every sprite under `Assets/DeckParty/Art` (viewers, streamers, backgrounds, UI) using the naming rules in `V1Instructions.md` and `V2Instructions.md`. |
+| Art > Assign Selected Sheet to Guests in Roster Order | Select a sliced character sheet, then run this. Sprites become viewer portraits in roster order. |
+| Art > Clear Guest Portraits | Reverts all viewers to placeholders. |
+| Art > Log Expected File Names | Prints every viewer, streamer and background file name the auto-assigner recognises. |
+| Art > Auto-Assign When Images Are Imported | On by default: images dropped into `Art/Characters`, `Art/Streamers`, `Art/Backgrounds` or `Art/UI` are set up as sprites and assigned automatically. |
+| Art > Create Character / Streamer Animator Template | Selects (creating if needed) the template controllers with every state name the game plays. |
+| Art > Validate Character Animations | Reports missing animation states and broken clip paths. |
+| Localization > Import CSV into String Tables | Loads `Resources/Localization/AudienceCapture_Strings.csv` into the Unity string tables. |
+| Localization > Export String Tables to CSV | Writes edits made in Unity's Localization Tables window back to the CSV. |
+| Localization > Select Strings CSV / Rebuild Fonts | Jumps to the CSV / regenerates the TextMeshPro fonts and their fallbacks. |
+| FX > Select FX Library / Rebuild FX (overwrites) | Jumps to the polish settings / regenerates the Feel prefabs and shader materials. |
+| Open Instructions / V1 / V2 Instructions / UI Guide | Opens the guides. |
 | Select Game Database / UI Skin / Audio Library | Jumps to the asset in the Project window. |
 | Open Main Menu Scene / Open Game Scene | Opens the scene. |
 
@@ -50,62 +76,98 @@ If the dialog doesn't appear (or you clicked Later), use **Deck Party > Setup > 
 
 ```
 Assets/DeckParty/
+  Animation/      animator templates, per-viewer override controllers, PortraitUnlit material
   Art/
-    Characters/     <- put your character sprite sheet(s) here
-    Backgrounds/    <- put venue background images here
-    UI/             <- put your UI sprite sheet(s) here
-    Placeholders/   (generated; safe to ignore or delete once replaced)
+    Characters/   <- viewer sprites (and streamer sprites named streamer_<name>)
+    Streamers/    <- streamer sprites (optional separate folder)
+    Backgrounds/  <- stream setup images (bg_<id>, bg_stage_<streamer>)
+    UI/           <- UI sprite sheet(s)
+    Placeholders/ (generated; safe to ignore)
   Audio/Music, Audio/SFX   <- optional audio clips
   Data/
     UISkin.asset          <- UI sprite slots + fonts
     AudioLibrary.asset    <- music + sound effect slots
-    Venues/Venue_*.asset  <- one asset per background/venue
+    FxLibrary.asset       <- Feel cues, shader materials, polish switches
+    Venues/Venue_*.asset  <- one asset per stream setup (incl. Venue_stage_<streamer>)
+  Fonts/          Noto Sans, Noto Sans SC, Rubik, ZCOOL KuaiLe (OFL) + generated TMP font assets
+  FX/Feedbacks, FX/Materials   <- generated Feel prefabs and SSU uber materials
+  Localization/   locales, string tables, LocalizationSettings (generated from the CSV)
   Resources/
-    DeckPartyDatabase.asset          <- guest portraits, venue list, links everything
+    DeckPartyDatabase.asset          <- viewer + streamer art, stream setups, links everything
+    Localization/AudienceCapture_Strings.csv   <- every on-screen text, all languages (the master copy)
     Network/DeckPartyNetSession.prefab   (networking, don't rename/move)
-  Prefabs/UI/   GuestCard, GuestRow, ScenarioItem, PlayerRow, TextLine
-  Scenes/       MainMenu.unity, Game.unity
+  Prefabs/UI/     GuestCard, GuestRow, ScenarioItem, PlayerRow, TextLine
+  Prefabs/PortraitStage.prefab       (renders animated characters for the UI)
+  Scenes/         MainMenu.unity, Game.unity
   Scripts/
-    Core/      pure C# rules engine (no Unity dependency)
-    Runtime/   Unity code: UI, sessions, networking, audio, data
-    Editor/    scene/prefab builders and art tools
+    Core/      pure C# rules engine (no Unity dependency), incl. StreamerCatalog
+    Runtime/   Unity code: UI, sessions, networking, audio, data, Localization, Fx, Animation
+    Juice/     DeckParty.Juice: the Feel backend (and Editor/ builds the Feel prefabs)
+    Editor/    scene/prefab builders and art, localization, animation and FX tools
 ```
 
 ---
 
 ## 3. Importing art
 
-Drop images into the matching `Art/` subfolder. On first import they're set up as sprites (Sprite (2D and UI), no mipmaps), and the auto-assigner hooks them up by file name. For a sprite sheet, set **Sprite Mode: Multiple**, slice it in the **Sprite Editor** and name the slices; applying re-runs the auto-assign. For pixel art, set **Filter Mode: Point** and **Compression: None** (your Inspector changes are kept). Matching ignores case, spaces, `_` and `-`.
+Drop images into the matching `Art/` subfolder. On first import they're set up as sprites (Sprite (2D and UI), no mipmaps), and the auto-assigner hooks them up by file name.
+- **Sprite sheets:** set **Sprite Mode: Multiple**, slice the sheet in the **Sprite Editor** and name the slices. Applying re-runs the auto-assign.
+- **Pixel art:** set **Filter Mode: Point** and **Compression: None**. Your Inspector changes are kept.
+- **Name matching:** ignores case, spaces, `_` and `-`.
 
 You can always assign sprites by hand instead. Each section below says which asset field to use.
 
 ---
 
-## 4. Characters (guest portraits)
+## 4. Characters (viewer and streamer art)
 
-**Full step-by-step guide and the 59-character file-name table: `V1Instructions.md`, section 2.**
+**Full step-by-step guide and the 59-character file-name table: `V1Instructions.md`, section 2. Streamers and animation: `V2Instructions.md`, sections 2 and 4.**
 
-**Where they go:** `Assets/DeckParty/Resources/DeckPartyDatabase.asset`, in the **Guests** list (one entry per guest, labelled by name). Drag a sprite into **Portrait**. Each entry also has:
-- **Display Name Override:** rename a guest in the UI (rules unaffected).
+**Where they go:** `Assets/DeckParty/Resources/DeckPartyDatabase.asset`.
+
+The inspector has a search box and filters, and two lists:
+- **Guests:** one entry per viewer. Drag a sprite into **Portrait**.
+- **Streamers:** one entry per streamer, with Portrait, Character Prefab, Animator Controller, Venue (their stage) and Color.
+
+Each viewer entry also has:
 - **Tint:** placeholder/accent colour (alpha 0 means the automatic family colour).
+- **Animation...:** Character Prefab (rigged PSB or animated prefab), Animator Controller, Framing Zoom/Offset, and **Create Override Controller**.
 
-Portraits are shown with "preserve aspect" in a roughly square frame (about 180x140 inside each card), so square-ish character art with a transparent background looks best.
+Portraits are shown with "preserve aspect" in a 180x178 area of each 200x290 card. Square-ish art with a transparent background looks best.
+
+Names are now translated. To rename a character on screen, edit its `char.<Type>.name` row in the strings CSV (`UIGuide.md` section 7).
 
 ---
 
-## 5. Backgrounds (venues)
+## 5. Backgrounds (stream setups)
 
 **Full step-by-step guide and the background file-name table: `V1Instructions.md`, section 3.**
 
-Each background is a **Venue** asset in `Assets/DeckParty/Data/Venues/` (`Venue_bedroom`, `Venue_content_house`, `Venue_cursed_stream`, `Venue_studio_stage`, `Venue_city_irl`, `Venue_metaverse`, `Venue_irl_beach`). Players pick one in the Single Player screen, in the multiplayer lobby (each player picks their own), or from the in-game **Menu** at any time.
+Each background is a **Venue** asset in `Assets/DeckParty/Data/Venues/`:
+- **7 general setups:** `Venue_bedroom`, `Venue_content_house`, `Venue_cursed_stream`, `Venue_studio_stage`, `Venue_city_irl`, `Venue_metaverse` and `Venue_irl_beach`.
+- **One stage per streamer:** `Venue_stage_fate`, `Venue_stage_brojogan` and so on.
 
-Each venue asset has three art fields: **Background** (full-screen image, 1920x1080+ 16:9, file `bg_<id>`), optional **Foreground** overlay (`bg_<id>_fg`) and optional **Thumbnail** (`bg_<id>_thumb`). The palette and style only drive the placeholder scene drawn while Background is empty. **Party Lights** adds moving spotlights (and the red/blue flash when you get swatted); untick it for a clean image. **Music** optionally replaces the party music for that venue.
+Players pick one in the Single Player screen, in the multiplayer lobby (each player picks their own), or from the in-game **Menu** at any time.
 
-**Special choices in every venue selector:**
-- **Character Set Default:** each character set's own background. Random Mix rolls one from its seed.
-- **Evolving:** your background upgrades as your Sub Cap grows (bedroom, then city at 9, studio at 14, content house at 20, metaverse at 27). Edit the stages in the database's **Evolving Venue** list.
+Each venue asset has three art fields:
+- **Background:** full-screen image, file `bg_<id>`. **Author it at 21:9 (2520x1080 or larger) and keep the important parts inside the central 16:9.** Ultrawide screens show the full width; 16:9 crops the sides.
+- **Foreground:** optional overlay, file `bg_<id>_fg`.
+- **Thumbnail:** optional, file `bg_<id>_thumb`.
 
-**Adding a new venue:** right-click in `Data/Venues` and choose **Create > Deck Party > Venue**. Give it a unique **Id**, assign art, then add it to the database's **Venues** list. It appears in every selector automatically.
+Other settings:
+- **Palette and style:** only drive the placeholder scene drawn while Background is empty.
+- **Party Lights:** adds moving spotlights, a red/blue flash when you get swatted and a red alert at high risk. Untick it for a clean image.
+- **Music:** optionally replaces the stream music for that setup.
+
+**Special choices in every setup selector:**
+- **Automatic (your streamer's setup)** (the default): the chosen streamer's stage. With No Streamer, each character set's own background (Random Mix rolls one from its seed).
+- **Evolving (grows with your Sub Cap):** your background upgrades as your Sub Cap grows (bedroom, then city at 9, studio at 14, content house at 20, metaverse at 27). Edit the stages in the database's **Evolving Venue** list.
+
+**Adding a new setup:**
+1. Right-click in `Data/Venues` and choose **Create > Deck Party > Venue**.
+2. Give it a unique **Id** and assign art.
+3. Add it to the database's **Venues** list. It appears in every selector.
+4. Add `venue.<id>` and `venue.<id>.desc` rows to the strings CSV for its name.
 
 ---
 
@@ -116,13 +178,13 @@ All menus, the HUD, cards and buttons draw from `Assets/DeckParty/Data/UISkin.as
 | Slot | Used for | Sprite name | Tips |
 |---|---|---|---|
 | Panel | Screen panels, side panels, dialogs | `ui_panel` | 9-slice |
-| PanelAlt | Rows, result card, character set items | `ui_panelalt` | 9-slice |
+| PanelAlt | Rows, result card, character set items, streamer power panel | `ui_panelalt` | 9-slice |
 | Button | Normal buttons | `ui_button` | 9-slice |
-| ButtonPrimary | Main actions (Open the Door, Start, Buy) and gold buttons | `ui_buttonprimary` | 9-slice |
-| ButtonSecondary | Secondary actions (Multiplayer, ability buttons) | `ui_buttonsecondary` | 9-slice |
-| ButtonDanger | Reject / Quit / Reset | `ui_buttondanger` | 9-slice |
-| CardFrame | Guest card frame | `ui_cardframe` | 9-slice |
-| CardFrameStar | Frame for Diamond guests (optional) | `ui_cardframestar` | 9-slice |
+| ButtonPrimary | Main actions (Add Viewer to Chat, Go Live, Buy) and gold buttons | `ui_buttonprimary` | 9-slice |
+| ButtonSecondary | Secondary actions (Multiplayer, action buttons) | `ui_buttonsecondary` | 9-slice |
+| ButtonDanger | Deny / Quit / Reset | `ui_buttondanger` | 9-slice |
+| CardFrame | Viewer card frame | `ui_cardframe` | 9-slice |
+| CardFrameStar | Frame for Diamond viewers (optional) | `ui_cardframestar` | 9-slice |
 | SlotEmpty | Empty Sub Cap space | `ui_slotempty` | 9-slice outline |
 | Badge | Small badges (permanent +1, x2) | `ui_badge` | 9-slice |
 | Circle | Placeholder portrait disc, player colour dot | `ui_circle` | |
@@ -130,8 +192,8 @@ All menus, the HUD, cards and buttons draw from `Assets/DeckParty/Data/UISkin.as
 | InputField | Text fields and selector value boxes | `ui_inputfield` | 9-slice |
 | Tooltip | Tooltip and toast background | `ui_tooltip` | 9-slice |
 | ScrollHandle | Scrollbar handle | `ui_scrollhandle` | 9-slice |
-| Glow | Party light glow | `ui_glow` | soft radial |
-| Logo | Main-menu logo (replaces the "DECK PARTY" text) | `ui_logo` | |
+| Glow | Light glow | `ui_glow` | soft radial |
+| Logo | Main-menu logo (replaces the "AUDIENCE CAPTURE" text) | `ui_logo` | |
 | IconPop / IconCash / IconDoor | HUD stat icons (Gifted Subs, Cash, Sub Cap) | `icon_pop`, `icon_cash`, `icon_door` | |
 | IconTrouble / IconStar | Swatting Risk and Diamond pips, card badges | `icon_trouble`, `icon_star` | |
 | IconCancel | "Cancels risk" badge (AutoMod, VIPS, Wholesome Icon, Cheems with a Doge) | `icon_cancel` | |
@@ -140,69 +202,133 @@ All menus, the HUD, cards and buttons draw from `Assets/DeckParty/Data/UISkin.as
 Notes:
 - **9-slice:** in the Sprite Editor, drag the green border handles so the corners don't stretch. Slots marked 9-slice default to *Sliced* drawing.
 - **Colours:** UI elements tint their sprite (for example, buttons are tinted pink). If your sprites are already coloured, tick **Override Color** on that slot and leave the colour **white**.
-- **Fonts:** create a TextMeshPro font asset (**Window > TextMeshPro > Font Asset Creator**) from your TTF, then drop it into **Body Font** and/or **Header Font** on the skin.
+- **Fonts:** **Body Font** and **Header Font** default to the generated Noto Sans and Rubik assets, with Chinese fallbacks. To use your own, create a *dynamic* TMP font asset and assign it. Then add `Fonts/NotoSans SDF` and `Fonts/NotoSansSC SDF` as its fallbacks so every language still renders.
 - The placeholder PNGs in `Art/Placeholders` are what the slots use by default. Replace them through the skin rather than editing the PNGs.
 
 ---
 
 ## 7. Audio (optional)
 
-`Assets/DeckParty/Data/AudioLibrary.asset` has **Menu Music**, **Party Music**, **Planning Music** and one slot per sound effect (Click, Hover, DoorKnock, GuestArrive, StarArrive = a Diamond arrives, Boot, Ability, Coin, Purchase, Expand = Sub Cap raised, PartySuccess, Raid = swatted, FireMarshal = Sub Cap exceeded, Victory, Defeat, Error, Notify, Peek). Any empty slot plays a small synthesized placeholder, so the game is never silent. A venue's own **Music** overrides Party Music.
+`Assets/DeckParty/Data/AudioLibrary.asset` has **Menu Music**, **Party Music**, **Planning Music** and one slot per sound effect:
+
+| Slot | Plays when |
+|---|---|
+| Click, Hover | A button is clicked or hovered |
+| DoorKnock, GuestArrive | A viewer is waiting / joins chat |
+| StarArrive | A Diamond joins chat |
+| Boot, Ability | A viewer is kicked / uses an action |
+| Coin, Purchase | Money comes in / a viewer is bought |
+| Expand | The Sub Cap is raised |
+| PartySuccess | A stream ends successfully |
+| Raid | The stream is swatted |
+| FireMarshal | The Sub Cap is exceeded |
+| Victory, Defeat, Error, Notify, Peek | The matching moments |
+
+Any empty slot plays a small synthesized placeholder, so the game is never silent. A setup's own **Music** overrides Party Music. With the **Audio Juice** polish switch on, music ducks under big moments and goes muffled while a menu is open.
 
 ---
 
 ## 8. Editing the scenes
 
-You're free to rearrange, restyle and reparent anything in **MainMenu** and **Game**. Every script reference is a normal serialized field, visible in the Inspector:
-- **MainMenu:** `MainMenuController` (scene root) links the six screens: Main, Single Player, Multiplayer, Lobby, Settings, How to Play.
-- **Game:** `GameController` (scene root) links the HUD, party grid, party controls, planning/shop, SWAT screen, side panel (players, log, chat) and the overlays (picker, Squad, pause, game over, banner, effects).
-- Lists (cards, shop rows, players, log lines) are spawned from the prefabs in `Prefabs/UI`. Edit those prefabs to restyle every card or row at once.
-- Cards are designed at **200x260** and scaled to fit. Keep new card content inside the card prefab's `Visual/Anim` object.
+You're free to rearrange, restyle and reparent anything in **MainMenu** and **Game**. Every script reference is a normal serialized field, visible in the Inspector.
 
-Running **Build Everything** again never touches existing scenes. Only **Rebuild ... (overwrites)** does.
+**MainMenu:** `MainMenuController` (scene root) links the seven screens:
+- Main
+- **Select Your Streamer**
+- Single Player
+- Multiplayer
+- Lobby
+- Settings
+- How to Play
+
+**Game:** `GameController` (scene root, split across `GameController.cs`, `.Presence.cs` and `.Juice.cs`) links these parts:
+- the HUD and the chat grid (a scroll view inside a **ContentFrame** that caps the UI at 21:9),
+- the stream controls and the shop with the **Streamer Power** panel,
+- the police screen,
+- the side panel: players, the **Activity / Chat** tabs (`SideTabsView`), and the **facecam** (`FacecamView`) with the emote buttons beside it,
+- the overlays (picker, Audience, pause, game over, banner, effects, anxious streamer, turn timer, presence, fake chat, stream overlay, link lines).
+
+**Text:**
+- **Static captions:** carry a **LocalizedLabel** with a CSV key.
+- **Editing a caption in the scene:** change its key, not its text. The text is replaced at runtime.
+- **Lists:** cards, shop rows, players and log lines are spawned from the prefabs in `Prefabs/UI`. Edit those prefabs to restyle every card or row at once.
+
+**Cards:**
+- **Design size:** 200x290, scaled to fit. Keep new card content inside the card prefab's `Visual/Anim` object.
+- **Portrait:** the **CharacterPortrait** (still sprite or animated) with a **CardFx** (shader statuses).
+
+Running **Build Everything** again never touches existing scenes. Only **Rebuild ... (overwrites)** does. `UIGuide.md` has the detailed map.
 
 ---
 
 ## 9. Playing
 
-- **Goal:** get 4 Diamond guests into one party and end it successfully before the last night (25 by default).
-- **Party:** *Open the Door* (Space) admits the next guest in line. Purple buttons on cards are once-per-party actions. Some open a choice popup first; multi-guest actions show a **Confirm** button (or press Space). *End Party* (E) banks everyone's Subs as Gifted Subs, plus Cash.
-- **Swatting Risk:** 3 net Swatting Risk brings the SWAT team (no payout, and one guest gets a Temporary Ban for the next party). The HUD shows the meter, and the controls show the live SWAT and Sub Cap risk.
-- **Planning:** spend Gifted Subs recruiting guests and Cash raising your Sub Cap, then start the next night (Space).
-- **Squad** (R) shows all your guests and permanent changes. **Esc** cancels targeting or opens the menu. Hover anything for details.
+- **Goal:** get 4 Diamond viewers into one stream and end it successfully before the last night (25 by default).
+- **Streamer:** pick one on **Select Your Streamer** (before Single Player, and before hosting or joining). Passive powers are always on. Active powers are used from the shop's **Streamer Power** panel on your turn. See `V2Instructions.md` section 2 for every power.
+- **Stream:** **Add Viewer to Chat** (Space) lets the next viewer in the queue join.
+  - Purple buttons on cards are once-per-stream actions. Some open a choice popup first.
+  - Actions that take several viewers show a **Confirm** button (or press Space).
+  - **End the Stream** (E) banks everyone's Subs as Gifted Subs, plus Cash.
+  - A skippable scoring sequence counts each viewer up.
+- **Swatting Risk:** 3 net Swatting Risk brings the SWAT team. You get no payout, and one viewer gets a Temporary Ban for the next stream. In the other languages, the police arrive.
+  - The HUD shows the meter. Under the buttons you see how many viewers with Swatting Risk are still in the queue, but never the odds: working them out is part of the game.
+  - At one risk from the police, your streamer appears at the top of the screen looking anxious, and the facecam (bottom right) pulses red.
+- **Shop:** spend Gifted Subs recruiting viewers and Cash raising your Sub Cap, use your streamer power, then start the next night (Space).
+- **Audience** (R) shows all your viewers and permanent changes.
+- **Esc** cancels targeting or opens the menu. **F11** or **Alt+Enter** toggles fullscreen. Hover anything for details.
 - **F9** (editor and development builds, single player): +50 Gifted Subs and +10 $ for testing.
 - Single-player seasons autosave after every action. **Continue** appears on the main menu.
 
-The full rules and the guest glossary are also in-game under **How to Play**. The meme guests' rule interpretations are listed in `V1Instructions.md` section 5.
+The full rules and the viewer glossary are also in-game under **How to Play**. The meme viewers' rule interpretations are listed in `V1Instructions.md` section 5.
 
 **Implementation decisions where the rules doc was ambiguous** (all adjustable in `Scripts/Core/GameRules.cs`):
-- Guest fees are paid from your Cash bank first. Only the unpaid remainder costs 7 Gifted Subs per Cash (`FeesDrawFromBank`).
+- Viewer fees are paid from your Cash bank first. Only the unpaid remainder costs 7 Gifted Subs per Cash (`FeesDrawFromBank`).
 - Getting swatted on the final night ends the season without a Temporary Ban.
 - Going over the Sub Cap doesn't ban anyone.
 
-To change character sets or guest stats, edit `ScenarioCatalog.cs` / `GuestCatalog.cs`. On-screen wording is in `Runtime/Visuals/Terms.cs`.
+**Where to change things:**
+- **Character sets and viewer stats:** `ScenarioCatalog.cs` / `GuestCatalog.cs`.
+- **Streamer powers:** `StreamerCatalog.cs`.
+- **On-screen wording:** the strings CSV (`UIGuide.md` section 7).
 
 ---
 
 ## 10. Multiplayer: how it works
 
-- 1 to 6 players. The **host** runs every player's game (server-authoritative). Clients send their actions and get their own state back, plus a live summary of everyone else in the side panel.
-- Everyone gets the **same character set** and starting Squad, then builds their own party.
-- It's an open-information game: the host sends every player's season to everyone. Click a player in the in-game **Players** panel to watch their party live (read-only); the strip above the board shows whose party is on screen.
-- **Take Turns** (default): each night, players throw their parties one after another in lobby order while everyone else watches the active player's board. **End Turn** (after the party and shopping) passes to the next player. The season ends after the first night someone ends a 4-Diamond party, once everyone has played that night.
-- **Synchronized Nights:** everyone plays the same night at once, and the next night starts when every player presses *Ready*. The first night anyone ends a 4-Diamond party, the season ends once everyone has finished that night. Ties go to the earlier win, then to more total Gifted Subs earned.
-- **Race:** everyone plays at their own pace, and the first 4-Diamond party wins instantly.
-- If nobody wins, the best Diamond count at a successful party wins, then total Gifted Subs earned.
-- The host picks the character set, mode and season length (10 to 30 nights) in the lobby. Everyone else presses **Ready**, then the host presses **Start Season**. The host can start solo for testing.
-- Chat works in the lobby and in game. Swattings, wins, Diamond recruits and joins pop up for everyone.
+- **Players:** 1 to 6.
+  - The **host** runs every player's game (server-authoritative).
+  - Clients send their actions and get their own state back, plus a live summary of everyone else in the side panel.
+- **Same start:** everyone gets the **same character set** and starting Audience, then builds their own stream. Each player brings their own **streamer**. A Random pick is rolled when the season starts.
+- **Open information:** the host sends every player's season to everyone. Click a player in the in-game **Players** panel to watch their stream live (read-only). The strip above the board shows whose stream is on screen.
+- **Presence:**
+  - While someone is acting, everyone watching sees what they point at and pick, in that player's colour: outlines and name tags on cards, shop rows and buttons, plus target arrows.
+  - A live status line appears under their name ("eyeing Doge", "browsing the shop").
+  - Watchers also see their mouse pointer.
+  - Updates are relayed by the host a few times a second. Up to a second of lag is expected and harmless.
+- **Chat and emotes:** the side panel's **Chat** tab sits next to **Activity** (the Stream Log) and counts new messages while you're on the other tab. Emotes (POG, KEKW, o7 and others) are the buttons left of the facecam. They float up on every screen.
+- **Rival powers:** Raid and Wealth Tax are resolved by the host on both players' games, with a callout to everyone.
+
+**Modes:**
+- **Take Turns** (default): each night, players stream one after another in lobby order while everyone else watches the active player's board.
+  - **End Turn** (after the stream and shopping) passes to the next player.
+  - The host can set a **turn timer**: Off, Hard 30 s, Medium 60 s, Easy 120 s, or Custom 10 to 600 s. It covers the whole turn. When it runs out, the stream ends (scored normally) and the turn passes.
+  - The season ends after the first night someone ends a 4-Diamond stream, once everyone has played that night.
+- **Synchronized Nights:** everyone plays the same night at once, and the next night starts when every player presses *Ready*. The first night anyone ends a 4-Diamond stream, the season ends once everyone has finished that night. Ties go to the earlier win, then to more total Gifted Subs earned.
+- **Race:** everyone plays at their own pace, and the first 4-Diamond stream wins instantly.
+- **No winner:** if nobody wins, the best Diamond count in a successful stream wins, then total Gifted Subs earned.
+
+**Lobby and season:**
+- The host picks the character set, mode, season length (10 to 30 nights) and turn timer in the lobby. Everyone else presses **Ready**, then the host presses **Start Season**. The host can start solo for testing.
+- Chat works in the lobby and in game. Swattings, wins, Diamond recruits, streamer powers and joins pop up for everyone, each in the reader's own language.
 - After the season, the host can press **Back to Lobby** to play again with the same group.
-- Everyone must run the **same build**. A version check rejects mismatches with a clear message.
+- Everyone must run the **same build**. A version check (`ProtocolVersion` in `NetworkService.cs`, currently `deckparty-4`) rejects mismatches with a clear message.
 
 There are two ways to connect, both on the Multiplayer screen:
 
-| | Online (Unity Relay) | Local Network / Direct IP |
+| | Online (join code, Unity Relay) | Direct IP / LAN |
 |---|---|---|
 | Works over | The internet, no port forwarding | Same Wi-Fi/LAN, or internet with a forwarded port |
+| Host clicks | **Host Online Game** | **Host** |
 | Host shares | A 6-character **join code** | The host's IP address and port (7777) |
 | Setup needed | Link the project to Unity Cloud (once, see 11d) | None for LAN |
 
@@ -214,35 +340,37 @@ There are two ways to connect, both on the Multiplayer screen:
 1. Open **Window > Multiplayer > Multiplayer Play Mode** (installed by this project).
 2. Tick **Player 2** (and more if you like) and wait for the virtual player to boot.
 3. Open the **MainMenu** scene and press **Play**. A second window appears for Player 2.
-4. Main editor: **Multiplayer > Host on this Network**.
-5. Player 2 window: **Multiplayer**, enter IP `127.0.0.1` and port `7777`, then **Join**. Press **Ready**.
+4. Main editor: **Multiplayer**, pick a streamer, then **Host** (under Direct IP / LAN).
+5. Player 2 window: **Multiplayer**, pick a streamer, enter IP `127.0.0.1` and port `7777`, then **Join by IP**. Press **Ready**.
 6. Main editor: **Start Season**.
 
-Relay works here too once 11d is done: Host Online Party in one window, paste the code in the other. Each window signs in with its own profile automatically.
+Relay works here too once 11d is done: **Host Online Game** in one window, paste the code in the other. Each window signs in with its own profile automatically.
 
 ### b) Two builds on one PC
 1. **File > Build Profiles > Windows** (scenes are already in the list) > **Build**.
-2. Run the .exe twice (it's windowed). Host on this Network in one, join `127.0.0.1` : `7777` in the other.
+2. Run the .exe twice (it's windowed). Host in one, and join `127.0.0.1` : `7777` in the other.
 
 ### c) Friends on the same Wi-Fi / LAN
 1. Send your friends the build folder (zip the whole output folder).
-2. Host clicks **Host on this Network**. The lobby shows the host's address, e.g. `192.168.1.20:7777` (also shown on the Multiplayer screen as *Your address*).
+2. The host clicks **Host**. The lobby shows the host's address, e.g. `192.168.1.20:7777`. It's also shown on the Multiplayer screen as *Your address*.
 3. When Windows Firewall asks, **allow Deck Party on Private networks**.
-4. Friends type that IP and port and click **Join**.
+4. Friends type that IP and port and click **Join by IP**.
 
 ### d) Friends over the internet: Unity Relay (recommended)
 One-time setup:
 1. Sign in to Unity in the editor (account menu at the top-left).
 2. **Edit > Project Settings > Services**: create or link a Unity Cloud project for Deck Party.
 3. Go to https://cloud.unity.com, open that project, and enable **Relay** (Multiplayer > Relay). Relay has a free tier that's plenty for friends.
-4. Check that **Authentication** is available for the project (anonymous sign-in is used automatically, so there's no login screen).
+4. Check that **Authentication** is available for the project. Anonymous sign-in is used automatically, so there's no login screen.
 5. Make a build (11b) and share it.
 
-To play: the host clicks **Host Online Party** and shares the join code from the lobby (there's a **Copy** button). Friends click **Multiplayer**, paste the code, then **Join**.
+To play:
+1. The host clicks **Host Online Game** and shares the join code from the lobby (there's a **Copy** button).
+2. Friends click **Multiplayer**, pick a streamer, paste the code, then click **Join**.
 
 If the project isn't linked, Deck Party shows "Online play isn't set up yet..." instead of failing silently.
 
-For a step-by-step guide to building, sending the game to a friend and a test session together, see section 6 of `V1Instructions.md`.
+For a step-by-step guide to building, sending the game to a friend and a test session together, see section 6 of `V1Instructions.md`. Then run the presence, timer and rival-power checks in section 6 of `V2Instructions.md`.
 
 ### e) Friends over the internet: Direct IP (no Unity account)
 1. On the host's router, forward **UDP port 7777** to the host PC's LAN IP.
@@ -258,10 +386,13 @@ For a step-by-step guide to building, sending the game to a friend and a test se
 | Compile errors right after opening | Let Package Manager finish (bottom-right spinner). If a package failed, open **Window > Package Manager** and install the versions listed in section 1. |
 | "Missing Resources/Network/DeckPartyNetSession.prefab" | Run **Deck Party > Setup > Build Everything**. |
 | TextMeshPro "Import TMP Essentials" window | Click **Import TMP Essentials**, then run Build Everything again. |
-| Text shows squares | A character isn't in your font asset. Regenerate it with the needed character set, or use a Dynamic font asset. |
+| Text shows squares | **Deck Party > Localization > Rebuild Fonts**. If you use your own font, give it the Noto fallbacks (section 6). |
+| Text is English in every language | **Deck Party > Localization > Import CSV into String Tables**, then check the Console. |
+| Text shows `[some.key]` | That key is missing from the strings CSV. Add the row and re-import. |
+| Cards have no glow or status effects | **Deck Party > FX > Rebuild FX (overwrites)**. Check that Sprite Shaders Ultimate is in `Assets/`. |
 | Client can't connect on LAN | Same port on both sides? Firewall allowed? Try `127.0.0.1` on the same PC first. |
 | "Version mismatch" | Everyone needs the exact same build. |
-| "That party has already started" | Joining is only possible while the host is in the lobby. |
+| "That game has already started" | Joining is only possible while the host is in the lobby. |
 | A client's window seems frozen when unfocused | Builds have Run In Background enabled. In the editor, keep Multiplayer Play Mode windows open rather than minimized. |
 | I broke a scene | **Deck Party > Setup > Rebuild Scenes and UI Prefabs (overwrites)**. |
 | Reset my progress | **Settings > Reset Progress** (also clears the saved season). |
@@ -270,13 +401,41 @@ For a step-by-step guide to building, sending the game to a friend and a test se
 
 ## 13. Code map (for further development)
 
-- `Core/PartyEngine.cs`: every rule (arrivals, entrance effects and reactions, bring chains, Swatting Risk, SWAT team, Sub Cap, all 21 action types, passive scoring, shop, Sub Cap upgrades). It's deterministic: all randomness lives in `PlayerState.RngState`, and the waiting line is shuffled once per party.
-- `Core/GuestCatalog.cs` / `GameRules.cs` / `ScenarioCatalog.cs`: guest stats and text, tuning numbers, character sets.
-- `Runtime/Visuals/Terms.cs`: every on-screen mechanic name (Subs, Swatting Risk, Diamonds, Squad...).
-- `Core/StateSerializer.cs`: compact binary state, used for save files and network snapshots.
+**Rules engine (Core):**
+- `Core/PartyEngine.cs`: every rule. This covers:
+  - arrivals, entrance effects and reactions, bring chains,
+  - Swatting Risk and the SWAT team, the Sub Cap,
+  - all 21 action types, passive scoring,
+  - the shop and Sub Cap upgrades,
+  - streamer powers (`UsePower`, `UseRivalPower`, `GetPowerBlocker`).
+
+  It's deterministic: all randomness lives in `PlayerState.RngState`, and the queue is shuffled once per stream. Rejections are localization keys built with `Err.Of`.
+- `Core/StreamerCatalog.cs`: streamers, power kinds, costs, cooldowns and tuning constants.
+- `Core/GuestCatalog.cs` / `GameRules.cs` / `ScenarioCatalog.cs`: viewer stats, tuning numbers, character sets.
+- `Core/StateSerializer.cs`: compact binary state (format version 3; reads version 2), used for save files and network snapshots.
+
+**Localization and visuals:**
+- `Runtime/Localization/Loc.cs`: all text. `Loc.Get(key, args)`, plurals, language switching, the CSV fallback and the pseudo-language. `LocUnityTables.cs` connects it to Unity Localization; `LocalizedLabel.cs` handles static captions.
+- `Runtime/Visuals/`: `Terms.cs` (mechanic names), `GuestVisuals.cs`, `StreamerVisuals.cs`, `EventText.cs` (Stream Log lines), `ContentText.cs`, `RulesText.cs`.
+
+**Effects and animation:**
+- `Runtime/Fx/`: `Fx.cs` (cue playback, shake, Feel or the built-in fallback), `CardFx.cs` (SSU statuses), `SignatureFx.cs` (per-viewer effects and stamps).
+- `Juice/` (`DeckParty.Juice`): the Feel backend. `Juice/Editor` builds the Feel prefabs.
+- `Runtime/Animation/`: `PortraitStage.cs` (render-texture stage, `CharacterAnimDriver`) and `CharacterPortrait.cs` (what cards, rows and the select screen use).
+
+**Sessions and networking:**
 - `Runtime/Session/`: `IGameSession`, with `LocalGameSession` (single player and autosave) and `NetworkGameSession` (multiplayer). The UI only talks to this interface.
-- `Runtime/Networking/NetworkService.cs`: creates the NetworkManager at runtime, Relay and direct hosting/joining, connection approval (version, lobby full, game in progress).
-- `Runtime/Networking/DeckPartyNetSession.cs`: lobby, match settings, per-player games on the host (every snapshot is broadcast to everyone), take turns / synchronized nights / race logic, rankings, chat and headlines (RPCs, NetworkVariables and a NetworkList).
-- `Runtime/UI/Game/ViewBarView.cs`: the multiplayer strip above the board (whose party is on screen, whose turn it is). Built at runtime.
-- `Runtime/UI/Game/GameController.cs`: the game scene: renders state, plays events (sounds, banners, confetti), runs the action flow (choice popup, target picks, Confirm) and hotkeys.
-- `Editor/*SceneBuilder.cs`, `DeckPartyAssets.cs`: generate the scenes and prefabs (useful as a reference for the hierarchy).
+- `Runtime/Networking/NetworkService.cs`: creates the NetworkManager at runtime, Relay and direct hosting/joining, and connection approval (version, lobby full, game in progress). The connection payload carries the player's streamer.
+- `Runtime/Networking/DeckPartyNetSession.cs`: lobby, match settings, and per-player games on the host (every snapshot is broadcast to everyone). It also handles:
+  - the take turns / synchronized nights / race logic and the turn timer,
+  - rival powers, presence and emotes relays,
+  - rankings, chat and headlines (RPCs, NetworkVariables and a NetworkList).
+
+**UI:**
+- `Runtime/UI/Game/GameController*.cs`: the game scene.
+  - **Core file:** renders state, runs the action flow (choice popup, target picks, Confirm) and hotkeys.
+  - **Presence file:** what's sent and shown to watchers.
+  - **Juice file:** event playback, the scoring sequence, stamps and fake chat.
+- `Runtime/UI/Menu/StreamerSelectScreen.cs`: the character select screen.
+- `Runtime/App/DisplaySettings.cs`: resolution and window mode presets, F11.
+- `Editor/*SceneBuilder.cs`, `StreamerSelectBuilder.cs` and `DeckPartyAssets.cs`: generate the scenes and prefabs. They're useful as a reference for the hierarchy.

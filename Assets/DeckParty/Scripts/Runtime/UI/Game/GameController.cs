@@ -11,12 +11,14 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// Runs the Game scene. Picks a local or networked session, renders the state it publishes, turns
-    /// engine events into feedback, and converts clicks / hotkeys into GameCommands.
-    /// In multiplayer any player's board can be on screen (it's an open-information game): your own board is
-    /// interactive when it's your move, everyone else's is shown live and read-only.
+    /// Runs the Game scene. Picks a local or networked session, renders the state it publishes, turns engine events into
+    /// feedback, and converts clicks / hotkeys into GameCommands.
+    /// In multiplayer any player's board can be on screen (it's an open-information game): your own board is interactive
+    /// when it's your move, everyone else's is shown live and read-only, with the active player's presence signals.
+    /// Split into partial files: this one (flow, rendering, actions), .Presence (presence, emotes, turn timer) and
+    /// .Juice (event effects, scoring sequence, link lines).
     /// </summary>
-    public sealed class GameController : MonoBehaviour
+    public sealed partial class GameController : MonoBehaviour
     {
         [Header("Main views")]
         [SerializeField] internal HudView hud;
@@ -31,6 +33,9 @@ namespace DeckParty.UI
         [SerializeField] internal EventLogView log;
         [SerializeField] internal OpponentsView opponents;
         [SerializeField] internal ChatView chat;
+        [Tooltip("The Activity / Chat tabs holding the log and the chat.")]
+        [SerializeField] internal SideTabsView feed;
+        [SerializeField] internal FacecamView facecam;
 
         [Header("Overlays")]
         [SerializeField] internal GuestPickerView picker;
@@ -40,6 +45,15 @@ namespace DeckParty.UI
         [SerializeField] internal BannerView banner;
         [SerializeField] internal EffectsView effects;
         [SerializeField] internal VenueBackgroundView background;
+
+        [Header("Polish (optional)")]
+        [SerializeField] internal StreamerAnxietyView anxiety;
+        [SerializeField] internal PresenceView presence;
+        [SerializeField] internal EmoteView emotes;
+        [SerializeField] internal FakeChatView fakeChat;
+        [SerializeField] internal StreamOverlayView overlay;
+        [SerializeField] internal TurnTimerView turnTimer;
+        [SerializeField] internal LinkLinesView links;
 
         const int HistoryLimit = 150;
 
@@ -59,12 +73,12 @@ namespace DeckParty.UI
         readonly Dictionary<ulong, List<string>> m_History = new Dictionary<ulong, List<string>>();
         readonly Dictionary<ulong, string> m_Breakdowns = new Dictionary<ulong, string>();
 
-        // Action targeting: the acting guest, the option chosen in the choice dialog and the guests picked so far.
+        // Action targeting: the acting viewer, the option chosen in the choice dialog and the viewers picked so far.
         int m_TargetActor = -1;
         int m_Option;
         readonly List<int> m_Picks = new List<int>();
 
-        // Distracted Boyfriend: the revealed guest chosen, while the player picks who they replace.
+        // Distracted Boyfriend: the revealed viewer chosen, while the player picks who they replace.
         int m_AttractionChoice = -1;
         bool m_AttractionSubmitted;
 
@@ -94,6 +108,7 @@ namespace DeckParty.UI
             // Multiplayer listens to every player's snapshots instead (see StartNetwork).
             if (m_Net == null) m_Session.StateChanged += OnStateChanged;
             m_Session.CommandRejected += OnCommandRejected;
+            Loc.Changed += OnLanguageChanged;
 
             if (State != null)
             {
@@ -103,7 +118,7 @@ namespace DeckParty.UI
             }
             else
             {
-                banner.Show("CONNECTING", "Waiting for the host...", UIPalette.Teal, 2f);
+                banner.Show(Loc.Get("game.connecting"), Loc.Get("game.waiting_host"), UIPalette.Teal, 2f);
             }
         }
 
@@ -119,7 +134,7 @@ namespace DeckParty.UI
             {
                 state = saved;
                 venue = savedVenue;
-                log.Add($"Welcome back! Continuing <b>{ScenarioCatalog.Get(state.ScenarioId).Name}</b> on night {state.Night}.");
+                log.Add(Loc.Get("game.welcome_back", "set", $"<b>{ContentText.ScenarioName(state.ScenarioId)}</b>", "night", state.Night));
             }
 
             if (state == null)
@@ -127,15 +142,20 @@ namespace DeckParty.UI
                 int scenarioId = launch != null ? launch.ScenarioId : AppSettings.LastScenario;
                 uint seed = launch != null && launch.Seed != 0 ? launch.Seed : NewSeed();
                 if (launch != null && !string.IsNullOrEmpty(launch.VenueChoice)) venue = launch.VenueChoice;
-                state = PartyEngine.CreateGame(scenarioId, seed);
-                var scenario = ScenarioCatalog.Get(scenarioId);
-                log.Add($"Welcome to <b>{scenario.Name}</b>! Get {GameRules.DiamondsToWin} {Terms.Diamonds} to one party within {state.TotalNights} nights.");
+                byte pick = launch != null ? launch.Streamer : AppSettings.LastStreamer;
+                var streamer = StreamerCatalog.Resolve(pick, new System.Random((int)seed));
+                state = PartyEngine.CreateGame(scenarioId, seed, GameRules.DefaultNights, streamer);
+                log.Add(Loc.Get("game.welcome", ("set", $"<b>{ContentText.ScenarioName(scenarioId)}</b>"), ("count", GameRules.DiamondsToWin), ("nights", state.TotalNights)));
+                if (streamer != StreamerType.None)
+                    log.Add(Loc.Get("game.streamer_intro", "streamer", StreamerVisuals.NameTag(streamer), "power", StreamerVisuals.PowerName(streamer)));
             }
 
             m_VenueChoice = venue;
             m_Session = new LocalGameSession(state, venue);
             opponents.gameObject.SetActive(false);
-            chat.gameObject.SetActive(false);
+            if (feed != null) feed.SetChatAvailable(false);
+            else chat.gameObject.SetActive(false);
+            if (emotes != null) emotes.gameObject.SetActive(false);
         }
 
         void StartNetwork(DeckPartyNetSession net)
@@ -147,9 +167,13 @@ namespace DeckParty.UI
             if (net.TakingTurns && net.ActivePlayer != DeckPartyNetSession.NoPlayer) m_ViewId = net.ActivePlayer;
 
             opponents.gameObject.SetActive(true);
-            chat.gameObject.SetActive(true);
+            if (feed != null) feed.SetChatAvailable(true);
+            else chat.gameObject.SetActive(true);
             chat.Bind(net);
+            if (feed != null) feed.MarkRead(SideTabsView.Tab.Chat);
             opponents.PlayerClicked += ShowBoard;
+            opponents.PresenceLine = PresenceLine;
+            EventText.PlayerName = index => ColoredName(net.ClientAtIndex(index));
 
             var panel = targetingBanner != null && targetingBanner.root != null ? targetingBanner.root.GetComponent<Image>() : null;
             m_ViewBar = ViewBarView.Create(partyRoot.transform.parent as RectTransform, hud.menuButton, hud.nightLabel, panel);
@@ -159,17 +183,34 @@ namespace DeckParty.UI
             net.HeadlineReceived += OnHeadline;
             net.PlayerStateReceived += OnPlayerState;
             net.ActivePlayerChanged += OnActivePlayerChanged;
+            net.PresenceReceived += OnPresenceReceived;
+            net.EmoteReceived += OnEmoteReceived;
+            net.RivalPowerUsed += OnRivalPowerUsed;
             net.RequestState();
+            net.ReportViewing(m_ViewId);
 
-            var settings = net.Settings;
-            m_IntroLine = $"Multiplayer season: <b>{ScenarioCatalog.Get(settings.ScenarioId).Name}</b>, {settings.Nights} nights, {MatchModes.ShortName(settings.Mode)}.";
+            if (emotes != null)
+            {
+                emotes.gameObject.SetActive(FxLibrary.Current.emotes);
+                emotes.EmoteClicked += index => net.SendEmote(index);
+            }
+
+            m_IntroLine = MultiplayerIntro();
             log.Add(m_IntroLine);
             opponents.Render(net, m_ViewId);
             UpdateViewBar();
         }
 
+        string MultiplayerIntro()
+        {
+            var settings = m_Net.Settings;
+            return Loc.Get("game.mp_intro", ("set", $"<b>{ContentText.ScenarioName(settings.ScenarioId)}</b>"), ("nights", settings.Nights), ("mode", MatchModes.ShortName(settings.Mode)));
+        }
+
         void OnDestroy()
         {
+            Loc.Changed -= OnLanguageChanged;
+            EventText.PlayerName = null;
             if (m_Session != null)
             {
                 m_Session.StateChanged -= OnStateChanged;
@@ -183,7 +224,11 @@ namespace DeckParty.UI
                 m_Net.HeadlineReceived -= OnHeadline;
                 m_Net.PlayerStateReceived -= OnPlayerState;
                 m_Net.ActivePlayerChanged -= OnActivePlayerChanged;
+                m_Net.PresenceReceived -= OnPresenceReceived;
+                m_Net.EmoteReceived -= OnEmoteReceived;
+                m_Net.RivalPowerUsed -= OnRivalPowerUsed;
             }
+            AudioService.SetMuffled(false);
         }
 
         void HookViews()
@@ -203,6 +248,7 @@ namespace DeckParty.UI
             planning.ExpandClicked += () => Submit(GameCommand.ExpandHouse());
             planning.RolodexClicked += ToggleRolodex;
             planning.NextNightClicked += NextNight;
+            planning.PowerClicked += UseStreamerPower;
 
             raidBlame.GuestChosen += id => Submit(GameCommand.Blame(id));
             targetingBanner.CancelClicked += () => CancelTargeting(true);
@@ -210,6 +256,9 @@ namespace DeckParty.UI
 
             pauseMenu.QuitClicked += QuitGame;
             pauseMenu.VenueChosen += ChangeVenue;
+            pauseMenu.OpenChanged += open => AudioService.SetMuffled(open);
+
+            HookPresenceSources();
         }
 
         static uint NewSeed() => (uint)Random.Range(1, int.MaxValue);
@@ -223,7 +272,19 @@ namespace DeckParty.UI
             }
             var s = State;
             if (s == null || s.Phase != GamePhase.Party || s.House.Count > 0) return;
-            banner.Show($"NIGHT {s.Night}", $"{ScenarioCatalog.Get(s.ScenarioId).Name}  -  {s.NightsRemaining} nights left after tonight", UIPalette.Purple, 1.2f);
+            banner.Show(Loc.Get("game.night_banner", "night", s.Night),
+                Loc.Get("game.night_sub", "set", ContentText.ScenarioName(s.ScenarioId), "count", s.NightsRemaining), UIPalette.Purple, 1.2f);
+        }
+
+        void OnLanguageChanged()
+        {
+            if (m_Net != null)
+            {
+                m_IntroLine = MultiplayerIntro();
+                RefillLog();
+            }
+            RenderAll();
+            if (Targeting) UpdateTargetingBanner();
         }
 
         // ================================================================== state updates
@@ -244,7 +305,6 @@ namespace DeckParty.UI
                 if (m_TargetActor >= 0 && (s.Phase != GamePhase.Party || PartyEngine.GetAbilityBlocker(s, m_TargetActor) != null)) CancelTargeting(false);
                 if (m_AttractionChoice >= 0 && (!s.AttractionPending || !s.AttractionCandidates.Contains(m_AttractionChoice))) CancelTargeting(false);
                 if (picker.IsOpen && s.Phase != GamePhase.Party) picker.Close();
-                ApplyVenue(false);
 
                 // Synchronized / Race: when your next night starts, come back from watching someone else.
                 if (!ViewingOwn && !TakingTurns && HasEvent(events, GameEventType.NightStarted))
@@ -263,15 +323,20 @@ namespace DeckParty.UI
 
             if (!switched)
                 foreach (var line in lines) log.Add(line);
+
+            // A successful stream ends with the scoring sequence before the shop appears.
+            if (TryStartScoring(s, events)) return;
+
+            ApplyVenue(false);
             ProcessEvents(s, events, own ? null : NameOf(owner));
             RenderAll();
-            PlayCardAnimations();
+            PlayCardAnimations(s, events);
         }
 
         void OnCommandRejected(string reason)
         {
             m_AttractionSubmitted = false;
-            ToastView.Show(reason, ToastKind.Warning);
+            ToastView.Show(Loc.Error(reason), ToastKind.Warning);
             AudioService.Play(Sfx.Error);
         }
 
@@ -332,130 +397,13 @@ namespace DeckParty.UI
 
         string BreakdownFor(ulong owner) => m_Breakdowns.TryGetValue(owner, out var text) ? text : null;
 
-        /// <summary>Banners, sounds and effects for events on the board being shown. <paramref name="who"/> is null for your own party.</summary>
-        void ProcessEvents(PlayerState s, IReadOnlyList<GameEvent> events, string who)
-        {
-            m_Arrivals.Clear();
-            m_Pulses.Clear();
-            if (events == null) return;
-
-            Sfx sound = Sfx.Click;
-            int soundPriority = -1;
-            void Consider(Sfx candidate, int priority)
-            {
-                if (priority > soundPriority)
-                {
-                    sound = candidate;
-                    soundPriority = priority;
-                }
-            }
-
-            foreach (var e in events)
-            {
-                switch (e.Type)
-                {
-                    case GameEventType.NightStarted:
-                    {
-                        string left = s.NightsRemaining > 0 ? $"{s.NightsRemaining} nights left after tonight" : "The final night!";
-                        banner.Show($"NIGHT {e.A}", who == null ? left : $"{who}'s party  -  {left}", UIPalette.Purple, 1.0f);
-                        Consider(Sfx.Notify, 1);
-                        break;
-                    }
-                    case GameEventType.GuestArrived:
-                        m_Arrivals.Add(e.GuestId);
-                        if (GuestCatalog.Get(e.Guest).IsDiamond) Consider(Sfx.StarArrive, 5);
-                        else Consider(e.A < 0 ? Sfx.DoorKnock : Sfx.GuestArrive, 2);
-                        break;
-                    case GameEventType.GuestRemoved:
-                    case GameEventType.GuestRejected:
-                        Consider(Sfx.Boot, 3);
-                        break;
-                    case GameEventType.GuestPeeked:
-                    case GameEventType.AttractionRevealed:
-                        Consider(Sfx.Peek, 3);
-                        break;
-                    case GameEventType.GuestScored:
-                        if (e.C == 0)
-                        {
-                            m_Pulses.Add(e.GuestId);
-                            Consider(Sfx.Coin, 3);
-                        }
-                        break;
-                    case GameEventType.GuestGained:
-                    case GameEventType.PartyPotGained:
-                        m_Pulses.Add(e.GuestId);
-                        Consider(Sfx.Coin, 1);
-                        break;
-                    case GameEventType.AbilityUsed:
-                        m_Pulses.Add(e.GuestId);
-                        Consider(Sfx.Ability, 2);
-                        break;
-                    case GameEventType.EveryoneOutside:
-                    case GameEventType.Transformed:
-                    case GameEventType.Struck:
-                    case GameEventType.Infected:
-                    case GameEventType.PositionsSwapped:
-                    case GameEventType.PrintedExchanged:
-                    case GameEventType.ShieldBlocked:
-                    case GameEventType.PermanentChange:
-                        m_Pulses.Add(e.GuestId);
-                        Consider(Sfx.Ability, 3);
-                        break;
-                    case GameEventType.ThisIsFine:
-                        banner.Show("THIS IS FINE.", $"The SWAT team was called off. {Terms.Risk} cleared.", UIPalette.Orange, 1.6f);
-                        effects.Flash(UIPalette.Orange);
-                        Consider(Sfx.Ability, 8);
-                        break;
-                    case GameEventType.PoliceRaid:
-                        banner.Show(Terms.Raid, who == null ? "The SWAT team is here. No payout tonight" : $"The SWAT team is at {who}'s party. No payout tonight", UIPalette.Red, 1.6f);
-                        effects.Shake(24f, 0.5f);
-                        effects.Flash(UIPalette.Red);
-                        background.PoliceLights();
-                        Consider(Sfx.Raid, 9);
-                        break;
-                    case GameEventType.FireMarshal:
-                        banner.Show(Terms.Overload, $"{e.A} spaces filled with a {Terms.SubCap} of {e.B}", UIPalette.Orange, 1.6f);
-                        effects.Shake(18f, 0.45f);
-                        effects.Flash(UIPalette.Orange);
-                        Consider(Sfx.FireMarshal, 9);
-                        break;
-                    case GameEventType.PartyEnded:
-                        effects.FloatText($"{GuestVisuals.PopText(e.A)}   {GuestVisuals.CashText(e.B)}", new Vector2(0f, 60f));
-                        Consider(Sfx.PartySuccess, 7);
-                        break;
-                    case GameEventType.CashShortfall:
-                        if (who == null) ToastView.Show($"You couldn't pay {e.A} $ in fees and lost {e.B} {Terms.GiftedSubs}.", ToastKind.Error);
-                        else ToastView.Show($"{who} couldn't pay {e.A} $ in fees and lost {e.B} {Terms.GiftedSubs}.", ToastKind.Info);
-                        break;
-                    case GameEventType.GuestPurchased:
-                        Consider(Sfx.Purchase, 4);
-                        break;
-                    case GameEventType.HouseExpanded:
-                        Consider(Sfx.Expand, 4);
-                        break;
-                    case GameEventType.Victory:
-                        banner.Show(who == null ? "VICTORY!" : $"{who.ToUpperInvariant()} WINS!", $"{GameRules.DiamondsToWin} {Terms.Diamonds} at one party!", UIPalette.Gold, 2.2f);
-                        effects.Confetti(140);
-                        effects.Flash(UIPalette.Gold);
-                        Consider(Sfx.Victory, 10);
-                        break;
-                    case GameEventType.Defeat:
-                        banner.Show("SEASON OVER", who == null ? $"No {GameRules.DiamondsToWin}-{Terms.Diamond} party this time" : $"{who}'s season is over", UIPalette.TextDim, 2f);
-                        Consider(Sfx.Defeat, 10);
-                        break;
-                }
-            }
-
-            if (soundPriority >= 0) AudioService.Play(sound);
-        }
-
         static string FormatBreakdown(Dictionary<GuestType, (int count, int pop, int cash)> breakdown)
         {
-            if (breakdown.Count == 0) return "Nobody was inside when the party ended.";
+            if (breakdown.Count == 0) return Loc.Get("result.nobody_scored");
             var entries = new List<KeyValuePair<GuestType, (int count, int pop, int cash)>>(breakdown);
             entries.Sort((a, b) => (b.Value.pop + b.Value.cash).CompareTo(a.Value.pop + a.Value.cash));
 
-            var sb = new StringBuilder("<b>Who scored:</b> ");
+            var sb = new StringBuilder("<b>" + Loc.Get("result.who_scored") + "</b> ");
             for (int i = 0; i < entries.Count; i++)
             {
                 if (i > 0) sb.Append(",  ");
@@ -469,28 +417,9 @@ namespace DeckParty.UI
             return sb.ToString();
         }
 
-        void PlayCardAnimations()
-        {
-            float delay = 0f;
-            foreach (var id in m_Arrivals)
-            {
-                var card = house.FindCard(id);
-                if (card == null) continue;
-                card.PlayArrive(delay);
-                delay += 0.12f;
-            }
-
-            foreach (var id in m_Pulses)
-            {
-                if (id < 0 || m_Arrivals.Contains(id)) continue;
-                var card = house.FindCard(id);
-                if (card != null) card.PlayPulse();
-            }
-        }
-
         // ================================================================== watching other players
 
-        string NameOf(ulong clientId) => m_Net != null ? m_Net.PlayerName(clientId) : "You";
+        string NameOf(ulong clientId) => m_Net != null ? m_Net.PlayerName(clientId) : Loc.Get("common.you");
 
         Color ColorOf(ulong clientId) =>
             m_Net != null && m_Net.TryGetPlayer(clientId, out var p) ? UIPalette.PlayerColor(p.ColorIndex) : UIPalette.Teal;
@@ -503,7 +432,7 @@ namespace DeckParty.UI
             if (m_Net == null) return;
             if (clientId != LocalId && m_Net.GetState(clientId) == null)
             {
-                ToastView.Show($"{NameOf(clientId)}'s party is still loading.", ToastKind.Info);
+                ToastView.Show(Loc.Get("game.board_loading", "player", NameOf(clientId)), ToastKind.Info);
                 return;
             }
 
@@ -512,11 +441,17 @@ namespace DeckParty.UI
                 CancelTargeting(false);
                 if (picker.IsOpen) picker.Close();
                 m_ViewId = clientId;
+                m_LastLive = null;
                 m_Arrivals.Clear();
                 m_Pulses.Clear();
                 RefillLog();
+                if (presence != null) presence.Clear();
+                m_Net.ReportViewing(clientId);
+                Fx.Play(FxCue.BoardSwitch, partyRoot.transform);
+                ApplyVenue(true);
             }
             RenderAll();
+            if (m_Presence.TryGetValue(clientId, out var msg)) RenderPresence(clientId, msg);
         }
 
         void RefillLog()
@@ -525,11 +460,15 @@ namespace DeckParty.UI
             if (!string.IsNullOrEmpty(m_IntroLine)) log.Add(m_IntroLine);
             if (m_History.TryGetValue(m_ViewId, out var history))
                 foreach (var line in history) log.Add(line);
+            // Another player's history isn't news.
+            if (feed != null) feed.MarkRead(SideTabsView.Tab.Activity);
         }
 
         void OnActivePlayerChanged(ulong active)
         {
             if (!TakingTurns) return;
+            m_Presence.Clear();
+            if (presence != null) presence.Clear();
             if (active == DeckPartyNetSession.NoPlayer)
             {
                 RenderAll();
@@ -544,50 +483,60 @@ namespace DeckParty.UI
         {
             if (m_Net == null || active == DeckPartyNetSession.NoPlayer || m_Net.Phase != MatchPhase.InGame) return;
             var s = m_Net.GetState(active);
-            string night = s != null ? $"Night {s.Night} of {s.TotalNights}" : string.Empty;
+            string night = s != null ? Loc.Get("game.night_of", "night", s.Night, "total", s.TotalNights) : string.Empty;
             if (active == LocalId)
             {
-                banner.Show("YOUR TURN", night + "  -  everyone is watching!", UIPalette.Gold, 1.4f);
+                banner.Show(Loc.Get("game.your_turn"), night + "  -  " + Loc.Get("game.everyone_watching"), UIPalette.Gold, 1.4f);
                 AudioService.Play(Sfx.Notify);
             }
             else
             {
-                banner.Show($"{NameOf(active).ToUpperInvariant()}'S TURN", night + "  -  watching live", ColorOf(active), 1.2f);
+                banner.Show(Loc.Get("game.their_turn", "player", NameOf(active)), night + "  -  " + Loc.Get("game.watching_live"), ColorOf(active), 1.2f);
             }
+            Fx.Play(FxCue.TurnBanner, banner.transform);
         }
 
         void UpdateViewBar()
         {
             if (m_ViewBar == null || m_Net == null) return;
             ulong active = m_Net.ActivePlayer;
+            string watchers = WatchersText();
 
             if (TakingTurns && m_Net.Phase == MatchPhase.InGame && active != DeckPartyNetSession.NoPlayer)
             {
                 if (active == LocalId)
                 {
-                    if (ViewingOwn) m_ViewBar.Set("<b>Your turn!</b>  Everyone is watching your party.", UIPalette.Gold, null, null);
-                    else m_ViewBar.Set($"<b>Your turn!</b>  You're looking at {ColoredName(m_ViewId)}'s party.", UIPalette.Gold, "Back to My Turn", () => ShowBoard(LocalId));
+                    if (ViewingOwn) m_ViewBar.Set(Loc.Get("bar.your_turn_watching") + watchers, UIPalette.Gold, null, null);
+                    else m_ViewBar.Set(Loc.Get("bar.your_turn_looking", "player", ColoredName(m_ViewId)), UIPalette.Gold, Loc.Get("bar.back_to_turn"), () => ShowBoard(LocalId));
                 }
                 else if (m_ViewId == active)
                 {
-                    m_ViewBar.Set($"<b>{ColoredName(active)}'s turn</b>  Watching live. You can't act until your turn.", ColorOf(active), "Look at My Party", () => ShowBoard(LocalId));
+                    m_ViewBar.Set(Loc.Get("bar.their_turn", "player", ColoredName(active)), ColorOf(active), Loc.Get("bar.my_stream"), () => ShowBoard(LocalId));
                 }
                 else
                 {
-                    string whose = ViewingOwn ? "Your party" : $"{ColoredName(m_ViewId)}'s party";
-                    m_ViewBar.Set($"{whose}  -  it's {ColoredName(active)}'s turn.", ColorOf(m_ViewId), $"Watch {NameOf(active)}", () => ShowBoard(active));
+                    string whose = ViewingOwn ? Loc.Get("bar.your_stream") : Loc.Get("bar.players_stream", "player", ColoredName(m_ViewId));
+                    m_ViewBar.Set(Loc.Get("bar.elsewhere", "whose", whose, "player", ColoredName(active)), ColorOf(m_ViewId), Loc.Get("bar.watch", "player", NameOf(active)), () => ShowBoard(active));
                 }
                 return;
             }
 
-            if (ViewingOwn) m_ViewBar.Set("<b>Your party</b>  <color=#B9AED6>Click a player on the right to watch their party live.</color>", UIPalette.Teal, null, null);
-            else m_ViewBar.Set($"<b>Watching {ColoredName(m_ViewId)}'s party</b>  live and read-only.", ColorOf(m_ViewId), "Back to My Party", () => ShowBoard(LocalId));
+            if (ViewingOwn) m_ViewBar.Set(Loc.Get("bar.own") + watchers, UIPalette.Teal, null, null);
+            else m_ViewBar.Set(Loc.Get("bar.watching", "player", ColoredName(m_ViewId)), ColorOf(m_ViewId), Loc.Get("bar.back_to_stream"), () => ShowBoard(LocalId));
+        }
+
+        /// <summary>"   👁 2 watching" for your own stream (presence P5).</summary>
+        string WatchersText()
+        {
+            if (m_Net == null || !m_Net.TryGetLocalPlayer(out var me) || me.Watchers == 0) return string.Empty;
+            return $"   <color=#FF9AD5>{Loc.Get("bar.watchers", "count", me.Watchers)}</color>";
         }
 
         // ================================================================== rendering
 
         void RenderAll()
         {
+            if (m_Scoring) return;
             var s = View;
             if (s == null) return;
             bool act = CanAct;
@@ -607,11 +556,21 @@ namespace DeckParty.UI
                 house.Render(s);
                 ApplyCardStates(s, act);
                 partyControls.Render(s, Targeting, act);
+                RenderLinks(s);
+                if (party) m_LastLive = s.Clone();
             }
             if (planningPhase) planning.Render(s, PlanningCtx(), BreakdownFor(m_ViewId));
-            if (blame) raidBlame.Render(s, act ? null : $"{(ViewingOwn ? "You" : NameOf(m_ViewId))} must choose who gets a {Terms.Ban}.");
+            if (blame) raidBlame.Render(s, act ? null : Loc.Get("ban.watching", "player", ViewingOwn ? Loc.Get("common.you") : NameOf(m_ViewId)));
 
+            int trouble = party ? PartyEngine.NetTrouble(s) : 0;
+            bool anxious = party && trouble >= GameRules.RaidTroubleThreshold - 1;
             background.SetEnergy(party ? s.Occupancy / (float)Mathf.Max(1, s.Capacity) : 0.2f);
+            background.SetRisk(party ? trouble / (float)(GameRules.RaidTroubleThreshold - 1) : 0f);
+            effects.SetDanger(anxious ? 1f : 0f);
+            if (anxiety != null) anxiety.Set(anxious, s.Streamer);
+            if (overlay != null) overlay.Render(s);
+            if (facecam != null) facecam.Render(s, m_Net != null ? NameOf(m_ViewId) : null, ColorOf(m_ViewId), anxious);
+
             if (rolodex.IsOpen) rolodex.Refresh(s, ViewOwnerName);
             if (m_Net != null)
             {
@@ -630,7 +589,7 @@ namespace DeckParty.UI
 
         void ApplyCardStates(PlayerState s, bool act)
         {
-            string watchHint = act ? null : ViewingOwn ? $"Wait for your turn. It's {NameOf(m_Net.ActivePlayer)}'s turn." : $"This is {NameOf(m_ViewId)}'s party. You're watching.";
+            string watchHint = act ? null : ViewingOwn ? Loc.Get("game.wait_turn_hint", "player", NameOf(m_Net.ActivePlayer)) : Loc.Get("game.watching_hint", "player", NameOf(m_ViewId));
             foreach (var card in house.Cards)
             {
                 if (!card.gameObject.activeSelf) continue;
@@ -652,6 +611,7 @@ namespace DeckParty.UI
                     card.SetHighlight(picked ? CardHighlight.Selected : valid ? CardHighlight.Selectable : CardHighlight.Dimmed);
                     card.SetClickable(valid || picked);
                     card.HideAbility();
+                    if (card.Fx != null) card.Fx.SetStatus(s, g, true, valid && !picked, picked, false);
                 }
                 else
                 {
@@ -660,8 +620,9 @@ namespace DeckParty.UI
                     if (g.Info.HasAbility && s.Phase == GamePhase.Party)
                     {
                         bool used = s.UsedAbilities.Contains(g.Id);
-                        var blocker = act ? PartyEngine.GetAbilityBlocker(s, g.Id) : watchHint;
-                        card.ShowAbility(used ? "Used" : g.Info.AbilityName, blocker == null, blocker);
+                        var blocker = act ? PartyEngine.GetAbilityBlocker(s, g.Id) : null;
+                        string reason = act ? (blocker != null ? Loc.Error(blocker) : null) : watchHint;
+                        card.ShowAbility(used ? Loc.Get("card.used") : GuestVisuals.ActionName(g.Kind), act && blocker == null, reason);
                     }
                     else
                     {
@@ -681,6 +642,7 @@ namespace DeckParty.UI
             ctx.Turns = TakingTurns;
             ctx.MyTurn = MyTurn;
             ctx.Owner = ViewOwnerName;
+            ctx.RivalsAvailable = m_Net.HasRival(ViewingOwn ? LocalId : m_ViewId);
             if (TakingTurns && m_Net.ActivePlayer != DeckPartyNetSession.NoPlayer)
             {
                 ctx.ActiveName = NameOf(m_Net.ActivePlayer);
@@ -698,9 +660,15 @@ namespace DeckParty.UI
             return ctx;
         }
 
+        /// <summary>
+        /// The background follows the board on screen: your own setup choice on your board (a streamer brings theirs on
+        /// "Automatic"), and the other player's streamer setup when you watch them.
+        /// </summary>
         void ApplyVenue(bool force)
         {
-            var venue = GameDatabase.Instance.ResolveVenue(m_VenueChoice, State);
+            var s = View;
+            string choice = ViewingOwn ? m_VenueChoice : AppSettings.VenueAuto;
+            var venue = GameDatabase.Instance.ResolveVenue(choice, s);
             if (venue != null) background.Apply(venue, force);
         }
 
@@ -735,6 +703,7 @@ namespace DeckParty.UI
         IEnumerator ShowGameOverAfter(float delay)
         {
             yield return new WaitForSecondsRealtime(delay);
+            while (m_Scoring) yield return null;
             m_GameOverShown = true;
             CancelTargeting(false);
             picker.Close();
@@ -753,11 +722,11 @@ namespace DeckParty.UI
             if (!matchOver && m_ResultsDismissed) return;
 
             if (matchOver && m_Net.IsServer)
-                gameOver.ShowMultiplayer(m_Net, State, true, () => m_Net.ServerReturnToLobby(), "Back to Lobby", LeaveGame, "Close Party", null);
+                gameOver.ShowMultiplayer(m_Net, State, true, () => m_Net.ServerReturnToLobby(), Loc.Get("over.back_to_lobby"), LeaveGame, Loc.Get("over.close_lobby"), null);
             else if (matchOver)
-                gameOver.ShowMultiplayer(m_Net, State, true, null, null, LeaveGame, "Leave", "Waiting for the host to start another round...");
+                gameOver.ShowMultiplayer(m_Net, State, true, null, null, LeaveGame, Loc.Get("over.leave"), Loc.Get("over.waiting_host"));
             else
-                gameOver.ShowMultiplayer(m_Net, State, false, KeepWatching, "Keep Watching", LeaveGame, "Leave", "The scoreboard updates live.");
+                gameOver.ShowMultiplayer(m_Net, State, false, KeepWatching, Loc.Get("over.keep_watching"), LeaveGame, Loc.Get("over.leave"), Loc.Get("over.scoreboard_live"));
         }
 
         void KeepWatching()
@@ -774,6 +743,7 @@ namespace DeckParty.UI
                 ScenarioId = s != null ? s.ScenarioId : 0,
                 Seed = NewSeed(),
                 VenueChoice = m_VenueChoice,
+                Streamer = s != null ? (byte)s.Streamer : AppSettings.LastStreamer,
             });
         }
 
@@ -785,7 +755,7 @@ namespace DeckParty.UI
             opponents.Render(m_Net, m_ViewId);
             UpdateViewBar();
             var s = View;
-            if (s != null && s.Phase == GamePhase.Planning) planning.Render(s, PlanningCtx(), BreakdownFor(m_ViewId));
+            if (s != null && s.Phase == GamePhase.Planning && !m_Scoring) planning.Render(s, PlanningCtx(), BreakdownFor(m_ViewId));
             if (m_GameOverShown) ShowMultiplayerResults();
         }
 
@@ -795,13 +765,13 @@ namespace DeckParty.UI
             UpdateViewBar();
         }
 
-        void OnHeadline(string text) => ToastView.Show(text, ToastKind.Info);
+        void OnHeadline(string text) => ToastView.Show(Loc.Error(text), ToastKind.Info);
 
         // ================================================================== player actions
 
         void Submit(GameCommand command)
         {
-            if (State == null || !CanAct) return;
+            if (State == null || !CanAct || m_Scoring) return;
             m_Session.Submit(command);
         }
 
@@ -811,7 +781,8 @@ namespace DeckParty.UI
             if (s == null || s.Phase != GamePhase.Party || !CanAct) return;
             if (s.House.Count == 0)
             {
-                ModalDialog.Show("End an empty party?", "Nobody is inside, so you'll earn nothing tonight.", () => Submit(GameCommand.EndParty()), "End It", "Keep Partying");
+                ModalDialog.Show(Loc.Get("game.end_empty_title"), Loc.Get("game.end_empty_body"), () => Submit(GameCommand.EndParty()),
+                    Loc.Get("game.end_it"), Loc.Get("game.keep_streaming"));
                 return;
             }
             Submit(GameCommand.EndParty());
@@ -833,6 +804,52 @@ namespace DeckParty.UI
             Submit(GameCommand.StartNextNight());
         }
 
+        // ------------------------------------------------------------------ streamer power
+
+        void UseStreamerPower()
+        {
+            var s = State;
+            if (s == null || !CanAct) return;
+            bool rivals = m_Net != null && m_Net.HasRival(LocalId);
+            var blocker = PartyEngine.GetPowerBlocker(s, rivals);
+            if (blocker != null)
+            {
+                OnCommandRejected(blocker);
+                return;
+            }
+
+            if (!s.StreamerInfo.NeedsRival || m_Net == null)
+            {
+                Submit(GameCommand.UsePower());
+                return;
+            }
+
+            // Rival powers: choose who to hit when there's more than one rival.
+            var options = new List<string>();
+            var indexes = new List<int>();
+            var players = m_Net.PlayersSnapshot();
+            for (int i = 0; i < players.Count; i++)
+            {
+                var p = players[i];
+                if (p.ClientId == LocalId || !p.Connected || p.Finished) continue;
+                options.Add(Loc.Get("power.rival_option", "player", p.DisplayName, "cash", p.Cash));
+                indexes.Add(i);
+            }
+            if (options.Count <= 1)
+            {
+                Submit(GameCommand.UsePower(indexes.Count == 1 ? indexes[0] : -1));
+                return;
+            }
+            m_ChoosingRival = true;
+            ModalDialog.ShowChoice(Loc.Get("power.pick_rival_title", "power", StreamerVisuals.PowerName(s.Streamer)), Loc.Get("power.pick_rival_body"), options,
+                pick =>
+                {
+                    m_ChoosingRival = false;
+                    Submit(GameCommand.UsePower(indexes[Mathf.Clamp(pick, 0, indexes.Count - 1)]));
+                },
+                () => m_ChoosingRival = false);
+        }
+
         // ------------------------------------------------------------------ actions: option -> targets -> submit
 
         void BeginAbility(int actorId)
@@ -851,15 +868,21 @@ namespace DeckParty.UI
 
             var guest = s.Find(actorId);
             var info = guest.Info;
-            var options = info.Options;
+            var options = GuestVisuals.Options(guest.Kind);
             if (options == null)
             {
                 ContinueAbility(actorId, 0);
                 return;
             }
 
-            ModalDialog.ShowChoice($"{GuestVisuals.DisplayName(guest.Kind)}: {info.AbilityName}", OptionHelp(s, info.Ability), options,
-                option => ContinueAbility(actorId, option), null, OptionsEnabled(s, info.Ability, options.Length));
+            m_ChoosingActor = actorId;
+            ModalDialog.ShowChoice($"{GuestVisuals.DisplayName(guest.Kind)}: {GuestVisuals.ActionName(guest.Kind)}", OptionHelp(s, info.Ability), options,
+                option =>
+                {
+                    m_ChoosingActor = -1;
+                    ContinueAbility(actorId, option);
+                },
+                () => m_ChoosingActor = -1, OptionsEnabled(s, info.Ability, options.Length));
         }
 
         static string OptionHelp(PlayerState s, AbilityKind kind)
@@ -867,23 +890,20 @@ namespace DeckParty.UI
             switch (kind)
             {
                 case AbilityKind.Mood:
-                    return $"<b>Happy:</b> +3 {Terms.Subs}.   <b>Sad:</b> +3 $.   <b>Angry:</b> +6 {Terms.Subs} and +1 {Terms.Risk}.\nLasts until the party ends.";
+                    return Loc.Get("help.mood");
                 case AbilityKind.Invest:
-                    return $"Stake {GameRules.StonksInvestPop} {Terms.GiftedSubs} or {GameRules.StonksInvestCash} $ from your bank. " +
-                           $"If the party succeeds you get {GameRules.StonksMultiplier}x back; if it's swatted or shut down, it's gone.\n" +
-                           $"You have {s.Pop} {Terms.GiftedSubs} and {s.Cash} $.";
+                    return Loc.Get("help.invest", ("subs", GameRules.StonksInvestPop), ("cash", GameRules.StonksInvestCash), ("mult", GameRules.StonksMultiplier),
+                        ("have_subs", s.Pop), ("have_cash", s.Cash));
                 case AbilityKind.Reroll:
                 {
                     var last = PartyEngine.CanReroll(s) ? s.Find(s.LastRandomArrival) : null;
-                    var reroll = last != null
-                        ? $"<b>Reroll:</b> {GuestVisuals.NameTag(last.Kind)} goes back outside and a new random guest takes their place."
-                        : "<b>Reroll:</b> nothing to reroll right now.";
-                    return reroll + "\n<b>Peek:</b> look at the next guest and decide whether to let them in.";
+                    var reroll = last != null ? Loc.Get("help.reroll", "viewer", GuestVisuals.NameTag(last.Kind)) : Loc.Get("help.reroll_none");
+                    return reroll + "\n" + Loc.Get("help.peek");
                 }
                 case AbilityKind.Drake:
-                    return $"You'll pick two guests: the first earns nothing tonight, the second doubles their printed {Terms.Subs} or $.\nWhat should the second guest double?";
+                    return Loc.Get("help.drake");
                 case AbilityKind.Convert:
-                    return $"You'll pick one guest for tonight.\n<b>{Terms.Subs} to $:</b> every 2 {Terms.Subs} become 1 $.   <b>$ to {Terms.Subs}:</b> every 1 $ becomes 2 {Terms.Subs}.";
+                    return Loc.Get("help.convert");
                 default:
                     return string.Empty;
             }
@@ -919,7 +939,7 @@ namespace DeckParty.UI
 
             var guest = s.Find(actorId);
             var info = guest.Info;
-            string title = $"{GuestVisuals.DisplayName(guest.Kind)}: {info.AbilityName}";
+            string title = $"{GuestVisuals.DisplayName(guest.Kind)}: {GuestVisuals.ActionName(guest.Kind)}";
 
             switch (info.Target)
             {
@@ -928,8 +948,13 @@ namespace DeckParty.UI
                     break;
 
                 case TargetMode.WaitingGuest:
-                    picker.Open(title, "Choose a waiting guest to bring in.", s, s.Pool,
-                        pick => Submit(GameCommand.UseAbility(actorId, pick, option: option)));
+                    m_PickingActor = actorId;
+                    picker.Open(title, Loc.Get("pick.fetch"), s, s.Pool,
+                        pick =>
+                        {
+                            m_PickingActor = -1;
+                            Submit(GameCommand.UseAbility(actorId, pick, option: option));
+                        }, () => m_PickingActor = -1);
                     break;
 
                 case TargetMode.Inspect:
@@ -946,23 +971,29 @@ namespace DeckParty.UI
             }
         }
 
-        /// <summary>Grumpy Cat: reject one of the next guests, then choose who comes next.</summary>
+        /// <summary>Grumpy Cat: deny one of the next viewers, then choose who comes next.</summary>
         void BeginInspect(int actorId, string title)
         {
             var s = State;
             var looked = s.Pool.GetRange(0, Mathf.Min(GameRules.GrumpyInspectCount, s.Pool.Count));
-            picker.Open(title, "These are the next guests in line. Pick one to reject for the night.", s, looked, rejected =>
+            m_PickingActor = actorId;
+            picker.Open(title, Loc.Get("pick.inspect_reject"), s, looked, rejected =>
             {
                 var rest = new List<int>(looked);
                 rest.Remove(rejected);
                 if (rest.Count <= 1)
                 {
+                    m_PickingActor = -1;
                     Submit(GameCommand.UseAbility(actorId, rejected, rest.Count == 1 ? rest[0] : -1));
                     return;
                 }
-                picker.Open(title, "Who should come in next?", State, rest,
-                    first => Submit(GameCommand.UseAbility(actorId, rejected, first)), keepOrder: true);
-            }, keepOrder: true);
+                picker.Open(title, Loc.Get("pick.inspect_next"), State, rest,
+                    first =>
+                    {
+                        m_PickingActor = -1;
+                        Submit(GameCommand.UseAbility(actorId, rejected, first));
+                    }, () => m_PickingActor = -1, keepOrder: true);
+            }, () => m_PickingActor = -1, keepOrder: true);
         }
 
         void UpdateTargetingBanner()
@@ -971,8 +1002,8 @@ namespace DeckParty.UI
             if (m_AttractionChoice >= 0)
             {
                 var chosen = s?.Find(m_AttractionChoice);
-                string who = chosen != null ? GuestVisuals.NameTag(chosen.Kind) : "them";
-                targetingBanner.Show($"New Attraction: choose who {who} replaces. They'll sit out tonight.");
+                string who = chosen != null ? GuestVisuals.NameTag(chosen.Kind) : Loc.Get("common.someone");
+                targetingBanner.Show(Loc.Get("target.attraction", "viewer", who));
                 targetingBanner.SetConfirm(false);
                 return;
             }
@@ -981,7 +1012,7 @@ namespace DeckParty.UI
             if (actor == null) return;
             GuestInfo.TargetCount(actor.Info.Ability, out int min, out int max);
             targetingBanner.Show(TargetPrompt(s, actor));
-            targetingBanner.SetConfirm(max > min, m_Picks.Count >= min, $"Confirm ({m_Picks.Count}/{max})");
+            targetingBanner.SetConfirm(max > min, m_Picks.Count >= min, Loc.Get("target.confirm_count", "count", m_Picks.Count, "max", max));
         }
 
         string TargetPrompt(PlayerState s, GuestInstance actor)
@@ -991,27 +1022,25 @@ namespace DeckParty.UI
             string first = m_Picks.Count > 0 && s.Find(m_Picks[0]) != null ? GuestVisuals.NameTag(s.Find(m_Picks[0]).Kind) : string.Empty;
             switch (info.Ability)
             {
-                case AbilityKind.Boot: return $"{who}: choose a guest to remove from chat (it can be {GuestVisuals.DisplayName(actor.Kind)} too).";
-                case AbilityKind.Troll: return $"{who}: choose a guest to send back outside.";
-                case AbilityKind.PlayOff: return $"{who}: choose a guest to play off.";
-                case AbilityKind.Refund: return $"{who}: choose a guest to remove. You get half their cost as {Terms.Subs}.";
-                case AbilityKind.Mog: return $"{who}: choose a guest to compare printed {Terms.Subs} with.";
-                case AbilityKind.Arson: return $"{who}: choose a guest to get +1 {Terms.Risk} and +3 {Terms.Subs}.";
-                case AbilityKind.Strike: return $"{who}: choose a guest to strike.";
-                case AbilityKind.Rickroll: return $"{who}: choose a non-{Terms.Diamond} guest to Rickroll.";
-                case AbilityKind.Convert: return $"{who}: choose a guest to convert ({info.Options[m_Option]}).";
-                case AbilityKind.Immunity: return $"{who}: choose a guest to make immune tonight.";
+                case AbilityKind.Boot: return Loc.Get("target.boot", "actor", who, "self", GuestVisuals.DisplayName(actor.Kind));
+                case AbilityKind.Troll: return Loc.Get("target.troll", "actor", who);
+                case AbilityKind.PlayOff: return Loc.Get("target.playoff", "actor", who);
+                case AbilityKind.Refund: return Loc.Get("target.refund", "actor", who);
+                case AbilityKind.Mog: return Loc.Get("target.mog", "actor", who);
+                case AbilityKind.Arson: return Loc.Get("target.arson", "actor", who);
+                case AbilityKind.Strike: return Loc.Get("target.strike", "actor", who);
+                case AbilityKind.Rickroll: return Loc.Get("target.rickroll", "actor", who);
+                case AbilityKind.Convert: return Loc.Get("target.convert", "actor", who, "option", GuestVisuals.OptionLabel(actor.Kind, m_Option));
+                case AbilityKind.Immunity: return Loc.Get("target.immunity", "actor", who);
                 case AbilityKind.SwapOrder:
-                    return m_Picks.Count == 0 ? $"{who}: choose the first guest to move." : $"{who}: choose who {first} swaps places with.";
+                    return m_Picks.Count == 0 ? Loc.Get("target.swap_first", "actor", who) : Loc.Get("target.swap_second", "actor", who, "first", first);
                 case AbilityKind.Pirouette:
-                    return m_Picks.Count == 0 ? $"{who}: choose the first dancer." : $"{who}: choose who {first} swaps printed {Terms.Subs} with.";
+                    return m_Picks.Count == 0 ? Loc.Get("target.pirouette_first", "actor", who) : Loc.Get("target.pirouette_second", "actor", who, "first", first);
                 case AbilityKind.Drake:
-                    return m_Picks.Count == 0
-                        ? $"{who}: choose the guest who earns nothing tonight."
-                        : $"{who}: choose who doubles their printed {(m_Option == 0 ? Terms.Subs : "$")}.";
+                    return m_Picks.Count == 0 ? Loc.Get("target.drake_first", "actor", who) : Loc.Get(m_Option == 0 ? "target.drake_second_subs" : "target.drake_second_cash", "actor", who);
                 case AbilityKind.Bombard:
-                    return $"{who}: choose up to 3 guests to replace with random waiting guests, then Confirm.";
-                default: return $"{who}: choose a target.";
+                    return Loc.Get("target.bombard", "actor", who);
+                default: return Loc.Get("target.default", "actor", who);
             }
         }
 
@@ -1047,6 +1076,7 @@ namespace DeckParty.UI
             if (!PartyEngine.IsValidTarget(s, m_TargetActor, id, m_Picks)) return;
 
             m_Picks.Add(id);
+            Fx.Play(FxCue.CardHover, card.AnimRoot, 2f);
             GuestInfo.TargetCount(actor.Info.Ability, out _, out int max);
             if (m_Picks.Count >= max)
             {
@@ -1092,20 +1122,23 @@ namespace DeckParty.UI
         {
             if (!s.AttractionPending || m_AttractionSubmitted || Targeting || picker.IsOpen || ModalDialog.IsOpen || m_GameOverShown) return;
             var boyfriend = s.Find(s.AttractionActor);
-            string title = $"{(boyfriend != null ? GuestVisuals.DisplayName(boyfriend.Kind) : "Distracted Boyfriend")}: New Attraction";
-            picker.Open(title, "Pick someone to swap in, then choose who they replace. Skip to keep everyone.", s, s.AttractionCandidates,
+            string title = Loc.Get("pick.attraction_title", "viewer", boyfriend != null ? GuestVisuals.DisplayName(boyfriend.Kind) : GuestVisuals.DisplayName(GuestType.DistractedBoyfriend));
+            m_PickingActor = s.AttractionActor;
+            picker.Open(title, Loc.Get("pick.attraction"), s, s.AttractionCandidates,
                 pick =>
                 {
+                    m_PickingActor = -1;
                     m_AttractionChoice = pick;
                     UpdateTargetingBanner();
                     RenderAll();
                 },
                 () =>
                 {
+                    m_PickingActor = -1;
                     m_AttractionSubmitted = true;
                     Submit(GameCommand.ResolveAttraction(-1, -1));
                 },
-                "Skip  [Esc]", true);
+                Loc.Get("pick.skip"), true);
         }
 
         // ------------------------------------------------------------------ misc
@@ -1136,9 +1169,7 @@ namespace DeckParty.UI
             if (m_Net != null)
             {
                 bool host = m_Net.IsServer;
-                ModalDialog.Show("Leave the game?",
-                    host ? "You're the host: leaving ends the season for everyone." : "You won't be able to rejoin this season.",
-                    LeaveGame, "Leave", "Stay");
+                ModalDialog.Show(Loc.Get("game.leave_title"), Loc.Get(host ? "game.leave_host" : "game.leave_client"), LeaveGame, Loc.Get("over.leave"), Loc.Get("lobby.stay"));
                 return;
             }
             pauseMenu.Close();
@@ -1156,7 +1187,15 @@ namespace DeckParty.UI
         void Update()
         {
             ClearButtonSelection();
+            UpdatePresence();
+            UpdateTurnTimer();
             if (State == null || InputHelper.IsTyping) return;
+
+            if (m_Scoring)
+            {
+                if (InputHelper.Pressed(HotKey.Space) || InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Escape) || PointerClicked()) SkipScoring();
+                return;
+            }
 
             if (InputHelper.Pressed(HotKey.Escape))
             {
@@ -1210,6 +1249,16 @@ namespace DeckParty.UI
             {
                 if (s.Phase == GamePhase.Party && !Targeting && PartyEngine.GetEndPartyBlocker(s) == null) EndParty();
             }
+        }
+
+        static bool PointerClicked()
+        {
+#if ENABLE_INPUT_SYSTEM
+            var mouse = UnityEngine.InputSystem.Mouse.current;
+            return mouse != null && mouse.leftButton.wasPressedThisFrame;
+#else
+            return Input.GetMouseButtonDown(0);
+#endif
         }
 
         void HandleEscape()

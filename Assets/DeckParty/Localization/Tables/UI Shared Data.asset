@@ -1,0 +1,1456 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UI Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: UI
+  m_TableCollectionNameGuidString: ca96b39389ed7e341b0e7f8dbab94f2e
+  m_Entries:
+  - m_Id: 1486045184
+    m_Key: hud.menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125568
+    m_Key: log.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125569
+    m_Key: chat.panel_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125570
+    m_Key: common.close_r
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125571
+    m_Key: pause.resume_esc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125572
+    m_Key: over.standings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125573
+    m_Key: mp.or_join
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125574
+    m_Key: mp.or_address
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125575
+    m_Key: lobby.match_settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125576
+    m_Key: hud.tip.gifted_subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125577
+    m_Key: hud.tip.cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125578
+    m_Key: hud.tip.sub_cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125579
+    m_Key: hud.audience_button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125580
+    m_Key: hud.night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125581
+    m_Key: hud.cap_only
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125582
+    m_Key: hud.risk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125583
+    m_Key: hud.diamonds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125584
+    m_Key: hud.tip.risk_idle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125585
+    m_Key: hud.tip.risk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125586
+    m_Key: hud.tip.risk_heat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125587
+    m_Key: hud.tip.risk_shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125588
+    m_Key: hud.tip.diamonds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125589
+    m_Key: card.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125590
+    m_Key: chat.header
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125591
+    m_Key: chat.hint.win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125592
+    m_Key: chat.hint.risk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125593
+    m_Key: chat.hint.full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125594
+    m_Key: controls.add_viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125595
+    m_Key: controls.add_viewer_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125596
+    m_Key: controls.queue_count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125597
+    m_Key: controls.end
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125598
+    m_Key: controls.end_win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125599
+    m_Key: controls.end_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125600
+    m_Key: controls.fees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125601
+    m_Key: controls.waiting_viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125602
+    m_Key: controls.next_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125603
+    m_Key: controls.xray
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125604
+    m_Key: controls.swat_chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125605
+    m_Key: controls.risky_waiting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125606
+    m_Key: controls.overcap_chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125607
+    m_Key: controls.approve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125608
+    m_Key: controls.deny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125609
+    m_Key: shop.starter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125610
+    m_Key: shop.owned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125611
+    m_Key: shop.owned_max
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125612
+    m_Key: shop.buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125613
+    m_Key: shop.maxed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125614
+    m_Key: shop.header
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125615
+    m_Key: shop.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125616
+    m_Key: shop.nights_left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125617
+    m_Key: shop.night_over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125618
+    m_Key: shop.night_over_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125619
+    m_Key: shop.wallet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125620
+    m_Key: shop.wallet_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125621
+    m_Key: shop.lock_watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125622
+    m_Key: shop.lock_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125623
+    m_Key: shop.lock_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125624
+    m_Key: shop.cap_maxed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125625
+    m_Key: shop.raise_cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125626
+    m_Key: shop.raise_cap_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125627
+    m_Key: shop.view_audience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125628
+    m_Key: shop.view_audience_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125629
+    m_Key: shop.other_shopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125630
+    m_Key: shop.watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125631
+    m_Key: shop.turn_ends_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125632
+    m_Key: shop.go_back_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125633
+    m_Key: shop.end_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125634
+    m_Key: shop.next_night_after
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125635
+    m_Key: shop.next_player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125636
+    m_Key: shop.waiting_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125637
+    m_Key: shop.their_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125638
+    m_Key: shop.cancel_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125639
+    m_Key: shop.ready_for
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125640
+    m_Key: shop.starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125641
+    m_Key: shop.waiting_for
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125642
+    m_Key: shop.everyone_ready_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514176
+    m_Key: shop.start_night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514177
+    m_Key: result.success
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514178
+    m_Key: result.success_diamonds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514179
+    m_Key: result.earned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514180
+    m_Key: result.fees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514181
+    m_Key: result.swatted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514182
+    m_Key: result.no_payout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514183
+    m_Key: result.banned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514184
+    m_Key: result.crashed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514185
+    m_Key: result.crashed_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514186
+    m_Key: result.planning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514187
+    m_Key: result.owner_prefix
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514188
+    m_Key: common.cancel_esc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514189
+    m_Key: common.confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514190
+    m_Key: common.cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514191
+    m_Key: common.back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514192
+    m_Key: common.close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514193
+    m_Key: common.ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514194
+    m_Key: common.yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514195
+    m_Key: common.no
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514196
+    m_Key: common.on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514197
+    m_Key: common.off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514198
+    m_Key: target.esc_cancels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514199
+    m_Key: ban.message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514200
+    m_Key: ban.choose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514201
+    m_Key: ban.watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514202
+    m_Key: audience.title_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514203
+    m_Key: audience.title_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514204
+    m_Key: audience.count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514205
+    m_Key: audience.summary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514206
+    m_Key: audience.summary_live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514207
+    m_Key: audience.banned_now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514208
+    m_Key: audience.banned_next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514209
+    m_Key: audience.streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514210
+    m_Key: audience.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514211
+    m_Key: players.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514212
+    m_Key: players.left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514213
+    m_Key: players.live_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514214
+    m_Key: players.streaming_now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514215
+    m_Key: players.shopping_now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514216
+    m_Key: players.done_tonight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514217
+    m_Key: players.waiting_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514218
+    m_Key: players.streaming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514219
+    m_Key: players.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514220
+    m_Key: players.planning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514221
+    m_Key: players.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514222
+    m_Key: players.season_over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514223
+    m_Key: players.night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514224
+    m_Key: players.wallet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514225
+    m_Key: over.victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514226
+    m_Key: over.season_over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514227
+    m_Key: over.won_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514228
+    m_Key: over.random_streak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514229
+    m_Key: over.cherry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514230
+    m_Key: over.lost_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514231
+    m_Key: over.play_again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514232
+    m_Key: over.main_menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514233
+    m_Key: over.you_win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514234
+    m_Key: over.player_wins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514235
+    m_Key: over.mp_won_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514236
+    m_Key: over.mp_nobody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514237
+    m_Key: over.diamond_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514238
+    m_Key: over.your_season_over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514239
+    m_Key: over.waiting_others
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514240
+    m_Key: over.stats1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514241
+    m_Key: over.stats2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514242
+    m_Key: over.stats_streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514243
+    m_Key: over.back_to_lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514244
+    m_Key: over.close_lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514245
+    m_Key: over.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514246
+    m_Key: over.keep_watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514247
+    m_Key: over.waiting_host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514248
+    m_Key: over.scoreboard_live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514249
+    m_Key: pause.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514250
+    m_Key: pause.title_mp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514251
+    m_Key: pause.keeps_running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514252
+    m_Key: pause.setup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514253
+    m_Key: pause.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514254
+    m_Key: pause.save_quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514255
+    m_Key: pause.resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514256
+    m_Key: pause.audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514257
+    m_Key: pause.rules
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514258
+    m_Key: settings.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514259
+    m_Key: settings.display
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514260
+    m_Key: settings.language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514261
+    m_Key: settings.window_mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514262
+    m_Key: settings.windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514263
+    m_Key: settings.fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514264
+    m_Key: settings.resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514265
+    m_Key: settings.apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514266
+    m_Key: settings.keep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514267
+    m_Key: settings.reverted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514268
+    m_Key: settings.editor_note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514269
+    m_Key: settings.shake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514270
+    m_Key: settings.reduce_flashing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514271
+    m_Key: settings.fake_chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514272
+    m_Key: settings.player_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514273
+    m_Key: settings.master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514274
+    m_Key: settings.music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514275
+    m_Key: settings.sfx
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514276
+    m_Key: settings.fast_animations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514277
+    m_Key: settings.reset_progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514278
+    m_Key: settings.reset_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514279
+    m_Key: settings.reset_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514280
+    m_Key: settings.reset_done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514281
+    m_Key: settings.fullscreen_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514282
+    m_Key: game.connecting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514283
+    m_Key: game.waiting_host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514284
+    m_Key: game.welcome_back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514285
+    m_Key: game.welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514286
+    m_Key: game.streamer_intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514287
+    m_Key: game.mp_intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514288
+    m_Key: game.night_banner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514289
+    m_Key: game.night_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514290
+    m_Key: game.nights_left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514291
+    m_Key: game.final_night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514292
+    m_Key: game.whose_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514293
+    m_Key: game.board_loading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514294
+    m_Key: game.night_of
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514295
+    m_Key: game.your_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514296
+    m_Key: game.everyone_watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514297
+    m_Key: game.their_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514298
+    m_Key: game.watching_live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514299
+    m_Key: game.wait_turn_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514300
+    m_Key: game.watching_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514301
+    m_Key: game.end_empty_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514302
+    m_Key: game.end_empty_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514303
+    m_Key: game.end_it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514304
+    m_Key: game.keep_streaming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514305
+    m_Key: game.leave_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514306
+    m_Key: game.leave_host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514307
+    m_Key: game.leave_client
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514308
+    m_Key: game.this_is_fine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514309
+    m_Key: game.this_is_fine_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514310
+    m_Key: game.swatted_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514311
+    m_Key: game.swatted_sub_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514312
+    m_Key: game.overload_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514313
+    m_Key: game.shortfall_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514314
+    m_Key: game.shortfall_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514315
+    m_Key: game.heat_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514316
+    m_Key: game.victory_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514317
+    m_Key: game.defeat_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514318
+    m_Key: game.defeat_sub_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514319
+    m_Key: game.scored_total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514320
+    m_Key: bar.your_turn_watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514321
+    m_Key: bar.your_turn_looking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514322
+    m_Key: bar.back_to_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514323
+    m_Key: bar.their_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514324
+    m_Key: bar.my_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514325
+    m_Key: bar.your_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514326
+    m_Key: bar.players_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514327
+    m_Key: bar.elsewhere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514328
+    m_Key: bar.watch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514329
+    m_Key: bar.own
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514330
+    m_Key: bar.watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514331
+    m_Key: bar.back_to_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514332
+    m_Key: bar.watchers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514333
+    m_Key: help.mood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514334
+    m_Key: help.invest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514335
+    m_Key: help.reroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514336
+    m_Key: help.reroll_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514337
+    m_Key: help.peek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514338
+    m_Key: help.drake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514339
+    m_Key: help.convert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514340
+    m_Key: pick.fetch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514341
+    m_Key: pick.inspect_reject
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514342
+    m_Key: pick.inspect_next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514343
+    m_Key: pick.attraction_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514344
+    m_Key: pick.attraction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514345
+    m_Key: pick.skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514346
+    m_Key: target.attraction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514347
+    m_Key: target.confirm_count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514348
+    m_Key: target.boot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514349
+    m_Key: target.troll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514350
+    m_Key: target.playoff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514351
+    m_Key: target.refund
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514352
+    m_Key: target.mog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514353
+    m_Key: target.arson
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514354
+    m_Key: target.strike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514355
+    m_Key: target.rickroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514356
+    m_Key: target.convert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514357
+    m_Key: target.immunity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514358
+    m_Key: target.swap_first
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514359
+    m_Key: target.swap_second
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514360
+    m_Key: target.pirouette_first
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514361
+    m_Key: target.pirouette_second
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514362
+    m_Key: target.drake_first
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514363
+    m_Key: target.drake_second_subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514364
+    m_Key: target.drake_second_cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514365
+    m_Key: target.bombard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514366
+    m_Key: target.default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514367
+    m_Key: result.who_scored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514368
+    m_Key: result.nobody_scored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514369
+    m_Key: overlay.live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514370
+    m_Key: overlay.viewers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514371
+    m_Key: menu.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514372
+    m_Key: menu.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514373
+    m_Key: menu.continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514374
+    m_Key: menu.save_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514375
+    m_Key: menu.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514376
+    m_Key: menu.single_player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514377
+    m_Key: menu.multiplayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514378
+    m_Key: menu.how_to_play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514379
+    m_Key: menu.settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514380
+    m_Key: menu.quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514381
+    m_Key: menu.heads_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514382
+    m_Key: single.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514383
+    m_Key: single.subtitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514384
+    m_Key: single.sets_header
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514385
+    m_Key: single.start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514386
+    m_Key: single.streak_short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514387
+    m_Key: single.cleared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514388
+    m_Key: single.not_cleared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514389
+    m_Key: single.streak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514390
+    m_Key: single.sandbox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514391
+    m_Key: single.nights
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514392
+    m_Key: single.random_set
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514393
+    m_Key: single.set_header
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514394
+    m_Key: single.evolving_note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514395
+    m_Key: single.replace_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514396
+    m_Key: single.replace_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514397
+    m_Key: single.start_new
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514398
+    m_Key: mp.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514399
+    m_Key: mp.subtitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514400
+    m_Key: mp.your_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514401
+    m_Key: mp.online_header
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514402
+    m_Key: mp.host_online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514403
+    m_Key: mp.join_online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514404
+    m_Key: mp.code_placeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514405
+    m_Key: mp.lan_header
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514406
+    m_Key: mp.host_lan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514407
+    m_Key: mp.join_lan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514408
+    m_Key: mp.ip_placeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514409
+    m_Key: mp.port_placeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514410
+    m_Key: mp.online_note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514411
+    m_Key: mp.lan_note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514412
+    m_Key: mp.creating
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514413
+    m_Key: mp.joining
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514414
+    m_Key: mp.connected_relay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514415
+    m_Key: mp.connecting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514416
+    m_Key: lobby.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514417
+    m_Key: lobby.title_host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514418
+    m_Key: lobby.code_hint_host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514419
+    m_Key: lobby.code_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514420
+    m_Key: lobby.ip_hint_host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514421
+    m_Key: lobby.ip_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514422
+    m_Key: lobby.copy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514423
+    m_Key: lobby.host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514424
+    m_Key: lobby.not_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514425
+    m_Key: lobby.players
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514426
+    m_Key: lobby.mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514427
+    m_Key: lobby.season_length
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514428
+    m_Key: lobby.turn_timer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514429
+    m_Key: lobby.custom_seconds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514430
+    m_Key: lobby.your_setup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514431
+    m_Key: lobby.timer_summary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514432
+    m_Key: lobby.change_streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514433
+    m_Key: lobby.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514434
+    m_Key: lobby.unready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514435
+    m_Key: lobby.start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514436
+    m_Key: lobby.leave_button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514437
+    m_Key: lobby.solo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514438
+    m_Key: lobby.all_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514439
+    m_Key: lobby.waiting_host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514440
+    m_Key: lobby.press_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514441
+    m_Key: lobby.mode_turns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514442
+    m_Key: lobby.mode_race
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514443
+    m_Key: lobby.mode_sync
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514444
+    m_Key: lobby.copied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514445
+    m_Key: lobby.close_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514446
+    m_Key: lobby.leave_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514447
+    m_Key: lobby.close_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514448
+    m_Key: lobby.leave_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514449
+    m_Key: lobby.stay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514450
+    m_Key: lobby.chat_placeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514451
+    m_Key: lobby.send
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514452
+    m_Key: players.you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514453
+    m_Key: settings.reset_confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514454
+    m_Key: howto.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514455
+    m_Key: howto.rules_tab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514456
+    m_Key: howto.viewers_tab
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2741550451676152061
+  references:
+    version: 2
+    RefIds:
+    - rid: 2741550451676152061
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1793475807545

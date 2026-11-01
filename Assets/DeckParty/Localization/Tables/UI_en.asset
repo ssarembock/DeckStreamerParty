@@ -1,0 +1,1486 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: ca96b39389ed7e341b0e7f8dbab94f2e, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1486045184
+    m_Localized: Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125568
+    m_Localized: Stream Log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125569
+    m_Localized: Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125570
+    m_Localized: 'Close  [R]'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125571
+    m_Localized: 'Resume  [Esc]'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125572
+    m_Localized: Standings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125573
+    m_Localized: '- or join a friend''s game -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125574
+    m_Localized: '- or join by address -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125575
+    m_Localized: Match Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125576
+    m_Localized: 'Gifted Subs: spend them to recruit new viewers.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125577
+    m_Localized: 'Cash: spend it to raise your Sub Cap.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125578
+    m_Localized: Spaces in use / your Sub Cap.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125579
+    m_Localized: 'Audience [R]'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125580
+    m_Localized: Night <b>{night}</b><size=70%>/{total}</size>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125581
+    m_Localized: '{cap}<size=70%> cap</size>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125582
+    m_Localized: Swatting Risk {risk}/{max}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125583
+    m_Localized: Diamonds {count}/{max}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125584
+    m_Localized: <b>Swatting Risk</b>\n{max} net Swatting Risk in one stream and
+      the SWAT team shows up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125585
+    m_Localized: '<b>Swatting Risk</b>\nAdded by viewers: {added}\nCancelled: -{cancelled}\nNet:
+      {net} (SWAT team at {max})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125586
+    m_Localized: 'From a rival''s raid: +{count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125587
+    m_Localized: 'Smoke Bomb: -{count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125588
+    m_Localized: '<b>Diamonds</b>\nThis stream: {now}\nIn your Audience: {owned}\nBest
+      ever in one stream: {best}\nGet {goal} in one stream to win!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125589
+    m_Localized: Empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125590
+    m_Localized: Live Chat  <size=75%><color=#B9AED6>{filled}/{cap} Sub Cap  -  {queue}
+      in the queue</color></size>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125591
+    m_Localized: '{count} Diamonds are here! End the stream now to win!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125592
+    m_Localized: One more Swatting Risk and the SWAT team shows up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125593
+    m_Localized: You've hit your Sub Cap. Use actions or end the stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125594
+    m_Localized: Add Viewer to Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125595
+    m_Localized: Let the next viewer in the queue join chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125596
+    m_Localized: '{count} {count:plural:viewer|viewers} in the queue'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125597
+    m_Localized: End the Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125598
+    m_Localized: End the Stream & WIN!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125599
+    m_Localized: Bank the Subs and Cash of everyone in chat as Gifted Subs and $.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125600
+    m_Localized: (-{count} fees)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125601
+    m_Localized: A viewer wants to join...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125602
+    m_Localized: 'Next up: {viewer}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125603
+    m_Localized: 'X-Ray: {viewers}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125604
+    m_Localized: 'SWAT chance: {percent}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125605
+    m_Localized: '{count} {count:plural:viewer|viewers} with Swatting Risk in the
+      queue'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125606
+    m_Localized: 'Over-cap chance: {percent}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125607
+    m_Localized: Approve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125608
+    m_Localized: Deny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125609
+    m_Localized: Starter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125610
+    m_Localized: Owned {count}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125611
+    m_Localized: Owned {count}/{max}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125612
+    m_Localized: Buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125613
+    m_Localized: Maxed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125614
+    m_Localized: Recruit Viewers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125615
+    m_Localized: Spend Gifted Subs to add viewers to your Audience for every future
+      stream. Hover a viewer for details.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125616
+    m_Localized: '{count} {count:plural:night|nights} left.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125617
+    m_Localized: Night {night} of {total} is over.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125618
+    m_Localized: '{player}''s night {night} of {total} is over.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125619
+    m_Localized: You have {subs} and {cash}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125620
+    m_Localized: '{player} has {subs} and {cash}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125621
+    m_Localized: This is {player}'s shop. You're watching.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125622
+    m_Localized: Wait for your turn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125623
+    m_Localized: You're marked ready.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125624
+    m_Localized: Sub Cap is maxed out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125625
+    m_Localized: Raise Sub Cap ({from} -> {to})  {cost}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125626
+    m_Localized: A bigger Sub Cap means more viewers at once (and more room for viewers
+      who bring friends).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125627
+    m_Localized: View Audience ({count})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125628
+    m_Localized: View {player}'s Audience ({count})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125629
+    m_Localized: '{player} is shopping'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125630
+    m_Localized: Watching {player}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125631
+    m_Localized: Their turn ends when they're done shopping.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125632
+    m_Localized: Click your own name in the Players list to go back to your stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125633
+    m_Localized: End Turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125634
+    m_Localized: Night {night} starts after your turn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125635
+    m_Localized: 'Next up: {player}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125636
+    m_Localized: Waiting for your turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125637
+    m_Localized: It's {player}'s turn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125638
+    m_Localized: Cancel Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125639
+    m_Localized: Ready for Night {night}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125640
+    m_Localized: Starting...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125641
+    m_Localized: 'Waiting for: {players}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1574125642
+    m_Localized: The next night starts when everyone is ready.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514176
+    m_Localized: Start Night {night}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514177
+    m_Localized: Great stream!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514178
+    m_Localized: Great stream! {diamonds} showed up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514179
+    m_Localized: Earned {subs} and {cash}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514180
+    m_Localized: Unpaid fees cost {count} Gifted Subs.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514181
+    m_Localized: SWATTED! The SWAT team showed up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514182
+    m_Localized: No payout tonight.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514183
+    m_Localized: '{viewer} got a Temporary Ban and sits out the next stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514184
+    m_Localized: Stream crashed! Sub Cap exceeded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514185
+    m_Localized: Too many viewers for your Sub Cap. No payout tonight.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514186
+    m_Localized: Planning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514187
+    m_Localized: '{player}: {text}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514188
+    m_Localized: 'Cancel  [Esc]'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514189
+    m_Localized: Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514190
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514191
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514192
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514193
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514194
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514195
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514196
+    m_Localized: On
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514197
+    m_Localized: Off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514198
+    m_Localized: '[Esc] cancels'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514199
+    m_Localized: Swatting Risk got too high and the SWAT team ended the stream. Nobody
+      gets paid tonight.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514200
+    m_Localized: Choose who gets a Temporary Ban. They'll sit out the next stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514201
+    m_Localized: '{player} must choose who gets a Temporary Ban.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514202
+    m_Localized: Your Audience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514203
+    m_Localized: '{player}''s Audience'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514204
+    m_Localized: '{count} {count:plural:viewer|viewers}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514205
+    m_Localized: 'Diamonds owned: {owned}    Best Diamonds in one stream: {best}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514206
+    m_Localized: 'In the queue: {queue}    In chat: {chat}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514207
+    m_Localized: '{viewer} is on a Temporary Ban tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514208
+    m_Localized: '{viewer} has a Temporary Ban for the next stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514209
+    m_Localized: 'Streamer: {streamer} ({power})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514210
+    m_Localized: Dimmed viewers can't join tonight. Hover for details.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514211
+    m_Localized: Players
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514212
+    m_Localized: Left the game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514213
+    m_Localized: ({viewers}/{cap}, {diamonds}, risk {risk})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514214
+    m_Localized: Streaming now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514215
+    m_Localized: Shopping now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514216
+    m_Localized: Done tonight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514217
+    m_Localized: Waiting for their turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514218
+    m_Localized: Streaming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514219
+    m_Localized: Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514220
+    m_Localized: Planning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514221
+    m_Localized: WON on night {night}!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514222
+    m_Localized: Season over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514223
+    m_Localized: Night {night}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514224
+    m_Localized: '{subs}  {cash}  Diamonds owned {owned}  best {best}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514225
+    m_Localized: VICTORY!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514226
+    m_Localized: SEASON OVER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514227
+    m_Localized: '{count} Diamonds streamed together on night {night} of {total}.
+      {set} cleared!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514228
+    m_Localized: 'Random streak: {streak}/{goal}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514229
+    m_Localized: Cherry earned!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514230
+    m_Localized: No {count}-Diamond stream this time. Your best was {best} at once.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514231
+    m_Localized: Play Again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514232
+    m_Localized: Main Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514233
+    m_Localized: YOU WIN!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514234
+    m_Localized: '{player} WINS!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514235
+    m_Localized: A {count}-Diamond stream on night {night}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514236
+    m_Localized: 'Nobody reached {count} Diamonds. Best Diamond count: {best}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514237
+    m_Localized: '{count}-DIAMOND STREAM!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514238
+    m_Localized: YOUR SEASON IS OVER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514239
+    m_Localized: Waiting for the other players to finish...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514240
+    m_Localized: 'Great streams: {great}    Swatted: {swatted}    Crashed: {crashed}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514241
+    m_Localized: 'Gifted Subs earned: {subs}    Cash earned: {cash}    Audience:
+      {viewers} viewers ({diamonds} Diamonds)    Sub Cap: {cap}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514242
+    m_Localized: 'Streamer: {streamer}    Power used: {uses} {uses:plural:time|times}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514243
+    m_Localized: Back to Lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514244
+    m_Localized: Close Lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514245
+    m_Localized: Leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514246
+    m_Localized: Keep Watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514247
+    m_Localized: Waiting for the host to start another round...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514248
+    m_Localized: The scoreboard updates live.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514249
+    m_Localized: Paused
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514250
+    m_Localized: Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514251
+    m_Localized: (the game keeps running)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514252
+    m_Localized: Stream Setup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514253
+    m_Localized: Leave Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514254
+    m_Localized: Save & Quit to Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514255
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514256
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514257
+    m_Localized: Quick Rules
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514258
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514259
+    m_Localized: Display & Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514260
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514261
+    m_Localized: Window Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514262
+    m_Localized: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514263
+    m_Localized: Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514264
+    m_Localized: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514265
+    m_Localized: Apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514266
+    m_Localized: Keep these settings? ({seconds})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514267
+    m_Localized: Display settings reverted.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514268
+    m_Localized: Resolution changes only apply in a build (the editor's Game view
+      controls the size).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514269
+    m_Localized: Screen Shake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514270
+    m_Localized: Reduce Flashing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514271
+    m_Localized: Fake Chat Feed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514272
+    m_Localized: Player Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514273
+    m_Localized: Master Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514274
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514275
+    m_Localized: Sound Effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514276
+    m_Localized: Fast Animations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514277
+    m_Localized: Reset Progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514278
+    m_Localized: Reset progress?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514279
+    m_Localized: This clears your cleared character sets and Random streak. Your
+      settings are kept.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514280
+    m_Localized: Progress reset.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514281
+    m_Localized: F11 or Alt+Enter toggles fullscreen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514282
+    m_Localized: CONNECTING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514283
+    m_Localized: Waiting for the host...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514284
+    m_Localized: Welcome back! Continuing {set} on night {night}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514285
+    m_Localized: Welcome to {set}! Get {count} Diamonds into one stream within {nights}
+      nights.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514286
+    m_Localized: 'You''re streaming as {streamer}. Power: {power}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514287
+    m_Localized: 'Multiplayer season: {set}, {nights} nights, {mode}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514288
+    m_Localized: NIGHT {night}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514289
+    m_Localized: '{set}  -  {count} {count:plural:night|nights} left after tonight'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514290
+    m_Localized: '{count} {count:plural:night|nights} left after tonight'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514291
+    m_Localized: The final night!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514292
+    m_Localized: '{player}''s stream'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514293
+    m_Localized: '{player}''s stream is still loading.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514294
+    m_Localized: Night {night} of {total}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514295
+    m_Localized: YOUR TURN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514296
+    m_Localized: everyone is watching!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514297
+    m_Localized: '{player}''S TURN'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514298
+    m_Localized: watching live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514299
+    m_Localized: Wait for your turn. It's {player}'s turn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514300
+    m_Localized: This is {player}'s stream. You're watching.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514301
+    m_Localized: End an empty stream?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514302
+    m_Localized: Nobody is in chat, so you'll earn nothing tonight.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514303
+    m_Localized: End It
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514304
+    m_Localized: Keep Streaming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514305
+    m_Localized: Leave the game?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514306
+    m_Localized: 'You''re the host: leaving ends the season for everyone.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514307
+    m_Localized: You won't be able to rejoin this season.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514308
+    m_Localized: THIS IS FINE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514309
+    m_Localized: The SWAT team was called off. Swatting Risk cleared.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514310
+    m_Localized: The SWAT team is here. No payout tonight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514311
+    m_Localized: The SWAT team is at {player}'s stream. No payout tonight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514312
+    m_Localized: '{filled} spaces filled with a Sub Cap of {cap}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514313
+    m_Localized: You couldn't pay {cash} $ in fees and lost {penalty} Gifted Subs.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514314
+    m_Localized: '{player} couldn''t pay {cash} $ in fees and lost {penalty} Gifted
+      Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514315
+    m_Localized: This stream starts with +{count} Swatting Risk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514316
+    m_Localized: '{count} Diamonds in one stream!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514317
+    m_Localized: No {count}-Diamond stream this time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514318
+    m_Localized: '{player}''s season is over'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514319
+    m_Localized: Banked {subs} and {cash}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514320
+    m_Localized: <b>Your turn!</b>  Everyone is watching your stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514321
+    m_Localized: <b>Your turn!</b>  You're looking at {player}'s stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514322
+    m_Localized: Back to My Turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514323
+    m_Localized: <b>{player}'s turn</b>  Watching live. You can't act until your
+      turn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514324
+    m_Localized: My Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514325
+    m_Localized: Your stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514326
+    m_Localized: '{player}''s stream'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514327
+    m_Localized: '{whose}  -  it''s {player}''s turn.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514328
+    m_Localized: Watch {player}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514329
+    m_Localized: <b>Your stream</b>  <color=#B9AED6>Click a player on the right to
+      watch their stream live.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514330
+    m_Localized: <b>Watching {player}'s stream</b>  live and read-only.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514331
+    m_Localized: Back to My Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514332
+    m_Localized: '{count} watching'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514333
+    m_Localized: <b>Happy:</b> +3 Subs.   <b>Sad:</b> +3 $.   <b>Angry:</b> +6 Subs
+      and +1 Swatting Risk.\nLasts until the stream ends.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514334
+    m_Localized: Stake {subs} Gifted Subs or {cash} $ from your bank. If the stream
+      succeeds you get {mult}x back; if it's swatted or crashes, it's gone.\nYou
+      have {have_subs} Gifted Subs and {have_cash} $.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514335
+    m_Localized: <b>Reroll:</b> {viewer} goes back to the queue and a new random
+      viewer takes their place.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514336
+    m_Localized: <b>Reroll:</b> nothing to reroll right now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514337
+    m_Localized: <b>Peek:</b> look at the next viewer and decide whether to approve
+      them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514338
+    m_Localized: 'You''ll pick two viewers: the first earns nothing tonight, the
+      second doubles their printed Subs or $.\nWhat should the second viewer double?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514339
+    m_Localized: You'll pick one viewer for tonight.\n<b>Subs to $:</b> every 2 Subs
+      become 1 $.   <b>$ to Subs:</b> every 1 $ becomes 2 Subs.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514340
+    m_Localized: Choose a viewer from the queue to bring in.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514341
+    m_Localized: These are the next viewers in the queue. Pick one to deny for the
+      night.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514342
+    m_Localized: Who should come in next?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514343
+    m_Localized: '{viewer}: New Attraction'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514344
+    m_Localized: Pick someone to swap in, then choose who they replace. Skip to keep
+      everyone.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514345
+    m_Localized: 'Skip  [Esc]'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514346
+    m_Localized: 'New Attraction: choose who {viewer} replaces. They''ll sit out
+      tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514347
+    m_Localized: Confirm ({count}/{max})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514348
+    m_Localized: '{actor}: choose a viewer to kick from chat (it can be {self} too).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514349
+    m_Localized: '{actor}: choose a viewer to send back to the queue.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514350
+    m_Localized: '{actor}: choose a viewer to play off.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514351
+    m_Localized: '{actor}: choose a viewer to kick. You get half their cost as Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514352
+    m_Localized: '{actor}: choose a viewer to compare printed Subs with.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514353
+    m_Localized: '{actor}: choose a viewer to get +1 Swatting Risk and +3 Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514354
+    m_Localized: '{actor}: choose a viewer to strike.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514355
+    m_Localized: '{actor}: choose a non-Diamond viewer to Rickroll.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514356
+    m_Localized: '{actor}: choose a viewer to convert ({option}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514357
+    m_Localized: '{actor}: choose a viewer to make immune tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514358
+    m_Localized: '{actor}: choose the first viewer to move.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514359
+    m_Localized: '{actor}: choose who {first} swaps places with.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514360
+    m_Localized: '{actor}: choose the first dancer.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514361
+    m_Localized: '{actor}: choose who {first} swaps printed Subs with.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514362
+    m_Localized: '{actor}: choose the viewer who earns nothing tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514363
+    m_Localized: '{actor}: choose who doubles their printed Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514364
+    m_Localized: '{actor}: choose who doubles their printed $.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514365
+    m_Localized: '{actor}: choose up to 3 viewers to replace with random viewers
+      from the queue, then Confirm.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514366
+    m_Localized: '{actor}: choose a target.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514367
+    m_Localized: 'Who scored:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514368
+    m_Localized: Nobody was in chat when the stream ended.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514369
+    m_Localized: LIVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514370
+    m_Localized: '{count} watching'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514371
+    m_Localized: AUDIENCE CAPTURE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514372
+    m_Localized: Go live, grow your Audience and get {count} Diamonds into one stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514373
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514374
+    m_Localized: '{set} - Night {night}/{total}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514375
+    m_Localized: 'Character sets cleared: {cleared}     Random streak: {streak} (best
+      {best})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514376
+    m_Localized: Single Player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514377
+    m_Localized: Multiplayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514378
+    m_Localized: How to Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514379
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514380
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514381
+    m_Localized: Heads up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514382
+    m_Localized: Single Player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514383
+    m_Localized: Pick a character set and a stream setup, then start your season.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514384
+    m_Localized: Character Sets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514385
+    m_Localized: Go Live!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514386
+    m_Localized: streak {count}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514387
+    m_Localized: Cleared!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514388
+    m_Localized: Not cleared yet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514389
+    m_Localized: 'Win streak: {streak}/{goal} for the Cherry (best {best})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514390
+    m_Localized: Sandbox - progress isn't recorded.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514391
+    m_Localized: '{count} {count:plural:night|nights}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514392
+    m_Localized: 'Character set: <color=#FFC94A>11 random viewers + 3 random Diamonds</color>,
+      rolled when the season starts.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514393
+    m_Localized: Character set ({count} viewers). Hover a viewer for details.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514394
+    m_Localized: (upgrades as your Sub Cap grows)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514395
+    m_Localized: Start a new season?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514396
+    m_Localized: You have a season in progress. Starting a new one will replace that
+      save.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514397
+    m_Localized: Start New
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514398
+    m_Localized: Multiplayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514399
+    m_Localized: Up to 6 players. Same character set, separate streams. First 4-Diamond
+      stream wins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514400
+    m_Localized: Your Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514401
+    m_Localized: Online (Join Code)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514402
+    m_Localized: Host Online Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514403
+    m_Localized: Join
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514404
+    m_Localized: Join code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514405
+    m_Localized: Direct IP / LAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514406
+    m_Localized: Host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514407
+    m_Localized: Join by IP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514408
+    m_Localized: Host address
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514409
+    m_Localized: Port
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514410
+    m_Localized: Play over the internet with a join code (Unity Relay). No port forwarding
+      needed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514411
+    m_Localized: 'Same Wi-Fi / LAN, or a forwarded port. Your address: {address}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514412
+    m_Localized: Creating an online game...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514413
+    m_Localized: Joining {code}...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514414
+    m_Localized: Connected to Relay. Waiting for the host...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514415
+    m_Localized: Connecting to {address}...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514416
+    m_Localized: Lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514417
+    m_Localized: Your Lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514418
+    m_Localized: Share this join code with your friends.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514419
+    m_Localized: Join code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514420
+    m_Localized: Friends join with this address (Direct IP). Port must be reachable.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514421
+    m_Localized: Host address
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514422
+    m_Localized: Copy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514423
+    m_Localized: Host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514424
+    m_Localized: Not ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514425
+    m_Localized: Players ({count}/{max})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514426
+    m_Localized: Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514427
+    m_Localized: Season length
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514428
+    m_Localized: Turn Timer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514429
+    m_Localized: Seconds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514430
+    m_Localized: Your stream setup (only you see it)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514431
+    m_Localized: 'Turn timer: {timer}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514432
+    m_Localized: 'Streamer: {streamer}  (change)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514433
+    m_Localized: Ready!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514434
+    m_Localized: Not Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514435
+    m_Localized: Start Season
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514436
+    m_Localized: Leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514437
+    m_Localized: You can start solo, or wait for friends to join.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514438
+    m_Localized: Everyone's ready!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514439
+    m_Localized: Waiting for the host to start...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514440
+    m_Localized: Press Ready when you're set.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514441
+    m_Localized: each night, players stream one after another while everyone else
+      watches live. The season ends after the first night someone gets {count} Diamonds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514442
+    m_Localized: play at your own pace. The first {count}-Diamond stream wins instantly.
+      Click a player to watch them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514443
+    m_Localized: everyone plays the same night at once. The first night someone gets
+      {count} Diamonds ends the season. Click a player to watch them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514444
+    m_Localized: Copied {code} to the clipboard.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514445
+    m_Localized: Close the lobby?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514446
+    m_Localized: Leave the lobby?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514447
+    m_Localized: Everyone in the lobby will be disconnected.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514448
+    m_Localized: You can rejoin with the same code while the lobby is open.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514449
+    m_Localized: Stay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514450
+    m_Localized: Say something...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514451
+    m_Localized: Send
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514452
+    m_Localized: (you)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514453
+    m_Localized: Reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514454
+    m_Localized: How to Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514455
+    m_Localized: Rules
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1582514456
+    m_Localized: All 59 Viewers
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -10,8 +10,10 @@ namespace DeckParty.UI
         [SerializeField] internal Slider masterSlider;
         [SerializeField] internal Slider musicSlider;
         [SerializeField] internal Slider sfxSlider;
+        [Tooltip("Legacy: replaced by the Display block (mode and resolution).")]
         [SerializeField] internal ToggleSwitch fullscreenToggle;
         [SerializeField] internal ToggleSwitch fastAnimationsToggle;
+        [SerializeField] internal DisplaySettingsView display;
         [SerializeField] internal Button resetProgressButton;
         [SerializeField] internal Button backButton;
 
@@ -29,7 +31,7 @@ namespace DeckParty.UI
                 AppSettings.SfxVolume = v;
                 AudioService.Play(Sfx.Click);
             });
-            fullscreenToggle.Changed += v => AppSettings.Fullscreen = v;
+            if (fullscreenToggle != null) fullscreenToggle.Changed += v => AppSettings.Fullscreen = v;
             fastAnimationsToggle.Changed += v => AppSettings.FastAnimations = v;
             resetProgressButton.onClick.AddListener(ResetProgress);
             backButton.onClick.AddListener(() =>
@@ -45,18 +47,19 @@ namespace DeckParty.UI
             masterSlider.SetValueWithoutNotify(AppSettings.MasterVolume);
             musicSlider.SetValueWithoutNotify(AppSettings.MusicVolume);
             sfxSlider.SetValueWithoutNotify(AppSettings.SfxVolume);
-            fullscreenToggle.Value = AppSettings.Fullscreen;
+            if (fullscreenToggle != null) fullscreenToggle.Value = AppSettings.Fullscreen;
             fastAnimationsToggle.Value = AppSettings.FastAnimations;
+            if (display != null) display.Refresh();
         }
 
         static void ResetProgress()
         {
-            ModalDialog.Show("Reset progress?", "This clears cleared scenarios, your Random streak and your saved season.", () =>
+            ModalDialog.Show(Loc.Get("settings.reset_title"), Loc.Get("settings.reset_body"), () =>
             {
                 ProgressStore.ResetAll();
                 SaveSystem.Delete();
-                ToastView.Show("Progress reset.", ToastKind.Success);
-            }, "Reset", "Cancel");
+                ToastView.Show(Loc.Get("settings.reset_done"), ToastKind.Success);
+            }, Loc.Get("settings.reset_confirm"));
         }
     }
 }

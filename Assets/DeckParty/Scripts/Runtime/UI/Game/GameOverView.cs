@@ -41,24 +41,25 @@ namespace DeckParty.UI
         {
             bool won = s.Phase == GamePhase.Victory;
             var scenario = ScenarioCatalog.Get(s.ScenarioId);
-            titleLabel.text = won ? "VICTORY!" : "SEASON OVER";
+            titleLabel.text = Loc.Get(won ? "over.victory" : "over.season_over");
             titleLabel.color = won ? UIPalette.Gold : UIPalette.TextDim;
 
             if (won)
             {
-                subtitleLabel.text = $"{GameRules.DiamondsToWin} {Terms.Diamonds} partied together on night {s.WinNight} of {s.TotalNights}. {scenario.Name} cleared!";
+                subtitleLabel.text = Loc.Get("over.won_detail", ("count", GameRules.DiamondsToWin), ("night", s.WinNight), ("total", s.TotalNights), ("set", ContentText.ScenarioName(s.ScenarioId)));
                 if (scenario.IsRandom)
-                    subtitleLabel.text += $"\nRandom streak: {ProgressStore.RandomStreak}/{ProgressStore.CherryStreak}" + (ProgressStore.HasCherry ? "  <color=#FF4F8B>Cherry earned!</color>" : string.Empty);
+                    subtitleLabel.text += "\n" + Loc.Get("over.random_streak", "streak", ProgressStore.RandomStreak, "goal", ProgressStore.CherryStreak) +
+                                          (ProgressStore.HasCherry ? $"  <color=#FF4F8B>{Loc.Get("over.cherry")}</color>" : string.Empty);
             }
             else
             {
-                subtitleLabel.text = $"No {GameRules.DiamondsToWin}-{Terms.Diamond} party this time. Your best was {Terms.DiamondCount(s.BestDiamonds)} at once.";
+                subtitleLabel.text = Loc.Get("over.lost_detail", "count", GameRules.DiamondsToWin, "best", Terms.DiamondCount(s.BestDiamonds));
             }
 
             statsLabel.text = Stats(s);
             rankingGroup.SetActive(false);
             waitingLabel.text = string.Empty;
-            SetButtons("Play Again", playAgain, "Main Menu", mainMenu);
+            SetButtons(Loc.Get("over.play_again"), playAgain, Loc.Get("over.main_menu"), mainMenu);
             Open();
         }
 
@@ -76,18 +77,18 @@ namespace DeckParty.UI
             {
                 var winner = players[0];
                 bool localWon = winner.ClientId == net.LocalClientId;
-                titleLabel.text = localWon ? "YOU WIN!" : $"{winner.DisplayName} WINS!";
+                titleLabel.text = localWon ? Loc.Get("over.you_win") : Loc.Get("over.player_wins", "player", winner.DisplayName);
                 titleLabel.color = localWon ? UIPalette.Gold : UIPalette.PlayerColor(winner.ColorIndex);
                 subtitleLabel.text = winner.Won
-                    ? $"A {GameRules.DiamondsToWin}-{Terms.Diamond} party on night {winner.WinNight}."
-                    : $"Nobody reached {GameRules.DiamondsToWin} {Terms.Diamonds}. Best {Terms.Diamond} count: {winner.BestDiamonds}.";
+                    ? Loc.Get("over.mp_won_detail", "count", GameRules.DiamondsToWin, "night", winner.WinNight)
+                    : Loc.Get("over.mp_nobody", "count", GameRules.DiamondsToWin, "best", winner.BestDiamonds);
             }
             else
             {
                 bool won = local != null && local.Phase == GamePhase.Victory;
-                titleLabel.text = won ? $"{GameRules.DiamondsToWin}-{Terms.Diamond.ToUpperInvariant()} PARTY!" : "YOUR SEASON IS OVER";
+                titleLabel.text = won ? Loc.Get("over.diamond_stream", "count", GameRules.DiamondsToWin) : Loc.Get("over.your_season_over");
                 titleLabel.color = won ? UIPalette.Gold : UIPalette.TextDim;
-                subtitleLabel.text = "Waiting for the other players to finish...";
+                subtitleLabel.text = Loc.Get("over.waiting_others");
             }
 
             statsLabel.text = local != null ? Stats(local) : string.Empty;
@@ -111,8 +112,12 @@ namespace DeckParty.UI
 
         static string Stats(PlayerState s)
         {
-            return $"Successful parties: {s.SuccessfulParties}    Swatted: {s.Raids}    {Terms.SubCap} exceeded: {s.FireMarshals}\n" +
-                   $"{Terms.GiftedSubs} earned: {s.TotalPopEarned}    Cash earned: {s.TotalCashEarned}    {Terms.Squad}: {s.PermanentCount} guests ({s.DiamondsOwned()} {Terms.Diamonds})    {Terms.SubCap}: {s.Capacity}";
+            string text = Loc.Get("over.stats1", ("great", s.SuccessfulParties), ("swatted", s.Raids), ("crashed", s.FireMarshals)) + "\n" +
+                          Loc.Get("over.stats2", ("subs", s.TotalPopEarned), ("cash", s.TotalCashEarned), ("viewers", s.PermanentCount),
+                              ("diamonds", s.DiamondsOwned()), ("cap", s.Capacity));
+            if (s.Streamer != StreamerType.None)
+                text += "\n" + Loc.Get("over.stats_streamer", "streamer", StreamerVisuals.NameTag(s.Streamer), "uses", s.PowerUses);
+            return text;
         }
 
         void SetButtons(string primaryText, Action primary, string secondaryText, Action secondary)

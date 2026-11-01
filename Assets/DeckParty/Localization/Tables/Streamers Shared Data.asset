@@ -1,0 +1,468 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Streamers Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Streamers
+  m_TableCollectionNameGuidString: 4a63c487877c3a4418d58efd9ecfa0bd
+  m_Entries:
+  - m_Id: 429080576
+    m_Key: power.raided_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 491995136
+    m_Key: power.taxed_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189440
+    m_Key: power.hit_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189441
+    m_Key: streamer.None.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189442
+    m_Key: streamer.None.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189443
+    m_Key: streamer.None.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189444
+    m_Key: streamer.None.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189445
+    m_Key: streamer.None.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189446
+    m_Key: streamer.Random.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189447
+    m_Key: streamer.Random.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189448
+    m_Key: streamer.Random.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189449
+    m_Key: streamer.Fate.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189450
+    m_Key: streamer.Fate.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189451
+    m_Key: streamer.Fate.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189452
+    m_Key: streamer.Fate.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189453
+    m_Key: streamer.Fate.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189454
+    m_Key: streamer.BroJogan.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189455
+    m_Key: streamer.BroJogan.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189456
+    m_Key: streamer.BroJogan.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189457
+    m_Key: streamer.BroJogan.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189458
+    m_Key: streamer.BroJogan.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189459
+    m_Key: streamer.Shinobi.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189460
+    m_Key: streamer.Shinobi.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189461
+    m_Key: streamer.Shinobi.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189462
+    m_Key: streamer.Shinobi.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189463
+    m_Key: streamer.Shinobi.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189464
+    m_Key: streamer.IRunFast.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189465
+    m_Key: streamer.IRunFast.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189466
+    m_Key: streamer.IRunFast.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189467
+    m_Key: streamer.IRunFast.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189468
+    m_Key: streamer.IRunFast.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189469
+    m_Key: streamer.MrShark.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189470
+    m_Key: streamer.MrShark.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189471
+    m_Key: streamer.MrShark.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189472
+    m_Key: streamer.MrShark.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189473
+    m_Key: streamer.MrShark.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189474
+    m_Key: streamer.EthicalFboi.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189475
+    m_Key: streamer.EthicalFboi.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189476
+    m_Key: streamer.EthicalFboi.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189477
+    m_Key: streamer.EthicalFboi.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189478
+    m_Key: streamer.EthicalFboi.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189479
+    m_Key: streamer.SoftHardBodyMan.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189480
+    m_Key: streamer.SoftHardBodyMan.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189481
+    m_Key: streamer.SoftHardBodyMan.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189482
+    m_Key: streamer.SoftHardBodyMan.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189483
+    m_Key: streamer.SoftHardBodyMan.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189484
+    m_Key: streamer.StrategicAbomination.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189485
+    m_Key: streamer.StrategicAbomination.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189486
+    m_Key: streamer.StrategicAbomination.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189487
+    m_Key: streamer.StrategicAbomination.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189488
+    m_Key: streamer.StrategicAbomination.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189489
+    m_Key: streamer.Palmane.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189490
+    m_Key: streamer.Palmane.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189491
+    m_Key: streamer.Palmane.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189492
+    m_Key: streamer.Palmane.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189493
+    m_Key: streamer.Palmane.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189494
+    m_Key: streamer.ManimMakethMan.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189495
+    m_Key: streamer.ManimMakethMan.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189496
+    m_Key: streamer.ManimMakethMan.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189497
+    m_Key: streamer.ManimMakethMan.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189498
+    m_Key: streamer.ManimMakethMan.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189499
+    m_Key: streamer.RudeRadiologist.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189500
+    m_Key: streamer.RudeRadiologist.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189501
+    m_Key: streamer.RudeRadiologist.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189502
+    m_Key: streamer.RudeRadiologist.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189503
+    m_Key: streamer.RudeRadiologist.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189504
+    m_Key: streamer.kind.passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189505
+    m_Key: streamer.kind.instant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189506
+    m_Key: streamer.kind.next_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189507
+    m_Key: streamer.kind.rival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189508
+    m_Key: streamer.cost_growing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189509
+    m_Key: streamer.cost_flat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189510
+    m_Key: streamer.cooldown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189511
+    m_Key: streamer.once_per_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189512
+    m_Key: select.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189513
+    m_Key: select.subtitle_single
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189514
+    m_Key: select.subtitle_multi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189515
+    m_Key: select.vs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189516
+    m_Key: select.opponent_algorithm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189517
+    m_Key: select.opponent_algorithm_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189518
+    m_Key: select.opponent_unknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189519
+    m_Key: select.opponent_unknown_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189520
+    m_Key: select.confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189521
+    m_Key: select.back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189522
+    m_Key: select.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189523
+    m_Key: select.announce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189524
+    m_Key: select.rival_warning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189525
+    m_Key: select.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189526
+    m_Key: select.p1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189527
+    m_Key: select.timer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189528
+    m_Key: select.stat.rizz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189529
+    m_Key: select.stat.drama
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189530
+    m_Key: select.stat.aura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189531
+    m_Key: select.stat.copium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189532
+    m_Key: power.panel_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189533
+    m_Key: power.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189534
+    m_Key: power.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189535
+    m_Key: power.cooldown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189536
+    m_Key: power.armed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189537
+    m_Key: power.passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189538
+    m_Key: power.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189539
+    m_Key: power.pick_rival_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189540
+    m_Key: power.pick_rival_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189541
+    m_Key: power.rival_option
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189542
+    m_Key: power.single_player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189543
+    m_Key: power.used_toast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189544
+    m_Key: power.xray_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189545
+    m_Key: anxious.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189546
+    m_Key: anxious.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189547
+    m_Key: anxious.sub_none
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2741550451676152064
+  references:
+    version: 2
+    RefIds:
+    - rid: 2741550451676152064
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1793475808162

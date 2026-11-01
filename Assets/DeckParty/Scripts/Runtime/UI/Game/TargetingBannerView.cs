@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
-    /// <summary>"Choose a guest" prompt shown while an action is picking its targets.</summary>
+    /// <summary>"Choose a viewer" prompt shown while an action is picking its targets.</summary>
     public sealed class TargetingBannerView : MonoBehaviour
     {
         [SerializeField] internal GameObject root;
@@ -42,7 +42,7 @@ namespace DeckParty.UI
             var text = go.GetComponentInChildren<TMP_Text>(true);
             if (text != null)
             {
-                text.text = "Confirm";
+                text.text = Loc.Get("common.confirm");
                 text.color = UIPalette.Night;
             }
             return go.GetComponent<Button>();
@@ -50,7 +50,7 @@ namespace DeckParty.UI
 
         public void Show(string text)
         {
-            label.text = text + "  <color=#B9AED6>[Esc] cancels</color>";
+            label.text = text + $"  <color=#B9AED6>{Loc.Get("target.esc_cancels")}</color>";
             if (!root.activeSelf)
             {
                 root.SetActive(true);
@@ -59,12 +59,12 @@ namespace DeckParty.UI
         }
 
         /// <summary>Shows the Confirm button for actions that take a variable number of picks.</summary>
-        public void SetConfirm(bool visible, bool interactable = true, string text = "Confirm")
+        public void SetConfirm(bool visible, bool interactable = true, string text = null)
         {
             if (confirmButton == null) return;
             confirmButton.gameObject.SetActive(visible);
             confirmButton.interactable = interactable;
-            if (m_ConfirmLabel != null) m_ConfirmLabel.text = text;
+            if (m_ConfirmLabel != null) m_ConfirmLabel.text = text ?? Loc.Get("common.confirm");
             var rect = (RectTransform)confirmButton.transform;
             label.rectTransform.offsetMax = visible ? new Vector2(m_LabelOffsetMax.x - rect.sizeDelta.x - 12f, m_LabelOffsetMax.y) : m_LabelOffsetMax;
         }

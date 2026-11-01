@@ -75,6 +75,12 @@ namespace DeckParty.UI
 
         public void PoliceLights(float seconds = 2.6f) => m_PoliceUntil = Time.unscaledTime + seconds;
 
+        float m_Risk;
+        float m_DisplayRisk;
+
+        /// <summary>Reactive background (FX Library > reactiveBackground): 0 calm, 1 one Swatting Risk from the SWAT team (lights drift red and blue).</summary>
+        public void SetRisk(float risk) => m_Risk = FxLibrary.Current.reactiveBackground ? Mathf.Clamp01(risk) : 0f;
+
         void Rebuild()
         {
             Clear(decorRoot);
@@ -319,17 +325,21 @@ namespace DeckParty.UI
         {
             if (m_Venue == null) return;
             m_DisplayEnergy = Mathf.MoveTowards(m_DisplayEnergy, m_Energy, Time.unscaledDeltaTime * 0.5f);
+            m_DisplayRisk = Mathf.MoveTowards(m_DisplayRisk, m_Risk, Time.unscaledDeltaTime * 0.8f);
             float time = Time.unscaledTime;
             bool police = time < m_PoliceUntil;
             bool redPhase = Mathf.Repeat(time * 4f, 2f) < 1f;
             var policeColor = redPhase ? new Color(1f, 0.15f, 0.2f) : new Color(0.2f, 0.4f, 1f);
+            // Rising Swatting Risk slowly bleeds the siren colours into the scene's own lights.
+            var riskColor = Mathf.Repeat(time * 0.8f, 2f) < 1f ? new Color(1f, 0.2f, 0.25f) : new Color(0.25f, 0.4f, 1f);
+            float riskBlend = AppSettings.ReduceFlashing ? m_DisplayRisk * 0.4f : m_DisplayRisk * 0.7f;
 
             for (int i = 0; i < m_Bulbs.Count; i++)
             {
                 var bulb = m_Bulbs[i];
                 if (bulb.Image == null) continue;
                 float pulse = 0.55f + 0.45f * Mathf.Sin(time * (1.5f + m_DisplayEnergy * 3f) + bulb.Phase);
-                var c = police ? policeColor.WithAlpha(bulb.Color.a) : bulb.Color;
+                var c = police ? policeColor.WithAlpha(bulb.Color.a) : Color.Lerp(bulb.Color, riskColor, riskBlend);
                 c.a = bulb.Color.a * Mathf.Lerp(0.5f, 1f, pulse);
                 bulb.Image.color = c;
             }
@@ -342,11 +352,12 @@ namespace DeckParty.UI
                 var offset = new Vector2(Mathf.Sin(t) * 0.12f, Mathf.Cos(t * 0.8f) * 0.08f);
                 spot.Rect.anchorMin = spot.Rect.anchorMax = spot.Anchor + offset;
                 float alpha = Mathf.Lerp(0.04f, 0.2f, m_DisplayEnergy);
-                spot.Image.color = (police ? policeColor : spot.Color).WithAlpha(police ? 0.28f : alpha);
+                spot.Image.color = (police ? policeColor : Color.Lerp(spot.Color, riskColor, riskBlend)).WithAlpha(police ? 0.28f : Mathf.Lerp(alpha, 0.24f, m_DisplayRisk));
             }
 
             if (tint != null)
-                tint.color = police ? policeColor.WithAlpha(0.12f + 0.08f * Mathf.Sin(time * 25f)) : new Color(0, 0, 0, 0);
+                tint.color = police ? policeColor.WithAlpha(0.12f + 0.08f * Mathf.Sin(time * 25f))
+                    : m_DisplayRisk > 0.01f ? riskColor.WithAlpha(0.05f * m_DisplayRisk) : new Color(0, 0, 0, 0);
         }
     }
 }

@@ -10,8 +10,9 @@ namespace DeckParty.Core
     /// </summary>
     public static class StateSerializer
     {
-        /// <summary>v2: meme roster, per-guest party modifiers, ordered waiting line.</summary>
-        const byte FormatVersion = 2;
+        /// <summary>v2: meme roster, per-guest party modifiers, ordered waiting line. v3: streamers and their powers.</summary>
+        const byte FormatVersion = 3;
+        const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
         public static byte[] Serialize(PlayerState s, IReadOnlyList<GameEvent> events = null)
@@ -71,6 +72,18 @@ namespace DeckParty.Core
                 w.Write(s.WinNight);
                 w.Write(s.RngState);
 
+                w.Write((byte)s.Streamer);
+                w.Write((short)s.PowerUses);
+                w.Write((byte)s.PowerCooldown);
+                w.Write(s.PowerArmed);
+                w.Write((byte)s.IncomingHeat);
+                w.Write((short)s.Streak);
+                w.Write((byte)s.PartyHeat);
+                w.Write((byte)s.PartyShield);
+                w.Write((byte)s.PartyViewerBonus);
+                w.Write((byte)s.PartyFreeActions);
+                w.Write(s.PartyXRay);
+
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
                 for (int i = 0; i < eventCount; i++)
@@ -97,8 +110,8 @@ namespace DeckParty.Core
             using (var r = new BinaryReader(stream))
             {
                 byte version = r.ReadByte();
-                if (version != FormatVersion)
-                    throw new InvalidDataException($"Unsupported state format v{version} (expected v{FormatVersion}).");
+                if (version < OldestReadableVersion || version > FormatVersion)
+                    throw new InvalidDataException($"Unsupported state format v{version} (expected v{OldestReadableVersion}-v{FormatVersion}).");
 
                 var s = new PlayerState();
                 s.ScenarioId = r.ReadInt32();
@@ -150,6 +163,23 @@ namespace DeckParty.Core
                 s.FireMarshals = r.ReadInt32();
                 s.WinNight = r.ReadInt32();
                 s.RngState = r.ReadUInt64();
+
+                // v2 saves predate streamers: they load as "no streamer".
+                if (version >= 3)
+                {
+                    var streamer = (StreamerType)r.ReadByte();
+                    s.Streamer = StreamerCatalog.IsValid(streamer) ? streamer : StreamerType.None;
+                    s.PowerUses = r.ReadInt16();
+                    s.PowerCooldown = r.ReadByte();
+                    s.PowerArmed = r.ReadBoolean();
+                    s.IncomingHeat = r.ReadByte();
+                    s.Streak = r.ReadInt16();
+                    s.PartyHeat = r.ReadByte();
+                    s.PartyShield = r.ReadByte();
+                    s.PartyViewerBonus = r.ReadByte();
+                    s.PartyFreeActions = r.ReadByte();
+                    s.PartyXRay = r.ReadBoolean();
+                }
 
                 int eventCount = ReadCount(r);
                 for (int i = 0; i < eventCount; i++)

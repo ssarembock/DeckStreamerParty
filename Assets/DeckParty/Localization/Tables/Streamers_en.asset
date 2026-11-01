@@ -1,0 +1,469 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Streamers_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 4a63c487877c3a4418d58efd9ecfa0bd, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 429080576
+    m_Localized: RAIDED!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 491995136
+    m_Localized: TAXED!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189440
+    m_Localized: '{player} used {power} on you!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189441
+    m_Localized: No Streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189442
+    m_Localized: Classic rules
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189443
+    m_Localized: No power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189444
+    m_Localized: Play the classic game without a streamer power. Your power slot
+      stays empty.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189445
+    m_Localized: Just here for the vibes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189446
+    m_Localized: Random
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189447
+    m_Localized: Let chat decide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189448
+    m_Localized: A random streamer is picked when you go live.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189449
+    m_Localized: Fate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189450
+    m_Localized: The Debate Lord
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189451
+    m_Localized: Raid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189452
+    m_Localized: 'Pick a rival: their next stream starts with +1 Swatting Risk.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189453
+    m_Localized: Debate me, bro.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189454
+    m_Localized: Bro Jogan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189455
+    m_Localized: The Three-Hour Podcaster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189456
+    m_Localized: Three-Hour Episode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189457
+    m_Localized: 'Passive: start with +1 Sub Cap. Sub Cap upgrades cost 1 $ more.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189458
+    m_Localized: Jamie, pull that up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189459
+    m_Localized: Shinobi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189460
+    m_Localized: The Headband Legend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189461
+    m_Localized: Smoke Bomb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189462
+    m_Localized: Your next stream ignores 1 Swatting Risk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189463
+    m_Localized: You didn't see that. Nobody did.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189464
+    m_Localized: IRunFast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189465
+    m_Localized: The Human Siren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189466
+    m_Localized: Bark at Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189467
+    m_Localized: 'Passive: viewers carrying Swatting Risk earn +1 Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189468
+    m_Localized: SIUUUUUUU!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189469
+    m_Localized: MrShark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189470
+    m_Localized: The Giveaway King
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189471
+    m_Localized: $10,000 Giveaway
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189472
+    m_Localized: In your next stream, every viewer earns +1 Subs.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189473
+    m_Localized: Last viewer to leave chat wins!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189474
+    m_Localized: Ethical F**kboi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189475
+    m_Localized: The Mansion Socialist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189476
+    m_Localized: Wealth Tax
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189477
+    m_Localized: The richest rival pays you up to 2 $.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189478
+    m_Localized: Eat the rich. Not me, though.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189479
+    m_Localized: Soft Hard Body Man
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189480
+    m_Localized: Looks Hard, Is Soft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189481
+    m_Localized: Soft Landing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189482
+    m_Localized: 'Passive: when you get SWATTED, you still bank half that stream''s
+      Subs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189483
+    m_Localized: REFORMED. And a little bit squishy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189484
+    m_Localized: Strategic Abomination
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189485
+    m_Localized: Two Heads, Zero Chill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189486
+    m_Localized: Double Move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189487
+    m_Localized: In your next stream, the first viewer action you use can be used
+      again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189488
+    m_Localized: The rook! THE ROOK!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189489
+    m_Localized: Palmane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189490
+    m_Localized: Gotta Catch 'Em (Legally)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189491
+    m_Localized: Pal Sphere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189492
+    m_Localized: Catch a random viewer from the shop (cost 6 or less, not a Diamond)
+      for free.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189493
+    m_Localized: Hiii chat, who wants to be my pal?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189494
+    m_Localized: Manim Maketh Man
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189495
+    m_Localized: The Animated Proof
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189496
+    m_Localized: Beautiful Sequence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189497
+    m_Localized: 'Passive: each great stream in a row earns +1, +2, +3... Subs (max
+      +5). A failed stream resets it.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189498
+    m_Localized: Let's visualize that.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189499
+    m_Localized: Rude Radiologist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189500
+    m_Localized: Two-Time Back-to-Back Diagnostician
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189501
+    m_Localized: X-Ray Vision
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189502
+    m_Localized: In your next stream, see the next 3 viewers in your queue.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189503
+    m_Localized: Violence. Speed. Radiology.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189504
+    m_Localized: PASSIVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189505
+    m_Localized: ACTIVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189506
+    m_Localized: "ACTIVE \xB7 NEXT STREAM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189507
+    m_Localized: "ACTIVE \xB7 RIVAL (MULTIPLAYER)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189508
+    m_Localized: Costs {cost} (+{step} per use)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189509
+    m_Localized: Costs {cost}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189510
+    m_Localized: 'Cooldown: {count} {count:plural:turn|turns}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189511
+    m_Localized: Once per turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189512
+    m_Localized: SELECT YOUR STREAMER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189513
+    m_Localized: Choose who goes live against THE ALGORITHM.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189514
+    m_Localized: Choose your fighter. Er, streamer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189515
+    m_Localized: VS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189516
+    m_Localized: THE ALGORITHM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189517
+    m_Localized: Undefeated. Unknowable. Unskippable.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189518
+    m_Localized: CHALLENGER APPROACHING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189519
+    m_Localized: Your rivals pick in the lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189520
+    m_Localized: GO LIVE!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189521
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189522
+    m_Localized: POWER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189523
+    m_Localized: '{streamer} ENTERS THE STREAM!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189524
+    m_Localized: 'Rival power: it does nothing in single player.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189525
+    m_Localized: "Arrow keys or click to choose \xB7 Enter to go live \xB7 Esc to
+      go back"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189526
+    m_Localized: P1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189527
+    m_Localized: 99
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189528
+    m_Localized: RIZZ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189529
+    m_Localized: DRAMA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189530
+    m_Localized: AURA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189531
+    m_Localized: COPIUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189532
+    m_Localized: Streamer Power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189533
+    m_Localized: Use ({cost})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189534
+    m_Localized: Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189535
+    m_Localized: 'Recharging: {count} {count:plural:turn|turns}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189536
+    m_Localized: Armed for your next stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189537
+    m_Localized: Always on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189538
+    m_Localized: No streamer power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189539
+    m_Localized: '{power}: choose a rival'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189540
+    m_Localized: Pick the rival to hit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189541
+    m_Localized: '{player} ({cash} $)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189542
+    m_Localized: Needs a rival (multiplayer only)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189543
+    m_Localized: '{player} used {power}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189544
+    m_Localized: 'X-RAY: NEXT IN QUEUE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189545
+    m_Localized: ONE MORE AND YOU'RE SWATTED!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189546
+    m_Localized: '{streamer} is sweating...'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 496189547
+    m_Localized: Chat is getting spicy...
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
