@@ -58,10 +58,10 @@ namespace DeckParty
                     return Loc.Get("log.everyone_out", "viewer", viewer, "count", e.A);
 
                 case GameEventType.PoliceRaid:
-                    return GuestVisuals.Colored(Loc.Get("log.swatted", "risk", e.A), UIPalette.Red);
+                    return GuestVisuals.Colored(Loc.Get("log.platform_ban", "risk", e.A), UIPalette.Red);
 
                 case GameEventType.FireMarshal:
-                    return GuestVisuals.Colored(Loc.Get("log.overload", "filled", e.A, "cap", e.B), UIPalette.Orange);
+                    return GuestVisuals.Colored(Loc.Get("log.server_down", "filled", e.A, "cap", e.B), UIPalette.Orange);
 
                 case GameEventType.PartyEnded:
                     return Loc.Get("log.stream_ended", "values", Values(e.A, e.B), "diamonds", Terms.DiamondCount(e.C));
@@ -166,12 +166,27 @@ namespace DeckParty
                 case GameEventType.TemporaryCopiesLeft:
                     return Loc.Get("log.temp_left", "count", e.A);
 
+                // --- audience classics ---
+                case GameEventType.ScoredNow:
+                    return Loc.Get("log.scored_now", ("viewer", viewer), ("source", Source(e.C, state)), ("values", Values(e.A, e.B)));
+
+                case GameEventType.InterviewGiven:
+                    return GuestVisuals.Colored(Loc.Get("log.interview", "viewer", viewer, "cash", GuestVisuals.CashText(e.A)), UIPalette.Green);
+
+                case GameEventType.CashBoosted:
+                    return Loc.Get("log.cash_boosted", "viewer", viewer, "total", GuestVisuals.CashText(e.B));
+
+                case GameEventType.MoodFlipped:
+                    return e.A != 0
+                        ? GuestVisuals.Colored(Loc.Get("log.hate_watching", "viewer", viewer), UIPalette.Red)
+                        : Loc.Get("log.just_watching", "viewer", viewer);
+
                 // --- streamer powers ---
                 case GameEventType.PowerUsed:
                 {
                     var streamer = (StreamerType)e.A;
                     return GuestVisuals.Colored(Loc.Get("log.power_used", "streamer", StreamerVisuals.Name(streamer), "power", StreamerVisuals.PowerName(streamer)), UIPalette.Gold)
-                           + CostSuffix(e.B, e.C);
+                           + CostSuffix(e.B);
                 }
                 case GameEventType.HeatApplied:
                     return GuestVisuals.Colored(Loc.Get("log.heat_applied", "risk", GuestVisuals.RiskText(e.A)), UIPalette.Red);
@@ -201,13 +216,8 @@ namespace DeckParty
             return null;
         }
 
-        static string CostSuffix(int giftedSubs, int cash)
-        {
-            if (giftedSubs <= 0 && cash <= 0) return string.Empty;
-            string cost = giftedSubs > 0 && cash > 0 ? GuestVisuals.GiftedSubsText(giftedSubs) + " + " + cash + " $"
-                : giftedSubs > 0 ? GuestVisuals.GiftedSubsText(giftedSubs) : cash + " $";
-            return "  " + GuestVisuals.Colored("(-" + cost + ")", UIPalette.TextDim);
-        }
+        static string CostSuffix(int cash) =>
+            cash > 0 ? "  " + GuestVisuals.Colored("(-" + cash + " " + Terms.CashSymbol + ")", UIPalette.TextDim) : string.Empty;
 
         static string Player(int index) => PlayerName != null ? PlayerName(index) : Loc.Get("common.rival");
 

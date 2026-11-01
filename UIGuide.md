@@ -67,19 +67,22 @@ The Game scene root has **GameController**, which links every part below.
 | Top bar (Gifted Subs, Cash, Sub Cap, Night, risk meter, Diamonds meter, Audience and Menu buttons) | Game > Root > **TopBar** | Rearrange freely. Groups flex and text auto-sizes. |
 | HUD icons | UI Skin: IconPop (Gifted Subs), IconCash, IconDoor (Sub Cap), IconTrouble (risk pips), IconStar (Diamonds), IconCancel | Assign sprites |
 | Fonts | UI Skin **Body Font** / **Header Font** (defaults: Noto Sans and Rubik, with Chinese fallbacks) | Assign a TMP font asset. Keep the Noto fallbacks for other languages (section 7). |
-| The chat (card area) | Game > Root > MainArea > Party > **HouseArea** (Scroll > Viewport > Grid) | Column rules are in section 10 |
+| The stage strip (above the chat bubble) | Party > **Stage** > HeaderImage | Shows the stream setup's optional **Header** image; otherwise the background shows through. Height: `GameSceneBuilder.StageHeight` (190). |
+| The chat bubble and its tail | Party > **ChatBubble** (**ChatBubbleView**) with **Tail** inside | Art: Game Database > **Stream Art** (Chat Bubble, Chat Bubble Tail, Tint). Tail spot: each Venue's **Chat Tail Position** (0 left - 1 right). Tail size: ChatBubbleView **Tail Height** / **Tail Overlap**. |
+| The chat (card area) | Party > ChatBubble > **HouseArea** (Scroll > Viewport > Grid) | Column rules are in section 10 |
+| Viewer emojis (float up from cards) | Party > **ViewerEmojis** (**ViewerEmojiView**) | Art and timing: Game Database > Stream Art > **Viewer Emojis**. Mood mix per danger level: `ViewerEmojiView.s_Calm` / `s_Risky`. Switch: FX Library **Viewer Emojis**. |
 | Add Viewer / End the Stream / the waiting-viewer panel | Party > **Controls** (with **Peek** inside) | – |
-| The shop | MainArea > Planning > **Shop**; the streamer panel is **StreamerPower** | – |
-| Side panel | Root > **SidePanel**: **Players** (multiplayer only), **Feed**, then **Facecam** | Its width follows the screen (section 10) |
-| Activity / Chat tabs | SidePanel > **Feed** (**SideTabsView**): Tabs, then the **Activity** page (the Stream Log) and the **Chat** page (messages, input, Send) | Tab captions are CSV keys `tab.activity` / `tab.chat`. The pink unread count and tab colours are in `SideTabsView.Style`. |
-| Facecam (the streamer square, bottom right) | SidePanel > **Facecam** (**FacecamView**): Frame > Border, Screen (Mask > Content with Glow, Placeholder and Art), NamePlate, RecDot | **Size With Side** (280) caps the square while the emote strip shows (multiplayer); otherwise it fills the panel width. Anxious red pulse and tremble: `FacecamView.LateUpdate`. Which reaction plays when: `GameController.Juice.cs` (search `facecam`). "Camera off" is the CSV key `facecam.off`. |
-| Emote buttons | SidePanel > Facecam > **Emotes** (2 columns, left of the square; multiplayer only) | **EmoteView > Columns**. 0 puts them all on one row. |
-| The risky-viewers line under the buttons | `PartyControlsView.RiskText` | It shows how many viewers with Swatting Risk are left in the queue, never the odds. |
-| Anxious streamer (one risk from the police) | OverlayCanvas > **AnxiousStreamer** (**StreamerAnxietyView**) | Move or resize the rect. Turn it off with the **Streamer Anxiety** switch. |
+| The shop | MainArea > Planning: the left column (**Streamer**: StreamerPower card, Raise Sub Cap, Audience, next night) and **Shop** (a grid of **ShopItem** tiles) | Tile size: PlanningView **Min/Max Tile Width** and **Tile Aspect**. Tile layout: `DeckPartyAssets.BuildShopItem` (or edit `Prefabs/UI/ShopItem.prefab`). |
+| Side panel | Root > **SidePanel**: **Players** and **EmoteBar** (multiplayer only), **Feed** (hidden unless the Activity log is on), Spacer, then **Facecam** | Its width follows the screen (section 10) |
+| Activity log (and hidden text chat) | SidePanel > **Feed** (**SideTabsView**): Tabs, then the **Activity** page and the **Chat** page | The Activity log is **off by default**: players switch it on in Settings (**Show Activity Log**). Text chat is off (FX Library **Text Chat**); the code stays for future modes. |
+| Facecam (the streamer square, bottom right) | SidePanel > **Facecam** (**FacecamView**): Frame > Border, Screen (Mask > Content with Glow, Placeholder and Art), NamePlate, RecDot | The square fills the panel width. Anxious red pulse and tremble: `FacecamView.LateUpdate`. Which reaction plays when: `GameController.Juice.cs` (search `facecam`). "Camera off" is the CSV key `facecam.off`. |
+| Emote buttons | SidePanel > **EmoteBar** > Buttons (**EmoteView**; multiplayer only) | Sprites: Game Database > Stream Art > **Emotes** (text emotes until then). Button size: EmoteView **Button Size**. Sent emotes pop up from the sender's avatar in the Players panel. |
+| The risky-viewers line under the buttons | `PartyControlsView.RiskText` | It shows how many viewers with Platform Ban Risk are left in the queue, never the odds. |
+| Anxious streamer (one risk from a Platform Ban) | OverlayCanvas > **AnxiousStreamer** (**StreamerAnxietyView**) | Move or resize the rect. Turn it off with the **Streamer Anxiety** switch. |
 | Turn timer pill | OverlayCanvas > **TurnTimer** | Move the rect |
 | LIVE badge and stream timer | Party > **StreamOverlay** | Turn it off with the **Stream Overlay** switch (N4) |
-| Fake chat feed | Party > **FakeChat** | Lines are CSV keys `fakechat.<pool>.<n>`. Players can turn it off in Settings; you can turn it off with the **Fake Chat** switch (N3). |
-| Banners (SWATTED!, YOUR TURN, NIGHT 3) | OverlayCanvas > **Banner** | Text comes from CSV keys `term.*` and `game.*` |
+| Banners (PLATFORM BAN!, SERVER DOWN!, YOUR TURN, NIGHT 3) | OverlayCanvas > **Banner** | Text comes from CSV keys `term.*` and `game.*` |
+| Platform Ban / Server Down images | OverlayCanvas > **StreamEnding** (**OutcomeSplashView**) | Images: Game Database > Stream Art > **Platform Ban Image** / **Server Down Image**. Without one, the banner shows. |
 | Comic stamps, confetti, flashes, danger vignette | OverlayCanvas > **Effects** (**EffectsView**) | Stamp words are CSV keys `stamp.<Viewer>`; which viewer gets which effect is in `Runtime/Fx/SignatureFx.cs` |
 | In-game menu | OverlayCanvas > **PauseMenu** (three columns: Settings / DisplayColumn / Rules) | – |
 
@@ -161,7 +164,7 @@ Keep any new card content inside the prefab's `Visual/Anim` object so it moves w
 | Fix squares / missing glyphs | **Deck Party > Localization > Rebuild Fonts**. All fonts are dynamic with fallbacks: Noto Sans SC covers Chinese, and Noto Sans covers Cyrillic and accents. |
 | Use your own font | Make a TMP font asset (dynamic). Assign it to the UI Skin, then add `Fonts/NotoSans SDF` and `Fonts/NotoSansSC SDF` to its **Fallback Font Assets** so other languages still render. |
 
-Language-specific terms: outside English, swatting is "the police arrive" (`term.risk`, `term.raid`), and the title differs per language (`menu.title`).
+Language-specific terms: the title differs per language (`menu.title`). Platform Ban Risk, Platform Ban and Server Down are `term.risk`, `term.raid` and `term.overload`.
 
 ---
 
@@ -177,7 +180,7 @@ Language-specific terms: outside English, swatting is "the police arrive" (`term
 | CardHover / ButtonPress / ButtonDenied | Hovering a card; pressing a button; a rejected click |
 | AbilityUsed, then ImpactRecruit / Remove / Modify / Shuffle / Scout / Economy | The acting card, then the target, by action type |
 | CounterPunch / RiskPip / SubCapFull / DiamondTracker | HUD numbers change; a risk pip fills; chat is full; the Diamonds meter goes up |
-| Swatted / Crashed / Victory / Defeat | The big moments (with banner and shake) |
+| PlatformBan / ServerDown / Victory / Defeat | The big moments (with banner and shake) |
 | ScoreTick | Each viewer in the scoring sequence |
 | TurnBanner / BoardSwitch / BannerSlam / ToastIn / MenuIn | Turn changes, switching boards, banners, toasts, menus opening |
 | StreamerAnxious | The anxious streamer's intermittent shake |
@@ -248,12 +251,11 @@ Every nice-to-have can be turned off on its own:
 |---|---|
 | Status Effects / Scoring Sequence / Presence Signals / Streamer Anxiety | Core polish: shader statuses, the count-up, multiplayer intent markers, the anxious streamer |
 | N1 Signature Effects | Per-viewer action and arrival effects |
-| N3 Fake Chat | The reacting chat feed |
 | N4 Stream Overlay | LIVE badge and stream timer |
 | N5 Emotes | Emote buttons and floating emotes |
 | N6 Ghost Cursor | Watchers see the active player's pointer |
 | N7 Card Tilt / N8 Idle Breathing | Card hover tilt / breathing still portraits |
-| N9 Reactive Background | Lights react to Swatting Risk |
+| N9 Reactive Background | Lights react to Platform Ban Risk |
 | N10 Shiny Title | Title shine and glitch |
 | N11 Audio Juice | Music ducks under big moments and goes muffled in menus |
 | N12 Musical Hover | Hover ticks rise in pitch along a row |

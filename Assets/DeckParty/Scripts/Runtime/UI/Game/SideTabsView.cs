@@ -5,8 +5,10 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// The side panel's feed, above the facecam: an Activity tab (the Stream Log) and a Chat tab (multiplayer messages and
-    /// headlines). The tab you're not looking at counts the lines that arrived since. Single player only has Activity.
+    /// The side panel's feed, above the facecam: an Activity tab (the activity log) and a Chat tab (multiplayer text chat).
+    /// Both are optional: the Activity log is off until the player switches it on in the menu, and text chat is off
+    /// (FX Library > Text Chat) because players talk with emotes. With neither, the whole panel hides.
+    /// The tab you're not looking at counts the lines that arrived since.
     /// </summary>
     public sealed class SideTabsView : MonoBehaviour
     {
@@ -31,6 +33,7 @@ namespace DeckParty.UI
         [SerializeField] internal EventLogView chatLog;
 
         Tab m_Tab;
+        bool m_ActivityAvailable = true;
         bool m_ChatAvailable = true;
         int m_UnreadActivity;
         int m_UnreadChat;
@@ -62,19 +65,26 @@ namespace DeckParty.UI
             if (chatLog != null) chatLog.LineAdded -= OnChatLine;
         }
 
-        /// <summary>Shows or hides the Chat tab (multiplayer only).</summary>
-        public void SetChatAvailable(bool available)
+        /// <summary>Which tabs exist right now. With neither, the panel hides itself.</summary>
+        public void SetAvailable(bool activity, bool chat)
         {
             Hook();
-            m_ChatAvailable = available;
-            if (chatTab != null) chatTab.gameObject.SetActive(available);
-            Select(available ? m_Tab : Tab.Activity, false);
+            m_ActivityAvailable = activity;
+            m_ChatAvailable = chat;
+            if (activityTab != null) activityTab.gameObject.SetActive(activity);
+            if (chatTab != null) chatTab.gameObject.SetActive(chat);
+            gameObject.SetActive(activity || chat);
+            if (activity || chat) Select(m_Tab, false);
         }
+
+        /// <summary>Shows or hides the Chat tab (multiplayer text chat).</summary>
+        public void SetChatAvailable(bool available) => SetAvailable(m_ActivityAvailable, available);
 
         public void Select(Tab tab, bool feedback)
         {
             Hook();
             if (tab == Tab.Chat && !m_ChatAvailable) tab = Tab.Activity;
+            if (tab == Tab.Activity && !m_ActivityAvailable && m_ChatAvailable) tab = Tab.Chat;
             bool changed = tab != m_Tab;
             m_Tab = tab;
             if (activityPage != null) activityPage.SetActive(tab == Tab.Activity);

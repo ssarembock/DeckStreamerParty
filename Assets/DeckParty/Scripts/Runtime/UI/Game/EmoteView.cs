@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using DeckParty.Core;
+using System.Collections;
 using DeckParty.Networking;
 using TMPro;
 using UnityEngine;
@@ -9,64 +8,73 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// Emotes (nice-to-have N5): emote buttons (multiplayer) and emotes that float up on everyone's screen. The buttons
-    /// fill this RectTransform (one row, or a grid of <see cref="columns"/> per row, as beside the facecam); floaters rise
-    /// from <see cref="floatArea"/> (or the screen bottom).
+    /// Multiplayer emotes (N5), the way players talk to each other now that text chat is off: a grid of emote buttons
+    /// (the sprites from Game Database > Multiplayer Emotes, or text emotes until those exist) that fills this
+    /// RectTransform. A sent emote pops up from the sender's avatar in the Players panel on every screen, then floats up and
+    /// fades like the viewers' emojis. Floaters live in <see cref="floatArea"/> so they can rise over anything.
     /// </summary>
     public sealed class EmoteView : MonoBehaviour
     {
-        [Tooltip("Where emotes float up (defaults to this object's parent canvas area).")]
+        [Tooltip("Where emotes float (an overlay layer over the whole screen).")]
         public RectTransform floatArea;
-        [Tooltip("Buttons per row. 0 = all in one row.")]
-        public int columns;
+        [Tooltip("Button size in pixels (the grid fits as many per row as it can).")]
+        public float buttonSize = 64f;
 
         public event Action<int> EmoteClicked;
 
         bool m_Built;
         float m_LastSent;
 
+        void Awake() => Build();
+
         void Build()
         {
             if (m_Built) return;
             m_Built = true;
-            var root = (RectTransform)transform;
-            var row = root;
-            if (columns > 0) Stack(gameObject.AddComponent<VerticalLayoutGroup>());
-            else Stack(gameObject.AddComponent<HorizontalLayoutGroup>());
-            for (int i = 0; i < Emotes.All.Length; i++)
+
+            var grid = gameObject.GetComponent<GridLayoutGroup>();
+            if (grid == null) grid = gameObject.AddComponent<GridLayoutGroup>();
+            grid.cellSize = new Vector2(buttonSize, buttonSize);
+            grid.spacing = new Vector2(8f, 8f);
+            grid.childAlignment = TextAnchor.MiddleCenter;
+            grid.constraint = GridLayoutGroup.Constraint.Flexible;
+
+            int count = Emotes.Count;
+            for (int i = 0; i < count; i++)
             {
-                if (columns > 0 && i % columns == 0)
-                {
-                    row = UiFactory.Rect("Row " + (i / columns), root);
-                    Stack(row.gameObject.AddComponent<HorizontalLayoutGroup>());
-                }
                 int index = i;
-                var bg = UiFactory.Image("Emote " + Emotes.All[i], row, UIPalette.PanelAlt, RuntimeSprites.Rounded, true);
+                var bg = UiFactory.Image("Emote " + (i + 1), transform, UIPalette.PanelAlt, RuntimeSprites.Rounded, true);
                 bg.raycastTarget = true;
                 var button = bg.gameObject.AddComponent<Button>();
                 button.targetGraphic = bg;
                 var nav = button.navigation;
                 nav.mode = Navigation.Mode.None;
                 button.navigation = nav;
+                var colors = button.colors;
+                colors.highlightedColor = Color.Lerp(Color.white, UIPalette.Pink, 0.35f);
+                colors.pressedColor = Color.Lerp(Color.white, UIPalette.Pink, 0.6f);
+                button.colors = colors;
                 button.onClick.AddListener(() => Send(index));
-                var label = UiFactory.Text("Label", bg.transform, 18f, UIPalette.Text, TextAlignmentOptions.Center, true);
-                UiFactory.Stretch(label.rectTransform, 2f);
-                label.text = Emotes.All[i];
-                label.fontStyle = FontStyles.Bold;
+                var feedback = bg.gameObject.AddComponent<ButtonFeedback>();
+                feedback.hoverScale = 1.08f;
+
+                var sprite = Emotes.SpriteAt(i);
+                if (sprite != null)
+                {
+                    var icon = UiFactory.Image("Icon", bg.transform, Color.white, sprite);
+                    UiFactory.Stretch(icon.rectTransform, 5f);
+                    icon.preserveAspect = true;
+                }
+                else
+                {
+                    var label = UiFactory.Text("Label", bg.transform, 18f, UIPalette.Text, TextAlignmentOptions.Center, true);
+                    UiFactory.Stretch(label.rectTransform, 3f);
+                    label.text = Emotes.TextAt(i);
+                    label.fontStyle = FontStyles.Bold;
+                }
             }
             if (floatArea == null) floatArea = (RectTransform)transform.root;
         }
-
-        static void Stack(HorizontalOrVerticalLayoutGroup layout)
-        {
-            layout.spacing = 4f;
-            layout.childForceExpandWidth = true;
-            layout.childForceExpandHeight = true;
-            layout.childControlWidth = true;
-            layout.childControlHeight = true;
-        }
-
-        void Awake() => Build();
 
         void Send(int index)
         {
@@ -75,39 +83,92 @@ namespace DeckParty.UI
             EmoteClicked?.Invoke(index);
         }
 
-        /// <summary>Floats an emote up the screen with the sender's name.</summary>
-        public void Show(string sender, Color color, int index)
+        /// <summary>
+        /// Pops an emote up from <paramref name="anchor"/> (the sender's avatar in the Players panel) and floats it up with
+        /// their name. Without an anchor it rises from the bottom of the screen.
+        /// </summary>
+        public void Show(string sender, Color color, int index, RectTransform anchor)
         {
             Build();
-            if (index < 0 || index >= Emotes.All.Length || floatArea == null) return;
-            var label = UiFactory.Text("FloatingEmote", floatArea, 46f, color, TextAlignmentOptions.Center, true);
-            label.enableAutoSizing = false;
-            label.text = $"{Emotes.All[index]}\n<size=40%><color=#FFFFFF>{sender}</color></size>";
-            label.outlineWidth = 0.25f;
-            label.outlineColor = new Color32(0, 0, 0, 220);
-            var rect = label.rectTransform;
-            rect.sizeDelta = new Vector2(240f, 120f);
-            var area = floatArea.rect;
-            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
-            rect.anchoredPosition = new Vector2(UnityEngine.Random.Range(area.xMin * 0.7f, area.xMax * 0.7f), area.yMin + 80f);
-            StartCoroutine(Rise(rect, label, area.height * 0.7f));
+            if (index < 0 || index >= Emotes.Count || floatArea == null) return;
+
+            var root = UiFactory.Rect("FloatingEmote", floatArea);
+            root.anchorMin = root.anchorMax = new Vector2(0.5f, 0.5f);
+            root.sizeDelta = new Vector2(150f, 150f);
+
+            var sprite = Emotes.SpriteAt(index);
+            Graphic main;
+            if (sprite != null)
+            {
+                var image = UiFactory.Image("Icon", root, Color.white, sprite);
+                image.preserveAspect = true;
+                image.rectTransform.anchorMin = new Vector2(0f, 0.22f);
+                image.rectTransform.anchorMax = Vector2.one;
+                image.rectTransform.offsetMin = image.rectTransform.offsetMax = Vector2.zero;
+                main = image;
+            }
+            else
+            {
+                var text = UiFactory.Text("Label", root, 46f, color, TextAlignmentOptions.Center, true);
+                text.enableAutoSizing = false;
+                text.text = Emotes.TextAt(index);
+                text.outlineWidth = 0.25f;
+                text.outlineColor = new Color32(0, 0, 0, 220);
+                text.rectTransform.anchorMin = new Vector2(0f, 0.22f);
+                text.rectTransform.anchorMax = Vector2.one;
+                text.rectTransform.offsetMin = text.rectTransform.offsetMax = Vector2.zero;
+                main = text;
+            }
+
+            var name = UiFactory.Text("Sender", root, 20f, color, TextAlignmentOptions.Center, true);
+            name.rectTransform.anchorMin = Vector2.zero;
+            name.rectTransform.anchorMax = new Vector2(1f, 0.22f);
+            name.rectTransform.offsetMin = name.rectTransform.offsetMax = Vector2.zero;
+            name.text = sender;
+            name.outlineWidth = 0.25f;
+            name.outlineColor = new Color32(0, 0, 0, 220);
+
+            if (anchor != null && anchor.gameObject.activeInHierarchy)
+            {
+                root.position = anchor.position;
+                // Start a little to the left of the avatar so it rises over the board rather than off-screen.
+                root.anchoredPosition += new Vector2(-40f, 20f);
+            }
+            else
+            {
+                var area = floatArea.rect;
+                root.anchoredPosition = new Vector2(UnityEngine.Random.Range(area.xMin * 0.5f, area.xMax * 0.5f), area.yMin + 120f);
+            }
+
+            StartCoroutine(Rise(root, main, name, 170f));
             AudioService.PlayPitched(Sfx.Notify, UnityEngine.Random.Range(1.1f, 1.5f), 0.5f);
         }
 
-        System.Collections.IEnumerator Rise(RectTransform rect, TMP_Text label, float distance)
+        IEnumerator Rise(RectTransform rect, Graphic main, Graphic label, float distance)
         {
             var start = rect.anchoredPosition;
-            float sway = UnityEngine.Random.Range(-60f, 60f);
-            for (float t = 0f; t < 2.4f; t += Time.unscaledDeltaTime)
+            float sway = UnityEngine.Random.Range(-30f, 30f);
+            const float duration = 2.2f;
+            for (float t = 0f; t < duration; t += Time.unscaledDeltaTime)
             {
                 if (rect == null) yield break;
-                float k = t / 2.4f;
-                rect.anchoredPosition = start + new Vector2(Mathf.Sin(k * 6f) * 18f + sway * k, distance * UITween.EaseOutCubic(k));
-                rect.localScale = Vector3.one * (k < 0.1f ? Mathf.Lerp(0.3f, 1.15f, k / 0.1f) : Mathf.Lerp(1.15f, 0.9f, k));
-                label.alpha = k < 0.75f ? 1f : 1f - (k - 0.75f) / 0.25f;
+                float k = t / duration;
+                rect.anchoredPosition = start + new Vector2(Mathf.Sin(k * 6f) * 10f + sway * k, distance * UITween.EaseOutCubic(k));
+                rect.localScale = Vector3.one * (k < 0.12f ? Mathf.Lerp(0.2f, 1.2f, k / 0.12f) : Mathf.Lerp(1.2f, 0.95f, (k - 0.12f) / 0.88f));
+                float alpha = k < 0.65f ? 1f : 1f - (k - 0.65f) / 0.35f;
+                SetAlpha(main, alpha);
+                SetAlpha(label, alpha);
                 yield return null;
             }
             if (rect != null) Destroy(rect.gameObject);
+        }
+
+        static void SetAlpha(Graphic graphic, float alpha)
+        {
+            if (graphic == null) return;
+            var c = graphic.color;
+            c.a = alpha;
+            graphic.color = c;
         }
     }
 }

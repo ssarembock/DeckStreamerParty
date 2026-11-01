@@ -78,7 +78,7 @@ namespace DeckParty.UI
         float m_Risk;
         float m_DisplayRisk;
 
-        /// <summary>Reactive background (FX Library > reactiveBackground): 0 calm, 1 one Swatting Risk from the SWAT team (lights drift red and blue).</summary>
+        /// <summary>Reactive background (FX Library > reactiveBackground): 0 calm, 1 one Platform Ban Risk from a Platform Ban (lights drift red and blue).</summary>
         public void SetRisk(float risk) => m_Risk = FxLibrary.Current.reactiveBackground ? Mathf.Clamp01(risk) : 0f;
 
         void Rebuild()
@@ -330,7 +330,7 @@ namespace DeckParty.UI
             bool police = time < m_PoliceUntil;
             bool redPhase = Mathf.Repeat(time * 4f, 2f) < 1f;
             var policeColor = redPhase ? new Color(1f, 0.15f, 0.2f) : new Color(0.2f, 0.4f, 1f);
-            // Rising Swatting Risk slowly bleeds the siren colours into the scene's own lights.
+            // Rising Platform Ban Risk slowly bleeds the warning colours into the scene's own lights.
             var riskColor = Mathf.Repeat(time * 0.8f, 2f) < 1f ? new Color(1f, 0.2f, 0.25f) : new Color(0.25f, 0.4f, 1f);
             float riskBlend = AppSettings.ReduceFlashing ? m_DisplayRisk * 0.4f : m_DisplayRisk * 0.7f;
 

@@ -23,6 +23,7 @@ namespace DeckParty.EditorTools
 
         public const string GuestCardPrefab = Prefabs + "/GuestCard.prefab";
         public const string GuestRowPrefab = Prefabs + "/GuestRow.prefab";
+        public const string ShopItemPrefab = Prefabs + "/ShopItem.prefab";
         public const string ScenarioItemPrefab = Prefabs + "/ScenarioItem.prefab";
         public const string PlayerRowPrefab = Prefabs + "/PlayerRow.prefab";
         public const string TextLinePrefab = Prefabs + "/TextLine.prefab";

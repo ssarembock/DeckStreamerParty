@@ -77,6 +77,8 @@ namespace DeckParty.UI
             m_Session.PhaseChanged += OnPhaseChanged;
             DeckPartyNetSession.Despawned += OnSessionDespawned;
             chat.Bind(m_Session);
+            // Text chat is off: the box shows lobby news only (players talk with emotes in game).
+            chat.SetTextInput(FxLibrary.Current.textChat);
             FillSelectors();
         }
 

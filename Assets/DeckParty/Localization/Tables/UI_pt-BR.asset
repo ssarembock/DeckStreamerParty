@@ -79,7 +79,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125582
-    m_Localized: "Risco de pol\xEDcia {risk}/{max}"
+    m_Localized: Risco de banimento {risk}/{max}
     m_Metadata:
       m_Items: []
   - m_Id: 1574125583
@@ -87,13 +87,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125584
-    m_Localized: "<b>Risco de pol\xEDcia</b>\\nCom {max} de risco l\xEDquido em uma
-      live a pol\xEDcia chega."
+    m_Localized: "<b>Risco de banimento</b>\\nCom {max} de risco l\xEDquido em uma
+      live, ela \xE9 banida."
     m_Metadata:
       m_Items: []
   - m_Id: 1574125585
-    m_Localized: "<b>Risco de pol\xEDcia</b>\\nAdicionado por espectadores: {added}\\nAnulado:
-      -{cancelled}\\nL\xEDquido: {net} (a pol\xEDcia chega com {max})"
+    m_Localized: "<b>Risco de banimento</b>\\nAdicionado por espectadores: {added}\\nAnulado:
+      -{cancelled}\\nL\xEDquido: {net} (banimento com {max})"
     m_Metadata:
       m_Items: []
   - m_Id: 1574125586
@@ -123,7 +123,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125592
-    m_Localized: "Mais um de risco e a pol\xEDcia chega."
+    m_Localized: "Mais um de risco e a live \xE9 banida."
     m_Metadata:
       m_Items: []
   - m_Id: 1574125593
@@ -176,7 +176,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125605
-    m_Localized: '{count} {count:plural:espectador|espectadores} com risco na fila'
+    m_Localized: '{count} {count:plural:espectador|espectadores} com risco de banimento
+      na fila'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125606
@@ -216,8 +217,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125615
-    m_Localized: "Gaste Subs de presente pra colocar espectadores na sua Audi\xEAncia
-      pra todas as pr\xF3ximas lives. Passe o mouse para ver detalhes."
+    m_Localized: "Clique num espectador pra recrut\xE1-lo pra sua Audi\xEAncia em
+      todas as pr\xF3ximas lives. Passe o mouse pra ver detalhes. O estoque da loja
+      \xE9 dividido entre todos."
     m_Metadata:
       m_Items: []
   - m_Id: 1574125616
@@ -422,7 +424,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514199
-    m_Localized: "O risco ficou alto demais e a pol\xEDcia encerrou a live. Ningu\xE9m
+    m_Localized: "O risco ficou alto demais e a plataforma baniu a live. Ningu\xE9m
       recebe esta noite."
     m_Metadata:
       m_Items: []
@@ -591,7 +593,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514240
-    m_Localized: "\xD3timas lives: {great}    Pol\xEDcia: {swatted}    Quedas: {crashed}"
+    m_Localized: "\xD3timas lives: {great}    Banimentos: {banned}    Servidor caiu:
+      {server_down}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514241
@@ -874,7 +877,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514309
-    m_Localized: "A pol\xEDcia foi embora. Risco zerado."
+    m_Localized: O banimento foi cancelado. Risco zerado.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514310
@@ -900,7 +903,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514315
-    m_Localized: "Esta live come\xE7a com +{count} de risco de pol\xEDcia."
+    m_Localized: "Esta live come\xE7a com +{count} de risco de banimento."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514316
@@ -975,12 +978,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514333
     m_Localized: "<b>Feliz:</b> +3 Subs.   <b>Triste:</b> +3 $.   <b>Bravo:</b> +6
-      Subs e +1 de risco de pol\xEDcia.\\nDura at\xE9 o fim da live."
+      Subs e +1 de risco de banimento.\\nDura at\xE9 o fim da live."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514334
     m_Localized: "Aposte {subs} Subs de presente ou {cash} $ do seu banco. Se a live
-      der certo voc\xEA recebe {mult}x de volta; se a pol\xEDcia chegar ou cair,
+      der certo voc\xEA recebe {mult}x de volta; se for banida ou o servidor cair,
       j\xE1 era.\\nVoc\xEA tem {have_subs} Subs de presente e {have_cash} $."
     m_Metadata:
       m_Items: []
@@ -1066,8 +1069,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514353
-    m_Localized: "{actor}: escolha um espectador pra ganhar +1 de risco de pol\xEDcia
-      e +3 Subs."
+    m_Localized: '{actor}: escolha um espectador pra ganhar +1 de risco de banimento
+      e +3 Subs.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514354
@@ -1496,6 +1499,81 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514456
     m_Localized: Os 59 espectadores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593395007488
+    m_Localized: Novidades do lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699264
+    m_Localized: Atividade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699265
+    m_Localized: Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699266
+    m_Localized: Loja de {player}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699267
+    m_Localized: Restam {count}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699268
+    m_Localized: Ilimitado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699269
+    m_Localized: ESGOTADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699270
+    m_Localized: "Voc\xEA tem {count}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699271
+    m_Localized: "Ainda d\xE1 pra recrutar {count} (o estoque da loja \xE9 dividido
+      entre todos)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087872
+    m_Localized: Mostrar registro de atividade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087873
+    m_Localized: Sua live foi banida. Sem pagamento esta noite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087874
+    m_Localized: A live de {player} foi banida. Sem pagamento esta noite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087875
+    m_Localized: '{filled} vagas ocupadas com limite de {cap}. Sem pagamento esta
+      noite'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087876
+    m_Localized: '{actor}: escolha outro espectador pra pontuar agora mesmo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087877
+    m_Localized: "{actor}: escolha um espectador pra ganhar +1 $ pra sempre (at\xE9
+      {cap} $)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087878
+    m_Localized: '{actor}: escolha o primeiro de dois espectadores lado a lado.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087879
+    m_Localized: '{actor}: agora escolha o espectador ao lado de {first}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087880
+    m_Localized: "C\xE2mera desligada"
     m_Metadata:
       m_Items: []
   references:

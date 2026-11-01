@@ -49,13 +49,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274886
-    m_Localized: Swatting Risk is good content
+    m_Localized: Platform Ban Risk is good content
     m_Metadata:
       m_Items: []
   - m_Id: 433274887
-    m_Localized: Wojaks feed on suffering. Doomer and Me Gusta love Swatting Risk,
-      Gigachad and Sigma want the spotlight alone, and This Is Fine Dog keeps the
-      SWAT team guessing.
+    m_Localized: Wojaks feed on suffering. Doomer and Me Gusta love Platform Ban
+      Risk, Gigachad and Sigma want the spotlight alone, and This Is Fine Dog keeps
+      the ban hammer guessing.
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
@@ -255,6 +255,48 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274935
     m_Localized: Smoke, lasers, a lightbox of X-rays and a very large trophy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590601601024
+    m_Localized: Talent Agency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904192
+    m_Localized: The audience classics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904193
+    m_Localized: Back to basics. Reliable earners, a Producer to call in the right
+      viewer, a Cybersecurity Engineer on the door and a Comedian who needs a full
+      chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904194
+    m_Localized: Damage Control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904195
+    m_Localized: Risk pays, if you can contain it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904196
+    m_Localized: Risky collaborators bring the money and the Hate-Watcher can't make
+      up their mind. Master of Currency and Executive PR cash in on the chaos while
+      the Chat Arbitrator keeps the peace.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904197
+    m_Localized: Money Talks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904198
+    m_Localized: Cash out before it crashes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904199
+    m_Localized: Rug pulls, checkout codes and softball interviews. Bank Subs mid-stream
+      with the Crypto Guy, grow your Gen Z with Job and let the Online Scandal fill
+      the room.
     m_Metadata:
       m_Items: []
   references:

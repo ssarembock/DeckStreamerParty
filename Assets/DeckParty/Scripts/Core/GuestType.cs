@@ -1,22 +1,24 @@
 namespace DeckParty.Core
 {
     /// <summary>
-    /// All 59 guest types. The numeric values are serialized (saves and network packets), so only ever
+    /// All 82 guest types. The numeric values are serialized (saves and network packets), so only ever
     /// append new entries at the end. Bump <see cref="StateSerializer"/>'s format version if you renumber.
+    /// Identifiers follow the current English names; the Game Database migrates art stored under older names
+    /// (see <see cref="GuestCatalog.RenamedFrom"/>).
     /// </summary>
     public enum GuestType : byte
     {
-        // --- Community (the renamed classics) ---
+        // --- The audience classics (renamed in V3) ---
         LoyalFan = 0,
         Whale = 1,
-        BotFarm = 2,
-        SocialMediaManager = 3,
-        Moderator = 4,
-        AutoMod = 5,
-        Collaborator = 6,
-        Hodl = 7,
-        Vips = 8,
-        Parasocialite = 9,
+        IneffectiveTroll = 2,
+        Producer = 3,
+        ChatAdmin = 4,
+        Normie = 5,
+        MildlyRiskyCollaborator = 6,
+        JuniorPrManager = 7,
+        DieHardFan = 8,
+        MarketingManager = 9,
 
         // --- Meme guests 1-10 ---
         Doge = 10,
@@ -66,19 +68,47 @@ namespace DeckParty.Core
         CryingCat = 48,
         DancingBaby = 49,
 
-        // --- Diamond guests (formerly Stars) ---
-        DramaChannel = 50,
-        DivaStreamer = 51,
-        RaidLeader = 52,
-        MysteryVTuber = 53,
-        WholesomeIcon = 54,
-        PlatformAdmin = 55,
-        MegaInfluencer = 56,
-        BrandSponsor = 57,
-        Algorithm = 58,
+        // --- Diamond guests (formerly Stars, renamed in V3) ---
+        BigBoomer = 50,
+        ClippoTheClanker = 51,
+        BiggerStar = 52,
+        PrecociousYouth = 53,
+        InternetStarpower = 54,
+        PlatformOwner = 55,
+        MainstreamCelebrity = 56,
+        SeniorMarketingManager = 57,
+        SurpriseGuest = 58,
+
+        // --- V3: the rest of the audience classics ---
+        InfluentialTroll = 59,
+        CybersecurityEngineer = 60,
+        PaidSponsorship = 61,
+        ComedianWithAPodcast = 62,
+        AccountManager = 63,
+        CryptoGuy = 64,
+        GenerousDonator = 65,
+        PrManager = 66,
+        HighlyRiskyCollaborator = 67,
+        ChatArbitrator = 68,
+        BotDetector = 69,
+        RiskyOrbiter = 70,
+        SocialMediaManager = 71,
+        BillionaireBenefactor = 72,
+        TechAdmin = 73,
+        OnlineScandal = 74,
+        Gatekeeper = 75,
+        BingeBunny = 76,
+        HateWatcher = 77,
+        Affiliate = 78,
+        MasterOfCurrency = 79,
+        ExecutivePr = 80,
+        GenZWithJob = 81,
     }
 
-    /// <summary>Character families. Doge counts how many different ones are at the party; Bongo Cat buffs Animals.</summary>
+    /// <summary>
+    /// Character groups. Doge counts how many different ones are at the party; Bongo Cat buffs Animals.
+    /// <see cref="Tbd"/> ("to be determined") is for viewers whose group hasn't been decided yet: it never counts as a group.
+    /// </summary>
     public enum GuestCategory : byte
     {
         Community = 0,
@@ -88,6 +118,7 @@ namespace DeckParty.Core
         Reaction = 4,
         Brainrot = 5,
         Diamond = 6,
+        Tbd = 7,
     }
 
     /// <summary>The mechanical effect of a guest's once-per-party action.</summary>
@@ -103,7 +134,7 @@ namespace DeckParty.Core
         Invest,     // Stonks Guy: stake Gifted Subs or Cash on the party succeeding.
         PlayOff,    // Keyboard Cat: evict a guest for Subs or Cash.
         Mog,        // Chad vs Virgin: compare printed Subs and transfer 1 permanently.
-        Arson,      // Disaster Girl: +1 Swatting Risk and +3 Subs to another guest.
+        Arson,      // Disaster Girl: +1 Platform Ban Risk and +3 Subs to another guest.
         Reroll,     // Success Kid: reroll the last random arrival, or peek at the next guest.
         Strike,     // Tung Tung Tung Sahur: three strikes and you're out.
         SwapOrder,  // Tralalero Tralala: swap two guests' places in the arrival order.
@@ -115,6 +146,12 @@ namespace DeckParty.Core
         Convert,    // Confused Math Lady: convert a guest's Subs to Cash or back.
         SideEye,    // Side Eye Chloe: move the next guest to the back of the line.
         Immunity,   // Roll Safe: a guest ignores further ability effects tonight.
+        Peek,       // Cybersecurity Engineer / Social Media Manager: look at the next guest, then let them in or deny them.
+        Photograph, // Crypto Guy: score another guest right now (banked immediately).
+        Calm,       // Chat Arbitrator: clear Platform Ban Risk from every risky guest for the rest of the party.
+        BootPair,   // Bot Detector: remove two guests sitting next to each other.
+        Interview,  // Billionaire Benefactor: everyone's Subs drop to 0; bank 1 Cash per Billionaire Benefactor.
+        Style,      // Affiliate: a guest permanently earns +1 Cash.
     }
 
     /// <summary>Effect families for actions. Dancing Baby rewards two in a row from the same family.</summary>
@@ -139,5 +176,6 @@ namespace DeckParty.Core
         UpToThree,      // One to three guests other than the actor.
         WaitingGuest,   // A guest from the waiting line (picker).
         Inspect,        // Grumpy Cat's look-ahead (picker over the next guests).
+        AdjacentPair,   // Two guests next to each other in chat (either may be the actor).
     }
 }

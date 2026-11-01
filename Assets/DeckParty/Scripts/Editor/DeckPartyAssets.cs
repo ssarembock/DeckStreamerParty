@@ -17,6 +17,7 @@ namespace DeckParty.EditorTools
     {
         public GuestCardView GuestCard;
         public GuestRowView GuestRow;
+        public ShopItemView ShopItem;
         public ScenarioItemView ScenarioItem;
         public PlayerRowView PlayerRow;
         public TMP_Text TextLine;
@@ -124,6 +125,7 @@ namespace DeckParty.EditorTools
 
             var db = LoadOrCreate<GameDatabase>(DeckPartyPaths.Database);
             int reset = db.EnsureAllGuests();
+            db.EnsureAllGroupIcons();
             if (reset > 0)
                 Debug.LogWarning($"[DeckParty] The viewer roster changed: {reset} portrait/animation setting(s) belonged to removed characters and were cleared. Re-assign them with Deck Party > Select Game Database.");
 
@@ -273,6 +275,7 @@ namespace DeckParty.EditorTools
         {
             Ensure<GuestCardView>(DeckPartyPaths.GuestCardPrefab, BuildGuestCard, overwrite);
             Ensure<GuestRowView>(DeckPartyPaths.GuestRowPrefab, BuildGuestRow, overwrite);
+            Ensure<ShopItemView>(DeckPartyPaths.ShopItemPrefab, BuildShopItem, overwrite);
             Ensure<ScenarioItemView>(DeckPartyPaths.ScenarioItemPrefab, BuildScenarioItem, overwrite);
             Ensure<PlayerRowView>(DeckPartyPaths.PlayerRowPrefab, BuildPlayerRow, overwrite);
             Ensure<TextMeshProUGUI>(DeckPartyPaths.TextLinePrefab, BuildTextLine, overwrite);
@@ -288,6 +291,7 @@ namespace DeckParty.EditorTools
             {
                 GuestCard = LoadPrefab<GuestCardView>(DeckPartyPaths.GuestCardPrefab),
                 GuestRow = LoadPrefab<GuestRowView>(DeckPartyPaths.GuestRowPrefab),
+                ShopItem = LoadPrefab<ShopItemView>(DeckPartyPaths.ShopItemPrefab),
                 ScenarioItem = LoadPrefab<ScenarioItemView>(DeckPartyPaths.ScenarioItemPrefab),
                 PlayerRow = LoadPrefab<PlayerRowView>(DeckPartyPaths.PlayerRowPrefab),
                 TextLine = LoadPrefab<TextMeshProUGUI>(DeckPartyPaths.TextLinePrefab),
@@ -502,6 +506,96 @@ namespace DeckParty.EditorTools
             view.buyTooltip = buyTooltip;
             view.tooltip = tooltip;
             return bg.gameObject;
+        }
+
+        /// <summary>
+        /// A shop tile. Everything is anchored by proportion, so the tile works at whatever size the shop grid gives it:
+        /// the picture fills the top, then the name, then the price and copies left. Group icon top-left, Diamond top-right.
+        /// </summary>
+        static GameObject BuildShopItem()
+        {
+            var root = EditorUI.Rect(null, "ShopItem");
+            root.sizeDelta = new Vector2(220, 300);
+            var anim = EditorUI.Rect(root, "Anim").Stretch();
+
+            var frame = EditorUI.Image(anim, "Frame", UIPalette.Border, EditorUI.Rounded, SkinSlot.CardFrame);
+            frame.type = Image.Type.Sliced;
+            frame.rectTransform.Stretch();
+            var background = EditorUI.Image(anim, "Background", UIPalette.PanelAlt, EditorUI.Rounded, SkinSlot.PanelAlt, true);
+            background.type = Image.Type.Sliced;
+            background.rectTransform.Stretch(3, 3, 3, 3);
+
+            var portraitBg = EditorUI.Image(anim, "PortraitBg", UIPalette.PanelDeep, EditorUI.Rounded);
+            portraitBg.type = Image.Type.Sliced;
+            portraitBg.rectTransform.Box(new Vector2(0.05f, 0.30f), new Vector2(0.95f, 0.965f), Vector2.zero, Vector2.zero);
+            var placeholder = EditorUI.Image(portraitBg.transform, "Placeholder", UIPalette.Teal, EditorUI.Circle, SkinSlot.Circle);
+            placeholder.rectTransform.Box(new Vector2(0.14f, 0.1f), new Vector2(0.86f, 0.9f), Vector2.zero, Vector2.zero);
+            var fitter = placeholder.gameObject.AddComponent<AspectRatioFitter>();
+            fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
+            fitter.aspectRatio = 1f;
+            var initials = EditorUI.Text(placeholder.transform, "Initials", "Gu", 52, UIPalette.Night, TextAlignmentOptions.Center, true, true, false);
+            initials.rectTransform.Stretch();
+            var portrait = EditorUI.Image(portraitBg.transform, "Portrait", Color.white);
+            portrait.rectTransform.Stretch(4, 4, 4, 4);
+            portrait.preserveAspect = true;
+            portrait.enabled = false;
+            portrait.gameObject.AddComponent<CharacterPortrait>().image = portrait;
+
+            var group = EditorUI.Image(anim, "GroupIcon", Color.white);
+            group.rectTransform.Place(new Vector2(0, 1), new Vector2(10, -10), new Vector2(40, 40), new Vector2(0, 1));
+            group.preserveAspect = true;
+            group.gameObject.SetActive(false);
+            var star = EditorUI.Icon(anim, "DiamondBadge", EditorUI.Star, UIPalette.Gold, SkinSlot.IconStar, 40);
+            star.rectTransform.Place(new Vector2(1, 1), new Vector2(-10, -10), new Vector2(40, 40), new Vector2(1, 1));
+
+            var name = EditorUI.Text(anim, "Name", "-", 22, UIPalette.Text, TextAlignmentOptions.Center, true, false, true);
+            name.rectTransform.Box(new Vector2(0.04f, 0.15f), new Vector2(0.96f, 0.295f), Vector2.zero, Vector2.zero);
+            name.fontSizeMin = 13;
+            name.overflowMode = TextOverflowModes.Ellipsis;
+
+            var price = EditorUI.Text(anim, "Price", "-", 22, UIPalette.Gold, TextAlignmentOptions.MidlineLeft, true, false, false);
+            price.rectTransform.Box(new Vector2(0.07f, 0.03f), new Vector2(0.6f, 0.15f), Vector2.zero, Vector2.zero);
+            price.fontSizeMin = 12;
+            var left = EditorUI.Text(anim, "Left", "-", 18, UIPalette.TextDim, TextAlignmentOptions.MidlineRight, false, false, false);
+            left.rectTransform.Box(new Vector2(0.5f, 0.03f), new Vector2(0.93f, 0.15f), Vector2.zero, Vector2.zero);
+            left.fontSizeMin = 11;
+
+            var dim = EditorUI.Image(anim, "Dim", new Color(0.03f, 0.02f, 0.06f, 0.55f), EditorUI.Rounded);
+            dim.type = Image.Type.Sliced;
+            dim.rectTransform.Stretch();
+            dim.enabled = false;
+            var soldOut = EditorUI.Text(anim, "SoldOut", "-", 34, UIPalette.Red, TextAlignmentOptions.Center, true, true, false);
+            soldOut.rectTransform.Place(new Vector2(0.5f, 0.62f), Vector2.zero, new Vector2(220, 60));
+            soldOut.rectTransform.localRotation = Quaternion.Euler(0, 0, 12f);
+            soldOut.outlineWidth = 0.2f;
+            soldOut.outlineColor = new Color32(0, 0, 0, 230);
+            soldOut.gameObject.SetActive(false);
+
+            var button = root.gameObject.AddComponent<Button>();
+            button.targetGraphic = background;
+            button.transition = Selectable.Transition.None;
+            EditorUI.NoNavigation(button);
+            var feedback = root.gameObject.AddComponent<ButtonFeedback>();
+            feedback.hoverScale = 1.04f;
+            var tooltip = root.gameObject.AddComponent<TooltipTrigger>();
+
+            var view = root.gameObject.AddComponent<ShopItemView>();
+            view.button = button;
+            view.background = background;
+            view.frame = frame;
+            view.animRoot = anim;
+            view.portrait = portrait;
+            view.placeholder = placeholder;
+            view.initialsLabel = initials;
+            view.nameLabel = name;
+            view.groupIcon = group;
+            view.diamondBadge = star.gameObject;
+            view.priceLabel = price;
+            view.leftLabel = left;
+            view.dim = dim;
+            view.soldOutLabel = soldOut;
+            view.tooltip = tooltip;
+            return root.gameObject;
         }
 
         static GameObject BuildScenarioItem()

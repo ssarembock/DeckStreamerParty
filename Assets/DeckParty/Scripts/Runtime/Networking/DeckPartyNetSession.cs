@@ -266,7 +266,7 @@ namespace DeckParty.Networking
 
         public void SendEmote(int index)
         {
-            if (index < 0 || index >= Emotes.All.Length) return;
+            if (index < 0 || index >= Emotes.Count) return;
             EmoteRpc((byte)index);
         }
         public void SubmitCommand(GameCommand command) => SubmitCommandRpc(NetCommand.From(command));
@@ -420,7 +420,7 @@ namespace DeckParty.Networking
         void EmoteRpc(byte index, RpcParams rpcParams = default)
         {
             ulong sender = rpcParams.Receive.SenderClientId;
-            if (index >= Emotes.All.Length || !IsConnectedPlayer(sender)) return;
+            if (index >= Emotes.Count || !IsConnectedPlayer(sender)) return;
             float now = Time.unscaledTime;
             if (m_LastEmote.TryGetValue(sender, out var last) && now - last < Emotes.Cooldown) return;
             m_LastEmote[sender] = now;
@@ -493,6 +493,7 @@ namespace DeckParty.Networking
             ServerBroadcastState(sender, m_Scratch);
             ServerAnnounce(sender, m_Scratch);
             ServerUpdateSummary(sender);
+            ServerSyncSharedShop();
             if (Settings.Mode == MatchMode.Turns && state.IsGameOver) ServerEndTurn(sender, GameOverTurnDelay);
             ServerEvaluateProgress();
         }
@@ -675,6 +676,46 @@ namespace DeckParty.Networking
         /// <summary>Sends a headline as a localization key with arguments, so each player reads it in their own language.</summary>
         void ServerHeadline(string key) => HeadlineRpc(NetStrings.Fs128(key));
 
+        /// <summary>
+        /// The shop's stock is the one thing players share: every season is simulated separately, so after anything that can
+        /// change a collection the host tells each player how many copies of each viewer the others have taken
+        /// (<see cref="PlayerState.RivalTaken"/>). Only snapshots that changed are sent again.
+        /// </summary>
+        void ServerSyncSharedShop()
+        {
+            if (m_Games.Count < 2) return;
+            int types = GuestCatalog.Count;
+            var taken = new Dictionary<ulong, int[]>(m_Games.Count);
+            var total = new int[types];
+            foreach (var kv in m_Games)
+            {
+                var counts = new int[types];
+                for (int t = 0; t < types; t++)
+                {
+                    counts[t] = PartyEngine.TakenFromShop(kv.Value, (GuestType)t);
+                    total[t] += counts[t];
+                }
+                taken[kv.Key] = counts;
+            }
+
+            var changed = new List<ulong>();
+            foreach (var kv in m_Games)
+            {
+                var own = taken[kv.Key];
+                var rivals = kv.Value.RivalTaken;
+                bool dirty = false;
+                for (int t = 0; t < types && t < rivals.Length; t++)
+                {
+                    int value = total[t] - own[t];
+                    if (rivals[t] == value) continue;
+                    rivals[t] = value;
+                    dirty = true;
+                }
+                if (dirty) changed.Add(kv.Key);
+            }
+            foreach (var id in changed) ServerBroadcastState(id, null);
+        }
+
         /// <summary>Fate's Raid / Ethical F**kboi's Wealth Tax: picks the rival (or uses the one chosen) and applies the power to both seasons.</summary>
         void ServerUseRivalPower(ulong sender, PlayerState state, int requestedIndex)
         {
@@ -776,10 +817,10 @@ namespace DeckParty.Networking
                 switch (e.Type)
                 {
                     case GameEventType.PoliceRaid:
-                        ServerHeadline(Core.Err.Of("mp.swatted", name));
+                        ServerHeadline(Core.Err.Of("mp.platform_ban", name));
                         break;
                     case GameEventType.FireMarshal:
-                        ServerHeadline(Core.Err.Of("mp.crashed", name));
+                        ServerHeadline(Core.Err.Of("mp.server_down", name));
                         break;
                     case GameEventType.PartyEnded:
                         if (e.C == GameRules.DiamondsToWin - 1) ServerHeadline(Core.Err.Of("mp.one_more", name, e.C));

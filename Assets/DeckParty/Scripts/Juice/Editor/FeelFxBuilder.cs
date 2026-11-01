@@ -15,6 +15,15 @@ namespace DeckParty.Juice.EditorTools
     [InitializeOnLoad]
     static class FeelFxBuilder
     {
+        /// <summary>
+        /// Bump when a recipe below is fixed: the cues in <see cref="s_Revised"/> are then regenerated once by the next
+        /// Build Everything / Rebuild, even though prefabs are normally never overwritten.
+        /// Revision 1: Power Used ended 20 degrees rotated (an additive spin that never came back), which left the shop's
+        /// streamer card tilted for the rest of the match, on every player's board.
+        /// </summary>
+        const int RecipeRevision = 1;
+        static readonly FxCue[] s_Revised = { FxCue.PowerUsed };
+
         static FeelFxBuilder()
         {
             FxSetup.FeelBuilder = Build;
@@ -22,12 +31,14 @@ namespace DeckParty.Juice.EditorTools
 
         static void Build(FxLibrary library, bool overwrite)
         {
+            bool revise = library.recipeRevision < RecipeRevision;
             foreach (var entry in library.cues)
             {
                 if (entry == null) continue;
                 string path = $"{FxSetup.Folder}/Feedbacks/FX_{entry.cue}.prefab";
                 var existing = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-                if (existing != null && !overwrite)
+                bool stale = revise && System.Array.IndexOf(s_Revised, entry.cue) >= 0;
+                if (existing != null && !overwrite && !stale)
                 {
                     if (entry.feedback == null) entry.feedback = existing;
                     continue;
@@ -42,6 +53,7 @@ namespace DeckParty.Juice.EditorTools
                 entry.feedback = PrefabUtility.SaveAsPrefabAsset(go, path);
                 Object.DestroyImmediate(go);
             }
+            library.recipeRevision = RecipeRevision;
             EditorUtility.SetDirty(library);
             Debug.Log("[DeckParty] Feel feedback prefabs are in " + FxSetup.Folder + "/Feedbacks.");
         }
@@ -108,10 +120,10 @@ namespace DeckParty.Juice.EditorTools
                 case FxCue.DiamondTracker:
                     Punch(p, 0.4f, 0.4f);
                     break;
-                case FxCue.Swatted:
+                case FxCue.PlatformBan:
                     Shake(p, 26f, 18f, 0.55f);
                     break;
-                case FxCue.Crashed:
+                case FxCue.ServerDown:
                     Shake(p, 18f, 10f, 0.45f);
                     Wobble(p, 3f, 0.45f);
                     break;
@@ -145,8 +157,9 @@ namespace DeckParty.Juice.EditorTools
                     Wobble(p, 4f, 0.3f);
                     break;
                 case FxCue.PowerUsed:
+                    // Everything here must come back to rest: the streamer card is one object shown on every player's board.
                     Pop(p, 0.7f, 0.35f, 1.15f);
-                    Spin(p, 20f, 0.35f);
+                    Wobble(p, 8f, 0.45f, 0.05f);
                     break;
                 case FxCue.ScreenShake:
                     Shake(p, 16f, 12f, 0.35f);

@@ -76,7 +76,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189452
-    m_Localized: 'Pick a rival: their next stream starts with +1 Swatting Risk.'
+    m_Localized: 'Pick a rival: their next stream starts with +1 Platform Ban Risk.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189453
@@ -116,7 +116,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189462
-    m_Localized: Your next stream ignores 1 Swatting Risk.
+    m_Localized: Your next stream ignores 1 Platform Ban Risk.
     m_Metadata:
       m_Items: []
   - m_Id: 496189463
@@ -136,7 +136,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189467
-    m_Localized: 'Passive: viewers carrying Swatting Risk earn +1 Subs.'
+    m_Localized: 'Passive: viewers carrying Platform Ban Risk earn +1 Subs.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -196,8 +196,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189482
-    m_Localized: 'Passive: when you get SWATTED, you still bank half that stream''s
-      Subs.'
+    m_Localized: 'Passive: when your stream gets a Platform Ban, you still bank half
+      that stream''s Subs.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189483
@@ -453,7 +453,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189545
-    m_Localized: ONE MORE AND YOU'RE SWATTED!
+    m_Localized: ONE MORE AND YOU'RE BANNED!
     m_Metadata:
       m_Items: []
   - m_Id: 496189546

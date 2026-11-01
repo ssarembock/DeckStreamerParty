@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using DeckParty.Core;
 using DeckParty.Networking;
 using TMPro;
@@ -32,10 +31,17 @@ namespace DeckParty.UI
         [Header("Side panel")]
         [SerializeField] internal EventLogView log;
         [SerializeField] internal OpponentsView opponents;
+        [Tooltip("Multiplayer text chat. Hidden while FX Library > Text Chat is off (players use emotes); kept for future modes.")]
         [SerializeField] internal ChatView chat;
-        [Tooltip("The Activity / Chat tabs holding the log and the chat.")]
+        [Tooltip("The Activity / Chat tabs holding the log and the chat. Hidden unless the Activity log is on (menu) or text chat is.")]
         [SerializeField] internal SideTabsView feed;
         [SerializeField] internal FacecamView facecam;
+
+        [Header("Stream chat")]
+        [Tooltip("The chat bubble the viewers sit in, with its tail pointing at the scene above.")]
+        [SerializeField] internal ChatBubbleView chatBubble;
+        [Tooltip("Emojis floating up from the viewers in chat.")]
+        [SerializeField] internal ViewerEmojiView viewerEmojis;
 
         [Header("Overlays")]
         [SerializeField] internal GuestPickerView picker;
@@ -45,12 +51,13 @@ namespace DeckParty.UI
         [SerializeField] internal BannerView banner;
         [SerializeField] internal EffectsView effects;
         [SerializeField] internal VenueBackgroundView background;
+        [Tooltip("Full-screen Platform Ban / Server Down images (Game Database > Stream Endings).")]
+        [SerializeField] internal OutcomeSplashView outcomeSplash;
 
         [Header("Polish (optional)")]
         [SerializeField] internal StreamerAnxietyView anxiety;
         [SerializeField] internal PresenceView presence;
         [SerializeField] internal EmoteView emotes;
-        [SerializeField] internal FakeChatView fakeChat;
         [SerializeField] internal StreamOverlayView overlay;
         [SerializeField] internal TurnTimerView turnTimer;
         [SerializeField] internal LinkLinesView links;
@@ -68,10 +75,9 @@ namespace DeckParty.UI
         readonly List<int> m_Arrivals = new List<int>();
         readonly List<int> m_Pulses = new List<int>();
 
-        // Whose board is on screen (multiplayer), plus every player's log lines and last scoring breakdown.
+        // Whose board is on screen (multiplayer), plus every player's log lines.
         ulong m_ViewId;
         readonly Dictionary<ulong, List<string>> m_History = new Dictionary<ulong, List<string>>();
-        readonly Dictionary<ulong, string> m_Breakdowns = new Dictionary<ulong, string>();
 
         // Action targeting: the acting viewer, the option chosen in the choice dialog and the viewers picked so far.
         int m_TargetActor = -1;
@@ -109,6 +115,8 @@ namespace DeckParty.UI
             if (m_Net == null) m_Session.StateChanged += OnStateChanged;
             m_Session.CommandRejected += OnCommandRejected;
             Loc.Changed += OnLanguageChanged;
+            AppSettings.Changed += UpdateFeedVisibility;
+            UpdateFeedVisibility();
 
             if (State != null)
             {
@@ -153,9 +161,7 @@ namespace DeckParty.UI
             m_VenueChoice = venue;
             m_Session = new LocalGameSession(state, venue);
             opponents.gameObject.SetActive(false);
-            if (feed != null) feed.SetChatAvailable(false);
-            else chat.gameObject.SetActive(false);
-            if (emotes != null) emotes.gameObject.SetActive(false);
+            if (emotes != null) SetEmotesVisible(false);
         }
 
         void StartNetwork(DeckPartyNetSession net)
@@ -167,9 +173,8 @@ namespace DeckParty.UI
             if (net.TakingTurns && net.ActivePlayer != DeckPartyNetSession.NoPlayer) m_ViewId = net.ActivePlayer;
 
             opponents.gameObject.SetActive(true);
-            if (feed != null) feed.SetChatAvailable(true);
-            else chat.gameObject.SetActive(true);
-            chat.Bind(net);
+            // Text chat is switched off (players talk with emotes); it still works if FX Library > Text Chat is turned on.
+            if (TextChatOn) chat.Bind(net);
             if (feed != null) feed.MarkRead(SideTabsView.Tab.Chat);
             opponents.PlayerClicked += ShowBoard;
             opponents.PresenceLine = PresenceLine;
@@ -191,7 +196,7 @@ namespace DeckParty.UI
 
             if (emotes != null)
             {
-                emotes.gameObject.SetActive(FxLibrary.Current.emotes);
+                SetEmotesVisible(FxLibrary.Current.emotes);
                 emotes.EmoteClicked += index => net.SendEmote(index);
             }
 
@@ -207,9 +212,36 @@ namespace DeckParty.UI
             return Loc.Get("game.mp_intro", ("set", $"<b>{ContentText.ScenarioName(settings.ScenarioId)}</b>"), ("nights", settings.Nights), ("mode", MatchModes.ShortName(settings.Mode)));
         }
 
+        bool TextChatOn => m_Net != null && FxLibrary.Current.textChat;
+
+        /// <summary>The side panel's Activity log is off unless switched on in the menu; the Chat tab only exists with text chat on.</summary>
+        void UpdateFeedVisibility()
+        {
+            bool activity = AppSettings.ShowActivityLog;
+            bool chatOn = TextChatOn;
+            if (feed != null) feed.SetAvailable(activity, chatOn);
+            else
+            {
+                if (log != null) log.gameObject.SetActive(activity);
+                if (chat != null) chat.gameObject.SetActive(chatOn);
+            }
+        }
+
+        /// <summary>The emote buttons sit in their own panel in the side panel (multiplayer only).</summary>
+        void SetEmotesVisible(bool visible)
+        {
+            emotes.gameObject.SetActive(visible);
+            var panel = emotes.transform.parent;
+            if (panel != null && panel.name == EmoteBarName) panel.gameObject.SetActive(visible);
+        }
+
+        /// <summary>Name of the side panel's emote panel (GameSceneBuilder).</summary>
+        public const string EmoteBarName = "EmoteBar";
+
         void OnDestroy()
         {
             Loc.Changed -= OnLanguageChanged;
+            AppSettings.Changed -= UpdateFeedVisibility;
             EventText.PlayerName = null;
             if (m_Session != null)
             {
@@ -296,7 +328,6 @@ namespace DeckParty.UI
             bool own = owner == LocalId;
             var lines = Describe(s, events, own ? null : NameOf(owner));
             Remember(owner, lines);
-            UpdateBreakdown(owner, events);
             bool switched = false;
 
             if (own)
@@ -368,55 +399,6 @@ namespace DeckParty.UI
             if (history.Count > HistoryLimit) history.RemoveRange(0, history.Count - HistoryLimit);
         }
 
-        void UpdateBreakdown(ulong owner, IReadOnlyList<GameEvent> events)
-        {
-            if (events == null) return;
-            Dictionary<GuestType, (int count, int pop, int cash)> breakdown = null;
-            bool partyEnded = false;
-
-            foreach (var e in events)
-            {
-                switch (e.Type)
-                {
-                    case GameEventType.NightStarted:
-                        m_Breakdowns.Remove(owner);
-                        break;
-                    case GameEventType.GuestScored when e.C != 0:
-                        if (breakdown == null) breakdown = new Dictionary<GuestType, (int count, int pop, int cash)>();
-                        breakdown.TryGetValue(e.Guest, out var entry);
-                        breakdown[e.Guest] = (entry.count + 1, entry.pop + e.A, entry.cash + e.B);
-                        break;
-                    case GameEventType.PartyEnded:
-                        partyEnded = true;
-                        break;
-                }
-            }
-
-            if (partyEnded) m_Breakdowns[owner] = FormatBreakdown(breakdown ?? new Dictionary<GuestType, (int count, int pop, int cash)>());
-        }
-
-        string BreakdownFor(ulong owner) => m_Breakdowns.TryGetValue(owner, out var text) ? text : null;
-
-        static string FormatBreakdown(Dictionary<GuestType, (int count, int pop, int cash)> breakdown)
-        {
-            if (breakdown.Count == 0) return Loc.Get("result.nobody_scored");
-            var entries = new List<KeyValuePair<GuestType, (int count, int pop, int cash)>>(breakdown);
-            entries.Sort((a, b) => (b.Value.pop + b.Value.cash).CompareTo(a.Value.pop + a.Value.cash));
-
-            var sb = new StringBuilder("<b>" + Loc.Get("result.who_scored") + "</b> ");
-            for (int i = 0; i < entries.Count; i++)
-            {
-                if (i > 0) sb.Append(",  ");
-                var (count, pop, cash) = entries[i].Value;
-                sb.Append(GuestVisuals.NameTag(entries[i].Key));
-                if (count > 1) sb.Append(" x").Append(count);
-                sb.Append(' ');
-                if (pop != 0 || cash == 0) sb.Append(GuestVisuals.PopText(pop));
-                if (cash != 0) sb.Append(pop != 0 ? " " : string.Empty).Append(GuestVisuals.CashText(cash));
-            }
-            return sb.ToString();
-        }
-
         // ================================================================== watching other players
 
         string NameOf(ulong clientId) => m_Net != null ? m_Net.PlayerName(clientId) : Loc.Get("common.you");
@@ -446,6 +428,10 @@ namespace DeckParty.UI
                 m_Pulses.Clear();
                 RefillLog();
                 if (presence != null) presence.Clear();
+                // Nothing visual from the previous board may carry over: these objects are shared by every board.
+                if (viewerEmojis != null) viewerEmojis.Clear();
+                if (planning.power != null) planning.power.ResetPose();
+                if (outcomeSplash != null) outcomeSplash.Hide();
                 m_Net.ReportViewing(clientId);
                 Fx.Play(FxCue.BoardSwitch, partyRoot.transform);
                 ApplyVenue(true);
@@ -559,7 +545,7 @@ namespace DeckParty.UI
                 RenderLinks(s);
                 if (party) m_LastLive = s.Clone();
             }
-            if (planningPhase) planning.Render(s, PlanningCtx(), BreakdownFor(m_ViewId));
+            if (planningPhase) planning.Render(s, PlanningCtx());
             if (blame) raidBlame.Render(s, act ? null : Loc.Get("ban.watching", "player", ViewingOwn ? Loc.Get("common.you") : NameOf(m_ViewId)));
 
             int trouble = party ? PartyEngine.NetTrouble(s) : 0;
@@ -570,6 +556,7 @@ namespace DeckParty.UI
             if (anxiety != null) anxiety.Set(anxious, s.Streamer);
             if (overlay != null) overlay.Render(s);
             if (facecam != null) facecam.Render(s, m_Net != null ? NameOf(m_ViewId) : null, ColorOf(m_ViewId), anxious);
+            if (viewerEmojis != null) viewerEmojis.Render(s, party && !m_Scoring);
 
             if (rolodex.IsOpen) rolodex.Refresh(s, ViewOwnerName);
             if (m_Net != null)
@@ -670,6 +657,7 @@ namespace DeckParty.UI
             string choice = ViewingOwn ? m_VenueChoice : AppSettings.VenueAuto;
             var venue = GameDatabase.Instance.ResolveVenue(choice, s);
             if (venue != null) background.Apply(venue, force);
+            if (chatBubble != null) chatBubble.Apply(venue);
         }
 
         void UpdateMusic(PlayerState s)
@@ -755,7 +743,7 @@ namespace DeckParty.UI
             opponents.Render(m_Net, m_ViewId);
             UpdateViewBar();
             var s = View;
-            if (s != null && s.Phase == GamePhase.Planning && !m_Scoring) planning.Render(s, PlanningCtx(), BreakdownFor(m_ViewId));
+            if (s != null && s.Phase == GamePhase.Planning && !m_Scoring) planning.Render(s, PlanningCtx());
             if (m_GameOverShown) ShowMultiplayerResults();
         }
 
@@ -1040,6 +1028,10 @@ namespace DeckParty.UI
                     return m_Picks.Count == 0 ? Loc.Get("target.drake_first", "actor", who) : Loc.Get(m_Option == 0 ? "target.drake_second_subs" : "target.drake_second_cash", "actor", who);
                 case AbilityKind.Bombard:
                     return Loc.Get("target.bombard", "actor", who);
+                case AbilityKind.Photograph: return Loc.Get("target.photograph", "actor", who);
+                case AbilityKind.Style: return Loc.Get("target.style", "actor", who, "cap", GameRules.PermanentCashCap);
+                case AbilityKind.BootPair:
+                    return m_Picks.Count == 0 ? Loc.Get("target.bot_pair_first", "actor", who) : Loc.Get("target.bot_pair_second", "actor", who, "first", first);
                 default: return Loc.Get("target.default", "actor", who);
             }
         }

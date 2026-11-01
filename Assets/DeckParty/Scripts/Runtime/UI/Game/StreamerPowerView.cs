@@ -29,14 +29,35 @@ namespace DeckParty.UI
         public event Action UseClicked;
         public RectTransform UseButtonRect => useButton != null ? (RectTransform)useButton.transform : null;
 
+        string m_Owner;
+
         void Awake()
         {
             if (useButton != null) useButton.onClick.AddListener(() => UseClicked?.Invoke());
         }
 
-        /// <param name="lockReason">Why the button can't be pressed right now (watching, not your turn...), or null.</param>
-        public void Render(PlayerState s, bool rivalsAvailable, string lockReason)
+        void OnDisable() => ResetPose();
+
+        /// <summary>
+        /// Puts the card back at rest. This one card shows whichever player's shop is on screen, so an effect still running
+        /// (or one that ended off-rest) from another player's power must never carry over to the next board.
+        /// </summary>
+        public void ResetPose()
         {
+            transform.localRotation = Quaternion.identity;
+            transform.localScale = Vector3.one;
+        }
+
+        /// <param name="owner">Whose shop this is (null for your own); switching to another player's board resets the card's pose.</param>
+        /// <param name="lockReason">Why the button can't be pressed right now (watching, not your turn...), or null.</param>
+        public void Render(PlayerState s, bool rivalsAvailable, string lockReason, string owner = null)
+        {
+            if (owner != m_Owner)
+            {
+                m_Owner = owner;
+                ResetPose();
+            }
+
             var type = s.Streamer;
             var info = StreamerCatalog.Get(type);
             bool hasStreamer = type != StreamerType.None;
@@ -77,8 +98,7 @@ namespace DeckParty.UI
 
             if (useButton == null) return;
             useButton.gameObject.SetActive(true);
-            StreamerCatalog.Cost(s, out int giftedSubs, out int cash);
-            if (useLabel != null) useLabel.text = Loc.Get("power.use", "cost", StreamerVisuals.CostText(giftedSubs, cash));
+            if (useLabel != null) useLabel.text = Loc.Get("power.use", "cost", StreamerVisuals.CostText(StreamerCatalog.Cost(s)));
             useButton.interactable = blocker == null && lockReason == null;
             if (useTooltip != null) useTooltip.Text = lockReason ?? (blocker != null ? Loc.Error(blocker) : StreamerVisuals.CostRules(type));
         }

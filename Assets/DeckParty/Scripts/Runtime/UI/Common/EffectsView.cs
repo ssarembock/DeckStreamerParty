@@ -56,7 +56,7 @@ namespace DeckParty.UI
 
         public void Shake(float intensity = 16f, float duration = 0.4f) => Fx.Shake(intensity, duration);
 
-        // ------------------------------------------------------------------ danger vignette (Swatting Risk tension)
+        // ------------------------------------------------------------------ danger vignette (Platform Ban Risk tension)
 
         Coroutine m_Vignette;
         float m_VignetteTarget;
@@ -77,7 +77,7 @@ namespace DeckParty.UI
             vignette.color = new Color(1f, 0.15f, 0.2f, 0f);
         }
 
-        /// <summary>Red screen edges that breathe while the stream is one Swatting Risk from the SWAT team (0 = off).</summary>
+        /// <summary>Red screen edges that breathe while the stream is one Platform Ban Risk from a Platform Ban (0 = off).</summary>
         public void SetDanger(float level)
         {
             if (vignette == null) return;

@@ -56,6 +56,16 @@ namespace DeckParty
             return Mathf.Max(body * (x <= 0.4f ? 1f : 0f), head);
         }));
 
+        static Sprite s_TailDown;
+
+        /// <summary>A soft triangle pointing down (the chat bubble's tail until real art is assigned).</summary>
+        public static Sprite TailDown => s_TailDown != null ? s_TailDown : (s_TailDown = Build("dp_tail_down", 64, Vector4.zero, (x, y) =>
+        {
+            // Wide at the top (y = 1), a point at the bottom (y = -1).
+            float half = (y + 1f) * 0.5f * 0.92f;
+            return Mathf.Clamp01((half - Mathf.Abs(x)) * 24f) * Mathf.Clamp01((y + 0.98f) * 24f);
+        }));
+
         static Sprite Build(string name, int size, Vector4 border, Func<float, float, float> alpha)
         {
             var tex = new Texture2D(size, size, TextureFormat.RGBA32, false)

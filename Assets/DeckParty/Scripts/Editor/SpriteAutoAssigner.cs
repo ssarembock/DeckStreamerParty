@@ -35,8 +35,11 @@ namespace DeckParty.EditorTools
         /// <summary>Short names people are likely to use for files, on top of the full names and enum names.</summary>
         static readonly (string alias, GuestType type)[] s_Aliases =
         {
-            ("smm", GuestType.SocialMediaManager), ("mod", GuestType.Moderator), ("collab", GuestType.Collaborator),
-            ("vip", GuestType.Vips), ("parasocial", GuestType.Parasocialite), ("thisisfine", GuestType.ThisIsFineDog),
+            ("troll", GuestType.IneffectiveTroll), ("botfarm", GuestType.IneffectiveTroll), ("producer", GuestType.Producer),
+            ("admin", GuestType.ChatAdmin), ("mod", GuestType.ChatAdmin), ("moderator", GuestType.ChatAdmin), ("automod", GuestType.Normie),
+            ("collab", GuestType.MildlyRiskyCollaborator), ("collaborator", GuestType.MildlyRiskyCollaborator), ("juniorpr", GuestType.JuniorPrManager),
+            ("hodl", GuestType.JuniorPrManager), ("diehard", GuestType.DieHardFan), ("vip", GuestType.DieHardFan), ("marketing", GuestType.MarketingManager),
+            ("parasocial", GuestType.MarketingManager), ("thisisfine", GuestType.ThisIsFineDog),
             ("finedog", GuestType.ThisIsFineDog), ("grumpy", GuestType.GrumpyCat), ("nyan", GuestType.NyanCat),
             ("stonks", GuestType.StonksGuy), ("chad", GuestType.ChadVsVirgin), ("npc", GuestType.NpcWojak),
             ("keyboard", GuestType.KeyboardCat), ("bongo", GuestType.BongoCat), ("popcat", GuestType.PopCat),
@@ -47,10 +50,19 @@ namespace DeckParty.EditorTools
             ("bombardiro", GuestType.BombardiroCrocodilo), ("ballerina", GuestType.BallerinaCappuccina), ("skibidi", GuestType.SkibidiToilet),
             ("sigma", GuestType.SigmaMale), ("distracted", GuestType.DistractedBoyfriend), ("drake", GuestType.Drakeposting),
             ("mathlady", GuestType.ConfusedMathLady), ("chloe", GuestType.SideEyeChloe), ("sideeye", GuestType.SideEyeChloe),
-            ("crying", GuestType.CryingCat), ("baby", GuestType.DancingBaby), ("drama", GuestType.DramaChannel),
-            ("diva", GuestType.DivaStreamer), ("raid", GuestType.RaidLeader), ("vtuber", GuestType.MysteryVTuber),
-            ("wholesome", GuestType.WholesomeIcon), ("admin", GuestType.PlatformAdmin), ("influencer", GuestType.MegaInfluencer),
-            ("sponsor", GuestType.BrandSponsor),
+            ("crying", GuestType.CryingCat), ("baby", GuestType.DancingBaby), ("boomer", GuestType.BigBoomer),
+            ("clippo", GuestType.ClippoTheClanker), ("clanker", GuestType.ClippoTheClanker), ("biggerstar", GuestType.BiggerStar),
+            ("youth", GuestType.PrecociousYouth), ("starpower", GuestType.InternetStarpower), ("owner", GuestType.PlatformOwner),
+            ("celebrity", GuestType.MainstreamCelebrity), ("seniormarketing", GuestType.SeniorMarketingManager), ("surprise", GuestType.SurpriseGuest),
+            ("influential", GuestType.InfluentialTroll), ("cybersecurity", GuestType.CybersecurityEngineer), ("cyber", GuestType.CybersecurityEngineer),
+            ("sponsorship", GuestType.PaidSponsorship), ("comedian", GuestType.ComedianWithAPodcast), ("podcast", GuestType.ComedianWithAPodcast),
+            ("accountmanager", GuestType.AccountManager), ("crypto", GuestType.CryptoGuy), ("donator", GuestType.GenerousDonator),
+            ("prmanager", GuestType.PrManager), ("highlyrisky", GuestType.HighlyRiskyCollaborator), ("arbitrator", GuestType.ChatArbitrator),
+            ("botdetector", GuestType.BotDetector), ("orbiter", GuestType.RiskyOrbiter), ("smm", GuestType.SocialMediaManager),
+            ("socialmedia", GuestType.SocialMediaManager), ("billionaire", GuestType.BillionaireBenefactor), ("techadmin", GuestType.TechAdmin),
+            ("scandal", GuestType.OnlineScandal), ("gatekeeper", GuestType.Gatekeeper), ("bunny", GuestType.BingeBunny),
+            ("rabbit", GuestType.BingeBunny), ("hatewatcher", GuestType.HateWatcher), ("affiliate", GuestType.Affiliate),
+            ("currency", GuestType.MasterOfCurrency), ("executivepr", GuestType.ExecutivePr), ("genz", GuestType.GenZWithJob),
         };
 
         [MenuItem("Deck Party/Art/Auto-Assign Sprites by Name", priority = 0)]

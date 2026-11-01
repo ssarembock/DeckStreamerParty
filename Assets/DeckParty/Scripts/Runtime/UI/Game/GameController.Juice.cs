@@ -35,7 +35,6 @@ namespace DeckParty.UI
 
             foreach (var e in events)
             {
-                if (fakeChat != null) fakeChat.React(e.Type);
                 SignatureFx.OnEvent(e, house, effects);
 
                 switch (e.Type)
@@ -72,6 +71,30 @@ namespace DeckParty.UI
                             Consider(Sfx.Coin, 3);
                         }
                         break;
+                    case GameEventType.ScoredNow:
+                    {
+                        // Banked mid-stream (Crypto Guy, Generous Donator): the take flies straight to the wallet.
+                        m_Pulses.Add(e.GuestId);
+                        var card = house.FindCard(e.GuestId);
+                        if (card != null)
+                        {
+                            string chip = e.B != 0 ? $"{GuestVisuals.PopText(e.A)} {GuestVisuals.CashText(e.B)}" : GuestVisuals.PopText(e.A);
+                            effects.FlyChip(chip, card.AnimRoot.position, hud.popLabel.transform.position);
+                        }
+                        Fx.Play(FxCue.CounterPunch, hud.popLabel.transform, 1.2f);
+                        Consider(Sfx.Coin, 4);
+                        break;
+                    }
+                    case GameEventType.InterviewGiven:
+                    case GameEventType.CashBoosted:
+                        m_Pulses.Add(e.GuestId);
+                        if (e.Type == GameEventType.InterviewGiven) Fx.Play(FxCue.CounterPunch, hud.cashLabel.transform, 1.2f);
+                        Consider(Sfx.Coin, 3);
+                        break;
+                    case GameEventType.MoodFlipped:
+                        m_Pulses.Add(e.GuestId);
+                        if (e.A != 0) Fx.Play(FxCue.RiskPip, hud.troubleLabel.transform);
+                        break;
                     case GameEventType.GuestGained:
                     case GameEventType.PartyPotGained:
                         m_Pulses.Add(e.GuestId);
@@ -101,17 +124,26 @@ namespace DeckParty.UI
                         Consider(Sfx.Ability, 8);
                         break;
                     case GameEventType.PoliceRaid:
-                        banner.Show(Terms.Raid, who == null ? Loc.Get("game.swatted_sub") : Loc.Get("game.swatted_sub_other", "player", who), UIPalette.Red, 1.6f);
-                        Swatted();
+                    {
+                        string sub = who == null ? Loc.Get("game.banned_sub") : Loc.Get("game.banned_sub_other", "player", who);
+                        // Your Platform Ban image when there is one, otherwise the text banner.
+                        if (outcomeSplash == null || !outcomeSplash.Show(GameDatabase.Instance.platformBanImage, Terms.Raid + "\n<size=55%>" + sub + "</size>", UIPalette.Red))
+                            banner.Show(Terms.Raid, sub, UIPalette.Red, 1.6f);
+                        PlatformBanned();
                         if (facecam != null) facecam.React(CharacterState.Hit);
                         Consider(Sfx.Raid, 9);
                         break;
+                    }
                     case GameEventType.FireMarshal:
-                        banner.Show(Terms.Overload, Loc.Get("game.overload_sub", "filled", e.A, "cap", e.B), UIPalette.Orange, 1.6f);
-                        Crashed();
+                    {
+                        string sub = Loc.Get("game.server_down_sub", "filled", e.A, "cap", e.B);
+                        if (outcomeSplash == null || !outcomeSplash.Show(GameDatabase.Instance.serverDownImage, Terms.Overload + "\n<size=55%>" + sub + "</size>", UIPalette.Orange))
+                            banner.Show(Terms.Overload, sub, UIPalette.Orange, 1.6f);
+                        ServerDown();
                         if (facecam != null) facecam.React(CharacterState.Hit);
                         Consider(Sfx.FireMarshal, 9);
                         break;
+                    }
                     case GameEventType.PartyEnded:
                         effects.FloatText($"{GuestVisuals.PopText(e.A)}   {GuestVisuals.CashText(e.B)}", new Vector2(0f, 60f));
                         if (facecam != null) facecam.React(CharacterState.Celebrate);
@@ -179,10 +211,10 @@ namespace DeckParty.UI
             if (soundPriority >= 0) AudioService.Play(sound);
         }
 
-        /// <summary>C11: SWATTED! A strong shake, the police strobe, a red flash and every card glitching.</summary>
-        void Swatted()
+        /// <summary>C11: Platform Ban! A strong shake, the strobing lights, a red flash and every card glitching.</summary>
+        void PlatformBanned()
         {
-            Fx.Play(FxCue.Swatted, Fx.ShakeRoot != null ? Fx.ShakeRoot : partyRoot.transform);
+            Fx.Play(FxCue.PlatformBan, Fx.ShakeRoot != null ? Fx.ShakeRoot : partyRoot.transform);
             Fx.Shake(24f, 0.5f);
             effects.Flash(UIPalette.Red);
             background.PoliceLights();
@@ -191,10 +223,10 @@ namespace DeckParty.UI
                 if (card.gameObject.activeSelf && card.Fx != null) card.Fx.Pulse(CardPulse.Glitch);
         }
 
-        /// <summary>C12: Sub Cap exceeded, the stream crashes: cards vibrate and pixelate.</summary>
-        void Crashed()
+        /// <summary>C12: Server Down (chat over the Sub Cap): cards vibrate and pixelate.</summary>
+        void ServerDown()
         {
-            Fx.Play(FxCue.Crashed, Fx.ShakeRoot != null ? Fx.ShakeRoot : partyRoot.transform);
+            Fx.Play(FxCue.ServerDown, Fx.ShakeRoot != null ? Fx.ShakeRoot : partyRoot.transform);
             Fx.Shake(18f, 0.45f);
             effects.Flash(UIPalette.Orange);
             AudioService.Duck(1.4f);
@@ -235,10 +267,10 @@ namespace DeckParty.UI
         void PurchaseFlourish(GuestType type)
         {
             if (!planning.gameObject.activeInHierarchy) return;
-            var row = planning.FindRow(type);
-            var from = row != null ? row.PortraitRect.position : planning.transform.position;
+            var item = planning.FindItem(type);
+            var from = item != null ? item.PortraitRect.position : planning.transform.position;
             effects.FlyChip(GuestVisuals.NameTag(type), from, planning.RolodexButtonRect.position);
-            if (row != null) Fx.Play(FxCue.Purchase, row.transform);
+            if (item != null) Fx.Play(FxCue.Purchase, item.AnimRoot);
             Fx.Play(FxCue.CounterPunch, planning.RolodexButtonRect, 1.2f);
         }
 

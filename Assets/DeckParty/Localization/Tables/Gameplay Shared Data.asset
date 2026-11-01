@@ -1211,6 +1211,150 @@ MonoBehaviour:
     m_Key: rules.quick
     m_Metadata:
       m_Items: []
+  - m_Id: 416591918612480
+    m_Key: stamp.Producer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721344
+    m_Key: stamp.ChatAdmin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721345
+    m_Key: stamp.JuniorPrManager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721346
+    m_Key: stamp.PlatformOwner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721347
+    m_Key: stamp.SurpriseGuest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721348
+    m_Key: stamp.PrManager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721349
+    m_Key: stamp.CybersecurityEngineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721350
+    m_Key: stamp.CryptoGuy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721351
+    m_Key: stamp.ChatArbitrator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721352
+    m_Key: stamp.BotDetector
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721353
+    m_Key: stamp.BillionaireBenefactor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721354
+    m_Key: stamp.TechAdmin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721355
+    m_Key: stamp.Affiliate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721356
+    m_Key: stamp.GenerousDonator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721357
+    m_Key: stamp.HateWatcher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721358
+    m_Key: family.Tbd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721359
+    m_Key: card.grows_cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721360
+    m_Key: card.if_full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721361
+    m_Key: card.per_risky
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721362
+    m_Key: card.base_stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721363
+    m_Key: card.hate_watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721364
+    m_Key: card.next_hate_watch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721365
+    m_Key: card.tag.risk_sometimes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721366
+    m_Key: status.no_subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721367
+    m_Key: log.platform_ban
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721368
+    m_Key: log.server_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721369
+    m_Key: log.scored_now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721370
+    m_Key: log.interview
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721371
+    m_Key: log.cash_boosted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721372
+    m_Key: log.hate_watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721373
+    m_Key: log.just_watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109952
+    m_Key: err.would_ban
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109953
+    m_Key: err.not_banned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109954
+    m_Key: err.no_risky
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109955
+    m_Key: err.interview_used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109956
+    m_Key: err.sold_out
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

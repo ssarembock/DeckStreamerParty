@@ -21,8 +21,8 @@ namespace DeckParty.Core
         GuestScored = 5,       // Guest, A = pop, B = cash, C = 1 for end-of-party scoring
         AbilityUsed = 6,       // Guest = actor, A = target A, B = target B, C = option
         EveryoneOutside = 7,   // Guest = actor, A = count
-        PoliceRaid = 8,        // A = net Swatting Risk
-        FireMarshal = 9,       // A = occupancy, B = capacity
+        PoliceRaid = 8,        // Platform Ban. A = net Platform Ban Risk
+        FireMarshal = 9,       // Server Down. A = occupancy, B = capacity
         PartyEnded = 10,       // A = pop, B = cash, C = diamonds
         CashShortfall = 11,    // A = unpaid cash, B = penalty
         GuestBlamed = 12,      // Guest (temporary ban)
@@ -34,7 +34,7 @@ namespace DeckParty.Core
         PartyPotGained = 18,   // Guest = source, A = pop, B = cash (paid straight into tonight's take)
         TroubleAdded = 19,     // Guest, A = amount
         TroubleRemoved = 20,   // Guest, A = amount
-        ThisIsFine = 21,       // Guest = dog, A = Swatting Risk cleared
+        ThisIsFine = 21,       // Guest = dog, A = Platform Ban Risk cleared
         Infected = 22,         // Guest = infected, A = source id
         Attached = 23,         // Guest = Overly Attached Girlfriend, A = partner id
         StatsCopied = 24,      // Guest = NPC Wojak, A = source id, B = pop, C = cash
@@ -58,19 +58,25 @@ namespace DeckParty.Core
         TemporaryCopiesLeft = 42,// A = count
 
         // Streamer powers
-        PowerUsed = 43,        // A = streamer, B = Gifted Subs paid, C = Cash paid
-        HeatApplied = 44,      // A = Swatting Risk from rivals' raids at the start of this stream
-        ShieldApplied = 45,    // A = Swatting Risk ignored this stream (Smoke Bomb)
+        PowerUsed = 43,        // A = streamer, B = Cash paid
+        HeatApplied = 44,      // A = Platform Ban Risk from rivals' raids at the start of this stream
+        ShieldApplied = 45,    // A = Platform Ban Risk ignored this stream (Smoke Bomb)
         GiveawayActive = 46,   // A = extra Subs per viewer this stream
         PalCaught = 47,        // Guest = the viewer caught from the shop
-        SoftLanding = 48,      // A = Gifted Subs banked despite the SWAT team
+        SoftLanding = 48,      // A = Gifted Subs banked despite the Platform Ban
         StreakBonus = 49,      // A = bonus Subs, B = streak length
         FreeActionUsed = 50,   // Guest = the viewer whose action refreshed (Double Move)
         XRayActive = 51,       // A = how many queued viewers are visible
-        RaidReceived = 52,     // A = Swatting Risk added to your next stream, B = raider's player index
+        RaidReceived = 52,     // A = Platform Ban Risk added to your next stream, B = raider's player index
         TaxPaid = 53,          // A = Cash paid, B = taxer's player index
         TaxReceived = 54,      // A = Cash received, B = payer's player index
         DoubleMoveActive = 55, // A = free action refreshes this stream
+
+        // V3 audience classics
+        InterviewGiven = 56,   // Guest = Billionaire Benefactor, A = Cash banked, B = viewers whose Subs dropped to 0
+        CashBoosted = 57,      // Guest, A = delta, B = new permanent Cash bonus
+        ScoredNow = 58,        // Guest = viewer scored mid-stream (banked), A = Subs, B = Cash, C = source viewer id
+        MoodFlipped = 59,      // Guest = Hate-Watcher, A = 1 now hate-watching (risky), 0 now harmless
     }
 
     public struct GameEvent

@@ -78,7 +78,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 496189452
     m_Localized: "Escolha um rival: a pr\xF3xima live dele come\xE7a com +1 de risco
-      de pol\xEDcia."
+      de banimento."
     m_Metadata:
       m_Items: []
   - m_Id: 496189453
@@ -119,7 +119,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189462
-    m_Localized: "Sua pr\xF3xima live ignora 1 de risco de pol\xEDcia."
+    m_Localized: "Sua pr\xF3xima live ignora 1 de risco de banimento."
     m_Metadata:
       m_Items: []
   - m_Id: 496189463
@@ -139,7 +139,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189467
-    m_Localized: "Passivo: espectadores com risco de pol\xEDcia ganham +1 Subs."
+    m_Localized: 'Passivo: espectadores com risco de banimento ganham +1 Subs.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -199,8 +199,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189482
-    m_Localized: "Passivo: se a pol\xEDcia chegar, voc\xEA ainda fica com metade
-      dos Subs daquela live."
+    m_Localized: "Passivo: se sua live for banida, voc\xEA ainda fica com metade
+      dos Subs dela."
     m_Metadata:
       m_Items: []
   - m_Id: 496189483
@@ -457,7 +457,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189545
-    m_Localized: "MAIS UM E A POL\xCDCIA CHEGA!"
+    m_Localized: "MAIS UM E VOC\xCA \xC9 BANIDO!"
     m_Metadata:
       m_Items: []
   - m_Id: 496189546

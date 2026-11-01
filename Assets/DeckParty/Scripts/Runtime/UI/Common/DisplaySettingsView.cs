@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
     /// <summary>
     /// The Display &amp; Language block shared by the main menu Settings screen and the in-game Menu: language, window mode,
-    /// resolution (with a 10-second "keep these settings?" countdown), screen shake, reduce flashing and the fake chat.
+    /// resolution (with a 10-second "keep these settings?" countdown), screen shake, reduce flashing and the Activity log.
     /// </summary>
     public sealed class DisplaySettingsView : MonoBehaviour
     {
@@ -20,7 +21,9 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text applyLabel;
         [SerializeField] internal Slider shakeSlider;
         [SerializeField] internal ToggleSwitch reduceFlashingToggle;
-        [SerializeField] internal ToggleSwitch fakeChatToggle;
+        [Tooltip("Shows the Activity log in the game's side panel (off by default).")]
+        [FormerlySerializedAs("fakeChatToggle")]
+        [SerializeField] internal ToggleSwitch activityLogToggle;
 
         readonly List<string> m_LanguageCodes = new List<string>();
         List<DisplayResolution> m_Resolutions;
@@ -44,7 +47,7 @@ namespace DeckParty.UI
             if (applyButton != null) applyButton.onClick.AddListener(OnApply);
             if (shakeSlider != null) shakeSlider.onValueChanged.AddListener(v => AppSettings.ScreenShake = v);
             if (reduceFlashingToggle != null) reduceFlashingToggle.Changed += v => AppSettings.ReduceFlashing = v;
-            if (fakeChatToggle != null) fakeChatToggle.Changed += v => AppSettings.FakeChat = v;
+            if (activityLogToggle != null) activityLogToggle.Changed += v => AppSettings.ShowActivityLog = v;
             Loc.Changed += Refresh;
         }
 
@@ -88,7 +91,7 @@ namespace DeckParty.UI
 
             if (shakeSlider != null) shakeSlider.SetValueWithoutNotify(AppSettings.ScreenShake);
             if (reduceFlashingToggle != null) reduceFlashingToggle.Value = AppSettings.ReduceFlashing;
-            if (fakeChatToggle != null) fakeChatToggle.Value = AppSettings.FakeChat;
+            if (activityLogToggle != null) activityLogToggle.Value = AppSettings.ShowActivityLog;
             UpdateApplyLabel();
         }
 

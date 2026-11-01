@@ -6,7 +6,7 @@ namespace DeckParty.Core
     public enum GamePhase : byte
     {
         Party = 0,      // Doors are open.
-        RaidBlame = 1,  // The SWAT team came; choose who gets the Temporary Ban.
+        RaidBlame = 1,  // The stream got a Platform Ban; choose who gets the Temporary Ban.
         Planning = 2,   // Spend Gifted Subs and Cash, then start the next night.
         Victory = 3,
         Defeat = 4,
@@ -16,7 +16,9 @@ namespace DeckParty.Core
     {
         None = 0,
         Success = 1,
+        /// <summary>Platform Ban: too much Platform Ban Risk.</summary>
         Raid = 2,
+        /// <summary>Server Down: chat went over the Sub Cap.</summary>
         FireMarshal = 3,
     }
 
@@ -39,15 +41,18 @@ namespace DeckParty.Core
 
         // Permanent
         public int BonusPop;        // Permanent Subs change (Chad vs Virgin, Tung Tung, Bad Luck Brian).
+        public int BonusCash;       // Permanent Cash change (Affiliate's Checkout Code, Gen Z with Job's entrances).
         public int TrolledCount;    // Times Trollface has trolled this guest.
         public int StrikeCount;     // Tung Tung Tung Sahur strikes so far (0-2).
         public bool Temporary;      // Ugandan Knuckles copy: vanishes when the party ends.
+        public bool Wolf;           // Hate-Watcher: hate-watching (risky) since their last entrance. Flips on every entrance.
 
         // Tonight only (cleared when the party ends)
         public int PartyPop;               // Subs this guest gained tonight.
         public int PartyCash;              // Cash this guest gained tonight.
-        public int PartyTrouble;           // Extra Swatting Risk added tonight.
-        public bool TroubleCleared;        // Printed Swatting Risk removed for the rest of the party.
+        public int PartyTrouble;           // Extra Platform Ban Risk added tonight.
+        public bool TroubleCleared;        // Printed Platform Ban Risk removed for the rest of the party.
+        public bool SubsMuted;             // Billionaire Benefactor's Softball Interview: earns 0 Subs tonight.
         public byte Disguise = NoDisguise; // Rickroll: the character this guest is pretending to be.
         public bool HasCopy;               // NPC Wojak copied stats.
         public int CopyPop;
@@ -82,6 +87,7 @@ namespace DeckParty.Core
             PartyCash = 0;
             PartyTrouble = 0;
             TroubleCleared = false;
+            SubsMuted = false;
             Disguise = NoDisguise;
             HasCopy = false;
             CopyPop = 0;
@@ -142,6 +148,15 @@ namespace DeckParty.Core
         public int LastRandomArrival = -1;
         public int AttractionActor = -1;
         public readonly List<int> AttractionCandidates = new List<int>();
+        /// <summary>A Billionaire Benefactor already gave the Softball Interview this stream (once per stream, for all of them).</summary>
+        public bool PartyInterviewUsed;
+
+        // Shared shop (multiplayer)
+        /// <summary>
+        /// Per guest type: copies the other players in the match have taken from the shared shop (their copies beyond the
+        /// starting audience). Maintained by the host and sent with every snapshot; always zero in single player.
+        /// </summary>
+        public readonly int[] RivalTaken = new int[GuestCatalog.Count];
 
         // Last party summary
         public PartyOutcome LastOutcome;
@@ -159,14 +174,14 @@ namespace DeckParty.Core
         public int PowerCooldown;
         /// <summary>A next-stream power bought in the shop, waiting for the next stream to start.</summary>
         public bool PowerArmed;
-        /// <summary>Swatting Risk rivals' raids will add to your next stream.</summary>
+        /// <summary>Platform Ban Risk rivals' raids will add to your next stream.</summary>
         public int IncomingHeat;
         /// <summary>Successful streams in a row (Manim Maketh Man's bonus).</summary>
         public int Streak;
 
         // Current stream: streamer power effects
-        public int PartyHeat;          // Swatting Risk from rivals' raids.
-        public int PartyShield;        // Swatting Risk ignored (Smoke Bomb).
+        public int PartyHeat;          // Platform Ban Risk from rivals' raids.
+        public int PartyShield;        // Platform Ban Risk ignored (Smoke Bomb).
         public int PartyViewerBonus;   // Extra Subs per viewer (Giveaway).
         public int PartyFreeActions;   // Viewer actions that refresh after use (Double Move).
         public bool PartyXRay;         // The next viewers in the queue are visible (X-Ray Vision).

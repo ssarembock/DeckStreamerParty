@@ -112,7 +112,7 @@ namespace DeckParty.UI
 
         static string Stats(PlayerState s)
         {
-            string text = Loc.Get("over.stats1", ("great", s.SuccessfulParties), ("swatted", s.Raids), ("crashed", s.FireMarshals)) + "\n" +
+            string text = Loc.Get("over.stats1", ("great", s.SuccessfulParties), ("banned", s.Raids), ("server_down", s.FireMarshals)) + "\n" +
                           Loc.Get("over.stats2", ("subs", s.TotalPopEarned), ("cash", s.TotalCashEarned), ("viewers", s.PermanentCount),
                               ("diamonds", s.DiamondsOwned()), ("cap", s.Capacity));
             if (s.Streamer != StreamerType.None)

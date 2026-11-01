@@ -33,8 +33,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Bot Farm
-    key: BotFarm
+  - name: Ineffective Troll
+    key: IneffectiveTroll
     type: 2
     portrait: {fileID: -2092036663, guid: f2248c449efb82747bb5106359d41f34, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -43,8 +43,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Social Media Manager
-    key: SocialMediaManager
+  - name: Producer
+    key: Producer
     type: 3
     portrait: {fileID: 541896646, guid: f2248c449efb82747bb5106359d41f34, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -53,8 +53,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Moderator
-    key: Moderator
+  - name: Chat Admin
+    key: ChatAdmin
     type: 4
     portrait: {fileID: 1557067447, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -63,8 +63,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: AutoMod
-    key: AutoMod
+  - name: Normie
+    key: Normie
     type: 5
     portrait: {fileID: -2107843817, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -73,8 +73,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Collaborator
-    key: Collaborator
+  - name: Mildly Risky Collaborator
+    key: MildlyRiskyCollaborator
     type: 6
     portrait: {fileID: 1804695789, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -83,8 +83,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: HODL
-    key: Hodl
+  - name: Junior PR Manager
+    key: JuniorPrManager
     type: 7
     portrait: {fileID: 785415261557809399, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -93,8 +93,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: VIPS
-    key: Vips
+  - name: Die Hard Fan
+    key: DieHardFan
     type: 8
     portrait: {fileID: -2119688159, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -103,8 +103,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Parasocialite
-    key: Parasocialite
+  - name: Marketing Manager
+    key: MarketingManager
     type: 9
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -513,8 +513,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Drama Channel
-    key: DramaChannel
+  - name: Big Boomer
+    key: BigBoomer
     type: 50
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -523,8 +523,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Diva Streamer
-    key: DivaStreamer
+  - name: Clippo The Clanker
+    key: ClippoTheClanker
     type: 51
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -533,8 +533,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Raid Leader
-    key: RaidLeader
+  - name: Bigger Star
+    key: BiggerStar
     type: 52
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -543,8 +543,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Mystery VTuber
-    key: MysteryVTuber
+  - name: Precocious Youth
+    key: PrecociousYouth
     type: 53
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -553,8 +553,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Wholesome Icon
-    key: WholesomeIcon
+  - name: Internet Starpower
+    key: InternetStarpower
     type: 54
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -563,8 +563,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Platform Admin
-    key: PlatformAdmin
+  - name: Platform Owner
+    key: PlatformOwner
     type: 55
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -573,8 +573,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Mega Influencer
-    key: MegaInfluencer
+  - name: Mainstream Celebrity
+    key: MainstreamCelebrity
     type: 56
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -583,8 +583,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Brand Sponsor
-    key: BrandSponsor
+  - name: Senior Marketing Manager
+    key: SeniorMarketingManager
     type: 57
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
@@ -593,9 +593,239 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: The Algorithm
-    key: Algorithm
+  - name: Surprise Guest
+    key: SurpriseGuest
     type: 58
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Influential Troll
+    key: InfluentialTroll
+    type: 59
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Cybersecurity Engineer
+    key: CybersecurityEngineer
+    type: 60
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Paid Sponsorship
+    key: PaidSponsorship
+    type: 61
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Comedian with a Podcast
+    key: ComedianWithAPodcast
+    type: 62
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Account Manager
+    key: AccountManager
+    type: 63
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Crypto Guy
+    key: CryptoGuy
+    type: 64
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Generous Donator
+    key: GenerousDonator
+    type: 65
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: PR Manager
+    key: PrManager
+    type: 66
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Highly Risky Collaborator
+    key: HighlyRiskyCollaborator
+    type: 67
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Chat Arbitrator
+    key: ChatArbitrator
+    type: 68
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Bot Detector
+    key: BotDetector
+    type: 69
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Risky Orbiter
+    key: RiskyOrbiter
+    type: 70
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Social Media Manager
+    key: SocialMediaManager
+    type: 71
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Billionaire Benefactor
+    key: BillionaireBenefactor
+    type: 72
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Tech Admin
+    key: TechAdmin
+    type: 73
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Online Scandal
+    key: OnlineScandal
+    type: 74
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Gatekeeper
+    key: Gatekeeper
+    type: 75
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Binge Bunny
+    key: BingeBunny
+    type: 76
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Hate-Watcher
+    key: HateWatcher
+    type: 77
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Affiliate
+    key: Affiliate
+    type: 78
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Master of Currency
+    key: MasterOfCurrency
+    type: 79
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Executive PR
+    key: ExecutivePr
+    type: 80
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Gen Z with Job
+    key: GenZWithJob
+    type: 81
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
     characterPrefab: {fileID: 0}
@@ -748,3 +978,44 @@ MonoBehaviour:
   audio: {fileID: 11400000, guid: 93270d33cd5806648b9a504b8edb25ce, type: 2}
   fx: {fileID: 11400000, guid: 4d3f5767d94834b47868635c30c55b64, type: 2}
   portraitStage: {fileID: 3230262368666778877, guid: 37ba0a174d98f9e4f97a33e4ee04f39f, type: 3}
+  chatBubble: {fileID: 0}
+  chatBubbleTail: {fileID: 0}
+  chatBubbleTint: {r: 1, g: 1, b: 1, a: 1}
+  viewerEmojis:
+    peaceful: []
+    argumentative: []
+    angry: []
+    calmInterval: 3.2
+    tenseInterval: 1.8
+    heatedInterval: 0.9
+    size: 64
+    rise: 110
+    lifetime: 1.8
+  emotes: []
+  platformBanImage: {fileID: 0}
+  serverDownImage: {fileID: 0}
+  groupIcons:
+  - name: Community
+    group: 0
+    icon: {fileID: 0}
+  - name: Animal
+    group: 1
+    icon: {fileID: 0}
+  - name: Wojak
+    group: 2
+    icon: {fileID: 0}
+  - name: RageComic
+    group: 3
+    icon: {fileID: 0}
+  - name: Reaction
+    group: 4
+    icon: {fileID: 0}
+  - name: Brainrot
+    group: 5
+    icon: {fileID: 0}
+  - name: Diamond
+    group: 6
+    icon: {fileID: 0}
+  - name: TBD (to be determined)
+    group: 7
+    icon: {fileID: 0}

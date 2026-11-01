@@ -249,8 +249,8 @@ namespace DeckParty.EditorTools
         }
 
         /// <summary>
-        /// The Display &amp; Language block (language, window mode, resolution + Apply, screen shake, reduce flashing, fake chat),
-        /// shared by the Settings screen and the in-game menu.
+        /// The Display &amp; Language block (language, window mode, resolution + Apply, screen shake, reduce flashing, Activity
+        /// log), shared by the Settings screen and the in-game menu.
         /// </summary>
         public static DisplaySettingsView DisplayBlock(Transform parent, float labelWidth = 260f)
         {
@@ -277,8 +277,9 @@ namespace DeckParty.EditorTools
             var shake = MainMenuSceneBuilder.SliderRow(root, "Shake", "settings.shake", labelWidth);
             var reduce = EditorUI.Toggle(root, "ReduceFlashing", "settings.reduce_flashing");
             EditorUI.Layout(reduce, -1, 56);
-            var fakeChat = EditorUI.Toggle(root, "FakeChat", "settings.fake_chat");
-            EditorUI.Layout(fakeChat, -1, 56);
+            // The Activity log is off by default (the side panel stays clear); players can switch it on here.
+            var activityLog = EditorUI.Toggle(root, "ActivityLog", "settings.activity_log");
+            EditorUI.Layout(activityLog, -1, 56);
 
             var view = root.gameObject.AddComponent<DisplaySettingsView>();
             view.languageSelector = language;
@@ -288,7 +289,7 @@ namespace DeckParty.EditorTools
             view.applyLabel = applyLabel;
             view.shakeSlider = shake;
             view.reduceFlashingToggle = reduce;
-            view.fakeChatToggle = fakeChat;
+            view.activityLogToggle = activityLog;
             return view;
         }
     }

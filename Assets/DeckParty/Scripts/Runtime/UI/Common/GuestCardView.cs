@@ -235,7 +235,7 @@ namespace DeckParty.UI
                 : GuestVisuals.DisplayName(shown);
             statsLabel.text = live ? GuestVisuals.LiveStats(state, guest) : GuestVisuals.BaseStats(info);
 
-            bool cleared = live && guest.TroubleCleared && info.Trouble;
+            bool cleared = live && guest.TroubleCleared && PartyEngine.PrintedTrouble(guest);
             bool trouble = live ? PartyEngine.HasTroubleProperty(state, guest) || cleared : info.Trouble;
             starBadge.SetActive(info.IsDiamond);
             troubleBadge.SetActive(trouble);
@@ -243,9 +243,12 @@ namespace DeckParty.UI
                 troubleIcon.color = trouble && live && !PartyEngine.HasTroubleProperty(state, guest) ? UIPalette.TextDim.WithAlpha(0.6f) : UIPalette.Red;
             cancelBadge.SetActive(live ? PartyEngine.CancelsTroubleNow(state, guest) : info.CancelsTrouble);
 
+            // Permanent upgrades: Subs (pink badge) first, otherwise Cash (Checkout Code, Gen Z with Job).
             int bonus = guest.BonusPop;
-            bonusBadge.SetActive(bonus != 0);
-            if (bonusLabel != null) bonusLabel.text = (bonus > 0 ? "+" : "") + bonus;
+            int bonusCash = guest.BonusCash;
+            bonusBadge.SetActive(bonus != 0 || bonusCash != 0);
+            if (bonusLabel != null)
+                bonusLabel.text = bonus != 0 ? (bonus > 0 ? "+" : "") + bonus : (bonusCash > 0 ? "+" : "") + bonusCash + Terms.CashSymbol;
 
             if (frame != null)
             {

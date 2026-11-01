@@ -1,3 +1,5 @@
+> V3 note: the fake chat is gone, Swatting is now **Platform Ban**, the Sub Cap crash is **Server Down**, and the shop and side panel changed. See **V3Instructions.md** for what's current.
+
 # Deck Party V2 (Audience Capture): getting the update into Unity and testing it
 
 This is the polish update planned in `PlanForPolish.md`. Players now see the game as **Audience Capture**. The product name, the repo and the Unity project are still "Deck Party". The update adds:

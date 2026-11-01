@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// When a stream is one Swatting Risk from the SWAT team, the streamer drops in at the top of the screen looking
+    /// When a stream is one Platform Ban Risk from a Platform Ban, the streamer drops in at the top of the screen looking
     /// anxious (their Anxious animation if they have one, otherwise a sweating, trembling portrait), with an
     /// intermittent Feel shake. The panel sits on this object's RectTransform (move or resize it in the Game scene).
     /// </summary>

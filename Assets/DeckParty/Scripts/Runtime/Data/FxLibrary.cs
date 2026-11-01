@@ -23,8 +23,8 @@ namespace DeckParty
         RiskPip = 13,
         SubCapFull = 14,
         DiamondTracker = 15,
-        Swatted = 16,
-        Crashed = 17,
+        PlatformBan = 16,
+        ServerDown = 17,
         ScoreTick = 18,
         Victory = 19,
         Defeat = 20,
@@ -62,6 +62,9 @@ namespace DeckParty
             public bool enabled = true;
         }
 
+        /// <summary>Which revision of the generated Feel recipes this library's prefabs were built with (see FeelFxBuilder).</summary>
+        [HideInInspector] public int recipeRevision;
+
         [Header("Global")]
         [Tooltip("Multiplies every Feel duration (the Fast Animations setting halves it on top).")]
         [Range(0.25f, 3f)] public float durationMultiplier = 1f;
@@ -86,19 +89,21 @@ namespace DeckParty
         [Header("Nice-to-haves")]
         [Tooltip("N1: signature effects and stamps for every viewer action and arrival special.")]
         public bool signatureEffects = true;
-        [Tooltip("N3: a fake Twitch-style chat feed that reacts to what happens.")]
-        public bool fakeChat = true;
         [Tooltip("N4: LIVE badge and stream timer on the board.")]
         public bool streamOverlay = true;
-        [Tooltip("N5: emotes players can send (they float up on every screen).")]
+        [Tooltip("N5: emotes players can send (they pop up from the sender's avatar on every screen).")]
         public bool emotes = true;
+        [Tooltip("Viewers in chat send emojis that float up (art in the Game Database > Viewer Emojis).")]
+        public bool viewerEmojis = true;
+        [Tooltip("Multiplayer text chat (lobby and game). Off: players talk with emotes only. The chat code is kept for future modes.")]
+        public bool textChat = false;
         [Tooltip("N6: watchers see the active player's mouse pointer.")]
         public bool ghostCursor = true;
         [Tooltip("N7: cards tilt slightly toward the cursor.")]
         public bool cardTilt = true;
         [Tooltip("N8: static portraits breathe gently so un-animated characters feel alive.")]
         public bool idleBreathing = true;
-        [Tooltip("N9: background lights react to Swatting Risk.")]
+        [Tooltip("N9: background lights react to Platform Ban Risk.")]
         public bool reactiveBackground = true;
         [Tooltip("N10: shine and glitch on the title, animated menu background.")]
         public bool shinyTitle = true;

@@ -91,7 +91,7 @@ namespace DeckParty
             m_LowPass.cutoffFrequency = Mathf.MoveTowards(m_LowPass.cutoffFrequency, cutoff, Time.unscaledDeltaTime * 40000f);
         }
 
-        /// <summary>Ducks the music for a moment so a big sound (SWATTED!, a Diamond, a win) lands.</summary>
+        /// <summary>Ducks the music for a moment so a big sound (Platform Ban!, a Diamond, a win) lands.</summary>
         public static void Duck(float seconds = 1.2f)
         {
             var service = Instance;

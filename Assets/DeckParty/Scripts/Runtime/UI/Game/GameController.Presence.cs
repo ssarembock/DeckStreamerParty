@@ -165,8 +165,8 @@ namespace DeckParty.UI
                 },
                 type =>
                 {
-                    var row = planning.gameObject.activeInHierarchy ? planning.FindRow(type) : null;
-                    return row != null ? (RectTransform)row.transform : null;
+                    var item = planning.gameObject.activeInHierarchy ? planning.FindItem(type) : null;
+                    return item != null ? (RectTransform)item.transform : null;
                 },
                 PresenceButtonRect, BoardRect);
         }
@@ -223,10 +223,12 @@ namespace DeckParty.UI
             return null;
         }
 
+        /// <summary>Every player sees the emote pop up from the sender's avatar in the Players panel.</summary>
         void OnEmoteReceived(ulong sender, int index)
         {
             if (emotes == null || !FxLibrary.Current.emotes) return;
-            emotes.Show(NameOf(sender), ColorOf(sender), index);
+            var row = opponents != null && opponents.gameObject.activeInHierarchy ? opponents.RowFor(sender) : null;
+            emotes.Show(NameOf(sender), ColorOf(sender), index, row != null ? row.AvatarRect : null);
         }
 
         void OnRivalPowerUsed(ulong actor, ulong target, StreamerType streamer)

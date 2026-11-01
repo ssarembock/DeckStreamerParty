@@ -323,11 +323,44 @@ namespace DeckParty.Networking
         public override int GetHashCode() => ((int)Kind * 397) ^ A ^ (B << 4);
     }
 
-    /// <summary>Emotes players can send (they float up on every screen). Text-only so every font can draw them.</summary>
+    /// <summary>
+    /// Emotes players can send (they pop up from the sender's avatar on every screen). The sprites in the Game Database
+    /// (Multiplayer Emotes) are the emotes; until some are assigned, these text emotes stand in. Every peer runs the same
+    /// build, so an index means the same emote everywhere.
+    /// </summary>
     public static class Emotes
     {
         public static readonly string[] All = { "POG", "KEKW", "LUL", "F", "W", "L", "o7", "<3", "monkaS", "Copium" };
         public const float Cooldown = 1.2f;
+        public const int MaxSprites = 16;
+
+        /// <summary>The sprite emotes, or null while the Game Database has none (the text emotes are used then).</summary>
+        public static System.Collections.Generic.List<UnityEngine.Sprite> Sprites
+        {
+            get
+            {
+                var list = GameDatabase.Instance.emotes;
+                return list != null && list.Count > 0 ? list : null;
+            }
+        }
+
+        public static int Count
+        {
+            get
+            {
+                var sprites = Sprites;
+                return sprites != null ? Math.Min(sprites.Count, MaxSprites) : All.Length;
+            }
+        }
+
+        /// <summary>The sprite for an emote (null for a text emote or an empty slot).</summary>
+        public static UnityEngine.Sprite SpriteAt(int index)
+        {
+            var sprites = Sprites;
+            return sprites != null && index >= 0 && index < sprites.Count ? sprites[index] : null;
+        }
+
+        public static string TextAt(int index) => index >= 0 && index < All.Length ? All[index] : "?";
     }
 
     public static class NetStrings

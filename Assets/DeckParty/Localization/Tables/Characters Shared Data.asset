@@ -623,6 +623,370 @@ MonoBehaviour:
     m_Key: ability.Convert.opt1
     m_Metadata:
       m_Items: []
+  - m_Id: 416591515959296
+    m_Key: char.IneffectiveTroll.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262464
+    m_Key: char.IneffectiveTroll.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262465
+    m_Key: char.Producer.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262466
+    m_Key: char.Producer.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262467
+    m_Key: char.Producer.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262468
+    m_Key: char.ChatAdmin.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262469
+    m_Key: char.ChatAdmin.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262470
+    m_Key: char.ChatAdmin.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262471
+    m_Key: char.Normie.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262472
+    m_Key: char.Normie.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262473
+    m_Key: char.MildlyRiskyCollaborator.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262474
+    m_Key: char.MildlyRiskyCollaborator.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262475
+    m_Key: char.JuniorPrManager.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262476
+    m_Key: char.JuniorPrManager.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262477
+    m_Key: char.JuniorPrManager.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262478
+    m_Key: char.DieHardFan.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262479
+    m_Key: char.DieHardFan.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262480
+    m_Key: char.MarketingManager.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262481
+    m_Key: char.MarketingManager.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262482
+    m_Key: char.BigBoomer.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262483
+    m_Key: char.BigBoomer.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262484
+    m_Key: char.ClippoTheClanker.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262485
+    m_Key: char.ClippoTheClanker.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262486
+    m_Key: char.BiggerStar.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262487
+    m_Key: char.BiggerStar.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262488
+    m_Key: char.PrecociousYouth.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262489
+    m_Key: char.PrecociousYouth.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262490
+    m_Key: char.InternetStarpower.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262491
+    m_Key: char.InternetStarpower.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262492
+    m_Key: char.PlatformOwner.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262493
+    m_Key: char.PlatformOwner.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262494
+    m_Key: char.PlatformOwner.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262495
+    m_Key: char.MainstreamCelebrity.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262496
+    m_Key: char.MainstreamCelebrity.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262497
+    m_Key: char.SeniorMarketingManager.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262498
+    m_Key: char.SeniorMarketingManager.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262499
+    m_Key: char.SurpriseGuest.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262500
+    m_Key: char.SurpriseGuest.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262501
+    m_Key: char.SurpriseGuest.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262502
+    m_Key: char.InfluentialTroll.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262503
+    m_Key: char.InfluentialTroll.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262504
+    m_Key: char.CybersecurityEngineer.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262505
+    m_Key: char.CybersecurityEngineer.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262506
+    m_Key: char.CybersecurityEngineer.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262507
+    m_Key: char.PaidSponsorship.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262508
+    m_Key: char.PaidSponsorship.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262509
+    m_Key: char.ComedianWithAPodcast.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262510
+    m_Key: char.ComedianWithAPodcast.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262511
+    m_Key: char.AccountManager.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262512
+    m_Key: char.AccountManager.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262513
+    m_Key: char.CryptoGuy.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262514
+    m_Key: char.CryptoGuy.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262515
+    m_Key: char.CryptoGuy.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262516
+    m_Key: char.GenerousDonator.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262517
+    m_Key: char.GenerousDonator.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262518
+    m_Key: char.PrManager.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262519
+    m_Key: char.PrManager.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262520
+    m_Key: char.PrManager.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262521
+    m_Key: char.HighlyRiskyCollaborator.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262522
+    m_Key: char.HighlyRiskyCollaborator.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262523
+    m_Key: char.ChatArbitrator.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262524
+    m_Key: char.ChatArbitrator.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262525
+    m_Key: char.ChatArbitrator.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262526
+    m_Key: char.BotDetector.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262527
+    m_Key: char.BotDetector.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262528
+    m_Key: char.BotDetector.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262529
+    m_Key: char.RiskyOrbiter.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262530
+    m_Key: char.RiskyOrbiter.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262531
+    m_Key: char.BillionaireBenefactor.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262532
+    m_Key: char.BillionaireBenefactor.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262533
+    m_Key: char.BillionaireBenefactor.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262534
+    m_Key: char.TechAdmin.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262535
+    m_Key: char.TechAdmin.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262536
+    m_Key: char.TechAdmin.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262537
+    m_Key: char.OnlineScandal.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262538
+    m_Key: char.OnlineScandal.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456768
+    m_Key: char.Gatekeeper.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456769
+    m_Key: char.Gatekeeper.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456770
+    m_Key: char.BingeBunny.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456771
+    m_Key: char.BingeBunny.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456772
+    m_Key: char.HateWatcher.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456773
+    m_Key: char.HateWatcher.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456774
+    m_Key: char.Affiliate.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456775
+    m_Key: char.Affiliate.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456776
+    m_Key: char.Affiliate.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456777
+    m_Key: char.MasterOfCurrency.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456778
+    m_Key: char.MasterOfCurrency.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456779
+    m_Key: char.ExecutivePr.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456780
+    m_Key: char.ExecutivePr.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456781
+    m_Key: char.GenZWithJob.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456782
+    m_Key: char.GenZWithJob.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

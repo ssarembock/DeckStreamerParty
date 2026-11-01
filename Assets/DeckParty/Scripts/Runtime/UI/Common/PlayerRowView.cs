@@ -23,6 +23,17 @@ namespace DeckParty.UI
 
         public event Action Clicked;
 
+        /// <summary>The player's avatar: their streamer portrait, or the colour swatch for players without a streamer (emotes pop up from here).</summary>
+        public RectTransform AvatarRect
+        {
+            get
+            {
+                if (streamerPortrait != null && streamerPortrait.transform.parent.gameObject.activeInHierarchy)
+                    return (RectTransform)streamerPortrait.transform.parent;
+                return colorSwatch != null ? colorSwatch.rectTransform : (RectTransform)transform;
+            }
+        }
+
         Button m_Button;
         Outline m_Outline;
         string m_Name;

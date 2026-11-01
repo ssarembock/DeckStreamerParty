@@ -156,7 +156,7 @@ Each venue asset has three art fields:
 
 Other settings:
 - **Palette and style:** only drive the placeholder scene drawn while Background is empty.
-- **Party Lights:** adds moving spotlights, a red/blue flash when you get swatted and a red alert at high risk. Untick it for a clean image.
+- **Party Lights:** adds moving spotlights, a red/blue flash on a Platform Ban and a red alert at high risk. Untick it for a clean image.
 - **Music:** optionally replaces the stream music for that setup.
 
 **Special choices in every setup selector:**
@@ -195,7 +195,7 @@ All menus, the HUD, cards and buttons draw from `Assets/DeckParty/Data/UISkin.as
 | Glow | Light glow | `ui_glow` | soft radial |
 | Logo | Main-menu logo (replaces the "AUDIENCE CAPTURE" text) | `ui_logo` | |
 | IconPop / IconCash / IconDoor | HUD stat icons (Gifted Subs, Cash, Sub Cap) | `icon_pop`, `icon_cash`, `icon_door` | |
-| IconTrouble / IconStar | Swatting Risk and Diamond pips, card badges | `icon_trouble`, `icon_star` | |
+| IconTrouble / IconStar | Platform Ban Risk and Diamond pips, card badges | `icon_trouble`, `icon_star` | |
 | IconCancel | "Cancels risk" badge (AutoMod, VIPS, Wholesome Icon, Cheems with a Doge) | `icon_cancel` | |
 | IconCrown / IconCheck | Host and ready markers | `icon_crown`, `icon_check` | |
 
@@ -220,8 +220,8 @@ Notes:
 | Coin, Purchase | Money comes in / a viewer is bought |
 | Expand | The Sub Cap is raised |
 | PartySuccess | A stream ends successfully |
-| Raid | The stream is swatted |
-| FireMarshal | The Sub Cap is exceeded |
+| Raid | The stream gets a Platform Ban |
+| FireMarshal | Server Down (chat over the Sub Cap) |
 | Victory, Defeat, Error, Notify, Peek | The matching moments |
 
 Any empty slot plays a small synthesized placeholder, so the game is never silent. A setup's own **Music** overrides Party Music. With the **Audio Juice** polish switch on, music ducks under big moments and goes muffled while a menu is open.
@@ -245,8 +245,9 @@ You're free to rearrange, restyle and reparent anything in **MainMenu** and **Ga
 - the HUD and the chat grid (a scroll view inside a **ContentFrame** that caps the UI at 21:9),
 - the stream controls and the shop with the **Streamer Power** panel,
 - the police screen,
-- the side panel: players, the **Activity / Chat** tabs (`SideTabsView`), and the **facecam** (`FacecamView`) with the emote buttons beside it,
-- the overlays (picker, Audience, pause, game over, banner, effects, anxious streamer, turn timer, presence, fake chat, stream overlay, link lines).
+- the stream: a stage strip on top and the **chat bubble** (`ChatBubbleView`) with the viewer cards and floating viewer emojis (`ViewerEmojiView`),
+- the side panel: players and the emote bar (multiplayer), the optional Activity log (`SideTabsView`, off by default) and the **facecam** (`FacecamView`),
+- the overlays (picker, Audience, pause, game over, banner, Platform Ban / Server Down images, effects, anxious streamer, turn timer, presence, stream overlay, link lines).
 
 **Text:**
 - **Static captions:** carry a **LocalizedLabel** with a CSV key.
@@ -270,8 +271,9 @@ Running **Build Everything** again never touches existing scenes. Only **Rebuild
   - Actions that take several viewers show a **Confirm** button (or press Space).
   - **End the Stream** (E) banks everyone's Subs as Gifted Subs, plus Cash.
   - A skippable scoring sequence counts each viewer up.
-- **Swatting Risk:** 3 net Swatting Risk brings the SWAT team. You get no payout, and one viewer gets a Temporary Ban for the next stream. In the other languages, the police arrive.
-  - The HUD shows the meter. Under the buttons you see how many viewers with Swatting Risk are still in the queue, but never the odds: working them out is part of the game.
+- **Platform Ban Risk:** 3 net Platform Ban Risk gets the stream a **Platform Ban**. You get no payout, and one viewer gets a Temporary Ban for the next stream.
+  - The HUD shows the meter. Under the buttons you see how many viewers with Platform Ban Risk are still in the queue, but never the odds: working them out is part of the game.
+- **Server Down:** going over the Sub Cap (viewers who bring others) ends the stream with no payout.
   - At one risk from the police, your streamer appears at the top of the screen looking anxious, and the facecam (bottom right) pulses red.
 - **Shop:** spend Gifted Subs recruiting viewers and Cash raising your Sub Cap, use your streamer power, then start the next night (Space).
 - **Audience** (R) shows all your viewers and permanent changes.
@@ -283,7 +285,7 @@ The full rules and the viewer glossary are also in-game under **How to Play**. T
 
 **Implementation decisions where the rules doc was ambiguous** (all adjustable in `Scripts/Core/GameRules.cs`):
 - Viewer fees are paid from your Cash bank first. Only the unpaid remainder costs 7 Gifted Subs per Cash (`FeesDrawFromBank`).
-- Getting swatted on the final night ends the season without a Temporary Ban.
+- A Platform Ban on the final night ends the season without a Temporary Ban.
 - Going over the Sub Cap doesn't ban anyone.
 
 **Where to change things:**
@@ -305,7 +307,7 @@ The full rules and the viewer glossary are also in-game under **How to Play**. T
   - A live status line appears under their name ("eyeing Doge", "browsing the shop").
   - Watchers also see their mouse pointer.
   - Updates are relayed by the host a few times a second. Up to a second of lag is expected and harmless.
-- **Chat and emotes:** the side panel's **Chat** tab sits next to **Activity** (the Stream Log) and counts new messages while you're on the other tab. Emotes (POG, KEKW, o7 and others) are the buttons left of the facecam. They float up on every screen.
+- **Emotes, not chat:** multiplayer text chat is switched off (FX Library > Text Chat; the code is kept). Players talk with the emote buttons under the Players panel; a sent emote pops up from the sender's avatar on every screen. The buttons use the sprites in Game Database > Stream Art > Emotes (text emotes such as POG and o7 until you add them).
 - **Rival powers:** Raid and Wealth Tax are resolved by the host on both players' games, with a callout to everyone.
 
 **Modes:**
@@ -319,7 +321,8 @@ The full rules and the viewer glossary are also in-game under **How to Play**. T
 
 **Lobby and season:**
 - The host picks the character set, mode, season length (10 to 30 nights) and turn timer in the lobby. Everyone else presses **Ready**, then the host presses **Start Season**. The host can start solo for testing.
-- Chat works in the lobby and in game. Swattings, wins, Diamond recruits, streamer powers and joins pop up for everyone, each in the reader's own language.
+- The lobby shows lobby news (joins, leaves). Platform Bans, Server Downs, wins, Diamond recruits, streamer powers and joins pop up for everyone, each in the reader's own language.
+- **Shared shop:** each player's season is separate (Audience, wallet, Sub Cap, streamer power costs), except the shop's stock: a copy one player recruits is gone for everyone (`GameRules.SharedStockPerGuest`, 4 per viewer; Diamonds unlimited).
 - After the season, the host can press **Back to Lobby** to play again with the same group.
 - Everyone must run the **same build**. A version check (`ProtocolVersion` in `NetworkService.cs`, currently `deckparty-4`) rejects mismatches with a clear message.
 
@@ -404,7 +407,7 @@ For a step-by-step guide to building, sending the game to a friend and a test se
 **Rules engine (Core):**
 - `Core/PartyEngine.cs`: every rule. This covers:
   - arrivals, entrance effects and reactions, bring chains,
-  - Swatting Risk and the SWAT team, the Sub Cap,
+  - Platform Ban Risk and the Platform Ban, the Sub Cap and Server Down,
   - all 21 action types, passive scoring,
   - the shop and Sub Cap upgrades,
   - streamer powers (`UsePower`, `UseRivalPower`, `GetPowerBlocker`).
@@ -435,7 +438,7 @@ For a step-by-step guide to building, sending the game to a friend and a test se
 - `Runtime/UI/Game/GameController*.cs`: the game scene.
   - **Core file:** renders state, runs the action flow (choice popup, target picks, Confirm) and hotkeys.
   - **Presence file:** what's sent and shown to watchers.
-  - **Juice file:** event playback, the scoring sequence, stamps and fake chat.
+  - **Juice file:** event playback, the scoring sequence, stamps and the Platform Ban / Server Down images.
 - `Runtime/UI/Menu/StreamerSelectScreen.cs`: the character select screen.
 - `Runtime/App/DisplaySettings.cs`: resolution and window mode presets, F11.
 - `Editor/*SceneBuilder.cs`, `StreamerSelectBuilder.cs` and `DeckPartyAssets.cs`: generate the scenes and prefabs. They're useful as a reference for the hierarchy.

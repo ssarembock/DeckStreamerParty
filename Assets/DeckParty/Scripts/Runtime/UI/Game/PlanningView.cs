@@ -28,14 +28,15 @@ namespace DeckParty.UI
         public bool RivalsAvailable;
     }
 
-    /// <summary>Between streams: last stream result, the viewer shop, the streamer power, Sub Cap upgrade and the next-night button.</summary>
+    /// <summary>
+    /// Between streams. The left column holds the player's streamer card (with its active, when it has one), Raise Sub Cap,
+    /// the Audience button and the next-night button; the rest of the screen is the shop: a grid of viewers to recruit.
+    /// Everything shown belongs to the player whose board is on screen (yours, or the one you're watching); only the shop's
+    /// stock is shared between players.
+    /// </summary>
     public sealed class PlanningView : MonoBehaviour
     {
-        [SerializeField] internal Image resultAccent;
-        [SerializeField] internal TMP_Text resultTitle;
-        [SerializeField] internal TMP_Text resultDetail;
-        [SerializeField] internal TMP_Text breakdownLabel;
-        [SerializeField] internal TMP_Text nightLabel;
+        [SerializeField] internal TMP_Text headerLabel;
         [SerializeField] internal Button expandButton;
         [SerializeField] internal TMP_Text expandLabel;
         [SerializeField] internal TooltipTrigger expandTooltip;
@@ -44,23 +45,31 @@ namespace DeckParty.UI
         [SerializeField] internal Button nextNightButton;
         [SerializeField] internal TMP_Text nextNightLabel;
         [SerializeField] internal TMP_Text waitingLabel;
-        [SerializeField] internal TMP_Text walletLabel;
-        [SerializeField] internal RectTransform shopList;
-        [SerializeField] internal GuestRowView shopRowPrefab;
+        [Tooltip("The scroll view's viewport (the grid fits as many columns as this width allows).")]
+        [SerializeField] internal RectTransform shopViewport;
+        [SerializeField] internal GridLayoutGroup shopGrid;
+        [SerializeField] internal ShopItemView shopItemPrefab;
         [SerializeField] internal StreamerPowerView power;
+
+        [Header("Shop grid")]
+        [Tooltip("Tiles never get narrower than this (more columns fit on wider screens).")]
+        [SerializeField] internal float minTileWidth = 190f;
+        [SerializeField] internal float maxTileWidth = 250f;
+        [Tooltip("Tile height = width x this.")]
+        [SerializeField] internal float tileAspect = 1.36f;
 
         public event Action<GuestType> BuyClicked;
         public event Action ExpandClicked;
         public event Action RolodexClicked;
         public event Action NextNightClicked;
         public event Action PowerClicked;
-        /// <summary>A shop row was hovered (type) or left (null). Used for multiplayer presence signals.</summary>
+        /// <summary>A shop tile was hovered (type) or left (null). Used for multiplayer presence signals.</summary>
         public event Action<GuestType?> ShopHovered;
 
-        readonly List<GuestRowView> m_Rows = new List<GuestRowView>();
+        readonly List<ShopItemView> m_Items = new List<ShopItemView>();
         PlayerState m_State;
         PlanningContext m_Context;
-        string m_Breakdown;
+        float m_LastWidth = -1f;
 
         public RectTransform ExpandButtonRect => (RectTransform)expandButton.transform;
         public RectTransform NextNightButtonRect => (RectTransform)nextNightButton.transform;
@@ -80,34 +89,31 @@ namespace DeckParty.UI
 
         void OnLanguageChanged()
         {
-            if (m_State != null) Render(m_State, m_Context, m_Breakdown);
+            if (m_State != null) Render(m_State, m_Context);
         }
 
-        public GuestRowView FindRow(GuestType type)
+        void Update()
         {
-            foreach (var row in m_Rows)
-                if (row.gameObject.activeSelf && row.Type == type) return row;
+            if (shopViewport != null && !Mathf.Approximately(shopViewport.rect.width, m_LastWidth)) LayoutGrid();
+        }
+
+        /// <summary>The tile selling this viewer (for the purchase flourish and presence highlights), or null.</summary>
+        public ShopItemView FindItem(GuestType type)
+        {
+            foreach (var item in m_Items)
+                if (item.gameObject.activeSelf && item.Type == type) return item;
             return null;
         }
 
-        public void Render(PlayerState s, PlanningContext ctx, string breakdown)
+        public void Render(PlayerState s, PlanningContext ctx)
         {
             m_State = s;
             m_Context = ctx;
-            m_Breakdown = breakdown;
             bool watching = ctx.Owner != null;
             bool waitingForTurn = ctx.Turns && !ctx.MyTurn && !watching;
-            RenderResult(s, breakdown, ctx.Owner);
 
-            string nightsLeft = $"<color=#B9AED6>{Loc.Get("shop.nights_left", "count", s.NightsRemaining)}</color>";
-            nightLabel.text = (watching
-                ? Loc.Get("shop.night_over_other", ("player", ctx.Owner), ("night", s.Night), ("total", s.TotalNights))
-                : Loc.Get("shop.night_over", "night", s.Night, "total", s.TotalNights)) + "  " + nightsLeft;
-            string subs = GuestVisuals.GiftedSubsText(s.Pop);
-            string cash = GuestVisuals.Colored(s.Cash + " $", UIPalette.Green);
-            walletLabel.text = watching
-                ? Loc.Get("shop.wallet_other", ("player", ctx.Owner), ("subs", subs), ("cash", cash))
-                : Loc.Get("shop.wallet", "subs", subs, "cash", cash);
+            if (headerLabel != null)
+                headerLabel.text = watching ? Loc.Get("shop.header_other", "player", ctx.Owner) : Loc.Get("shop.header");
 
             bool readyLocked = ctx.Multiplayer && ctx.SyncNights && ctx.LocalReady;
             bool locked = readyLocked || watching || waitingForTurn;
@@ -127,8 +133,31 @@ namespace DeckParty.UI
                 ? Loc.Get("shop.view_audience_other", "player", ctx.Owner, "count", s.PermanentCount)
                 : Loc.Get("shop.view_audience", "count", s.PermanentCount)) + "  <color=#B9AED6>[R]</color>";
 
-            if (power != null) power.Render(s, ctx.RivalsAvailable, locked ? lockReason : null);
+            if (power != null) power.Render(s, ctx.RivalsAvailable, locked ? lockReason : null, ctx.Owner);
 
+            RenderNextButton(s, ctx, watching);
+
+            for (int i = 0; i < s.Shop.Count; i++)
+            {
+                if (i >= m_Items.Count)
+                {
+                    var item = Instantiate(shopItemPrefab, shopGrid.transform);
+                    item.BuyClicked += type => BuyClicked?.Invoke(type);
+                    item.Hovered += (view, on) => ShopHovered?.Invoke(on ? view.Type : (GuestType?)null);
+                    m_Items.Add(item);
+                }
+                var tile = m_Items[i];
+                tile.gameObject.SetActive(true);
+                var type = s.Shop[i];
+                var blocker = PartyEngine.GetBuyBlocker(s, type);
+                tile.Bind(type, s, locked ? lockReason : blocker != null ? Loc.Error(blocker) : null);
+            }
+            for (int i = s.Shop.Count; i < m_Items.Count; i++) m_Items[i].gameObject.SetActive(false);
+            LayoutGrid();
+        }
+
+        void RenderNextButton(PlayerState s, PlanningContext ctx, bool watching)
+        {
             bool nextInteractable = true;
             if (watching)
             {
@@ -165,59 +194,21 @@ namespace DeckParty.UI
                 waitingLabel.text = string.Empty;
             }
             nextNightButton.interactable = nextInteractable;
-
-            for (int i = 0; i < s.Shop.Count; i++)
-            {
-                if (i >= m_Rows.Count)
-                {
-                    var row = Instantiate(shopRowPrefab, shopList);
-                    row.BuyClicked += type => BuyClicked?.Invoke(type);
-                    row.Hovered += (r, on) => ShopHovered?.Invoke(on ? r.Type : (GuestType?)null);
-                    m_Rows.Add(row);
-                }
-                var view = m_Rows[i];
-                view.gameObject.SetActive(true);
-                var type = s.Shop[i];
-                view.Bind(type, true);
-                var info = GuestCatalog.Get(type);
-                var blocker = PartyEngine.GetBuyBlocker(s, type);
-                view.SetShopState(s.CountOwned(type), info.MaxCopies, locked ? lockReason : blocker != null ? Loc.Error(blocker) : null);
-            }
-            for (int i = s.Shop.Count; i < m_Rows.Count; i++) m_Rows[i].gameObject.SetActive(false);
         }
 
-        void RenderResult(PlayerState s, string breakdown, string owner)
+        /// <summary>As many columns as fit, tiles between the minimum and maximum width.</summary>
+        void LayoutGrid()
         {
-            Color accent;
-            switch (s.LastOutcome)
-            {
-                case PartyOutcome.Success:
-                    accent = UIPalette.Gold;
-                    resultTitle.text = s.LastDiamonds > 0 ? Loc.Get("result.success_diamonds", "diamonds", Terms.DiamondCount(s.LastDiamonds)) : Loc.Get("result.success");
-                    resultDetail.text = Loc.Get("result.earned", "subs", GuestVisuals.GiftedSubsText(s.LastPop), "cash", GuestVisuals.CashText(s.LastCash)) +
-                                        (s.LastPenalty > 0 ? $"\n<color=#FF5A5A>{Loc.Get("result.fees", "count", s.LastPenalty)}</color>" : string.Empty);
-                    break;
-                case PartyOutcome.Raid:
-                    accent = UIPalette.Red;
-                    resultTitle.text = Loc.Get("result.swatted");
-                    var blamed = s.LastBlamedId >= 0 ? s.Find(s.LastBlamedId) : null;
-                    resultDetail.text = Loc.Get("result.no_payout") + (blamed != null ? "\n" + Loc.Get("result.banned", "viewer", GuestVisuals.NameTag(blamed.Type)) : string.Empty);
-                    break;
-                case PartyOutcome.FireMarshal:
-                    accent = UIPalette.Orange;
-                    resultTitle.text = Loc.Get("result.crashed");
-                    resultDetail.text = Loc.Get("result.crashed_detail");
-                    break;
-                default:
-                    accent = UIPalette.Teal;
-                    resultTitle.text = Loc.Get("result.planning");
-                    resultDetail.text = string.Empty;
-                    break;
-            }
-            if (owner != null) resultTitle.text = Loc.Get("result.owner_prefix", "player", owner, "text", resultTitle.text);
-            resultTitle.color = accent;
-            if (resultAccent != null) resultAccent.color = accent;
-            breakdownLabel.text = s.LastOutcome == PartyOutcome.Success ? breakdown ?? string.Empty : string.Empty;
+            if (shopGrid == null || shopViewport == null) return;
+            m_LastWidth = shopViewport.rect.width;
+            float width = m_LastWidth - shopGrid.padding.horizontal;
+            if (width <= 1f) return;
+            float spacing = shopGrid.spacing.x;
+            int columns = Mathf.Max(1, Mathf.FloorToInt((width + spacing) / (minTileWidth + spacing)));
+            float tileWidth = Mathf.Min(maxTileWidth, (width - spacing * (columns - 1)) / columns);
+            shopGrid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            shopGrid.constraintCount = columns;
+            shopGrid.cellSize = new Vector2(tileWidth, tileWidth * tileAspect);
         }
     }
 }

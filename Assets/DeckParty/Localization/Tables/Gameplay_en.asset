@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 408109056
-    m_Localized: SHOUTOUT!
+    m_Localized: SNEAK PEEK
     m_Metadata:
       m_Items: []
   - m_Id: 479412224
@@ -359,11 +359,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412308
-    m_Localized: Swatting Risk
+    m_Localized: Platform Ban Risk
     m_Metadata:
       m_Items: []
   - m_Id: 479412309
-    m_Localized: SWATTED!
+    m_Localized: PLATFORM BAN!
     m_Metadata:
       m_Items: []
   - m_Id: 479412310
@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412316
-    m_Localized: SUB CAP EXCEEDED!
+    m_Localized: SERVER DOWN!
     m_Metadata:
       m_Items: []
   - m_Id: 479412317
@@ -407,7 +407,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412320
-    m_Localized: '{value} Swatting Risk'
+    m_Localized: '{value} Platform Ban Risk'
     m_Metadata:
       m_Items: []
   - m_Id: 479412321
@@ -499,7 +499,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412343
-    m_Localized: SWATTING RISK
+    m_Localized: PLATFORM BAN RISK
     m_Metadata:
       m_Items: []
   - m_Id: 479412344
@@ -762,12 +762,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606536
-    m_Localized: '{viewer} loses their Swatting Risk.'
+    m_Localized: '{viewer} loses their Platform Ban Risk.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606537
-    m_Localized: This is fine. {viewer} calls off the SWAT team and clears {count}
-      Swatting Risk.
+    m_Localized: This is fine. {viewer} talks the platform out of the ban and clears
+      {count} Platform Ban Risk.
     m_Metadata:
       m_Items: []
   - m_Id: 483606538
@@ -886,7 +886,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606566
-    m_Localized: Smoke Bomb! This stream ignores {count} Swatting Risk.
+    m_Localized: Smoke Bomb! This stream ignores {count} Platform Ban Risk.
     m_Metadata:
       m_Items: []
   - m_Id: 483606567
@@ -920,7 +920,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606574
-    m_Localized: '{raider} raided this stream! +{count} Swatting Risk next stream.'
+    m_Localized: '{raider} raided this stream! +{count} Platform Ban Risk next stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606575
@@ -1173,16 +1173,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606635
-    m_Localized: Swatting Risk
+    m_Localized: Platform Ban Risk
     m_Metadata:
       m_Items: []
   - m_Id: 483606636
-    m_Localized: 'Viewers with a red X add Swatting Risk. Up to 2 net Swatting Risk
-      is fine; at <b>3 the SWAT team shows up</b>: the stream ends with no payout
-      and you give one viewer a <b>Temporary Ban</b> (they sit out the next stream).
-      AutoMod, VIPS and the Wholesome Icon <b>cancel</b> 1 Swatting Risk each while
-      in chat (Cheems does too when a Doge is around). Some viewers add Swatting
-      Risk with their actions; This Is Fine Dog calls off the SWAT team once.'
+    m_Localized: 'Viewers with a red X add Platform Ban Risk. Up to 2 net Platform
+      Ban Risk is fine; at <b>3 the stream gets a Platform Ban</b>: it ends with
+      no payout and you give one viewer a <b>Temporary Ban</b> (they sit out the
+      next stream). Normie, Die Hard Fan and Internet Starpower <b>cancel</b> 1 Platform
+      Ban Risk each while in chat (Cheems does too when a Doge is around). Some viewers
+      add Platform Ban Risk with their actions; This Is Fine Dog talks the platform
+      out of one ban, and the Chat Arbitrator clears risk.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606637
@@ -1191,9 +1192,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606638
     m_Localized: You can't add viewers once you've hit your Sub Cap, but viewers
-      who <b>bring</b> others (Parasocialite, Raid Leader) or take extra space (Big
-      Chungus takes 3) can push you over it. If that happens the stream crashes with
-      no payout. Leave spare room!
+      who <b>bring</b> others (Marketing Manager, Online Scandal, Bigger Star) or
+      take extra space (Big Chungus takes 3) can push you over it. If that happens
+      the <b>server goes down</b> and the stream ends with no payout. Leave spare
+      room!
     m_Metadata:
       m_Items: []
   - m_Id: 483606639
@@ -1201,11 +1203,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606640
-    m_Localized: Raising your Sub Cap costs 2 Cash, then 1 more each time (max 12
+    m_Localized: 'Raising your Sub Cap costs 2 Cash, then 1 more each time (max 12
       per space, up to 34). Some viewers charge fees (negative Cash). Fees are paid
-      from your Cash; any unpaid amount costs <b>7 Gifted Subs per Cash</b>.\nNormal
-      viewers are limited to 4 copies each; Diamonds are unlimited. You can't remove
-      viewers from your Audience, so every recruit changes your odds.
+      from your Cash; any unpaid amount costs <b>7 Gifted Subs per Cash</b>.\nThe
+      shop''s stock is <b>shared by every player</b>: each normal viewer has 4 copies
+      for the whole match, and you can own at most 4 of each; Diamonds are unlimited.
+      You can''t remove viewers from your Audience, so every recruit changes your
+      odds.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606641
@@ -1213,14 +1217,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606642
-    m_Localized: Every viewer belongs to a family (Community, Animal, Wojak, Rage
-      Comic, Reaction, Brainrot, Diamond) and every action has a type (Recruit, Remove,
-      Modify, Shuffle, Scout, Economy). Doge loves mixed families, Bongo Cat buffs
-      Animals and Dancing Baby rewards two actions of the same type in a row. Some
-      actions ask you to pick an option first, then one or more viewers; actions
-      that take several viewers show a Confirm button. Permanent changes (Chad vs
-      Virgin, Tung Tung, Bad Luck Brian) stay with that viewer card forever. Hover
-      any viewer to see its family, action type and tonight's effects.
+    m_Localized: Every viewer belongs to a group (Animal, Wojak, Rage Comic, Reaction,
+      Brainrot, or TBD while it's still being decided) and every action has a type
+      (Recruit, Remove, Modify, Shuffle, Scout, Economy). Doge loves mixed groups
+      (TBD doesn't count), Bongo Cat buffs Animals and Dancing Baby rewards two actions
+      of the same type in a row. Some actions ask you to pick an option first, then
+      one or more viewers; actions that take several viewers show a Confirm button.
+      Permanent changes (Chad vs Virgin, Tung Tung, Bad Luck Brian, Affiliate, Gen
+      Z with Job) stay with that viewer card forever. Hover any viewer to see its
+      group, action type and tonight's effects.
     m_Metadata:
       m_Items: []
   - m_Id: 483606643
@@ -1230,11 +1235,11 @@ MonoBehaviour:
   - m_Id: 483606644
     m_Localized: 'Before a season you <b>Select Your Streamer</b>. Each one has a
       power: <b>passive</b> powers are always on; <b>active</b> powers are used from
-      the shop after your stream (on your turn), cost Gifted Subs and/or Cash, get
-      more expensive every time and may need a few turns to recharge. <b>Rival</b>
-      powers (Raid, Wealth Tax) hit another player, so they only work in multiplayer.
-      Pick <b>No Streamer</b> to play the classic rules. Your streamer also brings
-      their own stream setup.'
+      the shop after your stream (on your turn), cost Cash, get more expensive every
+      time you use them (like raising your Sub Cap) and may need a few turns to recharge.
+      <b>Rival</b> powers (Raid, Wealth Tax) hit another player, so they only work
+      in multiplayer. Pick <b>No Streamer</b> to play the classic rules. Your streamer
+      also brings their own stream setup.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606645
@@ -1267,11 +1272,159 @@ MonoBehaviour:
   - m_Id: 483606649
     m_Localized: <b>Win:</b> 4 Diamonds in one successful stream.\n<b>Add Viewer:</b>
       the next viewer in the queue joins chat.  <b>End the Stream:</b> banks Subs
-      as Gifted Subs, plus Cash.\n<b>3 net Swatting Risk</b> = SWAT team (no payout,
-      one viewer gets a Temporary Ban).\n<b>Over your Sub Cap</b> = stream crashes
-      (no payout).\n<b>Shop:</b> Gifted Subs recruit viewers, Cash raises your Sub
-      Cap, streamer powers live here too.\n<b>Keys:</b> Space add viewer/confirm/next
-      night, E end the stream, R Audience, Esc menu, F11 fullscreen.
+      as Gifted Subs, plus Cash.\n<b>3 net Platform Ban Risk</b> = Platform Ban (no
+      payout, one viewer gets a Temporary Ban).\n<b>Over your Sub Cap</b> = Server
+      Down (no payout).\n<b>Shop:</b> Gifted Subs recruit viewers (the stock is shared
+      by every player), Cash raises your Sub Cap and pays for streamer actives.\n<b>Keys:</b>
+      Space add viewer/confirm/next night, E end the stream, R Audience, Esc menu,
+      F11 fullscreen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591918612480
+    m_Localized: SHOUTOUT!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721344
+    m_Localized: BANNED!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721345
+    m_Localized: DEFUSED!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721346
+    m_Localized: FREE SPEECH!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721347
+    m_Localized: SURPRISE!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721348
+    m_Localized: DAMAGE CONTROL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721349
+    m_Localized: ACCESS GRANTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721350
+    m_Localized: RUG PULL!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721351
+    m_Localized: PEACE.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721352
+    m_Localized: BOTS BEGONE!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721353
+    m_Localized: NO COMMENT.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721354
+    m_Localized: SUDO!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721355
+    m_Localized: LINK IN BIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721356
+    m_Localized: TAKE MY MONEY!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721357
+    m_Localized: HATE-WATCHING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721358
+    m_Localized: TBD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721359
+    m_Localized: Grows +1 $ per entrance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721360
+    m_Localized: '{value} if chat is full'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721361
+    m_Localized: '{value} per risky viewer'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721362
+    m_Localized: 'Scores: {stats}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721363
+    m_Localized: Hate-watching right now (+1 Platform Ban Risk)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721364
+    m_Localized: Will hate-watch on their next entrance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721365
+    m_Localized: SOMETIMES RISKY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721366
+    m_Localized: No Subs tonight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721367
+    m_Localized: PLATFORM BAN! Platform Ban Risk hit {risk}. The stream is banned.
+      No payout tonight.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721368
+    m_Localized: SERVER DOWN! {filled} spaces filled with a Sub Cap of {cap}. No
+      payout tonight.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721369
+    m_Localized: '{source} cashes in {viewer} right now: {values} banked.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721370
+    m_Localized: '{viewer} gives a softball interview: everyone here earns 0 Subs
+      tonight, {cash} banked.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721371
+    m_Localized: '{viewer} now earns {total} more for good.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721372
+    m_Localized: '{viewer} is hate-watching (+1 Platform Ban Risk).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721373
+    m_Localized: '{viewer} is just watching this time.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109952
+    m_Localized: That would get the stream banned.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109953
+    m_Localized: That viewer wasn't in the banned stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109954
+    m_Localized: Nobody in chat has Platform Ban Risk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109955
+    m_Localized: A Billionaire Benefactor already gave an interview this stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109956
+    m_Localized: '{0} is sold out: the shop''s stock is shared by every player.'
     m_Metadata:
       m_Items: []
   references:

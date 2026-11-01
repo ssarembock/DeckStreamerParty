@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
-    /// <summary>Top bar: night, Gifted Subs, Cash, Sub Cap, Swatting Risk meter and Diamond meter.</summary>
+    /// <summary>Top bar: night, Gifted Subs, Cash, Sub Cap, Platform Ban Risk meter and Diamond meter.</summary>
     public sealed class HudView : MonoBehaviour
     {
         [SerializeField] internal TMP_Text scenarioLabel;

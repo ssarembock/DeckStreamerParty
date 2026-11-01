@@ -25,9 +25,18 @@ namespace DeckParty
 
         static readonly Dictionary<GuestType, Signature> s_Table = new Dictionary<GuestType, Signature>
         {
-            { GuestType.SocialMediaManager, S(CardPulse.GlowIn, CardPulse.Shine, 0f, UIPalette.Teal) },
-            { GuestType.Moderator, S(CardPulse.Burn, null, 6f, UIPalette.Red) },
-            { GuestType.Hodl, S(null, CardPulse.Shine, 4f, UIPalette.Gold) },
+            { GuestType.Producer, S(CardPulse.GlowIn, CardPulse.Shine, 0f, UIPalette.Teal) },
+            { GuestType.ChatAdmin, S(CardPulse.Burn, null, 6f, UIPalette.Red) },
+            { GuestType.JuniorPrManager, S(null, CardPulse.Shine, 4f, UIPalette.Gold) },
+            { GuestType.PrManager, S(null, CardPulse.Shine, 4f, UIPalette.Gold) },
+            { GuestType.CybersecurityEngineer, S(null, CardPulse.Hologram, 0f, UIPalette.Teal) },
+            { GuestType.SocialMediaManager, S(null, CardPulse.Hologram, 0f, UIPalette.Blue) },
+            { GuestType.CryptoGuy, S(CardPulse.Shine, CardPulse.Glitch, 2f, UIPalette.Gold) },
+            { GuestType.ChatArbitrator, S(null, CardPulse.Frozen, 0f, UIPalette.Teal) },
+            { GuestType.BotDetector, S(CardPulse.Glitch, null, 6f, UIPalette.Red) },
+            { GuestType.BillionaireBenefactor, S(null, CardPulse.Shine, 0f, UIPalette.Green) },
+            { GuestType.TechAdmin, S(CardPulse.Burn, null, 6f, UIPalette.Red) },
+            { GuestType.Affiliate, S(CardPulse.Shine, null, 0f, UIPalette.Green) },
             { GuestType.Trollface, S(CardPulse.Glitch, null, 3f, UIPalette.Pink) },
             { GuestType.Pepe, S(null, CardPulse.Poison, 0f, UIPalette.Green) },
             { GuestType.GrumpyCat, S(null, CardPulse.Frozen, 0f, UIPalette.Orange) },
@@ -46,9 +55,11 @@ namespace DeckParty
             { GuestType.ConfusedMathLady, S(CardPulse.Hologram, null, 0f, UIPalette.Purple) },
             { GuestType.SideEyeChloe, S(null, CardPulse.Hologram, 0f, UIPalette.TextDim) },
             { GuestType.RollSafe, S(CardPulse.Frozen, null, 0f, UIPalette.Teal) },
-            { GuestType.PlatformAdmin, S(CardPulse.Burn, null, 10f, UIPalette.Red) },
-            { GuestType.Algorithm, S(CardPulse.GlowIn, CardPulse.Shine, 0f, UIPalette.Gold) },
+            { GuestType.PlatformOwner, S(CardPulse.Burn, null, 10f, UIPalette.Red) },
+            { GuestType.SurpriseGuest, S(CardPulse.GlowIn, CardPulse.Shine, 0f, UIPalette.Gold) },
             // Arrival specials (no action button)
+            { GuestType.GenerousDonator, S(CardPulse.Shine, CardPulse.Shine, 0f, UIPalette.Gold) },
+            { GuestType.HateWatcher, S(null, CardPulse.Burn, 2f, UIPalette.Red) },
             { GuestType.SkibidiToilet, S(CardPulse.Poison, null, 2f, UIPalette.Green) },
             { GuestType.NpcWojak, S(null, CardPulse.Hologram, 0f, UIPalette.TextDim) },
             { GuestType.OverlyAttachedGirlfriend, S(CardPulse.Shine, null, 0f, UIPalette.Pink) },
@@ -91,6 +102,22 @@ namespace DeckParty
                 case GameEventType.TemporaryCopy:
                     actorType = GuestType.UgandanKnuckles;
                     break;
+                case GameEventType.MoodFlipped:
+                    // Only the switch into hate-watching gets a signature.
+                    if (e.A == 0) return;
+                    actorType = e.Guest;
+                    actorId = e.GuestId;
+                    break;
+                case GameEventType.ScoredNow:
+                {
+                    // Generous Donator scoring the viewer it brought in (Crypto Guy's own action already played).
+                    var source = e.C >= 0 ? house.FindCard(e.C) : null;
+                    if (source == null || source.ShownType != GuestType.GenerousDonator) return;
+                    actorType = GuestType.GenerousDonator;
+                    actorId = e.C;
+                    targets.Add(e.GuestId);
+                    break;
+                }
                 default:
                     return;
             }

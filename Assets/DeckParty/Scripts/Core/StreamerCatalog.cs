@@ -33,27 +33,26 @@ namespace DeckParty.Core
         Rival = 4,
     }
 
-    /// <summary>Rule data for one streamer. Names and descriptions are localized on the Unity side (keys "streamer.&lt;Type&gt;.*").</summary>
+    /// <summary>
+    /// Rule data for one streamer. Names and descriptions are localized on the Unity side (keys "streamer.&lt;Type&gt;.*").
+    /// Actives are paid in Cash, and like raising the Sub Cap each use costs more (up to <see cref="StreamerCatalog.MaxPowerCost"/>).
+    /// </summary>
     public sealed class StreamerInfo
     {
         public readonly StreamerType Type;
         public readonly PowerKind Kind;
-        /// <summary>Gifted Subs / Cash the first use costs.</summary>
-        public readonly int GiftedSubsCost;
+        /// <summary>Cash the first use costs.</summary>
         public readonly int CashCost;
-        /// <summary>Added to each cost after every use.</summary>
-        public readonly int GiftedSubsStep;
+        /// <summary>Added to the cost after every use.</summary>
         public readonly int CashStep;
         /// <summary>Turns the power is unavailable after a use (0 = once per turn).</summary>
         public readonly int Cooldown;
 
-        public StreamerInfo(StreamerType type, PowerKind kind, int giftedSubs = 0, int cash = 0, int giftedSubsStep = 0, int cashStep = 0, int cooldown = 0)
+        public StreamerInfo(StreamerType type, PowerKind kind, int cash = 0, int cashStep = 0, int cooldown = 0)
         {
             Type = type;
             Kind = kind;
-            GiftedSubsCost = giftedSubs;
             CashCost = cash;
-            GiftedSubsStep = giftedSubsStep;
             CashStep = cashStep;
             Cooldown = cooldown;
         }
@@ -71,8 +70,10 @@ namespace DeckParty.Core
 
         // --- Power tuning ---
         public const int RaidHeat = 1;
-        /// <summary>Raids alone can't push a stream past this much Swatting Risk.</summary>
+        /// <summary>Raids alone can't push a stream past this much Platform Ban Risk.</summary>
         public const int MaxRaidHeat = GameRules.RaidTroubleThreshold - 1;
+        /// <summary>An active never costs more than this per use (the same ceiling as raising the Sub Cap).</summary>
+        public const int MaxPowerCost = GameRules.MaxExpansionCost;
         public const int SmokeBombShield = 1;
         public const int GiveawayBonus = 1;
         public const int WealthTaxAmount = 2;
@@ -87,13 +88,13 @@ namespace DeckParty.Core
             new StreamerInfo(StreamerType.None, PowerKind.None),
             new StreamerInfo(StreamerType.Fate, PowerKind.Rival, cash: 1, cashStep: 1, cooldown: 2),
             new StreamerInfo(StreamerType.BroJogan, PowerKind.Passive),
-            new StreamerInfo(StreamerType.Shinobi, PowerKind.NextStream, giftedSubs: 2, giftedSubsStep: 2, cooldown: 2),
+            new StreamerInfo(StreamerType.Shinobi, PowerKind.NextStream, cash: 2, cashStep: 1, cooldown: 2),
             new StreamerInfo(StreamerType.IRunFast, PowerKind.Passive),
             new StreamerInfo(StreamerType.MrShark, PowerKind.NextStream, cash: 3, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.EthicalFboi, PowerKind.Rival, giftedSubs: 1, giftedSubsStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.EthicalFboi, PowerKind.Rival, cash: 1, cashStep: 1, cooldown: 2),
             new StreamerInfo(StreamerType.SoftHardBodyMan, PowerKind.Passive),
-            new StreamerInfo(StreamerType.StrategicAbomination, PowerKind.NextStream, giftedSubs: 1, cash: 1, giftedSubsStep: 1, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.Palmane, PowerKind.Instant, cash: 2, cashStep: 2, cooldown: 3),
+            new StreamerInfo(StreamerType.StrategicAbomination, PowerKind.NextStream, cash: 2, cashStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.Palmane, PowerKind.Instant, cash: 2, cashStep: 1, cooldown: 3),
             new StreamerInfo(StreamerType.ManimMakethMan, PowerKind.Passive),
             new StreamerInfo(StreamerType.RudeRadiologist, PowerKind.NextStream, cash: 1, cashStep: 1),
         };
@@ -120,12 +121,12 @@ namespace DeckParty.Core
             return IsValid(type) ? type : StreamerType.None;
         }
 
-        /// <summary>What the next use costs (costs grow with every use).</summary>
-        public static void Cost(PlayerState s, out int giftedSubs, out int cash)
+        /// <summary>The Cash the next use costs: it grows with every use, like raising the Sub Cap, up to <see cref="MaxPowerCost"/>.</summary>
+        public static int Cost(PlayerState s)
         {
             var info = Get(s.Streamer);
-            giftedSubs = info.GiftedSubsCost + info.GiftedSubsStep * s.PowerUses;
-            cash = info.CashCost + info.CashStep * s.PowerUses;
+            if (!info.IsActive) return 0;
+            return Math.Min(MaxPowerCost, info.CashCost + info.CashStep * Math.Max(0, s.PowerUses));
         }
     }
 }

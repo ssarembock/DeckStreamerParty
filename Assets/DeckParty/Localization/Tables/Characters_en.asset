@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383744
-    m_Localized: Always shows up. Never misses a stream.
+    m_Localized: A basic starting viewer. Always shows up.
     m_Metadata:
       m_Items: []
   - m_Id: 500383745
@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383746
-    m_Localized: Funds your first Sub Cap upgrades.
+    m_Localized: A basic starting viewer who pays for your first Sub Cap upgrades.
     m_Metadata:
       m_Items: []
   - m_Id: 500383747
@@ -47,11 +47,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383750
-    m_Localized: 'Action: choose any viewer in the queue to join chat.'
+    m_Localized: 'Action: look at the next viewer in the queue, then let them in
+      or deny them for the rest of the stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 500383751
-    m_Localized: Shoutout
+    m_Localized: Sneak Peek
     m_Metadata:
       m_Items: []
   - m_Id: 500383752
@@ -140,7 +141,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 500383772
     m_Localized: 'Action: choose Happy (+3 Subs), Sad (+3 $) or Angry (+6 Subs and
-      +1 Swatting Risk) until the stream ends.'
+      +1 Platform Ban Risk) until the stream ends.'
     m_Metadata:
       m_Items: []
   - m_Id: 500383773
@@ -161,8 +162,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383777
-    m_Localized: 'Denial: the first time Swatting Risk would reach 3, the SWAT team
-      is called off and all Swatting Risk is cleared. This copy then leaves your
+    m_Localized: 'Denial: the first time Platform Ban Risk would reach 3, the ban
+      is called off and all Platform Ban Risk is cleared. This copy then leaves your
       Audience for good.'
     m_Metadata:
       m_Items: []
@@ -172,7 +173,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 500383779
     m_Localized: 'Shared Suffering: +2 Subs for every other viewer who is suffering
-      (Swatting Risk, negative stats, infected, zeroed or penalised), max +6.'
+      (Platform Ban Risk, negative stats, infected, zeroed or penalised), max +6.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578048
@@ -193,9 +194,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578052
-    m_Localized: 'Rainbow Trail: every viewer without Swatting Risk who joins after
-      her in an unbroken row earns +1, +2, +3... Subs (max +6 each). A Swatting Risk
-      arrival breaks the chain.'
+    m_Localized: 'Rainbow Trail: every viewer without Platform Ban Risk who joins
+      after her in an unbroken row earns +1, +2, +3... Subs (max +6 each). A Platform
+      Ban Risk arrival breaks the chain.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578053
@@ -216,8 +217,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578057
-    m_Localized: 'Don''t Bonk Me: with a Doge in chat, cancels 1 Swatting Risk and
-      both Doge and Cheems get +2 Subs. Without one, -1 Subs per Swatting Risk.'
+    m_Localized: 'Don''t Bonk Me: with a Doge in chat, cancels 1 Platform Ban Risk
+      and both Doge and Cheems get +2 Subs. Without one, -1 Subs per Platform Ban
+      Risk.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578058
@@ -238,8 +240,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578062
-    m_Localized: 'Doomscroll: +2 Subs per Swatting Risk in chat. At exactly 2 Swatting
-      Risk, also +2 $.'
+    m_Localized: 'Doomscroll: +2 Subs per Platform Ban Risk in chat. At exactly 2
+      Platform Ban Risk, also +2 $.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578063
@@ -248,7 +250,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578064
     m_Localized: 'Current Thing: on joining, copies the printed Subs and $ of the
-      viewer who joined just before him. Not their action, Swatting Risk or Diamond.'
+      viewer who joined just before him. Not their action, Platform Ban Risk or Diamond.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578065
@@ -265,8 +267,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578068
-    m_Localized: 'I Like That: gains +2 Subs whenever another viewer adds Swatting
-      Risk, and +1 $ for each Swatting Risk removed.'
+    m_Localized: 'I Like That: gains +2 Subs whenever another viewer adds Platform
+      Ban Risk, and +1 $ for each Platform Ban Risk removed.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578069
@@ -274,8 +276,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578070
-    m_Localized: 'Action: kick another viewer. Gains +2 Subs if they had Swatting
-      Risk, otherwise +1 $. Their exit effects still happen.'
+    m_Localized: 'Action: kick another viewer. Gains +2 Subs if they had Platform
+      Ban Risk, otherwise +1 $. Their exit effects still happen.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578071
@@ -333,8 +335,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578083
-    m_Localized: 'Action: another viewer gets +1 Swatting Risk and +3 Subs, and she
-      gets +2 Subs. Can''t be used if it would bring the SWAT team.'
+    m_Localized: 'Action: another viewer gets +1 Platform Ban Risk and +3 Subs, and
+      she gets +2 Subs. Can''t be used if it would get the stream banned.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578084
@@ -370,7 +372,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578091
     m_Localized: 'What Could Go Wrong?: once per stream, the first attempt to kick
-      him or clear his Swatting Risk fails, and he permanently gains +1 Subs.'
+      him or clear his Platform Ban Risk fails, and he permanently gains +1 Subs.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578092
@@ -379,8 +381,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578093
     m_Localized: 'Action: strike another viewer. 1st strike: +2 Subs. 2nd: clears
-      their Swatting Risk. 3rd: kicks them and Tung Tung permanently gains +1 Subs.
-      Strikes are remembered between streams.'
+      their Platform Ban Risk. 3rd: kicks them and Tung Tung permanently gains +1
+      Subs. Strikes are remembered between streams.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578094
@@ -432,8 +434,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578105
     m_Localized: 'Skibidi Invasion: on joining, infects another viewer (+2 Subs,
-      +1 Swatting Risk). Every time another viewer joins, the infection spreads to
-      one more. Ends after the stream.'
+      +1 Platform Ban Risk). Every time another viewer joins, the infection spreads
+      to one more. Ends after the stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578106
@@ -674,6 +676,393 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 508772352
     m_Localized: $ to Subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591515959296
+    m_Localized: Ineffective Troll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262464
+    m_Localized: Starting viewer only. Lots of noise, a little risk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262465
+    m_Localized: Producer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262466
+    m_Localized: 'Action: choose any viewer in the queue to join chat, if there''s
+      room.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262467
+    m_Localized: Shoutout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262468
+    m_Localized: Chat Admin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262469
+    m_Localized: 'Action: remove one viewer from chat for the rest of the stream
+      (even the Chat Admin).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262470
+    m_Localized: Remove From Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262471
+    m_Localized: Normie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262472
+    m_Localized: Cancels 1 Platform Ban Risk while in chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262473
+    m_Localized: Mildly Risky Collaborator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262474
+    m_Localized: Big numbers, a little risk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262475
+    m_Localized: Junior PR Manager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262476
+    m_Localized: 'Action: send everyone in chat back to the queue so they can join
+      again. Used actions stay used.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262477
+    m_Localized: Situation Defusal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262478
+    m_Localized: Die Hard Fan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262479
+    m_Localized: 'Uncancellable: cancels 1 Platform Ban Risk while in chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262480
+    m_Localized: Marketing Manager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262481
+    m_Localized: 'Viral Moment: brings one random viewer along when joining. Can
+      push chat over the Sub Cap.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262482
+    m_Localized: Big Boomer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262483
+    m_Localized: 'DIAMOND. Opinion Express: adds 1 Platform Ban Risk.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262484
+    m_Localized: Clippo The Clanker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262485
+    m_Localized: 'DIAMOND. Market Collapse: costs 3 $ when scored.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262486
+    m_Localized: Bigger Star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262487
+    m_Localized: 'DIAMOND. Uplifting: brings one random viewer along when joining.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262488
+    m_Localized: Precocious Youth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262489
+    m_Localized: DIAMOND. No extra effect.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262490
+    m_Localized: Internet Starpower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262491
+    m_Localized: 'DIAMOND. Can Do No Wrong: cancels 1 Platform Ban Risk while in
+      chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262492
+    m_Localized: Platform Owner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262493
+    m_Localized: 'DIAMOND. Action: remove one viewer for the rest of the stream (even
+      itself).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262494
+    m_Localized: Free The Speech!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262495
+    m_Localized: Mainstream Celebrity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262496
+    m_Localized: DIAMOND. Mass Appeal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262497
+    m_Localized: Senior Marketing Manager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262498
+    m_Localized: DIAMOND. Product Placement.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262499
+    m_Localized: Surprise Guest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262500
+    m_Localized: 'DIAMOND. Action: summon any viewer from the queue, even another
+      Diamond.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262501
+    m_Localized: 2-for-1!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262502
+    m_Localized: Influential Troll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262503
+    m_Localized: Lots of Subs, but trouble follows.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262504
+    m_Localized: Cybersecurity Engineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262505
+    m_Localized: 'Action: look at the next viewer in the queue, then let them in
+      or deny them for the rest of the stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262506
+    m_Localized: Read Access
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262507
+    m_Localized: Paid Sponsorship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262508
+    m_Localized: 'Pays well, but viewers skip the ad: -1 Subs when scored.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262509
+    m_Localized: Comedian with a Podcast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262510
+    m_Localized: +5 Subs, but only if chat is full when scored. Always costs 1 $.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262511
+    m_Localized: Account Manager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262512
+    m_Localized: 'Plenty of Subs, but expects to be paid: costs 1 $ when scored.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262513
+    m_Localized: Crypto Guy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262514
+    m_Localized: 'Action: score another viewer in chat right now, penalties included
+      (banked straight away). They still score again when the stream ends.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262515
+    m_Localized: Rug Pull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262516
+    m_Localized: Generous Donator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262517
+    m_Localized: 'Give to the Rich!: when joining, brings in the next viewer from
+      the queue and scores them once right away (banked).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262518
+    m_Localized: PR Manager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262519
+    m_Localized: 'Action: send everyone in chat back to the queue so they can join
+      again. Used actions stay used.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262520
+    m_Localized: Damage Control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262521
+    m_Localized: Highly Risky Collaborator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262522
+    m_Localized: '#NotHimToo?: big money, big risk.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262523
+    m_Localized: Chat Arbitrator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262524
+    m_Localized: 'Action: clear the Platform Ban Risk of every risky viewer in chat
+      for the rest of the stream, even if they leave and come back.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262525
+    m_Localized: Keep the Peace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262526
+    m_Localized: Bot Detector
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262527
+    m_Localized: 'Action: remove two viewers sitting next to each other in chat for
+      the rest of the stream (the Bot Detector can be one of them).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262528
+    m_Localized: Bot Removal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262529
+    m_Localized: Risky Orbiter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262530
+    m_Localized: Brings Subs and money, and a little risk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262531
+    m_Localized: Billionaire Benefactor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262532
+    m_Localized: 'Action (once per stream for all of them): every viewer in chat
+      drops to 0 Subs tonight, and you bank 1 $ right now for each Billionaire Benefactor
+      in chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262533
+    m_Localized: Softball Interview
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262534
+    m_Localized: Tech Admin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262535
+    m_Localized: 'Action: remove one viewer for the rest of the stream (even the
+      Tech Admin).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262536
+    m_Localized: Admin Rights
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262537
+    m_Localized: Online Scandal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262538
+    m_Localized: 'Unwanted Guests: brings two random viewers along when joining.
+      Can push chat over the Sub Cap.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456768
+    m_Localized: Gatekeeper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456769
+    m_Localized: 'You Shall Not Watch!: +1 Subs for every empty space in chat when
+      scored.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456770
+    m_Localized: Binge Bunny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456771
+    m_Localized: 'Algorithmic Rabbit Hole: +1 Subs for every Loyal Fan in chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456772
+    m_Localized: Hate-Watcher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456773
+    m_Localized: 'Switches mood every time they join chat: hate-watching (+1 Platform
+      Ban Risk) on their first entrance, harmless on the next, and so on.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456774
+    m_Localized: Affiliate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456775
+    m_Localized: 'Action: a viewer in chat permanently earns +1 $ more (up to 9 $).
+      Costs 1 $ when scored.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456776
+    m_Localized: Checkout Code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456777
+    m_Localized: Master of Currency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456778
+    m_Localized: 'Chaos Ladder: +2 $ for every viewer in chat who still has Platform
+      Ban Risk (cancelled risk still counts).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456779
+    m_Localized: Executive PR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456780
+    m_Localized: 'No Bad Press: +2 Subs for every viewer in chat who still has Platform
+      Ban Risk (cancelled risk still counts).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456781
+    m_Localized: Gen Z with Job
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456782
+    m_Localized: 'Secure The Bag: permanently gains +1 $ every time they join chat
+      (up to 9 $), even if the stream ends badly.'
     m_Metadata:
       m_Items: []
   references:

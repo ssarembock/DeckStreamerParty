@@ -5,10 +5,10 @@ using UnityEngine;
 namespace DeckParty.EditorTools
 {
     /// <summary>
-    /// The Game Database inspector (Deck Party > Select Game Database): one compact row per viewer with search and
-    /// filters, the sprite (always the fallback), an optional Character Prefab and Animator Controller (which override the
-    /// sprite), framing, and a checklist of the animation states the game will look for. Streamers get the same kind of
-    /// row with their select-screen quotes.
+    /// The Game Database inspector (Deck Party > Select Game Database): the stream art (chat bubble and tail, viewer emojis,
+    /// multiplayer emotes, Platform Ban / Server Down images, group icons), one compact row per streamer with their quotes,
+    /// and one row per viewer with search and filters, the sprite (always the fallback), an optional Character Prefab and
+    /// Animator Controller (which override the sprite), framing, and a checklist of the animation states the game looks for.
     /// </summary>
     [CustomEditor(typeof(GameDatabase))]
     internal sealed class GameDatabaseEditor : Editor
@@ -21,8 +21,15 @@ namespace DeckParty.EditorTools
             Animated,
         }
 
+        /// <summary>The stream art fields, drawn in their own section (and left out of the generic list at the bottom).</summary>
+        static readonly string[] s_StreamArt =
+        {
+            "chatBubble", "chatBubbleTail", "chatBubbleTint", "viewerEmojis", "emotes", "platformBanImage", "serverDownImage", "groupIcons",
+        };
+
         string m_Search = string.Empty;
         Filter m_Filter;
+        bool m_ShowStreamArt = true;
         bool m_ShowViewers = true;
         bool m_ShowStreamers = true;
         int m_Expanded = -1;
@@ -38,6 +45,10 @@ namespace DeckParty.EditorTools
                 "States the game plays: Idle (no action) or Idle_Pre_Active / Active / Idle_Post_Active (with an action), Score, and optional Enter, Exit, Hit, Celebrate. " +
                 "Deck Party > Art > Validate Character Animations checks everything.", MessageType.Info);
 
+            m_ShowStreamArt = EditorGUILayout.Foldout(m_ShowStreamArt, "Stream Art (chat bubble, emojis, emotes, stream endings, group icons)", true, EditorStyles.foldoutHeader);
+            if (m_ShowStreamArt) DrawStreamArt();
+
+            EditorGUILayout.Space(8);
             m_ShowStreamers = EditorGUILayout.Foldout(m_ShowStreamers, $"Streamers ({db.streamers.Count})", true, EditorStyles.foldoutHeader);
             if (m_ShowStreamers) DrawStreamers(db);
 
@@ -46,8 +57,27 @@ namespace DeckParty.EditorTools
             if (m_ShowViewers) DrawViewers(db);
 
             EditorGUILayout.Space(8);
-            DrawPropertiesExcluding(serializedObject, "m_Script", "guests", "streamers");
+            var excluded = new System.Collections.Generic.List<string> { "m_Script", "guests", "streamers" };
+            excluded.AddRange(s_StreamArt);
+            DrawPropertiesExcluding(serializedObject, excluded.ToArray());
             serializedObject.ApplyModifiedProperties();
+        }
+
+        void DrawStreamArt()
+        {
+            EditorGUILayout.HelpBox(
+                "Chat Bubble: a square sprite with 9-slice borders (Sprite Editor). Tail: a sprite pointing down, placed on the bubble's top edge; " +
+                "its spot along the edge is set per stream setup (Venue > Chat Tail Position). " +
+                "Emojis and Emotes: slice the sheet (Sprite Mode Multiple), select every slice in the Project window and drag them onto the list. " +
+                "Stream Endings show full-screen when a stream gets a Platform Ban or the server goes down.", MessageType.None);
+            using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
+            {
+                foreach (var name in s_StreamArt)
+                {
+                    var property = serializedObject.FindProperty(name);
+                    if (property != null) EditorGUILayout.PropertyField(property, true);
+                }
+            }
         }
 
         void DrawStreamers(GameDatabase db)
@@ -98,7 +128,7 @@ namespace DeckParty.EditorTools
                 EditorGUILayout.PropertyField(element.FindPropertyRelative("color"));
                 EditorGUILayout.PropertyField(element.FindPropertyRelative("characterPrefab"));
                 EditorGUILayout.PropertyField(element.FindPropertyRelative("animatorController"));
-                EditorGUILayout.LabelField("States: Idle, Select (picked), Anxious (one risk from swatted), optional Hit and Celebrate (facecam).", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField("States: Idle, Select (picked), Anxious (one risk from a Platform Ban), optional Hit and Celebrate (facecam).", EditorStyles.miniLabel);
             }
         }
 

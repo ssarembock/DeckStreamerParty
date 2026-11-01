@@ -50,13 +50,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274886
-    m_Localized: "El riesgo de polic\xEDa es buen contenido"
+    m_Localized: El riesgo de baneo es buen contenido
     m_Metadata:
       m_Items: []
   - m_Id: 433274887
-    m_Localized: "Los Wojaks se alimentan del sufrimiento. Doomer y Me Gusta aman
-      el riesgo de polic\xEDa, Gigachad y el Macho Sigma quieren el foco solo para
-      ellos, y el Perro \"Todo bien\" mantiene a la polic\xEDa adivinando."
+    m_Localized: Los Wojaks se alimentan del sufrimiento. Doomer y Me Gusta aman
+      el riesgo de baneo, Gigachad y el Macho Sigma quieren el foco solo para ellos,
+      y el Perro "Todo bien" mantiene al martillo del baneo adivinando.
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
@@ -262,6 +262,48 @@ MonoBehaviour:
   - m_Id: 433274935
     m_Localized: "Humo, l\xE1seres, un negatoscopio con radiograf\xEDas y un trofeo
       enorme."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590601601024
+    m_Localized: Agencia de talentos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904192
+    m_Localized: "Los cl\xE1sicos del p\xFAblico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904193
+    m_Localized: "Volver a lo b\xE1sico. Espectadores que rinden, un Productor que
+      trae al espectador justo, un Ingeniero de ciberseguridad en la puerta y un
+      Comediante que necesita el chat lleno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904194
+    m_Localized: "Control de da\xF1os"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904195
+    m_Localized: El riesgo paga, si lo puedes contener
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904196
+    m_Localized: "Los colaboradores riesgosos traen la plata y el Hater no se decide.
+      El Maestro de la moneda y el Director de PR sacan provecho del caos mientras
+      el \xC1rbitro del chat mantiene la paz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904197
+    m_Localized: El dinero habla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904198
+    m_Localized: Cobra antes de que se caiga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904199
+    m_Localized: "Rug pulls, c\xF3digos de descuento y entrevistas complacientes.
+      Cobra Subs a mitad del stream con el Tipo cripto, haz crecer a tu Centennial
+      con trabajo y deja que el Esc\xE1ndalo en l\xEDnea llene el chat."
     m_Metadata:
       m_Items: []
   references:

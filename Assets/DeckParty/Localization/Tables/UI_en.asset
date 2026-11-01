@@ -79,7 +79,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125582
-    m_Localized: Swatting Risk {risk}/{max}
+    m_Localized: Platform Ban Risk {risk}/{max}
     m_Metadata:
       m_Items: []
   - m_Id: 1574125583
@@ -87,13 +87,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125584
-    m_Localized: <b>Swatting Risk</b>\n{max} net Swatting Risk in one stream and
-      the SWAT team shows up.
+    m_Localized: <b>Platform Ban Risk</b>\n{max} net Platform Ban Risk in one stream
+      and the stream gets banned.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125585
-    m_Localized: '<b>Swatting Risk</b>\nAdded by viewers: {added}\nCancelled: -{cancelled}\nNet:
-      {net} (SWAT team at {max})'
+    m_Localized: '<b>Platform Ban Risk</b>\nAdded by viewers: {added}\nCancelled:
+      -{cancelled}\nNet: {net} (Platform Ban at {max})'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125586
@@ -123,7 +123,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125592
-    m_Localized: One more Swatting Risk and the SWAT team shows up.
+    m_Localized: One more Platform Ban Risk and the stream gets banned.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125593
@@ -175,8 +175,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125605
-    m_Localized: '{count} {count:plural:viewer|viewers} with Swatting Risk in the
-      queue'
+    m_Localized: '{count} {count:plural:viewer|viewers} with Platform Ban Risk in
+      the queue'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125606
@@ -216,8 +216,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125615
-    m_Localized: Spend Gifted Subs to add viewers to your Audience for every future
-      stream. Hover a viewer for details.
+    m_Localized: Click a viewer to recruit them into your Audience for every future
+      stream. Hover for details. The shop's stock is shared by every player.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125616
@@ -422,8 +422,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514199
-    m_Localized: Swatting Risk got too high and the SWAT team ended the stream. Nobody
-      gets paid tonight.
+    m_Localized: Platform Ban Risk got too high and the platform banned the stream.
+      Nobody gets paid tonight.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514200
@@ -588,7 +588,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514240
-    m_Localized: 'Great streams: {great}    Swatted: {swatted}    Crashed: {crashed}'
+    m_Localized: 'Great streams: {great}    Platform Bans: {banned}    Server Downs:
+      {server_down}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514241
@@ -868,7 +869,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514309
-    m_Localized: The SWAT team was called off. Swatting Risk cleared.
+    m_Localized: The Platform Ban was called off. Platform Ban Risk cleared.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514310
@@ -893,7 +894,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514315
-    m_Localized: This stream starts with +{count} Swatting Risk.
+    m_Localized: This stream starts with +{count} Platform Ban Risk.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514316
@@ -968,13 +969,13 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514333
     m_Localized: <b>Happy:</b> +3 Subs.   <b>Sad:</b> +3 $.   <b>Angry:</b> +6 Subs
-      and +1 Swatting Risk.\nLasts until the stream ends.
+      and +1 Platform Ban Risk.\nLasts until the stream ends.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514334
     m_Localized: Stake {subs} Gifted Subs or {cash} $ from your bank. If the stream
-      succeeds you get {mult}x back; if it's swatted or crashes, it's gone.\nYou
-      have {have_subs} Gifted Subs and {have_cash} $.
+      succeeds you get {mult}x back; if it gets a Platform Ban or the server goes
+      down, it's gone.\nYou have {have_subs} Gifted Subs and {have_cash} $.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514335
@@ -1057,7 +1058,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514353
-    m_Localized: '{actor}: choose a viewer to get +1 Swatting Risk and +3 Subs.'
+    m_Localized: '{actor}: choose a viewer to get +1 Platform Ban Risk and +3 Subs.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514354
@@ -1479,6 +1480,79 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514456
     m_Localized: All 59 Viewers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593395007488
+    m_Localized: Lobby News
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699264
+    m_Localized: Activity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699265
+    m_Localized: Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699266
+    m_Localized: '{player}''s Shop'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699267
+    m_Localized: '{count} left'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699268
+    m_Localized: Unlimited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699269
+    m_Localized: SOLD OUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699270
+    m_Localized: You own {count}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699271
+    m_Localized: You can still recruit {count} (the shop's stock is shared by every
+      player)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087872
+    m_Localized: Show Activity Log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087873
+    m_Localized: Your stream got a Platform Ban. No payout tonight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087874
+    m_Localized: '{player}''s stream got a Platform Ban. No payout tonight'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087875
+    m_Localized: '{filled} spaces filled with a Sub Cap of {cap}. No payout tonight'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087876
+    m_Localized: '{actor}: choose another viewer to score right now.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087877
+    m_Localized: '{actor}: choose a viewer to earn +1 $ for good (up to {cap} $).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087878
+    m_Localized: '{actor}: choose the first of two viewers sitting next to each other.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087879
+    m_Localized: '{actor}: now choose the viewer next to {first}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087880
+    m_Localized: Camera off
     m_Metadata:
       m_Items: []
   references:

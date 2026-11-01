@@ -52,11 +52,15 @@ namespace DeckParty
                 case GuestCategory.RageComic: return UIPalette.Pink;
                 case GuestCategory.Reaction: return UIPalette.Purple;
                 case GuestCategory.Brainrot: return UIPalette.Green;
+                case GuestCategory.Tbd: return UIPalette.Blue;
                 default: return UIPalette.Gold;
             }
         }
 
         public static string FamilyName(GuestCategory category) => Loc.Get($"family.{category}");
+
+        /// <summary>The character group's icon from the Game Database (Viewer Groups section), or null while none is assigned.</summary>
+        public static Sprite FamilyIcon(GuestCategory category) => GameDatabase.Instance.GetGroupIcon(category);
 
         public static string ActionTypeName(ActionCategory category) => category == ActionCategory.None ? string.Empty : Loc.Get($"actiontype.{category}");
 
@@ -96,6 +100,15 @@ namespace DeckParty
                 case GuestType.CryingCat:
                     sb.Append(Colored(Loc.Get("card.grows"), UIPalette.Gold));
                     break;
+                case GuestType.ComedianWithAPodcast:
+                    sb.Append(Colored(Loc.Get("card.if_full", "value", PopText(GameRules.ComedianFullBonus)), UIPalette.Gold));
+                    break;
+                case GuestType.ExecutivePr:
+                    sb.Append(Colored(Loc.Get("card.per_risky", "value", PopText(GameRules.PerRiskyViewerBonus)), UIPalette.Gold));
+                    break;
+                case GuestType.GenZWithJob:
+                    sb.Append(Colored(Loc.Get("card.grows_cash"), UIPalette.Green));
+                    break;
                 default:
                     if (info.Pop != 0) sb.Append(PopText(info.Pop));
                     break;
@@ -131,6 +144,7 @@ namespace DeckParty
             void Tag(string text, Color color) => sb.Append(Colored(text, color)).Append(' ');
             if (info.IsDiamond) Tag(Loc.Get("card.tag.diamond"), UIPalette.Gold);
             if (info.Trouble) Tag(Loc.Get("card.tag.risk"), UIPalette.Red);
+            else if (info.Type == GuestType.HateWatcher) Tag(Loc.Get("card.tag.risk_sometimes"), UIPalette.Red);
             if (info.CancelsTrouble) Tag(Loc.Get("card.tag.cancels"), UIPalette.Teal);
             if (info.Brings > 0) Tag(Loc.Get("card.tag.brings", "count", info.Brings), UIPalette.Orange);
             if (info.Size > 1) Tag(Loc.Get("card.tag.size", "count", info.Size), UIPalette.Orange);
@@ -138,7 +152,8 @@ namespace DeckParty
             return sb.ToString().TrimEnd();
         }
 
-        public static string Tooltip(GuestType type, GuestInstance instance = null, PlayerState state = null)
+        /// <param name="shopState">In the shop: the player whose shop it is, for their owned and copies-left numbers.</param>
+        public static string Tooltip(GuestType type, GuestInstance instance = null, PlayerState state = null, PlayerState shopState = null)
         {
             var info = GuestCatalog.Get(type);
             var sb = new StringBuilder();
@@ -154,12 +169,27 @@ namespace DeckParty
             if (info.HasAbility) meta.Append("   ").Append(Colored(Loc.Get("card.action_type", "type", ActionTypeName(info.ActionCategory)), UIPalette.Purple));
             sb.Append("\n<size=85%>").Append(meta).Append("</size>");
 
+            // The base stats and, in the shop, how many copies are left (kept off the shop tile itself).
+            if (shopState != null && info.Purchasable)
+            {
+                sb.Append("\n<size=90%>").Append(Loc.Get("card.base_stats", "stats", BaseStats(info))).Append("</size>");
+                int owned = shopState.CountOwned(type);
+                int left = PartyEngine.ShopLeft(shopState, type);
+                sb.Append("\n<size=90%>").Append(Loc.Get("shop.tip_owned", "count", owned));
+                if (left != int.MaxValue) sb.Append("   ").Append(Loc.Get("shop.tip_left", "count", left));
+                sb.Append("</size>");
+            }
+
             if (instance != null)
             {
                 if (instance.IsDisguised)
                     sb.Append('\n').Append(Colored(Loc.Get("card.rickrolled", "viewer", DisplayName(instance.Type)), UIPalette.Pink));
                 if (instance.BonusPop != 0)
                     sb.Append('\n').Append(Colored(Loc.Get("card.permanent", "value", PopText(instance.BonusPop)), UIPalette.Pink));
+                if (instance.BonusCash != 0)
+                    sb.Append('\n').Append(Colored(Loc.Get("card.permanent", "value", CashText(instance.BonusCash)), UIPalette.Green));
+                if (instance.Type == GuestType.HateWatcher)
+                    sb.Append('\n').Append(Colored(Loc.Get(instance.Wolf ? "card.hate_watching" : "card.next_hate_watch"), UIPalette.Red));
                 if (instance.StrikeCount > 0)
                     sb.Append('\n').Append(Colored(Loc.Get("card.strikes", "count", instance.StrikeCount), UIPalette.Orange));
                 if (instance.TrolledCount > 0)
@@ -194,6 +224,7 @@ namespace DeckParty
             if (g.Infected) Add(Loc.Get("status.infected"), UIPalette.Green);
             if (g.Immune) Add(Loc.Get("status.immune"), UIPalette.Teal);
             if (g.Zeroed) Add(Loc.Get("status.zeroed"), UIPalette.Red);
+            if (g.SubsMuted) Add(Loc.Get("status.no_subs"), UIPalette.Red);
             if (g.DoubleMode == 1) Add(Loc.Get("status.double_subs"), UIPalette.Gold);
             if (g.DoubleMode == 2) Add(Loc.Get("status.double_cash"), UIPalette.Green);
             if (g.ConvertMode == 1) Add(Loc.Get("status.subs_to_cash"), UIPalette.Green);

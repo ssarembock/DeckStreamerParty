@@ -75,18 +75,21 @@ namespace DeckParty.Core
                 case AbilityKind.Inspect: return TargetMode.Inspect;
                 case AbilityKind.Boot:
                 case AbilityKind.Convert:
-                case AbilityKind.Immunity: return TargetMode.AnyAttendee;
+                case AbilityKind.Immunity:
+                case AbilityKind.Style: return TargetMode.AnyAttendee;
                 case AbilityKind.Troll:
                 case AbilityKind.PlayOff:
                 case AbilityKind.Mog:
                 case AbilityKind.Arson:
                 case AbilityKind.Strike:
                 case AbilityKind.Refund:
-                case AbilityKind.Rickroll: return TargetMode.OtherAttendee;
+                case AbilityKind.Rickroll:
+                case AbilityKind.Photograph: return TargetMode.OtherAttendee;
                 case AbilityKind.SwapOrder:
                 case AbilityKind.Pirouette:
                 case AbilityKind.Drake: return TargetMode.TwoAttendees;
                 case AbilityKind.Bombard: return TargetMode.UpToThree;
+                case AbilityKind.BootPair: return TargetMode.AdjacentPair;
                 default: return TargetMode.None;
             }
         }
@@ -101,21 +104,27 @@ namespace DeckParty.Core
                 case AbilityKind.PlayOff:
                 case AbilityKind.Strike:
                 case AbilityKind.Bombard:
-                case AbilityKind.Refund: return ActionCategory.Remove;
+                case AbilityKind.Refund:
+                case AbilityKind.BootPair: return ActionCategory.Remove;
                 case AbilityKind.Mood:
                 case AbilityKind.Mog:
                 case AbilityKind.Arson:
                 case AbilityKind.Pirouette:
                 case AbilityKind.Drake:
                 case AbilityKind.Convert:
-                case AbilityKind.Immunity: return ActionCategory.Modify;
+                case AbilityKind.Immunity:
+                case AbilityKind.Calm:
+                case AbilityKind.Style: return ActionCategory.Modify;
                 case AbilityKind.Reset:
                 case AbilityKind.SwapOrder:
                 case AbilityKind.Rickroll: return ActionCategory.Shuffle;
                 case AbilityKind.Inspect:
                 case AbilityKind.Reroll:
-                case AbilityKind.SideEye: return ActionCategory.Scout;
-                case AbilityKind.Invest: return ActionCategory.Economy;
+                case AbilityKind.SideEye:
+                case AbilityKind.Peek: return ActionCategory.Scout;
+                case AbilityKind.Invest:
+                case AbilityKind.Photograph:
+                case AbilityKind.Interview: return ActionCategory.Economy;
                 default: return ActionCategory.None;
             }
         }
@@ -145,6 +154,7 @@ namespace DeckParty.Core
                     min = max = 1;
                     break;
                 case TargetMode.TwoAttendees:
+                case TargetMode.AdjacentPair:
                     min = max = 2;
                     break;
                 case TargetMode.UpToThree:

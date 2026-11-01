@@ -243,6 +243,42 @@ MonoBehaviour:
     m_Key: venue.stage_ruderadiologist.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 416590601601024
+    m_Key: scenario.7.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904192
+    m_Key: scenario.7.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904193
+    m_Key: scenario.7.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904194
+    m_Key: scenario.8.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904195
+    m_Key: scenario.8.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904196
+    m_Key: scenario.8.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904197
+    m_Key: scenario.9.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904198
+    m_Key: scenario.9.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904199
+    m_Key: scenario.9.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

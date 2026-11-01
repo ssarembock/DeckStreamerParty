@@ -12,6 +12,14 @@ namespace DeckParty.Core
     {
         const int InfectionPop = 2;
 
+        /// <summary>The Audience every season starts with. These copies don't come out of the shared shop.</summary>
+        static readonly (GuestType type, int count)[] s_StartingAudience =
+        {
+            (GuestType.LoyalFan, 4),
+            (GuestType.Whale, 2),
+            (GuestType.IneffectiveTroll, 4),
+        };
+
         // ================================================================== setup
 
         public static PlayerState CreateGame(int scenarioId, uint seed, int nights = GameRules.DefaultNights, StreamerType streamer = StreamerType.None)
@@ -31,12 +39,19 @@ namespace DeckParty.Core
             if (streamer == StreamerType.BroJogan) s.Capacity += StreamerCatalog.BigStudioCapacity;
             s.Shop.AddRange(ScenarioCatalog.BuildShop(scenarioId, seed));
 
-            for (int i = 0; i < 4; i++) AddGuest(s, GuestType.LoyalFan);
-            for (int i = 0; i < 2; i++) AddGuest(s, GuestType.Whale);
-            for (int i = 0; i < 4; i++) AddGuest(s, GuestType.BotFarm);
+            foreach (var (type, count) in s_StartingAudience)
+                for (int i = 0; i < count; i++) AddGuest(s, type);
 
             BeginParty(s, null);
             return s;
+        }
+
+        /// <summary>How many copies of this type every season starts with.</summary>
+        public static int StartingCopies(GuestType type)
+        {
+            foreach (var (startType, count) in s_StartingAudience)
+                if (startType == type) return count;
+            return 0;
         }
 
         static GuestInstance AddGuest(PlayerState s, GuestType type, bool temporary = false)
@@ -75,19 +90,33 @@ namespace DeckParty.Core
             }
         }
 
-        // ================================================================== queries: Swatting Risk
+        // ================================================================== queries: Platform Ban Risk
 
-        /// <summary>How much Swatting Risk this guest adds right now.</summary>
+        /// <summary>Whether the card itself carries Platform Ban Risk (a Hate-Watcher only while hate-watching).</summary>
+        public static bool PrintedTrouble(GuestInstance g)
+        {
+            if (g == null) return false;
+            return g.Info.Trouble || (g.Kind == GuestType.HateWatcher && g.Wolf);
+        }
+
+        /// <summary>Whether a guest waiting in the queue would bring Platform Ban Risk in with them (a Hate-Watcher flips on entry).</summary>
+        public static bool WouldArriveRisky(GuestInstance g)
+        {
+            if (g == null || g.TroubleCleared) return false;
+            return g.Info.Trouble || (g.Kind == GuestType.HateWatcher && !g.Wolf);
+        }
+
+        /// <summary>How much Platform Ban Risk this guest adds right now.</summary>
         public static int GuestTrouble(PlayerState s, GuestInstance g)
         {
             if (g == null) return 0;
-            int printed = !g.TroubleCleared && g.Info.Trouble ? 1 : 0;
+            int printed = !g.TroubleCleared && PrintedTrouble(g) ? 1 : 0;
             return printed + g.PartyTrouble;
         }
 
         public static bool HasTroubleProperty(PlayerState s, GuestInstance g) => GuestTrouble(s, g) > 0;
 
-        /// <summary>Swatting Risk from everyone in chat, plus heat from rivals' raids.</summary>
+        /// <summary>Platform Ban Risk from everyone in chat, plus heat from rivals' raids.</summary>
         public static int TroubleTotal(PlayerState s)
         {
             int total = s.PartyHeat;
@@ -103,7 +132,7 @@ namespace DeckParty.Core
             return count;
         }
 
-        /// <summary>Whether this guest is cancelling Swatting Risk right now (Cheems only does with a Doge).</summary>
+        /// <summary>Whether this guest is cancelling Platform Ban Risk right now (Cheems only does with a Doge).</summary>
         public static bool CancelsTroubleNow(PlayerState s, GuestInstance g)
         {
             if (g == null) return false;
@@ -111,7 +140,7 @@ namespace DeckParty.Core
             return g.Kind == GuestType.Cheems && s.CountInHouse(GuestType.Doge) > 0;
         }
 
-        /// <summary>Swatting Risk cancelled by viewers, plus Shinobi's Smoke Bomb.</summary>
+        /// <summary>Platform Ban Risk cancelled by viewers, plus Shinobi's Smoke Bomb.</summary>
         public static int CancelCount(PlayerState s)
         {
             int count = s.PartyShield;
@@ -143,7 +172,8 @@ namespace DeckParty.Core
             return basePop + g.BonusPop;
         }
 
-        public static int PrintedCash(GuestInstance g) => g.HasCopy ? g.CopyCash : g.Info.Cash;
+        /// <summary>The guest's printed Cash tonight (after NPC copies and permanent changes such as Checkout Code).</summary>
+        public static int PrintedCash(GuestInstance g) => (g.HasCopy ? g.CopyCash : g.Info.Cash) + g.BonusCash;
 
         /// <summary>Overly Attached Girlfriend attached to this guest makes them impossible to remove.</summary>
         public static bool IsProtected(PlayerState s, GuestInstance g)
@@ -166,11 +196,13 @@ namespace DeckParty.Core
 
         sealed class ScoreContext
         {
-            public int Doges, Cheems, Gigachads, Sigmas, Knuckles, Harolds;
+            public int Doges, Cheems, Gigachads, Sigmas, Knuckles, Harolds, LoyalFans;
             public int Families;
             public int BigPrinted;
             public int NetTrouble;
+            public int Troublemakers;
             public int Empty;
+            public bool Full;
             public int Guests;
             public int ChungusBonus;
             public int Sufferers;
@@ -239,6 +271,9 @@ namespace DeckParty.Core
                     prevented++;
                 }
 
+                // Softball Interview: everyone who was here earns no Subs tonight.
+                if (g.SubsMuted) pop = 0;
+
                 pops[i] = pop;
                 cashes[i] = cash;
             }
@@ -273,7 +308,9 @@ namespace DeckParty.Core
             var ctx = new ScoreContext
             {
                 NetTrouble = NetTrouble(s),
+                Troublemakers = TroublemakerCount(s),
                 Empty = s.EmptySpaces,
+                Full = s.HouseFull,
                 Guests = guests.Length,
                 ChungusBonus = Math.Max(0, Math.Min(GameRules.BigChungusMaxBonus, s.Capacity - GameRules.BigChungusCapacityBase)),
                 Suffering = new bool[guests.Length],
@@ -291,8 +328,10 @@ namespace DeckParty.Core
                     case GuestType.SigmaMale: ctx.Sigmas++; break;
                     case GuestType.UgandanKnuckles: ctx.Knuckles++; break;
                     case GuestType.HideThePainHarold: ctx.Harolds++; break;
+                    case GuestType.LoyalFan: ctx.LoyalFans++; break;
                 }
-                if (g.Kind != GuestType.Doge) familyMask |= 1 << (int)g.Info.Category;
+                // Undecided (TBD) groups don't count as a group yet.
+                if (g.Kind != GuestType.Doge && g.Info.Category != GuestCategory.Tbd) familyMask |= 1 << (int)g.Info.Category;
                 if (PrintedPop(g) >= 5) ctx.BigPrinted++;
             }
             for (int bit = familyMask; bit != 0; bit &= bit - 1) ctx.Families++;
@@ -353,6 +392,23 @@ namespace DeckParty.Core
                     if (g.Mood == PepeMood.Happy) pop += 3;
                     else if (g.Mood == PepeMood.Sad) cash += 3;
                     else if (g.Mood == PepeMood.Angry) pop += 6;
+                    break;
+
+                // --- Audience classics ---
+                case GuestType.ComedianWithAPodcast:
+                    if (ctx.Full) pop += GameRules.ComedianFullBonus;
+                    break;
+                case GuestType.Gatekeeper:
+                    pop += ctx.Empty;
+                    break;
+                case GuestType.BingeBunny:
+                    pop += ctx.LoyalFans;
+                    break;
+                case GuestType.MasterOfCurrency:
+                    cash += GameRules.PerRiskyViewerBonus * ctx.Troublemakers;
+                    break;
+                case GuestType.ExecutivePr:
+                    pop += GameRules.PerRiskyViewerBonus * ctx.Troublemakers;
                     break;
             }
         }
@@ -433,7 +489,16 @@ namespace DeckParty.Core
                     if (!CanReroll(s) && s.Pool.Count == 0) return Err.Of("err.nothing_to_reroll");
                     break;
                 case AbilityKind.Arson:
-                    if (WouldRaidWithExtraTrouble(s)) return Err.Of("err.would_swat");
+                    if (WouldRaidWithExtraTrouble(s)) return Err.Of("err.would_ban");
+                    break;
+                case AbilityKind.Peek:
+                    if (s.Pool.Count == 0) return Err.Of("err.queue_empty");
+                    break;
+                case AbilityKind.Calm:
+                    if (TroublemakerCount(s) == 0) return Err.Of("err.no_risky");
+                    break;
+                case AbilityKind.Interview:
+                    if (s.PartyInterviewUsed) return Err.Of("err.interview_used");
                     break;
             }
 
@@ -498,9 +563,41 @@ namespace DeckParty.Core
                 case AbilityKind.Pirouette:
                 case AbilityKind.Drake:
                     return chosen == null || chosen.Count < 2;
+                case AbilityKind.Photograph:
+                    return !self;
+                case AbilityKind.Style:
+                    return PrintedCash(target) < GameRules.PermanentCashCap;
+                case AbilityKind.BootPair:
+                {
+                    if (IsProtected(s, target)) return false;
+                    if (chosen == null || chosen.Count == 0) return HasPairPartner(s, candidateId);
+                    return chosen.Count == 1 && AreNeighbours(s, chosen[0], candidateId);
+                }
                 default:
                     return false;
             }
+        }
+
+        /// <summary>Bot Detector: two guests sit next to each other when they're in consecutive chat spots.</summary>
+        public static bool AreNeighbours(PlayerState s, int a, int b)
+        {
+            int ia = s.House.IndexOf(a);
+            int ib = s.House.IndexOf(b);
+            return ia >= 0 && ib >= 0 && Math.Abs(ia - ib) == 1;
+        }
+
+        /// <summary>Whether a guest has a neighbour Bot Detector could remove together with them.</summary>
+        static bool HasPairPartner(PlayerState s, int id)
+        {
+            int index = s.House.IndexOf(id);
+            for (int offset = -1; offset <= 1; offset += 2)
+            {
+                int j = index + offset;
+                if (j < 0 || j >= s.House.Count) continue;
+                var neighbour = s.Find(s.House[j]);
+                if (neighbour != null && !neighbour.Immune && !IsProtected(s, neighbour)) return true;
+            }
+            return false;
         }
 
         public static string ValidateCommand(PlayerState s, GameCommand cmd)
@@ -594,8 +691,37 @@ namespace DeckParty.Core
             var info = GuestCatalog.Get(type);
             if (!info.Purchasable) return Err.Of("err.cant_buy", Err.Guest(type));
             if (s.CountOwned(type) >= info.MaxCopies) return Err.Of("err.max_copies", info.MaxCopies, Err.Guest(type));
+            if (SharedLeft(s, type) <= 0) return Err.Of("err.sold_out", Err.Guest(type));
             if (s.Pop < info.Cost) return Err.Of("err.needs_gifted_subs", info.Cost);
             return null;
+        }
+
+        // ------------------------------------------------------------------ the shared shop
+
+        /// <summary>Copies of a type this player took from the shop (everything beyond the starting Audience).</summary>
+        public static int TakenFromShop(PlayerState s, GuestType type) => Math.Max(0, s.CountOwned(type) - StartingCopies(type));
+
+        /// <summary>
+        /// Copies still in the shop for every player (the shop's stock is shared by the whole match). Diamonds are
+        /// unlimited (<see cref="int.MaxValue"/>).
+        /// </summary>
+        public static int SharedLeft(PlayerState s, GuestType type)
+        {
+            if (GuestCatalog.Get(type).IsDiamond) return int.MaxValue;
+            int rivals = (int)type < s.RivalTaken.Length ? s.RivalTaken[(int)type] : 0;
+            return Math.Max(0, GameRules.SharedStockPerGuest - TakenFromShop(s, type) - rivals);
+        }
+
+        /// <summary>
+        /// How many more copies this player can buy: the smaller of their own copy limit and the shared stock.
+        /// <see cref="int.MaxValue"/> means unlimited (Diamonds).
+        /// </summary>
+        public static int ShopLeft(PlayerState s, GuestType type)
+        {
+            var info = GuestCatalog.Get(type);
+            if (!info.Purchasable) return 0;
+            if (info.IsDiamond) return int.MaxValue;
+            return Math.Max(0, Math.Min(info.MaxCopies - s.CountOwned(type), SharedLeft(s, type)));
         }
 
         public static string GetExpandBlocker(PlayerState s)
@@ -649,6 +775,7 @@ namespace DeckParty.Core
             s.PartyViewerBonus = 0;
             s.PartyFreeActions = 0;
             s.PartyXRay = false;
+            s.PartyInterviewUsed = false;
 
             foreach (var g in s.Rolodex) g.ResetParty();
             s.Rolodex.RemoveAll(g => g.Temporary);
@@ -702,8 +829,8 @@ namespace DeckParty.Core
         // ================================================================== arrivals
 
         /// <summary>
-        /// Moves a guest into the party and resolves entrance effects, reactions, overcrowding, Swatting Risk and
-        /// chained arrivals. Returns false when the party was shut down as a consequence.
+        /// Moves a guest into the party and resolves entrance effects, reactions, overcrowding (Server Down), Platform Ban
+        /// Risk and chained arrivals. Returns false when the party was shut down as a consequence.
         /// </summary>
         static bool Arrive(PlayerState s, int id, int slot, int sourceId, bool random, List<GameEvent> ev)
         {
@@ -731,7 +858,42 @@ namespace DeckParty.Core
                 if (s.Pool.Count == 0) break;
                 if (!Arrive(s, s.Pool[0], -1, id, true, ev)) return false;
             }
+
+            // Generous Donator: brings in the next viewer and scores them once right away.
+            if (g.Kind == GuestType.GenerousDonator && s.Pool.Count > 0)
+            {
+                int greeted = s.Pool[0];
+                if (!Arrive(s, greeted, -1, id, true, ev)) return false;
+                var guest = s.Find(greeted);
+                if (guest != null && s.House.Contains(greeted)) ScoreNow(s, guest, id, ev);
+            }
             return s.Phase == GamePhase.Party;
+        }
+
+        /// <summary>
+        /// Scores a guest mid-stream (Crypto Guy, Generous Donator) and banks it immediately, so it's kept even if the
+        /// stream ends badly. Fees the bank can't cover cost Gifted Subs, as at the end of a stream.
+        /// </summary>
+        static void ScoreNow(PlayerState s, GuestInstance g, int sourceId, List<GameEvent> ev)
+        {
+            ScoreGuest(s, g, out int pop, out int cash);
+            Emit(ev, GameEventType.ScoredNow, g, pop, cash, sourceId);
+            Bank(s, pop, cash, ev);
+        }
+
+        /// <summary>Adds Subs and Cash straight to the wallet. A Cash debt the bank can't pay becomes a Gifted Subs penalty.</summary>
+        static void Bank(PlayerState s, int pop, int cash, List<GameEvent> ev)
+        {
+            s.Pop = Math.Max(0, s.Pop + pop);
+            s.TotalPopEarned += Math.Max(0, pop);
+            s.Cash += cash;
+            s.TotalCashEarned += Math.Max(0, cash);
+            if (s.Cash >= 0) return;
+            int unpaid = -s.Cash;
+            int penalty = unpaid * GameRules.CashShortfallPopPenalty;
+            s.Cash = 0;
+            s.Pop = Math.Max(0, s.Pop - penalty);
+            Emit(ev, GameEventType.CashShortfall, null, unpaid, penalty);
         }
 
         /// <summary>The newcomer's own entrance effect.</summary>
@@ -773,13 +935,28 @@ namespace DeckParty.Core
                 case GuestType.DistractedBoyfriend:
                     StartAttraction(s, g, ev);
                     break;
+
+                case GuestType.HateWatcher:
+                    // Hate-watching on the first entrance, harmless on the next, and so on (remembered between streams).
+                    g.Wolf = !g.Wolf;
+                    Emit(ev, GameEventType.MoodFlipped, g, g.Wolf ? 1 : 0);
+                    break;
+
+                case GuestType.GenZWithJob:
+                    // Secure The Bag: +1 Cash for good on every entrance, up to the cap, even if the stream fails later.
+                    if (PrintedCash(g) < GameRules.PermanentCashCap)
+                    {
+                        g.BonusCash++;
+                        Emit(ev, GameEventType.CashBoosted, g, 1, g.BonusCash);
+                    }
+                    break;
             }
         }
 
         /// <summary>Everyone already at the party responds to a newcomer.</summary>
         static void ReactToArrival(PlayerState s, GuestInstance newcomer, List<GameEvent> ev)
         {
-            bool troubleArrival = newcomer.Info.Trouble;
+            bool troubleArrival = PrintedTrouble(newcomer) && !newcomer.TroubleCleared;
             if (troubleArrival) NotifyTroubleAdded(s, newcomer, ev);
 
             bool spreads = false;
@@ -999,7 +1176,7 @@ namespace DeckParty.Core
             NotifyTroubleAdded(s, g, ev);
         }
 
-        /// <summary>Clears a guest's Swatting Risk for the rest of the party. Returns how much was removed.</summary>
+        /// <summary>Clears a guest's Platform Ban Risk for the rest of the party. Returns how much was removed.</summary>
         static int ClearTrouble(PlayerState s, GuestInstance g, List<GameEvent> ev)
         {
             int amount = GuestTrouble(s, g);
@@ -1048,12 +1225,13 @@ namespace DeckParty.Core
 
         // ================================================================== shutdowns
 
+        /// <summary>Platform Ban: too much net Platform Ban Risk ends the stream with no payout (internally a "raid").</summary>
         static bool CheckRaid(PlayerState s, List<GameEvent> ev)
         {
             if (s.Phase != GamePhase.Party) return false;
             if (NetTrouble(s) < GameRules.RaidTroubleThreshold) return false;
 
-            // This Is Fine Dog: the first time it would happen, the SWAT team is called off.
+            // This Is Fine Dog: the first time it would happen, the ban is called off.
             GuestInstance dog = null;
             for (int i = 0; i < s.House.Count && dog == null; i++)
             {
@@ -1095,6 +1273,7 @@ namespace DeckParty.Core
             return true;
         }
 
+        /// <summary>Server Down: chat went over the Sub Cap, so the stream ends with no payout (internally the "fire marshal").</summary>
         static void ShutDownFireMarshal(PlayerState s, List<GameEvent> ev)
         {
             int occupancy = s.Occupancy;
@@ -1394,6 +1573,62 @@ namespace DeckParty.Core
                     Emit(ev, GameEventType.ImmunityGranted, target);
                     break;
                 }
+
+                // --- Audience classics ---
+
+                case AbilityKind.Peek:
+                {
+                    int peeked = s.Pool[0];
+                    s.Pool.RemoveAt(0);
+                    s.PeekedId = peeked;
+                    Emit(ev, GameEventType.GuestPeeked, s.Find(peeked), actorId);
+                    break;
+                }
+
+                case AbilityKind.Photograph:
+                    ScoreNow(s, s.Find(a), actorId, ev);
+                    break;
+
+                case AbilityKind.Calm:
+                    foreach (var id in new List<int>(s.House))
+                    {
+                        var g = s.Find(id);
+                        if (g != null && !g.Immune && HasTroubleProperty(s, g)) ClearTrouble(s, g, ev);
+                    }
+                    break;
+
+                case AbilityKind.BootPair:
+                    RemoveFromParty(s, a, LeaveReason.Evicted, actorId, true, ev);
+                    if (s.Phase == GamePhase.Party) RemoveFromParty(s, b, LeaveReason.Evicted, actorId, true, ev);
+                    CheckRaid(s, ev);
+                    break;
+
+                case AbilityKind.Interview:
+                {
+                    s.PartyInterviewUsed = true;
+                    int muted = 0;
+                    foreach (var id in s.House)
+                    {
+                        var g = s.Find(id);
+                        if (g == null || g.Immune) continue;
+                        g.SubsMuted = true;
+                        muted++;
+                    }
+                    // The stream's Subs pot drops to 0 as well.
+                    s.PartyPop = 0;
+                    int billionaires = s.CountInHouse(GuestType.BillionaireBenefactor);
+                    Emit(ev, GameEventType.InterviewGiven, actor, billionaires, muted);
+                    Bank(s, 0, billionaires, ev);
+                    break;
+                }
+
+                case AbilityKind.Style:
+                {
+                    var target = s.Find(a);
+                    target.BonusCash++;
+                    Emit(ev, GameEventType.CashBoosted, target, 1, target.BonusCash);
+                    break;
+                }
             }
 
             return CommandResult.Success;
@@ -1521,7 +1756,7 @@ namespace DeckParty.Core
         static CommandResult Blame(PlayerState s, int guestId, List<GameEvent> ev)
         {
             if (s.Phase != GamePhase.RaidBlame) return CommandResult.Fail(Err.Of("err.nobody_to_ban"));
-            if (!s.RaidSuspects.Contains(guestId) || s.Find(guestId) == null) return CommandResult.Fail(Err.Of("err.not_swatted"));
+            if (!s.RaidSuspects.Contains(guestId) || s.Find(guestId) == null) return CommandResult.Fail(Err.Of("err.not_banned"));
 
             s.BannedNextParty = guestId;
             s.LastBlamedId = guestId;
@@ -1587,9 +1822,8 @@ namespace DeckParty.Core
             }
             if (s.Streamer == StreamerType.Palmane && PalSphereChoices(s).Count == 0) return Err.Of("err.power_no_pals");
 
-            StreamerCatalog.Cost(s, out int giftedSubs, out int cash);
-            if (s.Pop < giftedSubs) return Err.Of("err.needs_gifted_subs", giftedSubs);
-            if (s.Cash < cash) return Err.Of("err.needs_cash", cash);
+            int cost = StreamerCatalog.Cost(s);
+            if (s.Cash < cost) return Err.Of("err.needs_cash", cost);
             return null;
         }
 
@@ -1609,7 +1843,8 @@ namespace DeckParty.Core
             {
                 var info = GuestCatalog.Get(type);
                 if (!info.Purchasable || info.IsDiamond || info.Cost > StreamerCatalog.PalSphereMaxCost) continue;
-                if (s.CountOwned(type) >= info.MaxCopies || result.Contains(type)) continue;
+                // A caught viewer comes out of the shared shop like a bought one.
+                if (ShopLeft(s, type) <= 0 || result.Contains(type)) continue;
                 result.Add(type);
             }
             return result;
@@ -1666,16 +1901,16 @@ namespace DeckParty.Core
             return CommandResult.Success;
         }
 
+        /// <summary>Actives are paid in Cash; every use makes the next one cost more (see <see cref="StreamerCatalog.Cost"/>).</summary>
         static void PayForPower(PlayerState s, List<GameEvent> ev)
         {
-            StreamerCatalog.Cost(s, out int giftedSubs, out int cash);
-            s.Pop -= giftedSubs;
-            s.Cash -= cash;
+            int cost = StreamerCatalog.Cost(s);
+            s.Cash -= cost;
             s.PowerUses++;
             int cooldown = s.StreamerInfo.Cooldown;
             // Stored one higher: it counts down as the next stream starts, so "2" means two turns without it.
             s.PowerCooldown = cooldown > 0 ? cooldown + 1 : 0;
-            Emit(ev, GameEventType.PowerUsed, null, (int)s.Streamer, giftedSubs, cash);
+            Emit(ev, GameEventType.PowerUsed, null, (int)s.Streamer, cost);
         }
 
         /// <summary>Applies armed powers and rivals' raids as a stream starts, and ticks the cooldown.</summary>
@@ -1721,7 +1956,7 @@ namespace DeckParty.Core
             Emit(ev, GameEventType.FreeActionUsed, s.Find(actorId));
         }
 
-        /// <summary>Soft Hard Body Man: a swatted stream still banks half its Subs.</summary>
+        /// <summary>Soft Hard Body Man: a stream that gets a Platform Ban still banks half its Subs.</summary>
         static void SoftLanding(PlayerState s, List<GameEvent> ev)
         {
             if (s.Streamer != StreamerType.SoftHardBodyMan) return;

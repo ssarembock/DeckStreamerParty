@@ -46,8 +46,11 @@ namespace DeckParty.Networking
     /// </summary>
     public sealed class NetworkService : MonoBehaviour
     {
-        /// <summary>Bump on any breaking network change. deckparty-4: streamers, localized message keys, presence, emotes, turn timer.</summary>
-        public const string ProtocolVersion = "deckparty-4";
+        /// <summary>
+        /// Bump on any breaking network change. deckparty-4: streamers, localized message keys, presence, emotes, turn timer.
+        /// deckparty-5: 82-viewer roster, state format v4, the shared shop and sprite emotes.
+        /// </summary>
+        public const string ProtocolVersion = "deckparty-5";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

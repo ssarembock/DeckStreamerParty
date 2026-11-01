@@ -10,8 +10,11 @@ namespace DeckParty.Core
     /// </summary>
     public static class StateSerializer
     {
-        /// <summary>v2: meme roster, per-guest party modifiers, ordered waiting line. v3: streamers and their powers.</summary>
-        const byte FormatVersion = 3;
+        /// <summary>
+        /// v2: meme roster, per-guest party modifiers, ordered waiting line. v3: streamers and their powers.
+        /// v4: audience classics (permanent Cash, Hate-Watcher mood, Softball Interview) and the shared shop.
+        /// </summary>
+        const byte FormatVersion = 4;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -83,6 +86,12 @@ namespace DeckParty.Core
                 w.Write((byte)s.PartyViewerBonus);
                 w.Write((byte)s.PartyFreeActions);
                 w.Write(s.PartyXRay);
+
+                // v4
+                w.Write(s.PartyInterviewUsed);
+                w.Write((ushort)s.RivalTaken.Length);
+                for (int i = 0; i < s.RivalTaken.Length; i++) w.Write((byte)Math.Min(255, Math.Max(0, s.RivalTaken[i])));
+                for (int i = 0; i < s.Rolodex.Count; i++) WriteGuestV4(w, s.Rolodex[i]);
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -181,6 +190,19 @@ namespace DeckParty.Core
                     s.PartyXRay = r.ReadBoolean();
                 }
 
+                // v3 and older saves predate the audience classics and the shared shop: everything starts at zero.
+                if (version >= 4)
+                {
+                    s.PartyInterviewUsed = r.ReadBoolean();
+                    int types = ReadCount(r);
+                    for (int i = 0; i < types; i++)
+                    {
+                        int taken = r.ReadByte();
+                        if (i < s.RivalTaken.Length) s.RivalTaken[i] = taken;
+                    }
+                    for (int i = 0; i < s.Rolodex.Count; i++) ReadGuestV4(r, s.Rolodex[i]);
+                }
+
                 int eventCount = ReadCount(r);
                 for (int i = 0; i < eventCount; i++)
                 {
@@ -266,6 +288,21 @@ namespace DeckParty.Core
             if (g.Disguise != GuestInstance.NoDisguise && !GuestCatalog.IsValid((GuestType)g.Disguise))
                 throw new InvalidDataException($"Unknown disguise {g.Disguise} in state data.");
             return g;
+        }
+
+        /// <summary>Per-guest fields added in v4, written after the v3 block (same guest order as the Audience).</summary>
+        static void WriteGuestV4(BinaryWriter w, GuestInstance g)
+        {
+            w.Write((short)g.BonusCash);
+            w.Write(g.Wolf);
+            w.Write(g.SubsMuted);
+        }
+
+        static void ReadGuestV4(BinaryReader r, GuestInstance g)
+        {
+            g.BonusCash = r.ReadInt16();
+            g.Wolf = r.ReadBoolean();
+            g.SubsMuted = r.ReadBoolean();
         }
 
         static GuestType ReadType(BinaryReader r)

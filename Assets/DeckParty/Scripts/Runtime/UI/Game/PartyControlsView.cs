@@ -128,8 +128,8 @@ namespace DeckParty.UI
         }
 
         /// <summary>
-        /// How many viewers with Swatting Risk are still in the queue: a fact, not the odds. Players work out their chances
-        /// from what they can see. Red when one more Swatting Risk would get the stream swatted.
+        /// How many viewers with Platform Ban Risk are still in the queue: a fact, not the odds. Players work out their chances
+        /// from what they can see. Red when one more Platform Ban Risk would get the stream banned.
         /// </summary>
         static string RiskText(PlayerState s)
         {
@@ -137,7 +137,7 @@ namespace DeckParty.UI
             for (int i = 0; i < s.Pool.Count; i++)
             {
                 var g = s.Find(s.Pool[i]);
-                if (g != null && g.Info.Trouble) troubleWaiting++;
+                if (PartyEngine.WouldArriveRisky(g)) troubleWaiting++;
             }
             if (troubleWaiting == 0) return string.Empty;
 

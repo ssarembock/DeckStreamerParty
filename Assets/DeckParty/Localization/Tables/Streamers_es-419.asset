@@ -77,7 +77,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 496189452
     m_Localized: "Elige un rival: su pr\xF3ximo stream empieza con +1 de riesgo de
-      polic\xEDa."
+      baneo."
     m_Metadata:
       m_Items: []
   - m_Id: 496189453
@@ -118,7 +118,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189462
-    m_Localized: "Tu pr\xF3ximo stream ignora 1 de riesgo de polic\xEDa."
+    m_Localized: "Tu pr\xF3ximo stream ignora 1 de riesgo de baneo."
     m_Metadata:
       m_Items: []
   - m_Id: 496189463
@@ -138,7 +138,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189467
-    m_Localized: "Pasivo: los espectadores con riesgo de polic\xEDa ganan +1 Subs."
+    m_Localized: 'Pasivo: los espectadores con riesgo de baneo ganan +1 Subs.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -198,8 +198,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189482
-    m_Localized: "Pasivo: si llega la polic\xEDa, igual te quedas con la mitad de
-      los Subs de ese stream."
+    m_Localized: 'Pasivo: si banean tu stream, igual te quedas con la mitad de los
+      Subs de ese stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189483
@@ -456,7 +456,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189545
-    m_Localized: "\xA1UNO M\xC1S Y LLEGA LA POLIC\xCDA!"
+    m_Localized: "\xA1UNO M\xC1S Y TE BANEAN!"
     m_Metadata:
       m_Items: []
   - m_Id: 496189546

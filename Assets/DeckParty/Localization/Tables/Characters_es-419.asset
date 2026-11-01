@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383744
-    m_Localized: "Siempre est\xE1. No se pierde ni un stream."
+    m_Localized: "Espectador inicial b\xE1sico. Siempre est\xE1."
     m_Metadata:
       m_Items: []
   - m_Id: 500383745
@@ -31,7 +31,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383746
-    m_Localized: Paga tus primeras ampliaciones de cupo.
+    m_Localized: "Espectador inicial b\xE1sico que paga tus primeras ampliaciones
+      de cupo."
     m_Metadata:
       m_Items: []
   - m_Id: 500383747
@@ -47,12 +48,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383750
-    m_Localized: "Acci\xF3n: elige a cualquier espectador de la fila para que entre
-      al chat."
+    m_Localized: "Acci\xF3n: mira al pr\xF3ximo espectador de la fila y d\xE9jalo
+      entrar o rech\xE1zalo por el resto del stream."
     m_Metadata:
       m_Items: []
   - m_Id: 500383751
-    m_Localized: "Menci\xF3n"
+    m_Localized: Adelanto
     m_Metadata:
       m_Items: []
   - m_Id: 500383752
@@ -142,7 +143,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 500383772
     m_Localized: "Acci\xF3n: elige Feliz (+3 Subs), Triste (+3 $) o Furioso (+6 Subs
-      y +1 de riesgo de polic\xEDa) hasta que termine el stream."
+      y +1 de riesgo de baneo) hasta que termine el stream."
     m_Metadata:
       m_Items: []
   - m_Id: 500383773
@@ -163,9 +164,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383777
-    m_Localized: "Negaci\xF3n: la primera vez que el riesgo llegar\xEDa a 3, la polic\xEDa
-      se va y todo el riesgo se borra. Despu\xE9s esta copia deja tu Audiencia para
-      siempre."
+    m_Localized: "Negaci\xF3n: la primera vez que el riesgo de baneo llegar\xEDa
+      a 3, el baneo se cancela y todo el riesgo se borra. Despu\xE9s esta copia deja
+      tu Audiencia para siempre."
     m_Metadata:
       m_Items: []
   - m_Id: 500383778
@@ -174,7 +175,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 500383779
     m_Localized: "Sufrimiento compartido: +2 Subs por cada otro espectador que sufre
-      (riesgo de polic\xEDa, stats negativas, infectado, en cero o penalizado), m\xE1x.
+      (riesgo de baneo, stats negativas, infectado, en cero o penalizado), m\xE1x.
       +6."
     m_Metadata:
       m_Items: []
@@ -337,8 +338,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578083
-    m_Localized: "Acci\xF3n: otro espectador gana +1 de riesgo y +3 Subs, y ella
-      +2 Subs. No se puede usar si traer\xEDa a la polic\xEDa."
+    m_Localized: "Acci\xF3n: otro espectador gana +1 de riesgo de baneo y +3 Subs,
+      y ella +2 Subs. No se puede usar si har\xEDa que baneen el stream."
     m_Metadata:
       m_Items: []
   - m_Id: 504578084
@@ -679,6 +680,397 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 508772352
     m_Localized: $ a Subs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591515959296
+    m_Localized: Trol ineficaz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262464
+    m_Localized: Solo espectador inicial. Mucho ruido, un poco de riesgo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262465
+    m_Localized: Productor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262466
+    m_Localized: "Acci\xF3n: elige a cualquier espectador de la fila para que entre
+      al chat, si hay lugar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262467
+    m_Localized: "Menci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262468
+    m_Localized: Admin del chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262469
+    m_Localized: "Acci\xF3n: saca a un espectador del chat por el resto del stream
+      (incluso al Admin del chat)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262470
+    m_Localized: Echar del chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262471
+    m_Localized: Normie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262472
+    m_Localized: "Mientras est\xE1 en el chat, anula 1 de riesgo de baneo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262473
+    m_Localized: Colaborador algo riesgoso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262474
+    m_Localized: "N\xFAmeros grandes, un poco de riesgo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262475
+    m_Localized: "Gerente de PR j\xFAnior"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262476
+    m_Localized: "Acci\xF3n: manda a todos los del chat de vuelta a la fila para
+      que vuelvan a entrar. Las acciones usadas siguen usadas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262477
+    m_Localized: Desactivar la crisis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262478
+    m_Localized: "Fan ac\xE9rrimo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262479
+    m_Localized: "Incancelable: mientras est\xE1 en el chat, anula 1 de riesgo de
+      baneo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262480
+    m_Localized: Gerente de marketing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262481
+    m_Localized: 'Momento viral: al entrar trae a un espectador al azar. Puede hacer
+      que el chat pase el cupo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262482
+    m_Localized: Gran Boomer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262483
+    m_Localized: 'DIAMANTE. Expreso de opiniones: suma 1 de riesgo de baneo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262484
+    m_Localized: Clippo el Chatarra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262485
+    m_Localized: 'DIAMANTE. Colapso del mercado: cuesta 3 $ al puntuar.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262486
+    m_Localized: "Estrella m\xE1s grande"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262487
+    m_Localized: 'DIAMANTE. Inspirador: al entrar trae a un espectador al azar.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262488
+    m_Localized: Joven precoz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262489
+    m_Localized: DIAMANTE. Sin efecto extra.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262490
+    m_Localized: Estrella de internet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262491
+    m_Localized: "DIAMANTE. No puede equivocarse: mientras est\xE1 en el chat, anula
+      1 de riesgo de baneo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262492
+    m_Localized: "Due\xF1o de la plataforma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262493
+    m_Localized: "DIAMANTE. Acci\xF3n: saca a un espectador por el resto del stream
+      (incluso a s\xED mismo)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262494
+    m_Localized: "\xA1Libertad de expresi\xF3n!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262495
+    m_Localized: Celebridad mainstream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262496
+    m_Localized: DIAMANTE. Atractivo masivo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262497
+    m_Localized: "Gerente s\xE9nior de marketing"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262498
+    m_Localized: "DIAMANTE. Colocaci\xF3n de producto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262499
+    m_Localized: Invitado sorpresa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262500
+    m_Localized: "DIAMANTE. Acci\xF3n: invoca a cualquier espectador de la fila,
+      incluso a otro Diamante."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262501
+    m_Localized: "\xA12x1!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262502
+    m_Localized: Trol influyente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262503
+    m_Localized: Muchos Subs, pero trae problemas.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262504
+    m_Localized: Ingeniero de ciberseguridad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262505
+    m_Localized: "Acci\xF3n: mira al pr\xF3ximo espectador de la fila y d\xE9jalo
+      entrar o rech\xE1zalo por el resto del stream."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262506
+    m_Localized: Acceso de lectura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262507
+    m_Localized: Patrocinio pagado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262508
+    m_Localized: "Paga bien, pero el p\xFAblico se salta el anuncio: -1 Sub al puntuar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262509
+    m_Localized: "Comediante con p\xF3dcast"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262510
+    m_Localized: "+5 Subs, pero solo si el chat est\xE1 lleno al puntuar. Siempre
+      cuesta 1 $."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262511
+    m_Localized: Gerente de cuentas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262512
+    m_Localized: 'Muchos Subs, pero hay que pagarle: cuesta 1 $ al puntuar.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262513
+    m_Localized: Tipo cripto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262514
+    m_Localized: "Acci\xF3n: punt\xFAa ahora mismo a otro espectador del chat, penalizaciones
+      incluidas (se cobra al instante). Igual vuelve a puntuar al terminar el stream."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262515
+    m_Localized: Rug Pull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262516
+    m_Localized: Donante generoso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262517
+    m_Localized: "\xA1Dale a los ricos!: al entrar trae al pr\xF3ximo espectador
+      de la fila y lo punt\xFAa una vez al instante (se cobra)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262518
+    m_Localized: Gerente de PR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262519
+    m_Localized: "Acci\xF3n: manda a todos los del chat de vuelta a la fila para
+      que vuelvan a entrar. Las acciones usadas siguen usadas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262520
+    m_Localized: "Control de da\xF1os"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262521
+    m_Localized: Colaborador muy riesgoso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262522
+    m_Localized: "#\xBF\xC9lTambi\xE9n?: mucha plata, mucho riesgo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262523
+    m_Localized: "\xC1rbitro del chat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262524
+    m_Localized: "Acci\xF3n: quita el riesgo de baneo a todos los espectadores riesgosos
+      del chat por el resto del stream, aunque salgan y vuelvan."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262525
+    m_Localized: Mantener la paz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262526
+    m_Localized: Detector de bots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262527
+    m_Localized: "Acci\xF3n: saca a dos espectadores que est\xE1n uno al lado del
+      otro en el chat por el resto del stream (el Detector de bots puede ser uno
+      de ellos)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262528
+    m_Localized: Eliminar bots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262529
+    m_Localized: Orbitador riesgoso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262530
+    m_Localized: Trae Subs y plata, y un poco de riesgo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262531
+    m_Localized: Benefactor multimillonario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262532
+    m_Localized: "Acci\xF3n (una vez por stream entre todos): cada espectador del
+      chat baja a 0 Subs esta noche, y cobras 1 $ al instante por cada Benefactor
+      multimillonario en el chat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262533
+    m_Localized: Entrevista complaciente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262534
+    m_Localized: "Admin t\xE9cnico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262535
+    m_Localized: "Acci\xF3n: saca a un espectador por el resto del stream (incluso
+      al Admin t\xE9cnico)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262536
+    m_Localized: Permisos de admin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262537
+    m_Localized: "Esc\xE1ndalo en l\xEDnea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591587262538
+    m_Localized: 'Invitados no deseados: al entrar trae a dos espectadores al azar.
+      Puede hacer que el chat pase el cupo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456768
+    m_Localized: "Guardi\xE1n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456769
+    m_Localized: "\xA1No ver\xE1s nada!: +1 Sub por cada lugar libre en el chat al
+      puntuar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456770
+    m_Localized: Conejo maratonero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456771
+    m_Localized: "Madriguera algor\xEDtmica: +1 Sub por cada Fan incondicional en
+      el chat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456772
+    m_Localized: Hater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456773
+    m_Localized: "Cambia de humor cada vez que entra al chat: la primera vez mira
+      por odio (+1 de riesgo de baneo), la siguiente es inofensivo, y as\xED sucesivamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456774
+    m_Localized: Afiliado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456775
+    m_Localized: "Acci\xF3n: un espectador del chat gana +1 $ m\xE1s para siempre
+      (hasta 9 $). Cuesta 1 $ al puntuar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456776
+    m_Localized: "C\xF3digo de descuento"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456777
+    m_Localized: Maestro de la moneda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456778
+    m_Localized: "Escalera del caos: +2 $ por cada espectador del chat que todav\xEDa
+      tiene riesgo de baneo (el riesgo anulado tambi\xE9n cuenta)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456779
+    m_Localized: Director de PR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456780
+    m_Localized: "No hay mala prensa: +2 Subs por cada espectador del chat que todav\xEDa
+      tiene riesgo de baneo (el riesgo anulado tambi\xE9n cuenta)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456781
+    m_Localized: Centennial con trabajo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591591456782
+    m_Localized: 'Asegurar la plata: gana +1 $ para siempre cada vez que entra al
+      chat (hasta 9 $), aunque el stream termine mal.'
     m_Metadata:
       m_Items: []
   references:

@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
-    /// <summary>Multiplayer chat box (lobby and in-game). Also shows system headlines.</summary>
+    /// <summary>
+    /// Multiplayer chat box (lobby and in-game). Also shows system headlines. While text chat is off (FX Library > Text Chat),
+    /// the input row is hidden and only the headlines show: players talk with emotes.
+    /// </summary>
     public sealed class ChatView : MonoBehaviour
     {
         [SerializeField] internal EventLogView log;
@@ -36,6 +39,13 @@ namespace DeckParty.UI
             m_Session.ChatReceived += OnChat;
         }
 
+        /// <summary>Shows or hides the message input and Send button (text chat on or off).</summary>
+        public void SetTextInput(bool enabled)
+        {
+            if (input != null) input.gameObject.SetActive(enabled);
+            if (sendButton != null) sendButton.gameObject.SetActive(enabled);
+        }
+
         public void Unbind()
         {
             if (m_Session != null) m_Session.ChatReceived -= OnChat;
@@ -48,7 +58,7 @@ namespace DeckParty.UI
 
         static string Format(ChatMessage message)
         {
-            if (message.IsSystem) return $"<color={UIPalette.Tag(UIPalette.TextDim)}><i>{Escape(message.Text)}</i></color>";
+            if (message.IsSystem) return $"<color={UIPalette.Tag(UIPalette.TextDim)}><i>{Escape(message.DisplayText)}</i></color>";
             return $"<b><color={UIPalette.Tag(UIPalette.PlayerColor(message.ColorIndex))}>{Escape(message.Sender)}:</color></b> {Escape(message.Text)}";
         }
 

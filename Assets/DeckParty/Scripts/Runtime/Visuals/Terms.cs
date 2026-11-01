@@ -14,9 +14,9 @@ namespace DeckParty
         public static string Cash => Loc.Get("term.cash");
         public const string CashSymbol = "$";
 
-        /// <summary>Was Trouble. Other languages call it "Police Arrival Risk".</summary>
+        /// <summary>Was Trouble (then Swatting Risk): Platform Ban Risk.</summary>
         public static string Risk => Loc.Get("term.risk");
-        /// <summary>Was the police raid.</summary>
+        /// <summary>Was the police raid (then SWATTED!): the Platform Ban that ends a stream.</summary>
         public static string Raid => Loc.Get("term.raid");
         /// <summary>Was "taking the blame" after a raid.</summary>
         public static string Ban => Loc.Get("term.ban");
@@ -31,7 +31,7 @@ namespace DeckParty
         /// <summary>Was the house size.</summary>
         public static string SubCap => Loc.Get("term.sub_cap");
         public static string RaiseSubCap => Loc.Get("term.raise_sub_cap");
-        /// <summary>Was the fire marshal shutting the party down.</summary>
+        /// <summary>Was the fire marshal shutting the party down: Server Down (chat over the Sub Cap).</summary>
         public static string Overload => Loc.Get("term.overload");
 
         /// <summary>A preset scenario (its viewer shop).</summary>

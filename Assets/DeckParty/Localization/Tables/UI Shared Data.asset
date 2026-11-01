@@ -1443,6 +1443,78 @@ MonoBehaviour:
     m_Key: howto.viewers_tab
     m_Metadata:
       m_Items: []
+  - m_Id: 416593395007488
+    m_Key: lobby.activity_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699264
+    m_Key: tab.activity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699265
+    m_Key: tab.chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699266
+    m_Key: shop.header_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699267
+    m_Key: shop.left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699268
+    m_Key: shop.left_unlimited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699269
+    m_Key: shop.sold_out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699270
+    m_Key: shop.tip_owned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699271
+    m_Key: shop.tip_left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087872
+    m_Key: settings.activity_log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087873
+    m_Key: game.banned_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087874
+    m_Key: game.banned_sub_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087875
+    m_Key: game.server_down_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087876
+    m_Key: target.photograph
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087877
+    m_Key: target.style
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087878
+    m_Key: target.bot_pair_first
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087879
+    m_Key: target.bot_pair_second
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087880
+    m_Key: facecam.off
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

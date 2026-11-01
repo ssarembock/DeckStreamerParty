@@ -50,13 +50,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274886
-    m_Localized: "Risco de pol\xEDcia \xE9 conte\xFAdo"
+    m_Localized: "Risco de banimento \xE9 conte\xFAdo"
     m_Metadata:
       m_Items: []
   - m_Id: 433274887
     m_Localized: "Os Wojaks se alimentam de sofrimento. Doomer e Me Gusta amam risco
-      de pol\xEDcia, Gigachad e o Macho Sigma querem os holofotes s\xF3 pra eles,
-      e o Cachorro \"T\xE1 tudo bem\" deixa a pol\xEDcia na d\xFAvida."
+      de banimento, Gigachad e o Macho Sigma querem os holofotes s\xF3 pra eles,
+      e o Cachorro \"T\xE1 tudo bem\" deixa o martelo do banimento na d\xFAvida."
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
@@ -262,6 +262,48 @@ MonoBehaviour:
   - m_Id: 433274935
     m_Localized: "Fuma\xE7a, lasers, um negatosc\xF3pio com raios X e um trof\xE9u
       enorme."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590601601024
+    m_Localized: "Ag\xEAncia de talentos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904192
+    m_Localized: "Os cl\xE1ssicos da audi\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904193
+    m_Localized: "De volta ao b\xE1sico. Espectadores que rendem, um Produtor pra
+      chamar o espectador certo, um Engenheiro de ciberseguran\xE7a na porta e um
+      Comediante que precisa do chat cheio."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904194
+    m_Localized: Controle de danos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904195
+    m_Localized: "Risco d\xE1 dinheiro, se voc\xEA conseguir segurar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904196
+    m_Localized: "Os collabs arriscados trazem a grana e o Hater n\xE3o se decide.
+      O Mestre da grana e o Diretor de PR lucram com o caos enquanto o \xC1rbitro
+      do chat mant\xE9m a paz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904197
+    m_Localized: Dinheiro fala mais alto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904198
+    m_Localized: Saque antes que despenque
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904199
+    m_Localized: "Rug pulls, cupons e entrevistas chapa-branca. Garanta Subs no meio
+      da live com o Cara das criptos, fa\xE7a seu Gera\xE7\xE3o Z empregado crescer
+      e deixe o Esc\xE2ndalo online lotar o chat."
     m_Metadata:
       m_Items: []
   references:

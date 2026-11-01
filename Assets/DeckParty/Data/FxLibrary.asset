@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db5ffe347599e4468d45ed45c90b551, type: 3}
   m_Name: FxLibrary
   m_EditorClassIdentifier: 
+  recipeRevision: 1
   durationMultiplier: 1
   shakeMultiplier: 1
   cues:
@@ -95,12 +96,12 @@ MonoBehaviour:
     feedback: {fileID: 5018930730727092404, guid: 120c8862eabd29b43a37a35f73e807a5, type: 3}
     intensity: 1
     enabled: 1
-  - name: Swatted
+  - name: PlatformBan
     cue: 16
     feedback: {fileID: 5334793438735782184, guid: 23cdf0064062f6247adea1a9cfbf79ca, type: 3}
     intensity: 1
     enabled: 1
-  - name: Crashed
+  - name: ServerDown
     cue: 17
     feedback: {fileID: 3387904191657230564, guid: 085b1536ef1ae08448376bc41cd03972, type: 3}
     intensity: 1
@@ -182,9 +183,10 @@ MonoBehaviour:
   presenceSignals: 1
   streamerAnxiety: 1
   signatureEffects: 1
-  fakeChat: 1
   streamOverlay: 1
   emotes: 1
+  viewerEmojis: 1
+  textChat: 0
   ghostCursor: 1
   cardTilt: 1
   idleBreathing: 1

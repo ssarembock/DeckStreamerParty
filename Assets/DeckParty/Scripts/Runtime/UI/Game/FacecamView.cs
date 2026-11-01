@@ -7,9 +7,9 @@ namespace DeckParty.UI
 {
     /// <summary>
     /// The facecam in the bottom-right corner: a square showing the streamer of the stream on screen (yours, or in
-    /// multiplayer the board being shown, which in Take Turns is the active player's) with a name plate. One Swatting Risk
-    /// from being swatted the streamer plays Anxious and the frame trembles red; Hit plays when the stream is swatted or
-    /// crashes, Celebrate when it ends well. Static portraits bob gently. The square fills its row's width, unless the side
+    /// multiplayer the board being shown, which in Take Turns is the active player's) with a name plate. One Platform Ban Risk
+    /// from a Platform Ban the streamer plays Anxious and the frame trembles red; Hit plays when the stream gets a Platform Ban
+    /// or the server goes down, Celebrate when it ends well. Static portraits bob gently. The square fills its row's width, unless the side
     /// strip (the emote buttons in multiplayer) is showing, when it's at most <see cref="sizeWithSide"/>.
     /// </summary>
     public sealed class FacecamView : MonoBehaviour

@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 408109056
-    m_Localized: "\xA1MENCI\xD3N!"
+    m_Localized: ADELANTO
     m_Metadata:
       m_Items: []
   - m_Id: 479412224
@@ -359,11 +359,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412308
-    m_Localized: "Riesgo de polic\xEDa"
+    m_Localized: Riesgo de baneo
     m_Metadata:
       m_Items: []
   - m_Id: 479412309
-    m_Localized: "\xA1LLEG\xD3 LA POLIC\xCDA!"
+    m_Localized: "\xA1BANEO DE LA PLATAFORMA!"
     m_Metadata:
       m_Items: []
   - m_Id: 479412310
@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412316
-    m_Localized: "\xA1CUPO SUPERADO!"
+    m_Localized: "\xA1SERVIDOR CA\xCDDO!"
     m_Metadata:
       m_Items: []
   - m_Id: 479412317
@@ -407,7 +407,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412320
-    m_Localized: '{value} de riesgo'
+    m_Localized: '{value} de riesgo de baneo'
     m_Metadata:
       m_Items: []
   - m_Id: 479412321
@@ -499,7 +499,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412343
-    m_Localized: "RIESGO DE POLIC\xCDA"
+    m_Localized: RIESGO DE BANEO
     m_Metadata:
       m_Items: []
   - m_Id: 479412344
@@ -762,12 +762,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606536
-    m_Localized: "{viewer} ya no tiene riesgo de polic\xEDa."
+    m_Localized: '{viewer} ya no tiene riesgo de baneo.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606537
-    m_Localized: "Todo bien. {viewer} manda a la polic\xEDa de vuelta y elimina {count}
-      de riesgo."
+    m_Localized: Todo bien. {viewer} convence a la plataforma de cancelar el baneo
+      y elimina {count} de riesgo.
     m_Metadata:
       m_Items: []
   - m_Id: 483606538
@@ -887,7 +887,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606566
-    m_Localized: "\xA1Bomba de humo! Este stream ignora {count} de riesgo."
+    m_Localized: "\xA1Bomba de humo! Este stream ignora {count} de riesgo de baneo."
     m_Metadata:
       m_Items: []
   - m_Id: 483606567
@@ -923,7 +923,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606574
     m_Localized: "\xA1{raider} hizo un raid! Pr\xF3ximo stream: +{count} de riesgo
-      de polic\xEDa."
+      de baneo."
     m_Metadata:
       m_Items: []
   - m_Id: 483606575
@@ -1177,17 +1177,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606635
-    m_Localized: "Riesgo de polic\xEDa"
+    m_Localized: Riesgo de baneo
     m_Metadata:
       m_Items: []
   - m_Id: 483606636
-    m_Localized: "Los espectadores con una X roja suman riesgo de polic\xEDa. Hasta
-      2 de riesgo neto no pasa nada; con <b>3 llega la polic\xEDa</b>: el stream
-      termina sin ganancias y le das a un espectador un <b>baneo temporal</b> (se
-      pierde el pr\xF3ximo stream). AutoMod, los VIPs y el \xCDcono Sano <b>anulan</b>
-      1 de riesgo cada uno mientras est\xE1n en el chat (Cheems tambi\xE9n, si hay
-      un Doge cerca). Algunos espectadores suman riesgo con sus acciones; el Perro
-      \"Todo bien\" hace que la polic\xEDa se vaya una vez."
+    m_Localized: "Los espectadores con una X roja suman riesgo de baneo. Hasta 2
+      de riesgo neto no pasa nada; con <b>3 la plataforma banea el stream</b>: termina
+      sin ganancias y le das a un espectador un <b>baneo temporal</b> (se pierde
+      el pr\xF3ximo stream). El Normie, el Fan ac\xE9rrimo y la Estrella de internet
+      <b>anulan</b> 1 de riesgo cada uno mientras est\xE1n en el chat (Cheems tambi\xE9n,
+      si hay un Doge cerca). Algunos espectadores suman riesgo con sus acciones;
+      el Perro \"Todo bien\" cancela un baneo una vez y el \xC1rbitro del chat quita
+      el riesgo."
     m_Metadata:
       m_Items: []
   - m_Id: 483606637
@@ -1196,9 +1197,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606638
     m_Localized: "No puedes sumar espectadores cuando llegas a tu cupo, pero los
-      que <b>traen</b> a otros (Parasocial, L\xEDder de Raid) o los que ocupan m\xE1s
-      lugar (Big Chungus ocupa 3) pueden hacerte pasar. Si pasa, el stream se cae
-      y no hay ganancias. \xA1Deja lugar libre!"
+      que <b>traen</b> a otros (Gerente de marketing, Esc\xE1ndalo en l\xEDnea, Estrella
+      m\xE1s grande) o los que ocupan m\xE1s lugar (Big Chungus ocupa 3) pueden hacerte
+      pasar. Si pasa, <b>se cae el servidor</b> y el stream termina sin ganancias.
+      \xA1Deja lugar libre!"
     m_Metadata:
       m_Items: []
   - m_Id: 483606639
@@ -1209,9 +1211,11 @@ MonoBehaviour:
     m_Localized: "Subir el cupo cuesta 2 de Plata, y 1 m\xE1s cada vez (m\xE1x. 12
       por lugar, hasta 34). Algunos espectadores cobran cuotas (Plata negativa).
       Las cuotas se pagan con tu Plata; lo que no puedas pagar cuesta <b>7 Subs regaladas
-      por cada 1 de Plata</b>.\\nLos espectadores normales tienen un l\xEDmite de
-      4 copias; los Diamantes son ilimitados. No puedes sacar espectadores de tu
-      Audiencia, as\xED que cada fichaje cambia tus probabilidades."
+      por cada 1 de Plata</b>.\\nEl stock de la tienda es <b>compartido entre todos
+      los jugadores</b>: cada espectador normal tiene 4 copias para toda la partida
+      y puedes tener como m\xE1ximo 4 de cada uno; los Diamantes son ilimitados.
+      No puedes sacar espectadores de tu Audiencia, as\xED que cada fichaje cambia
+      tus probabilidades."
     m_Metadata:
       m_Items: []
   - m_Id: 483606641
@@ -1219,16 +1223,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606642
-    m_Localized: "Cada espectador pertenece a una familia (Comunidad, Animales, Wojak,
-      Rage Comic, Reacciones, Brainrot, Diamante) y cada acci\xF3n tiene un tipo
-      (Reclutar, Echar, Modificar, Mezclar, Espiar, Econom\xEDa). Doge ama las familias
-      mezcladas, Bongo Cat potencia a los Animales y el Beb\xE9 Bailar\xEDn premia
-      dos acciones seguidas del mismo tipo. Algunas acciones te piden elegir una
-      opci\xF3n primero y luego uno o m\xE1s espectadores; las que usan varios espectadores
-      muestran un bot\xF3n Confirmar. Los cambios permanentes (Chad vs Virgen, Tung
-      Tung, Brian Mala Suerte) quedan en esa carta para siempre. Pasa el cursor sobre
-      un espectador para ver su familia, tipo de acci\xF3n y los efectos de esta
-      noche."
+    m_Localized: "Cada espectador pertenece a un grupo (Animales, Wojak, Rage Comic,
+      Reacciones, Brainrot, o Por definir mientras se decide) y cada acci\xF3n tiene
+      un tipo (Reclutar, Echar, Modificar, Mezclar, Espiar, Econom\xEDa). Doge ama
+      los grupos mezclados (Por definir no cuenta), Bongo Cat potencia a los Animales
+      y el Beb\xE9 Bailar\xEDn premia dos acciones seguidas del mismo tipo. Algunas
+      acciones te piden elegir una opci\xF3n primero y luego uno o m\xE1s espectadores;
+      las que usan varios espectadores muestran un bot\xF3n Confirmar. Los cambios
+      permanentes (Chad vs Virgen, Tung Tung, Brian Mala Suerte, Afiliado, Centennial
+      con trabajo) quedan en esa carta para siempre. Pasa el cursor sobre un espectador
+      para ver su grupo, tipo de acci\xF3n y los efectos de esta noche."
     m_Metadata:
       m_Items: []
   - m_Id: 483606643
@@ -1238,11 +1242,12 @@ MonoBehaviour:
   - m_Id: 483606644
     m_Localized: "Antes de una temporada <b>eliges a tu streamer</b>. Cada uno tiene
       un poder: los <b>pasivos</b> siempre est\xE1n activos; los <b>activos</b> se
-      usan desde la tienda despu\xE9s de tu stream (en tu turno), cuestan Subs regaladas
-      y/o Plata, se encarecen con cada uso y pueden necesitar unos turnos para recargarse.
-      Los poderes de <b>rival</b> (Raid, Impuesto a la riqueza) golpean a otro jugador,
-      as\xED que solo funcionan en multijugador. Elige <b>Sin streamer</b> para jugar
-      con las reglas cl\xE1sicas. Tu streamer tambi\xE9n trae su propio escenario."
+      usan desde la tienda despu\xE9s de tu stream (en tu turno), cuestan Plata,
+      se encarecen con cada uso (como subir el cupo) y pueden necesitar unos turnos
+      para recargarse. Los poderes de <b>rival</b> (Raid, Impuesto a la riqueza)
+      golpean a otro jugador, as\xED que solo funcionan en multijugador. Elige <b>Sin
+      streamer</b> para jugar con las reglas cl\xE1sicas. Tu streamer tambi\xE9n
+      trae su propio escenario."
     m_Metadata:
       m_Items: []
   - m_Id: 483606645
@@ -1275,12 +1280,161 @@ MonoBehaviour:
   - m_Id: 483606649
     m_Localized: "<b>Ganar:</b> 4 Diamantes en un stream exitoso.\\n<b>Sumar espectador:</b>
       entra al chat el pr\xF3ximo de la fila.  <b>Terminar el stream:</b> cobra los
-      Subs como Subs regaladas, m\xE1s la Plata.\\n<b>3 de riesgo neto</b> = llega
-      la polic\xEDa (sin ganancias, un espectador recibe un baneo temporal).\\n<b>Pasarte
-      del cupo</b> = se cae el stream (sin ganancias).\\n<b>Tienda:</b> las Subs
-      regaladas reclutan espectadores, la Plata sube el cupo y aqu\xED tambi\xE9n
-      est\xE1n los poderes de streamer.\\n<b>Teclas:</b> Espacio sumar/confirmar/siguiente
-      noche, E terminar el stream, R Audiencia, Esc men\xFA, F11 pantalla completa."
+      Subs como Subs regaladas, m\xE1s la Plata.\\n<b>3 de riesgo neto</b> = baneo
+      de la plataforma (sin ganancias, un espectador recibe un baneo temporal).\\n<b>Pasarte
+      del cupo</b> = se cae el servidor (sin ganancias).\\n<b>Tienda:</b> las Subs
+      regaladas reclutan espectadores (el stock es compartido entre todos), la Plata
+      sube el cupo y paga los poderes activos del streamer.\\n<b>Teclas:</b> Espacio
+      sumar/confirmar/siguiente noche, E terminar el stream, R Audiencia, Esc men\xFA,
+      F11 pantalla completa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591918612480
+    m_Localized: "\xA1MENCI\xD3N!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721344
+    m_Localized: "\xA1BANEADO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721345
+    m_Localized: "\xA1DESACTIVADO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721346
+    m_Localized: "\xA1LIBERTAD!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721347
+    m_Localized: "\xA1SORPRESA!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721348
+    m_Localized: "CONTROL DE DA\xD1OS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721349
+    m_Localized: ACCESO CONCEDIDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721350
+    m_Localized: "\xA1RUG PULL!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721351
+    m_Localized: PAZ.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721352
+    m_Localized: "\xA1FUERA BOTS!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721353
+    m_Localized: SIN COMENTARIOS.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721354
+    m_Localized: "\xA1SUDO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721355
+    m_Localized: LINK EN LA BIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721356
+    m_Localized: "\xA1TOMA MI PLATA!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721357
+    m_Localized: "\xA1ODIO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721358
+    m_Localized: Por definir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721359
+    m_Localized: +1 $ por cada entrada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721360
+    m_Localized: "{value} si el chat est\xE1 lleno"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721361
+    m_Localized: '{value} por espectador riesgoso'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721362
+    m_Localized: "Punt\xFAa: {stats}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721363
+    m_Localized: Ahora mira por odio (+1 de riesgo de baneo)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721364
+    m_Localized: "En su pr\xF3xima entrada mirar\xE1 por odio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721365
+    m_Localized: A VECES RIESGOSO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721366
+    m_Localized: Sin Subs esta noche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721367
+    m_Localized: "\xA1BANEO DE LA PLATAFORMA! El riesgo de baneo lleg\xF3 a {risk}.
+      Banearon el stream. Hoy no se cobra nada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721368
+    m_Localized: "\xA1SERVIDOR CA\xCDDO! {filled} lugares ocupados con un cupo de
+      {cap}. Hoy no se cobra nada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721369
+    m_Localized: '{source} cobra a {viewer} al instante: {values} al banco.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721370
+    m_Localized: '{viewer} da una entrevista complaciente: todos los presentes ganan
+      0 Subs esta noche, {cash} al banco.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721371
+    m_Localized: "{viewer} ahora gana {total} m\xE1s para siempre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721372
+    m_Localized: '{viewer} mira por odio (+1 de riesgo de baneo).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591985721373
+    m_Localized: '{viewer} esta vez solo mira.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109952
+    m_Localized: "Eso har\xEDa que baneen el stream."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109953
+    m_Localized: Ese espectador no estaba en el stream baneado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109954
+    m_Localized: Nadie en el chat tiene riesgo de baneo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109955
+    m_Localized: Un Benefactor multimillonario ya dio una entrevista en este stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416591994109956
+    m_Localized: "{0} est\xE1 agotado: el stock de la tienda es compartido entre
+      todos."
     m_Metadata:
       m_Items: []
   references:

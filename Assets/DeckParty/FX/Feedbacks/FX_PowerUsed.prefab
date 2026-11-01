@@ -135,8 +135,8 @@ MonoBehaviour:
   DebugActive: 0
   InScriptDrivenPause: 0
   FeedbacksList:
-  - rid: 2741550451676152105
-  - rid: 2741550451676152106
+  - rid: 7761574661956567129
+  - rid: 7761574661956567130
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   RestoreInitialValuesOnDisable: 0
@@ -148,11 +148,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2741550451676152105
+    - rid: 7761574661956567129
       type: {class: MMF_Scale, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -2080216416
+        UniqueID: 1591607809
         Label: Pop In
         OriginalLabel: 
         ChannelMode: 0
@@ -375,12 +375,12 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-    - rid: 2741550451676152106
+    - rid: 7761574661956567130
       type: {class: MMF_Rotation, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -458359564
-        Label: Spin
+        UniqueID: -24250499
+        Label: Wobble
         OriginalLabel: 
         ChannelMode: 0
         Channel: 0
@@ -390,7 +390,7 @@ MonoBehaviour:
           TimescaleMode: 1
           ExcludeFromHoldingPauses: 0
           ContributeToTotalDuration: 1
-          InitialDelay: 0
+          InitialDelay: 0.05
           CooldownDuration: 0
           InterruptsOnStop: 1
           NumberOfRepeats: 0
@@ -453,10 +453,10 @@ MonoBehaviour:
         Mode: 1
         RotationSpace: 1
         MovementMode: 0
-        AnimateRotationDuration: 0.35
+        AnimateRotationDuration: 0.45
         AnimatePositionSpeed: 1
         RemapCurveZero: 0
-        RemapCurveOne: 20
+        RemapCurveOne: 8
         AnimateX: 0
         AnimateRotationTweenX:
           MMTweenDefinitionType: 1
@@ -549,17 +549,71 @@ MonoBehaviour:
             - serializedVersion: 3
               time: 0
               value: 0
-              inSlope: 1
-              outSlope: 1
+              inSlope: 10
+              outSlope: 10
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
               outWeight: 0.33333334
             - serializedVersion: 3
-              time: 1
+              time: 0.1
               value: 1
-              inSlope: 1
-              outSlope: 1
+              inSlope: -1.333333
+              outSlope: -1.333333
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 0.25
+              value: -0.9
+              inSlope: -1
+              outSlope: -1
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 0.4
+              value: 0.7
+              inSlope: 1.333333
+              outSlope: 1.333333
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 0.55
+              value: -0.5
+              inSlope: -1.3333328
+              outSlope: -1.3333328
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 0.7
+              value: 0.3
+              inSlope: 1.1666675
+              outSlope: 1.1666675
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 0.85
+              value: -0.15
+              inSlope: -0.99999964
+              outSlope: -0.99999964
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0.33333334
+              outWeight: 0.33333334
+            - serializedVersion: 3
+              time: 1
+              value: 0
+              inSlope: 1.0000002
+              outSlope: 1.0000002
               tangentMode: 0
               weightedMode: 0
               inWeight: 0.33333334

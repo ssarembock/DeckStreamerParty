@@ -18,7 +18,7 @@ namespace DeckParty
         const string KeyPort = "dp.lastPort";
         const string KeyShake = "dp.screenShake";
         const string KeyReduceFlashing = "dp.reduceFlashing";
-        const string KeyFakeChat = "dp.fakeChat";
+        const string KeyActivityLog = "dp.activityLog";
         const string KeyStreamer = "dp.streamer";
         const string KeyTurnTimer = "dp.turnTimer";
 
@@ -74,11 +74,11 @@ namespace DeckParty
             set { PlayerPrefs.SetInt(KeyReduceFlashing, value ? 1 : 0); Notify(); }
         }
 
-        /// <summary>The fake live-chat feed in the game screen.</summary>
-        public static bool FakeChat
+        /// <summary>The Activity log (what happened, line by line) in the side panel during streams and in the shop. Off by default.</summary>
+        public static bool ShowActivityLog
         {
-            get => PlayerPrefs.GetInt(KeyFakeChat, 1) == 1;
-            set { PlayerPrefs.SetInt(KeyFakeChat, value ? 1 : 0); Notify(); }
+            get => PlayerPrefs.GetInt(KeyActivityLog, 0) == 1;
+            set { PlayerPrefs.SetInt(KeyActivityLog, value ? 1 : 0); Notify(); }
         }
 
         /// <summary>The last streamer picked on the select screen (a StreamerType, or 255 for Random).</summary>

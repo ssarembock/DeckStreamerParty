@@ -307,10 +307,10 @@ namespace DeckParty.EditorTools
             var venue = EditorUI.Selector(settings.transform, "Venue", "lobby.your_setup");
             EditorUI.Layout(venue, -1, 96);
 
-            // Chat
+            // Lobby news (joins, leaves, settings); the chat input only shows while text chat is on (FX Library).
             var chatPanel = EditorUI.Panel(screen, "Chat");
             chatPanel.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(1300, 150), new Vector2(-60, -200));
-            var chatTitle = EditorUI.Text(chatPanel.transform, "Header", "chat.panel_title", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
+            var chatTitle = EditorUI.Text(chatPanel.transform, "Header", "lobby.activity_title", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
             chatTitle.rectTransform.TopBand(18, 40, 24, 24);
             var chat = SceneCommon.Chat(chatPanel.rectTransform, 70, prefabs.TextLine);
 

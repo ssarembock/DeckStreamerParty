@@ -33,6 +33,14 @@ namespace DeckParty
         [Tooltip("Optional small preview used on the venue selectors.")]
         public Sprite thumbnail;
 
+        [Header("Stream chat bubble")]
+        [Tooltip("Where the chat bubble's tail sits along the bubble's top edge (0 = left, 1 = right). Line it up with the computer in this background " +
+                 "so the chat seems to come out of it.")]
+        [Range(0f, 1f)] public float chatTailPosition = 0.5f;
+        [Tooltip("Optional image shown in the strip above the chat bubble during a stream (e.g. the streamer at their desk, with the computer the tail " +
+                 "points at). Leave empty to let the background show through.")]
+        public Sprite header;
+
         [Header("Palette (also tints the procedural placeholder)")]
         public Color skyTop = new Color(0.10f, 0.07f, 0.20f);
         public Color skyBottom = new Color(0.30f, 0.12f, 0.35f);

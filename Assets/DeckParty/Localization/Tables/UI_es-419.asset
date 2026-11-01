@@ -79,7 +79,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125582
-    m_Localized: "Riesgo de polic\xEDa {risk}/{max}"
+    m_Localized: Riesgo de baneo {risk}/{max}
     m_Metadata:
       m_Items: []
   - m_Id: 1574125583
@@ -87,13 +87,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125584
-    m_Localized: "<b>Riesgo de polic\xEDa</b>\\nCon {max} de riesgo neto en un stream
-      llega la polic\xEDa."
+    m_Localized: <b>Riesgo de baneo</b>\nCon {max} de riesgo neto en un stream, lo
+      banean.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125585
-    m_Localized: "<b>Riesgo de polic\xEDa</b>\\nSumado por espectadores: {added}\\nAnulado:
-      -{cancelled}\\nNeto: {net} (la polic\xEDa llega con {max})"
+    m_Localized: '<b>Riesgo de baneo</b>\nSumado por espectadores: {added}\nAnulado:
+      -{cancelled}\nNeto: {net} (baneo con {max})'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125586
@@ -124,7 +124,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125592
-    m_Localized: "Un punto m\xE1s de riesgo y llega la polic\xEDa."
+    m_Localized: "Un punto m\xE1s de riesgo y te banean el stream."
     m_Metadata:
       m_Items: []
   - m_Id: 1574125593
@@ -177,8 +177,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125605
-    m_Localized: '{count} {count:plural:espectador|espectadores} con riesgo en la
-      fila'
+    m_Localized: '{count} {count:plural:espectador|espectadores} con riesgo de baneo
+      en la fila'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125606
@@ -218,8 +218,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125615
-    m_Localized: "Gasta Subs regaladas para sumar espectadores a tu Audiencia para
-      todos los pr\xF3ximos streams. Pasa el cursor sobre uno para ver detalles."
+    m_Localized: "Haz clic en un espectador para sumarlo a tu Audiencia para todos
+      los pr\xF3ximos streams. Pasa el cursor para ver detalles. El stock de la tienda
+      es compartido entre todos."
     m_Metadata:
       m_Items: []
   - m_Id: 1574125616
@@ -426,7 +427,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514199
-    m_Localized: "El riesgo subi\xF3 demasiado y la polic\xEDa cort\xF3 el stream.
+    m_Localized: "El riesgo subi\xF3 demasiado y la plataforma bane\xF3 el stream.
       Esta noche nadie cobra."
     m_Metadata:
       m_Items: []
@@ -595,8 +596,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514240
-    m_Localized: "Grandes streams: {great}    Polic\xEDa: {swatted}    Ca\xEDdas:
-      {crashed}"
+    m_Localized: "Grandes streams: {great}    Baneos: {banned}    Servidor ca\xEDdo:
+      {server_down}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514241
@@ -878,7 +879,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514309
-    m_Localized: "La polic\xEDa se fue. Riesgo borrado."
+    m_Localized: "Se cancel\xF3 el baneo. Riesgo borrado."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514310
@@ -904,7 +905,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514315
-    m_Localized: "Este stream empieza con +{count} de riesgo de polic\xEDa."
+    m_Localized: Este stream empieza con +{count} de riesgo de baneo.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514316
@@ -978,14 +979,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514333
-    m_Localized: "<b>Feliz:</b> +3 Subs.   <b>Triste:</b> +3 $.   <b>Furioso:</b>
-      +6 Subs y +1 de riesgo de polic\xEDa.\\nDura hasta que termine el stream."
+    m_Localized: <b>Feliz:</b> +3 Subs.   <b>Triste:</b> +3 $.   <b>Furioso:</b>
+      +6 Subs y +1 de riesgo de baneo.\nDura hasta que termine el stream.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514334
-    m_Localized: "Apuesta {subs} Subs regaladas o {cash} $ de tu banco. Si el stream
-      sale bien recuperas {mult}x; si llega la polic\xEDa o se cae, lo pierdes.\\nTienes
-      {have_subs} Subs regaladas y {have_cash} $."
+    m_Localized: Apuesta {subs} Subs regaladas o {cash} $ de tu banco. Si el stream
+      sale bien recuperas {mult}x; si lo banean o se cae el servidor, lo pierdes.\nTienes
+      {have_subs} Subs regaladas y {have_cash} $.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514335
@@ -1070,8 +1071,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514353
-    m_Localized: "{actor}: elige un espectador que gane +1 de riesgo de polic\xEDa
-      y +3 Subs."
+    m_Localized: '{actor}: elige un espectador que gane +1 de riesgo de baneo y +3
+      Subs.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514354
@@ -1498,6 +1499,82 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514456
     m_Localized: Los 59 espectadores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593395007488
+    m_Localized: Novedades del lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699264
+    m_Localized: Actividad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699265
+    m_Localized: Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699266
+    m_Localized: Tienda de {player}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699267
+    m_Localized: Quedan {count}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699268
+    m_Localized: Ilimitado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699269
+    m_Localized: AGOTADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699270
+    m_Localized: Tienes {count}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593474699271
+    m_Localized: "Todav\xEDa puedes reclutar {count} (el stock de la tienda es compartido
+      entre todos)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087872
+    m_Localized: Mostrar registro de actividad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087873
+    m_Localized: Banearon tu stream. Esta noche no hay ganancias
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087874
+    m_Localized: Banearon el stream de {player}. Esta noche no hay ganancias
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087875
+    m_Localized: '{filled} lugares ocupados con un cupo de {cap}. Esta noche no hay
+      ganancias'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087876
+    m_Localized: '{actor}: elige a otro espectador para puntuarlo ahora mismo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087877
+    m_Localized: '{actor}: elige un espectador que gane +1 $ para siempre (hasta
+      {cap} $).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087878
+    m_Localized: "{actor}: elige al primero de dos espectadores que est\xE1n uno
+      al lado del otro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087879
+    m_Localized: '{actor}: ahora elige al espectador al lado de {first}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416593483087880
+    m_Localized: "C\xE1mara apagada"
     m_Metadata:
       m_Items: []
   references:
