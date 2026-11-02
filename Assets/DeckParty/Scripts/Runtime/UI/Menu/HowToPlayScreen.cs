@@ -40,7 +40,8 @@ namespace DeckParty.UI
             rulesText.text = RulesText.Full;
             if (m_Rows.Count == 0)
             {
-                foreach (var info in GuestCatalog.All)
+                // The current roster only (put-aside viewers and the Bot token aren't in this build's guide).
+                foreach (var info in GuestCatalog.Roster)
                 {
                     var row = Instantiate(guestRowPrefab, guestList);
                     row.gameObject.SetActive(true);

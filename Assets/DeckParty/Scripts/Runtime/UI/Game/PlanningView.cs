@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DeckParty.Core;
+using DeckParty.Networking;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +27,18 @@ namespace DeckParty.UI
         public string Owner;
         /// <summary>Whether there's a rival to hit with a rival power (multiplayer with another player still in the season).</summary>
         public bool RivalsAvailable;
+
+        /// <summary>Free For All: every stream runs at once, then the shop opens for everyone together.</summary>
+        public bool FreeForAll;
+        /// <summary>Free For All: where the round is.</summary>
+        public RoundStage Stage;
+        /// <summary>Free For All: the shop hasn't opened yet (the gate covers it).</summary>
+        public bool ShopGated;
+        /// <summary>Free For All: you clicked Go to the Shop.</summary>
+        public bool LocalReadyForShop;
+        /// <summary>Free For All: rivals still streaming, and rivals done but not yet ready for the shop (comma lists).</summary>
+        public string StillStreaming;
+        public string NotReadyForShop;
     }
 
     /// <summary>
@@ -50,6 +63,8 @@ namespace DeckParty.UI
         [SerializeField] internal GridLayoutGroup shopGrid;
         [SerializeField] internal ShopItemView shopItemPrefab;
         [SerializeField] internal StreamerPowerView power;
+        [Tooltip("Free For All: covers the shop until it opens for everyone (Go to the Shop, then the 3-2-1).")]
+        [SerializeField] internal ShopGateView gate;
 
         [Header("Shop grid")]
         [Tooltip("Tiles never get narrower than this (more columns fit on wider screens).")]
@@ -63,6 +78,8 @@ namespace DeckParty.UI
         public event Action RolodexClicked;
         public event Action NextNightClicked;
         public event Action PowerClicked;
+        /// <summary>Free For All: Go to the Shop (or take it back) on the gate.</summary>
+        public event Action ShopReadyClicked;
         /// <summary>A shop tile was hovered (type) or left (null). Used for multiplayer presence signals.</summary>
         public event Action<GuestType?> ShopHovered;
 
@@ -82,6 +99,7 @@ namespace DeckParty.UI
             rolodexButton.onClick.AddListener(() => RolodexClicked?.Invoke());
             nextNightButton.onClick.AddListener(() => NextNightClicked?.Invoke());
             if (power != null) power.UseClicked += () => PowerClicked?.Invoke();
+            if (gate != null) gate.ReadyClicked += () => ShopReadyClicked?.Invoke();
             Loc.Changed += OnLanguageChanged;
         }
 
@@ -112,20 +130,28 @@ namespace DeckParty.UI
             bool watching = ctx.Owner != null;
             bool waitingForTurn = ctx.Turns && !ctx.MyTurn && !watching;
 
+            bool gated = ctx.ShopGated && !watching;
             if (headerLabel != null)
-                headerLabel.text = watching ? Loc.Get("shop.header_other", "player", ctx.Owner) : Loc.Get("shop.header");
+            {
+                string header = watching ? Loc.Get("shop.header_other", "player", ctx.Owner) : Loc.Get("shop.header");
+                // Free For All: the stock is shared and everyone shops at once.
+                if (ctx.FreeForAll && !watching) header += $"  <size=60%><color=#FF9A3D>{Loc.Get("shop.first_come")}</color></size>";
+                headerLabel.text = header;
+            }
 
             bool readyLocked = ctx.Multiplayer && ctx.SyncNights && ctx.LocalReady;
-            bool locked = readyLocked || watching || waitingForTurn;
+            bool locked = readyLocked || watching || waitingForTurn || gated;
             string lockReason = watching ? Loc.Get("shop.lock_watching", "player", ctx.Owner)
                 : waitingForTurn ? Loc.Get("shop.lock_turn")
+                : gated ? Loc.Get("shop.lock_gate")
                 : Loc.Get("shop.lock_ready");
+            RenderGate(ctx, gated);
 
             var expandBlocker = PartyEngine.GetExpandBlocker(s);
             expandButton.interactable = expandBlocker == null && !locked;
             expandLabel.text = s.Capacity >= GameRules.MaxCapacity
                 ? Loc.Get("shop.cap_maxed")
-                : Loc.Get("shop.raise_cap", ("from", s.Capacity), ("to", s.Capacity + 1), ("cost", $"<color=#6BE38B>{PartyEngine.ExpansionCost(s)} $</color>"));
+                : Loc.Get("shop.raise_cap", ("from", s.Capacity), ("to", s.Capacity + 1), ("cost", $"<color=#6BE38B>{GameIcons.Amount(ResourceIcon.Cash, PartyEngine.ExpansionCost(s))}</color>"));
             if (expandTooltip != null) expandTooltip.Text = watching || waitingForTurn ? lockReason
                 : expandBlocker != null ? Loc.Error(expandBlocker) : Loc.Get("shop.raise_cap_tip");
 
@@ -156,10 +182,43 @@ namespace DeckParty.UI
             LayoutGrid();
         }
 
+        /// <summary>Free For All: the gate over the shop until it opens for everyone.</summary>
+        void RenderGate(PlanningContext ctx, bool gated)
+        {
+            if (gate == null) return;
+            if (!gated)
+            {
+                gate.Hide();
+                return;
+            }
+
+            string notice = Loc.Get("gate.notice");
+            if (ctx.Stage == RoundStage.Countdown)
+            {
+                gate.Show(Loc.Get("gate.countdown_title"), Loc.Get("gate.countdown_body"), notice, null);
+                return;
+            }
+
+            string waiting = !string.IsNullOrEmpty(ctx.StillStreaming) ? Loc.Get("gate.still_streaming", "players", ctx.StillStreaming)
+                : !string.IsNullOrEmpty(ctx.NotReadyForShop) ? Loc.Get("gate.not_ready_yet", "players", ctx.NotReadyForShop)
+                : Loc.Get("gate.everyone_ready");
+            if (ctx.LocalReadyForShop)
+                gate.Show(Loc.Get("gate.waiting_title"), waiting, notice, Loc.Get("gate.cancel_ready"));
+            else
+                gate.Show(Loc.Get("gate.stream_over_title"), Loc.Get("gate.ready_body") + "\n" + waiting, notice, Loc.Get("gate.go_to_shop") + "  <size=70%>[Space]</size>");
+        }
+
         void RenderNextButton(PlayerState s, PlanningContext ctx, bool watching)
         {
             bool nextInteractable = true;
-            if (watching)
+            if (ctx.ShopGated && !watching)
+            {
+                // Free For All: the next night waits until everyone has shopped.
+                nextInteractable = false;
+                nextNightLabel.text = Loc.Get("shop.ready_for", "night", s.Night + 1);
+                waitingLabel.text = Loc.Get("shop.gate_hint");
+            }
+            else if (watching)
             {
                 nextInteractable = false;
                 nextNightLabel.text = ctx.Turns ? Loc.Get("shop.other_shopping", "player", ctx.Owner) : Loc.Get("shop.watching", "player", ctx.Owner);

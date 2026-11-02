@@ -276,7 +276,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469247
-    m_Localized: '{0} raided {1}! Their next stream starts with +1 Platform Ban Risk.'
+    m_Localized: '{0} raided {1}! Their next stream starts with +1 {icon:risk}.'
     m_Metadata:
       m_Items: []
   - m_Id: 437469248
@@ -308,11 +308,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416590245085184
-    m_Localized: '{0}''s stream got a Platform Ban!'
+    m_Localized: '{0} got deplatformed!'
     m_Metadata:
       m_Items: []
   - m_Id: 416590320582656
     m_Localized: '{0} blew past their Sub Cap and the server went down!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675188590198784
+    m_Localized: '{0}''s Doomsdayers curse everyone''s next stream ({1}% per viewer)!'
     m_Metadata:
       m_Items: []
   references:

@@ -42,7 +42,8 @@ namespace DeckParty.UI
                 var color = UIPalette.PlayerColor(p.ColorIndex);
                 m_RowIds[i] = p.ClientId;
                 m_Rows[i].gameObject.SetActive(true);
-                m_Rows[i].Set(p.DisplayName, Status(p, mode, session.ActivePlayer == p.ClientId), color, mode != MatchMode.Race && p.ReadyNextNight,
+                m_Rows[i].Set(p.DisplayName, Status(p, mode, session.ActivePlayer == p.ClientId, session.Stage), color,
+                    mode != MatchMode.Race && (p.ReadyNextNight || (mode == MatchMode.SyncNights && session.Stage != RoundStage.Shopping && p.ReadyForShop)),
                     session.IsHostPlayer(p.ClientId), p.Rank, p.ClientId == session.LocalClientId);
                 m_Rows[i].SetStreamer((StreamerType)p.Streamer);
                 m_Rows[i].SetViewed(p.ClientId == viewedId, color);
@@ -66,7 +67,8 @@ namespace DeckParty.UI
             if (index < m_RowIds.Count && m_Rows[index].gameObject.activeSelf) PlayerClicked?.Invoke(m_RowIds[index]);
         }
 
-        public static string Status(NetPlayer p, MatchMode mode, bool activeTurn)
+        /// <param name="stage">Free For All: where the round is (streams are private there, so no live details).</param>
+        public static string Status(NetPlayer p, MatchMode mode, bool activeTurn, RoundStage stage = RoundStage.Shopping)
         {
             if (!p.Connected) return $"<color=#B9AED6>{Loc.Get("players.left")}</color>";
             string streaming = Loc.Get("players.live_detail", ("viewers", p.Guests), ("cap", p.Capacity),
@@ -85,6 +87,20 @@ namespace DeckParty.UI
                     phase = p.ReadyNextNight ? $"<color=#6BE38B>{Loc.Get("players.done_tonight")}</color>" : Loc.Get("players.waiting_turn");
                 }
             }
+            else if (mode == MatchMode.SyncNights && !p.Finished)
+            {
+                switch (p.GamePhase)
+                {
+                    case GamePhase.Party: phase = $"<color=#FF4F8B>{Loc.Get("players.streaming")}</color>"; break;
+                    case GamePhase.RaidBlame: phase = $"<color=#FF5A5A>{Terms.Raid}</color>"; break;
+                    default:
+                        phase = p.ReadyNextNight ? $"<color=#6BE38B>{Loc.Get("players.ready")}</color>"
+                            : stage == RoundStage.Shopping ? $"<color=#FFC94A>{Loc.Get("players.shopping_now")}</color>"
+                            : p.ReadyForShop ? $"<color=#6BE38B>{Loc.Get("players.ready_for_shop")}</color>"
+                            : Loc.Get("players.stream_over");
+                        break;
+                }
+            }
             else
             {
                 bool sync = mode == MatchMode.SyncNights;
@@ -98,7 +114,7 @@ namespace DeckParty.UI
                 }
             }
             return Loc.Get("players.night", "night", p.Night) + "  -  " + phase + "\n" +
-                   Loc.Get("players.wallet", ("subs", $"<color=#FFC94A>{GuestVisuals.GiftedSubsText(p.Pop)}</color>"), ("cash", $"<color=#6BE38B>{p.Cash} $</color>"),
+                   Loc.Get("players.wallet", ("subs", GuestVisuals.GiftedSubsText(p.Pop)), ("cash", $"<color=#6BE38B>{GameIcons.Amount(ResourceIcon.Cash, p.Cash)}</color>"),
                        ("owned", p.DiamondsOwned), ("best", p.BestDiamonds));
         }
     }

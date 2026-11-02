@@ -40,8 +40,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274884
-    m_Localized: Every animal meme in one room. Bongo Cat buffs the whole zoo, Nyan
-      Cat chains arrivals, Doge rewards variety and Big Chungus needs a big Sub Cap.
+    m_Localized: Every animal meme in one room. Bongo Cat drums up its community,
+      Nyan Cat chains arrivals, Doge rewards variety and Big Chungus needs a big
+      Sub Cap.
     m_Metadata:
       m_Items: []
   - m_Id: 433274885
@@ -49,13 +50,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274886
-    m_Localized: Platform Ban Risk is good content
+    m_Localized: '{icon:risk} is good content'
     m_Metadata:
       m_Items: []
   - m_Id: 433274887
-    m_Localized: Wojaks feed on suffering. Doomer and Me Gusta love Platform Ban
-      Risk, Gigachad and Sigma want the spotlight alone, and This Is Fine Dog keeps
-      the ban hammer guessing.
+    m_Localized: Wojaks feed on suffering. Doomer and Me Gusta love {icon:risk},
+      Gigachad and Sigma want the spotlight alone, and This Is Fine Dog keeps the
+      platform guessing.
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
@@ -68,7 +69,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274890
     m_Localized: Chaos on a loop. Strikes, shuffles, bombardments and infections.
-      Pop Cat and Dancing Baby turn every action into Subs.
+      Pop Cat and Dancing Baby turn every action into {icon:subs}.
     m_Metadata:
       m_Items: []
   - m_Id: 433274891
@@ -81,7 +82,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274893
     m_Localized: Manipulators and schemers. Rearrange the queue, swap, zero and double
-      stats, convert Subs to Cash and back, and protect your stars from bad luck.
+      stats, convert {icon:subs} to {icon:cash} and back, and protect your stars
+      from bad luck.
     m_Metadata:
       m_Items: []
   - m_Id: 433274894
@@ -294,9 +296,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416590672904199
-    m_Localized: Rug pulls, checkout codes and softball interviews. Bank Subs mid-stream
-      with the Crypto Guy, grow your Gen Z with Job and let the Online Scandal fill
-      the room.
+    m_Localized: Rug pulls, checkout codes and softball interviews. Bank {icon:subs}
+      mid-stream with the Crypto Guy, grow your Gen Z with Job and let the Online
+      Scandal fill the room.
     m_Metadata:
       m_Items: []
   references:

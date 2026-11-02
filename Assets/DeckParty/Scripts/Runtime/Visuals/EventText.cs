@@ -9,6 +9,9 @@ namespace DeckParty
         /// <summary>Multiplayer: turns a player index from a rival-power event into a (coloured) name.</summary>
         public static Func<int, string> PlayerName;
 
+        /// <summary>Set by the game screen in multiplayer: Bots only travel to other players, so single player says nothing about them.</summary>
+        public static bool Multiplayer;
+
         /// <param name="owner">Whose stream this is when it isn't yours (multiplayer watching); null for your own.</param>
         public static string Describe(GameEvent e, PlayerState state, string owner = null)
         {
@@ -212,12 +215,54 @@ namespace DeckParty
                     return GuestVisuals.Colored(Loc.Get("log.tax_paid", "taxer", Player(e.B), "amount", e.A), UIPalette.Red);
                 case GameEventType.TaxReceived:
                     return GuestVisuals.Colored(Loc.Get("log.tax_received", "payer", Player(e.B), "amount", e.A), UIPalette.Green);
+
+                // --- communities ---
+                case GameEventType.CommunityBonus:
+                {
+                    var community = (Community)e.A;
+                    string tag = GameIcons.Tag(community) + " ";
+                    switch (community)
+                    {
+                        case Community.Staff:
+                            return tag + Loc.Get("log.staff_free", "viewer", viewer, "cash", GuestVisuals.CashText(-e.B));
+                        case Community.Content:
+                            return tag + Loc.Get("log.content_encore", "viewer", viewer);
+                        case Community.FinanceBros:
+                            return tag + Loc.Get("log.finance_double", "viewer", viewer, "cash", GuestVisuals.CashText(e.B));
+                        case Community.Doomsdayers:
+                            return tag + GuestVisuals.Colored(Loc.Get("log.doomed", "viewer", viewer), UIPalette.Red);
+                        case Community.ArmchairActivists:
+                            return tag + GuestVisuals.Colored(Loc.Get("log.all_talk", "viewer", viewer), UIPalette.TextDim);
+                        case Community.Clout:
+                            return tag + Loc.Get("log.clout", "viewer", viewer, "subs", GuestVisuals.PopText(e.B));
+                    }
+                    return null;
+                }
+                case GameEventType.MemeticsRepeat:
+                    return GameIcons.Tag(Community.MemeticsDivision) + " " + GuestVisuals.Colored(Loc.Get("log.memetics_repeat", "value", e.A), CommunityVisuals.Color(Community.MemeticsDivision));
+                case GameEventType.BotsSent:
+                    if (!Multiplayer) return null;
+                    return GameIcons.Tag(Community.Bots) + " " + Loc.Get(mine ? "log.bots_sent_you" : "log.bots_sent_other", "count", e.A, "player", owner ?? string.Empty);
+                case GameEventType.BotsArrived:
+                    return GameIcons.Tag(Community.Bots) + " " + GuestVisuals.Colored(Loc.Get("log.bots_arrived", "count", e.A), UIPalette.TextDim);
+                case GameEventType.CommunityReward:
+                {
+                    var community = (Community)e.A;
+                    string name = GuestVisuals.Colored(CommunityVisuals.Name(community), CommunityVisuals.Color(community));
+                    return GameIcons.Tag(community) + " " + Loc.Get("log.community_reward", "community", name, "values", Amounts(e.B, e.C));
+                }
+                case GameEventType.ServerRestored:
+                    return GameIcons.Tag(Community.Techspertise) + " " + GuestVisuals.Colored(Loc.Get("log.server_restored", "value", e.A), UIPalette.Teal);
+                case GameEventType.TrollsPaid:
+                    return GameIcons.Tag(Community.Trolls) + " " + GuestVisuals.Colored(Loc.Get("log.trolls_paid", "values", Amounts(e.A, e.B)), UIPalette.Orange);
+                case GameEventType.DoomApplied:
+                    return GameIcons.Tag(Community.Doomsdayers) + " " + GuestVisuals.Colored(Loc.Get("log.doom_applied", "value", e.B), UIPalette.Red);
             }
             return null;
         }
 
         static string CostSuffix(int cash) =>
-            cash > 0 ? "  " + GuestVisuals.Colored("(-" + cash + " " + Terms.CashSymbol + ")", UIPalette.TextDim) : string.Empty;
+            cash > 0 ? "  " + GuestVisuals.Colored("(-" + cash + " " + GameIcons.Tag(ResourceIcon.Cash) + ")", UIPalette.TextDim) : string.Empty;
 
         static string Player(int index) => PlayerName != null ? PlayerName(index) : Loc.Get("common.rival");
 
@@ -227,7 +272,10 @@ namespace DeckParty
             return g != null ? GuestVisuals.NameTag(g.Kind) : Loc.Get("common.someone");
         }
 
-        static string Values(int pop, int cash)
+        static string Values(int pop, int cash) => Amounts(pop, cash);
+
+        /// <summary>Subs and Cash as icon amounts ("+3 [subs] +1 [cash]"), skipping a zero.</summary>
+        public static string Amounts(int pop, int cash)
         {
             if (cash == 0) return GuestVisuals.PopText(pop);
             if (pop == 0) return GuestVisuals.CashText(cash);

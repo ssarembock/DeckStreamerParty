@@ -311,6 +311,10 @@ MonoBehaviour:
     m_Key: mp.server_down
     m_Metadata:
       m_Items: []
+  - m_Id: 675188590198784
+    m_Key: mp.doom
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

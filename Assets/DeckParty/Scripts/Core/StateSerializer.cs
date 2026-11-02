@@ -13,8 +13,9 @@ namespace DeckParty.Core
         /// <summary>
         /// v2: meme roster, per-guest party modifiers, ordered waiting line. v3: streamers and their powers.
         /// v4: audience classics (permanent Cash, Hate-Watcher mood, Softball Interview) and the shared shop.
+        /// v5: rival Doomsdayers. v6: Bots in flight.
         /// </summary>
-        const byte FormatVersion = 4;
+        const byte FormatVersion = 6;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -92,6 +93,15 @@ namespace DeckParty.Core
                 w.Write((ushort)s.RivalTaken.Length);
                 for (int i = 0; i < s.RivalTaken.Length; i++) w.Write((byte)Math.Min(255, Math.Max(0, s.RivalTaken[i])));
                 for (int i = 0; i < s.Rolodex.Count; i++) WriteGuestV4(w, s.Rolodex[i]);
+
+                // v5: rival Doomsdayers
+                w.Write((byte)Math.Min(255, Math.Max(0, s.IncomingDoom)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.PartyDoom)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.DoomOut)));
+
+                // v6: Bots
+                w.Write((byte)Math.Min(255, Math.Max(0, s.IncomingBots)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.BotsOut)));
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -201,6 +211,21 @@ namespace DeckParty.Core
                         if (i < s.RivalTaken.Length) s.RivalTaken[i] = taken;
                     }
                     for (int i = 0; i < s.Rolodex.Count; i++) ReadGuestV4(r, s.Rolodex[i]);
+                }
+
+                // v4 and older saves predate communities: no Doomsdayers in flight.
+                if (version >= 5)
+                {
+                    s.IncomingDoom = r.ReadByte();
+                    s.PartyDoom = r.ReadByte();
+                    s.DoomOut = r.ReadByte();
+                }
+
+                // v5 and older saves predate the Bots community.
+                if (version >= 6)
+                {
+                    s.IncomingBots = r.ReadByte();
+                    s.BotsOut = r.ReadByte();
                 }
 
                 int eventCount = ReadCount(r);

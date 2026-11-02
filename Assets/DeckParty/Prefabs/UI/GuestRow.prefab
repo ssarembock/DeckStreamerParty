@@ -451,6 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: 
+  overlay: 0
 --- !u!114 &5465211217074660618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1036,6 +1037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: 
+  overlay: 0
 --- !u!1 &7576796471097598654
 GameObject:
   m_ObjectHideFlags: 0

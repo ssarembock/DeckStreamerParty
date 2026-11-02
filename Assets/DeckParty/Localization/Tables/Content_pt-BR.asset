@@ -40,9 +40,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274884
-    m_Localized: "Todos os memes de bicho numa sala s\xF3. O Bongo Cat fortalece
-      o zool\xF3gico inteiro, o Nyan Cat encadeia chegadas, o Doge premia a variedade
-      e o Big Chungus precisa de um limite grande."
+    m_Localized: "Todos os memes de bicho numa sala s\xF3. O Bongo Cat agita a comunidade
+      dele, o Nyan Cat encadeia chegadas, o Doge premia a variedade e o Big Chungus
+      precisa de um limite grande."
     m_Metadata:
       m_Items: []
   - m_Id: 433274885
@@ -50,13 +50,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274886
-    m_Localized: "Risco de banimento \xE9 conte\xFAdo"
+    m_Localized: "{icon:risk} \xE9 conte\xFAdo"
     m_Metadata:
       m_Items: []
   - m_Id: 433274887
-    m_Localized: "Os Wojaks se alimentam de sofrimento. Doomer e Me Gusta amam risco
-      de banimento, Gigachad e o Macho Sigma querem os holofotes s\xF3 pra eles,
-      e o Cachorro \"T\xE1 tudo bem\" deixa o martelo do banimento na d\xFAvida."
+    m_Localized: "Os Wojaks se alimentam de sofrimento. Doomer e Me Gusta amam {icon:risk},
+      Gigachad e o Macho Sigma querem os holofotes s\xF3 pra eles, e o Cachorro \"T\xE1
+      tudo bem\" deixa a plataforma na d\xFAvida."
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
@@ -69,7 +69,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274890
     m_Localized: "Caos em loop. Pancadas, embaralhadas, bombardeios e infec\xE7\xF5es.
-      Pop Cat e o Beb\xEA Dan\xE7ante transformam cada a\xE7\xE3o em Subs."
+      Pop Cat e o Beb\xEA Dan\xE7ante transformam cada a\xE7\xE3o em {icon:subs}."
     m_Metadata:
       m_Items: []
   - m_Id: 433274891
@@ -82,8 +82,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274893
     m_Localized: Manipuladores e articuladores. Reorganize a fila, troque, zere e
-      dobre status, converta Subs em Grana e vice-versa, e proteja suas estrelas
-      do azar.
+      dobre status, converta {icon:subs} em {icon:cash} e vice-versa, e proteja suas
+      estrelas do azar.
     m_Metadata:
       m_Items: []
   - m_Id: 433274894
@@ -301,9 +301,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416590672904199
-    m_Localized: "Rug pulls, cupons e entrevistas chapa-branca. Garanta Subs no meio
-      da live com o Cara das criptos, fa\xE7a seu Gera\xE7\xE3o Z empregado crescer
-      e deixe o Esc\xE2ndalo online lotar o chat."
+    m_Localized: "Rug pulls, cupons e entrevistas chapa-branca. Garanta {icon:subs}
+      no meio da live com o Cara das criptos, fa\xE7a seu Gera\xE7\xE3o Z empregado
+      crescer e deixe o Esc\xE2ndalo online lotar o chat."
     m_Metadata:
       m_Items: []
   references:

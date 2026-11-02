@@ -156,7 +156,7 @@ Each venue asset has three art fields:
 
 Other settings:
 - **Palette and style:** only drive the placeholder scene drawn while Background is empty.
-- **Party Lights:** adds moving spotlights, a red/blue flash on a Platform Ban and a red alert at high risk. Untick it for a clean image.
+- **Party Lights:** adds moving spotlights, a red/blue flash when a stream gets deplatformed and a red alert at high risk. Untick it for a clean image.
 - **Music:** optionally replaces the stream music for that setup.
 
 **Special choices in every setup selector:**
@@ -194,8 +194,8 @@ All menus, the HUD, cards and buttons draw from `Assets/DeckParty/Data/UISkin.as
 | ScrollHandle | Scrollbar handle | `ui_scrollhandle` | 9-slice |
 | Glow | Light glow | `ui_glow` | soft radial |
 | Logo | Main-menu logo (replaces the "AUDIENCE CAPTURE" text) | `ui_logo` | |
-| IconPop / IconCash / IconDoor | HUD stat icons (Gifted Subs, Cash, Sub Cap) | `icon_pop`, `icon_cash`, `icon_door` | |
-| IconTrouble / IconStar | Platform Ban Risk and Diamond pips, card badges | `icon_trouble`, `icon_star` | |
+| IconPop / IconCash / IconDoor | HUD stat icons (Gifted Subs, Cash, Sub Cap); IconPop and IconCash are also the resource icons inside text | `icon_pop`, `icon_cash`, `icon_door` | |
+| IconTrouble / IconStar | Deplatform Risk and Diamond pips, card badges; IconTrouble is also the risk icon inside text | `icon_trouble`, `icon_star` | |
 | IconCancel | "Cancels risk" badge (AutoMod, VIPS, Wholesome Icon, Cheems with a Doge) | `icon_cancel` | |
 | IconCrown / IconCheck | Host and ready markers | `icon_crown`, `icon_check` | |
 
@@ -220,7 +220,7 @@ Notes:
 | Coin, Purchase | Money comes in / a viewer is bought |
 | Expand | The Sub Cap is raised |
 | PartySuccess | A stream ends successfully |
-| Raid | The stream gets a Platform Ban |
+| Raid | The stream gets deplatformed |
 | FireMarshal | Server Down (chat over the Sub Cap) |
 | Victory, Defeat, Error, Notify, Peek | The matching moments |
 
@@ -246,8 +246,9 @@ You're free to rearrange, restyle and reparent anything in **MainMenu** and **Ga
 - the stream controls and the shop with the **Streamer Power** panel,
 - the police screen,
 - the stream: a stage strip on top and the **chat bubble** (`ChatBubbleView`) with the viewer cards and floating viewer emojis (`ViewerEmojiView`),
-- the side panel: players and the emote bar (multiplayer), the optional Activity log (`SideTabsView`, off by default) and the **facecam** (`FacecamView`),
-- the overlays (picker, Audience, pause, game over, banner, Platform Ban / Server Down images, effects, anxious streamer, turn timer, presence, stream overlay, link lines).
+- the side panel: players and the emote bar (multiplayer), the optional Activity log (`SideTabsView`, off by default); the **facecam** (`FacecamView`) sits in the stream's bottom-right corner,
+- the overlays (picker, Audience, pause, game over, banner, Deplatform / Server Down images, effects, anxious streamer, turn timer, presence, stream overlay, link lines).
+- the Community Beats chips at the top of the chat bubble (`CommunityBeatsView`) and the community icons on cards and shop tiles (`CommunityIconsView`).
 
 **Text:**
 - **Static captions:** carry a **LocalizedLabel** with a CSV key.
@@ -271,8 +272,9 @@ Running **Build Everything** again never touches existing scenes. Only **Rebuild
   - Actions that take several viewers show a **Confirm** button (or press Space).
   - **End the Stream** (E) banks everyone's Subs as Gifted Subs, plus Cash.
   - A skippable scoring sequence counts each viewer up.
-- **Platform Ban Risk:** 3 net Platform Ban Risk gets the stream a **Platform Ban**. You get no payout, and one viewer gets a Temporary Ban for the next stream.
-  - The HUD shows the meter. Under the buttons you see how many viewers with Platform Ban Risk are still in the queue, but never the odds: working them out is part of the game.
+- **Deplatform Risk:** 3 net Deplatform Risk and the stream gets **deplatformed**. You get no payout, and one viewer gets a Temporary Ban for the next stream.
+  - The HUD shows the meter. Under the buttons you see how many viewers with Deplatform Risk are still in the queue, but never the odds: working them out is part of the game.
+- **Communities:** every viewer belongs to none, one or several communities. Each **different** viewer in chat gives their community a point (live), and points give bonuses (Core Fanbase cancels risk, Staff waives costs, Content scores twice, Techspertise saves Server Downs, Finance Bros double Cash, Trolls pay out when deplatformed, Doomsdayers curse rivals). Rules: `Core/Community.cs`; who belongs where: Game Database > Viewers > Communities.
 - **Server Down:** going over the Sub Cap (viewers who bring others) ends the stream with no payout.
   - At one risk from the police, your streamer appears at the top of the screen looking anxious, and the facecam (bottom right) pulses red.
 - **Shop:** spend Gifted Subs recruiting viewers and Cash raising your Sub Cap, use your streamer power, then start the next night (Space).
@@ -285,7 +287,7 @@ The full rules and the viewer glossary are also in-game under **How to Play**. T
 
 **Implementation decisions where the rules doc was ambiguous** (all adjustable in `Scripts/Core/GameRules.cs`):
 - Viewer fees are paid from your Cash bank first. Only the unpaid remainder costs 7 Gifted Subs per Cash (`FeesDrawFromBank`).
-- A Platform Ban on the final night ends the season without a Temporary Ban.
+- Being deplatformed on the final night ends the season without a Temporary Ban.
 - Going over the Sub Cap doesn't ban anyone.
 
 **Where to change things:**
@@ -315,13 +317,13 @@ The full rules and the viewer glossary are also in-game under **How to Play**. T
   - **End Turn** (after the stream and shopping) passes to the next player.
   - The host can set a **turn timer**: Off, Hard 30 s, Medium 60 s, Easy 120 s, or Custom 10 to 600 s. It covers the whole turn. When it runs out, the stream ends (scored normally) and the turn passes.
   - The season ends after the first night someone ends a 4-Diamond stream, once everyone has played that night.
-- **Synchronized Nights:** everyone plays the same night at once, and the next night starts when every player presses *Ready*. The first night anyone ends a 4-Diamond stream, the season ends once everyone has finished that night. Ties go to the earlier win, then to more total Gifted Subs earned.
+- **Free For All** (was Synchronized Nights; the only mode with 3+ players): everyone streams the same night at once without seeing each other, the shop opens for everyone together after a 3-2-1 once all have clicked *Go to the Shop* (first come, first served), and the next night starts when every player presses *Ready* (see V4Instructions.md, section 7). The first night anyone ends a 4-Diamond stream, the season ends once everyone has finished that night. Ties go to the earlier win, then to more total Gifted Subs earned.
 - **Race:** everyone plays at their own pace, and the first 4-Diamond stream wins instantly.
 - **No winner:** if nobody wins, the best Diamond count in a successful stream wins, then total Gifted Subs earned.
 
 **Lobby and season:**
 - The host picks the character set, mode, season length (10 to 30 nights) and turn timer in the lobby. Everyone else presses **Ready**, then the host presses **Start Season**. The host can start solo for testing.
-- The lobby shows lobby news (joins, leaves). Platform Bans, Server Downs, wins, Diamond recruits, streamer powers and joins pop up for everyone, each in the reader's own language.
+- The lobby shows lobby news (joins, leaves). Deplatformings, Server Downs, Doomsdayers curses, wins, Diamond recruits, streamer powers and joins pop up for everyone, each in the reader's own language.
 - **Shared shop:** each player's season is separate (Audience, wallet, Sub Cap, streamer power costs), except the shop's stock: a copy one player recruits is gone for everyone (`GameRules.SharedStockPerGuest`, 4 per viewer; Diamonds unlimited).
 - After the season, the host can press **Back to Lobby** to play again with the same group.
 - Everyone must run the **same build**. A version check (`ProtocolVersion` in `NetworkService.cs`, currently `deckparty-4`) rejects mismatches with a clear message.
@@ -407,7 +409,7 @@ For a step-by-step guide to building, sending the game to a friend and a test se
 **Rules engine (Core):**
 - `Core/PartyEngine.cs`: every rule. This covers:
   - arrivals, entrance effects and reactions, bring chains,
-  - Platform Ban Risk and the Platform Ban, the Sub Cap and Server Down,
+  - Deplatform Risk and being deplatformed, the Sub Cap and Server Down, communities,
   - all 21 action types, passive scoring,
   - the shop and Sub Cap upgrades,
   - streamer powers (`UsePower`, `UseRivalPower`, `GetPowerBlocker`).
@@ -438,7 +440,7 @@ For a step-by-step guide to building, sending the game to a friend and a test se
 - `Runtime/UI/Game/GameController*.cs`: the game scene.
   - **Core file:** renders state, runs the action flow (choice popup, target picks, Confirm) and hotkeys.
   - **Presence file:** what's sent and shown to watchers.
-  - **Juice file:** event playback, the scoring sequence, stamps and the Platform Ban / Server Down images.
+  - **Juice file:** event playback, the scoring sequence (with community bonus tags), stamps and the Deplatform / Server Down images.
 - `Runtime/UI/Menu/StreamerSelectScreen.cs`: the character select screen.
 - `Runtime/App/DisplaySettings.cs`: resolution and window mode presets, F11.
 - `Editor/*SceneBuilder.cs`, `StreamerSelectBuilder.cs` and `DeckPartyAssets.cs`: generate the scenes and prefabs. They're useful as a reference for the hierarchy.

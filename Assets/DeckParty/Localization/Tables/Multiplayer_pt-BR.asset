@@ -284,8 +284,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469247
-    m_Localized: "{0} deu raid em {1}! A pr\xF3xima live come\xE7a com +1 de risco
-      de banimento."
+    m_Localized: "{0} deu raid em {1}! A pr\xF3xima live come\xE7a com +1 {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 437469248
@@ -317,11 +316,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416590245085184
-    m_Localized: A live de {0} foi banida!
+    m_Localized: '{0} foi desplataformizado!'
     m_Metadata:
       m_Items: []
   - m_Id: 416590320582656
     m_Localized: '{0} estourou o limite e o servidor caiu!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675188590198784
+    m_Localized: "Os Apocal\xEDpticos de {0} amaldi\xE7oam a pr\xF3xima live de todo
+      mundo ({1}% por espectador)!"
     m_Metadata:
       m_Items: []
   references:

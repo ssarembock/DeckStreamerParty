@@ -35,13 +35,18 @@ namespace DeckParty
 
         public static Sprite Portrait(GuestType type) => GameDatabase.Instance.GetGuestArt(type)?.portrait;
 
+        /// <summary>The viewer's accent colour: the Game Database tint, else their first community's colour.</summary>
         public static Color Tint(GuestType type)
         {
             var art = GameDatabase.Instance.GetGuestArt(type);
             if (art != null && art.tint.a > 0.01f) return art.tint;
-            return FamilyColor(GuestCatalog.Get(type).Category);
+            var mask = GuestCatalog.CommunitiesOf(type);
+            foreach (var community in Communities.All)
+                if (Communities.Has(mask, community)) return CommunityVisuals.Color(community);
+            return UIPalette.Blue;
         }
 
+        // The old character families (no longer used in the game; kept in case they come back).
         public static Color FamilyColor(GuestCategory category)
         {
             switch (category)
@@ -79,13 +84,30 @@ namespace DeckParty
 
         static string Signed(int value) => (value >= 0 ? "+" : "") + value;
 
+        // Resources are always icons, never words (the icons name themselves on hover).
         public static string PopText(int value) => Colored(Loc.Get("fmt.subs", "value", Signed(value), "n", value), UIPalette.Gold);
 
-        public static string CashText(int value) => Colored(Signed(value) + " " + Terms.CashSymbol, UIPalette.Green);
+        public static string CashText(int value) => Colored(Loc.Get("fmt.cash", "value", Signed(value), "n", value), UIPalette.Green);
 
         public static string RiskText(int value) => Colored(Loc.Get("fmt.risk", "value", Signed(value), "n", value), UIPalette.Red);
 
+        /// <summary>A Gifted Subs amount (wallets, prices): the icon, then the number.</summary>
         public static string GiftedSubsText(int value) => Colored(Loc.Get("fmt.gifted_subs", "value", value, "n", value), UIPalette.Gold);
+
+        /// <summary>
+        /// The key section of the shop tooltip: what the viewer changes when scored, as the three resource icons with their
+        /// printed values (Gifted Subs, Cash, Deplatform Risk). Conditional bonuses are in the description.
+        /// </summary>
+        public static string ScoringIcons(GuestInfo info)
+        {
+            string Item(ResourceIcon icon, string value, bool zero, Color color) =>
+                GameIcons.Tag(icon) + " " + Colored(value, zero ? UIPalette.TextDim : color);
+
+            string risk = info.Trouble ? "+1" : info.CancelsTrouble ? "-1" : info.Type == GuestType.HateWatcher ? "0/+1" : "0";
+            return Item(ResourceIcon.Subs, Signed(info.Pop), info.Pop == 0, UIPalette.Gold) + "     " +
+                   Item(ResourceIcon.Cash, Signed(info.Cash), info.Cash == 0, UIPalette.Green) + "     " +
+                   Item(ResourceIcon.Risk, risk, risk == "0", info.CancelsTrouble ? UIPalette.Teal : UIPalette.Red);
+        }
 
         /// <summary>The always-true summary of what a viewer scores, ignoring live conditions.</summary>
         public static string BaseStats(GuestInfo info)
@@ -97,11 +119,11 @@ namespace DeckParty
                     sb.Append(Colored(Loc.Get("card.copies_previous"), UIPalette.Gold));
                     break;
                 case GuestType.PopCat:
-                case GuestType.CryingCat:
+                case GuestType.DistraughtCat:
                     sb.Append(Colored(Loc.Get("card.grows"), UIPalette.Gold));
                     break;
-                case GuestType.ComedianWithAPodcast:
-                    sb.Append(Colored(Loc.Get("card.if_full", "value", PopText(GameRules.ComedianFullBonus)), UIPalette.Gold));
+                case GuestType.PromoCodeUser:
+                    sb.Append(Colored(Loc.Get("card.if_full", "value", PopText(GameRules.PromoCodeFullBonus)), UIPalette.Gold));
                     break;
                 case GuestType.ExecutivePr:
                     sb.Append(Colored(Loc.Get("card.per_risky", "value", PopText(GameRules.PerRiskyViewerBonus)), UIPalette.Gold));
@@ -158,21 +180,21 @@ namespace DeckParty
             var info = GuestCatalog.Get(type);
             var sb = new StringBuilder();
             sb.Append("<b><size=120%>").Append(DisplayName(type)).Append("</size></b>");
-            if (info.Purchasable) sb.Append("   ").Append(Colored(Loc.Get("fmt.gifted_subs", "value", info.Cost, "n", info.Cost), UIPalette.TextDim));
+            if (info.Purchasable) sb.Append("   ").Append(Colored(GameIcons.Amount(ResourceIcon.Subs, info.Cost), UIPalette.TextDim));
             sb.Append('\n');
             var tags = Tags(info);
             if (tags.Length > 0) sb.Append("<size=85%>").Append(tags).Append("</size>\n");
             sb.Append(Description(type));
 
-            var meta = new StringBuilder();
-            meta.Append(Loc.Get("card.family", "family", Colored(FamilyName(info.Category), FamilyColor(info.Category))));
-            if (info.HasAbility) meta.Append("   ").Append(Colored(Loc.Get("card.action_type", "type", ActionTypeName(info.ActionCategory)), UIPalette.Purple));
-            sb.Append("\n<size=85%>").Append(meta).Append("</size>");
+            sb.Append("\n<size=88%>").Append(CommunityVisuals.Inline(type)).Append("</size>");
+            if (info.HasAbility)
+                sb.Append("\n<size=85%>").Append(Colored(Loc.Get("card.action_type", "type", ActionTypeName(info.ActionCategory)), UIPalette.Purple)).Append("</size>");
 
-            // The base stats and, in the shop, how many copies are left (kept off the shop tile itself).
+            // In the shop: the key scoring section (three resource icons) and how many copies are left (kept off the tile).
             if (shopState != null && info.Purchasable)
             {
-                sb.Append("\n<size=90%>").Append(Loc.Get("card.base_stats", "stats", BaseStats(info))).Append("</size>");
+                sb.Append("\n<size=80%>").Append(Colored(Loc.Get("card.when_scored"), UIPalette.TextDim)).Append("</size>")
+                  .Append("\n<size=115%>").Append(ScoringIcons(info)).Append("</size>");
                 int owned = shopState.CountOwned(type);
                 int left = PartyEngine.ShopLeft(shopState, type);
                 sb.Append("\n<size=90%>").Append(Loc.Get("shop.tip_owned", "count", owned));

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// The full-screen image for a stream that ends badly: Platform Ban (too much Platform Ban Risk) or Server Down (chat
+    /// The full-screen image for a stream that ends badly: deplatformed (too much Deplatform Risk) or Server Down (chat
     /// over the Sub Cap). The images come from the Game Database (Stream Endings); while one isn't assigned the game shows
     /// its usual text banner instead. A click (or a couple of seconds) dismisses it.
     /// </summary>

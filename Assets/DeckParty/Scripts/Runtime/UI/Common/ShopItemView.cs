@@ -8,8 +8,9 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// One viewer for sale in the shop grid: a big picture, the name, the group icon, the price and how many are left.
-    /// Everything else (stats, ability, how many you own) is in the hover tooltip or the Audience [R]. Click to buy.
+    /// One viewer for sale in the shop grid: a big picture, the name, the community icons, the price (icon and number) and
+    /// how many are left. Everything else (what it scores, ability, how many you own) is in the hover tooltip or the
+    /// Audience [R]. Click to buy.
     /// "Left" is how many more this player can recruit: the shop's stock is shared by every player in the match, and
     /// non-Diamond viewers are also capped per player.
     /// </summary>
@@ -23,7 +24,9 @@ namespace DeckParty.UI
         [SerializeField] internal Image placeholder;
         [SerializeField] internal TMP_Text initialsLabel;
         [SerializeField] internal TMP_Text nameLabel;
+        [Tooltip("Old single group icon (replaced by Communities). Hidden when present.")]
         [SerializeField] internal Image groupIcon;
+        [SerializeField] internal CommunityIconsView communities;
         [SerializeField] internal GameObject diamondBadge;
         [SerializeField] internal TMP_Text priceLabel;
         [SerializeField] internal TMP_Text leftLabel;
@@ -96,20 +99,16 @@ namespace DeckParty.UI
             if (initialsLabel != null) initialsLabel.text = GuestVisuals.Initials(type);
             if (nameLabel != null) nameLabel.text = GuestVisuals.DisplayName(type);
 
-            var icon = GuestVisuals.FamilyIcon(info.Category);
-            if (groupIcon != null)
-            {
-                groupIcon.gameObject.SetActive(icon != null);
-                groupIcon.sprite = icon;
-                groupIcon.preserveAspect = true;
-            }
+            if (groupIcon != null) groupIcon.gameObject.SetActive(false);
+            if (communities != null) communities.Bind(type);
             if (diamondBadge != null) diamondBadge.SetActive(info.IsDiamond);
             if (frame != null) frame.color = info.IsDiamond ? Color.Lerp(UIPalette.Border, UIPalette.Gold, 0.75f) : UIPalette.Border;
 
             bool affordable = state.Pop >= info.Cost;
             if (priceLabel != null)
             {
-                priceLabel.text = Loc.Get("fmt.gifted_subs", "value", info.Cost, "n", info.Cost);
+                // The icon and the number only: hovering the icon names the resource.
+                priceLabel.text = $"<size=125%>{GameIcons.Tag(ResourceIcon.Subs)}</size> {info.Cost}";
                 priceLabel.color = affordable ? UIPalette.Gold : UIPalette.Red;
             }
 

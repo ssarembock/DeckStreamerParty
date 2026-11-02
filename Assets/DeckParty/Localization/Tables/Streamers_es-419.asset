@@ -76,8 +76,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189452
-    m_Localized: "Elige un rival: su pr\xF3ximo stream empieza con +1 de riesgo de
-      baneo."
+    m_Localized: "Elige un rival: su pr\xF3ximo stream empieza con +1 {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189453
@@ -98,7 +97,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 496189457
     m_Localized: "Pasivo: empiezas con +1 de cupo del chat. Las mejoras de cupo cuestan
-      1 $ m\xE1s."
+      1 {icon:cash} m\xE1s."
     m_Metadata:
       m_Items: []
   - m_Id: 496189458
@@ -118,7 +117,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189462
-    m_Localized: "Tu pr\xF3ximo stream ignora 1 de riesgo de baneo."
+    m_Localized: "Tu pr\xF3ximo stream ignora 1 {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189463
@@ -138,7 +137,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189467
-    m_Localized: 'Pasivo: los espectadores con riesgo de baneo ganan +1 Subs.'
+    m_Localized: 'Pasivo: los espectadores con {icon:risk} ganan +1 {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -158,7 +157,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189472
-    m_Localized: "En tu pr\xF3ximo stream, cada espectador gana +1 Subs."
+    m_Localized: "En tu pr\xF3ximo stream, cada espectador gana +1 {icon:subs}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189473
@@ -178,7 +177,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189477
-    m_Localized: "El rival m\xE1s rico te paga hasta 2 $."
+    m_Localized: "El rival m\xE1s rico te paga hasta 2 {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189478
@@ -198,8 +197,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189482
-    m_Localized: 'Pasivo: si banean tu stream, igual te quedas con la mitad de los
-      Subs de ese stream.'
+    m_Localized: 'Pasivo: si te desplataforman, igual te quedas con la mitad de los
+      {icon:subs} de ese stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189483
@@ -261,7 +260,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189497
-    m_Localized: "Pasivo: cada gran stream seguido da +1, +2, +3... Subs (m\xE1x.
+    m_Localized: "Pasivo: cada gran stream seguido da +1, +2, +3... {icon:subs} (m\xE1x.
       +5). Un stream fallido la reinicia."
     m_Metadata:
       m_Items: []
@@ -440,7 +439,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189541
-    m_Localized: '{player} ({cash} $)'
+    m_Localized: '{player} ({cash} {icon:cash})'
     m_Metadata:
       m_Items: []
   - m_Id: 496189542
@@ -456,7 +455,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189545
-    m_Localized: "\xA1UNO M\xC1S Y TE BANEAN!"
+    m_Localized: "\xA1UNO M\xC1S Y TE DESPLATAFORMAN!"
     m_Metadata:
       m_Items: []
   - m_Id: 496189546

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DeckParty.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DeckParty
 {
@@ -14,8 +15,11 @@ namespace DeckParty
         public GuestType type;
         [Tooltip("Character portrait from your sprite sheet. Leave empty for the coloured placeholder. Always used as the fallback.")]
         public Sprite portrait;
-        [Tooltip("Placeholder / accent colour. Alpha 0 = use the automatic category colour.")]
+        [Tooltip("Placeholder / accent colour. Alpha 0 = use the colour of the viewer's first community.")]
         public Color tint = new Color(1f, 1f, 1f, 0f);
+        [Tooltip("The viewer's communities (none, one or several). Every different viewer in chat from a community gives it a point; " +
+                 "points give the community's bonus. Starts from the built-in defaults.")]
+        public CommunityMask communities;
 
         [Header("Animation (optional, overrides the portrait)")]
         [Tooltip("Your animated character prefab (rigged PSB or sprite-swap). Rendered onto the card by the portrait stage.")]
@@ -42,8 +46,8 @@ namespace DeckParty
         public StreamerType type;
         [Tooltip("Select-screen, shop and facecam portrait. Leave empty for the coloured placeholder.")]
         public Sprite portrait;
-        [Tooltip("Optional animated character. States: Idle, Select (picked on the select screen), Anxious (one Platform Ban Risk from a Platform Ban), " +
-                 "optional Hit (Platform Ban or Server Down) and Celebrate (a stream ends well), both played in the facecam.")]
+        [Tooltip("Optional animated character. States: Idle, Select (picked on the select screen), Anxious (one Deplatform Risk from being deplatformed), " +
+                 "optional Hit (deplatformed or Server Down) and Celebrate (a stream ends well), both played in the facecam.")]
         public GameObject characterPrefab;
         [Tooltip("Optional controller for the prefab (or for the portrait on its own).")]
         public RuntimeAnimatorController animatorController;
@@ -67,7 +71,17 @@ namespace DeckParty
         public VenueDefinition venue;
     }
 
-    /// <summary>The icon shown on shop tiles (and anywhere else a viewer's group appears) for one character group.</summary>
+    /// <summary>The icon for one viewer community: on cards, shop tiles, tooltips, text and the Community Beats chips.</summary>
+    [Serializable]
+    public sealed class CommunityIcon
+    {
+        [HideInInspector] public string name;
+        public Community community;
+        [Tooltip("Small square icon for this community (it also appears inside text, so keep it readable at ~24 px). Leave empty for the built-in badge.")]
+        public Sprite icon;
+    }
+
+    /// <summary>Old: the icon for one character group (groups were replaced by communities; kept so old databases load).</summary>
     [Serializable]
     public sealed class GroupIcon
     {
@@ -78,8 +92,8 @@ namespace DeckParty
     }
 
     /// <summary>
-    /// Emojis that float up from the viewers in chat. Three moods, picked by how close the stream is to a Platform Ban:
-    /// calm streams send mostly peaceful ones, tense streams argue, and one Platform Ban Risk from the limit they get angry.
+    /// Emojis that float up from the viewers in chat. Three moods, picked by how close the stream is to being deplatformed:
+    /// calm streams send mostly peaceful ones, tense streams argue, and one Deplatform Risk from the limit they get angry.
     /// </summary>
     [Serializable]
     public sealed class ViewerEmojiSet
@@ -92,11 +106,11 @@ namespace DeckParty
         public List<Sprite> angry = new List<Sprite>();
 
         [Header("Timing (seconds between emojis across the whole chat)")]
-        [Tooltip("No Platform Ban Risk.")]
+        [Tooltip("No Deplatform Risk.")]
         [Range(0.3f, 10f)] public float calmInterval = 3.2f;
-        [Tooltip("Some Platform Ban Risk.")]
+        [Tooltip("Some Deplatform Risk.")]
         [Range(0.2f, 10f)] public float tenseInterval = 1.8f;
-        [Tooltip("One Platform Ban Risk from the limit.")]
+        [Tooltip("One Deplatform Risk from the limit.")]
         [Range(0.1f, 10f)] public float heatedInterval = 0.9f;
         [Tooltip("Emoji size in pixels (at 1080p).")]
         [Range(24f, 160f)] public float size = 64f;
@@ -147,14 +161,64 @@ namespace DeckParty
         public List<Sprite> emotes = new List<Sprite>();
 
         [Header("Stream endings")]
-        [Tooltip("Shown full-screen when Platform Ban Risk goes over the limit and the stream ends.")]
-        public Sprite platformBanImage;
+        [Tooltip("Shown full-screen when Deplatform Risk goes over the limit and the stream ends (the streamer gets deplatformed).")]
+        [FormerlySerializedAs("platformBanImage")]
+        public Sprite deplatformImage;
         [Tooltip("Shown full-screen when chat goes over the Sub Cap and the stream ends.")]
         public Sprite serverDownImage;
 
-        [Header("Viewer groups")]
-        [Tooltip("An icon for each character group, shown on shop tiles. Groups marked TBD are still to be decided.")]
-        public List<GroupIcon> groupIcons = new List<GroupIcon>();
+        [Header("Viewer communities")]
+        [Tooltip("An icon for each community, shown on cards, shop tiles, tooltips, in text and on the Community Beats chips.")]
+        public List<CommunityIcon> communityIcons = new List<CommunityIcon>();
+
+        /// <summary>Old character group icons (groups were replaced by communities). Hidden; kept so nothing you assigned is lost.</summary>
+        [HideInInspector] public List<GroupIcon> groupIcons = new List<GroupIcon>();
+
+        /// <summary>Set once every viewer's communities have been copied from the built-in defaults; after that your edits rule.</summary>
+        [HideInInspector] public bool communitiesSeeded;
+
+        /// <summary>
+        /// Which batch of built-in communities this database has taken in. When communities are added to the game, their
+        /// default members are merged in once (your edits to the older communities are kept). 0 = seeded before revisions.
+        /// </summary>
+        [HideInInspector] public int communitiesRevision;
+
+        /// <summary>
+        /// 1: the first seven communities. 2: Boomer, Millennial, Zoomer and Armchair Activists. 3: the V4.2 card table (Clout,
+        /// Memetics Division and Bots; every roster card takes the table's communities).
+        /// </summary>
+        public const int CommunityDefaultsRevision = 3;
+
+        /// <summary>The revision whose built-in communities replace a roster card's (instead of merging into them).</summary>
+        const int RosterTableRevision = 3;
+
+        static CommunityMask AddedInRevision(int revision)
+        {
+            switch (revision)
+            {
+                case 2: return CommunityMask.Boomer | CommunityMask.Millennial | CommunityMask.Zoomer | CommunityMask.ArmchairActivists;
+                default: return CommunityMask.None;
+            }
+        }
+
+        /// <summary>
+        /// A viewer's communities with the defaults of any communities added since this database was seeded. The V4.2 card
+        /// table redefined every roster card's communities, so those take the table once (put-aside cards keep theirs).
+        /// </summary>
+        CommunityMask WithNewDefaults(GuestArt art)
+        {
+            var mask = art.communities;
+            for (int revision = Math.Max(1, communitiesRevision) + 1; revision <= CommunityDefaultsRevision; revision++)
+            {
+                if (revision == RosterTableRevision)
+                {
+                    if (GuestCatalog.InRoster(art.type)) mask = GuestCatalog.DefaultCommunitiesOf(art.type);
+                    continue;
+                }
+                mask |= GuestCatalog.DefaultCommunitiesOf(art.type) & AddedInRevision(revision);
+            }
+            return mask;
+        }
 
         static GameDatabase s_Instance;
         static bool s_IsFallback;
@@ -171,8 +235,10 @@ namespace DeckParty
                 var loaded = Resources.Load<GameDatabase>(ResourcePath);
                 if (loaded != null)
                 {
+                    bool fresh = s_Instance != loaded;
                     s_Instance = loaded;
                     s_IsFallback = false;
+                    if (fresh) loaded.ApplyCommunities();
                     return s_Instance;
                 }
 
@@ -215,6 +281,54 @@ namespace DeckParty
             m_GuestLookup.TryGetValue(type, out var result);
             return result;
         }
+
+        public Sprite GetCommunityIcon(Community community)
+        {
+            if (communityIcons == null) return null;
+            foreach (var entry in communityIcons)
+                if (entry != null && entry.community == community) return entry.icon;
+            return null;
+        }
+
+        /// <summary>One icon slot per community (icons you assign are kept).</summary>
+        public void EnsureAllCommunityIcons()
+        {
+            if (communityIcons == null) communityIcons = new List<CommunityIcon>();
+            communityIcons.RemoveAll(c => c == null || !Enum.IsDefined(typeof(Community), c.community));
+            foreach (var community in Communities.All)
+            {
+                var entry = communityIcons.Find(c => c.community == community);
+                if (entry == null) communityIcons.Add(entry = new CommunityIcon { community = community });
+                entry.name = community.ToString();
+            }
+            communityIcons.Sort((a, b) => a.community.CompareTo(b.community));
+        }
+
+        /// <summary>
+        /// Hands every viewer's communities to the rules (<see cref="GuestCatalog.SetCommunities"/>). Until the database has
+        /// been seeded (Deck Party > Setup) the built-in defaults are used.
+        /// </summary>
+        public void ApplyCommunities()
+        {
+            GuestCatalog.ResetCommunities();
+            if (!communitiesSeeded || guests == null) return;
+            // New communities get their default members straight away, even before Setup saves them into the database.
+            foreach (var art in guests)
+                if (art != null && GuestCatalog.IsValid(art.type)) GuestCatalog.SetCommunities(art.type, WithNewDefaults(art));
+        }
+
+        /// <summary>Puts every viewer back on the built-in communities.</summary>
+        public void ResetCommunitiesToDefaults()
+        {
+            foreach (var art in guests)
+                if (art != null && GuestCatalog.IsValid(art.type)) art.communities = GuestCatalog.DefaultCommunitiesOf(art.type);
+            communitiesSeeded = true;
+            communitiesRevision = CommunityDefaultsRevision;
+            ApplyCommunities();
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static void ApplyCommunitiesOnLoad() => Instance.ApplyCommunities();
 
         public Sprite GetGroupIcon(GuestCategory group)
         {
@@ -365,7 +479,7 @@ namespace DeckParty
             {
                 string key = info.Type.ToString();
                 var existing = guests.Find(g => g.type == info.Type);
-                if (existing == null) guests.Add(existing = new GuestArt { type = info.Type });
+                if (existing == null) guests.Add(existing = new GuestArt { type = info.Type, communities = GuestCatalog.DefaultCommunitiesOf(info.Type) });
                 else
                 {
                     // Old databases have no id yet: their (English) name is checked once, then the id takes over.
@@ -381,14 +495,22 @@ namespace DeckParty
                         existing.characterPrefab = null;
                         existing.animatorController = null;
                         existing.tint = new Color(1f, 1f, 1f, 0f);
+                        existing.communities = GuestCatalog.DefaultCommunitiesOf(info.Type);
                     }
                 }
+                // Databases from before communities start from the built-in ones (once; your edits are kept after that).
+                // Communities added later bring their default members in once.
+                if (!communitiesSeeded) existing.communities = GuestCatalog.DefaultCommunitiesOf(info.Type);
+                else existing.communities = WithNewDefaults(existing);
                 existing.key = key;
                 existing.name = info.Name;
                 existing.displayNameOverride = null;
             }
             guests.Sort((a, b) => a.type.CompareTo(b.type));
+            communitiesSeeded = true;
+            communitiesRevision = CommunityDefaultsRevision;
             m_GuestLookup = null;
+            ApplyCommunities();
             return reset;
         }
 
@@ -396,6 +518,8 @@ namespace DeckParty
         {
             m_GuestLookup = null;
             m_StreamerLookup = null;
+            // Community edits in the inspector apply straight away (the next stream uses them).
+            if (s_Instance == this) ApplyCommunities();
         }
     }
 }

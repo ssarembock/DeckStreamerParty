@@ -157,7 +157,7 @@ namespace DeckParty
             var csv = Csv();
             if (csv != null && csv.TryGetValue(code, out var column))
                 foreach (var kv in column)
-                    if (!string.IsNullOrEmpty(kv.Value)) result[kv.Key] = Unescape(kv.Value);
+                    if (!string.IsNullOrEmpty(kv.Value)) result[kv.Key] = Prepare(kv.Value);
 
             if (TableProvider != null)
             {
@@ -166,7 +166,7 @@ namespace DeckParty
                     var tables = TableProvider(code);
                     if (tables != null)
                         foreach (var kv in tables)
-                            if (!string.IsNullOrEmpty(kv.Value)) result[kv.Key] = Unescape(kv.Value);
+                            if (!string.IsNullOrEmpty(kv.Value)) result[kv.Key] = Prepare(kv.Value);
                 }
                 catch (Exception e)
                 {
@@ -176,8 +176,37 @@ namespace DeckParty
             return result;
         }
 
+        static string Prepare(string value) => ExpandIcons(Unescape(value));
+
         /// <summary>The CSV writes line breaks as "\n" so every string stays on one row.</summary>
         static string Unescape(string value) => value.IndexOf('\\') >= 0 ? value.Replace("\\n", "\n") : value;
+
+        const string IconToken = "{icon:";
+
+        /// <summary>
+        /// Resources and communities are written as icons, never named: "{icon:subs}", "{icon:cash}", "{icon:risk}" or
+        /// "{icon:CoreFanbase}" become inline sprites (see <see cref="GameIcons"/>). Unknown names are left as they are.
+        /// </summary>
+        static string ExpandIcons(string value)
+        {
+            int at = value.IndexOf(IconToken, StringComparison.Ordinal);
+            if (at < 0) return value;
+
+            var sb = new StringBuilder(value.Length + 64);
+            int i = 0;
+            while (at >= 0)
+            {
+                int close = value.IndexOf('}', at);
+                if (close < 0) break;
+                string id = value.Substring(at + IconToken.Length, close - at - IconToken.Length);
+                sb.Append(value, i, at - i);
+                sb.Append(GameIcons.TagFor(id) ?? value.Substring(at, close - at + 1));
+                i = close + 1;
+                at = value.IndexOf(IconToken, i, StringComparison.Ordinal);
+            }
+            sb.Append(value, i, value.Length - i);
+            return sb.ToString();
+        }
 
         static Dictionary<string, Dictionary<string, string>> Csv()
         {

@@ -96,7 +96,7 @@ MonoBehaviour:
     feedback: {fileID: 5018930730727092404, guid: 120c8862eabd29b43a37a35f73e807a5, type: 3}
     intensity: 1
     enabled: 1
-  - name: PlatformBan
+  - name: Deplatform
     cue: 16
     feedback: {fileID: 5334793438735782184, guid: 23cdf0064062f6247adea1a9cfbf79ca, type: 3}
     intensity: 1

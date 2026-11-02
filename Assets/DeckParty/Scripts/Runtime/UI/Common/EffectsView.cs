@@ -56,7 +56,7 @@ namespace DeckParty.UI
 
         public void Shake(float intensity = 16f, float duration = 0.4f) => Fx.Shake(intensity, duration);
 
-        // ------------------------------------------------------------------ danger vignette (Platform Ban Risk tension)
+        // ------------------------------------------------------------------ danger vignette (Deplatform Risk tension)
 
         Coroutine m_Vignette;
         float m_VignetteTarget;
@@ -77,7 +77,7 @@ namespace DeckParty.UI
             vignette.color = new Color(1f, 0.15f, 0.2f, 0f);
         }
 
-        /// <summary>Red screen edges that breathe while the stream is one Platform Ban Risk from a Platform Ban (0 = off).</summary>
+        /// <summary>Red screen edges that breathe while the stream is one Deplatform Risk from being deplatformed (0 = off).</summary>
         public void SetDanger(float level)
         {
             if (vignette == null) return;
@@ -89,9 +89,10 @@ namespace DeckParty.UI
         {
             while (vignette != null)
             {
-                float pulse = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 3.2f);
-                float alpha = m_VignetteTarget * Mathf.Lerp(0.25f, 0.55f, pulse);
-                if (AppSettings.ReduceFlashing) alpha = m_VignetteTarget * 0.3f;
+                // A slow, soft breath: noticeable without nagging.
+                float pulse = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 2.4f);
+                float alpha = m_VignetteTarget * Mathf.Lerp(0.16f, 0.36f, pulse);
+                if (AppSettings.ReduceFlashing) alpha = m_VignetteTarget * 0.2f;
                 var c = vignette.color;
                 c.a = Mathf.MoveTowards(c.a, alpha, Time.unscaledDeltaTime * 1.5f);
                 vignette.color = c;

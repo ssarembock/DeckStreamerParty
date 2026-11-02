@@ -6,7 +6,10 @@ using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
-    /// <summary>Top bar: night, Gifted Subs, Cash, Sub Cap, Platform Ban Risk meter and Diamond meter.</summary>
+    /// <summary>
+    /// Top bar: night, Gifted Subs, Cash, Sub Cap, Deplatform Risk meter and Diamond meter. Resources are an icon and a number
+    /// (no names); hovering one says what it is.
+    /// </summary>
     public sealed class HudView : MonoBehaviour
     {
         [SerializeField] internal TMP_Text scenarioLabel;
@@ -53,19 +56,24 @@ namespace DeckParty.UI
         /// <summary>Static captions and their tooltips (captions are upper-cased by the font style, not in code).</summary>
         void ApplyCaptions()
         {
-            SetCaption("Pop", Terms.GiftedSubs, Loc.Get("hud.tip.gifted_subs"));
-            SetCaption("Cash", Terms.Cash, Loc.Get("hud.tip.cash"));
+            SetCaption("Pop", null, Loc.Get("hud.tip.gifted_subs"));
+            SetCaption("Cash", null, Loc.Get("hud.tip.cash"));
             SetCaption("House", Terms.SubCap, Loc.Get("hud.tip.sub_cap"));
             var audienceLabel = rolodexButton != null ? rolodexButton.GetComponentInChildren<TMP_Text>(true) : null;
             if (audienceLabel != null) audienceLabel.text = Loc.Get("hud.audience_button");
         }
 
+        /// <param name="caption">Null hides the caption (resources show only their icon and number).</param>
         void SetCaption(string block, string caption, string tooltip)
         {
             var root = transform.Find(block);
             if (root == null) return;
             var label = root.Find("Texts/Caption");
-            if (label != null && label.TryGetComponent<TMP_Text>(out var text)) text.text = caption;
+            if (label != null)
+            {
+                label.gameObject.SetActive(caption != null);
+                if (caption != null && label.TryGetComponent<TMP_Text>(out var text)) text.text = caption;
+            }
             if (root.TryGetComponent<TooltipTrigger>(out var trigger)) trigger.Text = tooltip;
         }
 
@@ -115,6 +123,8 @@ namespace DeckParty.UI
             string text = Loc.Get("hud.tip.risk", ("added", PartyEngine.TroubleTotal(m_State) - m_State.PartyHeat), ("cancelled", PartyEngine.CancelCount(m_State) - m_State.PartyShield),
                 ("net", PartyEngine.NetTrouble(m_State)), ("max", GameRules.RaidTroubleThreshold));
             if (m_State.PartyHeat > 0) text += "\n" + Loc.Get("hud.tip.risk_heat", "count", m_State.PartyHeat);
+            int fanbase = PartyEngine.FanbaseCancels(m_State);
+            if (fanbase > 0) text += "\n" + Loc.Get("hud.tip.risk_fanbase", "count", fanbase);
             if (m_State.PartyShield > 0) text += "\n" + Loc.Get("hud.tip.risk_shield", "count", m_State.PartyShield);
             return text;
         }

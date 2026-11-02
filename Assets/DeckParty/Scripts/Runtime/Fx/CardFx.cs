@@ -122,7 +122,7 @@ namespace DeckParty
             if (g == null) return;
             var info = live ? g.Info : g.BaseInfo;
 
-            // Outline: selection beats Platform Ban Risk.
+            // Outline: selection beats Deplatform Risk.
             if (selected) SetOutline(UIPalette.Pink, 1f);
             else if (selectable) SetOutline(UIPalette.Gold, 0.85f);
             else if (live && PartyEngine.HasTroubleProperty(s, g)) SetOutline(UIPalette.Red, 0.55f);

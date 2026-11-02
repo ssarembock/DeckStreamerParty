@@ -119,8 +119,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383767
-    m_Localized: "Tanta sinergia: +1 Sub por cada familia de personajes distinta
-      en el chat (m\xE1x. +5). Otros Doge no cuentan."
+    m_Localized: "Tanta sinergia: +1 {icon:subs} por cada comunidad distinta en el
+      chat (m\xE1x. +5). Otros Doge no cuentan."
     m_Metadata:
       m_Items: []
   - m_Id: 500383768
@@ -129,8 +129,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 500383769
     m_Localized: "Acci\xF3n: manda a otro espectador de vuelta a la fila (puede volver
-      esta noche). Gana +2 Subs por cada vez que trolearon a ese espectador, incluida
-      esta."
+      esta noche). Gana +2 {icon:subs} por cada vez que trolearon a ese espectador,
+      incluida esta."
     m_Metadata:
       m_Items: []
   - m_Id: 500383770
@@ -142,8 +142,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383772
-    m_Localized: "Acci\xF3n: elige Feliz (+3 Subs), Triste (+3 $) o Furioso (+6 Subs
-      y +1 de riesgo de baneo) hasta que termine el stream."
+    m_Localized: "Acci\xF3n: elige Feliz (+3 {icon:subs}), Triste (+3 {icon:cash})
+      o Furioso (+6 {icon:subs} y +1 {icon:risk}) hasta que termine el stream."
     m_Metadata:
       m_Items: []
   - m_Id: 500383773
@@ -155,8 +155,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383775
-    m_Localized: "Energ\xEDa alfa: +3 Subs si es el \xFAnico espectador con 5+ Subs
-      base. Cada Gigachad extra le da -2 Subs a todos los Gigachad."
+    m_Localized: "Energ\xEDa alfa: +3 {icon:subs} si es el \xFAnico espectador con
+      5+ {icon:subs} base. Cada Gigachad extra le da -2 {icon:subs} a todos los Gigachad."
     m_Metadata:
       m_Items: []
   - m_Id: 500383776
@@ -164,9 +164,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383777
-    m_Localized: "Negaci\xF3n: la primera vez que el riesgo de baneo llegar\xEDa
-      a 3, el baneo se cancela y todo el riesgo se borra. Despu\xE9s esta copia deja
-      tu Audiencia para siempre."
+    m_Localized: "Negaci\xF3n: la primera vez que el {icon:risk} llegar\xEDa a 3,
+      se cancela la desplataformaci\xF3n y se borra todo el {icon:risk}. Despu\xE9s
+      esta copia deja tu Audiencia para siempre."
     m_Metadata:
       m_Items: []
   - m_Id: 500383778
@@ -174,9 +174,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383779
-    m_Localized: "Sufrimiento compartido: +2 Subs por cada otro espectador que sufre
-      (riesgo de baneo, stats negativas, infectado, en cero o penalizado), m\xE1x.
-      +6."
+    m_Localized: "Sufrimiento compartido: +2 {icon:subs} por cada otro espectador
+      que sufre ({icon:risk}, stats negativas, infectado, en cero o penalizado),
+      m\xE1x. +6."
     m_Metadata:
       m_Items: []
   - m_Id: 504578048
@@ -197,9 +197,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578052
-    m_Localized: "Estela arco\xEDris: cada espectador sin riesgo que entra despu\xE9s
-      de ella sin cortar la racha gana +1, +2, +3... Subs (m\xE1x. +6 cada uno).
-      Una llegada con riesgo rompe la cadena."
+    m_Localized: "Estela arco\xEDris: cada espectador sin {icon:risk} que entra despu\xE9s
+      de ella sin cortar la racha gana +1, +2, +3... {icon:subs} (m\xE1x. +6 cada
+      uno). Una llegada con {icon:risk} rompe la cadena."
     m_Metadata:
       m_Items: []
   - m_Id: 504578053
@@ -207,8 +207,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578054
-    m_Localized: "Acci\xF3n: invierte 2 Subs regaladas o 1 $. Si el stream sale bien
-      recuperas el triple; si falla, lo perdiste."
+    m_Localized: "Acci\xF3n: invierte 2 {icon:subs} o 1 {icon:cash}. Si el stream
+      sale bien recuperas el triple; si falla, lo perdiste."
     m_Metadata:
       m_Items: []
   - m_Id: 504578055
@@ -220,8 +220,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578057
-    m_Localized: 'No me bonkees: con un Doge en el chat, anula 1 de riesgo y Doge
-      y Cheems ganan +2 Subs. Sin Doge, -1 Sub por cada punto de riesgo.'
+    m_Localized: 'No me bonkees: con un Doge en el chat, anula 1 {icon:risk} y Doge
+      y Cheems ganan +2 {icon:subs}. Sin Doge, -1 {icon:subs} por cada {icon:risk}.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578058
@@ -229,8 +229,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578059
-    m_Localized: "Acci\xF3n: compara Subs base con otro espectador. Si tiene menos,
-      le da 1 a Chad para siempre. Si tiene m\xE1s, Chad pierde 1 para siempre."
+    m_Localized: "Acci\xF3n: compara {icon:subs} base con otro espectador. Si tiene
+      menos, le da 1 a Chad para siempre. Si tiene m\xE1s, Chad pierde 1 para siempre."
     m_Metadata:
       m_Items: []
   - m_Id: 504578060
@@ -242,8 +242,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578062
-    m_Localized: "Doomscroll: +2 Subs por cada punto de riesgo en el chat. Con exactamente
-      2 de riesgo, tambi\xE9n +2 $."
+    m_Localized: "Doomscroll: +2 {icon:subs} por cada {icon:risk} en el chat. Con
+      exactamente 2 {icon:risk}, tambi\xE9n +2 {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 504578063
@@ -251,8 +251,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578064
-    m_Localized: "Lo de moda: al entrar, copia los Subs base y el $ del espectador
-      que entr\xF3 justo antes. No su acci\xF3n, riesgo ni Diamante."
+    m_Localized: "Lo de moda: al entrar, copia {icon:subs} base y el {icon:cash}
+      del espectador que entr\xF3 justo antes. No su acci\xF3n, {icon:risk} ni Diamante."
     m_Metadata:
       m_Items: []
   - m_Id: 504578065
@@ -260,8 +260,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578066
-    m_Localized: "Mesa para uno: +6 Subs si es el \xFAnico espectador cuando termina
-      el stream. Si no, +1 Sub por lugar vac\xEDo."
+    m_Localized: "Mesa para uno: +6 {icon:subs} si es el \xFAnico espectador cuando
+      termina el stream. Si no, +1 {icon:subs} por lugar vac\xEDo."
     m_Metadata:
       m_Items: []
   - m_Id: 504578067
@@ -269,8 +269,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578068
-    m_Localized: 'Me gusta eso: gana +2 Subs cuando otro espectador suma riesgo y
-      +1 $ por cada punto de riesgo eliminado.'
+    m_Localized: 'Me gusta eso: gana +2 {icon:subs} cuando otro espectador suma {icon:risk}
+      y +1 {icon:cash} por cada {icon:risk} eliminado.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578069
@@ -278,8 +278,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578070
-    m_Localized: "Acci\xF3n: echa a otro espectador. Gana +2 Subs si ten\xEDa riesgo;
-      si no, +1 $. Sus efectos de salida se activan igual."
+    m_Localized: "Acci\xF3n: echa a otro espectador. Gana +2 {icon:subs} si ten\xEDa
+      {icon:risk}; si no, +1 {icon:cash}. Sus efectos de salida se activan igual."
     m_Metadata:
       m_Items: []
   - m_Id: 504578071
@@ -292,7 +292,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578073
     m_Localized: "El ritmo sigue: cada tercer espectador que entra despu\xE9s de
-      Bongo Cat le da +2 Subs a todos los Animales del chat por esta noche."
+      Bongo Cat le da +2 {icon:subs} por esta noche a Bongo Cat y a todos los que
+      comparten alguna de sus comunidades."
     m_Metadata:
       m_Items: []
   - m_Id: 504578074
@@ -300,8 +301,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578075
-    m_Localized: "Pop pop pop: gana +1 Sub cada vez que alguien usa una acci\xF3n.
-      Cada tercera acci\xF3n tambi\xE9n da +1 $."
+    m_Localized: "Pop pop pop: gana +1 {icon:subs} cada vez que alguien usa una acci\xF3n.
+      Cada tercera acci\xF3n tambi\xE9n da +1 {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 504578076
@@ -309,8 +310,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578077
-    m_Localized: "Chungus absoluto: ocupa 3 lugares. +1 Sub por cada punto de cupo
-      por encima de 10 (m\xE1x. +5)."
+    m_Localized: "Chungus absoluto: ocupa 3 lugares. +1 {icon:subs} por cada punto
+      de cupo por encima de 10 (m\xE1x. +5)."
     m_Metadata:
       m_Items: []
   - m_Id: 504578078
@@ -319,8 +320,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578079
     m_Localized: "S\xEDganme: al entrar, agrega una copia temporal suya a la fila
-      de esta noche (las copias no se copian). +1 Sub por cada otro Knuckles en el
-      chat."
+      de esta noche (las copias no se copian). +1 {icon:subs} por cada otro Knuckles
+      en el chat."
     m_Metadata:
       m_Items: []
   - m_Id: 504578080
@@ -329,8 +330,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578081
     m_Localized: "Para siempre tuya: al entrar, se pega al mejor espectador. Sus
-      Subs se duplican y no lo pueden echar mientras ella est\xE9. Si lo sacan, ella
-      se va tambi\xE9n."
+      {icon:subs} se duplican y no lo pueden echar mientras ella est\xE9. Si lo sacan,
+      ella se va tambi\xE9n."
     m_Metadata:
       m_Items: []
   - m_Id: 504578082
@@ -338,8 +339,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578083
-    m_Localized: "Acci\xF3n: otro espectador gana +1 de riesgo de baneo y +3 Subs,
-      y ella +2 Subs. No se puede usar si har\xEDa que baneen el stream."
+    m_Localized: "Acci\xF3n: otro espectador gana +1 {icon:risk} y +3 {icon:subs},
+      y ella +2 {icon:subs}. No se puede usar si har\xEDa que te desplataformen."
     m_Metadata:
       m_Items: []
   - m_Id: 504578084
@@ -351,8 +352,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578086
-    m_Localized: "Sonre\xEDr igual: los espectadores del chat no bajan de sus Subs
-      base. Gana +1 Sub por cada ca\xEDda que evita (m\xE1x. +5)."
+    m_Localized: "Sonre\xEDr igual: los espectadores del chat no bajan de sus {icon:subs}
+      base. Gana +1 {icon:subs} por cada ca\xEDda que evita (m\xE1x. +5)."
     m_Metadata:
       m_Items: []
   - m_Id: 504578087
@@ -375,7 +376,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578091
     m_Localized: "\xBFQu\xE9 podr\xEDa salir mal?: una vez por stream, el primer
-      intento de echarlo o quitarle el riesgo falla, y gana +1 Sub para siempre."
+      intento de echarlo o quitarle el {icon:risk} falla, y gana +1 {icon:subs} para
+      siempre."
     m_Metadata:
       m_Items: []
   - m_Id: 504578092
@@ -383,9 +385,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578093
-    m_Localized: "Acci\xF3n: golpea a otro espectador. 1.er golpe: +2 Subs. 2.\xBA:
-      le quita el riesgo. 3.\xBA: lo echa y Tung Tung gana +1 Sub para siempre. Los
-      golpes se recuerdan entre streams."
+    m_Localized: "Acci\xF3n: golpea a otro espectador. 1.er golpe: +2 {icon:subs}.
+      2.\xBA: le quita el {icon:risk}. 3.\xBA: lo echa y Tung Tung gana +1 {icon:subs}
+      para siempre. Los golpes se recuerdan entre streams."
     m_Metadata:
       m_Items: []
   - m_Id: 504578094
@@ -423,8 +425,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578102
-    m_Localized: "Acci\xF3n: dos espectadores intercambian sus Subs base por el resto
-      de la noche."
+    m_Localized: "Acci\xF3n: dos espectadores intercambian sus {icon:subs} base por
+      el resto de la noche."
     m_Metadata:
       m_Items: []
   - m_Id: 504578103
@@ -436,9 +438,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578105
-    m_Localized: "Invasi\xF3n Skibidi: al entrar, infecta a otro espectador (+2 Subs,
-      +1 de riesgo). Cada vez que entra alguien, la infecci\xF3n se contagia a uno
-      m\xE1s. Termina con el stream."
+    m_Localized: "Invasi\xF3n Skibidi: al entrar, infecta a otro espectador (+2 {icon:subs},
+      +1 {icon:risk}). Cada vez que entra alguien, la infecci\xF3n se contagia a
+      uno m\xE1s. Termina con el stream."
     m_Metadata:
       m_Items: []
   - m_Id: 504578106
@@ -446,8 +448,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578107
-    m_Localized: "Grindset: +1 Sub por lugar vac\xEDo (m\xE1x. +8). -1 Sub por cada
-      otro Macho Sigma en el chat."
+    m_Localized: "Grindset: +1 {icon:subs} por lugar vac\xEDo (m\xE1x. +8). -1 {icon:subs}
+      por cada otro Macho Sigma en el chat."
     m_Metadata:
       m_Items: []
   - m_Id: 504578108
@@ -456,7 +458,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578109
     m_Localized: "Acci\xF3n: echa a otro espectador por esta noche y gana la mitad
-      de su costo en Subs (m\xE1x. 8)."
+      de su costo en {icon:subs} (m\xE1x. 8)."
     m_Metadata:
       m_Items: []
   - m_Id: 504578110
@@ -493,7 +495,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578117
     m_Localized: "Acci\xF3n: elige dos espectadores. El primero no gana nada esta
-      noche; el segundo duplica sus Subs base o su $."
+      noche; el segundo duplica sus {icon:subs} base o su {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 504578118
@@ -505,8 +507,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578120
-    m_Localized: "Acci\xF3n: por esta noche, convierte los Subs de un espectador
-      en $ (2 Subs = 1 $) o su $ en Subs (1 $ = 2 Subs)."
+    m_Localized: "Acci\xF3n: por esta noche, convierte {icon:subs} de un espectador
+      en {icon:cash} (2 {icon:subs} = 1 {icon:cash}) o su {icon:cash} en {icon:subs}
+      (1 {icon:cash} = 2 {icon:subs})."
     m_Metadata:
       m_Items: []
   - m_Id: 504578121
@@ -544,8 +547,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578129
-    m_Localized: 'Todos me abandonan: gana +2 Subs y +1 $ cada vez que otro espectador
-      se va o lo echan.'
+    m_Localized: 'Todos me abandonan: gana +2 {icon:subs} y +1 {icon:cash} cada vez
+      que otro espectador se va o lo echan.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578130
@@ -554,7 +557,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578131
     m_Localized: "Animaci\xF3n en bucle: cada vez que dos acciones seguidas son del
-      mismo tipo, gana +3 Subs (m\xE1x. +9 por stream)."
+      mismo tipo, gana +3 {icon:subs} (m\xE1x. +9 por stream)."
     m_Metadata:
       m_Items: []
   - m_Id: 504578132
@@ -651,11 +654,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578155
-    m_Localized: Invertir 2 Subs regaladas
+    m_Localized: Invertir 2 {icon:subs}
     m_Metadata:
       m_Items: []
   - m_Id: 504578156
-    m_Localized: Invertir 1 $
+    m_Localized: Invertir 1 {icon:cash}
     m_Metadata:
       m_Items: []
   - m_Id: 504578157
@@ -667,19 +670,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578159
-    m_Localized: Subs dobles
+    m_Localized: '{icon:subs} dobles'
     m_Metadata:
       m_Items: []
   - m_Id: 504578160
-    m_Localized: $ doble
+    m_Localized: '{icon:cash} doble'
     m_Metadata:
       m_Items: []
   - m_Id: 504578161
-    m_Localized: Subs a $
+    m_Localized: '{icon:subs} a {icon:cash}'
     m_Metadata:
       m_Items: []
   - m_Id: 508772352
-    m_Localized: $ a Subs
+    m_Localized: '{icon:cash} a {icon:subs}'
     m_Metadata:
       m_Items: []
   - m_Id: 416591515959296
@@ -687,7 +690,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262464
-    m_Localized: Solo espectador inicial. Mucho ruido, un poco de riesgo.
+    m_Localized: Solo espectador inicial. Mucho ruido, un poco de {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262465
@@ -721,7 +724,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262472
-    m_Localized: "Mientras est\xE1 en el chat, anula 1 de riesgo de baneo."
+    m_Localized: "Mientras est\xE1 en el chat, anula 1 {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262473
@@ -729,7 +732,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262474
-    m_Localized: "N\xFAmeros grandes, un poco de riesgo."
+    m_Localized: "N\xFAmeros grandes, un poco de {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262475
@@ -750,8 +753,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262479
-    m_Localized: "Incancelable: mientras est\xE1 en el chat, anula 1 de riesgo de
-      baneo."
+    m_Localized: "Incancelable: mientras est\xE1 en el chat, anula 1 {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262480
@@ -768,7 +770,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262483
-    m_Localized: 'DIAMANTE. Expreso de opiniones: suma 1 de riesgo de baneo.'
+    m_Localized: 'DIAMANTE. Expreso de opiniones: suma 1 {icon:risk}.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262484
@@ -776,7 +778,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262485
-    m_Localized: 'DIAMANTE. Colapso del mercado: cuesta 3 $ al puntuar.'
+    m_Localized: 'DIAMANTE. Colapso del mercado: cuesta 3 {icon:cash} al puntuar.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262486
@@ -801,7 +803,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591587262491
     m_Localized: "DIAMANTE. No puede equivocarse: mientras est\xE1 en el chat, anula
-      1 de riesgo de baneo."
+      1 {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262492
@@ -851,7 +853,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262503
-    m_Localized: Muchos Subs, pero trae problemas.
+    m_Localized: Muchos {icon:subs}, pero trae problemas.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262504
@@ -872,7 +874,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262508
-    m_Localized: "Paga bien, pero el p\xFAblico se salta el anuncio: -1 Sub al puntuar."
+    m_Localized: "Paga bien, pero el p\xFAblico se salta el anuncio: -1 {icon:subs}
+      al puntuar."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262509
@@ -880,8 +883,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262510
-    m_Localized: "+5 Subs, pero solo si el chat est\xE1 lleno al puntuar. Siempre
-      cuesta 1 $."
+    m_Localized: "+5 {icon:subs}, pero solo si el chat est\xE1 lleno al puntuar.
+      Siempre cuesta 1 {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262511
@@ -889,7 +892,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262512
-    m_Localized: 'Muchos Subs, pero hay que pagarle: cuesta 1 $ al puntuar.'
+    m_Localized: 'Muchos {icon:subs}, pero hay que pagarle: cuesta 1 {icon:cash}
+      al puntuar.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262513
@@ -932,7 +936,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262522
-    m_Localized: "#\xBF\xC9lTambi\xE9n?: mucha plata, mucho riesgo."
+    m_Localized: "#\xBF\xC9lTambi\xE9n?: mucha plata, mucho {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262523
@@ -940,7 +944,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262524
-    m_Localized: "Acci\xF3n: quita el riesgo de baneo a todos los espectadores riesgosos
+    m_Localized: "Acci\xF3n: quita el {icon:risk} a todos los espectadores riesgosos
       del chat por el resto del stream, aunque salgan y vuelvan."
     m_Metadata:
       m_Items: []
@@ -967,7 +971,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262530
-    m_Localized: Trae Subs y plata, y un poco de riesgo.
+    m_Localized: Trae {icon:subs} y plata, y un poco de {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262531
@@ -976,8 +980,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591587262532
     m_Localized: "Acci\xF3n (una vez por stream entre todos): cada espectador del
-      chat baja a 0 Subs esta noche, y cobras 1 $ al instante por cada Benefactor
-      multimillonario en el chat."
+      chat baja a 0 {icon:subs} esta noche, y cobras 1 {icon:cash} al instante por
+      cada Benefactor multimillonario en el chat."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262533
@@ -1011,8 +1015,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456769
-    m_Localized: "\xA1No ver\xE1s nada!: +1 Sub por cada lugar libre en el chat al
-      puntuar."
+    m_Localized: "\xA1No ver\xE1s nada!: +1 {icon:subs} por cada lugar libre en el
+      chat al puntuar."
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456770
@@ -1020,8 +1024,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456771
-    m_Localized: "Madriguera algor\xEDtmica: +1 Sub por cada Fan incondicional en
-      el chat."
+    m_Localized: "Madriguera algor\xEDtmica: +1 {icon:subs} por cada Fan incondicional
+      en el chat."
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456772
@@ -1030,7 +1034,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591591456773
     m_Localized: "Cambia de humor cada vez que entra al chat: la primera vez mira
-      por odio (+1 de riesgo de baneo), la siguiente es inofensivo, y as\xED sucesivamente."
+      por odio (+1 {icon:risk}), la siguiente es inofensivo, y as\xED sucesivamente."
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456774
@@ -1038,8 +1042,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456775
-    m_Localized: "Acci\xF3n: un espectador del chat gana +1 $ m\xE1s para siempre
-      (hasta 9 $). Cuesta 1 $ al puntuar."
+    m_Localized: "Acci\xF3n: un espectador del chat gana +1 {icon:cash} m\xE1s para
+      siempre (hasta 9 {icon:cash}). Cuesta 1 {icon:cash} al puntuar."
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456776
@@ -1051,8 +1055,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456778
-    m_Localized: "Escalera del caos: +2 $ por cada espectador del chat que todav\xEDa
-      tiene riesgo de baneo (el riesgo anulado tambi\xE9n cuenta)."
+    m_Localized: "Escalera del caos: +2 {icon:cash} por cada espectador del chat
+      que todav\xEDa tiene {icon:risk} (el {icon:risk} anulado tambi\xE9n cuenta)."
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456779
@@ -1060,8 +1064,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456780
-    m_Localized: "No hay mala prensa: +2 Subs por cada espectador del chat que todav\xEDa
-      tiene riesgo de baneo (el riesgo anulado tambi\xE9n cuenta)."
+    m_Localized: "No hay mala prensa: +2 {icon:subs} por cada espectador del chat
+      que todav\xEDa tiene {icon:risk} (el {icon:risk} anulado tambi\xE9n cuenta)."
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456781
@@ -1069,8 +1073,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456782
-    m_Localized: 'Asegurar la plata: gana +1 $ para siempre cada vez que entra al
-      chat (hasta 9 $), aunque el stream termine mal.'
+    m_Localized: 'Asegurar la plata: gana +1 {icon:cash} para siempre cada vez que
+      entra al chat (hasta 9 {icon:cash}), aunque el stream termine mal.'
     m_Metadata:
       m_Items: []
   references:

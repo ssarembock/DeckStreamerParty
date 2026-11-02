@@ -6,7 +6,7 @@ namespace DeckParty.Core
     public enum GamePhase : byte
     {
         Party = 0,      // Doors are open.
-        RaidBlame = 1,  // The stream got a Platform Ban; choose who gets the Temporary Ban.
+        RaidBlame = 1,  // The stream got deplatformed; choose who gets the Temporary Ban.
         Planning = 2,   // Spend Gifted Subs and Cash, then start the next night.
         Victory = 3,
         Defeat = 4,
@@ -16,7 +16,7 @@ namespace DeckParty.Core
     {
         None = 0,
         Success = 1,
-        /// <summary>Platform Ban: too much Platform Ban Risk.</summary>
+        /// <summary>Deplatformed: too much Deplatform Risk.</summary>
         Raid = 2,
         /// <summary>Server Down: chat went over the Sub Cap.</summary>
         FireMarshal = 3,
@@ -44,14 +44,14 @@ namespace DeckParty.Core
         public int BonusCash;       // Permanent Cash change (Affiliate's Checkout Code, Gen Z with Job's entrances).
         public int TrolledCount;    // Times Trollface has trolled this guest.
         public int StrikeCount;     // Tung Tung Tung Sahur strikes so far (0-2).
-        public bool Temporary;      // Ugandan Knuckles copy: vanishes when the party ends.
+        public bool Temporary;      // Ugandan Knuckles copy or a rival's Bot: vanishes when the party ends.
         public bool Wolf;           // Hate-Watcher: hate-watching (risky) since their last entrance. Flips on every entrance.
 
         // Tonight only (cleared when the party ends)
         public int PartyPop;               // Subs this guest gained tonight.
         public int PartyCash;              // Cash this guest gained tonight.
-        public int PartyTrouble;           // Extra Platform Ban Risk added tonight.
-        public bool TroubleCleared;        // Printed Platform Ban Risk removed for the rest of the party.
+        public int PartyTrouble;           // Extra Deplatform Risk added tonight.
+        public bool TroubleCleared;        // Printed Deplatform Risk removed for the rest of the party.
         public bool SubsMuted;             // Billionaire Benefactor's Softball Interview: earns 0 Subs tonight.
         public byte Disguise = NoDisguise; // Rickroll: the character this guest is pretending to be.
         public bool HasCopy;               // NPC Wojak copied stats.
@@ -174,14 +174,28 @@ namespace DeckParty.Core
         public int PowerCooldown;
         /// <summary>A next-stream power bought in the shop, waiting for the next stream to start.</summary>
         public bool PowerArmed;
-        /// <summary>Platform Ban Risk rivals' raids will add to your next stream.</summary>
+        /// <summary>Deplatform Risk rivals' raids will add to your next stream.</summary>
         public int IncomingHeat;
         /// <summary>Successful streams in a row (Manim Maketh Man's bonus).</summary>
         public int Streak;
 
+        // Communities (multiplayer): rival Doomsdayers
+        /// <summary>Doomsdayers points a rival's stream aimed at you, applied when your next stream starts.</summary>
+        public int IncomingDoom;
+        /// <summary>This stream's rival Doomsdayers points: each viewer may score nothing (<see cref="Communities.DoomChance"/>).</summary>
+        public int PartyDoom;
+        /// <summary>Doomsdayers points your last successful stream earned, waiting for the host to pass them to your rivals.</summary>
+        public int DoomOut;
+
+        // Communities (multiplayer): Bots
+        /// <summary>Bots rivals sent you: they join your Audience when your next stream starts and leave when it ends.</summary>
+        public int IncomingBots;
+        /// <summary>Bots your last scored stream sent, waiting for the host to pass them to the next player.</summary>
+        public int BotsOut;
+
         // Current stream: streamer power effects
-        public int PartyHeat;          // Platform Ban Risk from rivals' raids.
-        public int PartyShield;        // Platform Ban Risk ignored (Smoke Bomb).
+        public int PartyHeat;          // Deplatform Risk from rivals' raids.
+        public int PartyShield;        // Deplatform Risk ignored (Smoke Bomb).
         public int PartyViewerBonus;   // Extra Subs per viewer (Giveaway).
         public int PartyFreeActions;   // Viewer actions that refresh after use (Double Move).
         public bool PartyXRay;         // The next viewers in the queue are visible (X-Ray Vision).

@@ -90,23 +90,23 @@ namespace DeckParty.Core
             }
         }
 
-        // ================================================================== queries: Platform Ban Risk
+        // ================================================================== queries: Deplatform Risk
 
-        /// <summary>Whether the card itself carries Platform Ban Risk (a Hate-Watcher only while hate-watching).</summary>
+        /// <summary>Whether the card itself carries Deplatform Risk (a Hate-Watcher only while hate-watching).</summary>
         public static bool PrintedTrouble(GuestInstance g)
         {
             if (g == null) return false;
             return g.Info.Trouble || (g.Kind == GuestType.HateWatcher && g.Wolf);
         }
 
-        /// <summary>Whether a guest waiting in the queue would bring Platform Ban Risk in with them (a Hate-Watcher flips on entry).</summary>
+        /// <summary>Whether a guest waiting in the queue would bring Deplatform Risk in with them (a Hate-Watcher flips on entry).</summary>
         public static bool WouldArriveRisky(GuestInstance g)
         {
             if (g == null || g.TroubleCleared) return false;
             return g.Info.Trouble || (g.Kind == GuestType.HateWatcher && !g.Wolf);
         }
 
-        /// <summary>How much Platform Ban Risk this guest adds right now.</summary>
+        /// <summary>How much Deplatform Risk this guest adds right now.</summary>
         public static int GuestTrouble(PlayerState s, GuestInstance g)
         {
             if (g == null) return 0;
@@ -116,7 +116,7 @@ namespace DeckParty.Core
 
         public static bool HasTroubleProperty(PlayerState s, GuestInstance g) => GuestTrouble(s, g) > 0;
 
-        /// <summary>Platform Ban Risk from everyone in chat, plus heat from rivals' raids.</summary>
+        /// <summary>Deplatform Risk from everyone in chat, plus heat from rivals' raids.</summary>
         public static int TroubleTotal(PlayerState s)
         {
             int total = s.PartyHeat;
@@ -132,24 +132,54 @@ namespace DeckParty.Core
             return count;
         }
 
-        /// <summary>Whether this guest is cancelling Platform Ban Risk right now (Cheems only does with a Doge).</summary>
+        /// <summary>Whether this guest is cancelling Deplatform Risk right now (Cheems only does with a Doge).</summary>
         public static bool CancelsTroubleNow(PlayerState s, GuestInstance g)
         {
             if (g == null) return false;
             if (g.Info.CancelsTrouble) return true;
-            return g.Kind == GuestType.Cheems && s.CountInHouse(GuestType.Doge) > 0;
+            return g.Kind == GuestType.Cheems && s.CountInHouse(GuestType.DegenDog) > 0;
         }
 
-        /// <summary>Platform Ban Risk cancelled by viewers, plus Shinobi's Smoke Bomb.</summary>
+        /// <summary>Deplatform Risk cancelled by viewers, the Core Fanbase (1 per 3 points) and Shinobi's Smoke Bomb.</summary>
         public static int CancelCount(PlayerState s)
         {
-            int count = s.PartyShield;
+            int count = s.PartyShield + FanbaseCancels(s);
             for (int i = 0; i < s.House.Count; i++)
                 if (CancelsTroubleNow(s, s.Find(s.House[i]))) count++;
             return count;
         }
 
+        /// <summary>Deplatform Risk the Core Fanbase cancels right now.</summary>
+        public static int FanbaseCancels(PlayerState s) => Communities.CoreFanbaseCancels(CommunityScore(s, Community.CoreFanbase));
+
         public static int NetTrouble(PlayerState s) => Math.Max(0, TroubleTotal(s) - CancelCount(s));
+
+        // ================================================================== queries: communities
+
+        /// <summary>
+        /// Each community's score right now (indexed by <see cref="Community"/>): how many <b>different</b> viewers in chat
+        /// belong to it. Two copies of the same card count once; a Rickrolled viewer counts as the character they've become.
+        /// </summary>
+        public static int[] CommunityScores(PlayerState s)
+        {
+            var scores = new int[Communities.Count];
+            if (s.House.Count == 0) return scores;
+            var seen = new bool[GuestCatalog.Count];
+            for (int i = 0; i < s.House.Count; i++)
+            {
+                var g = s.Find(s.House[i]);
+                if (g == null) continue;
+                int kind = (int)g.Kind;
+                if (kind < 0 || kind >= seen.Length || seen[kind]) continue;
+                seen[kind] = true;
+                int mask = (int)GuestCatalog.CommunitiesOf(g.Kind);
+                for (int c = 0; c < Communities.Count; c++)
+                    if ((mask & (1 << c)) != 0) scores[c]++;
+            }
+            return scores;
+        }
+
+        public static int CommunityScore(PlayerState s, Community community) => CommunityScores(s)[(int)community];
 
         public static int DiamondsPresent(PlayerState s)
         {
@@ -197,7 +227,8 @@ namespace DeckParty.Core
         sealed class ScoreContext
         {
             public int Doges, Cheems, Gigachads, Sigmas, Knuckles, Harolds, LoyalFans;
-            public int Families;
+            /// <summary>Different communities among the viewers in chat other than Doges.</summary>
+            public int CommunityCount;
             public int BigPrinted;
             public int NetTrouble;
             public int Troublemakers;
@@ -316,13 +347,13 @@ namespace DeckParty.Core
                 Suffering = new bool[guests.Length],
             };
 
-            int familyMask = 0;
+            var communities = CommunityMask.None;
             foreach (var g in guests)
             {
                 if (g == null) continue;
                 switch (g.Kind)
                 {
-                    case GuestType.Doge: ctx.Doges++; break;
+                    case GuestType.DegenDog: ctx.Doges++; break;
                     case GuestType.Cheems: ctx.Cheems++; break;
                     case GuestType.Gigachad: ctx.Gigachads++; break;
                     case GuestType.SigmaMale: ctx.Sigmas++; break;
@@ -330,11 +361,11 @@ namespace DeckParty.Core
                     case GuestType.HideThePainHarold: ctx.Harolds++; break;
                     case GuestType.LoyalFan: ctx.LoyalFans++; break;
                 }
-                // Undecided (TBD) groups don't count as a group yet.
-                if (g.Kind != GuestType.Doge && g.Info.Category != GuestCategory.Tbd) familyMask |= 1 << (int)g.Info.Category;
+                // Doge's Such Synergy counts communities (the old character families are no longer used).
+                if (g.Kind != GuestType.DegenDog) communities |= GuestCatalog.CommunitiesOf(g.Kind);
                 if (PrintedPop(g) >= 5) ctx.BigPrinted++;
             }
-            for (int bit = familyMask; bit != 0; bit &= bit - 1) ctx.Families++;
+            ctx.CommunityCount = Communities.CountIn(communities);
 
             for (int i = 0; i < guests.Length; i++)
             {
@@ -354,8 +385,8 @@ namespace DeckParty.Core
         {
             switch (g.Kind)
             {
-                case GuestType.Doge:
-                    pop += Math.Min(GameRules.DogeMaxBonus, ctx.Families);
+                case GuestType.DegenDog:
+                    pop += Math.Min(GameRules.DogeMaxBonus, ctx.CommunityCount);
                     if (ctx.Cheems > 0 && !g.Immune) pop += 2;
                     break;
                 case GuestType.Gigachad:
@@ -395,8 +426,8 @@ namespace DeckParty.Core
                     break;
 
                 // --- Audience classics ---
-                case GuestType.ComedianWithAPodcast:
-                    if (ctx.Full) pop += GameRules.ComedianFullBonus;
+                case GuestType.PromoCodeUser:
+                    if (ctx.Full) pop += GameRules.PromoCodeFullBonus;
                     break;
                 case GuestType.Gatekeeper:
                     pop += ctx.Empty;
@@ -413,7 +444,10 @@ namespace DeckParty.Core
             }
         }
 
-        /// <summary>Total Subs/Cash the party would bank if it ended successfully right now (before fee shortfalls).</summary>
+        /// <summary>
+        /// Total Subs/Cash the party would bank if it ended successfully right now (before fee shortfalls), including the
+        /// fixed Boomer / Millennial rewards. Random community rolls aren't included.
+        /// </summary>
         public static void ProjectScore(PlayerState s, out int pop, out int cash)
         {
             pop = s.PartyPop + s.InvestPop * GameRules.StonksMultiplier;
@@ -424,6 +458,9 @@ namespace DeckParty.Core
                 pop += pops[i];
                 cash += cashes[i];
             }
+            Communities.FixedRewards(CommunityScores(s), out int communitySubs, out int communityCash);
+            pop += communitySubs;
+            cash += communityCash;
         }
 
         /// <summary>Gifted Subs penalty that ending now would incur because fees can't be paid.</summary>
@@ -738,9 +775,16 @@ namespace DeckParty.Core
         static void BeginParty(PlayerState s, List<GameEvent> ev)
         {
             ClearParty(s);
+            s.DoomOut = 0;
+            s.BotsOut = 0;
             s.BannedThisParty = s.BannedNextParty;
             s.BannedNextParty = -1;
             s.RaidSuspects.Clear();
+
+            // A rival's Bots join this stream's Audience. They're temporary, so they leave when the stream ends.
+            int bots = Math.Min(Communities.BotsMaxIncoming, Math.Max(0, s.IncomingBots));
+            s.IncomingBots = 0;
+            for (int i = 0; i < bots; i++) AddGuest(s, GuestType.Bot, true);
 
             for (int i = 0; i < s.Rolodex.Count; i++)
             {
@@ -751,6 +795,7 @@ namespace DeckParty.Core
 
             s.Phase = GamePhase.Party;
             Emit(ev, GameEventType.NightStarted, null, s.Night);
+            if (bots > 0) Emit(ev, GameEventType.BotsArrived, null, bots);
             ApplyStreamerEffects(s, ev);
         }
 
@@ -776,6 +821,7 @@ namespace DeckParty.Core
             s.PartyFreeActions = 0;
             s.PartyXRay = false;
             s.PartyInterviewUsed = false;
+            s.PartyDoom = 0;
 
             foreach (var g in s.Rolodex) g.ResetParty();
             s.Rolodex.RemoveAll(g => g.Temporary);
@@ -829,7 +875,7 @@ namespace DeckParty.Core
         // ================================================================== arrivals
 
         /// <summary>
-        /// Moves a guest into the party and resolves entrance effects, reactions, overcrowding (Server Down), Platform Ban
+        /// Moves a guest into the party and resolves entrance effects, reactions, overcrowding (Server Down), Deplatform
         /// Risk and chained arrivals. Returns false when the party was shut down as a consequence.
         /// </summary>
         static bool Arrive(PlayerState s, int id, int slot, int sourceId, bool random, List<GameEvent> ev)
@@ -848,7 +894,8 @@ namespace DeckParty.Core
 
             if (s.Occupancy > s.Capacity)
             {
-                ShutDownFireMarshal(s, ev);
+                // Techspertise may bring the server back, in which case the stream still scores.
+                if (!TryRestoreServer(s, ev)) ShutDownFireMarshal(s, ev);
                 return false;
             }
             if (CheckRaid(s, ev)) return false;
@@ -877,6 +924,10 @@ namespace DeckParty.Core
         static void ScoreNow(PlayerState s, GuestInstance g, int sourceId, List<GameEvent> ev)
         {
             ScoreGuest(s, g, out int pop, out int cash);
+            // Staff and Finance Bros bonuses apply to every scoring, this one included.
+            var scores = CommunityScores(s);
+            cash = RollCash(s, g, cash, Communities.StaffFreeChance(scores[(int)Community.Staff]),
+                Communities.FinanceDoubleChance(scores[(int)Community.FinanceBros]), ev);
             Emit(ev, GameEventType.ScoredNow, g, pop, cash, sourceId);
             Bank(s, pop, cash, ev);
         }
@@ -1042,13 +1093,15 @@ namespace DeckParty.Core
             AddTrouble(s, target, 1, ev);
         }
 
+        /// <summary>Bongo Cat's beat buffs Bongo Cat and every viewer sharing a community with it (it used to be the Animal family).</summary>
         static void BongoBeat(PlayerState s, GuestInstance bongo, List<GameEvent> ev)
         {
+            var band = GuestCatalog.CommunitiesOf(bongo.Kind);
             for (int i = 0; i < s.House.Count; i++)
             {
                 var g = s.Find(s.House[i]);
-                if (g == null || g.Info.Category != GuestCategory.Animal) continue;
-                if (g != bongo && g.Immune) continue;
+                if (g == null) continue;
+                if (g != bongo && ((GuestCatalog.CommunitiesOf(g.Kind) & band) == 0 || g.Immune)) continue;
                 Gain(s, g, 2, 0, ev);
             }
         }
@@ -1142,7 +1195,7 @@ namespace DeckParty.Core
                 for (int i = 0; i < s.House.Count; i++)
                 {
                     var cat = s.Find(s.House[i]);
-                    if (cat != null && cat.Kind == GuestType.CryingCat) Gain(s, cat, 2, 1, ev);
+                    if (cat != null && cat.Kind == GuestType.DistraughtCat) Gain(s, cat, 2, 1, ev);
                 }
             }
 
@@ -1176,7 +1229,7 @@ namespace DeckParty.Core
             NotifyTroubleAdded(s, g, ev);
         }
 
-        /// <summary>Clears a guest's Platform Ban Risk for the rest of the party. Returns how much was removed.</summary>
+        /// <summary>Clears a guest's Deplatform Risk for the rest of the party. Returns how much was removed.</summary>
         static int ClearTrouble(PlayerState s, GuestInstance g, List<GameEvent> ev)
         {
             int amount = GuestTrouble(s, g);
@@ -1225,13 +1278,13 @@ namespace DeckParty.Core
 
         // ================================================================== shutdowns
 
-        /// <summary>Platform Ban: too much net Platform Ban Risk ends the stream with no payout (internally a "raid").</summary>
+        /// <summary>Deplatformed: too much net Deplatform Risk ends the stream with no payout (internally a "raid").</summary>
         static bool CheckRaid(PlayerState s, List<GameEvent> ev)
         {
             if (s.Phase != GamePhase.Party) return false;
             if (NetTrouble(s) < GameRules.RaidTroubleThreshold) return false;
 
-            // This Is Fine Dog: the first time it would happen, the ban is called off.
+            // This Is Fine Dog: the first time it would happen, the deplatforming is called off.
             GuestInstance dog = null;
             for (int i = 0; i < s.House.Count && dog == null; i++)
             {
@@ -1255,6 +1308,7 @@ namespace DeckParty.Core
 
             int trouble = NetTrouble(s);
             SoftLanding(s, ev);
+            PayTrolls(s, ev);
             s.Streak = 0;
             s.RaidSuspects.Clear();
             foreach (var id in s.House)
@@ -1270,6 +1324,37 @@ namespace DeckParty.Core
             if (s.IsFinalNight) FinishDefeat(s, ev);
             else if (s.RaidSuspects.Count == 0) s.Phase = GamePhase.Planning;
             else s.Phase = GamePhase.RaidBlame;
+            return true;
+        }
+
+        /// <summary>
+        /// Trolls love the drama: when the stream is deplatformed (Risk over the limit, not Server Down or ending it yourself)
+        /// each Trolls point pays 1 random Gifted Sub or Cash.
+        /// </summary>
+        static void PayTrolls(PlayerState s, List<GameEvent> ev)
+        {
+            int count = Communities.TrollsReward(CommunityScore(s, Community.Trolls));
+            if (count <= 0) return;
+            int subs = 0, cash = 0;
+            for (int i = 0; i < count; i++)
+            {
+                if (DeterministicRandom.Range(ref s.RngState, 2) == 0) subs++;
+                else cash++;
+            }
+            s.Pop += subs;
+            s.TotalPopEarned += subs;
+            s.Cash += cash;
+            s.TotalCashEarned += cash;
+            Emit(ev, GameEventType.TrollsPaid, null, subs, cash);
+        }
+
+        /// <summary>Techspertise: a chance (by points, max 3) that the server comes back and the stream still scores.</summary>
+        static bool TryRestoreServer(PlayerState s, List<GameEvent> ev)
+        {
+            int chance = Communities.TechspertiseChance(CommunityScore(s, Community.Techspertise));
+            if (!Roll(s, chance)) return false;
+            Emit(ev, GameEventType.ServerRestored, null, chance, s.Occupancy, s.Capacity);
+            ScoreStream(s, ev);
             return true;
         }
 
@@ -1667,16 +1752,38 @@ namespace DeckParty.Core
         {
             var blocker = GetEndPartyBlocker(s);
             if (blocker != null) return CommandResult.Fail(blocker);
+            ScoreStream(s, ev);
+            return CommandResult.Success;
+        }
 
-            ScoreHouse(s, out var pops, out var cashes);
-            for (int i = 0; i < s.House.Count; i++)
-                Emit(ev, GameEventType.GuestScored, s.Find(s.House[i]), pops[i], cashes[i], 1);
+        /// <summary>
+        /// Banks the stream: the chat scores (community bonuses rolled per viewer, then the stream-wide community rewards),
+        /// maybe a second time (Memetics Division), then investments, the streak bonus, fees and the win check. Used when the
+        /// stream is ended and when Techspertise brings a downed server back.
+        /// </summary>
+        static void ScoreStream(PlayerState s, List<GameEvent> ev)
+        {
+            var scores = CommunityScores(s);
+            ScoreChat(s, scores, false, out int pop, out int cash, ev);
+
+            // Memetics Division: the whole chat scores again, every roll made afresh.
+            int repeat = Communities.MemeticsRepeatChance(scores[(int)Community.MemeticsDivision]);
+            if (Roll(s, repeat))
+            {
+                Emit(ev, GameEventType.MemeticsRepeat, null, repeat);
+                ScoreChat(s, scores, true, out int againPop, out int againCash, ev);
+                pop += againPop;
+                cash += againCash;
+            }
 
             if (s.InvestPop > 0 || s.InvestCash > 0)
                 Emit(ev, GameEventType.InvestmentPaid, null, s.InvestPop * GameRules.StonksMultiplier, s.InvestCash * GameRules.StonksMultiplier);
+            pop += s.PartyPop + s.InvestPop * GameRules.StonksMultiplier;
+            cash += s.PartyCash + s.InvestCash * GameRules.StonksMultiplier;
 
-            ProjectScore(s, out int pop, out int cash);
             int diamonds = DiamondsPresent(s);
+            int doom = Math.Min(Communities.DoomMaxPoints, scores[(int)Community.Doomsdayers]);
+            int bots = RollBots(s, scores, ev);
             int penalty = 0;
 
             s.Streak++;
@@ -1715,20 +1822,173 @@ namespace DeckParty.Core
             Emit(ev, GameEventType.PartyEnded, null, pop, cash, diamonds);
 
             int temporary = 0;
-            foreach (var g in s.Rolodex) if (g.Temporary) temporary++;
+            foreach (var g in s.Rolodex) if (g.Temporary && !GuestCatalog.IsToken(g.Type)) temporary++;
             ClearParty(s);
             if (temporary > 0) Emit(ev, GameEventType.TemporaryCopiesLeft, null, temporary);
+            // The host hands these to the rivals' next streams (multiplayer only).
+            s.DoomOut = doom;
+            s.BotsOut = bots;
 
             if (diamonds >= GameRules.DiamondsToWin)
             {
                 s.Phase = GamePhase.Victory;
                 s.WinNight = s.Night;
                 Emit(ev, GameEventType.Victory, null, s.Night);
-                return CommandResult.Success;
+                return;
             }
 
             AfterParty(s, ev);
-            return CommandResult.Success;
+        }
+
+        /// <summary>
+        /// One scoring of the chat: every viewer in joining order (community bonuses rolled per viewer), then the stream-wide
+        /// community rewards. <paramref name="repeat"/> marks the Memetics Division's second scoring (GuestScored C = 2).
+        /// </summary>
+        static void ScoreChat(PlayerState s, int[] scores, bool repeat, out int pop, out int cash, List<GameEvent> ev)
+        {
+            ScoreHouse(s, out var pops, out var cashes);
+            RollCommunityBonuses(s, scores, pops, cashes, repeat ? 2 : 0, ev);
+            pop = 0;
+            cash = 0;
+            for (int i = 0; i < s.House.Count && i < pops.Length; i++)
+            {
+                Emit(ev, GameEventType.GuestScored, s.Find(s.House[i]), pops[i], cashes[i], repeat ? 2 : 1);
+                pop += pops[i];
+                cash += cashes[i];
+            }
+            ScoreCommunityRewards(s, scores, ref pop, ref cash, ev);
+        }
+
+        /// <summary>
+        /// End-of-stream community rolls, per viewer in joining order: rival Doomsdayers may stop a viewer scoring at all;
+        /// Content may make a viewer outside the Core Fanbase score twice; on each scoring, Clout may add a Gifted Sub to a
+        /// viewer outside the Core Fanbase, Staff may waive a Staff viewer's Cash cost and Finance Bros may double a Cash
+        /// reward. Changes <paramref name="pops"/> / <paramref name="cashes"/> in place. <paramref name="tag"/> goes in the
+        /// events' C (2 = the Memetics Division repeat).
+        /// </summary>
+        static void RollCommunityBonuses(PlayerState s, int[] scores, int[] pops, int[] cashes, int tag, List<GameEvent> ev)
+        {
+            int doom = Communities.DoomChance(s.PartyDoom);
+            int silence = Communities.ArmchairSilenceChance(scores[(int)Community.ArmchairActivists]);
+            int encore = Communities.ContentEncoreChance(scores[(int)Community.Content]);
+            int staff = Communities.StaffFreeChance(scores[(int)Community.Staff]);
+            int finance = Communities.FinanceDoubleChance(scores[(int)Community.FinanceBros]);
+            int clout = Communities.CloutChance(scores[(int)Community.Clout]);
+            if (doom + silence + encore + staff + finance + clout == 0) return;
+
+            for (int i = 0; i < s.House.Count && i < pops.Length; i++)
+            {
+                var g = s.Find(s.House[i]);
+                if (g == null) continue;
+
+                if (Roll(s, doom))
+                {
+                    // None of this viewer's benefits, or downsides.
+                    pops[i] = 0;
+                    cashes[i] = 0;
+                    Emit(ev, GameEventType.CommunityBonus, g, (int)Community.Doomsdayers, 0, tag);
+                    continue;
+                }
+
+                // Armchair Activists: all talk. Each one rolls on its own and may score nothing.
+                if (GuestCatalog.InCommunity(g.Kind, Community.ArmchairActivists) && Roll(s, silence))
+                {
+                    pops[i] = 0;
+                    cashes[i] = 0;
+                    Emit(ev, GameEventType.CommunityBonus, g, (int)Community.ArmchairActivists, 0, tag);
+                    continue;
+                }
+
+                bool fan = GuestCatalog.InCommunity(g.Kind, Community.CoreFanbase);
+                int times = 1;
+                if (!fan && Roll(s, encore))
+                {
+                    times = 2;
+                    Emit(ev, GameEventType.CommunityBonus, g, (int)Community.Content, 0, tag);
+                }
+
+                // Clout: the viewers outside the Core Fanbase may each bring one more Gifted Sub, every time they score.
+                // A Bot earns nothing, ever.
+                bool cloutable = !fan && !GuestCatalog.IsToken(g.Kind);
+                int pop = 0, cash = 0, extra = 0;
+                for (int t = 0; t < times; t++)
+                {
+                    pop += pops[i];
+                    if (cloutable && Roll(s, clout)) extra += Communities.CloutSubs;
+                    cash += RollCash(s, g, cashes[i], staff, finance, ev, tag);
+                }
+                if (extra > 0) Emit(ev, GameEventType.CommunityBonus, g, (int)Community.Clout, extra, tag);
+                pops[i] = pop + extra;
+                cashes[i] = cash;
+            }
+        }
+
+        /// <summary>
+        /// Bots: each Bots viewer in chat rolls (10% per point, max 40%) to send a Bot into the next player's next stream.
+        /// Returns how many were sent; the host delivers them (nothing happens in single player).
+        /// </summary>
+        static int RollBots(PlayerState s, int[] scores, List<GameEvent> ev)
+        {
+            int chance = Communities.BotChance(scores[(int)Community.Bots]);
+            if (chance <= 0) return 0;
+            int sent = 0;
+            for (int i = 0; i < s.House.Count; i++)
+            {
+                var g = s.Find(s.House[i]);
+                if (g != null && GuestCatalog.InCommunity(g.Kind, Community.Bots) && Roll(s, chance)) sent++;
+            }
+            if (sent > 0) Emit(ev, GameEventType.BotsSent, null, sent, chance);
+            return sent;
+        }
+
+        /// <summary>
+        /// The stream-wide community rewards when a stream is scored: Boomer and Millennial pay a fixed amount per point;
+        /// Zoomer rolls twice, separately (+6 Subs, and -3 Cash), each with 20% per point.
+        /// </summary>
+        static void ScoreCommunityRewards(PlayerState s, int[] scores, ref int pop, ref int cash, List<GameEvent> ev)
+        {
+            foreach (var community in new[] { Community.Boomer, Community.Millennial })
+            {
+                int points = scores[(int)community];
+                if (points <= 0) continue;
+                Communities.FixedReward(community, points, out int subs, out int money);
+                pop += subs;
+                cash += money;
+                Emit(ev, GameEventType.CommunityReward, null, (int)community, subs, money);
+            }
+
+            int chance = Communities.ZoomerChance(scores[(int)Community.Zoomer]);
+            if (chance <= 0) return;
+            int zoomerSubs = Roll(s, chance) ? Communities.ZoomerSubs : 0;
+            int zoomerCash = Roll(s, chance) ? -Communities.ZoomerCashCost : 0;
+            if (zoomerSubs == 0 && zoomerCash == 0) return;
+            pop += zoomerSubs;
+            cash += zoomerCash;
+            Emit(ev, GameEventType.CommunityReward, null, (int)Community.Zoomer, zoomerSubs, zoomerCash);
+        }
+
+        /// <summary>One scoring of a viewer's Cash: Staff may waive a Staff viewer's cost, Finance Bros may double a reward.</summary>
+        static int RollCash(PlayerState s, GuestInstance g, int cash, int staffChance, int financeChance, List<GameEvent> ev, int tag = 0)
+        {
+            if (cash < 0 && GuestCatalog.InCommunity(g.Kind, Community.Staff) && Roll(s, staffChance))
+            {
+                Emit(ev, GameEventType.CommunityBonus, g, (int)Community.Staff, -cash, tag);
+                return 0;
+            }
+            if (cash > 0 && Roll(s, financeChance))
+            {
+                Emit(ev, GameEventType.CommunityBonus, g, (int)Community.FinanceBros, cash, tag);
+                return cash * 2;
+            }
+            return cash;
+        }
+
+        /// <summary>A percentage roll on the season's deterministic RNG (no roll at all for 0%).</summary>
+        static bool Roll(PlayerState s, int percent)
+        {
+            if (percent <= 0) return false;
+            if (percent >= 100) return true;
+            return DeterministicRandom.Range(ref s.RngState, 100) < percent;
         }
 
         static void RecordOutcome(PlayerState s, PartyOutcome outcome, int pop, int cash, int diamonds, int penalty)
@@ -1925,6 +2185,14 @@ namespace DeckParty.Core
                 Emit(ev, GameEventType.HeatApplied, null, s.PartyHeat);
             }
 
+            // A rival's Doomsdayers: every viewer in this stream may score nothing.
+            if (s.IncomingDoom > 0)
+            {
+                s.PartyDoom = Math.Min(Communities.DoomMaxPoints, s.IncomingDoom);
+                s.IncomingDoom = 0;
+                Emit(ev, GameEventType.DoomApplied, null, s.PartyDoom, Communities.DoomChance(s.PartyDoom));
+            }
+
             if (!s.PowerArmed) return;
             s.PowerArmed = false;
             switch (s.Streamer)
@@ -1956,7 +2224,7 @@ namespace DeckParty.Core
             Emit(ev, GameEventType.FreeActionUsed, s.Find(actorId));
         }
 
-        /// <summary>Soft Hard Body Man: a stream that gets a Platform Ban still banks half its Subs.</summary>
+        /// <summary>Soft Hard Body Man: a deplatformed stream still banks half its Subs.</summary>
         static void SoftLanding(PlayerState s, List<GameEvent> ev)
         {
             if (s.Streamer != StreamerType.SoftHardBodyMan) return;

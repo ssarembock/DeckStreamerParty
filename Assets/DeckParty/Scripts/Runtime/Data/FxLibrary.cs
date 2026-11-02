@@ -23,7 +23,7 @@ namespace DeckParty
         RiskPip = 13,
         SubCapFull = 14,
         DiamondTracker = 15,
-        PlatformBan = 16,
+        Deplatform = 16,
         ServerDown = 17,
         ScoreTick = 18,
         Victory = 19,
@@ -103,7 +103,7 @@ namespace DeckParty
         public bool cardTilt = true;
         [Tooltip("N8: static portraits breathe gently so un-animated characters feel alive.")]
         public bool idleBreathing = true;
-        [Tooltip("N9: background lights react to Platform Ban Risk.")]
+        [Tooltip("N9: background lights react to Deplatform Risk.")]
         public bool reactiveBackground = true;
         [Tooltip("N10: shine and glitch on the title, animated menu background.")]
         public bool shinyTitle = true;

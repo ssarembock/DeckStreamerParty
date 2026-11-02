@@ -80,7 +80,7 @@ namespace DeckParty
         }
 
         static bool IsShake(FxCue cue) =>
-            cue == FxCue.ScreenShake || cue == FxCue.PlatformBan || cue == FxCue.ServerDown || cue == FxCue.StreamerAnxious || cue == FxCue.ButtonDenied;
+            cue == FxCue.ScreenShake || cue == FxCue.Deplatform || cue == FxCue.ServerDown || cue == FxCue.StreamerAnxious || cue == FxCue.ButtonDenied;
 
         /// <summary>A flash colour respecting Reduce Flashing (alpha scaled down).</summary>
         public static float FlashAlpha(float alpha) => AppSettings.ReduceFlashing ? alpha * 0.25f : alpha;
@@ -126,7 +126,7 @@ namespace DeckParty
                     break;
                 case FxCue.ButtonDenied:
                 case FxCue.SubCapFull:
-                case FxCue.PlatformBan:
+                case FxCue.Deplatform:
                 case FxCue.ServerDown:
                 case FxCue.StreamerAnxious:
                 case FxCue.ScreenShake:

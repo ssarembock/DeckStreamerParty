@@ -42,6 +42,8 @@ namespace DeckParty.UI
         [SerializeField] internal ChatBubbleView chatBubble;
         [Tooltip("Emojis floating up from the viewers in chat.")]
         [SerializeField] internal ViewerEmojiView viewerEmojis;
+        [Tooltip("Community Beats: each community's live score and bonus, top-right of the chat bubble.")]
+        [SerializeField] internal CommunityBeatsView communityBeats;
 
         [Header("Overlays")]
         [SerializeField] internal GuestPickerView picker;
@@ -51,8 +53,10 @@ namespace DeckParty.UI
         [SerializeField] internal BannerView banner;
         [SerializeField] internal EffectsView effects;
         [SerializeField] internal VenueBackgroundView background;
-        [Tooltip("Full-screen Platform Ban / Server Down images (Game Database > Stream Endings).")]
+        [Tooltip("Full-screen Deplatform / Server Down images (Game Database > Stream Endings).")]
         [SerializeField] internal OutcomeSplashView outcomeSplash;
+        [Tooltip("Free For All: what every player did this round (opened from the bar above the board).")]
+        [SerializeField] internal RoundSummaryView roundSummary;
 
         [Header("Polish (optional)")]
         [SerializeField] internal StreamerAnxietyView anxiety;
@@ -179,6 +183,7 @@ namespace DeckParty.UI
             opponents.PlayerClicked += ShowBoard;
             opponents.PresenceLine = PresenceLine;
             EventText.PlayerName = index => ColoredName(net.ClientAtIndex(index));
+            EventText.Multiplayer = true;
 
             var panel = targetingBanner != null && targetingBanner.root != null ? targetingBanner.root.GetComponent<Image>() : null;
             m_ViewBar = ViewBarView.Create(partyRoot.transform.parent as RectTransform, hud.menuButton, hud.nightLabel, panel);
@@ -191,6 +196,7 @@ namespace DeckParty.UI
             net.PresenceReceived += OnPresenceReceived;
             net.EmoteReceived += OnEmoteReceived;
             net.RivalPowerUsed += OnRivalPowerUsed;
+            net.StageChanged += OnStageChanged;
             net.RequestState();
             net.ReportViewing(m_ViewId);
 
@@ -243,6 +249,8 @@ namespace DeckParty.UI
             Loc.Changed -= OnLanguageChanged;
             AppSettings.Changed -= UpdateFeedVisibility;
             EventText.PlayerName = null;
+            EventText.Multiplayer = false;
+            CommunityVisuals.LiveState = null;
             if (m_Session != null)
             {
                 m_Session.StateChanged -= OnStateChanged;
@@ -259,6 +267,7 @@ namespace DeckParty.UI
                 m_Net.PresenceReceived -= OnPresenceReceived;
                 m_Net.EmoteReceived -= OnEmoteReceived;
                 m_Net.RivalPowerUsed -= OnRivalPowerUsed;
+                m_Net.StageChanged -= OnStageChanged;
             }
             AudioService.SetMuffled(false);
         }
@@ -281,6 +290,7 @@ namespace DeckParty.UI
             planning.RolodexClicked += ToggleRolodex;
             planning.NextNightClicked += NextNight;
             planning.PowerClicked += UseStreamerPower;
+            planning.ShopReadyClicked += ToggleShopReady;
 
             raidBlame.GuestChosen += id => Submit(GameCommand.Blame(id));
             targetingBanner.CancelClicked += () => CancelTargeting(true);
@@ -326,6 +336,7 @@ namespace DeckParty.UI
         void OnPlayerState(ulong owner, PlayerState s, IReadOnlyList<GameEvent> events)
         {
             bool own = owner == LocalId;
+            RecordRound(owner, s, events);
             var lines = Describe(s, events, own ? null : NameOf(owner));
             Remember(owner, lines);
             bool switched = false;
@@ -412,6 +423,12 @@ namespace DeckParty.UI
         void ShowBoard(ulong clientId)
         {
             if (m_Net == null) return;
+            // Free For All: everyone streams at once and nobody watches anyone else (the round summary tells what happened).
+            if (FreeForAll && clientId != LocalId)
+            {
+                ToastView.Show(Loc.Get("game.ffa_no_watching"), ToastKind.Info);
+                return;
+            }
             if (clientId != LocalId && m_Net.GetState(clientId) == null)
             {
                 ToastView.Show(Loc.Get("game.board_loading", "player", NameOf(clientId)), ToastKind.Info);
@@ -485,6 +502,7 @@ namespace DeckParty.UI
         void UpdateViewBar()
         {
             if (m_ViewBar == null || m_Net == null) return;
+            if (UpdateFreeForAllBar()) return;
             ulong active = m_Net.ActivePlayer;
             string watchers = WatchersText();
 
@@ -526,6 +544,8 @@ namespace DeckParty.UI
             var s = View;
             if (s == null) return;
             bool act = CanAct;
+            // Community icons show live scores for the stream on screen.
+            CommunityVisuals.LiveState = s;
 
             hud.Render(s);
 
@@ -542,6 +562,7 @@ namespace DeckParty.UI
                 house.Render(s);
                 ApplyCardStates(s, act);
                 partyControls.Render(s, Targeting, act);
+                if (communityBeats != null) communityBeats.Render(s);
                 RenderLinks(s);
                 if (party) m_LastLive = s.Clone();
             }
@@ -636,6 +657,7 @@ namespace DeckParty.UI
                 ctx.NextName = m_Net.NextTurnName();
             }
             if (m_Net.TryGetLocalPlayer(out var me)) ctx.LocalReady = me.ReadyNextNight;
+            FillShopGate(ref ctx);
 
             var waiting = new List<string>();
             foreach (var p in m_Net.PlayersSnapshot())
@@ -697,6 +719,7 @@ namespace DeckParty.UI
             picker.Close();
             rolodex.Close();
             pauseMenu.Close();
+            if (roundSummary != null) roundSummary.Close();
 
             if (m_Net == null) gameOver.ShowSingle(State, PlayAgain, () => SceneFlow.GoToMainMenu());
             else ShowMultiplayerResults();
@@ -780,6 +803,13 @@ namespace DeckParty.UI
         {
             var s = State;
             if (s == null || s.Phase != GamePhase.Planning || !CanAct) return;
+
+            // Free For All, before the shop opens: Space / the button marks you ready for the shop.
+            if (ShopGated)
+            {
+                ToggleShopReady();
+                return;
+            }
 
             if (m_Net != null && m_Net.Settings.Mode == MatchMode.SyncNights)
             {
@@ -1181,6 +1211,7 @@ namespace DeckParty.UI
             ClearButtonSelection();
             UpdatePresence();
             UpdateTurnTimer();
+            UpdateShopGate();
             if (State == null || InputHelper.IsTyping) return;
 
             if (m_Scoring)
@@ -1200,12 +1231,12 @@ namespace DeckParty.UI
             if (InputHelper.Pressed(HotKey.F9) && m_Session is LocalGameSession debugSession)
             {
                 debugSession.DebugGrant(50, 10);
-                ToastView.Show($"Debug: +50 {Terms.GiftedSubs}, +10 $", ToastKind.Info);
+                ToastView.Show($"Debug: +50 {GameIcons.Tag(ResourceIcon.Subs)}, +10 {GameIcons.Tag(ResourceIcon.Cash)}", ToastKind.Info);
                 return;
             }
 #endif
 
-            if (ModalDialog.IsOpen || pauseMenu.IsOpen || gameOver.IsOpen || picker.IsOpen) return;
+            if (ModalDialog.IsOpen || pauseMenu.IsOpen || gameOver.IsOpen || picker.IsOpen || (roundSummary != null && roundSummary.IsOpen)) return;
 
             if (InputHelper.Pressed(HotKey.R))
             {
@@ -1258,6 +1289,7 @@ namespace DeckParty.UI
             if (ModalDialog.IsOpen) ModalDialog.CloseActive();
             else if (picker.IsOpen) picker.Cancel();
             else if (rolodex.IsOpen) rolodex.Close();
+            else if (roundSummary != null && roundSummary.IsOpen) roundSummary.Close();
             else if (Targeting) CancelTargeting(true);
             else if (pauseMenu.IsOpen) pauseMenu.Close();
             else if (!gameOver.IsOpen) OpenPause();

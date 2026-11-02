@@ -1,93 +1,56 @@
-﻿Name,Description,Card Segment,Type,Cost in Shop,Rewards
-Ineffective Troll,Starting viewer only (you begin the season with 4); never sold in the shop. No special effect.,TBD,Viewer Card,,+2 Gifted Subs; +1 Platform Ban Risk
-Loyal Fan,Starting viewer (you begin the season with 4). No special effect. Binge Bunny gains from every Loyal Fan in chat.,TBD,Viewer Card,2,+1 Gifted Subs
-Influential Troll,No special effect.,TBD,Viewer Card,3,+4 Gifted Subs; +1 Platform Ban Risk
-Producer,"Action - Shoutout: choose any viewer in your queue to join chat, if there's room.",TBD,Viewer Card,3,None
-Whale,Starting viewer (you begin the season with 2). No special effect.,TBD,Viewer Card,3,+1 Cash
-Chat Admin,Action - Remove From Chat: remove one viewer from chat for the rest of the stream (can remove itself).,TBD,Viewer Card,4,None
-Cybersecurity Engineer,"Action - Read Access: look at the next viewer in the queue, then let them in or deny them for the rest of the stream.",TBD,Viewer Card,4,+2 Gifted Subs
-Gatekeeper,You Shall Not Watch!: +1 Gifted Subs for every empty space in chat when scored.,TBD,Viewer Card,4,+1 Gifted Subs; plus conditional (see description)
-Normie,Cancels 1 Platform Ban Risk while in chat. No other effect.,TBD,Viewer Card,4,+1 Gifted Subs; -1 Platform Ban Risk (cancels 1 while in chat)
-Paid Sponsorship,No special effect.,TBD,Viewer Card,4,-1 Gifted Subs; +2 Cash
-Account Manager,No special effect.,TBD,Viewer Card,5,+4 Gifted Subs; -1 Cash
-Binge Bunny,Algorithmic Rabbit Hole: +1 Gifted Subs for every Loyal Fan in chat.,TBD,Viewer Card,5,+1 Gifted Subs; plus conditional (see description)
-Comedian with a Podcast,"+5 Gifted Subs when scored, but only if chat is full.",TBD,Viewer Card,5,-1 Cash; plus conditional (see description)
-Crypto Guy,"Action - Rug Pull: score another viewer in chat right now, penalties included, and bank it straight away. They still score again when the stream ends.",TBD,Viewer Card,5,+1 Gifted Subs; -1 Cash; plus conditional (see description)
-Generous Donator,"Give to the Rich!: when joining, brings in the next viewer from the queue and scores them once right away (banked immediately). This can push chat over the Sub Cap (Server Down).",TBD,Viewer Card,5,+1 Gifted Subs; plus conditional (see description)
-Hate-Watcher,"Switches mood every time they join chat: hate-watching (+1 Platform Ban Risk) on their first entrance, harmless on the next, and so on. The mood carries over between streams.",TBD,Viewer Card,5,+4 Gifted Subs; +1 Platform Ban Risk on every other entrance (starts risky)
-Junior PR Manager,Action - Situation Defusal: send everyone in chat back to the queue so they can join again. Actions already used stay used.,TBD,Viewer Card,5,+2 Gifted Subs
-Marketing Manager,Viral Moment: brings one random viewer from the queue along when joining. This can push chat over the Sub Cap (Server Down).,TBD,Viewer Card,5,+3 Gifted Subs
-Mildly Risky Collaborator,No special effect.,TBD,Viewer Card,5,+3 Gifted Subs; +2 Cash; +1 Platform Ban Risk
-Highly Risky Collaborator,No special effect.,TBD,Viewer Card,6,+4 Cash; +1 Platform Ban Risk
-PR Manager,Action - Damage Control: send everyone in chat back to the queue so they can join again. Actions already used stay used.,TBD,Viewer Card,6,+1 Gifted Subs; +1 Cash
-Affiliate,Action - Checkout Code: a viewer in chat permanently earns +1 Cash more (up to 9 Cash).,TBD,Viewer Card,7,-1 Cash; plus conditional (see description)
-Chat Arbitrator,"Action - Keep the Peace: clear the Platform Ban Risk of every risky viewer in chat for the rest of the stream, even if they leave and come back. Needs at least one risky viewer in chat.",TBD,Viewer Card,7,None fixed (see description)
-Die Hard Fan,"Cancels 1 Platform Ban Risk while in chat. The card says ""Uncancellable"", but that has no extra rule yet, so it plays like a Normie with more Subs.",TBD,Viewer Card,7,+2 Gifted Subs; -1 Platform Ban Risk (cancels 1 while in chat)
-Risky Orbiter,No special effect.,TBD,Viewer Card,7,+2 Gifted Subs; +3 Cash; +1 Platform Ban Risk
-Bot Detector,Action - Bot Removal: remove two viewers sitting next to each other in chat (consecutive spots) for the rest of the stream. The Bot Detector can be one of them.,TBD,Viewer Card,8,+1 Gifted Subs
-Master of Currency,Chaos Ladder: +2 Cash for every viewer in chat who has Platform Ban Risk (cancelled risk still counts).,TBD,Viewer Card,8,+1 Cash; plus conditional (see description)
-Social Media Manager,"Action - Sneak Peek: look at the next viewer in the queue, then let them in or deny them for the rest of the stream.",TBD,Viewer Card,8,+2 Cash
-Billionaire Benefactor,"Action - Softball Interview (once per stream, shared by every Billionaire Benefactor): every viewer in chat drops to 0 Subs tonight, and you bank 1 Cash right away for each Billionaire Benefactor in chat.",TBD,Viewer Card,9,+5 Cash; plus conditional (see description)
-Tech Admin,Action - Admin Rights: remove one viewer from chat for the rest of the stream (can remove itself).,TBD,Viewer Card,9,+2 Gifted Subs
-Executive PR,No Bad Press: +2 Gifted Subs for every viewer in chat who has Platform Ban Risk (cancelled risk still counts).,TBD,Viewer Card,11,None fixed (see description)
-Online Scandal,Unwanted Guests: brings two random viewers from the queue along when joining. This can push chat over the Sub Cap (Server Down).,TBD,Viewer Card,11,+2 Gifted Subs; +3 Cash
-Gen Z with Job,"Secure The Bag: permanently gains +1 Cash every time they join chat (up to 9 Cash), even if the stream ends badly.",TBD,Viewer Card,12,None fixed (see description)
-Big Boomer,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Opinion Express: no other effect.,TBD,Viewer Card,25,+1 Platform Ban Risk
-Clippo The Clanker,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Market Collapse: no other effect.,TBD,Viewer Card,30,-3 Cash
-Bigger Star,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Uplifting: brings one random viewer from the queue along when joining (can push chat over the Sub Cap).,TBD,Viewer Card,35,None
-Precocious Youth,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). No other effect.,TBD,Viewer Card,40,None
-Internet Starpower,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Can Do No Wrong: cancels 1 Platform Ban Risk while in chat.,TBD,Viewer Card,45,-1 Platform Ban Risk (cancels 1 while in chat)
-Platform Owner,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Action - Free The Speech!: remove one viewer from chat for the rest of the stream (can remove itself).,TBD,Viewer Card,45,None
-Mainstream Celebrity,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Mass Appeal: no other effect.,TBD,Viewer Card,50,+3 Gifted Subs
-Senior Marketing Manager,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Product Placement: no other effect.,TBD,Viewer Card,50,+3 Cash
-Surprise Guest,"Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Action - 2-for-1!: summon any viewer from the queue to join chat, even another Diamond.",TBD,Viewer Card,55,None
-Cheems,"Don't Bonk Me: with a Doge in chat, cancels 1 Platform Ban Risk and both Doge and Cheems get +2 Gifted Subs. Without a Doge, -1 Gifted Subs per Platform Ban Risk in chat.",Animal,Viewer Card,5,+2 Gifted Subs; plus conditional (see description)
-Crying Cat,Everyone Leaves Me: +2 Gifted Subs and +1 Cash whenever another viewer leaves or is kicked.,Animal,Viewer Card,7,None fixed (see description)
-Doge,Such Synergy: +1 Gifted Subs for each different card segment in chat (max +5). Other Doges and TBD viewers don't count.,Animal,Viewer Card,7,+1 Gifted Subs; plus conditional (see description)
-Keyboard Cat,"Action - Play Him Off: kick another viewer. Keyboard Cat gains +2 Gifted Subs if they had Platform Ban Risk, otherwise +1 Cash. Their exit effects still happen.",Animal,Viewer Card,7,+1 Gifted Subs; plus conditional (see description)
-Pepe,"Action - Mood Swing: choose Happy (+3 Gifted Subs), Sad (+3 Cash) or Angry (+6 Gifted Subs and +1 Platform Ban Risk) until the stream ends.",Animal,Viewer Card,8,None fixed (see description)
-Grumpy Cat,Action - Absolutely Not: look at the next 3 viewers in the queue. Deny one for the night and choose who joins next.,Animal,Viewer Card,9,+2 Gifted Subs
-Pop Cat,Pop Pop Pop: +1 Gifted Subs whenever any viewer uses an action. Every third action also earns +1 Cash.,Animal,Viewer Card,9,None fixed (see description)
-Ugandan Knuckles,"Follow Me: on joining, adds a temporary copy of himself to tonight's queue (copies don't make more copies). +1 Gifted Subs per other Knuckles in chat.",Animal,Viewer Card,9,+1 Gifted Subs; plus conditional (see description)
-Bongo Cat,The Beat Goes On: every third viewer to join after Bongo Cat gives every Animal viewer in chat +2 Gifted Subs for the night.,Animal,Viewer Card,11,+1 Gifted Subs; plus conditional (see description)
-This Is Fine Dog,"Denial: the first time Platform Ban Risk would reach 3, the ban is called off and all Platform Ban Risk is cleared. This copy then leaves your Audience for good.",Animal,Viewer Card,12,+1 Gifted Subs; plus conditional (see description)
-Nyan Cat,"Rainbow Trail: every viewer without Platform Ban Risk who joins after her in an unbroken row earns +1, +2, +3... Gifted Subs (max +6 each). A risky viewer joining breaks the chain.",Animal,Viewer Card,14,+1 Gifted Subs; plus conditional (see description)
-Big Chungus,Absolute Chungus: takes up 3 spaces in chat. +1 Gifted Subs for each point of Sub Cap above 10 (max +5).,Animal,Viewer Card,16,+7 Gifted Subs; plus conditional (see description)
-Ballerina Cappuccina,Action - Pirouette: two viewers swap their printed Subs for the rest of the stream.,Brainrot,Viewer Card,10,+2 Gifted Subs; plus conditional (see description)
-Tralalero Tralala,Action - Tralalero Shuffle: swap two viewers' places in the joining order. Position-based bonuses update; join effects don't replay.,Brainrot,Viewer Card,11,+3 Gifted Subs
-Tung Tung Tung Sahur,Action - Three Strikes: strike another viewer. 1st strike: +2 Gifted Subs. 2nd: clears their Platform Ban Risk. 3rd: kicks them and Tung Tung permanently gains +1 Subs. Strikes are remembered between streams.,Brainrot,Viewer Card,12,+2 Gifted Subs; plus conditional (see description)
-Skibidi Toilet,"Skibidi Invasion: on joining, infects another viewer (+2 Gifted Subs, +1 Platform Ban Risk). Every time another viewer joins, the infection spreads to one more. Infections end after the stream.",Brainrot,Viewer Card,13,+2 Gifted Subs; +1 Platform Ban Risk; plus conditional (see description)
-Bombardiro Crocodilo,Action - Bombardment: kick up to 3 other viewers and replace each with a random viewer from the queue. Join and exit effects happen normally.,Brainrot,Viewer Card,15,+5 Gifted Subs; +1 Platform Ban Risk
-Forever Alone,Table for One: +6 Gifted Subs if he's the only viewer in chat when the stream ends. Otherwise +1 Gifted Subs per empty space.,Rage Comic,Viewer Card,8,+1 Gifted Subs; plus conditional (see description)
-Me Gusta,"I Like That: +2 Gifted Subs whenever another viewer adds Platform Ban Risk, and +1 Cash for each Platform Ban Risk removed.",Rage Comic,Viewer Card,8,+1 Gifted Subs; plus conditional (see description)
-Trollface,"Action - U Mad?: send another viewer back to the queue (they can join again tonight). Trollface gains +2 Gifted Subs for every time that viewer has been trolled, including this one.",Rage Comic,Viewer Card,9,+1 Platform Ban Risk; plus conditional (see description)
-Bad Luck Brian,"What Could Go Wrong?: once per stream, the first attempt to kick him or clear his Platform Ban Risk fails, and he permanently gains +1 Subs.",Reaction,Viewer Card,6,+4 Gifted Subs; +1 Platform Ban Risk; plus conditional (see description)
-Side Eye Chloe,While she's in chat you can see the next viewer in the queue. Action - Side Eye: send that viewer to the back of the queue.,Reaction,Viewer Card,7,+1 Gifted Subs
-Karen,Action - I Demand a Refund: kick another viewer for the stream and earn half their shop cost as Gifted Subs (max 8).,Reaction,Viewer Card,8,+1 Platform Ban Risk; plus conditional (see description)
-Overly Attached Girlfriend,"Forever Yours: on joining, attaches to the best other viewer in chat. Their Subs are doubled and they can't be kicked while she's there. If they're forced out, she leaves too.",Reaction,Viewer Card,8,+1 Gifted Subs; plus conditional (see description)
-Stonks Guy,"Action - Market Manipulation: invest 2 Gifted Subs or 1 Cash. If the stream succeeds you get triple back; if it fails, the investment is lost.",Reaction,Viewer Card,8,+1 Cash; plus conditional (see description)
-Distracted Boyfriend,"New Attraction: on joining, reveals 3 viewers in the queue. You may swap one viewer in chat for one of them; the replaced viewer sits out the rest of the stream.",Reaction,Viewer Card,9,+2 Gifted Subs
-Roll Safe,"Action - Can't Lose If You Don't Play: a viewer becomes immune to further action effects tonight, good or bad. What they already have stays.",Reaction,Viewer Card,9,+2 Gifted Subs
-Dancing Baby,"Looping Animation: whenever two actions in a row are the same type, +3 Gifted Subs (max +9 per stream).",Reaction,Viewer Card,10,+1 Gifted Subs; plus conditional (see description)
-Drakeposting,Action - I Prefer This: pick two viewers. The first earns nothing tonight; the second doubles their printed Subs or Cash.,Reaction,Viewer Card,10,+1 Gifted Subs; plus conditional (see description)
-Hide the Pain Harold,Smile Through It: viewers in chat can't drop below their printed Subs. He gains +1 Gifted Subs for each drop he prevents (max +5).,Reaction,Viewer Card,10,+2 Gifted Subs; plus conditional (see description)
-Rickroll,"Action - Surprise!: another non-Diamond viewer temporarily becomes a random different character from the queue, with its stats and action. Back to normal after the stream.",Reaction,Viewer Card,11,+2 Gifted Subs; plus conditional (see description)
-Confused Math Lady,"Action - The Numbers Don't Add Up: for tonight, convert a viewer's Subs into Cash (2 Subs = 1 Cash) or their Cash into Subs (1 Cash = 2 Subs).",Reaction,Viewer Card,12,+1 Gifted Subs; plus conditional (see description)
-Success Kid,"Action - Against All Odds: reroll the last viewer who joined (they go back to the queue and a random viewer joins instead), or peek at the next viewer and decide whether to let them in.",Reaction,Viewer Card,12,+1 Gifted Subs
-Disaster Girl,"Action - Accidental Fire: another viewer gets +1 Platform Ban Risk and +3 Gifted Subs, and she gets +2 Gifted Subs. Can't be used if it would get the stream banned.",Reaction,Viewer Card,13,+2 Gifted Subs; plus conditional (see description)
-Wojak,"Shared Suffering: +2 Gifted Subs for every other viewer in chat who is suffering (has Platform Ban Risk, negative stats, is infected, zeroed or penalised), max +6.",Wojak,Viewer Card,5,+1 Gifted Subs; plus conditional (see description)
-NPC Wojak,"Current Thing: on joining, copies the printed Subs and Cash of the viewer who joined just before him (not their action, Platform Ban Risk or Diamond).",Wojak,Viewer Card,6,None fixed (see description)
-Doomer,"Doomscroll: +2 Gifted Subs per Platform Ban Risk in chat. At exactly 2 Platform Ban Risk, also +2 Cash.",Wojak,Viewer Card,7,+1 Gifted Subs; plus conditional (see description)
-Chad vs Virgin,"Action - Know Your Place: compare printed Subs with another viewer. If theirs is lower, they permanently give Chad 1 Subs. If higher, Chad permanently loses 1.",Wojak,Viewer Card,10,+2 Gifted Subs; plus conditional (see description)
-Sigma Male,The Grindset: +1 Gifted Subs per empty space in chat (max +8). -1 Gifted Subs for every other Sigma Male in chat.,Wojak,Viewer Card,14,+3 Gifted Subs; plus conditional (see description)
-Gigachad,Alpha Energy: +3 Gifted Subs if he's the only viewer in chat with 5+ printed Subs. Each extra Gigachad gives every Gigachad -2 Gifted Subs.,Wojak,Viewer Card,19,+5 Gifted Subs; plus conditional (see description)
-Fate,"Raid (active, rival, multiplayer only, used in the shop): their next stream starts with +1 Platform Ban Risk. Hits whoever plays next in Take Turns, otherwise the leader. Raids alone can't start a stream above 2 Platform Ban Risk. Cooldown: 2 turns.",,Streamer Player Character,,"Costs 1 Cash per use, +1 after each use (max 12); Rival: +1 Platform Ban Risk next stream"
+﻿Name,Description,Communities,Type,Cost in Shop,Rewards
+Ineffective Troll,Starting viewer only (you begin the season with 4); never sold in the shop. No special effect.,Core Fanbase; Trolls,Viewer Card,,+2 Gifted Subs; +1 Deplatform Risk
+Loyal Fan,Starting viewer (you begin the season with 4). No special effect. Binge Bunny gains from every Loyal Fan in chat.,Core Fanbase,Viewer Card,2,+1 Gifted Subs
+Whale,Starting viewer (you begin the season with 2). No special effect.,Core Fanbase,Viewer Card,3,+1 Cash
+Gatekeeper,You Shall Not Watch!: +1 Gifted Subs for every empty space in chat when scored.,Core Fanbase; Trolls,Viewer Card,4,+1 Gifted Subs; plus conditional (see description)
+Normie,Cancels 1 Deplatform Risk while in chat. No other effect.,Core Fanbase,Viewer Card,4,+1 Gifted Subs; -1 Deplatform Risk (cancels 1 while in chat)
+Binge Bunny,Algorithmic Rabbit Hole: +1 Gifted Subs for every Loyal Fan in chat.,Core Fanbase,Viewer Card,5,+1 Gifted Subs; plus conditional (see description)
+Generous Donator,"Give to the Rich!: when joining, brings in the next viewer from the queue and scores them once right away (banked immediately). This can push chat over the Sub Cap (Server Down).",Core Fanbase; Finance Bros,Viewer Card,5,+1 Gifted Subs; plus conditional (see description)
+Promo Code User,"+5 Gifted Subs when scored, but only if chat is full.",Core Fanbase,Viewer Card,5,-1 Cash; plus conditional (see description)
+Die Hard Fan,"Cancels 1 Deplatform Risk while in chat. The card says ""Uncancellable"", but that has no extra rule yet, so it plays like a Normie with more Subs.",Core Fanbase,Viewer Card,7,+2 Gifted Subs; -1 Deplatform Risk (cancels 1 while in chat)
+Evangelist,"Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Action - 2-for-1!: summon any viewer from the queue to join chat, even another Diamond.",Core Fanbase,Viewer Card,55,None
+Producer,"Action - Shoutout: choose any viewer in your queue to join chat, if there's room.",Staff,Viewer Card,3,None
+Chat Admin,Action - Remove From Chat: remove one viewer from chat for the rest of the stream (can remove itself).,Staff,Viewer Card,4,None
+Cybersecurity Engineer,"Action - Read Access: look at the next viewer in the queue, then let them in or deny them for the rest of the stream.",Staff; Techspertise,Viewer Card,4,+2 Gifted Subs
+Account Manager,No special effect.,Staff,Viewer Card,5,+4 Gifted Subs; -1 Cash
+Junior PR Manager,Action - Situation Defusal: send everyone in chat back to the queue so they can join again. Actions already used stay used.,Staff,Viewer Card,5,+2 Gifted Subs
+Marketing Manager,Viral Moment: brings one random viewer from the queue along when joining. This can push chat over the Sub Cap (Server Down).,Staff,Viewer Card,5,+3 Gifted Subs
+PR Manager,Action - Damage Control: send everyone in chat back to the queue so they can join again. Actions already used stay used.,Staff,Viewer Card,6,+1 Gifted Subs; +1 Cash
+Chat Arbitrator,"Action - Keep the Peace: clear the Deplatform Risk of every risky viewer in chat for the rest of the stream, even if they leave and come back. Needs at least one risky viewer in chat.",Staff,Viewer Card,7,None fixed (see description)
+Social Media Manager,"Action - Sneak Peek: look at the next viewer in the queue, then let them in or deny them for the rest of the stream.",Staff; Zoomer,Viewer Card,8,+2 Cash
+Executive PR,No Bad Press: +2 Gifted Subs for every viewer in chat who has Deplatform Risk (cancelled risk still counts).,Staff; Boomer,Viewer Card,11,None fixed (see description)
+Senior Marketing Manager,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Product Placement: no other effect.,Staff; Millennial,Viewer Card,50,+3 Cash
+Mildly Risky Collaborator,No special effect.,Content,Viewer Card,5,+3 Gifted Subs; +2 Cash; +1 Deplatform Risk
+Highly Risky Collaborator,No special effect.,Content,Viewer Card,6,+4 Cash; +1 Deplatform Risk
+Risky Orbiter,No special effect.,Content,Viewer Card,7,+2 Gifted Subs; +3 Cash; +1 Deplatform Risk
+Online Scandal,Unwanted Guests: brings two random viewers from the queue along when joining. This can push chat over the Sub Cap (Server Down).,Content,Viewer Card,11,+2 Gifted Subs; +3 Cash
+Bigger Star,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Uplifting: brings one random viewer from the queue along when joining (can push chat over the Sub Cap).,Content; Clout,Viewer Card,35,None
+Precocious Youth,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). No other effect.,Content,Viewer Card,40,None
+Internet Starpower,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Can Do No Wrong: cancels 1 Deplatform Risk while in chat.,Content; Clout,Viewer Card,45,-1 Deplatform Risk (cancels 1 while in chat)
+Mainstream Celebrity,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Mass Appeal: no other effect.,Content; Clout,Viewer Card,50,+3 Gifted Subs
+Bot Detector,Action - Bot Removal: remove two viewers sitting next to each other in chat (consecutive spots) for the rest of the stream. The Bot Detector can be one of them.,Techspertise,Viewer Card,8,+1 Gifted Subs
+Tech Admin,Action - Admin Rights: remove one viewer from chat for the rest of the stream (can remove itself).,Techspertise,Viewer Card,9,+2 Gifted Subs
+Paid Sponsorship,No special effect.,Finance Bros,Viewer Card,4,-1 Gifted Subs; +2 Cash
+Affiliate,Action - Checkout Code: a viewer in chat permanently earns +1 Cash more (up to 9 Cash).,Finance Bros,Viewer Card,7,-1 Cash; plus conditional (see description)
+Master of Currency,Chaos Ladder: +2 Cash for every viewer in chat who has Deplatform Risk (cancelled risk still counts).,Finance Bros; Boomer,Viewer Card,8,+1 Cash; plus conditional (see description)
+Billionaire Benefactor,"Action - Softball Interview (once per stream, shared by every Billionaire Benefactor): every viewer in chat drops to 0 Subs tonight, and you bank 1 Cash right away for each Billionaire Benefactor in chat.",Finance Bros; Boomer,Viewer Card,9,+5 Cash; plus conditional (see description)
+Influential Troll,No special effect.,Trolls,Viewer Card,3,+4 Gifted Subs; +1 Deplatform Risk
+Hate-Watcher,"Switches mood every time they join chat: hate-watching (+1 Deplatform Risk) on their first entrance, harmless on the next, and so on. The mood carries over between streams.",Trolls,Viewer Card,5,+4 Gifted Subs; +1 Deplatform Risk on every other entrance (starts risky)
+Big Boomer,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Opinion Express: no other effect.,Boomer,Viewer Card,25,+1 Deplatform Risk
+Gen Z with Job,"Secure The Bag: permanently gains +1 Cash every time they join chat (up to 9 Cash), even if the stream ends badly.",Zoomer,Viewer Card,12,None fixed (see description)
+Platform Owner,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Action - Free The Speech!: remove one viewer from chat for the rest of the stream (can remove itself).,Clout,Viewer Card,45,None
+Degen Dog,Such Synergy: +1 Gifted Subs for each different community in chat (max +5). Other Degen Dogs don't count.,Memetics Division,Viewer Card,7,+1 Gifted Subs; plus conditional (see description)
+Distraught Cat,Everyone Leaves Me: +2 Gifted Subs and +1 Cash whenever another viewer leaves or is kicked.,Memetics Division,Viewer Card,7,None fixed (see description)
+Clippo The Clanker,Diamond: one of the 4 you need in chat at the end of a successful stream to win. Unlimited shop stock (not shared). Market Collapse: no other effect.,Bots,Viewer Card,30,-3 Cash
+Crypto Enthusiast,"Action - Rug Pull: score another viewer in chat right now, penalties included, and bank it straight away. They still score again when the stream ends.",None,Viewer Card,5,+1 Gifted Subs; -1 Cash; plus conditional (see description)
+Bot,"Token, not a card: a rival's Bots community sends it into your next stream. It takes a space in chat, earns nothing (no Gifted Subs, no Cash, never Clout) and leaves when the stream ends.",None,Bots token (not a card),,None
+Fate,"Raid (active, rival, multiplayer only, used in the shop): their next stream starts with +1 Deplatform Risk. Hits whoever plays next in Take Turns, otherwise the leader. Raids alone can't start a stream above 2 Deplatform Risk. Cooldown: 2 turns.",,Streamer Player Character,,"Costs 1 Cash per use, +1 after each use (max 12); Rival: +1 Deplatform Risk next stream"
 Bro Jogan,Three-Hour Episode (passive): start the season with +1 Sub Cap. Every Sub Cap upgrade costs 1 Cash more.,,Streamer Player Character,,Raise Sub Cap costs +1 Cash every time
-Shinobi,"Smoke Bomb (active, next stream; armed in the shop, not on the final night): your next stream ignores 1 Platform Ban Risk. Cooldown: 2 turns.",,Streamer Player Character,,"Costs 2 Cash per use, +1 after each use (max 12); -1 Platform Ban Risk next stream"
-IRunFast,Bark at Chat (passive): every viewer carrying Platform Ban Risk earns +1 Subs.,,Streamer Player Character,,+1 Gifted Subs per risky viewer in chat
+Shinobi,"Smoke Bomb (active, next stream; armed in the shop, not on the final night): your next stream ignores 1 Deplatform Risk. Cooldown: 2 turns.",,Streamer Player Character,,"Costs 2 Cash per use, +1 after each use (max 12); -1 Deplatform Risk next stream"
+IRunFast,Bark at Chat (passive): every viewer carrying Deplatform Risk earns +1 Subs.,,Streamer Player Character,,+1 Gifted Subs per risky viewer in chat
 MrShark,"$10,000 Giveaway (active, next stream; armed in the shop, not on the final night): in your next stream every viewer earns +1 Subs. Cooldown: 2 turns.",,Streamer Player Character,,"Costs 3 Cash per use, +1 after each use (max 12); +1 Gifted Subs per viewer next stream"
 Ethical F**kboi,"Wealth Tax (active, rival, multiplayer only, used in the shop): the richest rival pays you up to 2 Cash. Can't be used on a rival with no Cash. Cooldown: 2 turns.",,Streamer Player Character,,"Costs 1 Cash per use, +1 after each use (max 12); +up to 2 Cash (taken from a rival)"
-Soft Hard Body Man,"Soft Landing (passive): when your stream gets a Platform Ban, you still bank half that stream's Subs (rounded down).",,Streamer Player Character,,+half the stream's Gifted Subs on a Platform Ban
+Soft Hard Body Man,"Soft Landing (passive): when your stream gets deplatformed, you still bank half that stream's Subs (rounded down).",,Streamer Player Character,,+half the stream's Gifted Subs when deplatformed
 Strategic Abomination,"Double Move (active, next stream; armed in the shop, not on the final night): in your next stream, the first viewer action you use can be used again. Cooldown: 2 turns.",,Streamer Player Character,,"Costs 2 Cash per use, +1 after each use (max 12)"
 Palmane,"Pal Sphere (active, instant, used in the shop): catch a random viewer from the shop (cost 6 or less, not a Diamond) for free. It takes a copy from the shared shop stock. Cooldown: 3 turns.",,Streamer Player Character,,"Costs 2 Cash per use, +1 after each use (max 12); a free viewer worth up to 6 Gifted Subs"
 Manim Maketh Man,"Beautiful Sequence (passive): each successful stream in a row earns +1, +2, +3... Subs (max +5). A failed stream resets the streak.",,Streamer Player Character,,+1 to +5 Gifted Subs per successful stream (streak)

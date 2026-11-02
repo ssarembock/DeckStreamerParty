@@ -18,6 +18,8 @@ MonoBehaviour:
   background: {fileID: 0}
   foreground: {fileID: 0}
   thumbnail: {fileID: 0}
+  chatTailPosition: 0.5
+  header: {fileID: 0}
   skyTop: {r: 0.16862746, g: 0.18039216, b: 0.5137255, a: 1}
   skyBottom: {r: 1, g: 0.5411765, b: 0.35686275, a: 1}
   wallColor: {r: 0.12156863, g: 0.43529412, b: 0.54509807, a: 1}

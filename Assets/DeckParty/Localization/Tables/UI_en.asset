@@ -55,11 +55,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125576
-    m_Localized: 'Gifted Subs: spend them to recruit new viewers.'
+    m_Localized: <b>Gifted Subs</b>\nViewers bring them in during a stream. Spend
+      them in the shop to recruit new viewers.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125577
-    m_Localized: 'Cash: spend it to raise your Sub Cap.'
+    m_Localized: <b>Cash</b>\nRaises your Sub Cap and pays for your streamer's active
+      power.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125578
@@ -79,7 +81,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125582
-    m_Localized: Platform Ban Risk {risk}/{max}
+    m_Localized: '{icon:risk} {risk}/{max}'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125583
@@ -87,13 +89,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125584
-    m_Localized: <b>Platform Ban Risk</b>\n{max} net Platform Ban Risk in one stream
-      and the stream gets banned.
+    m_Localized: <b>{icon:risk} Deplatform Risk</b>\n{max} net {icon:risk} in one
+      stream and the stream gets deplatformed.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125585
-    m_Localized: '<b>Platform Ban Risk</b>\nAdded by viewers: {added}\nCancelled:
-      -{cancelled}\nNet: {net} (Platform Ban at {max})'
+    m_Localized: '<b>{icon:risk} Deplatform Risk</b>\nAdded by viewers: {added}\nCancelled:
+      -{cancelled}\nNet: {net} (deplatformed at {max})'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125586
@@ -123,7 +125,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125592
-    m_Localized: One more Platform Ban Risk and the stream gets banned.
+    m_Localized: One more {icon:risk} and the stream gets deplatformed.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125593
@@ -151,7 +153,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125599
-    m_Localized: Bank the Subs and Cash of everyone in chat as Gifted Subs and $.
+    m_Localized: Bank everyone's {icon:subs} and {icon:cash}.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125600
@@ -175,8 +177,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125605
-    m_Localized: '{count} {count:plural:viewer|viewers} with Platform Ban Risk in
-      the queue'
+    m_Localized: '{count} {count:plural:viewer|viewers} with {icon:risk} in the queue'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125606
@@ -422,8 +423,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514199
-    m_Localized: Platform Ban Risk got too high and the platform banned the stream.
-      Nobody gets paid tonight.
+    m_Localized: '{icon:risk} got too high and the stream got deplatformed. Nobody
+      gets paid tonight.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514200
@@ -479,7 +480,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514213
-    m_Localized: ({viewers}/{cap}, {diamonds}, risk {risk})
+    m_Localized: ({viewers}/{cap}, {diamonds}, {icon:risk} {risk})
     m_Metadata:
       m_Items: []
   - m_Id: 1582514214
@@ -588,13 +589,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514240
-    m_Localized: 'Great streams: {great}    Platform Bans: {banned}    Server Downs:
+    m_Localized: 'Great streams: {great}    Deplatformed: {banned}    Server Downs:
       {server_down}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514241
-    m_Localized: 'Gifted Subs earned: {subs}    Cash earned: {cash}    Audience:
-      {viewers} viewers ({diamonds} Diamonds)    Sub Cap: {cap}'
+    m_Localized: 'Earned: {icon:subs} {subs}   {icon:cash} {cash}    Audience: {viewers}
+      viewers ({diamonds} Diamonds)    Sub Cap: {cap}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514242
@@ -869,7 +870,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514309
-    m_Localized: The Platform Ban was called off. Platform Ban Risk cleared.
+    m_Localized: The deplatforming was called off. {icon:risk} cleared.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514310
@@ -885,16 +886,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514313
-    m_Localized: You couldn't pay {cash} $ in fees and lost {penalty} Gifted Subs.
+    m_Localized: You couldn't pay {cash} {icon:cash} in fees and lost {penalty} {icon:subs}.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514314
-    m_Localized: '{player} couldn''t pay {cash} $ in fees and lost {penalty} Gifted
-      Subs.'
+    m_Localized: '{player} couldn''t pay {cash} {icon:cash} in fees and lost {penalty}
+      {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514315
-    m_Localized: This stream starts with +{count} Platform Ban Risk.
+    m_Localized: This stream starts with +{count} {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514316
@@ -968,14 +969,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514333
-    m_Localized: <b>Happy:</b> +3 Subs.   <b>Sad:</b> +3 $.   <b>Angry:</b> +6 Subs
-      and +1 Platform Ban Risk.\nLasts until the stream ends.
+    m_Localized: <b>Happy:</b> +3 {icon:subs}.   <b>Sad:</b> +3 {icon:cash}.   <b>Angry:</b>
+      +6 {icon:subs} and +1 {icon:risk}.\nLasts until the stream ends.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514334
-    m_Localized: Stake {subs} Gifted Subs or {cash} $ from your bank. If the stream
-      succeeds you get {mult}x back; if it gets a Platform Ban or the server goes
-      down, it's gone.\nYou have {have_subs} Gifted Subs and {have_cash} $.
+    m_Localized: Stake {subs} {icon:subs} or {cash} {icon:cash} from your bank. If
+      the stream succeeds you get {mult}x back; if it gets deplatformed or the server
+      goes down, it's gone.\nYou have {have_subs} {icon:subs} and {have_cash} {icon:cash}.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514335
@@ -994,12 +995,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514338
     m_Localized: 'You''ll pick two viewers: the first earns nothing tonight, the
-      second doubles their printed Subs or $.\nWhat should the second viewer double?'
+      second doubles their printed {icon:subs} or {icon:cash}.\nWhat should the second
+      viewer double?'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514339
-    m_Localized: You'll pick one viewer for tonight.\n<b>Subs to $:</b> every 2 Subs
-      become 1 $.   <b>$ to Subs:</b> every 1 $ becomes 2 Subs.
+    m_Localized: You'll pick one viewer for tonight.\n<b>{icon:subs} to {icon:cash}:</b>
+      every 2 {icon:subs} become 1 {icon:cash}.   <b>{icon:cash} to {icon:subs}:</b>
+      every 1 {icon:cash} becomes 2 {icon:subs}.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514340
@@ -1050,15 +1053,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514351
-    m_Localized: '{actor}: choose a viewer to kick. You get half their cost as Subs.'
+    m_Localized: '{actor}: choose a viewer to kick. You get half their cost as {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514352
-    m_Localized: '{actor}: choose a viewer to compare printed Subs with.'
+    m_Localized: '{actor}: choose a viewer to compare printed {icon:subs} with.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514353
-    m_Localized: '{actor}: choose a viewer to get +1 Platform Ban Risk and +3 Subs.'
+    m_Localized: '{actor}: choose a viewer to get +1 {icon:risk} and +3 {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514354
@@ -1090,7 +1093,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514361
-    m_Localized: '{actor}: choose who {first} swaps printed Subs with.'
+    m_Localized: '{actor}: choose who {first} swaps printed {icon:subs} with.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514362
@@ -1098,11 +1101,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514363
-    m_Localized: '{actor}: choose who doubles their printed Subs.'
+    m_Localized: '{actor}: choose who doubles their printed {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514364
-    m_Localized: '{actor}: choose who doubles their printed $.'
+    m_Localized: '{actor}: choose who doubles their printed {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514365
@@ -1524,11 +1527,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087873
-    m_Localized: Your stream got a Platform Ban. No payout tonight
+    m_Localized: Your stream got deplatformed. No payout tonight
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087874
-    m_Localized: '{player}''s stream got a Platform Ban. No payout tonight'
+    m_Localized: '{player}''s stream got deplatformed. No payout tonight'
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087875
@@ -1540,7 +1543,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087877
-    m_Localized: '{actor}: choose a viewer to earn +1 $ for good (up to {cap} $).'
+    m_Localized: '{actor}: choose a viewer to earn +1 {icon:cash} for good (up to
+      {cap} {icon:cash}).'
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087878
@@ -1553,6 +1557,58 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416593483087880
     m_Localized: Camera off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191463297024
+    m_Localized: '<b>Deplatform Risk</b>\nViewers with a red X bring it. At {max}
+      net Risk the stream gets deplatformed: no payout tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377408
+    m_Localized: '{icon:CoreFanbase} Core Fanbase cancels: -{count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377409
+    m_Localized: x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377410
+    m_Localized: FREE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377411
+    m_Localized: '{icon:cash} x2'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377412
+    m_Localized: DOOMED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377413
+    m_Localized: ALL TALK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377414
+    m_Localized: SERVER RESTORED!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377415
+    m_Localized: Techspertise brought it back ({value}% chance). The stream still
+      scores.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377416
+    m_Localized: The Trolls loved it!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377417
+    m_Localized: 'Rival Doomsdayers: each of your viewers has a {value}% chance to
+      score nothing this stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377418
+    m_Localized: 'Rival Doomsdayers: each of {player}''s viewers has a {value}% chance
+      to score nothing this stream.'
     m_Metadata:
       m_Items: []
   references:

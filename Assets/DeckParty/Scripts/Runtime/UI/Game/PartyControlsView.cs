@@ -128,8 +128,8 @@ namespace DeckParty.UI
         }
 
         /// <summary>
-        /// How many viewers with Platform Ban Risk are still in the queue: a fact, not the odds. Players work out their chances
-        /// from what they can see. Red when one more Platform Ban Risk would get the stream banned.
+        /// How many viewers with Deplatform Risk are still in the queue: a fact, not the odds. Players work out their chances
+        /// from what they can see. Red when one more Deplatform Risk would get the stream banned.
         /// </summary>
         static string RiskText(PlayerState s)
         {

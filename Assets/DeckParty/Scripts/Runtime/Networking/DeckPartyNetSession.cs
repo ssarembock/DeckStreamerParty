@@ -33,6 +33,10 @@ namespace DeckParty.Networking
         readonly NetworkVariable<ulong> m_ActivePlayer = new NetworkVariable<ulong>(NoPlayer);
         /// <summary>Take Turns timer: server time when the active player's turn runs out (0 = no timer running).</summary>
         readonly NetworkVariable<double> m_TurnDeadline = new NetworkVariable<double>(0);
+        /// <summary>Free For All: where the round is (a <see cref="RoundStage"/>).</summary>
+        readonly NetworkVariable<byte> m_RoundStage = new NetworkVariable<byte>((byte)RoundStage.Streaming);
+        /// <summary>Free For All: server time when the countdown ends and the shop opens.</summary>
+        readonly NetworkVariable<double> m_ShopOpensAt = new NetworkVariable<double>(0);
 
         // Client-side view: the latest snapshot of every player's season.
         readonly Dictionary<ulong, PlayerState> m_States = new Dictionary<ulong, PlayerState>();
@@ -40,8 +44,10 @@ namespace DeckParty.Networking
 
         // Server-side simulation
         readonly Dictionary<ulong, PlayerState> m_Games = new Dictionary<ulong, PlayerState>();
-        // Synchronized Nights: ready for the next night. Take Turns: finished their turn this round.
+        // Free For All: ready for the next night. Take Turns: finished their turn this round.
         readonly HashSet<ulong> m_ReadyNextNight = new HashSet<ulong>();
+        // Free For All: finished their stream and clicked Go to the Shop.
+        readonly HashSet<ulong> m_ReadyForShop = new HashSet<ulong>();
         readonly List<GameEvent> m_Scratch = new List<GameEvent>();
         Coroutine m_TurnRoutine;
         bool m_TurnEnding;
@@ -69,12 +75,45 @@ namespace DeckParty.Networking
         public event Action<ulong, int> EmoteReceived;
         /// <summary>A rival power hit someone: (actor, target, streamer).</summary>
         public event Action<ulong, ulong, StreamerType> RivalPowerUsed;
+        /// <summary>Free For All: the round moved on (streaming, the countdown, the shop open).</summary>
+        public event Action<RoundStage> StageChanged;
 
         public NetworkList<NetPlayer> Players => m_Players;
         public MatchSettings Settings => m_Settings.Value;
         public MatchPhase Phase => m_Phase.Value;
         public ulong ActivePlayer => m_ActivePlayer.Value;
         public bool TakingTurns => Settings.Mode == MatchMode.Turns;
+
+        /// <summary>Free For All: streams run at once, nobody watches anyone else, and the shop opens for everyone together.</summary>
+        public bool FreeForAll => Settings.Mode == MatchMode.SyncNights;
+
+        /// <summary>Free For All: where the round is (always Shopping in the other modes, where everyone shops at their own pace).</summary>
+        public RoundStage Stage => FreeForAll ? (RoundStage)m_RoundStage.Value : RoundStage.Shopping;
+
+        /// <summary>Whether the shop takes orders right now (Free For All only while it's open for everyone).</summary>
+        public bool ShopOpen => Stage == RoundStage.Shopping;
+
+        /// <summary>Free For All: seconds until the shop opens during the countdown (0 otherwise).</summary>
+        public float ShopCountdownLeft
+        {
+            get
+            {
+                if (Stage != RoundStage.Countdown || NetworkManager == null) return 0f;
+                return Mathf.Max(0f, (float)(m_ShopOpensAt.Value - NetworkManager.ServerTime.Time));
+            }
+        }
+
+        /// <summary>Players still in the lobby or match (connected).</summary>
+        public int ConnectedCount
+        {
+            get
+            {
+                int count = 0;
+                for (int i = 0; i < m_Players.Count; i++)
+                    if (m_Players[i].Connected) count++;
+                return count;
+            }
+        }
 
         /// <summary>Seconds left in the active player's turn, or -1 when there's no timer.</summary>
         public float TurnSecondsLeft
@@ -108,6 +147,7 @@ namespace DeckParty.Networking
             m_Settings.OnValueChanged += OnSettingsValueChanged;
             m_Phase.OnValueChanged += OnPhaseValueChanged;
             m_ActivePlayer.OnValueChanged += OnActivePlayerValueChanged;
+            m_RoundStage.OnValueChanged += OnRoundStageValueChanged;
 
             if (IsServer)
             {
@@ -125,6 +165,7 @@ namespace DeckParty.Networking
             m_Settings.OnValueChanged -= OnSettingsValueChanged;
             m_Phase.OnValueChanged -= OnPhaseValueChanged;
             m_ActivePlayer.OnValueChanged -= OnActivePlayerValueChanged;
+            m_RoundStage.OnValueChanged -= OnRoundStageValueChanged;
             StopTurnTimer();
 
             if (IsServer && NetworkManager != null)
@@ -150,6 +191,7 @@ namespace DeckParty.Networking
         void OnPlayersListChanged(NetworkListEvent<NetPlayer> change) => Raise(PlayersChanged);
         void OnSettingsValueChanged(MatchSettings previous, MatchSettings current) => Raise(SettingsChanged);
         void OnActivePlayerValueChanged(ulong previous, ulong current) => Raise(ActivePlayerChanged, current);
+        void OnRoundStageValueChanged(byte previous, byte current) => Raise(StageChanged, (RoundStage)current);
 
         void OnPhaseValueChanged(MatchPhase previous, MatchPhase current)
         {
@@ -272,6 +314,8 @@ namespace DeckParty.Networking
         public void SubmitCommand(GameCommand command) => SubmitCommandRpc(NetCommand.From(command));
         public void RequestState() => RequestStateRpc();
         public void CancelNextNightReady() => CancelNextNightRpc();
+        /// <summary>Free For All: after your stream, say you're ready for the shop (or take it back while others still stream).</summary>
+        public void SetReadyForShop(bool ready) => ReadyForShopRpc(ready);
 
         public void SendChat(string text)
         {
@@ -287,7 +331,20 @@ namespace DeckParty.Networking
         {
             if (!IsServer || Phase != MatchPhase.Lobby) return;
             settings.Nights = (byte)Mathf.Clamp(settings.Nights, 5, 40);
+            // More than two players: Free For All only.
+            if (!MatchModes.Allowed(settings.Mode, ConnectedCount)) settings.Mode = MatchMode.SyncNights;
             if (!settings.Equals(m_Settings.Value)) m_Settings.Value = settings;
+        }
+
+        /// <summary>A third player joined a Take Turns or Race lobby: switch to Free For All (and say so).</summary>
+        void ServerEnforceModeForPlayerCount()
+        {
+            if (!IsServer || Phase != MatchPhase.Lobby) return;
+            var settings = m_Settings.Value;
+            if (MatchModes.Allowed(settings.Mode, ConnectedCount)) return;
+            settings.Mode = MatchMode.SyncNights;
+            m_Settings.Value = settings;
+            ServerHeadline(Core.Err.Of("mp.ffa_forced", MatchModes.MaxPlayersForAnyMode));
         }
 
         public bool ServerCanStart(out string reason)
@@ -315,11 +372,15 @@ namespace DeckParty.Networking
         {
             if (!ServerCanStart(out _)) return;
 
+            ServerEnforceModeForPlayerCount();
             var settings = Settings;
             uint seed = (uint)UnityEngine.Random.Range(1, int.MaxValue);
             StopTurnTimer();
             m_Games.Clear();
             m_ReadyNextNight.Clear();
+            m_ReadyForShop.Clear();
+            m_RoundStage.Value = (byte)RoundStage.Streaming;
+            m_ShopOpensAt.Value = 0;
 
             var random = new System.Random((int)seed);
             for (int i = 0; i < m_Players.Count; i++)
@@ -351,6 +412,9 @@ namespace DeckParty.Networking
             StopTurnTimer();
             m_Games.Clear();
             m_ReadyNextNight.Clear();
+            m_ReadyForShop.Clear();
+            m_RoundStage.Value = (byte)RoundStage.Streaming;
+            m_ShopOpensAt.Value = 0;
             m_ActivePlayer.Value = NoPlayer;
             for (int i = m_Players.Count - 1; i >= 0; i--)
             {
@@ -455,6 +519,12 @@ namespace DeckParty.Networking
                     return;
                 }
             }
+            else if (FreeForAll && Stage != RoundStage.Shopping && IsShopCommand(cmd.Type))
+            {
+                // Free For All: the shop opens for everyone at once, after every stream is over.
+                ServerReject(sender, Stage == RoundStage.Countdown ? "mp.shop_countdown" : "mp.shop_closed");
+                return;
+            }
             else if (cmd.Type == CommandType.StartNextNight && Settings.Mode == MatchMode.SyncNights)
             {
                 if (state.Phase != GamePhase.Planning || state.IsFinalNight)
@@ -492,6 +562,10 @@ namespace DeckParty.Networking
 
             ServerBroadcastState(sender, m_Scratch);
             ServerAnnounce(sender, m_Scratch);
+            ServerSendDoom(sender, state);
+            ServerSendBots(sender, state);
+            // A Free For All player whose stream ended badly may have taken back their shop ready mark with it.
+            if (state.Phase != GamePhase.Planning) m_ReadyForShop.Remove(sender);
             ServerUpdateSummary(sender);
             ServerSyncSharedShop();
             if (Settings.Mode == MatchMode.Turns && state.IsGameOver) ServerEndTurn(sender, GameOverTurnDelay);
@@ -503,6 +577,26 @@ namespace DeckParty.Networking
         {
             ulong sender = rpcParams.Receive.SenderClientId;
             foreach (var owner in m_Games.Keys) ServerSendState(owner, null, RpcTarget.Single(sender, RpcTargetUse.Temp));
+        }
+
+        /// <summary>Commands that belong to the shop half of a turn (gated in Free For All until the shop opens).</summary>
+        static bool IsShopCommand(CommandType type) =>
+            type == CommandType.BuyGuest || type == CommandType.ExpandHouse || type == CommandType.UseStreamerPower || type == CommandType.StartNextNight;
+
+        [Rpc(SendTo.Server)]
+        void ReadyForShopRpc(bool ready, RpcParams rpcParams = default)
+        {
+            ulong sender = rpcParams.Receive.SenderClientId;
+            if (Phase != MatchPhase.InGame || !FreeForAll || Stage != RoundStage.Streaming || !m_Games.TryGetValue(sender, out var state)) return;
+            if (ready && state.Phase != GamePhase.Planning)
+            {
+                ServerReject(sender, "err.finish_stream");
+                return;
+            }
+            bool changed = ready ? m_ReadyForShop.Add(sender) : m_ReadyForShop.Remove(sender);
+            if (!changed) return;
+            ServerUpdateSummary(sender);
+            ServerEvaluateProgress();
         }
 
         [Rpc(SendTo.Server)]
@@ -603,6 +697,7 @@ namespace DeckParty.Networking
 
             m_Players.Add(NetPlayer.Create(clientId, name, NextColorIndex(), streamer));
             if (!IsHostPlayer(clientId)) ServerHeadline(Core.Err.Of("mp.joined", name));
+            ServerEnforceModeForPlayerCount();
         }
 
         void ServerOnClientDisconnected(ulong clientId)
@@ -621,8 +716,10 @@ namespace DeckParty.Networking
             {
                 p.Connected = false;
                 p.ReadyNextNight = false;
+                p.ReadyForShop = false;
                 m_Players[index] = p;
                 m_ReadyNextNight.Remove(clientId);
+                m_ReadyForShop.Remove(clientId);
             }
 
             m_Viewing.Remove(clientId);
@@ -716,6 +813,62 @@ namespace DeckParty.Networking
             foreach (var id in changed) ServerBroadcastState(id, null);
         }
 
+        /// <summary>
+        /// Doomsdayers: a successful stream's Doomsdayers points curse every rival's next stream (each of their viewers may score
+        /// nothing). Several curses don't add up: a rival keeps the strongest one waiting for them.
+        /// </summary>
+        void ServerSendDoom(ulong sender, PlayerState state)
+        {
+            int points = state.DoomOut;
+            if (points <= 0) return;
+            state.DoomOut = 0;
+
+            int cursed = 0;
+            foreach (var kv in m_Games)
+            {
+                if (kv.Key == sender || !IsConnectedPlayer(kv.Key) || kv.Value.IsGameOver) continue;
+                cursed++;
+                if (kv.Value.IncomingDoom >= points) continue;
+                kv.Value.IncomingDoom = points;
+                ServerBroadcastState(kv.Key, null);
+            }
+            if (cursed > 0) ServerHeadline(Core.Err.Of("mp.doom", PlayerName(sender), Communities.DoomChance(points)));
+        }
+
+        /// <summary>
+        /// Bots: a scored stream's Bots join the Audience of the next player (in player order) for their next stream. Bots from
+        /// several rivals add up, to <see cref="Communities.BotsMaxIncoming"/>.
+        /// </summary>
+        void ServerSendBots(ulong sender, PlayerState state)
+        {
+            int bots = state.BotsOut;
+            if (bots <= 0) return;
+            state.BotsOut = 0;
+
+            ulong target = NextPlayerAfter(sender);
+            if (target == NoPlayer || !m_Games.TryGetValue(target, out var targetState)) return;
+            int before = targetState.IncomingBots;
+            targetState.IncomingBots = Mathf.Min(Communities.BotsMaxIncoming, before + bots);
+            if (targetState.IncomingBots == before) return;
+            ServerBroadcastState(target, null);
+            ServerHeadline(Core.Err.Of("mp.bots", PlayerName(sender), targetState.IncomingBots - before) + Core.Err.Separator + PlayerName(target));
+        }
+
+        /// <summary>The next connected player after <paramref name="clientId"/> in player order who's still in the season.</summary>
+        ulong NextPlayerAfter(ulong clientId)
+        {
+            int start = IndexOfPlayer(clientId);
+            int count = m_Players.Count;
+            for (int step = 1; step < count; step++)
+            {
+                var p = m_Players[((start < 0 ? 0 : start) + step) % count];
+                if (p.ClientId == clientId || !p.Connected) continue;
+                if (!m_Games.TryGetValue(p.ClientId, out var s) || s.IsGameOver) continue;
+                return p.ClientId;
+            }
+            return NoPlayer;
+        }
+
         /// <summary>Fate's Raid / Ethical F**kboi's Wealth Tax: picks the rival (or uses the one chosen) and applies the power to both seasons.</summary>
         void ServerUseRivalPower(ulong sender, PlayerState state, int requestedIndex)
         {
@@ -805,6 +958,7 @@ namespace DeckParty.Networking
                 p.LastOutcome = (byte)s.LastOutcome;
             }
             p.ReadyNextNight = m_ReadyNextNight.Contains(clientId);
+            p.ReadyForShop = m_ReadyForShop.Contains(clientId);
 
             if (!p.Equals(m_Players[index])) m_Players[index] = p;
         }
@@ -856,6 +1010,7 @@ namespace DeckParty.Networking
             bool anyVictory = false;
             bool allFinishedNight = true;
             bool allReady = true;
+            bool allReadyForShop = true;
             int activePlayers = 0;
 
             foreach (var kv in m_Games)
@@ -868,6 +1023,7 @@ namespace DeckParty.Networking
                 activePlayers++;
                 if (s.Phase != GamePhase.Planning) allFinishedNight = false;
                 if (s.Phase != GamePhase.Planning || !m_ReadyNextNight.Contains(kv.Key)) allReady = false;
+                if (s.Phase != GamePhase.Planning || !m_ReadyForShop.Contains(kv.Key)) allReadyForShop = false;
             }
 
             if (Settings.Mode == MatchMode.Race)
@@ -882,7 +1038,27 @@ namespace DeckParty.Networking
                 if (allFinishedNight) ServerEndMatch();
                 return;
             }
-            if (allReady) ServerAdvanceNight();
+            // Free For All: once every stream is over and everyone clicked Go to the Shop, the countdown starts.
+            if (Stage == RoundStage.Streaming)
+            {
+                if (allReadyForShop) ServerStartShopCountdown();
+                return;
+            }
+            if (Stage == RoundStage.Shopping && allReady) ServerAdvanceNight();
+        }
+
+        void ServerStartShopCountdown()
+        {
+            m_ShopOpensAt.Value = NetworkManager.ServerTime.Time + MatchModes.ShopCountdownSeconds;
+            m_RoundStage.Value = (byte)RoundStage.Countdown;
+        }
+
+        void ServerOpenShop()
+        {
+            m_RoundStage.Value = (byte)RoundStage.Shopping;
+            m_ShopOpensAt.Value = 0;
+            ServerHeadline("mp.shop_open");
+            ServerEvaluateProgress();
         }
 
         void ServerAdvanceNight()
@@ -904,6 +1080,8 @@ namespace DeckParty.Networking
             }
 
             m_ReadyNextNight.Clear();
+            m_ReadyForShop.Clear();
+            if (FreeForAll) m_RoundStage.Value = (byte)RoundStage.Streaming;
             foreach (var id in ids) ServerUpdateSummary(id);
             if (night > 0) ServerHeadline(Core.Err.Of("mp.night_begins", night));
         }
@@ -945,7 +1123,9 @@ namespace DeckParty.Networking
 
         void Update()
         {
-            if (!IsServer || Phase != MatchPhase.InGame || !TakingTurns || m_TurnEnding) return;
+            if (!IsServer || Phase != MatchPhase.InGame) return;
+            if (FreeForAll && Stage == RoundStage.Countdown && NetworkManager.ServerTime.Time >= m_ShopOpensAt.Value) ServerOpenShop();
+            if (!TakingTurns || m_TurnEnding) return;
             double deadline = m_TurnDeadline.Value;
             if (deadline > 0 && NetworkManager.ServerTime.Time >= deadline) ServerTurnTimedOut(ActivePlayer);
         }
@@ -977,6 +1157,8 @@ namespace DeckParty.Networking
                 if (!PartyEngine.Execute(s, cmd, m_Scratch).Ok) break;
                 ServerBroadcastState(clientId, m_Scratch);
                 ServerAnnounce(clientId, m_Scratch);
+                ServerSendDoom(clientId, s);
+                ServerSendBots(clientId, s);
             }
             ServerUpdateSummary(clientId);
             ServerEndTurn(clientId, s.IsGameOver ? GameOverTurnDelay : 0f);

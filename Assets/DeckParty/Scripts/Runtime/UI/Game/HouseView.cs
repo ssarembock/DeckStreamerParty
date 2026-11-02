@@ -8,8 +8,10 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// The live chat: one card slot per Sub Cap space. The column count adapts to the screen's shape (more columns on
-    /// ultrawide) and cards shrink to fit, but never below <see cref="MinCardScale"/>: past that the area scrolls.
+    /// The live chat: one card slot per Sub Cap space, in rows of at most <see cref="GameRules.HouseColumns"/>, so the chat
+    /// grows as a rectangle and starts a new row each time one fills. Cards shrink to fit, but never below
+    /// <see cref="MinCardScale"/>: then rows may get longer, and past that the area scrolls. The cards keep clear of
+    /// <see cref="avoid"/> (the facecam in the stream's bottom-right corner).
     /// </summary>
     public sealed class HouseView : MonoBehaviour
     {
@@ -28,10 +30,18 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text hintLabel;
         [Tooltip("Optional: lets the chat scroll when cards hit their minimum size.")]
         [SerializeField] internal ScrollRect scroll;
+        [Tooltip("Optional: a rect overlapping the chat that the cards keep clear of (the facecam).")]
+        [SerializeField] internal RectTransform avoid;
+
+        /// <summary>Gap kept between the cards and <see cref="avoid"/>.</summary>
+        const float AvoidGap = 12f;
+
+        static readonly Vector3[] s_Corners = new Vector3[4];
 
         readonly List<GuestCardView> m_Cards = new List<GuestCardView>();
         int m_Capacity = -1;
         Vector2 m_LastAreaSize;
+        Vector2 m_LastObstacle;
         PlayerState m_State;
 
         public IReadOnlyList<GuestCardView> Cards => m_Cards;
@@ -57,7 +67,8 @@ namespace DeckParty.UI
 
         void Update()
         {
-            if (Viewport != null && Viewport.rect.size != m_LastAreaSize && m_Capacity > 0) Relayout(m_Capacity);
+            if (Viewport == null || m_Capacity <= 0) return;
+            if (Viewport.rect.size != m_LastAreaSize || (Obstacle() - m_LastObstacle).sqrMagnitude > 1f) Relayout(m_Capacity);
         }
 
         RectTransform Viewport => scroll != null && scroll.viewport != null ? scroll.viewport : area;
@@ -81,6 +92,7 @@ namespace DeckParty.UI
             for (; slot < s.Capacity; slot++) Show(slot).ShowEmpty();
             for (int i = slot; i < m_Cards.Count; i++) m_Cards[i].gameObject.SetActive(false);
 
+            // Optional (scenes from before V4.2 have it): the "Live Chat 3/5 Sub Cap - 7 in the queue" line.
             if (headerLabel != null)
                 headerLabel.text = Loc.Get("chat.header", ("filled", s.Occupancy), ("cap", s.Capacity), ("queue", s.Pool.Count));
 
@@ -122,6 +134,7 @@ namespace DeckParty.UI
         {
             m_Capacity = capacity;
             m_LastAreaSize = Viewport.rect.size;
+            m_LastObstacle = Obstacle();
             if (m_LastAreaSize.x <= 1f || m_LastAreaSize.y <= 1f) return;
 
             float spacing = Mathf.Lerp(18f, 8f, Mathf.InverseLerp(5, GameRules.MaxCapacity, capacity));
@@ -130,42 +143,117 @@ namespace DeckParty.UI
             float width = m_LastAreaSize.x - padding.horizontal;
             float height = m_LastAreaSize.y - padding.vertical;
 
-            // Wider screens allow more columns (16:9 -> 9, 21:9 -> 11...).
+            // Wider screens allow longer rows when the cards would otherwise get too small (16:9 -> 9, 21:9 -> 11...).
             float aspect = m_LastAreaSize.x / Mathf.Max(1f, m_LastAreaSize.y);
             const float referenceAspect = 1464f / 790f; // the chat area's shape on a 1920x1080 screen
-            int maxColumns = Mathf.Clamp(Mathf.RoundToInt(BaseColumns * aspect / referenceAspect), 6, MaxColumns);
+            int maxColumns = Mathf.Clamp(Mathf.RoundToInt(BaseColumns * aspect / referenceAspect), BaseColumns, MaxColumns);
 
-            // Pick the column count that gives the biggest cards while everything fits.
-            int bestColumns = 1;
-            float bestScale = 0f;
-            for (int columns = 1; columns <= Mathf.Min(capacity, maxColumns); columns++)
+            // Rows of at most HouseColumns: the chat is a rectangle that gains a row each time one fills up.
+            int columns = Mathf.Clamp(capacity, 1, BaseColumns);
+            float scale = ScaleFor(capacity, columns, width, height, spacing);
+
+            if (scale < MinCardScale)
             {
-                int rows = Mathf.CeilToInt(capacity / (float)columns);
-                float scale = Mathf.Min(CardScaleFor(width, columns, spacing, true), CardScaleFor(height, rows, spacing, false));
-                if (scale > bestScale + 0.001f)
+                // Too many rows to stay readable: longer rows (the biggest cards that fit), then scrolling.
+                for (int c = columns + 1; c <= Mathf.Min(capacity, maxColumns); c++)
                 {
-                    bestScale = scale;
-                    bestColumns = columns;
+                    float candidate = ScaleFor(capacity, c, width, height, spacing);
+                    if (candidate > scale + 0.001f)
+                    {
+                        scale = candidate;
+                        columns = c;
+                    }
                 }
             }
 
-            float finalScale = Mathf.Min(bestScale, MaxCardScale);
-            int finalColumns = bestColumns;
-            if (finalScale < MinCardScale)
+            float finalScale = Mathf.Min(scale, MaxCardScale);
+            int finalColumns = columns;
+            bool scrolling = finalScale < MinCardScale;
+            if (scrolling)
             {
-                // Too many to fit: keep cards readable and let the area scroll.
                 finalScale = MinCardScale;
                 float cellW = GuestCardView.DesignWidth * finalScale;
                 finalColumns = Mathf.Clamp(Mathf.FloorToInt((width + spacing) / (cellW + spacing)), 1, maxColumns);
             }
 
+            // Keep the cards clear of the facecam: slide the rectangle left, or narrow it when there's no room to slide.
+            float shift = 0f;
+            if (!scrolling && m_LastObstacle.x > 0f && m_LastObstacle.y > 0f)
+                shift = AvoidObstacle(capacity, finalColumns, ref finalScale, width, height, spacing);
+
             CardScale = finalScale;
             grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             grid.constraintCount = finalColumns;
             grid.cellSize = GuestCardView.CellSize(finalScale);
-            if (scroll != null) scroll.vertical = finalScale <= MinCardScale + 0.001f;
+            if (scroll != null) scroll.vertical = scrolling;
+            var gridRect = (RectTransform)grid.transform;
+            gridRect.anchoredPosition = new Vector2(shift, gridRect.anchoredPosition.y);
 
             foreach (var card in m_Cards) card.SetScale(finalScale);
+        }
+
+        static float ScaleFor(int capacity, int columns, float width, float height, float spacing)
+        {
+            int rows = Mathf.CeilToInt(capacity / (float)columns);
+            return Mathf.Min(CardScaleFor(width, columns, spacing, true), CardScaleFor(height, rows, spacing, false));
+        }
+
+        /// <summary>
+        /// How far (in pixels, negative = left) the centred card rectangle must move so no card sits under the facecam. When
+        /// sliding isn't enough, the cards shrink to fit the width left of it instead.
+        /// </summary>
+        float AvoidObstacle(int capacity, int columns, ref float scale, float width, float height, float spacing)
+        {
+            var cell = GuestCardView.CellSize(scale);
+            int rows = Mathf.CeilToInt(capacity / (float)columns);
+            int lastRow = capacity - (rows - 1) * columns;
+            float blockW = columns * cell.x + (columns - 1) * spacing;
+            float blockH = rows * cell.y + (rows - 1) * spacing;
+            float left = (width - blockW) * 0.5f;
+            float bottom = (height - blockH) * 0.5f;
+
+            // The facecam covers the bottom-right corner of the content: x past obstacleLeft, y below obstacleTop.
+            float obstacleLeft = width - m_LastObstacle.x - AvoidGap;
+            float obstacleTop = m_LastObstacle.y + AvoidGap;
+
+            // The rightmost card edge among the rows reaching down into the facecam's height.
+            float reach = float.MinValue;
+            for (int row = 0; row < rows; row++)
+            {
+                float rowBottom = bottom + (rows - 1 - row) * (cell.y + spacing);
+                if (rowBottom >= obstacleTop) continue;
+                int count = row == rows - 1 ? lastRow : columns;
+                reach = Mathf.Max(reach, left + count * cell.x + (count - 1) * spacing);
+            }
+            if (reach <= obstacleLeft) return 0f;
+
+            float needed = reach - obstacleLeft;
+            if (needed <= left) return -needed;
+
+            // No room to slide: fit the rectangle to the width left of the facecam and centre it there.
+            float room = Mathf.Max(1f, obstacleLeft);
+            scale = Mathf.Max(MinCardScale, Mathf.Min(scale, CardScaleFor(room, columns, spacing, true)));
+            float narrowW = columns * GuestCardView.DesignWidth * scale + (columns - 1) * spacing;
+            return Mathf.Min(0f, (room - narrowW) * 0.5f - (width - narrowW) * 0.5f);
+        }
+
+        /// <summary>How much of the chat's bottom-right corner <see cref="avoid"/> covers (width, height), or zero.</summary>
+        Vector2 Obstacle()
+        {
+            var viewport = Viewport;
+            if (avoid == null || viewport == null || !avoid.gameObject.activeInHierarchy) return Vector2.zero;
+            avoid.GetWorldCorners(s_Corners);
+            var min = new Vector2(float.MaxValue, float.MaxValue);
+            var max = new Vector2(float.MinValue, float.MinValue);
+            for (int i = 0; i < 4; i++)
+            {
+                Vector2 local = viewport.InverseTransformPoint(s_Corners[i]);
+                min = Vector2.Min(min, local);
+                max = Vector2.Max(max, local);
+            }
+            var rect = viewport.rect;
+            if (min.x >= rect.xMax || max.x <= rect.xMin || min.y >= rect.yMax || max.y <= rect.yMin) return Vector2.zero;
+            return new Vector2(rect.xMax - Mathf.Max(rect.xMin, min.x), Mathf.Min(rect.yMax, max.y) - rect.yMin);
         }
 
         static float CardScaleFor(float space, int count, float spacing, bool horizontal)

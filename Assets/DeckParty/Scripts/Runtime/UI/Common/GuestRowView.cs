@@ -67,13 +67,15 @@ namespace DeckParty.UI
             placeholder.color = GuestVisuals.Tint(type);
             initialsLabel.text = GuestVisuals.Initials(type);
 
-            nameLabel.text = GuestVisuals.DisplayName(type);
+            // The viewer's community icons follow the name (hover one to see what it does).
+            string icons = CommunityVisuals.Icons(type);
+            nameLabel.text = icons.Length > 0 ? GuestVisuals.DisplayName(type) + "  " + icons : GuestVisuals.DisplayName(type);
             if (tagsLabel != null) tagsLabel.text = GuestVisuals.Tags(info);
             descriptionLabel.text = GuestVisuals.Description(type);
             statsLabel.text = GuestVisuals.BaseStats(info);
             costLabel.enableAutoSizing = true;
             costLabel.fontSizeMin = 14;
-            costLabel.text = info.Purchasable ? Loc.Get("fmt.gifted_subs", "value", info.Cost, "n", info.Cost) : Loc.Get("shop.starter");
+            costLabel.text = info.Purchasable ? GameIcons.Amount(ResourceIcon.Subs, info.Cost) : Loc.Get("shop.starter");
             if (starTag != null) starTag.SetActive(info.IsDiamond);
 
             buyButton.gameObject.SetActive(shopMode);

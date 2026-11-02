@@ -126,6 +126,7 @@ namespace DeckParty.EditorTools
             var db = LoadOrCreate<GameDatabase>(DeckPartyPaths.Database);
             int reset = db.EnsureAllGuests();
             db.EnsureAllGroupIcons();
+            db.EnsureAllCommunityIcons();
             if (reset > 0)
                 Debug.LogWarning($"[DeckParty] The viewer roster changed: {reset} portrait/animation setting(s) belonged to removed characters and were cleared. Re-assign them with Deck Party > Select Game Database.");
 
@@ -365,6 +366,10 @@ namespace DeckParty.EditorTools
             var calm = EditorUI.Icon(content, "CancelBadge", EditorUI.Shield, UIPalette.Teal, SkinSlot.IconCancel, 40);
             calm.rectTransform.Place(new Vector2(1, 1), new Vector2(-6, -50), new Vector2(40, 40), new Vector2(1, 1));
 
+            // Community icons down the left edge of the portrait (hover one for what the community does).
+            var communities = CommunityIcons(content, "Communities", 34, false);
+            ((RectTransform)communities.transform).Place(new Vector2(0, 1), new Vector2(8, -54), new Vector2(34, 3 * 34 + 2 * 4), new Vector2(0, 1));
+
             var bonus = EditorUI.Image(content, "BonusBadge", UIPalette.Pink, EditorUI.RoundedSmall, SkinSlot.Badge);
             bonus.rectTransform.Place(new Vector2(1, 1), new Vector2(-8, -CardLayout.BadgeRowTop), new Vector2(64, 34), new Vector2(1, 1));
             var bonusLabel = EditorUI.Text(bonus.transform, "Label", "+1", 21, UIPalette.Text, TextAlignmentOptions.Center, true, false, false);
@@ -398,7 +403,7 @@ namespace DeckParty.EditorTools
             var empty = EditorUI.Rect(anim, "Empty").Stretch();
             var emptyFrame = EditorUI.Image(empty, "Frame", UIPalette.Border.WithAlpha(0.7f), EditorUI.Frame, SkinSlot.SlotEmpty);
             emptyFrame.rectTransform.Stretch(6, 6, 6, 6);
-            var emptyLabel = EditorUI.Text(empty, "Label", "-", 22, UIPalette.TextDim.WithAlpha(0.6f), TextAlignmentOptions.Center, false, false, false);
+            var emptyLabel = EditorUI.Text(empty, "Label", string.Empty, 22, UIPalette.TextDim.WithAlpha(0.6f), TextAlignmentOptions.Center, false, false, false);
             emptyLabel.rectTransform.Stretch();
             empty.gameObject.SetActive(false);
 
@@ -442,7 +447,34 @@ namespace DeckParty.EditorTools
             view.dim = dim;
             view.tooltip = tooltip;
             view.characterPortrait = characterPortrait;
+            view.communities = communities;
             return root.gameObject;
+        }
+
+        /// <summary>Three community icon slots (vertical or horizontal), each with an overlay tooltip.</summary>
+        static CommunityIconsView CommunityIcons(Transform parent, string name, float size, bool horizontal)
+        {
+            const int slots = 3;
+            var root = EditorUI.Rect(parent, name);
+            if (horizontal) EditorUI.HLayout(root, 4, EditorUI.Pad(0), TextAnchor.UpperLeft, false, false, false, false);
+            else EditorUI.VLayout(root, 4, EditorUI.Pad(0), TextAnchor.UpperLeft, false, false, false, false);
+
+            var view = root.gameObject.AddComponent<CommunityIconsView>();
+            view.icons = new Image[slots];
+            view.tooltips = new TooltipTrigger[slots];
+            for (int i = 0; i < slots; i++)
+            {
+                var icon = EditorUI.Image(root, "Community" + (i + 1), Color.white, EditorUI.Circle, null, true);
+                icon.preserveAspect = true;
+                icon.rectTransform.sizeDelta = new Vector2(size, size);
+                EditorUI.Layout(icon, size, size, 0, 0);
+                var trigger = EditorUI.Tooltip(icon);
+                trigger.overlay = true;
+                icon.gameObject.SetActive(false);
+                view.icons[i] = icon;
+                view.tooltips[i] = trigger;
+            }
+            return view;
         }
 
         static GameObject BuildGuestRow()
@@ -510,7 +542,8 @@ namespace DeckParty.EditorTools
 
         /// <summary>
         /// A shop tile. Everything is anchored by proportion, so the tile works at whatever size the shop grid gives it:
-        /// the picture fills the top, then the name, then the price and copies left. Group icon top-left, Diamond top-right.
+        /// the picture fills the top, then the name, then the price (icon + number) and copies left. Community icons
+        /// top-left, Diamond top-right.
         /// </summary>
         static GameObject BuildShopItem()
         {
@@ -541,10 +574,8 @@ namespace DeckParty.EditorTools
             portrait.enabled = false;
             portrait.gameObject.AddComponent<CharacterPortrait>().image = portrait;
 
-            var group = EditorUI.Image(anim, "GroupIcon", Color.white);
-            group.rectTransform.Place(new Vector2(0, 1), new Vector2(10, -10), new Vector2(40, 40), new Vector2(0, 1));
-            group.preserveAspect = true;
-            group.gameObject.SetActive(false);
+            var communities = CommunityIcons(anim, "Communities", 40, true);
+            ((RectTransform)communities.transform).Place(new Vector2(0, 1), new Vector2(10, -10), new Vector2(3 * 40 + 2 * 4, 40), new Vector2(0, 1));
             var star = EditorUI.Icon(anim, "DiamondBadge", EditorUI.Star, UIPalette.Gold, SkinSlot.IconStar, 40);
             star.rectTransform.Place(new Vector2(1, 1), new Vector2(-10, -10), new Vector2(40, 40), new Vector2(1, 1));
 
@@ -553,9 +584,10 @@ namespace DeckParty.EditorTools
             name.fontSizeMin = 13;
             name.overflowMode = TextOverflowModes.Ellipsis;
 
-            var price = EditorUI.Text(anim, "Price", "-", 22, UIPalette.Gold, TextAlignmentOptions.MidlineLeft, true, false, false);
+            // The price is the Gifted Subs icon and the number (ShopItemView writes it).
+            var price = EditorUI.Text(anim, "Price", "-", 26, UIPalette.Gold, TextAlignmentOptions.MidlineLeft, true, false, false);
             price.rectTransform.Box(new Vector2(0.07f, 0.03f), new Vector2(0.6f, 0.15f), Vector2.zero, Vector2.zero);
-            price.fontSizeMin = 12;
+            price.fontSizeMin = 14;
             var left = EditorUI.Text(anim, "Left", "-", 18, UIPalette.TextDim, TextAlignmentOptions.MidlineRight, false, false, false);
             left.rectTransform.Box(new Vector2(0.5f, 0.03f), new Vector2(0.93f, 0.15f), Vector2.zero, Vector2.zero);
             left.fontSizeMin = 11;
@@ -588,7 +620,7 @@ namespace DeckParty.EditorTools
             view.placeholder = placeholder;
             view.initialsLabel = initials;
             view.nameLabel = name;
-            view.groupIcon = group;
+            view.communities = communities;
             view.diamondBadge = star.gameObject;
             view.priceLabel = price;
             view.leftLabel = left;

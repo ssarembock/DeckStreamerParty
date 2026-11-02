@@ -6,11 +6,12 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// The facecam in the bottom-right corner: a square showing the streamer of the stream on screen (yours, or in
-    /// multiplayer the board being shown, which in Take Turns is the active player's) with a name plate. One Platform Ban Risk
-    /// from a Platform Ban the streamer plays Anxious and the frame trembles red; Hit plays when the stream gets a Platform Ban
-    /// or the server goes down, Celebrate when it ends well. Static portraits bob gently. The square fills its row's width, unless the side
-    /// strip (the emote buttons in multiplayer) is showing, when it's at most <see cref="sizeWithSide"/>.
+    /// The facecam in the stream's bottom-right corner: a square showing the streamer of the stream on screen (yours, or in
+    /// multiplayer the board being shown, which in Take Turns is the active player's) with a name plate, the LIVE badge and
+    /// the stream timer. It belongs to the stream, so it hides in the shop. One Deplatform Risk from being deplatformed the
+    /// streamer plays Anxious and the frame trembles red; Hit plays when the stream gets deplatformed or the server goes down,
+    /// Celebrate when it ends well. Static portraits bob gently. Built as a fixed square (Game scenes from before V4.2 have it
+    /// in the side panel, where it fills the row's width unless the side strip is showing).
     /// </summary>
     public sealed class FacecamView : MonoBehaviour
     {
@@ -102,9 +103,10 @@ namespace DeckParty.UI
             float t = Time.unscaledTime;
 
             if (border != null)
-                border.color = m_Anxious ? Color.Lerp(m_Accent, UIPalette.Red, 0.5f + 0.5f * Mathf.Sin(t * 7f)) : m_Accent;
+                border.color = m_Anxious ? Color.Lerp(m_Accent, UIPalette.Red, 0.35f + 0.35f * Mathf.Sin(t * 4.5f)) : m_Accent;
+            // A light tremble: the warning should read, not shout.
             if (content != null)
-                content.localRotation = m_Anxious ? Quaternion.Euler(0f, 0f, Mathf.Sin(t * 37f) * 1.6f + Mathf.Sin(t * 13f) * 0.9f) : Quaternion.identity;
+                content.localRotation = m_Anxious ? Quaternion.Euler(0f, 0f, Mathf.Sin(t * 29f) * 0.9f + Mathf.Sin(t * 11f) * 0.5f) : Quaternion.identity;
 
             // Static portraits breathe (N8), growing upward from their feet.
             if (portrait != null && portrait.image != null && !portrait.IsAnimated)
@@ -119,6 +121,8 @@ namespace DeckParty.UI
         /// <summary>Keeps the frame square: full row width, or narrower when the side strip needs room.</summary>
         void UpdateLayout()
         {
+            // The V4.2 facecam is a fixed square in the stream's corner: nothing to fit.
+            if (layoutElement == null) return;
             var row = (RectTransform)transform;
             float width = row.rect.width;
             bool side = sideStrip != null && sideStrip.gameObject.activeSelf;

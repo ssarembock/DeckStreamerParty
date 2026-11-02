@@ -50,13 +50,13 @@ namespace DeckParty.EditorTools
             ("bombardiro", GuestType.BombardiroCrocodilo), ("ballerina", GuestType.BallerinaCappuccina), ("skibidi", GuestType.SkibidiToilet),
             ("sigma", GuestType.SigmaMale), ("distracted", GuestType.DistractedBoyfriend), ("drake", GuestType.Drakeposting),
             ("mathlady", GuestType.ConfusedMathLady), ("chloe", GuestType.SideEyeChloe), ("sideeye", GuestType.SideEyeChloe),
-            ("crying", GuestType.CryingCat), ("baby", GuestType.DancingBaby), ("boomer", GuestType.BigBoomer),
+            ("crying", GuestType.DistraughtCat), ("distraught", GuestType.DistraughtCat), ("doge", GuestType.DegenDog), ("degen", GuestType.DegenDog), ("baby", GuestType.DancingBaby), ("boomer", GuestType.BigBoomer),
             ("clippo", GuestType.ClippoTheClanker), ("clanker", GuestType.ClippoTheClanker), ("biggerstar", GuestType.BiggerStar),
             ("youth", GuestType.PrecociousYouth), ("starpower", GuestType.InternetStarpower), ("owner", GuestType.PlatformOwner),
-            ("celebrity", GuestType.MainstreamCelebrity), ("seniormarketing", GuestType.SeniorMarketingManager), ("surprise", GuestType.SurpriseGuest),
+            ("celebrity", GuestType.MainstreamCelebrity), ("seniormarketing", GuestType.SeniorMarketingManager), ("surprise", GuestType.Evangelist), ("evangelist", GuestType.Evangelist),
             ("influential", GuestType.InfluentialTroll), ("cybersecurity", GuestType.CybersecurityEngineer), ("cyber", GuestType.CybersecurityEngineer),
-            ("sponsorship", GuestType.PaidSponsorship), ("comedian", GuestType.ComedianWithAPodcast), ("podcast", GuestType.ComedianWithAPodcast),
-            ("accountmanager", GuestType.AccountManager), ("crypto", GuestType.CryptoGuy), ("donator", GuestType.GenerousDonator),
+            ("sponsorship", GuestType.PaidSponsorship), ("comedian", GuestType.PromoCodeUser), ("podcast", GuestType.PromoCodeUser), ("promocode", GuestType.PromoCodeUser),
+            ("accountmanager", GuestType.AccountManager), ("crypto", GuestType.CryptoEnthusiast), ("donator", GuestType.GenerousDonator),
             ("prmanager", GuestType.PrManager), ("highlyrisky", GuestType.HighlyRiskyCollaborator), ("arbitrator", GuestType.ChatArbitrator),
             ("botdetector", GuestType.BotDetector), ("orbiter", GuestType.RiskyOrbiter), ("smm", GuestType.SocialMediaManager),
             ("socialmedia", GuestType.SocialMediaManager), ("billionaire", GuestType.BillionaireBenefactor), ("techadmin", GuestType.TechAdmin),
@@ -167,15 +167,18 @@ namespace DeckParty.EditorTools
             });
 
             db.EnsureAllGuests();
-            int count = Mathf.Min(sprites.Count, GuestCatalog.Count);
+            // The current roster only (put-aside viewers are skipped), in id order; Deck Party > Art > Log Expected File Names lists it.
+            var roster = GuestCatalog.Roster;
+            int count = Mathf.Min(sprites.Count, roster.Count);
+            if (count == 0) return;
             if (!EditorUtility.DisplayDialog("Assign portraits in roster order?",
-                    $"{sprites.Count} sprites found. The first {count} will become the portraits of guests #1 ({GuestCatalog.Get(0).Name}) to #{count} ({GuestCatalog.Get((GuestType)(count - 1)).Name}), " +
-                    "reading the sheet left-to-right, top-to-bottom.\n\nThe roster order is listed in V1Instructions.md.", "Assign", "Cancel"))
+                    $"{sprites.Count} sprites found. The first {count} will become the portraits of viewers #1 ({roster[0].Name}) to #{count} ({roster[count - 1].Name}), " +
+                    "reading the sheet left-to-right, top-to-bottom.\n\nDeck Party > Art > Log Expected File Names prints the roster order.", "Assign", "Cancel"))
                 return;
 
             for (int i = 0; i < count; i++)
             {
-                var art = db.GetGuestArt((GuestType)i);
+                var art = db.GetGuestArt(roster[i].Type);
                 if (art != null) art.portrait = sprites[i];
             }
             EditorUtility.SetDirty(db);
@@ -199,11 +202,10 @@ namespace DeckParty.EditorTools
         public static void LogExpectedNames()
         {
             var sb = new StringBuilder("[DeckParty] File names the auto-assigner recognises (case, spaces, - and _ don't matter):\n\nGuests (Assets/DeckParty/Art/Characters):\n");
-            for (int i = 0; i < GuestCatalog.Count; i++)
-            {
-                var info = GuestCatalog.Get((GuestType)i);
-                sb.AppendLine($"  {i + 1,2}. {info.Name}  ->  {FileName(info.Name)}.png");
-            }
+            var roster = GuestCatalog.Roster;
+            for (int i = 0; i < roster.Count; i++)
+                sb.AppendLine($"  {i + 1,2}. {roster[i].Name}  ->  {FileName(roster[i].Name)}.png");
+            sb.AppendLine($"  Bot (the Bots community's token)  ->  {FileName(GuestCatalog.Get(GuestType.Bot).Name)}.png");
             sb.AppendLine("\nStreamers (Assets/DeckParty/Art/Characters or Art/Streamers):");
             foreach (var type in StreamerCatalog.Roster) sb.AppendLine($"  {type}  ->  streamer_{FileName(SplitWords(type.ToString()))}.png");
             sb.AppendLine("\nBackgrounds (Assets/DeckParty/Art/Backgrounds):");

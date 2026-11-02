@@ -5,7 +5,8 @@ namespace DeckParty.UI
     /// <summary>
     /// Keeps the game UI readable on any screen shape with small adjustments instead of separate layouts:
     /// the UI is capped at <see cref="maxAspect"/> (21:9) and centred, so on super-ultrawide the stream setup shows at
-    /// the sides; and the optional side panel widens gently on wider screens, with the main area following it.
+    /// the sides; and the optional side panel widens gently on wider screens, with the main area following it. While the
+    /// side panel shows nothing (single player with the Activity log off) the main area takes the whole width.
     /// </summary>
     [ExecuteAlways]
     [RequireComponent(typeof(RectTransform))]
@@ -24,6 +25,7 @@ namespace DeckParty.UI
 
         RectTransform m_Rect;
         Vector2 m_LastParentSize;
+        bool m_LastSideUsed;
 
         void OnEnable()
         {
@@ -34,7 +36,7 @@ namespace DeckParty.UI
         void Update()
         {
             var parent = m_Rect != null ? m_Rect.parent as RectTransform : null;
-            if (parent != null && parent.rect.size != m_LastParentSize) Apply();
+            if (parent != null && (parent.rect.size != m_LastParentSize || SideUsed() != m_LastSideUsed)) Apply();
         }
 
         void OnRectTransformDimensionsChange()
@@ -62,7 +64,17 @@ namespace DeckParty.UI
             float side = Mathf.Lerp(minSideWidth, maxSideWidth, Mathf.InverseLerp(1700f, 2520f, width));
             sidePanel.offsetMin = new Vector2(-side - gap, sidePanel.offsetMin.y);
             sidePanel.offsetMax = new Vector2(-gap, sidePanel.offsetMax.y);
-            if (mainArea != null) mainArea.offsetMax = new Vector2(-side - gap * 2f, mainArea.offsetMax.y);
+            m_LastSideUsed = SideUsed();
+            if (mainArea != null) mainArea.offsetMax = new Vector2(m_LastSideUsed ? -side - gap * 2f : -gap, mainArea.offsetMax.y);
+        }
+
+        /// <summary>Whether the side panel shows anything (a visible child other than its layout spacer).</summary>
+        bool SideUsed()
+        {
+            if (sidePanel == null || !sidePanel.gameObject.activeSelf) return false;
+            foreach (Transform child in sidePanel)
+                if (child.gameObject.activeSelf && child.name != "Spacer") return true;
+            return false;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace DeckParty
         Celebrate,
         /// <summary>Streamers: picked on the select screen.</summary>
         Select,
-        /// <summary>Streamers: one Platform Ban Risk from a Platform Ban.</summary>
+        /// <summary>Streamers: one Deplatform Risk from being deplatformed.</summary>
         Anxious,
     }
 

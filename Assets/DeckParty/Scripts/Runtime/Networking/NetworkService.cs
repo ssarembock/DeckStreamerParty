@@ -49,8 +49,9 @@ namespace DeckParty.Networking
         /// <summary>
         /// Bump on any breaking network change. deckparty-4: streamers, localized message keys, presence, emotes, turn timer.
         /// deckparty-5: 82-viewer roster, state format v4, the shared shop and sprite emotes.
+        /// deckparty-8: V4.2 roster, Clout / Memetics Division / Bots (state format v6) and Free For All's shop gate.
         /// </summary>
-        public const string ProtocolVersion = "deckparty-5";
+        public const string ProtocolVersion = "deckparty-8";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

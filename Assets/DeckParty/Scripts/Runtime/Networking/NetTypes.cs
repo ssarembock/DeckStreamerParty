@@ -14,7 +14,11 @@ namespace DeckParty.Networking
 
     public enum MatchMode : byte
     {
-        /// <summary>Everyone plays the same night; the next night starts when all players are ready.</summary>
+        /// <summary>
+        /// Free For All: everyone streams at the same time (nobody can watch anyone else), then the shop opens for everyone at
+        /// once after a 3-2-1 countdown, first come first served. The next night starts when all players are ready. The only
+        /// mode with more than two players.
+        /// </summary>
         SyncNights = 0,
         /// <summary>Everyone plays at their own pace; the first 4-Diamond party wins instantly.</summary>
         Race = 1,
@@ -22,10 +26,30 @@ namespace DeckParty.Networking
         Turns = 2,
     }
 
+    /// <summary>Free For All: where the round is. Every stream runs at once, then the shared shop opens for everyone together.</summary>
+    public enum RoundStage : byte
+    {
+        /// <summary>Players are streaming (or have finished and are waiting for the others).</summary>
+        Streaming = 0,
+        /// <summary>Everyone is ready: the 3-2-1 before the shop opens.</summary>
+        Countdown = 1,
+        /// <summary>The shop is open for everyone (first come, first served).</summary>
+        Shopping = 2,
+    }
+
     /// <summary>Lobby order and names of the match modes.</summary>
     public static class MatchModes
     {
+        /// <summary>Take Turns and Race need exactly two players; with more, Free For All is the only mode.</summary>
+        public const int MaxPlayersForAnyMode = 2;
+
+        /// <summary>Seconds of the Free For All countdown before the shop opens.</summary>
+        public const float ShopCountdownSeconds = 3f;
+
         public static readonly MatchMode[] Order = { MatchMode.Turns, MatchMode.SyncNights, MatchMode.Race };
+
+        /// <summary>Whether a mode can be played with this many players.</summary>
+        public static bool Allowed(MatchMode mode, int players) => players <= MaxPlayersForAnyMode || mode == MatchMode.SyncNights;
 
         public static string[] Labels => new[] { Loc.Get("mode.turns"), Loc.Get("mode.sync"), Loc.Get("mode.race") };
 
@@ -113,6 +137,8 @@ namespace DeckParty.Networking
         public bool LobbyReady;
         public bool Connected;
         public bool ReadyNextNight;
+        /// <summary>Free For All: finished this night's stream and clicked Go to the Shop.</summary>
+        public bool ReadyForShop;
 
         public byte Night;
         public byte Phase;
@@ -158,6 +184,7 @@ namespace DeckParty.Networking
             serializer.SerializeValue(ref LobbyReady);
             serializer.SerializeValue(ref Connected);
             serializer.SerializeValue(ref ReadyNextNight);
+            serializer.SerializeValue(ref ReadyForShop);
             serializer.SerializeValue(ref Night);
             serializer.SerializeValue(ref Phase);
             serializer.SerializeValue(ref Pop);
@@ -178,7 +205,7 @@ namespace DeckParty.Networking
         public bool Equals(NetPlayer o)
         {
             return ClientId == o.ClientId && Name.Equals(o.Name) && ColorIndex == o.ColorIndex && Streamer == o.Streamer && LobbyReady == o.LobbyReady &&
-                   Connected == o.Connected && ReadyNextNight == o.ReadyNextNight && Night == o.Night && Phase == o.Phase &&
+                   Connected == o.Connected && ReadyNextNight == o.ReadyNextNight && ReadyForShop == o.ReadyForShop && Night == o.Night && Phase == o.Phase &&
                    Pop == o.Pop && Cash == o.Cash && Capacity == o.Capacity && Guests == o.Guests && DiamondsOwned == o.DiamondsOwned &&
                    DiamondsInHouse == o.DiamondsInHouse && BestDiamonds == o.BestDiamonds && Trouble == o.Trouble && TotalPop == o.TotalPop &&
                    WinNight == o.WinNight && Rank == o.Rank && LastOutcome == o.LastOutcome && Watchers == o.Watchers;

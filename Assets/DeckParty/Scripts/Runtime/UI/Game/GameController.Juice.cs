@@ -13,6 +13,8 @@ namespace DeckParty.UI
     {
         bool m_Scoring;
         bool m_SkipScoring;
+        /// <summary>True while the events of a stream whose scoring sequence just played are processed (its chips already flew).</summary>
+        bool m_AfterSequence;
         PlayerState m_LastLive;
 
         /// <summary>Banners, sounds and effects for events on the board being shown. <paramref name="who"/> is null for your own stream.</summary>
@@ -126,10 +128,10 @@ namespace DeckParty.UI
                     case GameEventType.PoliceRaid:
                     {
                         string sub = who == null ? Loc.Get("game.banned_sub") : Loc.Get("game.banned_sub_other", "player", who);
-                        // Your Platform Ban image when there is one, otherwise the text banner.
-                        if (outcomeSplash == null || !outcomeSplash.Show(GameDatabase.Instance.platformBanImage, Terms.Raid + "\n<size=55%>" + sub + "</size>", UIPalette.Red))
+                        // Your Deplatform image when there is one, otherwise the text banner.
+                        if (outcomeSplash == null || !outcomeSplash.Show(GameDatabase.Instance.deplatformImage, Terms.Raid + "\n<size=55%>" + sub + "</size>", UIPalette.Red))
                             banner.Show(Terms.Raid, sub, UIPalette.Red, 1.6f);
-                        PlatformBanned();
+                        Deplatformed();
                         if (facecam != null) facecam.React(CharacterState.Hit);
                         Consider(Sfx.Raid, 9);
                         break;
@@ -144,6 +146,50 @@ namespace DeckParty.UI
                         Consider(Sfx.FireMarshal, 9);
                         break;
                     }
+                    // --- communities ---
+                    case GameEventType.CommunityBonus:
+                        if (e.C == 0) m_Pulses.Add(e.GuestId);
+                        break;
+                    case GameEventType.ServerRestored:
+                        // Shown before the scoring sequence (TryStartScoring); without it, a quick banner and flash.
+                        if (!FxLibrary.Current.scoringSequence) banner.Show(Loc.Get("game.server_restored"), Loc.Get("game.server_restored_sub", "value", e.A), UIPalette.Teal, 1.6f);
+                        effects.Flash(UIPalette.Teal);
+                        Consider(Sfx.PartySuccess, 8);
+                        break;
+                    case GameEventType.CommunityReward:
+                        // Boomer / Millennial / Zoomer payouts fly from their chip during the scoring sequence; without it, float up.
+                        if (!m_AfterSequence)
+                        {
+                            var community = (Community)e.A;
+                            effects.FloatText(GameIcons.Tag(community) + " " + EventText.Amounts(e.B, e.C), new Vector2(0f, 10f - 40f * (e.A % 3)));
+                        }
+                        Consider(Sfx.Coin, 5);
+                        break;
+                    case GameEventType.TrollsPaid:
+                        effects.FloatText(GuestVisuals.Colored(Loc.Get("game.trolls_paid"), UIPalette.Orange) + "  " + EventText.Amounts(e.A, e.B), new Vector2(0f, -40f));
+                        Fx.Play(FxCue.CounterPunch, hud.popLabel.transform, 1.2f);
+                        Consider(Sfx.Coin, 7);
+                        break;
+                    case GameEventType.DoomApplied:
+                        ToastView.Show(Loc.Get(who == null ? "game.doom_you" : "game.doom_other", "value", e.B, "player", who ?? string.Empty), ToastKind.Error);
+                        effects.Flash(UIPalette.Red);
+                        Consider(Sfx.Raid, 5);
+                        break;
+                    case GameEventType.MemeticsRepeat:
+                        // Announced mid-sequence (ScoringSequence); without the sequence, a banner.
+                        if (!m_AfterSequence)
+                            banner.Show(Loc.Get("game.memetics_repeat"), Loc.Get("game.memetics_repeat_sub", "value", e.A), CommunityVisuals.Color(Community.MemeticsDivision), 1.4f);
+                        Consider(Sfx.PartySuccess, 8);
+                        break;
+                    case GameEventType.BotsArrived:
+                        ToastView.Show(GameIcons.Tag(Community.Bots) + " " + Loc.Get(who == null ? "game.bots_you" : "game.bots_other", "count", e.A, "player", who ?? string.Empty), ToastKind.Warning);
+                        Consider(Sfx.Notify, 4);
+                        break;
+                    case GameEventType.BotsSent:
+                        if (m_Net != null && who == null)
+                            effects.FloatText(GameIcons.Tag(Community.Bots) + " " + GuestVisuals.Colored(Loc.Get("game.bots_sent", "count", e.A), CommunityVisuals.Color(Community.Bots)), new Vector2(0f, -90f), 40f);
+                        break;
+
                     case GameEventType.PartyEnded:
                         effects.FloatText($"{GuestVisuals.PopText(e.A)}   {GuestVisuals.CashText(e.B)}", new Vector2(0f, 60f));
                         if (facecam != null) facecam.React(CharacterState.Celebrate);
@@ -211,10 +257,10 @@ namespace DeckParty.UI
             if (soundPriority >= 0) AudioService.Play(sound);
         }
 
-        /// <summary>C11: Platform Ban! A strong shake, the strobing lights, a red flash and every card glitching.</summary>
-        void PlatformBanned()
+        /// <summary>C11: Deplatformed! A strong shake, the strobing lights, a red flash and every card glitching.</summary>
+        void Deplatformed()
         {
-            Fx.Play(FxCue.PlatformBan, Fx.ShakeRoot != null ? Fx.ShakeRoot : partyRoot.transform);
+            Fx.Play(FxCue.Deplatform, Fx.ShakeRoot != null ? Fx.ShakeRoot : partyRoot.transform);
             Fx.Shake(24f, 0.5f);
             effects.Flash(UIPalette.Red);
             background.PoliceLights();
@@ -307,12 +353,21 @@ namespace DeckParty.UI
             if (!FxLibrary.Current.scoringSequence || m_LastLive == null || events == null) return false;
             var scored = new List<GameEvent>();
             bool ended = false;
+            bool restored = false;
+            int restoreChance = 0;
             foreach (var e in events)
             {
                 if (e.Type == GameEventType.GuestScored && e.C != 0) scored.Add(e);
                 if (e.Type == GameEventType.PartyEnded) ended = true;
+                if (e.Type == GameEventType.ServerRestored)
+                {
+                    restored = true;
+                    restoreChance = e.A;
+                }
             }
             if (!ended || scored.Count == 0) return false;
+            // Techspertise saved a downed server: say so before the chat scores.
+            if (restored) banner.Show(Loc.Get("game.server_restored"), Loc.Get("game.server_restored_sub", "value", restoreChance), UIPalette.Teal, 1.4f);
             StartCoroutine(ScoringSequence(m_LastLive, s, events, scored));
             m_LastLive = null;
             return true;
@@ -332,21 +387,49 @@ namespace DeckParty.UI
             partyControls.Render(before, false, false);
 
             float step = Mathf.Clamp(3f / scored.Count, 0.12f, 0.28f) * AppSettings.AnimationTimeScale;
-            int total = 0;
-            for (int i = 0; i < scored.Count && !m_SkipScoring; i++)
+            int i = 0;
+            // In engine order: each viewer's take, then the stream-wide community rewards, and the same again if the Memetics
+            // Division made the stream score twice.
+            foreach (var e in events)
             {
-                var e = scored[i];
+                if (m_SkipScoring) break;
+                if (e.Type == GameEventType.MemeticsRepeat)
+                {
+                    banner.Show(Loc.Get("game.memetics_repeat"), Loc.Get("game.memetics_repeat_sub", "value", e.A), CommunityVisuals.Color(Community.MemeticsDivision), 1.2f);
+                    Fx.Play(FxCue.BannerSlam, banner.transform);
+                    effects.Flash(CommunityVisuals.Color(Community.MemeticsDivision));
+                    AudioService.Play(Sfx.Notify);
+                    yield return Wait(0.7f * AppSettings.AnimationTimeScale);
+                    continue;
+                }
+                if (e.Type == GameEventType.CommunityReward)
+                {
+                    // Boomer, Millennial and Zoomer fly from their Community Beats chips.
+                    var community = (Community)e.A;
+                    var from = communityBeats != null ? communityBeats.ChipPosition(community) : null;
+                    string reward = GameIcons.Tag(community) + "  " + EventText.Amounts(e.B, e.C);
+                    effects.FlyChip(reward, from ?? partyRoot.transform.position, hud.popLabel.transform.position);
+                    AudioService.PlayPitched(Sfx.Coin, 1.3f, 0.8f);
+                    yield return Wait(step);
+                    continue;
+                }
+                if (e.Type != GameEventType.GuestScored || e.C == 0) continue;
+
                 var card = house.FindCard(e.GuestId);
-                total += e.A;
                 if (card != null)
                 {
                     if (card.Portrait == null || !card.Portrait.Play(CharacterState.Score)) Fx.Play(FxCue.ScoreTick, card.AnimRoot);
                     else Fx.Play(FxCue.ScoreTick, card.AnimRoot, 0.6f);
                     if (card.Fx != null) card.Fx.Pulse(CardPulse.Shine, 0.7f);
                     string chip = e.B != 0 ? $"{GuestVisuals.PopText(e.A)} {GuestVisuals.CashText(e.B)}" : GuestVisuals.PopText(e.A);
+                    // Community bonuses this viewer rolled in this scoring (twice, free, Cash doubled, cursed, Clout) ride along on the chip.
+                    string tags = CommunityTags(events, e.GuestId, e.C == 2 ? 2 : 0);
+                    if (tags.Length > 0) chip = tags + "  " + chip;
                     effects.FlyChip(chip, card.AnimRoot.position, hud.popLabel.transform.position);
+                    if (tags.Length > 0 && card.Fx != null) card.Fx.Pulse(CardPulse.Shine);
                 }
                 AudioService.PlayPitched(Sfx.Coin, 1f + i * 0.06f, 0.8f);
+                i++;
                 yield return Wait(step);
             }
 
@@ -354,10 +437,40 @@ namespace DeckParty.UI
 
             m_Scoring = false;
             ApplyVenue(false);
-            ProcessEvents(after, events, ViewingOwn ? null : NameOf(m_ViewId));
+            m_AfterSequence = true;
+            try { ProcessEvents(after, events, ViewingOwn ? null : NameOf(m_ViewId)); }
+            finally { m_AfterSequence = false; }
             banner.Show(Loc.Get("result.success"), Loc.Get("game.scored_total", "subs", GuestVisuals.PopText(after.LastPop), "cash", GuestVisuals.CashText(after.LastCash)), UIPalette.Gold, 1.4f);
             Fx.Play(FxCue.BannerSlam, banner.transform);
             RenderAll();
+        }
+
+        /// <summary>
+        /// The community bonus tags for one viewer's end-of-stream score ("[Content] x2", "[Staff] FREE", "[Clout] +1"...).
+        /// <paramref name="pass"/>: 0 for the stream's scoring, 2 for the Memetics Division repeat.
+        /// </summary>
+        static string CommunityTags(IReadOnlyList<GameEvent> events, int guestId, int pass)
+        {
+            var sb = new System.Text.StringBuilder();
+            foreach (var e in events)
+            {
+                if (e.Type != GameEventType.CommunityBonus || e.GuestId != guestId || e.C != pass) continue;
+                var community = (Community)e.A;
+                string label;
+                switch (community)
+                {
+                    case Community.Content: label = Loc.Get("score.tag.encore"); break;
+                    case Community.Staff: label = Loc.Get("score.tag.free"); break;
+                    case Community.FinanceBros: label = Loc.Get("score.tag.cash_double"); break;
+                    case Community.Doomsdayers: label = Loc.Get("score.tag.doomed"); break;
+                    case Community.ArmchairActivists: label = Loc.Get("score.tag.all_talk"); break;
+                    case Community.Clout: label = "+" + e.B; break;
+                    default: continue;
+                }
+                if (sb.Length > 0) sb.Append(' ');
+                sb.Append(GameIcons.Tag(community)).Append(GuestVisuals.Colored(label, CommunityVisuals.Color(community)));
+            }
+            return sb.ToString();
         }
 
         IEnumerator Wait(float seconds)

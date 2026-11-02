@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace DeckParty.UI
 {
-    /// <summary>After a Platform Ban: pick which viewer gets a Temporary Ban (they sit out the next stream).</summary>
+    /// <summary>After being deplatformed: pick which viewer gets a Temporary Ban (they sit out the next stream).</summary>
     public sealed class RaidBlameView : MonoBehaviour
     {
         [SerializeField] internal TMP_Text titleLabel;

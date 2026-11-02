@@ -126,7 +126,7 @@ namespace DeckParty
             return text;
         }
 
-        public static string CostText(int cash) => cash > 0 ? cash + " " + Terms.CashSymbol : string.Empty;
+        public static string CostText(int cash) => cash > 0 ? GameIcons.Amount(ResourceIcon.Cash, cash) : string.Empty;
 
         /// <summary>The background (stream setup) used while this streamer is live, or null for the player's own choice.</summary>
         public static VenueDefinition Venue(StreamerType type) => GameDatabase.Instance.GetStreamerArt(type)?.venue;

@@ -70,7 +70,7 @@ namespace DeckParty.Core
 
         // --- Power tuning ---
         public const int RaidHeat = 1;
-        /// <summary>Raids alone can't push a stream past this much Platform Ban Risk.</summary>
+        /// <summary>Raids alone can't push a stream past this much Deplatform Risk.</summary>
         public const int MaxRaidHeat = GameRules.RaidTroubleThreshold - 1;
         /// <summary>An active never costs more than this per use (the same ceiling as raising the Sub Cap).</summary>
         public const int MaxPowerCost = GameRules.MaxExpansionCost;

@@ -1355,6 +1355,206 @@ MonoBehaviour:
     m_Key: err.sold_out
     m_Metadata:
       m_Items: []
+  - m_Id: 675190074982400
+    m_Key: fmt.cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091264
+    m_Key: community.CoreFanbase.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091265
+    m_Key: community.CoreFanbase.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091266
+    m_Key: community.CoreFanbase.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091267
+    m_Key: community.Staff.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091268
+    m_Key: community.Staff.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091269
+    m_Key: community.Staff.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091270
+    m_Key: community.Content.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091271
+    m_Key: community.Content.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091272
+    m_Key: community.Content.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091273
+    m_Key: community.Techspertise.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091274
+    m_Key: community.Techspertise.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091275
+    m_Key: community.Techspertise.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091276
+    m_Key: community.FinanceBros.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091277
+    m_Key: community.FinanceBros.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091278
+    m_Key: community.FinanceBros.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091279
+    m_Key: community.Trolls.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091280
+    m_Key: community.Trolls.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091281
+    m_Key: community.Trolls.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091282
+    m_Key: community.Doomsdayers.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091283
+    m_Key: community.Doomsdayers.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091284
+    m_Key: community.Doomsdayers.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091285
+    m_Key: community.Boomer.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091286
+    m_Key: community.Boomer.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091287
+    m_Key: community.Boomer.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091288
+    m_Key: community.Millennial.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091289
+    m_Key: community.Millennial.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091290
+    m_Key: community.Millennial.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091291
+    m_Key: community.Zoomer.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091292
+    m_Key: community.Zoomer.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091293
+    m_Key: community.Zoomer.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091294
+    m_Key: community.ArmchairActivists.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091295
+    m_Key: community.ArmchairActivists.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091296
+    m_Key: community.ArmchairActivists.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091297
+    m_Key: community.points
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091298
+    m_Key: community.points_max
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091299
+    m_Key: community.cursed_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091300
+    m_Key: card.when_scored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091301
+    m_Key: card.no_community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091302
+    m_Key: log.staff_free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091303
+    m_Key: log.content_encore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091304
+    m_Key: log.finance_double
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091305
+    m_Key: log.doomed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091306
+    m_Key: log.server_restored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091307
+    m_Key: log.trolls_paid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091308
+    m_Key: log.doom_applied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091309
+    m_Key: log.community_reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091310
+    m_Key: log.all_talk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190146285568
+    m_Key: rules.communities.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190146285569
+    m_Key: rules.communities.body
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -16,6 +16,7 @@ namespace DeckParty.UI
         const float ButtonWidth = 250f;
 
         Image m_Background;
+        RectTransform m_Board;
         TMP_Text m_Label;
         Button m_Button;
         TMP_Text m_ButtonLabel;
@@ -38,6 +39,7 @@ namespace DeckParty.UI
             board.offsetMax = new Vector2(board.offsetMax.x, board.offsetMax.y - Height - Gap);
 
             var view = go.AddComponent<ViewBarView>();
+            view.m_Board = board;
             view.m_Background = go.GetComponent<Image>();
             if (panelTemplate != null)
             {
@@ -87,6 +89,16 @@ namespace DeckParty.UI
 
             view.Set(string.Empty, UIPalette.Teal, null, null);
             return view;
+        }
+
+        /// <summary>Follows the board's width (the content frame widens it when the side panel is empty).</summary>
+        void LateUpdate()
+        {
+            if (m_Board == null) return;
+            var rect = (RectTransform)transform;
+            if (Mathf.Approximately(rect.offsetMin.x, m_Board.offsetMin.x) && Mathf.Approximately(rect.offsetMax.x, m_Board.offsetMax.x)) return;
+            rect.offsetMin = new Vector2(m_Board.offsetMin.x, rect.offsetMin.y);
+            rect.offsetMax = new Vector2(m_Board.offsetMax.x, rect.offsetMax.y);
         }
 
         /// <param name="buttonText">Null hides the button.</param>

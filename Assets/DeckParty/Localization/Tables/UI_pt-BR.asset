@@ -55,11 +55,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125576
-    m_Localized: 'Subs de presente: gaste pra recrutar novos espectadores.'
+    m_Localized: <b>Subs de presente</b>\nOs espectadores trazem durante a live.
+      Gaste na loja pra recrutar novos espectadores.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125577
-    m_Localized: 'Grana: gaste pra aumentar seu limite do chat.'
+    m_Localized: <b>Grana</b>\nAumenta seu limite do chat e paga o poder ativo do
+      seu streamer.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125578
@@ -79,7 +81,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125582
-    m_Localized: Risco de banimento {risk}/{max}
+    m_Localized: '{icon:risk} {risk}/{max}'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125583
@@ -87,13 +89,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125584
-    m_Localized: "<b>Risco de banimento</b>\\nCom {max} de risco l\xEDquido em uma
-      live, ela \xE9 banida."
+    m_Localized: "<b>{icon:risk} Risco de desplataformiza\xE7\xE3o</b>\\nCom {max}
+      de {icon:risk} l\xEDquido em uma live, ela \xE9 desplataformizada."
     m_Metadata:
       m_Items: []
   - m_Id: 1574125585
-    m_Localized: "<b>Risco de banimento</b>\\nAdicionado por espectadores: {added}\\nAnulado:
-      -{cancelled}\\nL\xEDquido: {net} (banimento com {max})"
+    m_Localized: "<b>{icon:risk} Risco de desplataformiza\xE7\xE3o</b>\\nAdicionado
+      por espectadores: {added}\\nAnulado: -{cancelled}\\nL\xEDquido: {net} (desplataformiza\xE7\xE3o
+      com {max})"
     m_Metadata:
       m_Items: []
   - m_Id: 1574125586
@@ -123,7 +126,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125592
-    m_Localized: "Mais um de risco e a live \xE9 banida."
+    m_Localized: "Mais 1 {icon:risk} e a live \xE9 desplataformizada."
     m_Metadata:
       m_Items: []
   - m_Id: 1574125593
@@ -151,8 +154,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125599
-    m_Localized: Guarde os Subs e a Grana de todo mundo no chat como Subs de presente
-      e $.
+    m_Localized: Guarde os {icon:subs} e a {icon:cash} de todo mundo no chat.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125600
@@ -176,7 +178,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125605
-    m_Localized: '{count} {count:plural:espectador|espectadores} com risco de banimento
+    m_Localized: '{count} {count:plural:espectador|espectadores} com {icon:risk}
       na fila'
     m_Metadata:
       m_Items: []
@@ -424,8 +426,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514199
-    m_Localized: "O risco ficou alto demais e a plataforma baniu a live. Ningu\xE9m
-      recebe esta noite."
+    m_Localized: "O {icon:risk} ficou alto demais e a live foi desplataformizada.
+      Ningu\xE9m recebe esta noite."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514200
@@ -483,7 +485,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514213
-    m_Localized: ({viewers}/{cap}, {diamonds}, risco {risk})
+    m_Localized: ({viewers}/{cap}, {diamonds}, {icon:risk} {risk})
     m_Metadata:
       m_Items: []
   - m_Id: 1582514214
@@ -593,12 +595,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514240
-    m_Localized: "\xD3timas lives: {great}    Banimentos: {banned}    Servidor caiu:
-      {server_down}"
+    m_Localized: "\xD3timas lives: {great}    Desplataformizadas: {banned}    Servidor
+      caiu: {server_down}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514241
-    m_Localized: "Subs de presente ganhos: {subs}    Grana ganha: {cash}    Audi\xEAncia:
+    m_Localized: "Ganho: {icon:subs} {subs}   {icon:cash} {cash}    Audi\xEAncia:
       {viewers} espectadores ({diamonds} Diamantes)    Limite: {cap}"
     m_Metadata:
       m_Items: []
@@ -877,7 +879,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514309
-    m_Localized: O banimento foi cancelado. Risco zerado.
+    m_Localized: "A desplataformiza\xE7\xE3o foi cancelada. {icon:risk} zerado."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514310
@@ -893,17 +895,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514313
-    m_Localized: "Voc\xEA n\xE3o conseguiu pagar {cash} $ de taxas e perdeu {penalty}
-      Subs de presente."
+    m_Localized: "Voc\xEA n\xE3o conseguiu pagar {cash} {icon:cash} de taxas e perdeu
+      {penalty} {icon:subs}."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514314
-    m_Localized: "{player} n\xE3o conseguiu pagar {cash} $ de taxas e perdeu {penalty}
-      Subs de presente."
+    m_Localized: "{player} n\xE3o conseguiu pagar {cash} {icon:cash} de taxas e perdeu
+      {penalty} {icon:subs}."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514315
-    m_Localized: "Esta live come\xE7a com +{count} de risco de banimento."
+    m_Localized: "Esta live come\xE7a com +{count} {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514316
@@ -977,14 +979,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514333
-    m_Localized: "<b>Feliz:</b> +3 Subs.   <b>Triste:</b> +3 $.   <b>Bravo:</b> +6
-      Subs e +1 de risco de banimento.\\nDura at\xE9 o fim da live."
+    m_Localized: "<b>Feliz:</b> +3 {icon:subs}.   <b>Triste:</b> +3 {icon:cash}.  
+      <b>Bravo:</b> +6 {icon:subs} e +1 {icon:risk}.\\nDura at\xE9 o fim da live."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514334
-    m_Localized: "Aposte {subs} Subs de presente ou {cash} $ do seu banco. Se a live
-      der certo voc\xEA recebe {mult}x de volta; se for banida ou o servidor cair,
-      j\xE1 era.\\nVoc\xEA tem {have_subs} Subs de presente e {have_cash} $."
+    m_Localized: "Aposte {subs} {icon:subs} ou {cash} {icon:cash} do seu banco. Se
+      a live der certo voc\xEA recebe {mult}x de volta; se for desplataformizada
+      ou o servidor cair, j\xE1 era.\\nVoc\xEA tem {have_subs} {icon:subs} e {have_cash}
+      {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514335
@@ -1002,13 +1005,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514338
     m_Localized: "Voc\xEA vai escolher dois espectadores: o primeiro n\xE3o ganha
-      nada esta noite, o segundo dobra os Subs base ou o $.\\nO que o segundo deve
-      dobrar?"
+      nada esta noite, o segundo dobra {icon:subs} base ou o {icon:cash}.\\nO que
+      o segundo deve dobrar?"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514339
-    m_Localized: "Voc\xEA vai escolher um espectador pra esta noite.\\n<b>Subs em
-      $:</b> cada 2 Subs viram 1 $.   <b>$ em Subs:</b> cada 1 $ vira 2 Subs."
+    m_Localized: "Voc\xEA vai escolher um espectador pra esta noite.\\n<b>{icon:subs}
+      em {icon:cash}:</b> cada 2 {icon:subs} viram 1 {icon:cash}.   <b>{icon:cash}
+      em {icon:subs}:</b> cada 1 {icon:cash} vira 2 {icon:subs}."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514340
@@ -1061,16 +1065,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514351
     m_Localized: "{actor}: escolha um espectador pra expulsar. Voc\xEA ganha metade
-      do custo dele em Subs."
+      do custo dele em {icon:subs}."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514352
-    m_Localized: '{actor}: escolha um espectador pra comparar Subs base.'
+    m_Localized: '{actor}: escolha um espectador pra comparar {icon:subs} base.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514353
-    m_Localized: '{actor}: escolha um espectador pra ganhar +1 de risco de banimento
-      e +3 Subs.'
+    m_Localized: '{actor}: escolha um espectador pra ganhar +1 {icon:risk} e +3 {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514354
@@ -1103,7 +1106,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514361
-    m_Localized: '{actor}: escolha com quem {first} troca os Subs base.'
+    m_Localized: '{actor}: escolha com quem {first} troca {icon:subs} base.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514362
@@ -1111,11 +1114,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514363
-    m_Localized: '{actor}: escolha quem dobra os Subs base.'
+    m_Localized: '{actor}: escolha quem dobra {icon:subs} base.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514364
-    m_Localized: '{actor}: escolha quem dobra o $ base.'
+    m_Localized: '{actor}: escolha quem dobra o {icon:cash} base.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514365
@@ -1543,11 +1546,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087873
-    m_Localized: Sua live foi banida. Sem pagamento esta noite
+    m_Localized: Sua live foi desplataformizada. Sem pagamento esta noite
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087874
-    m_Localized: A live de {player} foi banida. Sem pagamento esta noite
+    m_Localized: A live de {player} foi desplataformizada. Sem pagamento esta noite
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087875
@@ -1560,8 +1563,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087877
-    m_Localized: "{actor}: escolha um espectador pra ganhar +1 $ pra sempre (at\xE9
-      {cap} $)."
+    m_Localized: "{actor}: escolha um espectador pra ganhar +1 {icon:cash} pra sempre
+      (at\xE9 {cap} {icon:cash})."
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087878
@@ -1574,6 +1577,59 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416593483087880
     m_Localized: "C\xE2mera desligada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191463297024
+    m_Localized: "<b>Risco de desplataformiza\xE7\xE3o</b>\\nEspectadores com um
+      X vermelho trazem isso. Com {max} de risco l\xEDquido a live \xE9 desplataformizada:
+      sem pagamento esta noite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377408
+    m_Localized: "{icon:CoreFanbase} A Base de f\xE3s anula: -{count}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377409
+    m_Localized: x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377410
+    m_Localized: "GR\xC1TIS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377411
+    m_Localized: '{icon:cash} x2'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377412
+    m_Localized: CONDENADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377413
+    m_Localized: "S\xD3 PAPO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377414
+    m_Localized: SERVIDOR RESTAURADO!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377415
+    m_Localized: Os Tecnoexperts trouxeram de volta ({value}% de chance). A live
+      ainda pontua.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377416
+    m_Localized: Os Trolls adoraram!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377417
+    m_Localized: "Apocal\xEDpticos rivais: nesta live cada espectador seu tem {value}%
+      de chance de n\xE3o pontuar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377418
+    m_Localized: "Apocal\xEDpticos rivais: nesta live cada espectador de {player}
+      tem {value}% de chance de n\xE3o pontuar."
     m_Metadata:
       m_Items: []
   references:

@@ -1515,6 +1515,54 @@ MonoBehaviour:
     m_Key: facecam.off
     m_Metadata:
       m_Items: []
+  - m_Id: 675191463297024
+    m_Key: hud.tip.risk_term
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377408
+    m_Key: hud.tip.risk_fanbase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377409
+    m_Key: score.tag.encore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377410
+    m_Key: score.tag.free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377411
+    m_Key: score.tag.cash_double
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377412
+    m_Key: score.tag.doomed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377413
+    m_Key: score.tag.all_talk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377414
+    m_Key: game.server_restored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377415
+    m_Key: game.server_restored_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377416
+    m_Key: game.trolls_paid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377417
+    m_Key: game.doom_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675191551377418
+    m_Key: game.doom_other
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

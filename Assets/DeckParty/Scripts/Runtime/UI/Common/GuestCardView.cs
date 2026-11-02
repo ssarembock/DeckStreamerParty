@@ -54,6 +54,8 @@ namespace DeckParty.UI
         [SerializeField] internal Image dim;
         [SerializeField] internal TooltipTrigger tooltip;
         [SerializeField] internal CharacterPortrait characterPortrait;
+        [Tooltip("The viewer's community icons (left edge of the portrait).")]
+        [SerializeField] internal CommunityIconsView communities;
 
         public int GuestId { get; private set; } = -1;
         public GuestType GuestType { get; private set; }
@@ -182,6 +184,7 @@ namespace DeckParty.UI
             if (layout != null) layout.cellSize = CellSize(scale);
         }
 
+        /// <summary>An open chat slot: just the faded frame (no text), or a label such as a big viewer's name on its extra spaces.</summary>
         public void ShowEmpty(string label = null)
         {
             Hook();
@@ -189,11 +192,12 @@ namespace DeckParty.UI
             content.SetActive(false);
             emptyState.SetActive(true);
             if (m_EmptyLabel == null) m_EmptyLabel = emptyState.GetComponentInChildren<TMP_Text>(true);
-            if (m_EmptyLabel != null) m_EmptyLabel.text = label ?? Loc.Get("card.empty");
+            if (m_EmptyLabel != null) m_EmptyLabel.text = label ?? string.Empty;
             if (button != null) button.interactable = false;
             SetHighlight(CardHighlight.None);
             if (tooltip != null) tooltip.Provider = null;
             if (countBadge != null) countBadge.SetActive(false);
+            if (communities != null) communities.Clear();
             if (frame != null) frame.color = m_FrameBase.WithAlpha(0.35f);
             if (characterPortrait != null) characterPortrait.Clear();
             if (m_Fx != null) m_Fx.Clear();
@@ -238,17 +242,20 @@ namespace DeckParty.UI
             bool cleared = live && guest.TroubleCleared && PartyEngine.PrintedTrouble(guest);
             bool trouble = live ? PartyEngine.HasTroubleProperty(state, guest) || cleared : info.Trouble;
             starBadge.SetActive(info.IsDiamond);
+            if (communities != null) communities.Bind(shown);
             troubleBadge.SetActive(trouble);
             if (troubleIcon != null)
                 troubleIcon.color = trouble && live && !PartyEngine.HasTroubleProperty(state, guest) ? UIPalette.TextDim.WithAlpha(0.6f) : UIPalette.Red;
             cancelBadge.SetActive(live ? PartyEngine.CancelsTroubleNow(state, guest) : info.CancelsTrouble);
 
-            // Permanent upgrades: Subs (pink badge) first, otherwise Cash (Checkout Code, Gen Z with Job).
+            // Permanent upgrades: Subs (pink badge) first, otherwise Cash (Checkout Code, Gen Z with Job). Icons, not words.
             int bonus = guest.BonusPop;
             int bonusCash = guest.BonusCash;
             bonusBadge.SetActive(bonus != 0 || bonusCash != 0);
             if (bonusLabel != null)
-                bonusLabel.text = bonus != 0 ? (bonus > 0 ? "+" : "") + bonus : (bonusCash > 0 ? "+" : "") + bonusCash + Terms.CashSymbol;
+                bonusLabel.text = bonus != 0
+                    ? (bonus > 0 ? "+" : "") + bonus + GameIcons.Tag(ResourceIcon.Subs)
+                    : (bonusCash > 0 ? "+" : "") + bonusCash + GameIcons.Tag(ResourceIcon.Cash);
 
             if (frame != null)
             {

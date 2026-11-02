@@ -12,6 +12,7 @@ namespace DeckParty.UI
             ("risk", "#FF5A5A"),
             ("subcap", "#FF9A3D"),
             ("money", "#6BE38B"),
+            ("communities", "#5FD3FF"),
             ("actions", "#A77BFF"),
             ("streamers", "#FF9AD5"),
             ("controls", "#3DDBD9"),

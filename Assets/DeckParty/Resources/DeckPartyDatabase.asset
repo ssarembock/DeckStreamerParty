@@ -18,6 +18,7 @@ MonoBehaviour:
     type: 0
     portrait: {fileID: 2408035347343583912, guid: f2248c449efb82747bb5106359d41f34, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -28,6 +29,7 @@ MonoBehaviour:
     type: 1
     portrait: {fileID: 541896646, guid: f2248c449efb82747bb5106359d41f34, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -38,6 +40,7 @@ MonoBehaviour:
     type: 2
     portrait: {fileID: -2092036663, guid: f2248c449efb82747bb5106359d41f34, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 33
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -48,6 +51,7 @@ MonoBehaviour:
     type: 3
     portrait: {fileID: 541896646, guid: f2248c449efb82747bb5106359d41f34, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -58,6 +62,7 @@ MonoBehaviour:
     type: 4
     portrait: {fileID: 1557067447, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -68,6 +73,7 @@ MonoBehaviour:
     type: 5
     portrait: {fileID: -2107843817, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -78,6 +84,7 @@ MonoBehaviour:
     type: 6
     portrait: {fileID: 1804695789, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 4
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -88,6 +95,7 @@ MonoBehaviour:
     type: 7
     portrait: {fileID: 785415261557809399, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -98,6 +106,7 @@ MonoBehaviour:
     type: 8
     portrait: {fileID: -2119688159, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -108,16 +117,18 @@ MonoBehaviour:
     type: 9
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Doge
-    key: Doge
+  - name: Degen Dog
+    key: DegenDog
     type: 10
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 4096
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -128,6 +139,7 @@ MonoBehaviour:
     type: 11
     portrait: {fileID: 1464234329955669435, guid: 22737974618bd104dac319073f2a3f14, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 288
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -138,6 +150,7 @@ MonoBehaviour:
     type: 12
     portrait: {fileID: 541896646, guid: f2248c449efb82747bb5106359d41f34, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 260
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -148,6 +161,7 @@ MonoBehaviour:
     type: 13
     portrait: {fileID: -2088211175, guid: f2248c449efb82747bb5106359d41f34, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 528
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -158,6 +172,7 @@ MonoBehaviour:
     type: 14
     portrait: {fileID: -2092036663, guid: f2248c449efb82747bb5106359d41f34, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 260
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -168,6 +183,7 @@ MonoBehaviour:
     type: 15
     portrait: {fileID: 7193592329560644690, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 260
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -178,6 +194,7 @@ MonoBehaviour:
     type: 16
     portrait: {fileID: 1557067447, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 260
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -188,6 +205,7 @@ MonoBehaviour:
     type: 17
     portrait: {fileID: -2107843817, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 260
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -198,6 +216,7 @@ MonoBehaviour:
     type: 18
     portrait: {fileID: 1804695789, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 16
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -208,6 +227,7 @@ MonoBehaviour:
     type: 19
     portrait: {fileID: 1189930840, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 513
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -218,6 +238,7 @@ MonoBehaviour:
     type: 20
     portrait: {fileID: 785415261557809399, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 544
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -228,6 +249,7 @@ MonoBehaviour:
     type: 21
     portrait: {fileID: -2119688159, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 516
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -238,6 +260,7 @@ MonoBehaviour:
     type: 22
     portrait: {fileID: 692109619, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1032
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -248,6 +271,7 @@ MonoBehaviour:
     type: 23
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 257
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -258,6 +282,7 @@ MonoBehaviour:
     type: 24
     portrait: {fileID: 1661188788, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 288
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -268,6 +293,7 @@ MonoBehaviour:
     type: 25
     portrait: {fileID: 1464234329955669435, guid: 22737974618bd104dac319073f2a3f14, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 264
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -278,6 +304,7 @@ MonoBehaviour:
     type: 26
     portrait: {fileID: 1587852471, guid: 22737974618bd104dac319073f2a3f14, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 520
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -288,6 +315,7 @@ MonoBehaviour:
     type: 27
     portrait: {fileID: 1567478799, guid: 22737974618bd104dac319073f2a3f14, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 516
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -298,6 +326,7 @@ MonoBehaviour:
     type: 28
     portrait: {fileID: 1645326131, guid: 22737974618bd104dac319073f2a3f14, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 516
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -308,6 +337,7 @@ MonoBehaviour:
     type: 29
     portrait: {fileID: -162210258, guid: 22737974618bd104dac319073f2a3f14, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 544
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -318,6 +348,7 @@ MonoBehaviour:
     type: 30
     portrait: {fileID: 9205303203659863379, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 257
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -328,6 +359,7 @@ MonoBehaviour:
     type: 31
     portrait: {fileID: -1577711586, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 32
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -338,6 +370,7 @@ MonoBehaviour:
     type: 32
     portrait: {fileID: 28286594, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 132
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -348,6 +381,7 @@ MonoBehaviour:
     type: 33
     portrait: {fileID: -570074226, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 260
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -358,6 +392,7 @@ MonoBehaviour:
     type: 34
     portrait: {fileID: 1211086218, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 260
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -368,6 +403,7 @@ MonoBehaviour:
     type: 35
     portrait: {fileID: 5649303986351544168, guid: 71ad138068d067f48ab2b13065017c03, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 516
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -378,6 +414,7 @@ MonoBehaviour:
     type: 36
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 516
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -388,6 +425,7 @@ MonoBehaviour:
     type: 37
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 544
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -398,6 +436,7 @@ MonoBehaviour:
     type: 38
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 516
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -408,6 +447,7 @@ MonoBehaviour:
     type: 39
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 544
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -418,6 +458,7 @@ MonoBehaviour:
     type: 40
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 528
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -428,6 +469,7 @@ MonoBehaviour:
     type: 41
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1184
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -438,6 +480,7 @@ MonoBehaviour:
     type: 42
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 288
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -448,6 +491,7 @@ MonoBehaviour:
     type: 43
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 260
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -458,6 +502,7 @@ MonoBehaviour:
     type: 44
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 260
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -468,6 +513,7 @@ MonoBehaviour:
     type: 45
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 16
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -478,6 +524,7 @@ MonoBehaviour:
     type: 46
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 516
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -488,16 +535,18 @@ MonoBehaviour:
     type: 47
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1028
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Crying Cat
-    key: CryingCat
+  - name: Distraught Cat
+    key: DistraughtCat
     type: 48
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 4096
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -508,6 +557,7 @@ MonoBehaviour:
     type: 49
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 260
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -518,6 +568,7 @@ MonoBehaviour:
     type: 50
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 128
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -528,6 +579,7 @@ MonoBehaviour:
     type: 51
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 8192
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -538,6 +590,7 @@ MonoBehaviour:
     type: 52
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2052
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -548,6 +601,7 @@ MonoBehaviour:
     type: 53
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 4
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -558,6 +612,7 @@ MonoBehaviour:
     type: 54
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2052
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -568,6 +623,7 @@ MonoBehaviour:
     type: 55
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2048
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -578,6 +634,7 @@ MonoBehaviour:
     type: 56
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2052
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -588,16 +645,18 @@ MonoBehaviour:
     type: 57
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 258
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Surprise Guest
-    key: SurpriseGuest
+  - name: Evangelist
+    key: Evangelist
     type: 58
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -608,6 +667,7 @@ MonoBehaviour:
     type: 59
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 32
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -618,6 +678,7 @@ MonoBehaviour:
     type: 60
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 10
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -628,16 +689,18 @@ MonoBehaviour:
     type: 61
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 16
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Comedian with a Podcast
-    key: ComedianWithAPodcast
+  - name: Promo Code User
+    key: PromoCodeUser
     type: 62
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: bbf4155401ecb5442a0d48111c7d9459, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -648,16 +711,18 @@ MonoBehaviour:
     type: 63
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Crypto Guy
-    key: CryptoGuy
+  - name: Crypto Enthusiast
+    key: CryptoEnthusiast
     type: 64
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -668,6 +733,7 @@ MonoBehaviour:
     type: 65
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 17
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -678,6 +744,7 @@ MonoBehaviour:
     type: 66
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -688,6 +755,7 @@ MonoBehaviour:
     type: 67
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 4
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -698,6 +766,7 @@ MonoBehaviour:
     type: 68
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 2
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -708,6 +777,7 @@ MonoBehaviour:
     type: 69
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 8
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -718,6 +788,7 @@ MonoBehaviour:
     type: 70
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 4
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -728,6 +799,7 @@ MonoBehaviour:
     type: 71
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 514
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -738,6 +810,7 @@ MonoBehaviour:
     type: 72
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 144
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -748,6 +821,7 @@ MonoBehaviour:
     type: 73
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 8
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -758,6 +832,7 @@ MonoBehaviour:
     type: 74
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 4
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -768,6 +843,7 @@ MonoBehaviour:
     type: 75
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 33
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -778,6 +854,7 @@ MonoBehaviour:
     type: 76
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -788,6 +865,7 @@ MonoBehaviour:
     type: 77
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 32
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -798,6 +876,7 @@ MonoBehaviour:
     type: 78
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 16
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -808,6 +887,7 @@ MonoBehaviour:
     type: 79
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 144
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -818,6 +898,7 @@ MonoBehaviour:
     type: 80
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 130
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -828,6 +909,18 @@ MonoBehaviour:
     type: 81
     portrait: {fileID: 0}
     tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 512
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Bot
+    key: Bot
+    type: 82
+    portrait: {fileID: 0}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -978,22 +1071,91 @@ MonoBehaviour:
   audio: {fileID: 11400000, guid: 93270d33cd5806648b9a504b8edb25ce, type: 2}
   fx: {fileID: 11400000, guid: 4d3f5767d94834b47868635c30c55b64, type: 2}
   portraitStage: {fileID: 3230262368666778877, guid: 37ba0a174d98f9e4f97a33e4ee04f39f, type: 3}
-  chatBubble: {fileID: 0}
+  chatBubble: {fileID: 21300000, guid: cbd7999bd59eeed48877008244147003, type: 3}
   chatBubbleTail: {fileID: 0}
   chatBubbleTint: {r: 1, g: 1, b: 1, a: 1}
   viewerEmojis:
-    peaceful: []
-    argumentative: []
-    angry: []
+    peaceful:
+    - {fileID: -5829815243304860919, guid: b8f36099b75dba94280e08d85a3a184f, type: 3}
+    - {fileID: -1303079210186327544, guid: b8f36099b75dba94280e08d85a3a184f, type: 3}
+    - {fileID: 4165859800542272815, guid: b8f36099b75dba94280e08d85a3a184f, type: 3}
+    - {fileID: -180748632207136293, guid: b8f36099b75dba94280e08d85a3a184f, type: 3}
+    - {fileID: -1234557451402715931, guid: b8f36099b75dba94280e08d85a3a184f, type: 3}
+    - {fileID: -216906659084114682, guid: b8f36099b75dba94280e08d85a3a184f, type: 3}
+    argumentative:
+    - {fileID: -4817286675488006880, guid: fd4fe310a36021143980e6c6319140fa, type: 3}
+    - {fileID: 1417266304235375654, guid: fd4fe310a36021143980e6c6319140fa, type: 3}
+    - {fileID: -2515000732024824202, guid: fd4fe310a36021143980e6c6319140fa, type: 3}
+    - {fileID: 5171921728076206801, guid: fd4fe310a36021143980e6c6319140fa, type: 3}
+    - {fileID: 3455371997778700155, guid: fd4fe310a36021143980e6c6319140fa, type: 3}
+    - {fileID: -4543687338035063588, guid: fd4fe310a36021143980e6c6319140fa, type: 3}
+    angry:
+    - {fileID: 6934204898008747404, guid: 81237588d90cd814ebb99d7a0157be14, type: 3}
+    - {fileID: 1464235996162006602, guid: 81237588d90cd814ebb99d7a0157be14, type: 3}
+    - {fileID: 5807940798594734346, guid: 81237588d90cd814ebb99d7a0157be14, type: 3}
+    - {fileID: -3853156051452739233, guid: 81237588d90cd814ebb99d7a0157be14, type: 3}
+    - {fileID: 96307011405003670, guid: 81237588d90cd814ebb99d7a0157be14, type: 3}
+    - {fileID: -2452615842964545730, guid: 81237588d90cd814ebb99d7a0157be14, type: 3}
     calmInterval: 3.2
     tenseInterval: 1.8
     heatedInterval: 0.9
     size: 64
     rise: 110
     lifetime: 1.8
-  emotes: []
-  platformBanImage: {fileID: 0}
-  serverDownImage: {fileID: 0}
+  emotes:
+  - {fileID: 3407081104509524442, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
+  - {fileID: -8322702425874062737, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
+  - {fileID: 3564924232581687765, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
+  - {fileID: 8367865425249610289, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
+  - {fileID: 5009408590829783221, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
+  - {fileID: -1079751589794765733, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
+  - {fileID: -3807700631403515124, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
+  - {fileID: 1521659264739580947, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
+  deplatformImage: {fileID: 21300000, guid: f558a3637bc663e4a8ea3135008f9b9f, type: 3}
+  serverDownImage: {fileID: 21300000, guid: f558a3637bc663e4a8ea3135008f9b9f, type: 3}
+  communityIcons:
+  - name: CoreFanbase
+    community: 0
+    icon: {fileID: 0}
+  - name: Staff
+    community: 1
+    icon: {fileID: 0}
+  - name: Content
+    community: 2
+    icon: {fileID: 0}
+  - name: Techspertise
+    community: 3
+    icon: {fileID: 0}
+  - name: FinanceBros
+    community: 4
+    icon: {fileID: 0}
+  - name: Trolls
+    community: 5
+    icon: {fileID: 0}
+  - name: Doomsdayers
+    community: 6
+    icon: {fileID: 0}
+  - name: Boomer
+    community: 7
+    icon: {fileID: 0}
+  - name: Millennial
+    community: 8
+    icon: {fileID: 0}
+  - name: Zoomer
+    community: 9
+    icon: {fileID: 0}
+  - name: ArmchairActivists
+    community: 10
+    icon: {fileID: 0}
+  - name: Clout
+    community: 11
+    icon: {fileID: 0}
+  - name: MemeticsDivision
+    community: 12
+    icon: {fileID: 0}
+  - name: Bots
+    community: 13
+    icon: {fileID: 0}
   groupIcons:
   - name: Community
     group: 0
@@ -1019,3 +1181,5 @@ MonoBehaviour:
   - name: TBD (to be determined)
     group: 7
     icon: {fileID: 0}
+  communitiesSeeded: 1
+  communitiesRevision: 3

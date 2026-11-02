@@ -20,9 +20,10 @@ namespace DeckParty.Juice.EditorTools
         /// Build Everything / Rebuild, even though prefabs are normally never overwritten.
         /// Revision 1: Power Used ended 20 degrees rotated (an additive spin that never came back), which left the shop's
         /// streamer card tilted for the rest of the match, on every player's board.
+        /// Revision 2: a subtler Streamer Anxious (the one-risk-from-deplatformed warning).
         /// </summary>
-        const int RecipeRevision = 1;
-        static readonly FxCue[] s_Revised = { FxCue.PowerUsed };
+        const int RecipeRevision = 2;
+        static readonly FxCue[] s_Revised = { FxCue.PowerUsed, FxCue.StreamerAnxious };
 
         static FeelFxBuilder()
         {
@@ -120,7 +121,7 @@ namespace DeckParty.Juice.EditorTools
                 case FxCue.DiamondTracker:
                     Punch(p, 0.4f, 0.4f);
                     break;
-                case FxCue.PlatformBan:
+                case FxCue.Deplatform:
                     Shake(p, 26f, 18f, 0.55f);
                     break;
                 case FxCue.ServerDown:
@@ -153,8 +154,8 @@ namespace DeckParty.Juice.EditorTools
                     Pop(p, 0.85f, 0.25f, 1.04f);
                     break;
                 case FxCue.StreamerAnxious:
-                    Shake(p, 6f, 2f, 0.3f);
-                    Wobble(p, 4f, 0.3f);
+                    Shake(p, 4f, 1.5f, 0.28f);
+                    Wobble(p, 2.5f, 0.28f);
                     break;
                 case FxCue.PowerUsed:
                     // Everything here must come back to rest: the streamer card is one object shown on every player's board.

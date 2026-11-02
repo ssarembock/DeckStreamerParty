@@ -3,7 +3,11 @@ using UnityEngine;
 
 namespace DeckParty.UI
 {
-    /// <summary>Hover tooltip that follows the pointer and stays on screen.</summary>
+    /// <summary>
+    /// Hover tooltip that follows the pointer and stays on screen. Two layers: the base tooltip (cards, buttons) and an
+    /// override for small things inside them (a community icon on a card, an icon in a line of text). Leaving the small
+    /// thing brings the base tooltip back.
+    /// </summary>
     public sealed class TooltipView : MonoBehaviour
     {
         [SerializeField] internal RectTransform panel;
@@ -12,9 +16,14 @@ namespace DeckParty.UI
 
         static TooltipView s_Active;
         RectTransform m_CanvasRect;
-        bool m_Visible;
         float m_ShowAt;
-        object m_Owner;
+        string m_BaseText;
+        object m_BaseOwner;
+        string m_OverrideText;
+        object m_OverrideOwner;
+        string m_Shown;
+
+        bool Visible => m_OverrideText != null || m_BaseText != null;
 
         void Awake()
         {
@@ -24,6 +33,8 @@ namespace DeckParty.UI
             group.alpha = 0f;
             group.blocksRaycasts = false;
             group.interactable = false;
+            // Icons inside text name themselves on hover (every scene with a tooltip gets this).
+            if (GetComponent<InlineIconTooltips>() == null) gameObject.AddComponent<InlineIconTooltips>();
         }
 
         void OnDestroy()
@@ -34,23 +45,59 @@ namespace DeckParty.UI
         public static void Show(string text, object owner = null)
         {
             if (s_Active == null || string.IsNullOrEmpty(text)) return;
-            s_Active.label.text = text;
-            s_Active.m_Owner = owner;
-            if (!s_Active.m_Visible) s_Active.m_ShowAt = Time.unscaledTime + 0.3f;
-            s_Active.m_Visible = true;
+            s_Active.BeginShow();
+            s_Active.m_BaseText = text;
+            s_Active.m_BaseOwner = owner;
+            s_Active.Refresh();
         }
 
         public static void Hide(object owner = null)
         {
             if (s_Active == null) return;
-            if (owner != null && s_Active.m_Owner != owner) return;
-            s_Active.m_Visible = false;
-            s_Active.m_Owner = null;
+            if (owner != null && s_Active.m_BaseOwner != owner)
+            {
+                // An override owner leaving through Hide (e.g. disabled) only clears its own layer.
+                if (s_Active.m_OverrideOwner == owner) ClearOverride(owner);
+                return;
+            }
+            s_Active.m_BaseText = null;
+            s_Active.m_BaseOwner = null;
+            s_Active.Refresh();
+        }
+
+        /// <summary>Shows text above the base tooltip until <see cref="ClearOverride"/> (the base comes back afterwards).</summary>
+        public static void ShowOverride(string text, object owner)
+        {
+            if (s_Active == null || string.IsNullOrEmpty(text)) return;
+            s_Active.BeginShow();
+            s_Active.m_OverrideText = text;
+            s_Active.m_OverrideOwner = owner;
+            s_Active.Refresh();
+        }
+
+        public static void ClearOverride(object owner)
+        {
+            if (s_Active == null || s_Active.m_OverrideOwner != owner) return;
+            s_Active.m_OverrideText = null;
+            s_Active.m_OverrideOwner = null;
+            s_Active.Refresh();
+        }
+
+        void BeginShow()
+        {
+            if (!Visible) m_ShowAt = Time.unscaledTime + 0.3f;
+        }
+
+        void Refresh()
+        {
+            string text = m_OverrideText ?? m_BaseText;
+            if (text != null && text != m_Shown) label.text = text;
+            m_Shown = text;
         }
 
         void LateUpdate()
         {
-            float target = m_Visible && Time.unscaledTime >= m_ShowAt ? 1f : 0f;
+            float target = Visible && Time.unscaledTime >= m_ShowAt ? 1f : 0f;
             group.alpha = Mathf.MoveTowards(group.alpha, target, Time.unscaledDeltaTime * 10f);
             if (group.alpha <= 0f) return;
 

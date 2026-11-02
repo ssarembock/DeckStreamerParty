@@ -359,11 +359,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412308
-    m_Localized: Platform Ban Risk
+    m_Localized: Deplatform Risk
     m_Metadata:
       m_Items: []
   - m_Id: 479412309
-    m_Localized: PLATFORM BAN!
+    m_Localized: DEPLATFORMED!
     m_Metadata:
       m_Items: []
   - m_Id: 479412310
@@ -403,15 +403,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412319
-    m_Localized: '{value} Subs'
+    m_Localized: '{value} {icon:subs}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412320
-    m_Localized: '{value} Platform Ban Risk'
+    m_Localized: '{value} {icon:risk}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412321
-    m_Localized: '{value} Gifted Subs'
+    m_Localized: '{icon:subs} {value}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412322
@@ -491,7 +491,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412341
-    m_Localized: No base Subs
+    m_Localized: No base {icon:subs}
     m_Metadata:
       m_Items: []
   - m_Id: 479412342
@@ -499,11 +499,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412343
-    m_Localized: PLATFORM BAN RISK
+    m_Localized: +1 {icon:risk}
     m_Metadata:
       m_Items: []
   - m_Id: 479412344
-    m_Localized: CANCELS RISK
+    m_Localized: CANCELS {icon:risk}
     m_Metadata:
       m_Items: []
   - m_Id: 479412345
@@ -571,31 +571,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412361
-    m_Localized: Double Subs
+    m_Localized: Double {icon:subs}
     m_Metadata:
       m_Items: []
   - m_Id: 479412362
-    m_Localized: Double $
+    m_Localized: Double {icon:cash}
     m_Metadata:
       m_Items: []
   - m_Id: 479412363
-    m_Localized: Subs to $
+    m_Localized: '{icon:subs} to {icon:cash}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412364
-    m_Localized: $ to Subs
+    m_Localized: '{icon:cash} to {icon:subs}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412365
-    m_Localized: Printed Subs {value}
+    m_Localized: Printed {icon:subs} {value}
     m_Metadata:
       m_Items: []
   - m_Id: 479412366
-    m_Localized: Copied {subs} Subs / {cash} $
+    m_Localized: Copied {subs} {icon:subs} / {cash} {icon:cash}
     m_Metadata:
       m_Items: []
   - m_Id: 479412367
-    m_Localized: Risk cleared
+    m_Localized: '{icon:risk} cleared'
     m_Metadata:
       m_Items: []
   - m_Id: 479412368
@@ -718,7 +718,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412397
-    m_Localized: 'Couldn''t pay {cash} $ in fees: -{penalty} Gifted Subs.'
+    m_Localized: 'Couldn''t pay {cash} {icon:cash} in fees: -{penalty} {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 479412398
@@ -762,12 +762,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606536
-    m_Localized: '{viewer} loses their Platform Ban Risk.'
+    m_Localized: '{viewer} loses their {icon:risk}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606537
-    m_Localized: This is fine. {viewer} talks the platform out of the ban and clears
-      {count} Platform Ban Risk.
+    m_Localized: This is fine. {viewer} talks the platform out of it and clears {count}
+      {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 483606538
@@ -788,7 +788,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606542
     m_Localized: '{viewer}''s bad luck holds: it doesn''t work, and he permanently
-      gains +1 Subs.'
+      gains +1 {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606543
@@ -796,11 +796,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606544
-    m_Localized: '{viewer} permanently gains {amount} Subs (now {total}).'
+    m_Localized: '{viewer} permanently gains {amount} {icon:subs} (now {total}).'
     m_Metadata:
       m_Items: []
   - m_Id: 483606545
-    m_Localized: '{viewer} permanently loses {amount} Subs (now {total}).'
+    m_Localized: '{viewer} permanently loses {amount} {icon:subs} (now {total}).'
     m_Metadata:
       m_Items: []
   - m_Id: 483606546
@@ -816,7 +816,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606549
-    m_Localized: '{a} and {b} swap their printed Subs.'
+    m_Localized: '{a} and {b} swap their printed {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606550
@@ -840,11 +840,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606555
-    m_Localized: '{viewer} will turn their Subs into $ tonight.'
+    m_Localized: '{viewer} will turn their {icon:subs} into {icon:cash} tonight.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606556
-    m_Localized: '{viewer} will turn their $ into Subs tonight.'
+    m_Localized: '{viewer} will turn their {icon:cash} into {icon:subs} tonight.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606557
@@ -852,11 +852,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606558
-    m_Localized: '{viewer}''s printed Subs are doubled tonight.'
+    m_Localized: '{viewer}''s printed {icon:subs} are doubled tonight.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606559
-    m_Localized: '{viewer}''s printed $ are doubled tonight.'
+    m_Localized: '{viewer}''s printed {icon:cash} are doubled tonight.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606560
@@ -886,11 +886,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606566
-    m_Localized: Smoke Bomb! This stream ignores {count} Platform Ban Risk.
+    m_Localized: Smoke Bomb! This stream ignores {count} {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 483606567
-    m_Localized: Giveaway is live! Every viewer earns +{count} Subs this stream.
+    m_Localized: Giveaway is live! Every viewer earns +{count} {icon:subs} this stream.
     m_Metadata:
       m_Items: []
   - m_Id: 483606568
@@ -898,12 +898,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606569
-    m_Localized: 'Soft landing: {value} Gifted Subs banked anyway.'
+    m_Localized: 'Soft landing: {value} {icon:subs} banked anyway.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606570
     m_Localized: 'Beautiful Sequence: {count} great {count:plural:stream|streams}
-      in a row. +{bonus} Subs.'
+      in a row. +{bonus} {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606571
@@ -920,15 +920,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606574
-    m_Localized: '{raider} raided this stream! +{count} Platform Ban Risk next stream.'
+    m_Localized: '{raider} raided this stream! +{count} {icon:risk} next stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606575
-    m_Localized: '{taxer} collected a Wealth Tax: -{amount} $.'
+    m_Localized: '{taxer} collected a Wealth Tax: -{amount} {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606576
-    m_Localized: 'Wealth Tax collected from {payer}: +{amount} $.'
+    m_Localized: 'Wealth Tax collected from {payer}: +{amount} {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606577
@@ -1008,11 +1008,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606596
-    m_Localized: Needs {0} Gifted Subs.
+    m_Localized: Needs {0} {icon:subs}.
     m_Metadata:
       m_Items: []
   - m_Id: 483606597
-    m_Localized: Needs {0} $.
+    m_Localized: Needs {0} {icon:cash}.
     m_Metadata:
       m_Items: []
   - m_Id: 483606598
@@ -1136,7 +1136,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606628
-    m_Localized: That rival has no Cash to tax.
+    m_Localized: That rival has no {icon:cash} to tax.
     m_Metadata:
       m_Items: []
   - m_Id: 483606629
@@ -1166,24 +1166,24 @@ MonoBehaviour:
       next viewer from your Audience join. Each viewer can join once per stream.
       Viewers with a purple <b>action</b> button can use it once per stream. When
       you're happy, press <b>End the Stream</b> to bank what everyone in chat brought
-      in.\n<b>2. The shop.</b> Viewers bring in <color=#FFC94A>Subs</color>; when
-      the stream ends they're banked as <color=#FFC94A>Gifted Subs</color>, which
-      recruit new viewers into your Audience. <color=#6BE38B>Cash</color> raises
+      in.\n<b>2. The shop.</b> Viewers bring in {icon:subs}; when the stream ends
+      they're banked and recruit new viewers into your Audience. {icon:cash} raises
       your <b>Sub Cap</b> (how many viewers fit in chat at once).
     m_Metadata:
       m_Items: []
   - m_Id: 483606635
-    m_Localized: Platform Ban Risk
+    m_Localized: '{icon:risk} Deplatform Risk'
     m_Metadata:
       m_Items: []
   - m_Id: 483606636
-    m_Localized: 'Viewers with a red X add Platform Ban Risk. Up to 2 net Platform
-      Ban Risk is fine; at <b>3 the stream gets a Platform Ban</b>: it ends with
-      no payout and you give one viewer a <b>Temporary Ban</b> (they sit out the
-      next stream). Normie, Die Hard Fan and Internet Starpower <b>cancel</b> 1 Platform
-      Ban Risk each while in chat (Cheems does too when a Doge is around). Some viewers
-      add Platform Ban Risk with their actions; This Is Fine Dog talks the platform
-      out of one ban, and the Chat Arbitrator clears risk.'
+    m_Localized: 'Viewers with a red X add {icon:risk}. Up to 2 net {icon:risk} is
+      fine; at <b>3 the stream gets deplatformed</b>: it ends with no payout and
+      you give one viewer a <b>Temporary Ban</b> (they sit out the next stream).
+      Normie, Die Hard Fan and Internet Starpower <b>cancel</b> 1 {icon:risk} each
+      while in chat (Cheems does too when a Doge is around), and so does every 3
+      points of {icon:CoreFanbase} Core Fanbase. Some viewers add {icon:risk} with
+      their actions; This Is Fine Dog talks the platform out of it once, and the
+      Chat Arbitrator clears risk.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606637
@@ -1203,13 +1203,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606640
-    m_Localized: 'Raising your Sub Cap costs 2 Cash, then 1 more each time (max 12
-      per space, up to 34). Some viewers charge fees (negative Cash). Fees are paid
-      from your Cash; any unpaid amount costs <b>7 Gifted Subs per Cash</b>.\nThe
-      shop''s stock is <b>shared by every player</b>: each normal viewer has 4 copies
-      for the whole match, and you can own at most 4 of each; Diamonds are unlimited.
-      You can''t remove viewers from your Audience, so every recruit changes your
-      odds.'
+    m_Localized: 'Raising your Sub Cap costs 2 {icon:cash}, then 1 more each time
+      (max 12 per space, up to 34). Some viewers charge fees (negative {icon:cash}).
+      Fees are paid from your {icon:cash}; any unpaid amount costs <b>7 {icon:subs}
+      per {icon:cash}</b>.\nThe shop''s stock is <b>shared by every player</b>: each
+      normal viewer has 4 copies for the whole match, and you can own at most 4 of
+      each; Diamonds are unlimited. You can''t remove viewers from your Audience,
+      so every recruit changes your odds.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606641
@@ -1235,11 +1235,11 @@ MonoBehaviour:
   - m_Id: 483606644
     m_Localized: 'Before a season you <b>Select Your Streamer</b>. Each one has a
       power: <b>passive</b> powers are always on; <b>active</b> powers are used from
-      the shop after your stream (on your turn), cost Cash, get more expensive every
-      time you use them (like raising your Sub Cap) and may need a few turns to recharge.
-      <b>Rival</b> powers (Raid, Wealth Tax) hit another player, so they only work
-      in multiplayer. Pick <b>No Streamer</b> to play the classic rules. Your streamer
-      also brings their own stream setup.'
+      the shop after your stream (on your turn), cost {icon:cash}, get more expensive
+      every time you use them (like raising your Sub Cap) and may need a few turns
+      to recharge. <b>Rival</b> powers (Raid, Wealth Tax) hit another player, so
+      they only work in multiplayer. Pick <b>No Streamer</b> to play the classic
+      rules. Your streamer also brings their own stream setup.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606645
@@ -1270,14 +1270,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606649
-    m_Localized: <b>Win:</b> 4 Diamonds in one successful stream.\n<b>Add Viewer:</b>
-      the next viewer in the queue joins chat.  <b>End the Stream:</b> banks Subs
-      as Gifted Subs, plus Cash.\n<b>3 net Platform Ban Risk</b> = Platform Ban (no
-      payout, one viewer gets a Temporary Ban).\n<b>Over your Sub Cap</b> = Server
-      Down (no payout).\n<b>Shop:</b> Gifted Subs recruit viewers (the stock is shared
-      by every player), Cash raises your Sub Cap and pays for streamer actives.\n<b>Keys:</b>
-      Space add viewer/confirm/next night, E end the stream, R Audience, Esc menu,
-      F11 fullscreen.
+    m_Localized: <b>Win:</b> 4 Diamonds in one successful stream.\n<b>Icons:</b>
+      {icon:subs} Gifted Subs   {icon:cash} Cash   {icon:risk} Deplatform Risk (hover
+      any icon to see what it is).\n<b>Add Viewer:</b> the next viewer in the queue
+      joins chat.  <b>End the Stream:</b> banks everyone's {icon:subs} and {icon:cash}.\n<b>3
+      net {icon:risk}</b> = deplatformed (no payout, one viewer gets a Temporary
+      Ban).\n<b>Over your Sub Cap</b> = Server Down (no payout).\n<b>Communities:</b>
+      each different viewer in chat scores a point for their community; points give
+      growing bonuses (Community Beats, top of the chat).\n<b>Shop:</b> {icon:subs}
+      recruit viewers (the stock is shared by every player), {icon:cash} raises your
+      Sub Cap and pays for streamer actives.\n<b>Keys:</b> Space add viewer/confirm/next
+      night, E end the stream, R Audience, Esc menu, F11 fullscreen.
     m_Metadata:
       m_Items: []
   - m_Id: 416591918612480
@@ -1345,7 +1348,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721359
-    m_Localized: Grows +1 $ per entrance
+    m_Localized: Grows +1 {icon:cash} per entrance
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721360
@@ -1361,7 +1364,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721363
-    m_Localized: Hate-watching right now (+1 Platform Ban Risk)
+    m_Localized: Hate-watching right now (+1 {icon:risk})
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721364
@@ -1369,16 +1372,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721365
-    m_Localized: SOMETIMES RISKY
+    m_Localized: SOMETIMES +1 {icon:risk}
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721366
-    m_Localized: No Subs tonight
+    m_Localized: No {icon:subs} tonight
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721367
-    m_Localized: PLATFORM BAN! Platform Ban Risk hit {risk}. The stream is banned.
-      No payout tonight.
+    m_Localized: DEPLATFORMED! {icon:risk} hit {risk}. No payout tonight.
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721368
@@ -1391,7 +1393,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721370
-    m_Localized: '{viewer} gives a softball interview: everyone here earns 0 Subs
+    m_Localized: '{viewer} gives a softball interview: everyone here earns 0 {icon:subs}
       tonight, {cash} banked.'
     m_Metadata:
       m_Items: []
@@ -1400,7 +1402,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721372
-    m_Localized: '{viewer} is hate-watching (+1 Platform Ban Risk).'
+    m_Localized: '{viewer} is hate-watching (+1 {icon:risk}).'
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721373
@@ -1408,15 +1410,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591994109952
-    m_Localized: That would get the stream banned.
+    m_Localized: That would get the stream deplatformed.
     m_Metadata:
       m_Items: []
   - m_Id: 416591994109953
-    m_Localized: That viewer wasn't in the banned stream.
+    m_Localized: That viewer wasn't in the deplatformed stream.
     m_Metadata:
       m_Items: []
   - m_Id: 416591994109954
-    m_Localized: Nobody in chat has Platform Ban Risk.
+    m_Localized: Nobody in chat has {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 416591994109955
@@ -1425,6 +1427,246 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591994109956
     m_Localized: '{0} is sold out: the shop''s stock is shared by every player.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190074982400
+    m_Localized: '{value} {icon:cash}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091264
+    m_Localized: Core Fanbase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091265
+    m_Localized: The regulars. Every {every} points cancel 1 {icon:risk} while they're
+      in chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091266
+    m_Localized: Cancelling {value} {icon:risk} right now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091267
+    m_Localized: Staff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091268
+    m_Localized: The people the stream pays. Each point gives every Staff viewer
+      a {per}% chance to waive their {icon:cash} cost each time they're scored ({top}%
+      at {max} points).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091269
+    m_Localized: 'Now: {value}% chance per Staff scoring to be free.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091270
+    m_Localized: Content
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091271
+    m_Localized: Each point gives every viewer outside the Core Fanbase a {per}%
+      chance to score twice when the stream ends ({top}% at {max} points).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091272
+    m_Localized: 'Now: {value}% chance per viewer to score twice.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091273
+    m_Localized: Techspertise
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091274
+    m_Localized: 'If the server goes down, the stream may still score: {t1}% / {t2}%
+      / {t3}% at 1 / 2 / 3 points (3 is the most that counts).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091275
+    m_Localized: 'Now: {value}% chance the stream still scores if the server goes
+      down.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091276
+    m_Localized: Finance Bros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091277
+    m_Localized: Each point gives every viewer a {per}% chance to score their {icon:cash}
+      reward twice ({top}% at {max} points).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091278
+    m_Localized: 'Now: {value}% chance per viewer to double their {icon:cash} reward.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091279
+    m_Localized: Trolls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091280
+    m_Localized: If the stream gets deplatformed ({icon:risk} over the limit), each
+      point pays 1 random {icon:subs} or {icon:cash}. Not if you end the stream or
+      the server goes down.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091281
+    m_Localized: 'Now: +{value} random {icon:subs}/{icon:cash} if deplatformed.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091282
+    m_Localized: Doomsdayers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091283
+    m_Localized: Multiplayer. After your successful stream, each point gives every
+      viewer in your rivals' next stream a {per}% chance to score nothing ({top}%
+      at {max} points).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091284
+    m_Localized: 'Now: {value}% per viewer in your rivals'' next stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091285
+    m_Localized: Boomer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091286
+    m_Localized: Old money, old opinions. When the stream is scored, each point gives
+      +{cash} {icon:cash} and -{subs} {icon:subs}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091287
+    m_Localized: 'Now: +{cash} {icon:cash} and -{subs} {icon:subs} when the stream
+      is scored.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091288
+    m_Localized: Millennial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091289
+    m_Localized: Very online, slightly broke. When the stream is scored, each point
+      gives +{subs} {icon:subs} and -{cash} {icon:cash}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091290
+    m_Localized: 'Now: +{subs} {icon:subs} and -{cash} {icon:cash} when the stream
+      is scored.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091291
+    m_Localized: Zoomer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091292
+    m_Localized: 'Chaotic. When the stream is scored, two separate rolls, each with
+      a {per}% chance per point ({top}% at {max} points): +{subs} {icon:subs}, and
+      -{cash} {icon:cash}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091293
+    m_Localized: 'Now: {value}% chance for each roll.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091294
+    m_Localized: Armchair Activists
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091295
+    m_Localized: All talk. Each point gives every Armchair Activist in chat a {per}%
+      chance to score nothing when the stream ends ({top}% at {max} points). Other
+      viewers aren't affected.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091296
+    m_Localized: 'Now: {value}% chance each Armchair Activist scores nothing.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091297
+    m_Localized: '{count} {count:plural:point|points}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091298
+    m_Localized: '{count}/{max} points'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091299
+    m_Localized: <b>{icon:Doomsdayers} Cursed by rival Doomsdayers</b>\nEach viewer
+      in this stream has a {value}% chance to score nothing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091300
+    m_Localized: When scored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091301
+    m_Localized: No community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091302
+    m_Localized: '{viewer} works for free tonight ({cash} waived).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091303
+    m_Localized: '{viewer} scores twice.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091304
+    m_Localized: '{viewer}''s {icon:cash} reward doubles ({cash}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091305
+    m_Localized: '{viewer} scores nothing (rival Doomsdayers).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091306
+    m_Localized: Server Down, but Techspertise brought it back ({value}% chance)!
+      The stream still scores.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091307
+    m_Localized: 'Deplatformed, but the Trolls loved the drama: {values}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091308
+    m_Localized: 'Rival Doomsdayers curse this stream: each viewer has a {value}%
+      chance to score nothing.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091309
+    m_Localized: '{community} payout: {values}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190142091310
+    m_Localized: '{viewer} is all talk and scores nothing (Armchair Activists).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190146285568
+    m_Localized: Communities
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675190146285569
+    m_Localized: 'Every viewer belongs to none, one or several <b>communities</b>
+      (the small icons on their card). Each <b>different</b> viewer in chat gives
+      their community a point; two copies of the same card count once, and a viewer
+      who leaves takes their point with them. Every point makes the bonus bigger.
+      Watch the <b>Community Beats</b> at the top of the chat and hover any community
+      icon to see exactly what it does:\n{icon:CoreFanbase} <b>Core Fanbase</b>:
+      every 3 points cancel 1 {icon:risk}.\n{icon:Staff} <b>Staff</b>: 10% per point
+      that a Staff viewer''s {icon:cash} cost is waived.\n{icon:Content} <b>Content</b>:
+      10% per point that a viewer outside the Core Fanbase scores twice.\n{icon:Techspertise}
+      <b>Techspertise</b>: 20 / 40 / 50% that a Server Down stream still scores.\n{icon:FinanceBros}
+      <b>Finance Bros</b>: 10% per point that a {icon:cash} reward doubles.\n{icon:Trolls}
+      <b>Trolls</b>: 1 random {icon:subs} or {icon:cash} per point when you get deplatformed.\n{icon:Doomsdayers}
+      <b>Doomsdayers</b> (multiplayer): 4% per point that each viewer in your rivals''
+      next stream scores nothing.\n{icon:Boomer} <b>Boomer</b>: +2 {icon:cash} and
+      -1 {icon:subs} per point when the stream is scored.\n{icon:Millennial} <b>Millennial</b>:
+      +2 {icon:subs} and -1 {icon:cash} per point when the stream is scored.\n{icon:Zoomer}
+      <b>Zoomer</b>: two separate rolls of 20% per point (up to 80%): +6 {icon:subs},
+      and -3 {icon:cash}.\n{icon:ArmchairActivists} <b>Armchair Activists</b>: 10%
+      per point (up to 50%) that each Armchair Activist scores nothing.'
     m_Metadata:
       m_Items: []
   references:

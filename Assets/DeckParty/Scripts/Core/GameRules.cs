@@ -14,7 +14,7 @@ namespace DeckParty.Core
         public const int FirstExpansionCost = 2;
         public const int MaxExpansionCost = 12;
 
-        /// <summary>Net Platform Ban Risk at (or above) this value gets the stream banned (internally: a raid).</summary>
+        /// <summary>Net Deplatform Risk at (or above) this value gets the stream deplatformed (internally: a raid).</summary>
         public const int RaidTroubleThreshold = 3;
 
         /// <summary>Diamonds that must attend one successful party to win.</summary>
@@ -36,8 +36,8 @@ namespace DeckParty.Core
         /// <summary>Gifted Subs lost for every Cash a party cannot pay.</summary>
         public const int CashShortfallPopPenalty = 7;
 
-        /// <summary>Guests are shown in rows of this many.</summary>
-        public const int HouseColumns = 9;
+        /// <summary>Most viewer cards in one chat row: past this the chat starts a new row (more only once cards hit their minimum size).</summary>
+        public const int HouseColumns = 8;
 
         // --- Meme guest tuning ---
         public const int DogeMaxBonus = 5;
@@ -61,9 +61,9 @@ namespace DeckParty.Core
         public const int AttractionRevealCount = 3;
 
         // --- Audience classics tuning ---
-        /// <summary>Comedian with a Podcast: Subs when chat is full at scoring time.</summary>
-        public const int ComedianFullBonus = 5;
-        /// <summary>Master of Currency ($) and Executive PR (Subs): bonus per viewer still carrying Platform Ban Risk.</summary>
+        /// <summary>Promo Code User: Subs when chat is full at scoring time.</summary>
+        public const int PromoCodeFullBonus = 5;
+        /// <summary>Master of Currency ($) and Executive PR (Subs): bonus per viewer still carrying Deplatform Risk.</summary>
         public const int PerRiskyViewerBonus = 2;
 
         /// <summary>

@@ -1,5 +1,7 @@
 # Audience Capture V3: where to put your sprites
 
+> V4 note: Platform Ban is now **Deplatform** (Stream Art > **Deplatform Image**, your image is kept), group icons were replaced by **Community Icons**, and resources are icons everywhere. See **V4Instructions.md** for what's current.
+
 ## 1. Get the update into Unity (do this first)
 
 1. Open the project and let it compile.

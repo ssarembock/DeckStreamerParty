@@ -190,7 +190,8 @@ namespace DeckParty.UI
         /// <summary>The live status line under a player in the Players panel ("choosing Trollface's target..."), or null.</summary>
         string PresenceLine(ulong clientId)
         {
-            if (clientId == LocalId || !m_Presence.TryGetValue(clientId, out var msg)) return null;
+            // Free For All: nobody watches anyone else, so nothing about what they're doing right now.
+            if (clientId == LocalId || FreeForAll || !m_Presence.TryGetValue(clientId, out var msg)) return null;
             var s = m_Net != null ? m_Net.GetState(clientId) : null;
             if (s == null) return null;
             string Viewer(int id) => s.Find(id) is GuestInstance g ? GuestVisuals.DisplayName(g.Kind) : Loc.Get("common.someone");

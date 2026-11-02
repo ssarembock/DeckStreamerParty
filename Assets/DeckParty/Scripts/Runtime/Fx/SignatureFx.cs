@@ -31,7 +31,7 @@ namespace DeckParty
             { GuestType.PrManager, S(null, CardPulse.Shine, 4f, UIPalette.Gold) },
             { GuestType.CybersecurityEngineer, S(null, CardPulse.Hologram, 0f, UIPalette.Teal) },
             { GuestType.SocialMediaManager, S(null, CardPulse.Hologram, 0f, UIPalette.Blue) },
-            { GuestType.CryptoGuy, S(CardPulse.Shine, CardPulse.Glitch, 2f, UIPalette.Gold) },
+            { GuestType.CryptoEnthusiast, S(CardPulse.Shine, CardPulse.Glitch, 2f, UIPalette.Gold) },
             { GuestType.ChatArbitrator, S(null, CardPulse.Frozen, 0f, UIPalette.Teal) },
             { GuestType.BotDetector, S(CardPulse.Glitch, null, 6f, UIPalette.Red) },
             { GuestType.BillionaireBenefactor, S(null, CardPulse.Shine, 0f, UIPalette.Green) },
@@ -56,7 +56,7 @@ namespace DeckParty
             { GuestType.SideEyeChloe, S(null, CardPulse.Hologram, 0f, UIPalette.TextDim) },
             { GuestType.RollSafe, S(CardPulse.Frozen, null, 0f, UIPalette.Teal) },
             { GuestType.PlatformOwner, S(CardPulse.Burn, null, 10f, UIPalette.Red) },
-            { GuestType.SurpriseGuest, S(CardPulse.GlowIn, CardPulse.Shine, 0f, UIPalette.Gold) },
+            { GuestType.Evangelist, S(CardPulse.GlowIn, CardPulse.Shine, 0f, UIPalette.Gold) },
             // Arrival specials (no action button)
             { GuestType.GenerousDonator, S(CardPulse.Shine, CardPulse.Shine, 0f, UIPalette.Gold) },
             { GuestType.HateWatcher, S(null, CardPulse.Burn, 2f, UIPalette.Red) },

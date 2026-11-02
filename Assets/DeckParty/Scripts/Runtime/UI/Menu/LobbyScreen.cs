@@ -189,13 +189,16 @@ namespace DeckParty.UI
                 if (!customTimerInput.isFocused) customTimerInput.text = settings.TurnSeconds > 0 ? settings.TurnSeconds.ToString() : string.Empty;
             }
             m_Applying = false;
+            // More than two players: Free For All is the only mode (the host switches automatically).
+            bool freeForAllOnly = m_Session.ConnectedCount > MatchModes.MaxPlayersForAnyMode;
             scenarioSelector.Interactable = isHost;
-            modeSelector.Interactable = isHost;
+            modeSelector.Interactable = isHost && !freeForAllOnly;
             nightsSelector.Interactable = isHost;
 
             var summary = new StringBuilder();
             summary.Append($"<b>{ContentText.ScenarioName(settings.ScenarioId)}</b> - {ContentText.ScenarioDescription(settings.ScenarioId)}\n");
             summary.Append(ModeSummary(settings.Mode));
+            if (freeForAllOnly) summary.Append("\n<color=#FF9A3D>").Append(Loc.Get("lobby.ffa_only", "count", MatchModes.MaxPlayersForAnyMode)).Append("</color>");
             if (turns) summary.Append("\n").Append(Loc.Get("lobby.timer_summary", "timer", TurnTimers.Describe(settings.TurnSeconds)));
             settingsSummary.text = summary.ToString();
 

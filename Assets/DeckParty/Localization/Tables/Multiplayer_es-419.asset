@@ -286,7 +286,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 437469247
     m_Localized: "\xA1{0} le hizo raid a {1}! Su pr\xF3ximo stream empieza con +1
-      de riesgo de baneo."
+      {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 437469248
@@ -322,11 +322,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416590245085184
-    m_Localized: "\xA1Banearon el stream de {0}!"
+    m_Localized: "\xA1Desplataformaron a {0}!"
     m_Metadata:
       m_Items: []
   - m_Id: 416590320582656
     m_Localized: "\xA1{0} se pas\xF3 de su cupo y se cay\xF3 el servidor!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675188590198784
+    m_Localized: "\xA1Los Apocal\xEDpticos de {0} maldicen el pr\xF3ximo stream de
+      todos ({1}% por espectador)!"
     m_Metadata:
       m_Items: []
   references:

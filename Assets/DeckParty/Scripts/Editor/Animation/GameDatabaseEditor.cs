@@ -6,7 +6,7 @@ namespace DeckParty.EditorTools
 {
     /// <summary>
     /// The Game Database inspector (Deck Party > Select Game Database): the stream art (chat bubble and tail, viewer emojis,
-    /// multiplayer emotes, Platform Ban / Server Down images, group icons), one compact row per streamer with their quotes,
+    /// multiplayer emotes, Deplatform / Server Down images, community icons), one compact row per streamer with their quotes,
     /// and one row per viewer with search and filters, the sprite (always the fallback), an optional Character Prefab and
     /// Animator Controller (which override the sprite), framing, and a checklist of the animation states the game looks for.
     /// </summary>
@@ -24,7 +24,7 @@ namespace DeckParty.EditorTools
         /// <summary>The stream art fields, drawn in their own section (and left out of the generic list at the bottom).</summary>
         static readonly string[] s_StreamArt =
         {
-            "chatBubble", "chatBubbleTail", "chatBubbleTint", "viewerEmojis", "emotes", "platformBanImage", "serverDownImage", "groupIcons",
+            "chatBubble", "chatBubbleTail", "chatBubbleTint", "viewerEmojis", "emotes", "deplatformImage", "serverDownImage", "communityIcons",
         };
 
         string m_Search = string.Empty;
@@ -45,7 +45,7 @@ namespace DeckParty.EditorTools
                 "States the game plays: Idle (no action) or Idle_Pre_Active / Active / Idle_Post_Active (with an action), Score, and optional Enter, Exit, Hit, Celebrate. " +
                 "Deck Party > Art > Validate Character Animations checks everything.", MessageType.Info);
 
-            m_ShowStreamArt = EditorGUILayout.Foldout(m_ShowStreamArt, "Stream Art (chat bubble, emojis, emotes, stream endings, group icons)", true, EditorStyles.foldoutHeader);
+            m_ShowStreamArt = EditorGUILayout.Foldout(m_ShowStreamArt, "Stream Art (chat bubble, emojis, emotes, stream endings, community icons)", true, EditorStyles.foldoutHeader);
             if (m_ShowStreamArt) DrawStreamArt();
 
             EditorGUILayout.Space(8);
@@ -53,7 +53,7 @@ namespace DeckParty.EditorTools
             if (m_ShowStreamers) DrawStreamers(db);
 
             EditorGUILayout.Space(8);
-            m_ShowViewers = EditorGUILayout.Foldout(m_ShowViewers, $"Viewers ({db.guests.Count})", true, EditorStyles.foldoutHeader);
+            m_ShowViewers = EditorGUILayout.Foldout(m_ShowViewers, $"Viewers ({GuestCatalog.Roster.Count} in the roster, plus the Bot)", true, EditorStyles.foldoutHeader);
             if (m_ShowViewers) DrawViewers(db);
 
             EditorGUILayout.Space(8);
@@ -69,7 +69,9 @@ namespace DeckParty.EditorTools
                 "Chat Bubble: a square sprite with 9-slice borders (Sprite Editor). Tail: a sprite pointing down, placed on the bubble's top edge; " +
                 "its spot along the edge is set per stream setup (Venue > Chat Tail Position). " +
                 "Emojis and Emotes: slice the sheet (Sprite Mode Multiple), select every slice in the Project window and drag them onto the list. " +
-                "Stream Endings show full-screen when a stream gets a Platform Ban or the server goes down.", MessageType.None);
+                "Stream Endings show full-screen when a stream gets deplatformed or the server goes down. " +
+                "Community Icons appear on cards, shop tiles, tooltips, inside text and on the Community Beats chips. " +
+                "The resource icons (Gifted Subs, Cash, Deplatform Risk) live in the UI Skin: IconPop, IconCash and IconTrouble.", MessageType.None);
             using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {
                 foreach (var name in s_StreamArt)
@@ -128,7 +130,7 @@ namespace DeckParty.EditorTools
                 EditorGUILayout.PropertyField(element.FindPropertyRelative("color"));
                 EditorGUILayout.PropertyField(element.FindPropertyRelative("characterPrefab"));
                 EditorGUILayout.PropertyField(element.FindPropertyRelative("animatorController"));
-                EditorGUILayout.LabelField("States: Idle, Select (picked), Anxious (one risk from a Platform Ban), optional Hit and Celebrate (facecam).", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField("States: Idle, Select (picked), Anxious (one risk from being deplatformed), optional Hit and Celebrate (facecam).", EditorStyles.miniLabel);
             }
         }
 
@@ -140,11 +142,28 @@ namespace DeckParty.EditorTools
                 m_Filter = (Filter)EditorGUILayout.EnumPopup(m_Filter, GUILayout.Width(110));
             }
 
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                EditorGUILayout.LabelField("Communities: tick any number per viewer (Nothing = no community). Edits apply straight away.", EditorStyles.miniLabel);
+                if (GUILayout.Button("Reset All Communities", GUILayout.Width(170)) &&
+                    EditorUtility.DisplayDialog("Reset communities", "Put every viewer back on the built-in communities (the V4.2 card table)? Your community edits are lost.", "Reset", "Cancel"))
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    Undo.RecordObject(target, "Reset Communities");
+                    db.ResetCommunitiesToDefaults();
+                    EditorUtility.SetDirty(target);
+                    serializedObject.Update();
+                }
+            }
+
+            EditorGUILayout.LabelField("Only the current roster is listed (put-aside viewers keep their art in the database, hidden). " +
+                                       "The Bot is the token the Bots community sends: give it a portrait like any viewer.", EditorStyles.wordWrappedMiniLabel);
+
             var guests = serializedObject.FindProperty("guests");
             for (int i = 0; i < guests.arraySize && i < db.guests.Count; i++)
             {
                 var art = db.guests[i];
-                if (art == null || !Matches(art)) continue;
+                if (art == null || GuestCatalog.IsPutAside(art.type) || !Matches(art)) continue;
                 var element = guests.GetArrayElementAtIndex(i);
                 DrawRow(art, element, i);
             }
@@ -175,8 +194,11 @@ namespace DeckParty.EditorTools
                     {
                         var info = GuestCatalog.Get(art.type);
                         string badge = art.IsAnimated ? "  [animated]" : art.portrait != null ? "  [sprite]" : "  [placeholder]";
-                        EditorGUILayout.LabelField(art.name + badge, info.HasAbility ? "action: " + info.AbilityName : "no action", EditorStyles.boldLabel);
+                        string kind = GuestCatalog.IsToken(art.type) ? "Bots token (never bought)" : info.HasAbility ? "action: " + info.AbilityName : "no action";
+                        EditorGUILayout.LabelField(art.name + badge, kind, EditorStyles.boldLabel);
                         EditorGUILayout.PropertyField(element.FindPropertyRelative("portrait"), new GUIContent("Portrait (fallback)"));
+                        if (!GuestCatalog.IsToken(art.type))
+                            EditorGUILayout.PropertyField(element.FindPropertyRelative("communities"), new GUIContent("Communities"));
                     }
                     if (GUILayout.Button(m_Expanded == index ? "Less" : "Animation...", GUILayout.Width(90), GUILayout.Height(38)))
                         m_Expanded = m_Expanded == index ? -1 : index;

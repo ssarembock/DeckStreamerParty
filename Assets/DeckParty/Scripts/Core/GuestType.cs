@@ -1,10 +1,11 @@
 namespace DeckParty.Core
 {
     /// <summary>
-    /// All 82 guest types. The numeric values are serialized (saves and network packets), so only ever
-    /// append new entries at the end. Bump <see cref="StateSerializer"/>'s format version if you renumber.
-    /// Identifiers follow the current English names; the Game Database migrates art stored under older names
-    /// (see <see cref="GuestCatalog.RenamedFrom"/>).
+    /// All 83 guest types: the 82 viewer cards (44 in the current roster, the rest put aside; see
+    /// <see cref="GuestCatalog.IsPutAside"/>) and the Bot token the Bots community sends. The numeric values are serialized
+    /// (saves and network packets), so only ever append new entries at the end. Bump <see cref="StateSerializer"/>'s format
+    /// version if you renumber. Identifiers follow the current English names; the Game Database migrates art stored under
+    /// older names (see <see cref="GuestCatalog.RenamedFrom"/>).
     /// </summary>
     public enum GuestType : byte
     {
@@ -21,7 +22,7 @@ namespace DeckParty.Core
         MarketingManager = 9,
 
         // --- Meme guests 1-10 ---
-        Doge = 10,
+        DegenDog = 10,
         Trollface = 11,
         Pepe = 12,
         Gigachad = 13,
@@ -65,7 +66,7 @@ namespace DeckParty.Core
         ConfusedMathLady = 45,
         SideEyeChloe = 46,
         RollSafe = 47,
-        CryingCat = 48,
+        DistraughtCat = 48,
         DancingBaby = 49,
 
         // --- Diamond guests (formerly Stars, renamed in V3) ---
@@ -77,15 +78,15 @@ namespace DeckParty.Core
         PlatformOwner = 55,
         MainstreamCelebrity = 56,
         SeniorMarketingManager = 57,
-        SurpriseGuest = 58,
+        Evangelist = 58,
 
         // --- V3: the rest of the audience classics ---
         InfluentialTroll = 59,
         CybersecurityEngineer = 60,
         PaidSponsorship = 61,
-        ComedianWithAPodcast = 62,
+        PromoCodeUser = 62,
         AccountManager = 63,
-        CryptoGuy = 64,
+        CryptoEnthusiast = 64,
         GenerousDonator = 65,
         PrManager = 66,
         HighlyRiskyCollaborator = 67,
@@ -103,11 +104,14 @@ namespace DeckParty.Core
         MasterOfCurrency = 79,
         ExecutivePr = 80,
         GenZWithJob = 81,
+
+        // --- V4.2: not a viewer card. Rival Bots communities send these into your next stream (takes a space, earns nothing). ---
+        Bot = 82,
     }
 
     /// <summary>
-    /// Character groups. Doge counts how many different ones are at the party; Bongo Cat buffs Animals.
-    /// <see cref="Tbd"/> ("to be determined") is for viewers whose group hasn't been decided yet: it never counts as a group.
+    /// The old character groups ("families"). No longer used by the game: viewers belong to <see cref="Community"/>
+    /// groups instead (Doge and Bongo Cat now use those). Kept, with every viewer's old value, in case they come back.
     /// </summary>
     public enum GuestCategory : byte
     {
@@ -134,7 +138,7 @@ namespace DeckParty.Core
         Invest,     // Stonks Guy: stake Gifted Subs or Cash on the party succeeding.
         PlayOff,    // Keyboard Cat: evict a guest for Subs or Cash.
         Mog,        // Chad vs Virgin: compare printed Subs and transfer 1 permanently.
-        Arson,      // Disaster Girl: +1 Platform Ban Risk and +3 Subs to another guest.
+        Arson,      // Disaster Girl: +1 Deplatform Risk and +3 Subs to another guest.
         Reroll,     // Success Kid: reroll the last random arrival, or peek at the next guest.
         Strike,     // Tung Tung Tung Sahur: three strikes and you're out.
         SwapOrder,  // Tralalero Tralala: swap two guests' places in the arrival order.
@@ -147,8 +151,8 @@ namespace DeckParty.Core
         SideEye,    // Side Eye Chloe: move the next guest to the back of the line.
         Immunity,   // Roll Safe: a guest ignores further ability effects tonight.
         Peek,       // Cybersecurity Engineer / Social Media Manager: look at the next guest, then let them in or deny them.
-        Photograph, // Crypto Guy: score another guest right now (banked immediately).
-        Calm,       // Chat Arbitrator: clear Platform Ban Risk from every risky guest for the rest of the party.
+        Photograph, // Crypto Enthusiast: score another guest right now (banked immediately).
+        Calm,       // Chat Arbitrator: clear Deplatform Risk from every risky guest for the rest of the party.
         BootPair,   // Bot Detector: remove two guests sitting next to each other.
         Interview,  // Billionaire Benefactor: everyone's Subs drop to 0; bank 1 Cash per Billionaire Benefactor.
         Style,      // Affiliate: a guest permanently earns +1 Cash.

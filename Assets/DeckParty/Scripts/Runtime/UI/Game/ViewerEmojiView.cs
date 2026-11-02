@@ -9,8 +9,8 @@ namespace DeckParty.UI
 {
     /// <summary>
     /// Viewers in chat send emojis that float up from their cards and fade away. Which ones, and how often, follow how close
-    /// the stream is to a Platform Ban: calm chats send mostly peaceful emojis now and then, tense chats argue, and one
-    /// Platform Ban Risk from the limit they get angry and spam. Viewers who carry risk themselves lean angrier.
+    /// the stream is to being deplatformed: calm chats send mostly peaceful emojis now and then, tense chats argue, and one
+    /// Deplatform Risk from the limit they get angry and spam. Viewers who carry risk themselves lean angrier.
     /// Art and timing live in the Game Database (Viewer Emojis); purely cosmetic and local (never networked).
     /// </summary>
     public sealed class ViewerEmojiView : MonoBehaviour
@@ -35,7 +35,7 @@ namespace DeckParty.UI
         readonly List<GameObject> m_Floating = new List<GameObject>();
         readonly List<GuestCardView> m_Candidates = new List<GuestCardView>();
 
-        /// <summary>Danger level 0 (calm), 1 (tense) or 2 (one Platform Ban Risk from the limit).</summary>
+        /// <summary>Danger level 0 (calm), 1 (tense) or 2 (one Deplatform Risk from the limit).</summary>
         public static int DangerLevel(PlayerState s)
         {
             if (s == null || s.Phase != GamePhase.Party) return 0;

@@ -1,3 +1,4 @@
+using DeckParty.Core;
 using DeckParty.UI;
 using TMPro;
 using UnityEditor;
@@ -8,10 +9,11 @@ using UnityEngine.UI;
 namespace DeckParty.EditorTools
 {
     /// <summary>
-    /// Builds Assets/DeckParty/Scenes/Game.unity: HUD, the stream (a stage strip on top and the chat bubble the viewers sit
-    /// in), stream controls, shop (streamer card, Sub Cap, Audience and the viewer grid), side panel (players, emotes,
-    /// optional Activity log, facecam) and overlays (presence, anxious streamer, turn timer, stream overlay, link lines,
-    /// Platform Ban / Server Down images).
+    /// Builds Assets/DeckParty/Scenes/Game.unity: HUD, the stream (a stage strip on top, the chat bubble the viewers sit in
+    /// and the facecam in its bottom-right corner with the LIVE badge), stream controls, shop (streamer card, Sub Cap,
+    /// Audience, the viewer grid and the Free For All gate), side panel (players, emotes, optional Activity log; the stream
+    /// takes the whole width while it's empty) and overlays (presence, anxious streamer, turn timer, link lines, Deplatform /
+    /// Server Down images, the round summary).
     /// Static captions are localization keys (see EditorLoc); labels the views fill at runtime use plain placeholders.
     /// </summary>
     internal static class GameSceneBuilder
@@ -20,6 +22,15 @@ namespace DeckParty.EditorTools
         const float StageHeight = 190f;
         /// <summary>Height of the stream controls along the bottom.</summary>
         const float ControlsHeight = 186f;
+        /// <summary>Community Beats chips (top-right of the chat bubble).</summary>
+        const float BeatChipWidth = 92f;
+        const float BeatChipHeight = 64f;
+        const float BeatChipGap = 6f;
+        const float CursedChipWidth = 116f;
+        /// <summary>The facecam square in the stream's bottom-right corner (3/4 of the old side-panel facecam).</summary>
+        const float FacecamSize = 318f;
+        /// <summary>Its distance from the stream's right and bottom edges.</summary>
+        const float FacecamMargin = 8f;
         public static void Build()
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
@@ -42,23 +53,26 @@ namespace DeckParty.EditorTools
 
             var mainArea = EditorUI.Rect(root, "MainArea").Box(Vector2.zero, Vector2.one, new Vector2(16, 16), new Vector2(-456, -130));
             var partyRoot = EditorUI.Rect(mainArea, "Party").Stretch();
-            var house = BuildHouse(partyRoot, prefabs, out var links, out var bubble, out var viewerEmojis);
+            var house = BuildHouse(partyRoot, prefabs, out var links, out var bubble, out var viewerEmojis, out var beats);
             var targeting = BuildTargetingBanner(partyRoot);
             var controls = BuildPartyControls(partyRoot, prefabs);
-            var streamOverlay = BuildStreamOverlay(partyRoot);
+            // The facecam belongs to the stream (it hides with it in the shop) and the cards keep clear of it.
+            var facecam = BuildFacecam(partyRoot, out var streamOverlay);
+            // The facecam's fixed square (its frame punches and trembles; the cards shouldn't follow that).
+            house.avoid = (RectTransform)facecam.transform;
             var planning = BuildPlanning(mainArea, prefabs);
             var raid = BuildRaidBlame(mainArea, prefabs);
 
-            // Players and emotes (multiplayer), the optional Activity log, then the facecam in the bottom-right corner.
+            // Players and emotes (multiplayer) and the optional Activity log. With none of them showing (single player, log off)
+            // ContentFrame gives the stream the whole width.
             var side = EditorUI.Rect(root, "SidePanel").Box(new Vector2(1, 0), new Vector2(1, 1), new Vector2(-440, 16), new Vector2(-16, -130));
             EditorUI.VLayout(side, 12, EditorUI.Pad(0), TextAnchor.UpperCenter, true, true, true, false);
             var opponents = BuildOpponents(side, prefabs);
             var emotes = BuildEmoteBar(side);
             var feed = BuildFeed(side, prefabs, out var log, out var chat);
-            // Keeps the facecam at the bottom while the Activity log is hidden.
+            // Keeps the panels at the top.
             var spacer = EditorUI.Rect(side, "Spacer");
             EditorUI.Layout(spacer, -1, 0, -1, 1);
-            var facecam = BuildFacecam(side);
             frame.sidePanel = side;
             frame.mainArea = mainArea;
 
@@ -72,6 +86,7 @@ namespace DeckParty.EditorTools
             var splash = BuildOutcomeSplash(overlay);
             var picker = BuildPicker(overlay, prefabs);
             var rolodex = BuildRolodex(overlay, prefabs);
+            var roundSummary = BuildRoundSummary(overlay);
             var pause = BuildPauseMenu(overlay);
             var gameOver = BuildGameOver(overlay, prefabs);
             SceneCommon.CreateOverlays(overlay);
@@ -92,7 +107,9 @@ namespace DeckParty.EditorTools
             controller.facecam = facecam;
             controller.chatBubble = bubble;
             controller.viewerEmojis = viewerEmojis;
+            controller.communityBeats = beats;
             controller.outcomeSplash = splash;
+            controller.roundSummary = roundSummary;
             controller.picker = picker;
             controller.rolodex = rolodex;
             controller.gameOver = gameOver;
@@ -211,7 +228,8 @@ namespace DeckParty.EditorTools
         /// through, computer and all), and below it the chat bubble the viewers sit in. The bubble's tail sits on its top
         /// edge, pointing up at the computer (ChatBubbleView places it from the stream setup's Chat Tail Position).
         /// </summary>
-        static HouseView BuildHouse(RectTransform partyRoot, UIPrefabs prefabs, out LinkLinesView links, out ChatBubbleView bubbleView, out ViewerEmojiView emojiView)
+        static HouseView BuildHouse(RectTransform partyRoot, UIPrefabs prefabs, out LinkLinesView links, out ChatBubbleView bubbleView, out ViewerEmojiView emojiView,
+            out CommunityBeatsView beatsView)
         {
             var stage = EditorUI.Rect(partyRoot, "Stage").TopBand(0, StageHeight);
             var headerImage = EditorUI.Image(stage, "HeaderImage", Color.white);
@@ -226,10 +244,13 @@ namespace DeckParty.EditorTools
             var tail = EditorUI.Image(bubble.transform, "Tail", new Color(0.13f, 0.10f, 0.22f, 0.86f));
             tail.preserveAspect = true;
 
-            var header = EditorUI.Text(bubble.transform, "Header", "-", 28, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
-            header.rectTransform.TopBand(14, 40, 30, 30);
-            var hint = EditorUI.Text(bubble.transform, "Hint", string.Empty, 22, UIPalette.Orange, TextAlignmentOptions.MidlineLeft, false, false, false);
-            hint.rectTransform.TopBand(54, 30, 30, 30);
+            // No status line ("Live Chat 3/5 Sub Cap..."): the top band holds the hint (one risk left, chat full, win now) on the
+            // left and the Community Beats chips on the right (CommunityBeatsView pulls the hint in to fit the chips).
+            float beatsWidth = Communities.Count * BeatChipWidth + (Communities.Count - 1) * BeatChipGap + CursedChipWidth + BeatChipGap;
+            var hint = EditorUI.Text(bubble.transform, "Hint", string.Empty, 24, UIPalette.Orange, TextAlignmentOptions.MidlineLeft, false, false, false);
+            hint.rectTransform.TopBand(20, 48, 30, 30);
+            beatsView = BuildCommunityBeats(bubble.transform, beatsWidth);
+            beatsView.avoid = new[] { hint.rectTransform };
 
             var area = EditorUI.Rect(bubble.transform, "HouseArea").Box(Vector2.zero, Vector2.one, new Vector2(18, 16), new Vector2(-18, -88));
 
@@ -274,7 +295,6 @@ namespace DeckParty.EditorTools
             view.grid = grid;
             view.scroll = scroll;
             view.cardPrefab = prefabs.GuestCard;
-            view.headerLabel = header;
             view.hintLabel = hint;
 
             // Viewer emojis float above the cards (and above the bubble's edge).
@@ -285,11 +305,69 @@ namespace DeckParty.EditorTools
             return view;
         }
 
+        /// <summary>
+        /// Community Beats: a chip per community (icon, live score, current bonus; hover for what it does and how it scales),
+        /// right-aligned in the bubble's top band, plus a red chip shown while rival Doomsdayers curse the stream.
+        /// </summary>
+        static CommunityBeatsView BuildCommunityBeats(Transform bubble, float width)
+        {
+            var row = EditorUI.Rect(bubble, "CommunityBeats").Place(new Vector2(1, 1), new Vector2(-22, -12), new Vector2(width, BeatChipHeight), new Vector2(1, 1));
+            EditorUI.HLayout(row, BeatChipGap, EditorUI.Pad(0), TextAnchor.MiddleRight, false, false, false, false);
+
+            // Rival Doomsdayers warning (hidden unless this stream is cursed).
+            var cursed = EditorUI.Image(row, "Cursed", UIPalette.Red.WithAlpha(0.85f), EditorUI.Rounded, SkinSlot.Badge, true);
+            EditorUI.Layout(cursed, CursedChipWidth, BeatChipHeight, 0, 0);
+            var cursedLabel = EditorUI.Text(cursed.transform, "Label", "-", 24, UIPalette.Text, TextAlignmentOptions.Center, true, false, false);
+            cursedLabel.rectTransform.Stretch(6, 4, 6, 4);
+            var cursedTip = EditorUI.Tooltip(cursed);
+            cursed.gameObject.SetActive(false);
+
+            var chips = new CommunityBeatsView.Chip[Communities.Count];
+            for (int i = 0; i < Communities.Count; i++)
+            {
+                var community = Communities.All[i];
+                var background = EditorUI.Image(row, "Beat_" + community, UIPalette.PanelDeep.WithAlpha(0.7f), EditorUI.Rounded, null, true);
+                EditorUI.Layout(background, BeatChipWidth, BeatChipHeight, 0, 0);
+                var group = background.gameObject.AddComponent<CanvasGroup>();
+
+                // Icon and score on top, the current bonus across the bottom.
+                var icon = EditorUI.Image(background.transform, "Icon", Color.white, EditorUI.Circle);
+                icon.preserveAspect = true;
+                icon.rectTransform.Place(new Vector2(0, 1), new Vector2(6, -4), new Vector2(32, 32), new Vector2(0, 1));
+
+                var points = EditorUI.Text(background.transform, "Points", "0", 24, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
+                points.rectTransform.Box(new Vector2(0, 0.45f), Vector2.one, new Vector2(42, 0), new Vector2(-4, -2));
+                var effect = EditorUI.Text(background.transform, "Effect", "-", 16, UIPalette.TextDim, TextAlignmentOptions.Midline, false, false, false);
+                effect.rectTransform.Box(Vector2.zero, new Vector2(1, 0.45f), new Vector2(4, 2), new Vector2(-4, 0));
+                effect.fontSizeMin = 10;
+
+                chips[i] = new CommunityBeatsView.Chip
+                {
+                    community = community,
+                    root = background.rectTransform,
+                    group = group,
+                    background = background,
+                    icon = icon,
+                    pointsLabel = points,
+                    effectLabel = effect,
+                    tooltip = EditorUI.Tooltip(background),
+                };
+            }
+
+            var view = row.gameObject.AddComponent<CommunityBeatsView>();
+            view.chips = chips;
+            view.cursed = cursed.gameObject;
+            view.cursedLabel = cursedLabel;
+            view.cursedTooltip = cursedTip;
+            return view;
+        }
+
         // ------------------------------------------------------------------ polish overlays
 
-        static StreamOverlayView BuildStreamOverlay(RectTransform partyRoot)
+        /// <summary>The LIVE badge and the stream timer, top-left inside the facecam.</summary>
+        static StreamOverlayView BuildStreamOverlay(Transform parent)
         {
-            var rect = EditorUI.Rect(partyRoot, "StreamOverlay").Place(new Vector2(1, 1), new Vector2(-12, -4), new Vector2(220, 38), new Vector2(1, 1));
+            var rect = EditorUI.Rect(parent, "StreamOverlay").Place(new Vector2(0, 1), new Vector2(12, -12), new Vector2(210, 34), new Vector2(0, 1));
             return rect.gameObject.AddComponent<StreamOverlayView>();
         }
 
@@ -342,26 +420,28 @@ namespace DeckParty.EditorTools
         {
             var bar = EditorUI.Panel(partyRoot, "Controls", UIPalette.PanelDeep.WithAlpha(0.9f));
             bar.rectTransform.BottomBand(0, ControlsHeight);
+            // The buttons centre in the room left of the facecam (bottom-right corner).
+            var buttons = EditorUI.Rect(bar.transform, "Buttons").Box(Vector2.zero, Vector2.one, Vector2.zero, new Vector2(-(FacecamSize + FacecamMargin + 16), 0));
 
-            var door = EditorUI.Button(bar.transform, "Door", "Add Viewer to Chat", ButtonStyle.Primary, 36, out var doorLabel);
+            var door = EditorUI.Button(buttons, "Door", "Add Viewer to Chat", ButtonStyle.Primary, 36, out var doorLabel);
             door.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0.5f), new Vector2(-255, 16), new Vector2(480, 126));
             doorLabel.rectTransform.TopBand(16, 52, 16, 16);
             var doorSub = EditorUI.Text(door.transform, "Sub", string.Empty, 20, UIPalette.Text.WithAlpha(0.9f), TextAlignmentOptions.Center, false, false, false);
             doorSub.rectTransform.BottomBand(14, 34, 12, 12);
             var doorTip = EditorUI.Tooltip(door);
 
-            var end = EditorUI.Button(bar.transform, "EndParty", "End the Stream", ButtonStyle.Gold, 36, out var endLabel);
+            var end = EditorUI.Button(buttons, "EndParty", "End the Stream", ButtonStyle.Gold, 36, out var endLabel);
             end.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0.5f), new Vector2(255, 16), new Vector2(480, 126));
             endLabel.rectTransform.TopBand(16, 52, 16, 16);
             var endSub = EditorUI.Text(end.transform, "Sub", string.Empty, 20, UIPalette.Night, TextAlignmentOptions.Center, true, false, false);
             endSub.rectTransform.BottomBand(14, 34, 12, 12);
             EditorUI.Tooltip(end);
 
-            var risk = EditorUI.Text(bar.transform, "Risk", string.Empty, 22, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
+            var risk = EditorUI.Text(buttons, "Risk", string.Empty, 22, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
             risk.rectTransform.BottomBand(6, 32, 20, 20);
 
             // Peek decision panel floats above the controls.
-            var peek = EditorUI.Panel(bar.transform, "Peek", UIPalette.PanelDeep);
+            var peek = EditorUI.Panel(buttons, "Peek", UIPalette.PanelDeep);
             peek.rectTransform.Place(new Vector2(0.5f, 1), new Vector2(0, 12), new Vector2(680, 384), new Vector2(0.5f, 0));
             var peekTitle = EditorUI.Text(peek.transform, "Title", "-", 28, UIPalette.Teal, TextAlignmentOptions.MidlineLeft, true, true, false);
             peekTitle.rectTransform.TopBand(14, 40, 28, 28);
@@ -396,7 +476,7 @@ namespace DeckParty.EditorTools
 
         /// <summary>
         /// The shop: the left column holds the player's streamer card (with its active), Raise Sub Cap, the Audience button
-        /// and the next-night button; the rest is a grid of viewers to recruit (name, picture, group icon, price, copies left).
+        /// and the next-night button; the rest is a grid of viewers to recruit (name, picture, community icons, price, copies left).
         /// </summary>
         static PlanningView BuildPlanning(RectTransform mainArea, UIPrefabs prefabs)
         {
@@ -434,6 +514,7 @@ namespace DeckParty.EditorTools
             scroll.GetComponent<RectTransform>().Box(Vector2.zero, Vector2.one, new Vector2(20, 20), new Vector2(-20, -112));
             var grid = shopContent.GetComponent<GridLayoutGroup>();
             grid.childAlignment = TextAnchor.UpperLeft;
+            var gate = BuildShopGate(shop.transform);
 
             var view = root.gameObject.AddComponent<PlanningView>();
             view.headerLabel = shopTitle;
@@ -449,7 +530,47 @@ namespace DeckParty.EditorTools
             view.shopGrid = grid;
             view.shopItemPrefab = prefabs.ShopItem;
             view.power = power;
+            view.gate = gate;
             root.gameObject.SetActive(false);
+            return view;
+        }
+
+        /// <summary>
+        /// Free For All: the panel over the shop until it opens for everyone. After your stream: who's still streaming and Go to
+        /// the Shop; once everyone is ready, a big 3-2-1. ShopGateView writes every text.
+        /// </summary>
+        static ShopGateView BuildShopGate(Transform shop)
+        {
+            var host = EditorUI.Rect(shop, "ShopGate").Stretch();
+            var panel = EditorUI.Panel(host, "Root", UIPalette.PanelDeep.WithAlpha(0.97f), SkinSlot.Panel, true);
+            panel.rectTransform.Stretch(10, 10, 10, 10);
+
+            var title = EditorUI.Text(panel.transform, "Title", "-", 52, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
+            title.rectTransform.TopBand(70, 72, 40, 40);
+            var body = EditorUI.Text(panel.transform, "Body", "-", 26, UIPalette.Text, TextAlignmentOptions.Top);
+            body.rectTransform.TopBand(160, 130, 90, 90);
+
+            var countdown = EditorUI.Text(panel.transform, "Countdown", "3", 220, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
+            countdown.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(0, -30), new Vector2(420, 280));
+            countdown.outlineWidth = 0.2f;
+            countdown.outlineColor = new Color32(0, 0, 0, 220);
+            countdown.gameObject.SetActive(false);
+
+            var ready = EditorUI.Button(panel.transform, "Ready", "-", ButtonStyle.Primary, 34, out var readyLabel);
+            ready.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0), new Vector2(0, 150), new Vector2(560, 110), new Vector2(0.5f, 0));
+
+            var notice = EditorUI.Text(panel.transform, "Notice", "-", 22, UIPalette.Orange, TextAlignmentOptions.Center);
+            notice.rectTransform.BottomBand(46, 76, 90, 90);
+
+            var view = host.gameObject.AddComponent<ShopGateView>();
+            view.root = panel.gameObject;
+            view.titleLabel = title;
+            view.bodyLabel = body;
+            view.countdownLabel = countdown;
+            view.readyButton = ready;
+            view.readyLabel = readyLabel;
+            view.noticeLabel = notice;
+            panel.gameObject.SetActive(false);
             return view;
         }
 
@@ -608,13 +729,15 @@ namespace DeckParty.EditorTools
             return button;
         }
 
-        /// <summary>The facecam along the bottom: the streamer's square (FacecamView keeps it square and sizes the row).</summary>
-        static FacecamView BuildFacecam(RectTransform side)
+        /// <summary>
+        /// The facecam: a fixed square in the stream's bottom-right corner (over the controls' right end and the bubble's
+        /// corner), with the streamer, their name plate, the REC dot and the LIVE badge with the stream timer.
+        /// </summary>
+        static FacecamView BuildFacecam(RectTransform partyRoot, out StreamOverlayView overlay)
         {
-            var row = EditorUI.Rect(side, "Facecam");
-            var element = EditorUI.Layout(row, -1, 424, -1, 0, -1, 424);
+            var row = EditorUI.Rect(partyRoot, "Facecam").Place(new Vector2(1, 0), new Vector2(-FacecamMargin, FacecamMargin), new Vector2(FacecamSize, FacecamSize), new Vector2(1, 0));
 
-            var frame = EditorUI.Rect(row, "Frame").Place(new Vector2(1, 0), new Vector2(-212, 212), new Vector2(424, 424), new Vector2(0.5f, 0.5f));
+            var frame = EditorUI.Rect(row, "Frame").Stretch();
             var border = EditorUI.Image(frame, "Border", UIPalette.Border, EditorUI.Rounded);
             border.rectTransform.Stretch();
             var screen = EditorUI.Image(frame, "Screen", UIPalette.Night, EditorUI.Rounded);
@@ -631,7 +754,7 @@ namespace DeckParty.EditorTools
             var fitter = placeholder.gameObject.AddComponent<AspectRatioFitter>();
             fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
             fitter.aspectRatio = 1f;
-            var initials = EditorUI.Text(placeholder.transform, "Initials", "?", 96, Color.white, TextAlignmentOptions.Center, true, true, false);
+            var initials = EditorUI.Text(placeholder.transform, "Initials", "?", 72, Color.white, TextAlignmentOptions.Center, true, true, false);
             initials.rectTransform.Stretch();
 
             // The streamer stands on the bottom edge (pivot at the feet, so idle breathing grows upward).
@@ -644,12 +767,13 @@ namespace DeckParty.EditorTools
             portrait.image = art;
 
             var plate = EditorUI.Image(screen.transform, "NamePlate", UIPalette.PanelDeep.WithAlpha(0.88f), EditorUI.RoundedSmall);
-            plate.rectTransform.BottomBand(12, 60, 12, 12);
-            var name = EditorUI.Text(plate.transform, "Name", "-", 26, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
-            name.rectTransform.Stretch(14, 4, 14, 4);
+            plate.rectTransform.BottomBand(10, 50, 10, 10);
+            var name = EditorUI.Text(plate.transform, "Name", "-", 22, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
+            name.rectTransform.Stretch(12, 3, 12, 3);
 
             var rec = EditorUI.Image(screen.transform, "RecDot", UIPalette.Red, EditorUI.Circle);
-            rec.rectTransform.Place(new Vector2(1, 1), new Vector2(-16, -16), new Vector2(18, 18), new Vector2(1, 1));
+            rec.rectTransform.Place(new Vector2(1, 1), new Vector2(-14, -14), new Vector2(16, 16), new Vector2(1, 1));
+            overlay = BuildStreamOverlay(screen.transform);
 
             var view = row.gameObject.AddComponent<FacecamView>();
             view.frame = frame;
@@ -661,7 +785,6 @@ namespace DeckParty.EditorTools
             view.initialsLabel = initials;
             view.nameLabel = name;
             view.recDot = rec;
-            view.layoutElement = element;
             return view;
         }
 
@@ -703,7 +826,7 @@ namespace DeckParty.EditorTools
             return view;
         }
 
-        /// <summary>The full-screen Platform Ban / Server Down image (Game Database > Stream Endings), with its caption.</summary>
+        /// <summary>The full-screen Deplatform / Server Down image (Game Database > Stream Endings), with its caption.</summary>
         static OutcomeSplashView BuildOutcomeSplash(RectTransform overlay)
         {
             var host = EditorUI.Rect(overlay, "StreamEnding").Stretch();
@@ -768,6 +891,29 @@ namespace DeckParty.EditorTools
             view.summaryLabel = summary;
             view.grid = grid;
             view.cardPrefab = prefabs.GuestCard;
+            view.closeButton = close;
+            return view;
+        }
+
+        /// <summary>The round summary (Free For All): one scrolling text with every player's round. RoundSummaryView writes it.</summary>
+        static RoundSummaryView BuildRoundSummary(RectTransform overlay)
+        {
+            var host = EditorUI.ModalShell(overlay, "RoundSummary", new Vector2(1200, 880), out var root, out var panel);
+            var title = EditorUI.Text(panel, "Title", "-", 44, UIPalette.Text, TextAlignmentOptions.Center, true, true, false);
+            title.rectTransform.TopBand(24, 58, 40, 40);
+            var scroll = EditorUI.Scroll(panel, "Lines", out var content, 0, EditorUI.Pad(8));
+            scroll.GetComponent<RectTransform>().Box(Vector2.zero, Vector2.one, new Vector2(40, 116), new Vector2(-40, -96));
+            var body = EditorUI.Text(content, "Body", string.Empty, 24, UIPalette.Text, TextAlignmentOptions.TopLeft);
+            body.enableAutoSizing = false;
+            body.fontSize = 24;
+            var close = EditorUI.Button(panel, "Close", "common.close", ButtonStyle.Primary, 28);
+            close.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0), new Vector2(0, 26), new Vector2(300, 72), new Vector2(0.5f, 0));
+
+            var view = host.gameObject.AddComponent<RoundSummaryView>();
+            view.root = root;
+            view.titleLabel = title;
+            view.bodyLabel = body;
+            view.scroll = scroll;
             view.closeButton = close;
             return view;
         }

@@ -64,8 +64,11 @@ The Game scene root has **GameController**, which links every part below.
 
 | To change | Open | Do |
 |---|---|---|
-| Top bar (Gifted Subs, Cash, Sub Cap, Night, risk meter, Diamonds meter, Audience and Menu buttons) | Game > Root > **TopBar** | Rearrange freely. Groups flex and text auto-sizes. |
-| HUD icons | UI Skin: IconPop (Gifted Subs), IconCash, IconDoor (Sub Cap), IconTrouble (risk pips), IconStar (Diamonds), IconCancel | Assign sprites |
+| Top bar (Gifted Subs, Cash, Sub Cap, Night, risk meter, Diamonds meter, Audience and Menu buttons) | Game > Root > **TopBar** | Rearrange freely. Groups flex and text auto-sizes. Resources show only an icon and a number (`HudView.ApplyCaptions` hides their captions); hovering names them. |
+| HUD icons | UI Skin: IconPop (Gifted Subs), IconCash, IconDoor (Sub Cap), IconTrouble (risk pips), IconStar (Diamonds), IconCancel | Assign sprites. IconPop, IconCash and IconTrouble are also the resource icons used **inside text** everywhere (see section on icons in text below). |
+| Resource and community icons inside text | `GameIcons` builds a TextMeshPro sprite asset at runtime; strings write `{icon:subs}`, `{icon:cash}`, `{icon:risk}` or `{icon:<Community>}` and `Loc` expands them | Icon art: UI Skin (resources), Game Database > Stream Art > **Community Icons**. Size and baseline: `GameIcons.CreateAsset`. Hovering an icon in text names it (`InlineIconTooltips`, added next to the tooltip automatically). |
+| Community Beats (stream) | Party > ChatBubble > **CommunityBeats** (**CommunityBeatsView**): one chip per community, plus a red chip while rival Doomsdayers curse the stream | Chip size: `GameSceneBuilder.BeatChipWidth` / `BeatChipHeight`. The header and hint leave room for it. |
+| Community icons on cards and shop tiles | Card: Content > **Communities** (left edge of the portrait). Shop tile: Anim > **Communities** (top-left). Both **CommunityIconsView**, 3 slots | Each icon has an overlay tooltip explaining the community. Layout: `DeckPartyAssets.BuildGuestCard` / `BuildShopItem`. |
 | Fonts | UI Skin **Body Font** / **Header Font** (defaults: Noto Sans and Rubik, with Chinese fallbacks) | Assign a TMP font asset. Keep the Noto fallbacks for other languages (section 7). |
 | The stage strip (above the chat bubble) | Party > **Stage** > HeaderImage | Shows the stream setup's optional **Header** image; otherwise the background shows through. Height: `GameSceneBuilder.StageHeight` (190). |
 | The chat bubble and its tail | Party > **ChatBubble** (**ChatBubbleView**) with **Tail** inside | Art: Game Database > **Stream Art** (Chat Bubble, Chat Bubble Tail, Tint). Tail spot: each Venue's **Chat Tail Position** (0 left - 1 right). Tail size: ChatBubbleView **Tail Height** / **Tail Overlap**. |
@@ -73,16 +76,16 @@ The Game scene root has **GameController**, which links every part below.
 | Viewer emojis (float up from cards) | Party > **ViewerEmojis** (**ViewerEmojiView**) | Art and timing: Game Database > Stream Art > **Viewer Emojis**. Mood mix per danger level: `ViewerEmojiView.s_Calm` / `s_Risky`. Switch: FX Library **Viewer Emojis**. |
 | Add Viewer / End the Stream / the waiting-viewer panel | Party > **Controls** (with **Peek** inside) | – |
 | The shop | MainArea > Planning: the left column (**Streamer**: StreamerPower card, Raise Sub Cap, Audience, next night) and **Shop** (a grid of **ShopItem** tiles) | Tile size: PlanningView **Min/Max Tile Width** and **Tile Aspect**. Tile layout: `DeckPartyAssets.BuildShopItem` (or edit `Prefabs/UI/ShopItem.prefab`). |
-| Side panel | Root > **SidePanel**: **Players** and **EmoteBar** (multiplayer only), **Feed** (hidden unless the Activity log is on), Spacer, then **Facecam** | Its width follows the screen (section 10) |
+| Side panel | Root > **SidePanel**: **Players** and **EmoteBar** (multiplayer only), **Feed** (hidden unless the Activity log is on), Spacer | Its width follows the screen (section 10). While nothing in it is showing, the stream takes the whole width (`ContentFrame.SideUsed`) |
 | Activity log (and hidden text chat) | SidePanel > **Feed** (**SideTabsView**): Tabs, then the **Activity** page and the **Chat** page | The Activity log is **off by default**: players switch it on in Settings (**Show Activity Log**). Text chat is off (FX Library **Text Chat**); the code stays for future modes. |
-| Facecam (the streamer square, bottom right) | SidePanel > **Facecam** (**FacecamView**): Frame > Border, Screen (Mask > Content with Glow, Placeholder and Art), NamePlate, RecDot | The square fills the panel width. Anxious red pulse and tremble: `FacecamView.LateUpdate`. Which reaction plays when: `GameController.Juice.cs` (search `facecam`). "Camera off" is the CSV key `facecam.off`. |
+| Facecam (the streamer square, bottom right) | MainArea > Party > **Facecam** (**FacecamView**): Frame > Border, Screen (Mask > Content with Glow, Placeholder and Art), NamePlate, RecDot, **StreamOverlay** (LIVE badge and timer) | A fixed 318 px square (`GameSceneBuilder.FacecamSize`), hidden with the stream in the shop; the chat cards keep clear of it (`HouseView.avoid`). Anxious red pulse and tremble: `FacecamView.LateUpdate`. Which reaction plays when: `GameController.Juice.cs` (search `facecam`). "Camera off" is the CSV key `facecam.off`. |
 | Emote buttons | SidePanel > **EmoteBar** > Buttons (**EmoteView**; multiplayer only) | Sprites: Game Database > Stream Art > **Emotes** (text emotes until then). Button size: EmoteView **Button Size**. Sent emotes pop up from the sender's avatar in the Players panel. |
-| The risky-viewers line under the buttons | `PartyControlsView.RiskText` | It shows how many viewers with Platform Ban Risk are left in the queue, never the odds. |
-| Anxious streamer (one risk from a Platform Ban) | OverlayCanvas > **AnxiousStreamer** (**StreamerAnxietyView**) | Move or resize the rect. Turn it off with the **Streamer Anxiety** switch. |
+| The risky-viewers line under the buttons | `PartyControlsView.RiskText` | It shows how many viewers with Deplatform Risk are left in the queue, never the odds. |
+| Anxious streamer (one risk from being deplatformed) | OverlayCanvas > **AnxiousStreamer** (**StreamerAnxietyView**) | Move or resize the rect. Turn it off with the **Streamer Anxiety** switch. |
 | Turn timer pill | OverlayCanvas > **TurnTimer** | Move the rect |
 | LIVE badge and stream timer | Party > **StreamOverlay** | Turn it off with the **Stream Overlay** switch (N4) |
 | Banners (PLATFORM BAN!, SERVER DOWN!, YOUR TURN, NIGHT 3) | OverlayCanvas > **Banner** | Text comes from CSV keys `term.*` and `game.*` |
-| Platform Ban / Server Down images | OverlayCanvas > **StreamEnding** (**OutcomeSplashView**) | Images: Game Database > Stream Art > **Platform Ban Image** / **Server Down Image**. Without one, the banner shows. |
+| Deplatform / Server Down images | OverlayCanvas > **StreamEnding** (**OutcomeSplashView**) | Images: Game Database > Stream Art > **Deplatform Image** / **Server Down Image**. Without one, the banner shows. |
 | Comic stamps, confetti, flashes, danger vignette | OverlayCanvas > **Effects** (**EffectsView**) | Stamp words are CSV keys `stamp.<Viewer>`; which viewer gets which effect is in `Runtime/Fx/SignatureFx.cs` |
 | In-game menu | OverlayCanvas > **PauseMenu** (three columns: Settings / DisplayColumn / Rules) | – |
 
@@ -164,7 +167,7 @@ Keep any new card content inside the prefab's `Visual/Anim` object so it moves w
 | Fix squares / missing glyphs | **Deck Party > Localization > Rebuild Fonts**. All fonts are dynamic with fallbacks: Noto Sans SC covers Chinese, and Noto Sans covers Cyrillic and accents. |
 | Use your own font | Make a TMP font asset (dynamic). Assign it to the UI Skin, then add `Fonts/NotoSans SDF` and `Fonts/NotoSansSC SDF` to its **Fallback Font Assets** so other languages still render. |
 
-Language-specific terms: the title differs per language (`menu.title`). Platform Ban Risk, Platform Ban and Server Down are `term.risk`, `term.raid` and `term.overload`.
+Language-specific terms: the title differs per language (`menu.title`). Deplatform Risk, DEPLATFORMED! and Server Down are `term.risk`, `term.raid` and `term.overload`. Resources are never written as words in game text: use `{icon:subs}`, `{icon:cash}` and `{icon:risk}` (their names live in `term.*` and the `hud.tip.*` tooltips). Communities are `community.<Community>.name / .desc / .now`.
 
 ---
 
@@ -255,7 +258,7 @@ Every nice-to-have can be turned off on its own:
 | N5 Emotes | Emote buttons and floating emotes |
 | N6 Ghost Cursor | Watchers see the active player's pointer |
 | N7 Card Tilt / N8 Idle Breathing | Card hover tilt / breathing still portraits |
-| N9 Reactive Background | Lights react to Platform Ban Risk |
+| N9 Reactive Background | Lights react to Deplatform Risk |
 | N10 Shiny Title | Title shine and glitch |
 | N11 Audio Juice | Music ducks under big moments and goes muffled in menus |
 | N12 Musical Hover | Hover ticks rise in pitch along a row |

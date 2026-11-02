@@ -76,7 +76,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189452
-    m_Localized: 'Pick a rival: their next stream starts with +1 Platform Ban Risk.'
+    m_Localized: 'Pick a rival: their next stream starts with +1 {icon:risk}.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189453
@@ -96,7 +96,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189457
-    m_Localized: 'Passive: start with +1 Sub Cap. Sub Cap upgrades cost 1 $ more.'
+    m_Localized: 'Passive: start with +1 Sub Cap. Sub Cap upgrades cost 1 {icon:cash}
+      more.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189458
@@ -116,7 +117,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189462
-    m_Localized: Your next stream ignores 1 Platform Ban Risk.
+    m_Localized: Your next stream ignores 1 {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 496189463
@@ -136,7 +137,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189467
-    m_Localized: 'Passive: viewers carrying Platform Ban Risk earn +1 Subs.'
+    m_Localized: 'Passive: viewers carrying {icon:risk} earn +1 {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -156,7 +157,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189472
-    m_Localized: In your next stream, every viewer earns +1 Subs.
+    m_Localized: In your next stream, every viewer earns +1 {icon:subs}.
     m_Metadata:
       m_Items: []
   - m_Id: 496189473
@@ -176,7 +177,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189477
-    m_Localized: The richest rival pays you up to 2 $.
+    m_Localized: The richest rival pays you up to 2 {icon:cash}.
     m_Metadata:
       m_Items: []
   - m_Id: 496189478
@@ -196,8 +197,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189482
-    m_Localized: 'Passive: when your stream gets a Platform Ban, you still bank half
-      that stream''s Subs.'
+    m_Localized: 'Passive: when your stream gets deplatformed, you still bank half
+      that stream''s {icon:subs}.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189483
@@ -259,8 +260,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189497
-    m_Localized: 'Passive: each great stream in a row earns +1, +2, +3... Subs (max
-      +5). A failed stream resets it.'
+    m_Localized: 'Passive: each great stream in a row earns +1, +2, +3... {icon:subs}
+      (max +5). A failed stream resets it.'
     m_Metadata:
       m_Items: []
   - m_Id: 496189498
@@ -437,7 +438,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189541
-    m_Localized: '{player} ({cash} $)'
+    m_Localized: '{player} ({cash} {icon:cash})'
     m_Metadata:
       m_Items: []
   - m_Id: 496189542
@@ -453,7 +454,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189545
-    m_Localized: ONE MORE AND YOU'RE BANNED!
+    m_Localized: ONE MORE AND YOU'RE DEPLATFORMED!
     m_Metadata:
       m_Items: []
   - m_Id: 496189546

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3172014356530369294}
   - component: {fileID: 4798988593715810521}
   m_Layer: 0
-  m_Name: FX_PlatformBan
+  m_Name: FX_Deplatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

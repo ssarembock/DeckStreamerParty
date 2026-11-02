@@ -40,9 +40,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274884
-    m_Localized: "Todos los memes de animales en un mismo lugar. Bongo Cat potencia
-      a todo el zool\xF3gico, Nyan Cat encadena llegadas, Doge premia la variedad
-      y Big Chungus necesita un cupo grande."
+    m_Localized: Todos los memes de animales en un mismo lugar. Bongo Cat le marca
+      el ritmo a su comunidad, Nyan Cat encadena llegadas, Doge premia la variedad
+      y Big Chungus necesita un cupo grande.
     m_Metadata:
       m_Items: []
   - m_Id: 433274885
@@ -50,13 +50,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274886
-    m_Localized: El riesgo de baneo es buen contenido
+    m_Localized: El {icon:risk} es buen contenido
     m_Metadata:
       m_Items: []
   - m_Id: 433274887
     m_Localized: Los Wojaks se alimentan del sufrimiento. Doomer y Me Gusta aman
-      el riesgo de baneo, Gigachad y el Macho Sigma quieren el foco solo para ellos,
-      y el Perro "Todo bien" mantiene al martillo del baneo adivinando.
+      el {icon:risk}, Gigachad y el Macho Sigma quieren el foco solo para ellos,
+      y el Perro "Todo bien" mantiene a la plataforma adivinando.
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
@@ -69,7 +69,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274890
     m_Localized: "Caos en bucle. Golpes, mezclas, bombardeos e infecciones. Pop Cat
-      y el Beb\xE9 Bailar\xEDn convierten cada acci\xF3n en Subs."
+      y el Beb\xE9 Bailar\xEDn convierten cada acci\xF3n en {icon:subs}."
     m_Metadata:
       m_Items: []
   - m_Id: 433274891
@@ -82,8 +82,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274893
     m_Localized: Manipuladores e intrigantes. Reordena la fila, intercambia, anula
-      y duplica stats, convierte Subs en Plata y viceversa, y protege a tus estrellas
-      de la mala suerte.
+      y duplica stats, convierte {icon:subs} en {icon:cash} y viceversa, y protege
+      a tus estrellas de la mala suerte.
     m_Metadata:
       m_Items: []
   - m_Id: 433274894
@@ -302,7 +302,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416590672904199
     m_Localized: "Rug pulls, c\xF3digos de descuento y entrevistas complacientes.
-      Cobra Subs a mitad del stream con el Tipo cripto, haz crecer a tu Centennial
+      Cobra {icon:subs} a mitad del stream con el Tipo cripto, haz crecer a tu Centennial
       con trabajo y deja que el Esc\xE1ndalo en l\xEDnea llene el chat."
     m_Metadata:
       m_Items: []

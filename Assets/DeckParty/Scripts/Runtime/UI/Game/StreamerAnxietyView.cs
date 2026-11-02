@@ -7,16 +7,18 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// When a stream is one Platform Ban Risk from a Platform Ban, the streamer drops in at the top of the screen looking
+    /// When a stream is one Deplatform Risk from being deplatformed, the streamer drops in at the top of the screen looking
     /// anxious (their Anxious animation if they have one, otherwise a sweating, trembling portrait), with an
     /// intermittent Feel shake. The panel sits on this object's RectTransform (move or resize it in the Game scene).
     /// </summary>
     public sealed class StreamerAnxietyView : MonoBehaviour
     {
         [Tooltip("Seconds between the intermittent shakes.")]
-        public float shakeInterval = 1.6f;
+        public float shakeInterval = 2.6f;
         [Tooltip("Screen shake strength in pixels for each jolt (the Screen Shake setting scales it).")]
-        public float shakePixels = 4f;
+        public float shakePixels = 2.5f;
+        [Tooltip("Strength of the panel's own jolt (Feel cue Streamer Anxious) each time.")]
+        public float panelJolt = 0.6f;
 
         RectTransform m_Root;
         RectTransform m_Panel;
@@ -95,8 +97,8 @@ namespace DeckParty.UI
                 if (!m_Showing)
                 {
                     m_Panel.gameObject.SetActive(true);
-                    Fx.Play(FxCue.BannerSlam, m_Panel);
-                    AudioService.Play(Sfx.Error, 0.6f);
+                    Fx.Play(FxCue.BannerSlam, m_Panel, 0.7f);
+                    AudioService.Play(Sfx.Error, 0.45f);
                     m_NextShake = Time.unscaledTime + 0.4f;
                 }
             }
@@ -120,7 +122,7 @@ namespace DeckParty.UI
 
             // Nervous tremble of the portrait (on top of any Anxious animation).
             if (m_Portrait != null)
-                m_Portrait.transform.parent.localRotation = Quaternion.Euler(0f, 0f, Mathf.Sin(t * 37f) * 2.2f + Mathf.Sin(t * 13f) * 1.2f);
+                m_Portrait.transform.parent.localRotation = Quaternion.Euler(0f, 0f, Mathf.Sin(t * 29f) * 1.4f + Mathf.Sin(t * 11f) * 0.7f);
 
             // Sweat drops slide off the forehead.
             for (int i = 0; i < m_Drops.Count; i++)
@@ -135,8 +137,8 @@ namespace DeckParty.UI
             if (t >= m_NextShake)
             {
                 m_NextShake = t + shakeInterval;
-                Fx.Play(FxCue.StreamerAnxious, m_Panel);
-                Fx.Shake(shakePixels, 0.25f);
+                Fx.Play(FxCue.StreamerAnxious, m_Panel, panelJolt);
+                Fx.Shake(shakePixels, 0.2f);
             }
         }
     }
