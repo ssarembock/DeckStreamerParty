@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>DeckParty.Juice</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(ProjectRoot)\Assets\DeckParty\Scripts\Juice\*.cs" />
+    <Reference Include="$(OutDirShared)DeckParty.Core.dll" Private="false" />
+    <Reference Include="$(OutDirShared)DeckParty.Runtime.dll" Private="false" />
+    <Reference Include="$(ProjectRoot)\Library\ScriptAssemblies\MoreMountains.Tools.dll" Private="false" />
+    <Reference Include="$(ProjectRoot)\Library\ScriptAssemblies\Unity.TextMeshPro.dll" Private="false" />
+    <Reference Include="$(ProjectRoot)\Library\ScriptAssemblies\UnityEngine.UI.dll" Private="false" />
+  </ItemGroup>
+</Project>

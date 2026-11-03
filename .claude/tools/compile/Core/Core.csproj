@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>DeckParty.Core</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(ProjectRoot)\Assets\DeckParty\Scripts\Core\**\*.cs" />
+  </ItemGroup>
+</Project>

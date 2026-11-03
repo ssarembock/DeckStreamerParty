@@ -55,5 +55,13 @@ ExportedObj/
 Thumbs.db
 Desktop.ini
 
-# Personal Claude Code permissions
+# Personal Claude Code permissions (shared ones are in .claude/settings.json)
 .claude/settings.local.json
+
+# Claude compile-check output (.claude/tools/compile) and raw transcripts (only the gzipped copies are shared)
+.claude/tools/compile/out/
+.claude/tools/compile/**/obj/
+.claude/tools/compile/**/bin/
+.claude/sessions/*.jsonl
+# ...but the compile check's own project files are shared (Unity's generated *.csproj above stay ignored).
+!.claude/tools/compile/**/*.csproj

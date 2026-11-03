@@ -1,0 +1,676 @@
+
+FullName                                                                                                   Length  
+--------                                                                                                   ------  
+C:\Users\ssare\DeckParty\.vscode                                                                                   
+C:\Users\ssare\DeckParty\Assets                                                                                    
+C:\Users\ssare\DeckParty\Library                                                                                   
+C:\Users\ssare\DeckParty\Logs                                                                                      
+C:\Users\ssare\DeckParty\Packages                                                                                  
+C:\Users\ssare\DeckParty\ProjectSettings                                                                           
+C:\Users\ssare\DeckParty\Temp                                                                                      
+C:\Users\ssare\DeckParty\UserSettings                                                                              
+C:\Users\ssare\DeckParty\DeckParty.slnx                                                                    28      
+C:\Users\ssare\DeckParty\Party_House_UFO50_Complete_Rules.md                                               22995   
+C:\Users\ssare\DeckParty\.vscode\extensions.json                                                           75      
+C:\Users\ssare\DeckParty\.vscode\launch.json                                                               178     
+C:\Users\ssare\DeckParty\.vscode\settings.json                                                             1884    
+C:\Users\ssare\DeckParty\Assets\Scenes                                                                             
+C:\Users\ssare\DeckParty\Assets\Settings                                                                           
+C:\Users\ssare\DeckParty\Assets\DefaultVolumeProfile.asset                                                 18729   
+C:\Users\ssare\DeckParty\Assets\DefaultVolumeProfile.asset.meta                                            189     
+C:\Users\ssare\DeckParty\Assets\InputSystem_Actions.inputactions                                           41005   
+C:\Users\ssare\DeckParty\Assets\InputSystem_Actions.inputactions.meta                                      376     
+C:\Users\ssare\DeckParty\Assets\Scenes.meta                                                                172     
+C:\Users\ssare\DeckParty\Assets\Settings.meta                                                              172     
+C:\Users\ssare\DeckParty\Assets\UniversalRenderPipelineGlobalSettings.asset                                21403   
+C:\Users\ssare\DeckParty\Assets\UniversalRenderPipelineGlobalSettings.asset.meta                           189     
+C:\Users\ssare\DeckParty\Assets\Scenes\SampleScene.unity                                                   9947    
+C:\Users\ssare\DeckParty\Assets\Scenes\SampleScene.unity.meta                                              155     
+C:\Users\ssare\DeckParty\Assets\Settings\Scenes                                                                    
+C:\Users\ssare\DeckParty\Assets\Settings\Lit2DSceneTemplate.scenetemplate                                  3942809 
+C:\Users\ssare\DeckParty\Assets\Settings\Lit2DSceneTemplate.scenetemplate.meta                             189     
+C:\Users\ssare\DeckParty\Assets\Settings\Renderer2D.asset                                                  3629    
+C:\Users\ssare\DeckParty\Assets\Settings\Renderer2D.asset.meta                                             189     
+C:\Users\ssare\DeckParty\Assets\Settings\Scenes.meta                                                       172     
+C:\Users\ssare\DeckParty\Assets\Settings\UniversalRP.asset                                                 4259    
+C:\Users\ssare\DeckParty\Assets\Settings\UniversalRP.asset.meta                                            189     
+C:\Users\ssare\DeckParty\Library\APIUpdater                                                                        
+C:\Users\ssare\DeckParty\Library\Artifacts                                                                         
+C:\Users\ssare\DeckParty\Library\Bee                                                                               
+C:\Users\ssare\DeckParty\Library\BuildInstructions                                                                 
+C:\Users\ssare\DeckParty\Library\BurstCache                                                                        
+C:\Users\ssare\DeckParty\Library\PackageCache                                                                      
+C:\Users\ssare\DeckParty\Library\PackageManager                                                                    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies                                                                  
+C:\Users\ssare\DeckParty\Library\Search                                                                            
+C:\Users\ssare\DeckParty\Library\ShaderCache                                                                       
+C:\Users\ssare\DeckParty\Library\StateCache                                                                        
+C:\Users\ssare\DeckParty\Library\TempArtifacts                                                                     
+C:\Users\ssare\DeckParty\Library\UIElements                                                                        
+C:\Users\ssare\DeckParty\Library\AnnotationManager                                                         1500    
+C:\Users\ssare\DeckParty\Library\ArtifactDB                                                                67108864
+C:\Users\ssare\DeckParty\Library\ArtifactDB-lock                                                           8192    
+C:\Users\ssare\DeckParty\Library\BuildPlayer.prefs                                                         0       
+C:\Users\ssare\DeckParty\Library\BuildSettings.asset                                                       2044    
+C:\Users\ssare\DeckParty\Library\EditorInstance.json                                                       217     
+C:\Users\ssare\DeckParty\Library\EditorOnlyScriptingSettings.json                                          182     
+C:\Users\ssare\DeckParty\Library\EditorOnlyVirtualTextureState.json                                        79      
+C:\Users\ssare\DeckParty\Library\EditorUserBuildSettings.asset                                             8668    
+C:\Users\ssare\DeckParty\Library\ilpp.pid                                                                  5       
+C:\Users\ssare\DeckParty\Library\InspectorExpandedItems.asset                                              888     
+C:\Users\ssare\DeckParty\Library\LastSceneManagerSetup.txt                                                 97      
+C:\Users\ssare\DeckParty\Library\LibraryFormatVersion.txt                                                  65      
+C:\Users\ssare\DeckParty\Library\MonoManager.asset                                                         2576    
+C:\Users\ssare\DeckParty\Library\SceneVisibilityState.asset                                                3732    
+C:\Users\ssare\DeckParty\Library\ScriptMapper                                                              19609   
+C:\Users\ssare\DeckParty\Library\ShaderCache.db                                                            16384   
+C:\Users\ssare\DeckParty\Library\SourceAssetDB                                                             16777216
+C:\Users\ssare\DeckParty\Library\SourceAssetDB-lock                                                        8192    
+C:\Users\ssare\DeckParty\Library\SpriteAtlasDatabase.asset                                                 2952    
+C:\Users\ssare\DeckParty\Library\Style.catalog                                                             247626  
+C:\Users\ssare\DeckParty\Library\UndoData.bin                                                              44      
+C:\Users\ssare\DeckParty\Library\UndoStack.bin                                                             88      
+C:\Users\ssare\DeckParty\Library\APIUpdater\ConfigurationCache                                                     
+C:\Users\ssare\DeckParty\Library\APIUpdater\project-dependencies.graph                                     7913    
+C:\Users\ssare\DeckParty\Library\Artifacts\00                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\01                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\02                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\03                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\04                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\05                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\06                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\07                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\08                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\09                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\0a                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\0b                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\0c                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\0d                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\0e                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\0f                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\10                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\11                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\12                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\13                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\14                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\15                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\16                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\17                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\18                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\19                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\1a                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\1b                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\1c                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\1d                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\1e                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\1f                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\20                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\21                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\22                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\23                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\24                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\25                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\26                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\27                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\28                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\29                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\2a                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\2b                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\2c                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\2d                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\2e                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\2f                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\30                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\31                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\32                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\33                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\34                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\35                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\36                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\37                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\38                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\39                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\3a                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\3b                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\3c                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\3d                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\3e                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\3f                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\40                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\41                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\42                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\43                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\44                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\45                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\46                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\47                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\48                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\49                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\4a                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\4b                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\4c                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\4d                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\4e                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\4f                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\50                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\51                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\52                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\53                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\54                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\55                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\56                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\57                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\58                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\59                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\5a                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\5b                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\5c                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\5d                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\5e                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\5f                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\60                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\61                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\62                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\63                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\64                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\65                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\66                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\67                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\68                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\69                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\6a                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\6b                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\6c                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\6d                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\6e                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\6f                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\70                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\71                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\72                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\73                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\74                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\75                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\76                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\77                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\78                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\79                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\7a                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\7b                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\7c                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\7d                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\7e                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\7f                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\80                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\81                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\82                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\83                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\84                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\85                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\86                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\87                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\88                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\89                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\8a                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\8b                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\8c                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\8d                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\8e                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\8f                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\90                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\91                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\92                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\93                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\94                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\95                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\96                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\97                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\98                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\99                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\9a                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\9b                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\9c                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\9d                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\9e                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\9f                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\a0                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\a1                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\a2                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\a3                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\a4                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\a5                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\a6                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\a7                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\a8                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\a9                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\aa                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ab                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ac                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ad                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ae                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\af                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\b0                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\b1                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\b2                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\b3                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\b4                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\b5                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\b6                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\b7                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\b8                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\b9                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ba                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\bb                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\bc                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\bd                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\be                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\bf                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\c0                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\c1                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\c2                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\c3                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\c4                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\c5                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\c6                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\c7                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\c8                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\c9                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ca                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\cb                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\cc                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\cd                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ce                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\cf                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\d0                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\d1                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\d2                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\d3                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\d4                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\d5                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\d6                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\d7                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\d8                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\d9                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\da                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\db                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\dc                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\dd                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\de                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\df                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\e0                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\e1                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\e2                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\e3                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\e4                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\e5                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\e6                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\e7                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\e8                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\e9                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ea                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\eb                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ec                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ed                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ee                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ef                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\f0                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\f1                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\f2                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\f3                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\f4                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\f5                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\f6                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\f7                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\f8                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\f9                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\fa                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\fb                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\fc                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\fd                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\fe                                                                      
+C:\Users\ssare\DeckParty\Library\Artifacts\ff                                                                      
+C:\Users\ssare\DeckParty\Library\Bee\artifacts                                                                     
+C:\Users\ssare\DeckParty\Library\Bee\CachedNodeOutput                                                              
+C:\Users\ssare\DeckParty\Library\Bee\1900b0aE-inputdata.json                                               3702770 
+C:\Users\ssare\DeckParty\Library\Bee\1900b0aE.dag                                                          24706832
+C:\Users\ssare\DeckParty\Library\Bee\1900b0aE.dag.json                                                     18810009
+C:\Users\ssare\DeckParty\Library\Bee\1900b0aE.dag.outputdata                                               23558   
+C:\Users\ssare\DeckParty\Library\Bee\1900b0aE.dag.payloads                                                 7489335 
+C:\Users\ssare\DeckParty\Library\Bee\1900b0aE.dag_derived                                                  817056  
+C:\Users\ssare\DeckParty\Library\Bee\1900b0aE.dag_fsmtime                                                  8       
+C:\Users\ssare\DeckParty\Library\Bee\backend1.traceevents                                                  283167  
+C:\Users\ssare\DeckParty\Library\Bee\backend2.traceevents                                                  3152096 
+C:\Users\ssare\DeckParty\Library\Bee\backend3.traceevents                                                  285003  
+C:\Users\ssare\DeckParty\Library\Bee\bee_backend.info                                                      127     
+C:\Users\ssare\DeckParty\Library\Bee\buildprogram0.traceevents                                             1114    
+C:\Users\ssare\DeckParty\Library\Bee\fullprofile.json                                                      472902  
+C:\Users\ssare\DeckParty\Library\Bee\tundra.digestcache                                                    1225936 
+C:\Users\ssare\DeckParty\Library\Bee\tundra.log.json                                                       272785  
+C:\Users\ssare\DeckParty\Library\Bee\TundraBuildState.state                                                226320  
+C:\Users\ssare\DeckParty\Library\Bee\TundraBuildState.state.map                                            226320  
+C:\Users\ssare\DeckParty\Library\BurstCache\JIT                                                                    
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.2d.animation@6e14714a57c6                                  
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.2d.aseprite@64cce0d92207                                   
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.2d.common@bc041c6e0d0d                                     
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.2d.pixel-perfect@e3ae982b672d                              
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.2d.psdimporter@6fdac9101225                                
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.2d.sprite@0eb6ea2c7181                                     
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.2d.spriteshape@9e35352ae135                                
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.2d.tilemap.extras@13634da7dbe0                             
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.2d.tilemap@81172dccd143                                    
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.burst@6bb9aca3ef38                                         
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.collab-proxy@0b1559bcd34e                                  
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.collections@12999e356c23                                   
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.ext.nunit@031a54704bff                                     
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.feature.2d@dd1ea8910f12                                    
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.ide.rider@4504839d03f7                                     
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.ide.visualstudio@dc1ddd4f09b6                              
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.inputsystem@21a28c3a6c83                                   
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.mathematics@8017b507cc74                                   
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.accessibility                                      
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.ai                                                 
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.androidjni                                         
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.animation                                          
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.assetbundle                                        
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.audio                                              
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.cloth                                              
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.director                                           
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.hierarchycore                                      
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.imageconversion                                    
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.imgui                                              
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.jsonserialize                                      
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.particlesystem                                     
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.physics                                            
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.physics2d                                          
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.screencapture                                      
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.subsystems                                         
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.terrain                                            
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.terrainphysics                                     
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.tilemap                                            
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.ui                                                 
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.uielements                                         
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.umbra                                              
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.unityanalytics                                     
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.unitywebrequest                                    
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle                         
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.unitywebrequestaudio                               
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.unitywebrequesttexture                             
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.unitywebrequestwww                                 
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.vehicles                                           
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.video                                              
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.vr                                                 
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.wind                                               
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.modules.xr                                                 
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.multiplayer.center@f3fb577b3546                            
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.nuget.mono-cecil@ecb9724e46ff                              
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.render-pipelines.core@d7b87cecdab8                         
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.render-pipelines.universal-config@dd206bf35d04             
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.render-pipelines.universal@7b0cf3c8f06b                    
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.rendering.light-transport@9bd588f963c0                     
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.searcher@1e17ce91558d                                      
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.shadergraph@bff931d63a7a                                   
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.test-framework.performance@aa81a99c4a75                    
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.test-framework@082c24152fd4                                
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.timeline@8cd8509afae5                                      
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.ugui@47e51ce530b9                                          
+C:\Users\ssare\DeckParty\Library\PackageCache\com.unity.visualscripting@8bed5ad90189                               
+C:\Users\ssare\DeckParty\Library\PackageManager\Backups                                                            
+C:\Users\ssare\DeckParty\Library\PackageManager\ProjectCache                                               162082  
+C:\Users\ssare\DeckParty\Library\PackageManager\ProjectCache.md5                                           32      
+C:\Users\ssare\DeckParty\Library\PackageManager\projectResolution.json                                     24480   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\PPv2URPConverters.dll                                    4096    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\PPv2URPConverters.pdb                                    21256   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\PsdPlugin.dll                                            88064   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\PsdPlugin.pdb                                            57772   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\ScriptablePacker.dll                                     24576   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\ScriptablePacker.pdb                                     25676   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll                            749568  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Animation.Editor.pdb                            322712  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Animation.Runtime.dll                           94208   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Animation.Runtime.pdb                           55040   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Aseprite.Common.dll                             28160   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Aseprite.Common.pdb                             29428   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Aseprite.Editor.dll                             184832  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Aseprite.Editor.pdb                             82356   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Common.Editor.dll                               42496   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Common.Editor.pdb                               33588   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Common.Path.Editor.dll                          88576   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Common.Path.Editor.pdb                          56244   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll                              49664   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Common.Runtime.pdb                              42064   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll                                   30720   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.IK.Editor.pdb                                   29200   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll                                  29696   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.IK.Runtime.pdb                                  32720   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll                                13824   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll                         19456   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.pdb                         23856   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.PixelPerfect.pdb                                22868   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll                          161792  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.pdb                          70000   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll                               215040  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.pdb                               98276   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll                          93184   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.pdb                          50144   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll                         116224  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.pdb                         70752   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll                              357888  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.pdb                              162844  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll                              33792   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll                       107520  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.pdb                       46524   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.pdb                              30728   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Burst.CodeGen.dll                                  63488   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Burst.CodeGen.pdb                                  39984   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Burst.dll                                          366080  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Burst.Editor.dll                                   918528  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Burst.Editor.pdb                                   97720   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Burst.pdb                                          182792  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll                             16384   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.CollabProxy.Editor.pdb                             23764   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Collections.CodeGen.dll                            22016   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Collections.CodeGen.pdb                            25756   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Collections.dll                                    476160  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Collections.Editor.dll                             5632    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Collections.Editor.pdb                             20728   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Collections.pdb                                    245148  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InputSystem.dll                                    1836544 
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InputSystem.DocCodeSamples.dll                     6656    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InputSystem.DocCodeSamples.pdb                     20188   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InputSystem.ForUI.dll                              22016   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InputSystem.ForUI.pdb                              24340   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InputSystem.pdb                                    631764  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InputSystem.TestFramework.dll                      51712   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InputSystem.TestFramework.pdb                      31112   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll                    33792   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.pdb                    29900   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll                    7168    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.pdb                    20904   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Mathematics.dll                                    755200  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll                             23552   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Mathematics.Editor.pdb                             24032   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Mathematics.pdb                                    339944  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Multiplayer.Center.Common.dll                      10752   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Multiplayer.Center.Common.pdb                      21692   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Multiplayer.Center.Editor.dll                      97280   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Multiplayer.Center.Editor.pdb                      55836   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.PerformanceTesting.dll                             48640   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.PerformanceTesting.Editor.dll                      48640   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.PerformanceTesting.Editor.pdb                      34444   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.PerformanceTesting.pdb                             37008   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll                              1644032 
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.Entities.dll                     4096    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.Entities.pdb                     20220   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.pdb                              699488  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Rendering.LightTransport.Editor.dll                13312   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Rendering.LightTransport.Editor.pdb                21100   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Rendering.LightTransport.Runtime.dll               314368  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Rendering.LightTransport.Runtime.pdb               54568   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll         9216    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.pdb         20476   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll                    934400  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.pdb                    306400  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.Shared.dll             4608    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.Shared.pdb             20172   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll                   992768  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.pdb                   371992  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.Shared.dll            5632    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.Shared.pdb            20236   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll             4608    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.pdb             19976   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.GPUDriven.Runtime.dll              245248  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.GPUDriven.Runtime.pdb              106280  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll 4608    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.pdb 19972   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.2D.Runtime.dll           264192  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.2D.Runtime.pdb           138164  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Config.Runtime.dll       5632    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Config.Runtime.pdb       20144   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll               829440  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.pdb               247892  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll              854016  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.pdb              288060  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll              4608    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.pdb              19976   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Rider.Editor.dll                                   79360   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Rider.Editor.pdb                                   44804   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Searcher.Editor.dll                                41984   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Searcher.Editor.pdb                                34252   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll                             1585664 
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.pdb                             575576  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.ShaderGraph.Utilities.dll                          6144    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.ShaderGraph.Utilities.pdb                          21148   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.TextMeshPro.dll                                    471040  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll                             292352  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.pdb                             105360  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.TextMeshPro.pdb                                    197172  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Timeline.dll                                       154624  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Timeline.Editor.dll                                747520  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Timeline.Editor.pdb                                316988  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.Timeline.pdb                                       81772   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll                           635392  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll                    1128960 
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.pdb                    366604  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.Core.pdb                           273800  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.DocCodeExamples.dll                7168    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.DocCodeExamples.pdb                19956   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll                           408576  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll                    346112  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.pdb                    125132  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.Flow.pdb                           190984  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll        18944   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.pdb        24384   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll                  13312   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.pdb                  23160   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.State.dll                          32768   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll                   100352  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.pdb                   49128   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualScripting.State.pdb                          30948   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll                            140288  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\Unity.VisualStudio.Editor.pdb                            68920   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\UnityEditor.TestRunner.dll                               309248  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\UnityEditor.TestRunner.pdb                               135880  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\UnityEditor.UI.Analytics.dll                             7680    
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\UnityEditor.UI.Analytics.pdb                             21548   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\UnityEditor.UI.dll                                       98304   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\UnityEditor.UI.pdb                                       48408   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\UnityEngine.TestRunner.dll                               172544  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\UnityEngine.TestRunner.pdb                               82820   
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\UnityEngine.UI.dll                                       270848  
+C:\Users\ssare\DeckParty\Library\ScriptAssemblies\UnityEngine.UI.pdb                                       142780  
+C:\Users\ssare\DeckParty\Library\Search\propertyAliases.db                                                 4       
+C:\Users\ssare\DeckParty\Library\Search\propertyAliases.db.st                                              1430    
+C:\Users\ssare\DeckParty\Library\Search\propertyDatabase.db                                                4       
+C:\Users\ssare\DeckParty\Library\Search\propertyDatabase.db.st                                             1430    
+C:\Users\ssare\DeckParty\Library\Search\transactions.db                                                    319932  
+C:\Users\ssare\DeckParty\Library\ShaderCache\builtin                                                               
+C:\Users\ssare\DeckParty\Library\ShaderCache\compute                                                               
+C:\Users\ssare\DeckParty\Library\ShaderCache\shader                                                                
+C:\Users\ssare\DeckParty\Library\ShaderCache\shadergraph                                                           
+C:\Users\ssare\DeckParty\Library\ShaderCache\temp                                                                  
+C:\Users\ssare\DeckParty\Library\ShaderCache\urtshader                                                             
+C:\Users\ssare\DeckParty\Library\ShaderCache\EditorEncounteredVariants                                     6344    
+C:\Users\ssare\DeckParty\Library\StateCache\LayerSettings                                                          
+C:\Users\ssare\DeckParty\Library\TempArtifacts\Extra                                                               
+C:\Users\ssare\DeckParty\Library\TempArtifacts\Primary                                                             
+C:\Users\ssare\DeckParty\Library\UIElements\EditorWindows                                                          
+C:\Users\ssare\DeckParty\Logs\AssetImportWorker0.log                                                       0       
+C:\Users\ssare\DeckParty\Logs\AssetImportWorker1.log                                                       0       
+C:\Users\ssare\DeckParty\Logs\Packages-Update.log                                                          1885    
+C:\Users\ssare\DeckParty\Logs\shadercompiler-AssetImportWorker0-0.log                                      0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-AssetImportWorker1-0.log                                      0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-0.log                                 139169  
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-1.log                                 0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-10.log                                0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-11.log                                0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-12.log                                0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-13.log                                0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-14.log                                0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-15.log                                0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-2.log                                 0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-3.log                                 0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-4.log                                 0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-5.log                                 0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-6.log                                 0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-7.log                                 0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-8.log                                 0       
+C:\Users\ssare\DeckParty\Logs\shadercompiler-UnityShaderCompiler.exe-9.log                                 0       
+C:\Users\ssare\DeckParty\Packages\manifest.json                                                            1914    
+C:\Users\ssare\DeckParty\Packages\packages-lock.json                                                       15244   
+C:\Users\ssare\DeckParty\ProjectSettings\AudioManager.asset                                                413     
+C:\Users\ssare\DeckParty\ProjectSettings\ClusterInputManager.asset                                         114     
+C:\Users\ssare\DeckParty\ProjectSettings\DynamicsManager.asset                                             1254    
+C:\Users\ssare\DeckParty\ProjectSettings\EditorBuildSettings.asset                                         401     
+C:\Users\ssare\DeckParty\ProjectSettings\EditorSettings.asset                                              1585    
+C:\Users\ssare\DeckParty\ProjectSettings\GraphicsSettings.asset                                            2554    
+C:\Users\ssare\DeckParty\ProjectSettings\InputManager.asset                                                9731    
+C:\Users\ssare\DeckParty\ProjectSettings\MemorySettings.asset                                              1192    
+C:\Users\ssare\DeckParty\ProjectSettings\MultiplayerManager.asset                                          157     
+C:\Users\ssare\DeckParty\ProjectSettings\NavMeshAreas.asset                                                1308    
+C:\Users\ssare\DeckParty\ProjectSettings\NetworkManager.asset                                              151     
+C:\Users\ssare\DeckParty\ProjectSettings\PackageManagerSettings.asset                                      1044    
+C:\Users\ssare\DeckParty\ProjectSettings\Physics2DSettings.asset                                           2028    
+C:\Users\ssare\DeckParty\ProjectSettings\PresetManager.asset                                               146     
+C:\Users\ssare\DeckParty\ProjectSettings\ProjectSettings.asset                                             20332   
+C:\Users\ssare\DeckParty\ProjectSettings\ProjectVersion.txt                                                85      
+C:\Users\ssare\DeckParty\ProjectSettings\QualitySettings.asset                                             6701    
+C:\Users\ssare\DeckParty\ProjectSettings\ShaderGraphSettings.asset                                         524     
+C:\Users\ssare\DeckParty\ProjectSettings\TagManager.asset                                                  378     
+C:\Users\ssare\DeckParty\ProjectSettings\TimeManager.asset                                                 202     
+C:\Users\ssare\DeckParty\ProjectSettings\UnityConnectSettings.asset                                        1063    
+C:\Users\ssare\DeckParty\ProjectSettings\URPProjectSettings.asset                                          411     
+C:\Users\ssare\DeckParty\ProjectSettings\VersionControlSettings.asset                                      172     
+C:\Users\ssare\DeckParty\ProjectSettings\VFXManager.asset                                                  308     
+C:\Users\ssare\DeckParty\ProjectSettings\XRSettings.asset                                                  158     
+C:\Users\ssare\DeckParty\Temp\Burst                                                                                
+C:\Users\ssare\DeckParty\Temp\ProcessJobs                                                                          
+C:\Users\ssare\DeckParty\Temp\ScriptUpdater                                                                        
+C:\Users\ssare\DeckParty\Temp\FSTimeGet-40743c23d01ea1f40a2bf7cbcbb2651b                                   0       
+C:\Users\ssare\DeckParty\Temp\FSTimeGet-7b6e101f61e34a44084e6ade83144e90                                   8       
+C:\Users\ssare\DeckParty\Temp\FSTimeGet-ff77d98067ef5e94eaa0dad8cd1c5d16                                   0       
+C:\Users\ssare\DeckParty\Temp\UnityLockfile                                                                0       
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aot0c0s7rwg.hm2                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aot1c12bfd5.yo5                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aot2edupqxe.xs6                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aot3uz8wjht.ram                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aot68zrsegg.eyw                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aot73nskcs4.k06                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aote427t9su.562                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aote91prf0b.3pg                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aoteg7tibrz.w21                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aoti0z6gi7t.ac4                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aoti3cep1i9.zzt                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aotla5w4r6b.ceq                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aotogu7zgbu.hck                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aotupoq9eng.grr                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aotv2ue21r5.oef                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aotvpx3iqcg.zun                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aotx1886kaa.evd                                                          
+C:\Users\ssare\DeckParty\Temp\Burst\burst-aotxs6lfbsv.5fl                                                          
+C:\Users\ssare\DeckParty\Temp\ScriptUpdater\65462107                                                               
+C:\Users\ssare\DeckParty\UserSettings\Layouts                                                                      
+C:\Users\ssare\DeckParty\UserSettings\EditorUserSettings.asset                                             1011    
+C:\Users\ssare\DeckParty\UserSettings\Search.settings                                                      2       
+C:\Users\ssare\DeckParty\UserSettings\Layouts\default-6000.dwlt                                            41150   
+
+
+

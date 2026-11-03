@@ -1,0 +1,252 @@
+Assets\DeckParty\Scripts\Runtime\App\ProgressStore.cs:55:                    if (s.IsPreset && IsCleared(s.Id)) count++;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:39:            AbilityKind ability = AbilityKind.None,
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:60:        public bool HasAbility => Ability != AbilityKind.None;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:74:                case AbilityKind.Fetch: return TargetMode.WaitingGuest;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:75:                case AbilityKind.Inspect: return TargetMode.Inspect;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:76:                case AbilityKind.Boot:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:77:                case AbilityKind.Convert:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:78:                case AbilityKind.Immunity: return TargetMode.AnyAttendee;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:79:                case AbilityKind.Troll:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:80:                case AbilityKind.PlayOff:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:81:                case AbilityKind.Mog:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:82:                case AbilityKind.Arson:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:83:                case AbilityKind.Strike:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:84:                case AbilityKind.Refund:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:85:                case AbilityKind.Rickroll: return TargetMode.OtherAttendee;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:86:                case AbilityKind.SwapOrder:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:87:                case AbilityKind.Pirouette:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:88:                case AbilityKind.Drake: return TargetMode.TwoAttendees;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:89:                case AbilityKind.Bombard: return TargetMode.UpToThree;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:98:                case AbilityKind.Fetch: return ActionCategory.Recruit;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:99:                case AbilityKind.Boot:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:100:                case AbilityKind.Troll:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:101:                case AbilityKind.PlayOff:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:102:                case AbilityKind.Strike:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:103:                case AbilityKind.Bombard:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:104:                case AbilityKind.Refund: return ActionCategory.Remove;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:105:                case AbilityKind.Mood:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:106:                case AbilityKind.Mog:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:107:                case AbilityKind.Arson:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:108:                case AbilityKind.Pirouette:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:109:                case AbilityKind.Drake:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:110:                case AbilityKind.Convert:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:111:                case AbilityKind.Immunity: return ActionCategory.Modify;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:112:                case AbilityKind.Reset:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:113:                case AbilityKind.SwapOrder:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:114:                case AbilityKind.Rickroll: return ActionCategory.Shuffle;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:115:                case AbilityKind.Inspect:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:116:                case AbilityKind.Reroll:
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:117:                case AbilityKind.SideEye: return ActionCategory.Scout;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:118:                case AbilityKind.Invest: return ActionCategory.Economy;
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:128:                case AbilityKind.Mood: return new[] { "Happy", "Sad", "Angry" };
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:129:                case AbilityKind.Invest: return new[] { "Invest 2 Subs", "Invest 1 $" };
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:130:                case AbilityKind.Reroll: return new[] { "Reroll", "Peek" };
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:131:                case AbilityKind.Drake: return new[] { "Double Subs", "Double $" };
+Assets\DeckParty\Scripts\Core\GuestInfo.cs:132:                case AbilityKind.Convert: return new[] { "Subs to $", "$ to Subs" };
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:28:            { GuestType.SocialMediaManager, S(CardPulse.GlowIn, CardPulse.Shine, 0f, UIPalette.Teal) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:29:            { GuestType.Moderator, S(CardPulse.Burn, null, 6f, UIPalette.Red) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:30:            { GuestType.Hodl, S(null, CardPulse.Shine, 4f, UIPalette.Gold) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:31:            { GuestType.Trollface, S(CardPulse.Glitch, null, 3f, UIPalette.Pink) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:32:            { GuestType.Pepe, S(null, CardPulse.Poison, 0f, UIPalette.Green) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:33:            { GuestType.GrumpyCat, S(null, CardPulse.Frozen, 0f, UIPalette.Orange) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:34:            { GuestType.StonksGuy, S(null, CardPulse.Shine, 0f, UIPalette.Green) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:35:            { GuestType.ChadVsVirgin, S(CardPulse.Vibrate, CardPulse.Shine, 3f, UIPalette.Teal) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:36:            { GuestType.KeyboardCat, S(CardPulse.Burn, null, 2f, UIPalette.Orange) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:37:            { GuestType.DisasterGirl, S(CardPulse.Burn, null, 3f, UIPalette.Orange) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:38:            { GuestType.SuccessKid, S(CardPulse.Shine, CardPulse.Shine, 0f, UIPalette.Gold) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:39:            { GuestType.TungTungTungSahur, S(CardPulse.Vibrate, null, 8f, UIPalette.Orange) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:40:            { GuestType.TralaleroTralala, S(CardPulse.Hologram, null, 2f, UIPalette.Blue) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:41:            { GuestType.BombardiroCrocodilo, S(CardPulse.Burn, null, 12f, UIPalette.Red) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:42:            { GuestType.BallerinaCappuccina, S(CardPulse.Shine, null, 0f, UIPalette.Pink) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:43:            { GuestType.Karen, S(CardPulse.Burn, null, 4f, UIPalette.Red) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:44:            { GuestType.Rickroll, S(CardPulse.Glitch, null, 2f, UIPalette.Purple) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:45:            { GuestType.Drakeposting, S(CardPulse.Shine, null, 0f, UIPalette.Gold) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:46:            { GuestType.ConfusedMathLady, S(CardPulse.Hologram, null, 0f, UIPalette.Purple) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:47:            { GuestType.SideEyeChloe, S(null, CardPulse.Hologram, 0f, UIPalette.TextDim) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:48:            { GuestType.RollSafe, S(CardPulse.Frozen, null, 0f, UIPalette.Teal) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:49:            { GuestType.PlatformAdmin, S(CardPulse.Burn, null, 10f, UIPalette.Red) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:50:            { GuestType.Algorithm, S(CardPulse.GlowIn, CardPulse.Shine, 0f, UIPalette.Gold) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:52:            { GuestType.SkibidiToilet, S(CardPulse.Poison, null, 2f, UIPalette.Green) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:53:            { GuestType.NpcWojak, S(null, CardPulse.Hologram, 0f, UIPalette.TextDim) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:54:            { GuestType.OverlyAttachedGirlfriend, S(CardPulse.Shine, null, 0f, UIPalette.Pink) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:55:            { GuestType.UgandanKnuckles, S(null, CardPulse.Hologram, 0f, UIPalette.Red) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:56:            { GuestType.DistractedBoyfriend, S(null, CardPulse.Shine, 0f, UIPalette.Pink) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:57:            { GuestType.ThisIsFineDog, S(null, CardPulse.Burn, 6f, UIPalette.Orange) },
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:80:                    actorType = GuestType.SkibidiToilet;
+Assets\DeckParty\Scripts\Runtime\Fx\SignatureFx.cs:92:                    actorType = GuestType.UgandanKnuckles;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:34:            for (int i = 0; i < 4; i++) AddGuest(s, GuestType.LoyalFan);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:35:            for (int i = 0; i < 2; i++) AddGuest(s, GuestType.Whale);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:36:            for (int i = 0; i < 4; i++) AddGuest(s, GuestType.BotFarm);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:111:            return g.Kind == GuestType.Cheems && s.CountInHouse(GuestType.Doge) > 0;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:155:                if (other != null && other != g && other.Kind == GuestType.OverlyAttachedGirlfriend && other.AttachedTo == g.Id) return true;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:250:                    if (guests[i] != null && guests[i].Kind == GuestType.HideThePainHarold) pops[i] += bonus;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:288:                    case GuestType.Doge: ctx.Doges++; break;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:289:                    case GuestType.Cheems: ctx.Cheems++; break;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:290:                    case GuestType.Gigachad: ctx.Gigachads++; break;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:291:                    case GuestType.SigmaMale: ctx.Sigmas++; break;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:292:                    case GuestType.UgandanKnuckles: ctx.Knuckles++; break;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:293:                    case GuestType.HideThePainHarold: ctx.Harolds++; break;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:295:                if (g.Kind != GuestType.Doge) familyMask |= 1 << (int)g.Info.Category;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:304:                bool penalised = (g.Kind == GuestType.Gigachad && ctx.Gigachads > 1) ||
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:305:                                 (g.Kind == GuestType.SigmaMale && ctx.Sigmas > 1) ||
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:306:                                 (g.Kind == GuestType.Cheems && ctx.Doges == 0 && ctx.NetTrouble > 0);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:318:                case GuestType.Doge:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:322:                case GuestType.Gigachad:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:326:                case GuestType.Wojak:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:332:                case GuestType.Cheems:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:336:                case GuestType.Doomer:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:340:                case GuestType.ForeverAlone:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:343:                case GuestType.UgandanKnuckles:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:346:                case GuestType.BigChungus:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:349:                case GuestType.SigmaMale:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:352:                case GuestType.Pepe:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:419:                case AbilityKind.Fetch:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:423:                case AbilityKind.Inspect:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:426:                case AbilityKind.SideEye:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:429:                case AbilityKind.Invest:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:432:                case AbilityKind.Reroll:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:435:                case AbilityKind.Arson:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:467:            if (kind == AbilityKind.Fetch) return s.Pool.Contains(candidateId);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:479:                case AbilityKind.Boot:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:481:                case AbilityKind.Troll:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:482:                case AbilityKind.PlayOff:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:483:                case AbilityKind.Refund:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:485:                case AbilityKind.Bombard:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:487:                case AbilityKind.Mog:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:488:                case AbilityKind.Arson:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:490:                case AbilityKind.Strike:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:492:                case AbilityKind.Rickroll:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:494:                case AbilityKind.Convert:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:495:                case AbilityKind.Immunity:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:497:                case AbilityKind.SwapOrder:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:498:                case AbilityKind.Pirouette:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:499:                case AbilityKind.Drake:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:518:                case AbilityKind.Invest:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:522:                case AbilityKind.Reroll:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:526:                case AbilityKind.Inspect:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:742:                case GuestType.NpcWojak:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:746:                case GuestType.OverlyAttachedGirlfriend:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:760:                case GuestType.UgandanKnuckles:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:763:                        var copy = AddGuest(s, GuestType.UgandanKnuckles, true);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:769:                case GuestType.SkibidiToilet:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:773:                case GuestType.DistractedBoyfriend:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:795:                    case GuestType.OverlyAttachedGirlfriend:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:799:                    case GuestType.NyanCat:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:808:                    case GuestType.BongoCat:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:813:                    case GuestType.SkibidiToilet:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:820:            if (spreads && newcomer.Kind != GuestType.SkibidiToilet) InfectRandom(s, newcomer.Id, ev);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:826:            if (candidate.Kind == GuestType.OverlyAttachedGirlfriend) return false;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:857:                if (g == null || g.Infected || g.Immune || g.Kind == GuestType.SkibidiToilet) continue;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:873:                if (g == null || g.Info.Category != GuestCategory.Animal) continue;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:968:                    if (cat != null && cat.Kind == GuestType.CryingCat) Gain(s, cat, 2, 1, ev);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:977:                if (other == null || other.Kind != GuestType.OverlyAttachedGirlfriend || other.AttachedTo != id) continue;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:988:            if (g.Kind != GuestType.BadLuckBrian || g.ShieldUsed) return false;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1020:                if (g != null && g != source && g.Kind == GuestType.MeGusta) Gain(s, g, 2, 0, ev);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1029:                if (g != null && g != source && g.Kind == GuestType.MeGusta) Gain(s, g, 0, amount, ev);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1061:                if (g != null && g.Type == GuestType.ThisIsFineDog && !g.IsDisguised) dog = g;
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1128:                case AbilityKind.Fetch:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1132:                case AbilityKind.Boot:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1137:                case AbilityKind.Reset:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1147:                case AbilityKind.Troll:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1159:                case AbilityKind.Mood:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1169:                case AbilityKind.Inspect:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1182:                case AbilityKind.Invest:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1196:                case AbilityKind.PlayOff:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1206:                case AbilityKind.Mog:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1230:                case AbilityKind.Arson:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1240:                case AbilityKind.Reroll:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1266:                case AbilityKind.Strike:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1292:                case AbilityKind.SwapOrder:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1301:                        if (g != null && g.Kind == GuestType.NpcWojak && !g.Immune) CopyFromPredecessor(s, g, ev);
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1306:                case AbilityKind.Bombard:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1324:                case AbilityKind.Pirouette:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1338:                case AbilityKind.Refund:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1348:                case AbilityKind.Rickroll:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1362:                case AbilityKind.Drake:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1373:                case AbilityKind.Convert:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1381:                case AbilityKind.SideEye:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1390:                case AbilityKind.Immunity:
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1412:                if (g.Kind == GuestType.PopCat)
+Assets\DeckParty\Scripts\Core\PartyEngine.cs:1418:                else if (g.Kind == GuestType.DancingBaby && combo)
+Assets\DeckParty\Scripts\Runtime\Visuals\GuestVisuals.cs:49:                case GuestCategory.Community: return UIPalette.Blue;
+Assets\DeckParty\Scripts\Runtime\Visuals\GuestVisuals.cs:50:                case GuestCategory.Animal: return UIPalette.Orange;
+Assets\DeckParty\Scripts\Runtime\Visuals\GuestVisuals.cs:51:                case GuestCategory.Wojak: return UIPalette.Teal;
+Assets\DeckParty\Scripts\Runtime\Visuals\GuestVisuals.cs:52:                case GuestCategory.RageComic: return UIPalette.Pink;
+Assets\DeckParty\Scripts\Runtime\Visuals\GuestVisuals.cs:53:                case GuestCategory.Reaction: return UIPalette.Purple;
+Assets\DeckParty\Scripts\Runtime\Visuals\GuestVisuals.cs:54:                case GuestCategory.Brainrot: return UIPalette.Green;
+Assets\DeckParty\Scripts\Runtime\Visuals\GuestVisuals.cs:92:                case GuestType.NpcWojak:
+Assets\DeckParty\Scripts\Runtime\Visuals\GuestVisuals.cs:95:                case GuestType.PopCat:
+Assets\DeckParty\Scripts\Runtime\Visuals\GuestVisuals.cs:96:                case GuestType.CryingCat:
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:38:            ("smm", GuestType.SocialMediaManager), ("mod", GuestType.Moderator), ("collab", GuestType.Collaborator),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:39:            ("vip", GuestType.Vips), ("parasocial", GuestType.Parasocialite), ("thisisfine", GuestType.ThisIsFineDog),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:40:            ("finedog", GuestType.ThisIsFineDog), ("grumpy", GuestType.GrumpyCat), ("nyan", GuestType.NyanCat),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:41:            ("stonks", GuestType.StonksGuy), ("chad", GuestType.ChadVsVirgin), ("npc", GuestType.NpcWojak),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:42:            ("keyboard", GuestType.KeyboardCat), ("bongo", GuestType.BongoCat), ("popcat", GuestType.PopCat),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:43:            ("chungus", GuestType.BigChungus), ("knuckles", GuestType.UgandanKnuckles), ("oag", GuestType.OverlyAttachedGirlfriend),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:44:            ("attachedgirlfriend", GuestType.OverlyAttachedGirlfriend), ("disaster", GuestType.DisasterGirl),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:45:            ("harold", GuestType.HideThePainHarold), ("success", GuestType.SuccessKid), ("brian", GuestType.BadLuckBrian),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:46:            ("tungtung", GuestType.TungTungTungSahur), ("sahur", GuestType.TungTungTungSahur), ("tralalero", GuestType.TralaleroTralala),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:47:            ("bombardiro", GuestType.BombardiroCrocodilo), ("ballerina", GuestType.BallerinaCappuccina), ("skibidi", GuestType.SkibidiToilet),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:48:            ("sigma", GuestType.SigmaMale), ("distracted", GuestType.DistractedBoyfriend), ("drake", GuestType.Drakeposting),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:49:            ("mathlady", GuestType.ConfusedMathLady), ("chloe", GuestType.SideEyeChloe), ("sideeye", GuestType.SideEyeChloe),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:50:            ("crying", GuestType.CryingCat), ("baby", GuestType.DancingBaby), ("drama", GuestType.DramaChannel),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:51:            ("diva", GuestType.DivaStreamer), ("raid", GuestType.RaidLeader), ("vtuber", GuestType.MysteryVTuber),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:52:            ("wholesome", GuestType.WholesomeIcon), ("admin", GuestType.PlatformAdmin), ("influencer", GuestType.MegaInfluencer),
+Assets\DeckParty\Scripts\Editor\SpriteAutoAssigner.cs:53:            ("sponsor", GuestType.BrandSponsor),
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:31:        public bool IsPreset => !IsRandom && !IsSandbox;
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:38:        public const int PresetCount = 5;
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:49:                    GuestType.LoyalFan, GuestType.Whale, GuestType.SocialMediaManager, GuestType.Moderator, GuestType.AutoMod,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:50:                    GuestType.Collaborator, GuestType.Vips, GuestType.Parasocialite, GuestType.Doge, GuestType.Cheems,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:51:                    GuestType.Pepe,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:52:                    GuestType.MysteryVTuber, GuestType.MegaInfluencer, GuestType.DramaChannel,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:58:                    GuestType.Doge, GuestType.Cheems, GuestType.GrumpyCat, GuestType.NyanCat, GuestType.KeyboardCat,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:59:                    GuestType.BongoCat, GuestType.PopCat, GuestType.CryingCat, GuestType.ThisIsFineDog, GuestType.BigChungus,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:60:                    GuestType.UgandanKnuckles,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:61:                    GuestType.WholesomeIcon, GuestType.RaidLeader, GuestType.BrandSponsor,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:67:                    GuestType.Wojak, GuestType.Doomer, GuestType.NpcWojak, GuestType.ChadVsVirgin, GuestType.Gigachad,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:68:                    GuestType.SigmaMale, GuestType.ForeverAlone, GuestType.MeGusta, GuestType.Trollface, GuestType.Karen,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:69:                    GuestType.ThisIsFineDog, GuestType.AutoMod,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:70:                    GuestType.DramaChannel, GuestType.DivaStreamer, GuestType.PlatformAdmin,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:76:                    GuestType.TungTungTungSahur, GuestType.TralaleroTralala, GuestType.BombardiroCrocodilo, GuestType.BallerinaCappuccina, GuestType.SkibidiToilet,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:77:                    GuestType.Rickroll, GuestType.DancingBaby, GuestType.PopCat, GuestType.Hodl, GuestType.Vips,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:78:                    GuestType.Moderator,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:79:                    GuestType.Algorithm, GuestType.RaidLeader, GuestType.MegaInfluencer,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:85:                    GuestType.DistractedBoyfriend, GuestType.Drakeposting, GuestType.ConfusedMathLady, GuestType.SideEyeChloe, GuestType.RollSafe,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:86:                    GuestType.SuccessKid, GuestType.BadLuckBrian, GuestType.DisasterGirl, GuestType.HideThePainHarold, GuestType.OverlyAttachedGirlfriend,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:87:                    GuestType.StonksGuy,
+Assets\DeckParty\Scripts\Core\ScenarioCatalog.cs:88:                    GuestType.Algorithm, GuestType.BrandSponsor, GuestType.WholesomeIcon,
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:892:                case AbilityKind.Mood:
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:894:                case AbilityKind.Invest:
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:897:                case AbilityKind.Reroll:
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:903:                case AbilityKind.Drake:
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:905:                case AbilityKind.Convert:
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:916:            if (kind == AbilityKind.Invest && count >= 2)
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:921:            else if (kind == AbilityKind.Reroll && count >= 2)
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1025:                case AbilityKind.Boot: return Loc.Get("target.boot", "actor", who, "self", GuestVisuals.DisplayName(actor.Kind));
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1026:                case AbilityKind.Troll: return Loc.Get("target.troll", "actor", who);
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1027:                case AbilityKind.PlayOff: return Loc.Get("target.playoff", "actor", who);
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1028:                case AbilityKind.Refund: return Loc.Get("target.refund", "actor", who);
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1029:                case AbilityKind.Mog: return Loc.Get("target.mog", "actor", who);
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1030:                case AbilityKind.Arson: return Loc.Get("target.arson", "actor", who);
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1031:                case AbilityKind.Strike: return Loc.Get("target.strike", "actor", who);
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1032:                case AbilityKind.Rickroll: return Loc.Get("target.rickroll", "actor", who);
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1033:                case AbilityKind.Convert: return Loc.Get("target.convert", "actor", who, "option", GuestVisuals.OptionLabel(actor.Kind, m_Option));
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1034:                case AbilityKind.Immunity: return Loc.Get("target.immunity", "actor", who);
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1035:                case AbilityKind.SwapOrder:
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1037:                case AbilityKind.Pirouette:
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1039:                case AbilityKind.Drake:
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1041:                case AbilityKind.Bombard:
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.cs:1125:            string title = Loc.Get("pick.attraction_title", "viewer", boyfriend != null ? GuestVisuals.DisplayName(boyfriend.Kind) : GuestVisuals.DisplayName(GuestType.DistractedBoyfriend));
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.Juice.cs:351:                    if (g.Kind == GuestType.OverlyAttachedGirlfriend)
+Assets\DeckParty\Scripts\Runtime\UI\Game\GameController.Juice.cs:356:                    else if (g.Kind == GuestType.NyanCat && g.Counter > 0)
+Assets\DeckParty\Scripts\Core\GuestCatalog.cs:27:            const GuestCategory Community = GuestCategory.Community;
+Assets\DeckParty\Scripts\Core\GuestCatalog.cs:28:            const GuestCategory Animal = GuestCategory.Animal;
+Assets\DeckParty\Scripts\Core\GuestCatalog.cs:29:            const GuestCategory Wojak = GuestCategory.Wojak;
+Assets\DeckParty\Scripts\Core\GuestCatalog.cs:30:            const GuestCategory Rage = GuestCategory.RageComic;
+Assets\DeckParty\Scripts\Core\GuestCatalog.cs:31:            const GuestCategory Reaction = GuestCategory.Reaction;
+Assets\DeckParty\Scripts\Core\GuestCatalog.cs:32:            const GuestCategory Brainrot = GuestCategory.Brainrot;
+Assets\DeckParty\Scripts\Core\GuestCatalog.cs:33:            const GuestCategory Diamond = GuestCategory.Diamond;
+Assets\DeckParty\Scripts\Core\GuestCatalog.cs:38:                new GuestInfo(GuestType.LoyalFan, "Loyal Fan", 2, Community,
+Assets\DeckParty\Scripts\Core\GuestCatalog.cs:40:                new GuestInfo(GuestType.Whale, "Whale", 3, Community,
+
+[Showing results with pagination = limit: 250]

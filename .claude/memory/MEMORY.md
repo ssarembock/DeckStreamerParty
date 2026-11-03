@@ -1,0 +1,3 @@
+- [User tests in Unity](user-tests-in-unity.md) — no automated tests by Claude; project-related PC commands pre-approved; run unattended without blocking questions
+- [GitHub repo](github-repo.md) — github.com/ssarembock/DeckStreamerParty (private), branch main; ask before committing; two PCs share Claude context via CLAUDE.md + .claude/memory + .claude/sync-claude.ps1
+- [Deck Party project](deck-party-project.md) — Party House rebuild, player-facing "Audience Capture"; Loc/CSV text, streamers, Feel/SSU; V4 Deplatform rename, resource icons in text ({icon:x}), 14 Communities + Community Beats; V4.2 44-card roster, Free For All; V5 website look (platforms/logos, chat avatars, icon buttons, Clout/Plays rename); protocol deckparty-8, FormatVersion 6

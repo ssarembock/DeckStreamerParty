@@ -1,0 +1,30 @@
+<Project>
+  <PropertyGroup>
+    <UnityData Condition="'$(UnityData)' == ''">C:\Program Files\Unity\Hub\Editor\6000.0.73f1\Editor\Data</UnityData>
+    <ProjectRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\..'))</ProjectRoot>
+    <OutDirShared>$(MSBuildThisFileDirectory)out\</OutDirShared>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoStdLib>true</NoStdLib>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <OutputPath>$(OutDirShared)</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <DefineConstants>UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_6000_0_OR_NEWER;UNITY_2023_3_OR_NEWER;UNITY_2023_2_OR_NEWER;UNITY_2023_1_OR_NEWER;UNITY_2022_3_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_1_OR_NEWER;ENABLE_INPUT_SYSTEM;ENABLE_LEGACY_INPUT_MANAGER;DEBUG;TRACE;UNITY_ASSERTIONS;ENABLE_UNITY_COLLECTIONS_CHECKS;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_MONO;UNITY_64;ENABLE_PROFILER</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="$(UnityData)\NetStandard\ref\2.1.0\netstandard.dll" Private="false" />
+    <Reference Include="$(UnityData)\NetStandard\compat\2.1.0\shims\netfx\*.dll" Private="false" />
+    <Reference Include="$(UnityData)\Managed\UnityEngine\UnityEngine*.dll" Private="false" />
+    <Reference Include="$(UnityData)\Managed\UnityEngine\UnityEditor*.dll" Private="false" />
+    <Reference Include="$(ProjectRoot)\Library\ScriptAssemblies\Unity.Burst.dll" Private="false" />
+    <Reference Include="$(ProjectRoot)\Library\ScriptAssemblies\Unity.Collections.dll" Private="false" />
+    <Reference Include="$(ProjectRoot)\Library\ScriptAssemblies\Unity.Mathematics.dll" Private="false" />
+  </ItemGroup>
+</Project>

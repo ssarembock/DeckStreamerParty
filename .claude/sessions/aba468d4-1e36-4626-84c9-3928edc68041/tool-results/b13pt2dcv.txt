@@ -1,0 +1,258 @@
+== term.risk | Gameplay
+   en : Platform Ban Risk
+   zh : 封禁风险
+   ru : Риск бана
+   es : Riesgo de baneo
+   pt : Risco de banimento
+== term.raid | Gameplay
+   en : PLATFORM BAN!
+   zh : 平台封禁！
+   ru : БАН ОТ ПЛАТФОРМЫ!
+   es : ¡BANEO DE LA PLATAFORMA!
+   pt : BANIDO DA PLATAFORMA!
+== hud.tip.risk_idle | UI
+   en : <b>Platform Ban Risk</b>\n{max} net Platform Ban Risk in one stream and the stream gets banned.
+   zh : <b>封禁风险</b>\n一场直播的净风险达到 {max}，直播就会被封禁。
+   ru : <b>Риск бана</b>\n{max} чистого риска за стрим — и стрим банят.
+   es : <b>Riesgo de baneo</b>\nCon {max} de riesgo neto en un stream, lo banean.
+   pt : <b>Risco de banimento</b>\nCom {max} de risco líquido em uma live, ela é banida.
+== hud.tip.risk | UI
+   en : <b>Platform Ban Risk</b>\nAdded by viewers: {added}\nCancelled: -{cancelled}\nNet: {net} (Platform Ban at {max})
+   zh : <b>封禁风险</b>\n观众带来：{added}\n已抵消：-{cancelled}\n净值：{net}（{max} 时被封禁）
+   ru : <b>Риск бана</b>\nОт зрителей: {added}\nПогашено: -{cancelled}\nИтого: {net} (бан при {max})
+   es : <b>Riesgo de baneo</b>\nSumado por espectadores: {added}\nAnulado: -{cancelled}\nNeto: {net} (baneo con {max})
+   pt : <b>Risco de banimento</b>\nAdicionado por espectadores: {added}\nAnulado: -{cancelled}\nLíquido: {net} (banimento com {max})
+== chat.hint.risk | UI
+   en : One more Platform Ban Risk and the stream gets banned.
+   zh : 再多 1 点风险直播就会被封禁。
+   ru : Ещё 1 риск — и стрим забанят.
+   es : Un punto más de riesgo y te banean el stream.
+   pt : Mais um de risco e a live é banida.
+== ban.message | UI
+   en : Platform Ban Risk got too high and the platform banned the stream. Nobody gets paid tonight.
+   zh : 风险太高，平台封禁了直播。今晚谁都拿不到钱。
+   ru : Риск стал слишком высоким, и платформа забанила стрим. Сегодня никому не платят.
+   es : El riesgo subió demasiado y la plataforma baneó el stream. Esta noche nadie cobra.
+   pt : O risco ficou alto demais e a plataforma baniu a live. Ninguém recebe esta noite.
+== over.stats1 | UI
+   en : Great streams: {great}    Platform Bans: {banned}    Server Downs: {server_down}
+   zh : 精彩直播：{great}    平台封禁：{banned}    服务器崩溃：{server_down}
+   ru : Отличных стримов: {great}    Банов: {banned}    Падений сервера: {server_down}
+   es : Grandes streams: {great}    Baneos: {banned}    Servidor caído: {server_down}
+   pt : Ótimas lives: {great}    Banimentos: {banned}    Servidor caiu: {server_down}
+== over.stats2 | UI
+   en : Gifted Subs earned: {subs}    Cash earned: {cash}    Audience: {viewers} viewers ({diamonds} Diamonds)    Sub Cap: {cap}
+   zh : 获得礼物订阅：{subs}    获得现金：{cash}    粉丝团：{viewers} 位观众（{diamonds} 颗钻石）    人数上限：{cap}
+   ru : Подарочных сабов: {subs}    Денег: {cash}    Аудитория: {viewers} (алмазов: {diamonds})    Лимит: {cap}
+   es : Subs regaladas ganadas: {subs}    Plata ganada: {cash}    Audiencia: {viewers} espectadores ({diamonds} Diamantes)    Cupo: {cap}
+   pt : Subs de presente ganhos: {subs}    Grana ganha: {cash}    Audiência: {viewers} espectadores ({diamonds} Diamantes)    Limite: {cap}
+== game.this_is_fine_sub | UI
+   en : The Platform Ban was called off. Platform Ban Risk cleared.
+   zh : 封禁被撤回了。风险已清零。
+   ru : Бан отменили. Риск сброшен.
+   es : Se canceló el baneo. Riesgo borrado.
+   pt : O banimento foi cancelado. Risco zerado.
+== game.banned_sub | UI
+   en : Your stream got a Platform Ban. No payout tonight
+   zh : 你的直播被平台封禁了。今晚没有收入
+   ru : Ваш стрим забанили. Сегодня без выплаты
+   es : Banearon tu stream. Esta noche no hay ganancias
+   pt : Sua live foi banida. Sem pagamento esta noite
+== game.banned_sub_other | UI
+   en : {player}'s stream got a Platform Ban. No payout tonight
+   zh : {player} 的直播被平台封禁了。今晚没有收入
+   ru : Стрим {player} забанили. Сегодня без выплаты
+   es : Banearon el stream de {player}. Esta noche no hay ganancias
+   pt : A live de {player} foi banida. Sem pagamento esta noite
+== help.invest | UI
+   en : Stake {subs} Gifted Subs or {cash} $ from your bank. If the stream succeeds you get {mult}x back; if it gets a Platform Ban or the server goes down, it's gone.\nYou have {have_subs} Gifted Subs and {have_cash} $.
+   zh : 从存款中投入 {subs} 礼物订阅或 {cash} $。直播成功返还 {mult} 倍；被平台封禁或服务器崩溃就血本无归。\n你有 {have_subs} 礼物订阅和 {have_cash} $。
+   ru : Поставьте {subs} подарочных сабов или {cash} $ из банка. Если стрим удастся, вернётся в {mult} раза больше; если стрим забанят или упадёт сервер — всё пропало.\nУ вас {have_subs} подарочных сабов и {have_cash} $.
+   es : Apuesta {subs} Subs regaladas o {cash} $ de tu banco. Si el stream sale bien recuperas {mult}x; si lo banean o se cae el servidor, lo pierdes.\nTienes {have_subs} Subs regaladas y {have_cash} $.
+   pt : Aposte {subs} Subs de presente ou {cash} $ do seu banco. Se a live der certo você recebe {mult}x de volta; se for banida ou o servidor cair, já era.\nVocê tem {have_subs} Subs de presente e {have_cash} $.
+== log.platform_ban | Gameplay
+   en : PLATFORM BAN! Platform Ban Risk hit {risk}. The stream is banned. No payout tonight.
+   zh : 平台封禁！封禁风险达到 {risk}。直播被封禁，今晚没有收入。
+   ru : БАН ОТ ПЛАТФОРМЫ! Риск бана достиг {risk}. Стрим забанен. Сегодня без выплат.
+   es : ¡BANEO DE LA PLATAFORMA! El riesgo de baneo llegó a {risk}. Banearon el stream. Hoy no se cobra nada.
+   pt : BANIDO DA PLATAFORMA! O risco de banimento bateu {risk}. A live foi banida. Hoje não tem pagamento.
+== log.this_is_fine | Gameplay
+   en : This is fine. {viewer} talks the platform out of the ban and clears {count} Platform Ban Risk.
+   zh : 这很好。{viewer} 说服平台撤回了封禁，清除了 {count} 点风险。
+   ru : Всё нормально. {viewer} уговаривает платформу отменить бан и снимает {count} риска.
+   es : Todo bien. {viewer} convence a la plataforma de cancelar el baneo y elimina {count} de riesgo.
+   pt : Tá tudo bem. {viewer} convence a plataforma a cancelar o banimento e zera {count} de risco.
+== err.would_ban | Gameplay
+   en : That would get the stream banned.
+   zh : 这样会导致直播被封禁。
+   ru : Так стрим получит бан.
+   es : Eso haría que baneen el stream.
+   pt : Isso faria a live ser banida.
+== rules.risk.title | Gameplay
+   en : Platform Ban Risk
+   zh : 封禁风险
+   ru : Риск бана
+   es : Riesgo de baneo
+   pt : Risco de banimento
+== rules.risk.body | Gameplay
+   en : Viewers with a red X add Platform Ban Risk. Up to 2 net Platform Ban Risk is fine; at <b>3 the stream gets a Platform Ban</b>: it ends with no payout and you give one viewer a <b>Temporary Ban</b> (they sit out the next stream). Normie, Die Hard Fan and Internet Starpower <b>cancel</b> 1 Platform Ban Risk each while in chat (Cheems does too when a Doge is around). Some viewers add Platform Ban Risk with their actions; This Is Fine Dog talks the platform out of one ban, and the Chat Arbitrator clears risk.
+   zh : 带红色 X 的观众会增加封禁风险。净风险 2 点以内没事；到 <b>3 点直播就会被平台封禁</b>：直播结束且没有收入，你还要让一位观众<b>禁言</b>（缺席下一场直播）。路人、死忠粉和网络顶流在直播间时各<b>抵消</b> 1 点风险（有神烦狗在场时 Cheems柴犬 也可以）。有些观众的技能会增加风险；“这很好”狗能让平台撤回一次封禁，聊天仲裁员能清除风险。
+   ru : Зрители с красным крестиком добавляют риск бана. До 2 чистого риска — нормально; при <b>3 платформа банит стрим</b>: он заканчивается без выплаты, и вы даёте одному зрителю <b>временный бан</b> (он пропускает следующий стрим). Нормис, Фанат до гроба и Интернет-звезда <b>гасят</b> по 1 риску, пока в чате (Чимс тоже, если рядом Доге). Некоторые зрители добавляют риск своими действиями; Пёс «Всё нормально» один раз отменяет бан, а Арбитр чата снимает риск.
+   es : Los espectadores con una X roja suman riesgo de baneo. Hasta 2 de riesgo neto no pasa nada; con <b>3 la plataforma banea el stream</b>: termina sin ganancias y le das a un espectador un <b>baneo temporal</b> (se pierde el próximo stream). El Normie, el Fan acérrimo y la Estrella de internet <b>anulan</b> 1 de riesgo cada uno mientras están en el chat (Cheems también, si hay un Doge cerca). Algunos espectadores suman riesgo con sus acciones; el Perro "Todo bien" cancela un baneo una vez y el Árbitro del chat quita el riesgo.
+   pt : Espectadores com um X vermelho adicionam risco de banimento. Até 2 de risco líquido tudo bem; com <b>3 a plataforma bane a live</b>: ela acaba sem pagamento e você dá um <b>ban temporário</b> a um espectador (ele fica fora da próxima live). O Normie, o Fã raiz e a Estrela da internet <b>anulam</b> 1 de risco cada enquanto estão no chat (o Cheems também, se tiver um Doge por perto). Alguns espectadores adicionam risco com as ações; o Cachorro "Tá tudo bem" cancela um banimento uma vez e o Árbitro do chat tira o risco.
+== rules.quick | Gameplay
+   en : <b>Win:</b> 4 Diamonds in one successful stream.\n<b>Add Viewer:</b> the next viewer in the queue joins chat.  <b>End the Stream:</b> banks Subs as Gifted Subs, plus Cash.\n<b>3 net Platform Ban Risk</b> = Platform Ban (no payout, one viewer gets a Temporary Ban).\n<b>Over your Sub Cap</b> = Server Down (no payout).\n<b>Shop:</b> Gifted Subs recruit viewers (the stock is shared by every player), Cash raises your Sub Cap and pays for streamer actives.\n<b>Keys:</b> Space add viewer/confirm/next night, E end the stream, R Audience, Esc menu, F11 fullscreen.
+   zh : <b>获胜：</b>一场成功的直播里有 4 颗钻石。\n<b>让观众进来：</b>排队区的下一位观众进入直播间。  <b>结束直播：</b>把订阅存为礼物订阅，外加现金。\n<b>净风险 3 点</b> = 平台封禁（没有收入，一位观众被禁言）。\n<b>超过人数上限</b> = 服务器崩溃（没有收入）。\n<b>商店：</b>礼物订阅招募观众（库存所有玩家共享），现金提高人数上限并支付主播主动能力。\n<b>按键：</b>空格 让观众进来/确认/下一晚，E 结束直播，R 粉丝团，Esc 菜单，F11 全屏。
+   ru : <b>Победа:</b> 4 алмаза в одном успешном стриме.\n<b>Впустить зрителя:</b> следующий зритель из очереди заходит в чат.  <b>Завершить стрим:</b> сабы становятся подарочными сабами, плюс деньги.\n<b>3 чистого риска</b> = бан от платформы (без выплаты, один зритель получает временный бан).\n<b>Больше лимита</b> = сервер падает (без выплаты).\n<b>Магазин:</b> подарочные сабы нанимают зрителей (запас общий для всех игроков), деньги повышают лимит и оплачивают активные способности стримера.\n<b>Клавиши:</b> Пробел — впустить/подтвердить/следующая ночь, E — завершить стрим, R — аудитория, Esc — меню, F11 — полный экран.
+   es : <b>Ganar:</b> 4 Diamantes en un stream exitoso.\n<b>Sumar espectador:</b> entra al chat el próximo de la fila.  <b>Terminar el stream:</b> cobra los Subs como Subs regaladas, más la Plata.\n<b>3 de riesgo neto</b> = baneo de la plataforma (sin ganancias, un espectador recibe un baneo temporal).\n<b>Pasarte del cupo</b> = se cae el servidor (sin ganancias).\n<b>Tienda:</b> las Subs regaladas reclutan espectadores (el stock es compartido entre todos), la Plata sube el cupo y paga los poderes activos del streamer.\n<b>Teclas:</b> Espacio sumar/confirmar/siguiente noche, E terminar el stream, R Audiencia, Esc menú, F11 pantalla completa.
+   pt : <b>Vitória:</b> 4 Diamantes numa live bem-sucedida.\n<b>Adicionar espectador:</b> o próximo da fila entra no chat.  <b>Encerrar a live:</b> guarda os Subs como Subs de presente, mais a Grana.\n<b>3 de risco líquido</b> = banimento da plataforma (sem pagamento, um espectador leva ban temporário).\n<b>Passar do limite</b> = o servidor cai (sem pagamento).\n<b>Loja:</b> Subs de presente recrutam espectadores (o estoque é dividido entre todos), a Grana aumenta o limite e paga os poderes ativos do streamer.\n<b>Teclas:</b> Espaço adicionar/confirmar/próxima noite, E encerrar a live, R Audiência, Esc menu, F11 tela cheia.
+== char.ThisIsFineDog.desc | Characters
+   en : Denial: the first time Platform Ban Risk would reach 3, the ban is called off and all Platform Ban Risk is cleared. This copy then leaves your Audience for good.
+   zh : 否认现实：封禁风险第一次要达到 3 时，封禁被撤回，所有风险清零。之后这张卡永远离开你的粉丝团。
+   ru : Отрицание: когда риск бана впервые должен достичь 3, бан отменяется и весь риск сбрасывается. Затем эта копия навсегда покидает аудиторию.
+   es : Negación: la primera vez que el riesgo de baneo llegaría a 3, el baneo se cancela y todo el riesgo se borra. Después esta copia deja tu Audiencia para siempre.
+   pt : Negação: na primeira vez que o risco de banimento chegaria a 3, o banimento é cancelado e todo o risco zera. Depois essa cópia sai da sua Audiência pra sempre.
+== char.DisasterGirl.desc | Characters
+   en : Action: another viewer gets +1 Platform Ban Risk and +3 Subs, and she gets +2 Subs. Can't be used if it would get the stream banned.
+   zh : 技能：另一位观众 +1 封禁风险和 +3 订阅，她自己 +2 订阅。如果会导致直播被封禁就不能用。
+   ru : Действие: другой зритель получает +1 риск бана и +3 саба, а она +2 саба. Нельзя, если из-за этого стрим забанят.
+   es : Acción: otro espectador gana +1 de riesgo de baneo y +3 Subs, y ella +2 Subs. No se puede usar si haría que baneen el stream.
+   pt : Ação: outro espectador ganha +1 de risco de banimento e +3 Subs, e ela +2 Subs. Não dá pra usar se fizer a live ser banida.
+== char.Doge.desc | Characters
+   en : Such Synergy: +1 Subs for each different character family in chat (max +5). Other Doges don't count.
+   zh : 如此协同：直播间里每有一个不同的角色家族 +1 订阅（最多 +5）。其他神烦狗不算。
+   ru : Такая синергия: +1 саб за каждую разную семью персонажей в чате (максимум +5). Другие Доге не считаются.
+   es : Tanta sinergia: +1 Sub por cada familia de personajes distinta en el chat (máx. +5). Otros Doge no cuentan.
+   pt : Tanta sinergia: +1 Sub por cada família de personagem diferente no chat (máx. +5). Outros Doge não contam.
+== char.BongoCat.desc | Characters
+   en : The Beat Goes On: every third viewer to join after Bongo Cat gives every Animal viewer in chat +2 Subs for the night.
+   zh : 节奏不停：在敲鼓猫之后每第三位进场的观众，会让直播间所有动物观众今晚 +2 订阅。
+   ru : Ритм не смолкает: каждый третий зритель, вошедший после Бонго-кота, даёт всем животным в чате +2 саба на эту ночь.
+   es : El ritmo sigue: cada tercer espectador que entra después de Bongo Cat le da +2 Subs a todos los Animales del chat por esta noche.
+   pt : O ritmo continua: cada terceiro espectador que entra depois do Bongo Cat dá +2 Subs a todos os Bichos do chat nesta noite.
+== streamer.SoftHardBodyMan.desc | Streamers
+   en : Passive: when your stream gets a Platform Ban, you still bank half that stream's Subs.
+   zh : 被动：直播被平台封禁时，你仍能保住那场直播一半的订阅。
+   ru : Пассивно: если стрим забанили, вы всё равно сохраняете половину его сабов.
+   es : Pasivo: si banean tu stream, igual te quedas con la mitad de los Subs de ese stream.
+   pt : Passivo: se sua live for banida, você ainda fica com metade dos Subs dela.
+== scenario.2.tagline | Content
+   en : Platform Ban Risk is good content
+   zh : 封禁风险就是好内容
+   ru : Риск бана — это контент
+   es : El riesgo de baneo es buen contenido
+   pt : Risco de banimento é conteúdo
+== scenario.2.desc | Content
+   en : Wojaks feed on suffering. Doomer and Me Gusta love Platform Ban Risk, Gigachad and Sigma want the spotlight alone, and This Is Fine Dog keeps the ban hammer guessing.
+   zh : Wojak 们以痛苦为食。末日哥和我喜欢爱死了封禁风险，Gigachad猛男和西格玛男想独占聚光灯，“这很好”狗让封禁大锤捉摸不透。
+   ru : Воджаки питаются страданиями. Думер и Ме густа обожают риск бана, Гигачад и Сигма хотят быть в центре внимания одни, а Пёс «Всё нормально» не даёт банхаммеру опуститься.
+   es : Los Wojaks se alimentan del sufrimiento. Doomer y Me Gusta aman el riesgo de baneo, Gigachad y el Macho Sigma quieren el foco solo para ellos, y el Perro "Todo bien" mantiene al martillo del baneo adivinando.
+   pt : Os Wojaks se alimentam de sofrimento. Doomer e Me Gusta amam risco de banimento, Gigachad e o Macho Sigma querem os holofotes só pra eles, e o Cachorro "Tá tudo bem" deixa o martelo do banimento na dúvida.
+== mp.platform_ban | Multiplayer
+   en : {0}'s stream got a Platform Ban!
+   zh : {0} 的直播被平台封禁了！
+   ru : Стрим {0} забанили!
+   es : ¡Banearon el stream de {0}!
+   pt : A live de {0} foi banida!
+== anxious.title | Streamers
+   en : ONE MORE AND YOU'RE BANNED!
+   zh : 再来一点风险就要被封了！
+   ru : ЕЩЁ ЧУТЬ-ЧУТЬ — И БАН!
+   es : ¡UNO MÁS Y TE BANEAN!
+   pt : MAIS UM E VOCÊ É BANIDO!
+== card.tag.risk | Gameplay
+   en : PLATFORM BAN RISK
+   zh : 封禁风险
+   ru : РИСК БАНА
+   es : RIESGO DE BANEO
+   pt : RISCO DE BANIMENTO
+== card.tag.cancels | Gameplay
+   en : CANCELS RISK
+   zh : 抵消风险
+   ru : ГАСИТ РИСК
+   es : ANULA RIESGO
+   pt : ANULA RISCO
+== card.hate_watching | Gameplay
+   en : Hate-watching right now (+1 Platform Ban Risk)
+   zh : 正在来黑（+1 封禁风险）
+   ru : Сейчас смотрит с ненавистью (+1 риск бана)
+   es : Ahora mira por odio (+1 de riesgo de baneo)
+   pt : Assistindo por ódio agora (+1 de risco de banimento)
+== log.hate_watching | Gameplay
+   en : {viewer} is hate-watching (+1 Platform Ban Risk).
+   zh : {viewer} 是来黑的（+1 封禁风险）。
+   ru : {viewer} смотрит с ненавистью (+1 риск бана).
+   es : {viewer} mira por odio (+1 de riesgo de baneo).
+   pt : {viewer} está assistindo por ódio (+1 de risco de banimento).
+== players.live_detail | UI
+   en : ({viewers}/{cap}, {diamonds}, risk {risk})
+   zh : （{viewers}/{cap}，{diamonds}，风险 {risk}）
+   ru : ({viewers}/{cap}, {diamonds}, риск {risk})
+   es : ({viewers}/{cap}, {diamonds}, riesgo {risk})
+   pt : ({viewers}/{cap}, {diamonds}, risco {risk})
+== status.risk_cleared | Gameplay
+   en : Risk cleared
+   zh : 风险已清除
+   ru : Риск снят
+   es : Riesgo eliminado
+   pt : Risco eliminado
+== fmt.subs | Gameplay
+   en : {value} Subs
+   zh : {value} 订阅
+   ru : {value} саб.
+   es : {value} Subs
+   pt : {value} Subs
+== fmt.risk | Gameplay
+   en : {value} Platform Ban Risk
+   zh : {value} 封禁风险
+   ru : {value} риска бана
+   es : {value} de riesgo de baneo
+   pt : {value} de risco de banimento
+== fmt.gifted_subs | Gameplay
+   en : {value} Gifted Subs
+   zh : {value} 礼物订阅
+   ru : {value} под. саб.
+   es : {value} Subs regaladas
+   pt : {value} Subs de presente
+== hud.risk | UI
+   en : Platform Ban Risk {risk}/{max}
+   zh : 封禁风险 {risk}/{max}
+   ru : Риск бана {risk}/{max}
+   es : Riesgo de baneo {risk}/{max}
+   pt : Risco de banimento {risk}/{max}
+== hud.tip.gifted_subs | UI
+   en : Gifted Subs: spend them to recruit new viewers.
+   zh : 礼物订阅：用来招募新观众。
+   ru : Подарочные сабы: тратьте их на новых зрителей.
+   es : Subs regaladas: gástalas para reclutar nuevos espectadores.
+   pt : Subs de presente: gaste pra recrutar novos espectadores.
+== hud.tip.cash | UI
+   en : Cash: spend it to raise your Sub Cap.
+   zh : 现金：用来提高人数上限。
+   ru : Деньги: тратьте их на повышение лимита зрителей.
+   es : Plata: gástala para subir tu cupo del chat.
+   pt : Grana: gaste pra aumentar seu limite do chat.
+== rules.night.body | Gameplay
+   en : <b>1. The stream.</b> Press <b>Add Viewer to Chat</b> to let the next viewer from your Audience join. Each viewer can join once per stream. Viewers with a purple <b>action</b> button can use it once per stream. When you're happy, press <b>End the Stream</b> to bank what everyone in chat brought in.\n<b>2. The shop.</b> Viewers bring in <color=#FFC94A>Subs</color>; when the stream ends they're banked as <color=#FFC94A>Gifted Subs</color>, which recruit new viewers into your Audience. <color=#6BE38B>Cash</color> raises your <b>Sub Cap</b> (how many viewers fit in chat at once).
+   zh : <b>1. 直播。</b>按<b>让观众进入直播间</b>，让粉丝团里的下一位观众进来。每位观众每场直播只能进来一次。带紫色<b>技能</b>按钮的观众每场可以用一次技能。满意了就按<b>结束直播</b>，把直播间里所有人带来的收益存起来。\n<b>2. 商店。</b>观众带来<color=#FFC94A>订阅</color>；直播结束时存为<color=#FFC94A>礼物订阅</color>，用来招募新观众加入粉丝团。<color=#6BE38B>现金</color>用来提高<b>人数上限</b>（直播间同时能容纳多少观众）。
+   ru : <b>1. Стрим.</b> Нажмите <b>Впустить зрителя в чат</b>, чтобы следующий зритель из вашей аудитории зашёл. Каждый зритель заходит один раз за стрим. Зрители с фиолетовой кнопкой <b>действия</b> могут использовать её раз за стрим. Когда всё устраивает, нажмите <b>Завершить стрим</b> и заберите всё, что принесли зрители в чате.\n<b>2. Магазин.</b> Зрители приносят <color=#FFC94A>сабы</color>; после стрима они становятся <color=#FFC94A>подарочными сабами</color>, на которые нанимаются новые зрители. <color=#6BE38B>Деньги</color> повышают <b>лимит зрителей</b> (сколько зрителей помещается в чате одновременно).
+   es : <b>1. El stream.</b> Pulsa <b>Dejar entrar a un espectador</b> para que entre el próximo espectador de tu Audiencia. Cada espectador puede entrar una vez por stream. Los espectadores con un botón violeta de <b>acción</b> pueden usarlo una vez por stream. Cuando estés conforme, pulsa <b>Terminar el stream</b> para cobrar lo que trajeron todos los del chat.\n<b>2. La tienda.</b> Los espectadores traen <color=#FFC94A>Subs</color>; al terminar el stream se cobran como <color=#FFC94A>Subs regaladas</color>, que reclutan nuevos espectadores para tu Audiencia. La <color=#6BE38B>Plata</color> sube tu <b>cupo del chat</b> (cuántos espectadores entran en el chat a la vez).
+   pt : <b>1. A live.</b> Aperte <b>Deixar um espectador entrar</b> pra chamar o próximo espectador da sua Audiência. Cada espectador entra uma vez por live. Espectadores com um botão roxo de <b>ação</b> podem usá-lo uma vez por live. Quando estiver satisfeito, aperte <b>Encerrar a live</b> pra guardar o que todo mundo no chat trouxe.\n<b>2. A loja.</b> Espectadores trazem <color=#FFC94A>Subs</color>; quando a live acaba eles viram <color=#FFC94A>Subs de presente</color>, que recrutam novos espectadores pra sua Audiência. A <color=#6BE38B>Grana</color> aumenta o seu <b>limite do chat</b> (quantos espectadores cabem no chat ao mesmo tempo).
+== rules.money.body | Gameplay
+   en : Raising your Sub Cap costs 2 Cash, then 1 more each time (max 12 per space, up to 34). Some viewers charge fees (negative Cash). Fees are paid from your Cash; any unpaid amount costs <b>7 Gifted Subs per Cash</b>.\nThe shop's stock is <b>shared by every player</b>: each normal viewer has 4 copies for the whole match, and you can own at most 4 of each; Diamonds are unlimited. You can't remove viewers from your Audience, so every recruit changes your odds.
+   zh : 提高人数上限第一次花 2 现金，之后每次多 1（每格最多 12，上限 34）。有些观众会收费用（负数现金）。费用从现金里支付；付不起的部分<b>每 1 现金扣 7 礼物订阅</b>。\n商店库存<b>所有玩家共享</b>：每种普通观众整局只有 4 张，你每种最多拥有 4 张；钻石不限。粉丝团里的观众无法移除，所以每次招募都会改变你的概率。
+   ru : Повышение лимита стоит 2 денег, затем каждый раз на 1 больше (максимум 12 за место, лимит до 34). Некоторые зрители берут сборы (отрицательные деньги). Сборы оплачиваются деньгами; каждая неоплаченная единица стоит <b>7 подарочных сабов</b>.\nЗапас магазина <b>общий для всех игроков</b>: у каждого обычного зрителя 4 копии на весь матч, и у вас может быть не больше 4 одинаковых; алмазов — сколько угодно. Убрать зрителя из аудитории нельзя, так что каждый наём меняет ваши шансы.
+   es : Subir el cupo cuesta 2 de Plata, y 1 más cada vez (máx. 12 por lugar, hasta 34). Algunos espectadores cobran cuotas (Plata negativa). Las cuotas se pagan con tu Plata; lo que no puedas pagar cuesta <b>7 Subs regaladas por cada 1 de Plata</b>.\nEl stock de la tienda es <b>compartido entre todos los jugadores</b>: cada espectador normal tiene 4 copias para toda la partida y puedes tener como máximo 4 de cada uno; los Diamantes son ilimitados. No puedes sacar espectadores de tu Audiencia, así que cada fichaje cambia tus probabilidades.
+   pt : Aumentar o limite custa 2 de Grana, e 1 a mais a cada vez (máx. 12 por vaga, até 34). Alguns espectadores cobram taxas (Grana negativa). As taxas são pagas com a sua Grana; o que faltar custa <b>7 Subs de presente por cada 1 de Grana</b>.\nO estoque da loja é <b>dividido entre todos os jogadores</b>: cada espectador normal tem 4 cópias pra partida inteira e você pode ter no máximo 4 de cada; Diamantes são ilimitados. Você não pode tirar espectadores da sua Audiência, então cada recrutamento muda as suas chances.
+== game.server_down_sub | UI
+   en : {filled} spaces filled with a Sub Cap of {cap}. No payout tonight
+   zh : 人数上限 {cap}，却挤进了 {filled} 个位置。今晚没有收入
+   ru : Занято мест: {filled} при лимите {cap}. Сегодня без выплаты
+   es : {filled} lugares ocupados con un cupo de {cap}. Esta noche no hay ganancias
+   pt : {filled} vagas ocupadas com limite de {cap}. Sem pagamento esta noite
+== scenario.1.desc | Content
+   en : Every animal meme in one room. Bongo Cat buffs the whole zoo, Nyan Cat chains arrivals, Doge rewards variety and Big Chungus needs a big Sub Cap.
+   zh : 所有动物梗齐聚一堂。敲鼓猫强化整个动物园，彩虹猫串联进场，神烦狗奖励多样性，大胖兔需要很高的人数上限。
+   ru : Все мемные животные в одной комнате. Бонго-кот усиливает весь зоопарк, Нян-кэт выстраивает цепочки, Доге любит разнообразие, а Большому Чангусу нужен большой лимит.
+   es : Todos los memes de animales en un mismo lugar. Bongo Cat potencia a todo el zoológico, Nyan Cat encadena llegadas, Doge premia la variedad y Big Chungus necesita un cupo grande.
+   pt : Todos os memes de bicho numa sala só. O Bongo Cat fortalece o zoológico inteiro, o Nyan Cat encadeia chegadas, o Doge premia a variedade e o Big Chungus precisa de um limite grande.

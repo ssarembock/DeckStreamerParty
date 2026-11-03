@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>DeckParty.Juice.Editor</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(ProjectRoot)\Assets\DeckParty\Scripts\Juice\Editor\*.cs" />
+    <Reference Include="$(OutDirShared)DeckParty.Core.dll" Private="false" />
+    <Reference Include="$(OutDirShared)DeckParty.Runtime.dll" Private="false" />
+    <Reference Include="$(OutDirShared)DeckParty.Editor.dll" Private="false" />
+    <Reference Include="$(OutDirShared)DeckParty.Juice.dll" Private="false" />
+    <Reference Include="$(ProjectRoot)\Library\ScriptAssemblies\MoreMountains.Tools.dll" Private="false" />
+  </ItemGroup>
+</Project>

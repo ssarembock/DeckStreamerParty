@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell",
+      "Bash",
+      "Read",
+      "Glob",
+      "Grep",
+      "Edit(/**)",
+      "Edit(~/AppData/Local/Temp/claude/**)",
+      "Edit(~/.claude/projects/*DeckParty/memory/**)",
+      "WebSearch",
+      "WebFetch",
+      "Skill",
+      "mcp__claude-vscode"
+    ],
+    "deny": [
+      "Edit(//c/Program Files/**)",
+      "Edit(//c/Windows/**)",
+      "PowerShell(Format-Volume*)",
+      "PowerShell(Clear-Disk*)",
+      "PowerShell(Stop-Computer*)",
+      "PowerShell(Restart-Computer*)",
+      "PowerShell(shutdown*)",
+      "Bash(shutdown*)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "askUserQuestionTimeout": "5m",
+  "autoContinueAtUsageLimit": true
+}
