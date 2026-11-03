@@ -55,8 +55,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125576
-    m_Localized: <b>Subs de presente</b>\nOs espectadores trazem durante a live.
-      Gaste na loja pra recrutar novos espectadores.
+    m_Localized: <b>Fama</b>\nOs espectadores trazem fama durante a live. Gaste na
+      loja pra recrutar novos espectadores.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125577
@@ -85,7 +85,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125583
-    m_Localized: Diamantes {count}/{max}
+    m_Localized: Plays {count}/{max}
     m_Metadata:
       m_Items: []
   - m_Id: 1574125584
@@ -108,7 +108,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125588
-    m_Localized: "<b>Diamantes</b>\\nNesta live: {now}\\nNa sua Audi\xEAncia: {owned}\\nRecorde
+    m_Localized: "<b>Plays</b>\\nNesta live: {now}\\nNa sua Audi\xEAncia: {owned}\\nRecorde
       em uma live: {best}\\nJunte {goal} em uma live pra vencer!"
     m_Metadata:
       m_Items: []
@@ -122,7 +122,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125591
-    m_Localized: "Os {count} Diamantes est\xE3o aqui! Encerre a live agora pra vencer!"
+    m_Localized: "Os {count} Plays est\xE3o aqui! Encerre a live agora pra vencer!"
     m_Metadata:
       m_Items: []
   - m_Id: 1574125592
@@ -452,7 +452,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514205
-    m_Localized: 'Diamantes: {owned}    Recorde de Diamantes em uma live: {best}'
+    m_Localized: 'Plays: {owned}    Recorde de Plays em uma live: {best}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514206
@@ -529,7 +529,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514224
-    m_Localized: '{subs}  {cash}  Diamantes {owned}  recorde {best}'
+    m_Localized: '{subs}  {cash}  Plays {owned}  recorde {best}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514225
@@ -541,8 +541,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514227
-    m_Localized: "{count} Diamantes juntos numa live na noite {night} de {total}.
-      {set} conclu\xEDdo!"
+    m_Localized: "{count} Plays juntos numa live na noite {night} de {total}. {set}
+      conclu\xEDdo!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514228
@@ -554,8 +554,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514230
-    m_Localized: "Dessa vez n\xE3o rolou live de {count} Diamantes. Seu melhor foi
-      {best} de uma vez."
+    m_Localized: "Dessa vez n\xE3o rolou live de {count} Plays. Seu melhor foi {best}
+      de uma vez."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514231
@@ -575,15 +575,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514235
-    m_Localized: Uma live de {count} Diamantes na noite {night}.
+    m_Localized: Uma live de {count} Plays na noite {night}.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514236
-    m_Localized: "Ningu\xE9m chegou a {count} Diamantes. Melhor marca: {best}."
+    m_Localized: "Ningu\xE9m chegou a {count} Plays. Melhor marca: {best}."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514237
-    m_Localized: LIVE DE {count} DIAMANTES!
+    m_Localized: LIVE DE {count} PLAYS!
     m_Metadata:
       m_Items: []
   - m_Id: 1582514238
@@ -601,7 +601,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514241
     m_Localized: "Ganho: {icon:subs} {subs}   {icon:cash} {cash}    Audi\xEAncia:
-      {viewers} espectadores ({diamonds} Diamantes)    Limite: {cap}"
+      {viewers} espectadores ({diamonds} Plays)    Limite: {cap}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514242
@@ -779,8 +779,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514285
-    m_Localized: Bem-vindo a {set}! Junte {count} Diamantes numa live em {nights}
-      noites.
+    m_Localized: Bem-vindo a {set}! Junte {count} Plays numa live em {nights} noites.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514286
@@ -909,11 +908,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514316
-    m_Localized: '{count} Diamantes numa live!'
+    m_Localized: '{count} Plays numa live!'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514317
-    m_Localized: "Dessa vez n\xE3o rolou live de {count} Diamantes"
+    m_Localized: "Dessa vez n\xE3o rolou live de {count} Plays"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514318
@@ -1081,8 +1080,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514355
-    m_Localized: "{actor}: escolha um espectador que n\xE3o seja Diamante pra dar
-      Rickroll."
+    m_Localized: "{actor}: escolha um espectador que n\xE3o seja Play pra dar Rickroll."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514356
@@ -1151,8 +1149,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514372
-    m_Localized: "Entre ao vivo, aumente sua Audi\xEAncia e junte {count} Diamantes
-      numa \xFAnica live."
+    m_Localized: "Entre ao vivo, aumente sua Audi\xEAncia e junte {count} Plays numa
+      \xFAnica live."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514373
@@ -1234,7 +1232,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: "Elenco: <color=#FFC94A>11 espectadores aleat\xF3rios + 3 Diamantes
+    m_Localized: "Elenco: <color=#FFC94A>11 espectadores aleat\xF3rios + 3 Plays
       aleat\xF3rios</color>, sorteados quando a temporada come\xE7a."
     m_Metadata:
       m_Items: []
@@ -1265,7 +1263,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514399
     m_Localized: "At\xE9 6 jogadores. Mesmo elenco, lives separadas. Vence a primeira
-      live de 4 Diamantes."
+      live de 4 Plays."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514400
@@ -1437,19 +1435,19 @@ MonoBehaviour:
   - m_Id: 1582514441
     m_Localized: "a cada noite os jogadores fazem live um depois do outro enquanto
       os outros assistem ao vivo. A temporada acaba depois da primeira noite em que
-      algu\xE9m junta {count} Diamantes."
+      algu\xE9m junta {count} Plays."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514442
-    m_Localized: jogue no seu ritmo. A primeira live de {count} Diamantes vence na
-      hora. Clique num jogador pra assistir.
+    m_Localized: jogue no seu ritmo. A primeira live de {count} Plays vence na hora.
+      Clique num jogador pra assistir.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514443
     m_Localized: "todo mundo faz live ao mesmo tempo e ningu\xE9m v\xEA os outros.
       Quando todas as lives acabam e cada um clica em Ir pra loja, uma contagem 3-2-1
       abre a loja pra todos ao mesmo tempo: quem chegar primeiro leva. A primeira
-      noite em que algu\xE9m junta {count} Diamantes encerra a temporada. O \xFAnico
+      noite em que algu\xE9m junta {count} Plays encerra a temporada. O \xFAnico
       modo pra 3 ou mais jogadores."
     m_Metadata:
       m_Items: []
@@ -1797,6 +1795,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 736683856445440
     m_Localized: "Mais de {count} jogadores: Todos contra todos \xE9 o \xFAnico modo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 994296326209536
+    m_Localized: Chat da live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 994296414289920
+    m_Localized: "<b>Plays</b>\\nEspectadores com este \xEDcone s\xE3o Plays. Tenha
+      {goal} no chat ao mesmo tempo e encerre bem a live pra vencer."
     m_Metadata:
       m_Items: []
   references:

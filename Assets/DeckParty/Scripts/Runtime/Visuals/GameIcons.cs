@@ -15,6 +15,8 @@ namespace DeckParty
         Cash,
         /// <summary>Deplatform Risk.</summary>
         Risk,
+        /// <summary>Plays (were Diamonds): the viewers that win the game, four in one stream.</summary>
+        Plays,
     }
 
     /// <summary>
@@ -35,12 +37,14 @@ namespace DeckParty
         const string SubsId = "subs";
         const string CashId = "cash";
         const string RiskId = "risk";
+        const string PlaysId = "plays";
 
         static TMP_SpriteAsset s_Asset;
         static bool s_Hooked;
         static Sprite[] s_CommunityPlaceholders;
 
-        public static string Id(ResourceIcon icon) => icon == ResourceIcon.Cash ? CashId : icon == ResourceIcon.Risk ? RiskId : SubsId;
+        public static string Id(ResourceIcon icon) =>
+            icon == ResourceIcon.Cash ? CashId : icon == ResourceIcon.Risk ? RiskId : icon == ResourceIcon.Plays ? PlaysId : SubsId;
 
         public static string Id(Community community) => community.ToString();
 
@@ -73,6 +77,40 @@ namespace DeckParty
         public static Color ResourceColor(ResourceIcon icon) =>
             icon == ResourceIcon.Cash ? UIPalette.Green : icon == ResourceIcon.Risk ? UIPalette.Red : UIPalette.Gold;
 
+        /// <summary>True when the UI Skin slot holds your own art (not the generated white placeholder shape).</summary>
+        public static bool HasArt(ResourceIcon icon) => !IsPlaceholder(Sprite(icon));
+
+        /// <summary>
+        /// The colour for an icon Image showing any UI Skin slot: the slot's colour when Override Color is ticked, white for your
+        /// own art (so its colours show), otherwise <paramref name="placeholderTint"/> for the generated white shape.
+        /// </summary>
+        public static Color SlotTint(SkinSlot slot, Color placeholderTint)
+        {
+            var skin = GameDatabase.Instance.skin;
+            var entry = skin != null ? skin.Get(slot) : null;
+            if (entry == null || entry.sprite == null) return placeholderTint;
+            if (entry.overrideColor) return entry.color;
+            return IsGeneratedShape(entry.sprite) ? placeholderTint : Color.white;
+        }
+
+        /// <summary>The generated placeholder PNGs (Art/Placeholders): single sprites named icon_* or ui_* after their file.</summary>
+        static bool IsGeneratedShape(Sprite sprite)
+        {
+            string name = sprite.name;
+            return sprite.texture != null && sprite.texture.name == name && (name.StartsWith("icon_") || name.StartsWith("ui_"));
+        }
+
+        /// <summary>
+        /// The colour for an icon Image that shows a resource as on/off (HUD pips): your art keeps its colours (dimmed when off),
+        /// a placeholder shape takes <paramref name="onColor"/> or <paramref name="offColor"/>.
+        /// </summary>
+        public static Color PipColor(ResourceIcon icon, bool on, Color onColor, Color offColor)
+        {
+            if (!HasArt(icon)) return on ? onColor : offColor;
+            var tint = Tint(icon);
+            return on ? tint : new Color(tint.r * 0.6f, tint.g * 0.6f, tint.b * 0.6f, 0.28f);
+        }
+
         public static Color CommunityColor(Community community)
         {
             switch (community)
@@ -95,14 +133,15 @@ namespace DeckParty
         }
 
         static SkinSlot SlotOf(ResourceIcon icon) =>
-            icon == ResourceIcon.Cash ? SkinSlot.IconCash : icon == ResourceIcon.Risk ? SkinSlot.IconTrouble : SkinSlot.IconPop;
+            icon == ResourceIcon.Cash ? SkinSlot.IconCash : icon == ResourceIcon.Risk ? SkinSlot.IconTrouble
+            : icon == ResourceIcon.Plays ? SkinSlot.IconStar : SkinSlot.IconPop;
 
-        /// <summary>The white placeholder shapes Build Everything puts in the UI Skin (icon_pop, icon_cash, icon_trouble).</summary>
+        /// <summary>The white placeholder shapes Build Everything puts in the UI Skin (icon_pop, icon_cash, icon_trouble, icon_star).</summary>
         static bool IsPlaceholder(Sprite sprite)
         {
             if (sprite == null || sprite == RuntimeSprites.Circle) return true;
             string name = sprite.name;
-            return name == "icon_pop" || name == "icon_cash" || name == "icon_trouble";
+            return name == "icon_pop" || name == "icon_cash" || name == "icon_trouble" || name == "icon_star";
         }
 
         // ------------------------------------------------------------------ text
@@ -124,6 +163,10 @@ namespace DeckParty
                 case "gifted_subs": return Tag(ResourceIcon.Subs);
                 case CashId: return Tag(ResourceIcon.Cash);
                 case RiskId: return Tag(ResourceIcon.Risk);
+                case PlaysId:
+                case "play":
+                case "diamond":
+                case "diamonds": return Tag(ResourceIcon.Plays);
             }
             return Enum.TryParse(id, true, out Community community) && Enum.IsDefined(typeof(Community), community) ? Tag(community) : null;
         }
@@ -143,6 +186,7 @@ namespace DeckParty
                 case SubsId: return Loc.Get("hud.tip.gifted_subs");
                 case CashId: return Loc.Get("hud.tip.cash");
                 case RiskId: return Loc.Get("hud.tip.risk_term", "max", GameRules.RaidTroubleThreshold);
+                case PlaysId: return Loc.Get("hud.tip.plays_term", "goal", GameRules.DiamondsToWin);
             }
             return Enum.TryParse(id, false, out Community community) && Enum.IsDefined(typeof(Community), community)
                 ? CommunityVisuals.Tooltip(community, state)
@@ -181,6 +225,7 @@ namespace DeckParty
                 (SubsId, Sprite(ResourceIcon.Subs)),
                 (CashId, Sprite(ResourceIcon.Cash)),
                 (RiskId, Sprite(ResourceIcon.Risk)),
+                (PlaysId, Sprite(ResourceIcon.Plays)),
             };
             foreach (var community in Communities.All) entries.Add((Id(community), Sprite(community)));
 

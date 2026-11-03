@@ -7,8 +7,9 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// Top bar: night, Gifted Subs, Cash, Sub Cap, Deplatform Risk meter and Diamond meter. Resources are an icon and a number
-    /// (no names); hovering one says what it is.
+    /// The site's menu bar (top of the stream and shop): night, Clout, Cash, Sub Cap, the Deplatform Risk pips and the Plays
+    /// pips, then the Audience and Menu icon buttons. Everything is an icon and a number; hovering any of it says what it is
+    /// (the night's tooltip also names the character set).
     /// </summary>
     public sealed class HudView : MonoBehaviour
     {
@@ -17,8 +18,10 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text popLabel;
         [SerializeField] internal TMP_Text cashLabel;
         [SerializeField] internal TMP_Text capacityLabel;
+        [Tooltip("Optional text next to the risk pips (older scenes). The pips alone show the count.")]
         [SerializeField] internal TMP_Text troubleLabel;
         [SerializeField] internal Image[] troublePips;
+        [Tooltip("Optional text next to the Plays pips (older scenes).")]
         [SerializeField] internal TMP_Text starsLabel;
         [SerializeField] internal Image[] starPips;
         [SerializeField] internal TooltipTrigger troubleTooltip;
@@ -26,8 +29,24 @@ namespace DeckParty.UI
         [SerializeField] internal Button rolodexButton;
         [SerializeField] internal Button menuButton;
 
+        [Header("Website bar (optional)")]
+        [SerializeField] internal Image popIcon;
+        [SerializeField] internal Image cashIcon;
+        [SerializeField] internal Image nightIcon;
+        [SerializeField] internal Image capacityIcon;
+        [SerializeField] internal TooltipTrigger nightTooltip;
+        [Tooltip("The risk pips' block: what feedbacks punch when risk changes.")]
+        [SerializeField] internal RectTransform troubleMeter;
+        [Tooltip("The Plays pips' block.")]
+        [SerializeField] internal RectTransform starsMeter;
+
         public event Action RolodexClicked;
         public event Action MenuClicked;
+
+        /// <summary>Where Deplatform Risk feedbacks play (the pips, or the old label).</summary>
+        public Transform RiskAnchor => troubleMeter != null ? troubleMeter : troubleLabel != null ? troubleLabel.transform : transform;
+        /// <summary>Where Plays feedbacks play.</summary>
+        public Transform PlaysAnchor => starsMeter != null ? starsMeter : starsLabel != null ? starsLabel.transform : transform;
 
         int m_LastPop = int.MinValue;
         int m_LastCash = int.MinValue;
@@ -41,6 +60,7 @@ namespace DeckParty.UI
             menuButton.onClick.AddListener(() => MenuClicked?.Invoke());
             if (troubleTooltip != null) troubleTooltip.Provider = TroubleTooltip;
             if (starsTooltip != null) starsTooltip.Provider = DiamondsTooltip;
+            if (nightTooltip != null) nightTooltip.Provider = NightTooltip;
             ApplyCaptions();
             Loc.Changed += OnLanguageChanged;
         }
@@ -58,15 +78,30 @@ namespace DeckParty.UI
         {
             SetCaption("Pop", null, Loc.Get("hud.tip.gifted_subs"));
             SetCaption("Cash", null, Loc.Get("hud.tip.cash"));
-            SetCaption("House", Terms.SubCap, Loc.Get("hud.tip.sub_cap"));
-            var audienceLabel = rolodexButton != null ? rolodexButton.GetComponentInChildren<TMP_Text>(true) : null;
-            if (audienceLabel != null) audienceLabel.text = Loc.Get("hud.audience_button");
+            SetCaption("House", null, Loc.Get("hud.tip.sub_cap"));
+            // Icon buttons say what they do on hover; text buttons (older scenes) keep their caption.
+            SetButton(rolodexButton, Loc.Get("hud.audience_button"));
+            SetButton(menuButton, Loc.Get("hud.menu") + "  [Esc]");
+            if (popIcon != null) popIcon.color = GameIcons.Tint(ResourceIcon.Subs);
+            if (cashIcon != null) cashIcon.color = GameIcons.Tint(ResourceIcon.Cash);
+            // Your own art keeps its colours; the white placeholder shapes take the site's grey.
+            if (nightIcon != null) nightIcon.color = GameIcons.SlotTint(SkinSlot.IconNight, SitePalette.TextDim);
+            if (capacityIcon != null) capacityIcon.color = GameIcons.SlotTint(SkinSlot.IconDoor, SitePalette.TextDim);
+        }
+
+        static void SetButton(Button button, string text)
+        {
+            if (button == null) return;
+            var label = button.GetComponentInChildren<TMP_Text>(true);
+            if (label != null && button.GetComponent<TooltipTrigger>() == null) label.text = text;
+            else if (button.TryGetComponent<TooltipTrigger>(out var trigger)) trigger.Text = text;
         }
 
         /// <param name="caption">Null hides the caption (resources show only their icon and number).</param>
         void SetCaption(string block, string caption, string tooltip)
         {
             var root = transform.Find(block);
+            if (root == null) root = FindDeep(transform, block);
             if (root == null) return;
             var label = root.Find("Texts/Caption");
             if (label != null)
@@ -77,11 +112,23 @@ namespace DeckParty.UI
             if (root.TryGetComponent<TooltipTrigger>(out var trigger)) trigger.Text = tooltip;
         }
 
+        static Transform FindDeep(Transform parent, string name)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.name == name) return child;
+                var found = FindDeep(child, name);
+                if (found != null) return found;
+            }
+            return null;
+        }
+
         public void Render(PlayerState s)
         {
             m_State = s;
-            scenarioLabel.text = ContentText.ScenarioName(s.ScenarioId);
-            nightLabel.text = Loc.Get("hud.night", "night", s.Night, "total", s.TotalNights);
+            if (scenarioLabel != null) scenarioLabel.text = ContentText.ScenarioName(s.ScenarioId);
+            if (nightLabel != null)
+                nightLabel.text = nightTooltip != null ? $"{s.Night}<size=70%><color=#9A9AA6>/{s.TotalNights}</color></size>" : Loc.Get("hud.night", "night", s.Night, "total", s.TotalNights);
 
             popLabel.text = s.Pop.ToString();
             cashLabel.text = s.Cash.ToString();
@@ -91,7 +138,7 @@ namespace DeckParty.UI
             m_LastCash = s.Cash;
 
             bool party = s.Phase == GamePhase.Party;
-            capacityLabel.text = party ? $"{s.Occupancy}<size=70%>/{s.Capacity}</size>" : Loc.Get("hud.cap_only", "cap", s.Capacity);
+            capacityLabel.text = party ? $"{s.Occupancy}<size=70%><color=#9A9AA6>/{s.Capacity}</color></size>" : s.Capacity.ToString();
 
             int trouble = party ? PartyEngine.NetTrouble(s) : 0;
             int diamonds = party ? PartyEngine.DiamondsPresent(s) : 0;
@@ -99,21 +146,32 @@ namespace DeckParty.UI
             for (int i = 0; i < troublePips.Length; i++)
             {
                 bool lit = i < trouble;
-                troublePips[i].color = lit ? (i >= GameRules.RaidTroubleThreshold - 1 ? UIPalette.Red : UIPalette.Orange) : UIPalette.Border;
+                var hot = i >= GameRules.RaidTroubleThreshold - 1 ? SitePalette.Danger : SitePalette.Warning;
+                troublePips[i].color = GameIcons.PipColor(ResourceIcon.Risk, lit, hot, SitePalette.Off);
             }
-            troubleLabel.enableAutoSizing = true;
-            troubleLabel.fontSizeMin = 14;
-            string riskText = Loc.Get("hud.risk", "risk", trouble, "max", GameRules.RaidTroubleThreshold);
-            troubleLabel.text = trouble >= GameRules.RaidTroubleThreshold - 1 && party ? $"<color=#FF5A5A>{riskText}</color>" : riskText;
+            if (troubleLabel != null)
+            {
+                troubleLabel.enableAutoSizing = true;
+                troubleLabel.fontSizeMin = 14;
+                string riskText = Loc.Get("hud.risk", "risk", trouble, "max", GameRules.RaidTroubleThreshold);
+                troubleLabel.text = trouble >= GameRules.RaidTroubleThreshold - 1 && party ? $"<color=#FF5A5A>{riskText}</color>" : riskText;
+            }
 
             for (int i = 0; i < starPips.Length; i++)
-                starPips[i].color = i < diamonds ? UIPalette.Gold : UIPalette.Border;
-            starsLabel.text = Loc.Get("hud.diamonds", "count", diamonds, "max", GameRules.DiamondsToWin);
+                starPips[i].color = GameIcons.PipColor(ResourceIcon.Plays, i < diamonds, SitePalette.Gold, SitePalette.Off);
+            if (starsLabel != null) starsLabel.text = Loc.Get("hud.diamonds", "count", diamonds, "max", GameRules.DiamondsToWin);
 
-            if (m_LastTrouble >= 0 && trouble > m_LastTrouble) UITween.Punch(this, troubleLabel.transform, 0.3f);
-            if (m_LastDiamonds >= 0 && diamonds > m_LastDiamonds) UITween.Punch(this, starsLabel.transform, 0.3f);
+            if (m_LastTrouble >= 0 && trouble > m_LastTrouble) UITween.Punch(this, RiskAnchor, 0.3f);
+            if (m_LastDiamonds >= 0 && diamonds > m_LastDiamonds) UITween.Punch(this, PlaysAnchor, 0.3f);
             m_LastTrouble = trouble;
             m_LastDiamonds = diamonds;
+        }
+
+        string NightTooltip()
+        {
+            if (m_State == null) return null;
+            return Loc.Get("hud.night", "night", m_State.Night, "total", m_State.TotalNights) + "\n" +
+                   GuestVisuals.Colored(ContentText.ScenarioName(m_State.ScenarioId), UIPalette.TextDim);
         }
 
         string TroubleTooltip()

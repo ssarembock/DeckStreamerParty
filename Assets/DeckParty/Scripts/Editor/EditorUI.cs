@@ -35,6 +35,15 @@ namespace DeckParty.EditorTools
         public static Sprite Door;
         public static Sprite Crown;
         public static Sprite Check;
+        public static Sprite AddViewer;
+        public static Sprite EndStream;
+        public static Sprite Audience;
+        public static Sprite Menu;
+        public static Sprite Action;
+        public static Sprite GoLive;
+        public static Sprite Close;
+        public static Sprite Night;
+        public static Sprite Ring;
 
         public static void LoadArt()
         {
@@ -59,6 +68,15 @@ namespace DeckParty.EditorTools
             Door = PlaceholderArt.Load(PlaceholderArt.DoorName);
             Crown = PlaceholderArt.Load(PlaceholderArt.CrownName);
             Check = PlaceholderArt.Load(PlaceholderArt.CheckName);
+            AddViewer = PlaceholderArt.Load(PlaceholderArt.AddViewerName);
+            EndStream = PlaceholderArt.Load(PlaceholderArt.EndStreamName);
+            Audience = PlaceholderArt.Load(PlaceholderArt.AudienceName);
+            Menu = PlaceholderArt.Load(PlaceholderArt.MenuName);
+            Action = PlaceholderArt.Load(PlaceholderArt.ActionName);
+            GoLive = PlaceholderArt.Load(PlaceholderArt.GoLiveName);
+            Close = PlaceholderArt.Load(PlaceholderArt.CloseName);
+            Night = PlaceholderArt.Load(PlaceholderArt.NightName);
+            Ring = PlaceholderArt.Load(PlaceholderArt.RingName);
         }
 
         // ------------------------------------------------------------------ rects
@@ -233,6 +251,89 @@ namespace DeckParty.EditorTools
         public static Button Button(Transform parent, string name, string label, ButtonStyle style, float fontSize = 28f)
         {
             return Button(parent, name, label, style, fontSize, out _);
+        }
+
+        // ------------------------------------------------------------------ website look (stream and shop)
+
+        /// <summary>How a website-look button is coloured.</summary>
+        public enum SiteButton
+        {
+            /// <summary>The platform's accent colour with its icon colour (Add Viewer, Go Live, actions).</summary>
+            Accent,
+            /// <summary>Near-black with a white icon (End the Stream).</summary>
+            Dark,
+            /// <summary>Light grey with a dark icon (Audience, Menu, Deny).</summary>
+            Light,
+        }
+
+        /// <summary>
+        /// An icon button in the website look: a slightly rounded rectangle (or a circle) with one icon and no text. The icon
+        /// comes from a UI Skin slot (so your own icon art replaces it); what the button does goes in the hover tooltip.
+        /// </summary>
+        public static Button IconButton(Transform parent, string name, Sprite icon, SkinSlot iconSlot, SiteButton style, Vector2 size, float iconSize,
+            out Image iconImage, string tooltip = null, bool round = false)
+        {
+            var background = Image(parent, name, SiteFill(style), round ? Circle : RoundedSmall, null, true);
+            if (!round) background.type = UnityEngine.UI.Image.Type.Sliced;
+            background.rectTransform.sizeDelta = size;
+            if (style == SiteButton.Accent) background.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Fill;
+
+            var button = background.gameObject.AddComponent<Button>();
+            button.targetGraphic = background;
+            var colors = button.colors;
+            colors.normalColor = Color.white;
+            colors.highlightedColor = new Color(0.92f, 0.92f, 0.95f, 1f);
+            colors.pressedColor = new Color(0.78f, 0.78f, 0.82f, 1f);
+            colors.selectedColor = Color.white;
+            colors.disabledColor = new Color(0.8f, 0.8f, 0.84f, 0.45f);
+            colors.fadeDuration = 0.08f;
+            button.colors = colors;
+            NoNavigation(button);
+            background.gameObject.AddComponent<ButtonFeedback>();
+
+            iconImage = Icon(background.transform, "Icon", icon, SiteContent(style), iconSlot, iconSize);
+            iconImage.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(iconSize, iconSize));
+            if (style == SiteButton.Accent) iconImage.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Content;
+            Tooltip(background, tooltip);
+            return button;
+        }
+
+        public static Color SiteFill(SiteButton style) =>
+            style == SiteButton.Accent ? SitePalette.Accent : style == SiteButton.Dark ? SitePalette.Outline : SitePalette.SurfaceAlt;
+
+        public static Color SiteContent(SiteButton style) => style == SiteButton.Light ? SitePalette.Text : Color.white;
+
+        /// <summary>
+        /// A website card: a slightly rounded rectangle with a thin border. Returns the inner fill (put content under it); the
+        /// border is its parent, named <paramref name="name"/>.
+        /// </summary>
+        public static Image SitePanel(Transform parent, string name, Color fill, Color border, float borderWidth = 2f, bool raycast = true)
+        {
+            var outer = Image(parent, name, border, RoundedSmall, null, raycast);
+            outer.type = UnityEngine.UI.Image.Type.Sliced;
+            var inner = Image(outer.transform, "Fill", fill, RoundedSmall, null, false);
+            inner.type = UnityEngine.UI.Image.Type.Sliced;
+            inner.rectTransform.Stretch(borderWidth, borderWidth, borderWidth, borderWidth);
+            return inner;
+        }
+
+        /// <summary>A hairline divider.</summary>
+        public static Image Line(Transform parent, string name, Color color, float thickness = 2f)
+        {
+            var line = Image(parent, name, color, null, null, false);
+            line.sprite = null;
+            line.rectTransform.sizeDelta = new Vector2(thickness, thickness);
+            return line;
+        }
+
+        /// <summary>A dark pill holding coloured numbers (gold and green read well on it).</summary>
+        public static TextMeshProUGUI Pill(Transform parent, string name, float fontSize, out Image pill)
+        {
+            pill = Image(parent, name, SitePalette.Pill, RoundedSmall, null, true);
+            pill.type = UnityEngine.UI.Image.Type.Sliced;
+            var text = Text(pill.transform, "Label", string.Empty, fontSize, Color.white, TextAlignmentOptions.Center, true, false, false);
+            text.rectTransform.Stretch(10, 2, 10, 2);
+            return text;
         }
 
         public static void NoNavigation(Selectable selectable)

@@ -28,7 +28,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274881
     m_Localized: Your first season live. Dependable regulars, a Producer and a Chat
-      Admin to run the room, one risky collaborator and three friendly Diamonds.
+      Admin to run the room, one risky collaborator and three friendly Plays.
     m_Metadata:
       m_Items: []
   - m_Id: 433274882
@@ -96,7 +96,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274896
-    m_Localized: Eleven random viewers and three random Diamonds. Win five in a row
+    m_Localized: Eleven random viewers and three random Plays. Win five in a row
       to earn the Cherry.
     m_Metadata:
       m_Items: []

@@ -54,7 +54,7 @@ namespace DeckParty.UI
                         {
                             Consider(Sfx.StarArrive, 5);
                             AudioService.Duck(0.8f);
-                            Fx.Play(FxCue.DiamondTracker, hud.starsLabel.transform);
+                            Fx.Play(FxCue.DiamondTracker, hud.PlaysAnchor);
                         }
                         else Consider(e.A < 0 ? Sfx.DoorKnock : Sfx.GuestArrive, 2);
                         break;
@@ -95,7 +95,7 @@ namespace DeckParty.UI
                         break;
                     case GameEventType.MoodFlipped:
                         m_Pulses.Add(e.GuestId);
-                        if (e.A != 0) Fx.Play(FxCue.RiskPip, hud.troubleLabel.transform);
+                        if (e.A != 0) Fx.Play(FxCue.RiskPip, hud.RiskAnchor);
                         break;
                     case GameEventType.GuestGained:
                     case GameEventType.PartyPotGained:
@@ -107,7 +107,7 @@ namespace DeckParty.UI
                         PlayActionImpact(e);
                         break;
                     case GameEventType.TroubleAdded:
-                        Fx.Play(FxCue.RiskPip, hud.troubleLabel.transform);
+                        Fx.Play(FxCue.RiskPip, hud.RiskAnchor);
                         break;
                     case GameEventType.EveryoneOutside:
                     case GameEventType.Transformed:
@@ -222,7 +222,7 @@ namespace DeckParty.UI
                     }
                     case GameEventType.HeatApplied:
                         banner.Show(Loc.Get("power.raided_title"), Loc.Get("game.heat_sub", "count", e.A), UIPalette.Red, 1.4f);
-                        Fx.Play(FxCue.RiskPip, hud.troubleLabel.transform, 1.5f);
+                        Fx.Play(FxCue.RiskPip, hud.RiskAnchor, 1.5f);
                         Consider(Sfx.Raid, 6);
                         break;
                     case GameEventType.ShieldApplied:
@@ -315,7 +315,8 @@ namespace DeckParty.UI
             if (!planning.gameObject.activeInHierarchy) return;
             var item = planning.FindItem(type);
             var from = item != null ? item.PortraitRect.position : planning.transform.position;
-            effects.FlyChip(GuestVisuals.NameTag(type), from, planning.RolodexButtonRect.position);
+            // No names on screen: a "+1" flies to the Audience button (the bought viewer's name is in the tooltip and the log).
+            effects.FlyChip(GuestVisuals.Colored("+1", GuestVisuals.Tint(type)), from, planning.RolodexButtonRect.position);
             if (item != null) Fx.Play(FxCue.Purchase, item.AnimRoot);
             Fx.Play(FxCue.CounterPunch, planning.RolodexButtonRect, 1.2f);
         }

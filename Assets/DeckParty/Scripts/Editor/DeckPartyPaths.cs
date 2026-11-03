@@ -22,6 +22,7 @@ namespace DeckParty.EditorTools
         public const string NetworkSessionPrefab = NetworkResources + "/DeckPartyNetSession.prefab";
 
         public const string GuestCardPrefab = Prefabs + "/GuestCard.prefab";
+        public const string ChatAvatarPrefab = Prefabs + "/ChatAvatar.prefab";
         public const string GuestRowPrefab = Prefabs + "/GuestRow.prefab";
         public const string ShopItemPrefab = Prefabs + "/ShopItem.prefab";
         public const string ScenarioItemPrefab = Prefabs + "/ScenarioItem.prefab";

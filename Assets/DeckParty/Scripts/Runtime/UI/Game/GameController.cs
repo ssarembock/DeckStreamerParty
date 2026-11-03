@@ -122,6 +122,9 @@ namespace DeckParty.UI
             AppSettings.Changed += UpdateFeedVisibility;
             UpdateFeedVisibility();
 
+            // Re-read the platform colours each game (they may have been edited in the Game Database since the last one).
+            SiteTheme.Apply(State != null ? StreamerVisuals.Platform(State.Streamer) : SiteTheme.Platform, true);
+
             if (State != null)
             {
                 ApplyVenue(true);
@@ -546,6 +549,8 @@ namespace DeckParty.UI
             bool act = CanAct;
             // Community icons show live scores for the stream on screen.
             CommunityVisuals.LiveState = s;
+            // The site takes the look of the on-screen streamer's platform (logo and button colour).
+            SiteTheme.Apply(StreamerVisuals.Platform(s.Streamer));
 
             hud.Render(s);
 
@@ -630,7 +635,7 @@ namespace DeckParty.UI
                         bool used = s.UsedAbilities.Contains(g.Id);
                         var blocker = act ? PartyEngine.GetAbilityBlocker(s, g.Id) : null;
                         string reason = act ? (blocker != null ? Loc.Error(blocker) : null) : watchHint;
-                        card.ShowAbility(used ? Loc.Get("card.used") : GuestVisuals.ActionName(g.Kind), act && blocker == null, reason);
+                        card.ShowAbility(GuestVisuals.ActionName(g.Kind), act && blocker == null && !used, reason, used);
                     }
                     else
                     {

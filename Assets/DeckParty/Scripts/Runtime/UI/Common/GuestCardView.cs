@@ -17,14 +17,32 @@ namespace DeckParty.UI
 
     /// <summary>
     /// One viewer card (chat slot, picker entry, Audience entry...). All content lives under <see cref="visual"/>,
-    /// which is designed at 200x290 (see DeckPartyAssets.CardLayout) and uniformly scaled to the layout cell.
-    /// The portrait is a <see cref="CharacterPortrait"/> (animated when the Game Database has a prefab or controller)
-    /// with a <see cref="CardFx"/> for Sprite Shaders Ultimate status effects.
+    /// which is designed at <see cref="DesignSize"/> (cards 200x290, see DeckPartyAssets.CardLayout) and uniformly scaled to
+    /// the layout cell. The portrait is a <see cref="CharacterPortrait"/> (animated when the Game Database has a prefab or
+    /// controller) with a <see cref="CardFx"/> for Sprite Shaders Ultimate status effects.
+    /// <para>
+    /// The same view drives the round chat avatar (<see cref="avatarMode"/>, the ChatAvatar prefab): the viewer's head in a
+    /// circle (Game Database > Avatar, or the portrait zoomed in), a ring whose colour shows their state, and while their
+    /// action is still unused the ring pulses in the platform colour and the avatar wiggles now and then. Names only show on hover.
+    /// </para>
     /// </summary>
     public sealed class GuestCardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         public const float DesignWidth = 200f;
         public const float DesignHeight = 290f;
+
+        [Tooltip("The size everything under Visual is designed at (cards 200x290, chat avatars 180x206).")]
+        [SerializeField] internal Vector2 designSize = new Vector2(DesignWidth, DesignHeight);
+        [Tooltip("Round chat avatar: head in a circle, state ring, no name.")]
+        [SerializeField] internal bool avatarMode;
+        [Tooltip("Sprite Shaders Ultimate status effects on the portrait (cards). Avatars show state with their ring instead.")]
+        [SerializeField] internal bool statusShaders = true;
+        [Tooltip("Avatar: the circle (wiggles while the action is unused).")]
+        [SerializeField] internal RectTransform faceRoot;
+        [Tooltip("Avatar: the masked circle the head is framed in.")]
+        [SerializeField] internal RectTransform faceMask;
+        [Tooltip("Avatar: the empty seat's fill (tinted for the extra seats a big viewer takes).")]
+        [SerializeField] internal Image emptyFill;
 
         [SerializeField] internal Button button;
         [Tooltip("Scaled to fit the layout cell.")]
@@ -64,6 +82,13 @@ namespace DeckParty.UI
         public RectTransform AnimRoot => animRoot != null ? animRoot : (RectTransform)transform;
         public CharacterPortrait Portrait => characterPortrait;
         public CardFx Fx => m_Fx;
+        public bool IsAvatar => avatarMode;
+
+        /// <summary>The design size of this card (layout scales it uniformly).</summary>
+        public Vector2 DesignSize => designSize.x > 1f && designSize.y > 1f ? designSize : new Vector2(DesignWidth, DesignHeight);
+
+        /// <summary>The layout cell for this card shown at <paramref name="scale"/>.</summary>
+        public Vector2 CellSizeAt(float scale) => DesignSize * scale;
 
         public event Action<GuestCardView> Clicked;
         public event Action<GuestCardView> AbilityClicked;
@@ -77,11 +102,19 @@ namespace DeckParty.UI
         float m_Lift;
         Vector2 m_Tilt;
         float m_BreathPhase;
+        /// <summary>Avatar: the viewer's action hasn't been used this stream (ring pulse and wiggle).</summary>
+        bool m_ActionReady;
+        float m_WiggleClock;
+
+        /// <summary>Seconds between an unused-action avatar's wiggles.</summary>
+        const float WiggleInterval = 2.6f;
+        const float WiggleLength = 0.5f;
 
         void Awake()
         {
             Hook();
             m_BreathPhase = UnityEngine.Random.value * 10f;
+            m_WiggleClock = UnityEngine.Random.value * WiggleInterval;
         }
 
         void OnDisable()
@@ -92,6 +125,11 @@ namespace DeckParty.UI
                 animRoot.localScale = Vector3.one;
                 animRoot.localRotation = Quaternion.identity;
                 animRoot.anchoredPosition = Vector2.zero;
+            }
+            if (faceRoot != null)
+            {
+                faceRoot.localRotation = Quaternion.identity;
+                faceRoot.localScale = Vector3.one;
             }
             m_Hover = false;
             m_Lift = 0f;
@@ -110,7 +148,7 @@ namespace DeckParty.UI
                 if (characterPortrait == null) characterPortrait = portrait.gameObject.AddComponent<CharacterPortrait>();
                 characterPortrait.image = portrait;
             }
-            if (portrait != null)
+            if (portrait != null && statusShaders)
             {
                 m_Fx = portrait.GetComponent<CardFx>();
                 if (m_Fx == null) m_Fx = portrait.gameObject.AddComponent<CardFx>();
@@ -139,6 +177,34 @@ namespace DeckParty.UI
                 highlight.color = c;
             }
             UpdateMotion();
+            if (avatarMode) UpdateActionCue();
+        }
+
+        /// <summary>
+        /// Avatar: while the viewer's action is unused, the ring pulses in the platform colour and the circle gives a little
+        /// wiggle every few seconds, so players see at a glance which actions are still available.
+        /// </summary>
+        void UpdateActionCue()
+        {
+            if (IsEmpty || !m_ActionReady)
+            {
+                if (faceRoot != null && faceRoot.localRotation != Quaternion.identity) faceRoot.localRotation = Quaternion.identity;
+                return;
+            }
+            float t = Time.unscaledTime;
+            if (frame != null)
+            {
+                float pulse = 0.5f + 0.5f * Mathf.Sin(t * 4.2f + m_BreathPhase);
+                frame.color = Color.Lerp(SiteTheme.Accent, Color.Lerp(SiteTheme.Accent, Color.white, 0.55f), pulse);
+            }
+            if (faceRoot == null) return;
+            m_WiggleClock += Time.unscaledDeltaTime;
+            if (m_WiggleClock >= WiggleInterval) m_WiggleClock -= WiggleInterval;
+            float k = m_WiggleClock / WiggleLength;
+            float angle = k < 1f ? Mathf.Sin(k * Mathf.PI * 4f) * 7f * (1f - k) : 0f;
+            float bump = k < 1f ? 1f + 0.05f * Mathf.Sin(k * Mathf.PI) : 1f;
+            faceRoot.localRotation = Quaternion.Euler(0f, 0f, angle);
+            faceRoot.localScale = new Vector3(bump, bump, 1f);
         }
 
         /// <summary>Hover lift (spring), tilt toward the cursor (N7) and idle breathing for static portraits (N8).</summary>
@@ -174,6 +240,7 @@ namespace DeckParty.UI
             if (visual != null) visual.localScale = Vector3.one * scale;
         }
 
+        /// <summary>The layout cell of a standard (200x290) card shown at <paramref name="scale"/>.</summary>
         public static Vector2 CellSize(float scale) => new Vector2(DesignWidth * scale, DesignHeight * scale);
 
         /// <summary>Sizes a GridLayoutGroup's cells for cards shown at <paramref name="scale"/>.</summary>
@@ -189,10 +256,12 @@ namespace DeckParty.UI
         {
             Hook();
             GuestId = -1;
+            m_ActionReady = false;
             content.SetActive(false);
             emptyState.SetActive(true);
             if (m_EmptyLabel == null) m_EmptyLabel = emptyState.GetComponentInChildren<TMP_Text>(true);
             if (m_EmptyLabel != null) m_EmptyLabel.text = label ?? string.Empty;
+            if (emptyFill != null) emptyFill.color = SitePalette.SurfaceAlt;
             if (button != null) button.interactable = false;
             SetHighlight(CardHighlight.None);
             if (tooltip != null) tooltip.Provider = null;
@@ -223,8 +292,9 @@ namespace DeckParty.UI
 
             var sprite = GuestVisuals.Portrait(shown);
             var art = GameDatabase.Instance.GetGuestArt(shown);
-            bool hasArt = sprite != null || (art != null && art.IsAnimated);
-            if (characterPortrait != null) characterPortrait.ShowViewer(shown, IdleState(guest, state, live));
+            bool hasArt = sprite != null || (art != null && art.IsAnimated) || (avatarMode && art != null && art.avatar != null);
+            if (avatarMode) ShowAvatarFace(shown, art, sprite, IdleState(guest, state, live));
+            else if (characterPortrait != null) characterPortrait.ShowViewer(shown, IdleState(guest, state, live));
             else
             {
                 portrait.enabled = sprite != null;
@@ -234,30 +304,38 @@ namespace DeckParty.UI
             placeholder.color = GuestVisuals.Tint(shown);
             initialsLabel.text = GuestVisuals.Initials(shown);
 
-            nameLabel.text = live && guest.IsDisguised
-                ? GuestVisuals.Colored(GuestVisuals.DisplayName(shown) + "?", UIPalette.Pink)
-                : GuestVisuals.DisplayName(shown);
-            statsLabel.text = live ? GuestVisuals.LiveStats(state, guest) : GuestVisuals.BaseStats(info);
+            // Names only show on hover (the tooltip); older card prefabs may still have the label.
+            if (nameLabel != null)
+                nameLabel.text = live && guest.IsDisguised
+                    ? GuestVisuals.Colored(GuestVisuals.DisplayName(shown) + "?", UIPalette.Pink)
+                    : GuestVisuals.DisplayName(shown);
+            if (statsLabel != null) statsLabel.text = live ? GuestVisuals.LiveStats(state, guest) : GuestVisuals.BaseStats(info);
 
             bool cleared = live && guest.TroubleCleared && PartyEngine.PrintedTrouble(guest);
             bool trouble = live ? PartyEngine.HasTroubleProperty(state, guest) || cleared : info.Trouble;
-            starBadge.SetActive(info.IsDiamond);
+            if (starBadge != null) starBadge.SetActive(info.IsDiamond);
             if (communities != null) communities.Bind(shown);
-            troubleBadge.SetActive(trouble);
+            if (troubleBadge != null) troubleBadge.SetActive(trouble);
             if (troubleIcon != null)
-                troubleIcon.color = trouble && live && !PartyEngine.HasTroubleProperty(state, guest) ? UIPalette.TextDim.WithAlpha(0.6f) : UIPalette.Red;
-            cancelBadge.SetActive(live ? PartyEngine.CancelsTroubleNow(state, guest) : info.CancelsTrouble);
+                troubleIcon.color = trouble && live && !PartyEngine.HasTroubleProperty(state, guest) ? UIPalette.TextDim.WithAlpha(0.6f) : GameIcons.Tint(ResourceIcon.Risk);
+            if (cancelBadge != null) cancelBadge.SetActive(live ? PartyEngine.CancelsTroubleNow(state, guest) : info.CancelsTrouble);
 
             // Permanent upgrades: Subs (pink badge) first, otherwise Cash (Checkout Code, Gen Z with Job). Icons, not words.
             int bonus = guest.BonusPop;
             int bonusCash = guest.BonusCash;
-            bonusBadge.SetActive(bonus != 0 || bonusCash != 0);
+            if (bonusBadge != null) bonusBadge.SetActive(bonus != 0 || bonusCash != 0);
             if (bonusLabel != null)
                 bonusLabel.text = bonus != 0
                     ? (bonus > 0 ? "+" : "") + bonus + GameIcons.Tag(ResourceIcon.Subs)
                     : (bonusCash > 0 ? "+" : "") + bonusCash + GameIcons.Tag(ResourceIcon.Cash);
 
-            if (frame != null)
+            if (frame != null && avatarMode)
+            {
+                // The ring shows the viewer's state; the action cue (pulsing accent) takes over while their action is unused.
+                m_FrameBase = AvatarRingColor(info, guest, live);
+                frame.color = m_FrameBase;
+            }
+            else if (frame != null)
             {
                 m_FrameBase = info.IsDiamond ? Color.Lerp(UIPalette.PanelAlt, UIPalette.Gold, 0.28f) : UIPalette.PanelAlt;
                 if (live && guest.Infected) m_FrameBase = Color.Lerp(m_FrameBase, UIPalette.Green, 0.3f);
@@ -281,6 +359,52 @@ namespace DeckParty.UI
             HideAbility();
         }
 
+        /// <summary>The avatar ring when no action is waiting: gold for Plays, green infected, teal immune, otherwise grey.</summary>
+        static Color AvatarRingColor(GuestInfo info, GuestInstance guest, bool live)
+        {
+            if (live && guest.Infected) return UIPalette.Green;
+            if (live && guest.Immune) return UIPalette.Teal;
+            if (info.IsDiamond) return SitePalette.Gold;
+            return SitePalette.Border;
+        }
+
+        /// <summary>
+        /// Avatar: the head sprite fills the circle; without one the portrait (or animation) is zoomed in on the head using the
+        /// viewer's Avatar Zoom and Offset.
+        /// </summary>
+        void ShowAvatarFace(GuestType shown, GuestArt art, Sprite portraitSprite, CharacterState idle)
+        {
+            var head = art != null ? art.avatar : null;
+            float zoom = head != null ? 1f : art != null && art.avatarZoom > 0.01f ? art.avatarZoom : 1.8f;
+            var offset = head != null ? Vector2.zero : art != null ? art.avatarOffset : new Vector2(0f, -0.32f);
+
+            if (characterPortrait != null)
+            {
+                if (head != null) characterPortrait.Show(null, null, head, 1f, Vector2.zero, idle);
+                else characterPortrait.Show(art?.characterPrefab, art?.animatorController, portraitSprite, art != null ? art.framingZoom : 1f,
+                    art != null ? art.framingOffset : Vector2.zero, idle);
+            }
+            else if (portrait != null)
+            {
+                portrait.sprite = head != null ? head : portraitSprite;
+                portrait.enabled = portrait.sprite != null;
+            }
+
+            var circle = faceMask != null ? faceMask.rect.size : new Vector2(140f, 140f);
+            if (circle.x < 1f) circle = new Vector2(140f, 140f);
+            Frame(portrait != null ? portrait.rectTransform : null, circle, zoom, offset);
+            if (characterPortrait != null && characterPortrait.animated != null) Frame(characterPortrait.animated.rectTransform, circle, zoom, offset);
+        }
+
+        static void Frame(RectTransform rect, Vector2 circle, float zoom, Vector2 offset)
+        {
+            if (rect == null) return;
+            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.sizeDelta = circle * zoom;
+            rect.anchoredPosition = new Vector2(offset.x * circle.x, offset.y * circle.y);
+        }
+
         /// <summary>Which idle animation fits: actions not used yet rest in Idle_Pre_Active, used ones in Idle_Post_Active.</summary>
         public static CharacterState IdleState(GuestInstance guest, PlayerState state, bool live)
         {
@@ -293,8 +417,9 @@ namespace DeckParty.UI
         /// <summary>An extra space taken up by a big viewer (Big Chungus fills 3).</summary>
         public void ShowFiller(GuestType owner)
         {
-            ShowEmpty($"<size=80%>{GuestVisuals.DisplayName(owner)}</size>");
+            ShowEmpty(avatarMode ? null : $"<size=80%>{GuestVisuals.DisplayName(owner)}</size>");
             if (frame != null) frame.color = GuestVisuals.Tint(owner).WithAlpha(0.35f);
+            if (emptyFill != null) emptyFill.color = Color.Lerp(SitePalette.SurfaceAlt, GuestVisuals.Tint(owner), 0.35f);
         }
 
         public void SetCount(int count)
@@ -304,18 +429,49 @@ namespace DeckParty.UI
             if (countLabel != null) countLabel.text = "x" + count;
         }
 
-        public void ShowAbility(string label, bool enabled, string blocker)
+        /// <param name="label">The action's name.</param>
+        /// <param name="enabled">Whether it can be pressed now.</param>
+        /// <param name="blocker">Why not (already localized), or null.</param>
+        /// <param name="used">Already used this stream: cards say so on the button, avatars hide it and stop their cue.</param>
+        public void ShowAbility(string label, bool enabled, string blocker, bool used = false)
         {
+            SetActionReady(avatarMode && !used);
             if (abilityButton == null) return;
+            if (avatarMode && used)
+            {
+                abilityButton.gameObject.SetActive(false);
+                return;
+            }
             abilityButton.gameObject.SetActive(true);
-            abilityButton.interactable = enabled;
-            abilityLabel.text = label;
-            if (abilityTooltip != null) abilityTooltip.Text = enabled ? null : blocker;
+            abilityButton.interactable = enabled && !used;
+            if (abilityLabel != null) abilityLabel.text = used ? Loc.Get("card.used") : label;
+            if (abilityTooltip != null)
+            {
+                // Icon buttons name their action on hover; text buttons only explain why they're disabled.
+                if (abilityLabel == null) abilityTooltip.Text = enabled || string.IsNullOrEmpty(blocker) ? $"<b>{label}</b>" : $"<b>{label}</b>\n{blocker}";
+                else abilityTooltip.Text = enabled ? null : blocker;
+            }
         }
 
         public void HideAbility()
         {
+            SetActionReady(false);
             if (abilityButton != null) abilityButton.gameObject.SetActive(false);
+        }
+
+        void SetActionReady(bool ready)
+        {
+            if (m_ActionReady == ready) return;
+            m_ActionReady = ready;
+            if (!ready)
+            {
+                if (frame != null && avatarMode) frame.color = m_FrameBase;
+                if (faceRoot != null)
+                {
+                    faceRoot.localRotation = Quaternion.identity;
+                    faceRoot.localScale = Vector3.one;
+                }
+            }
         }
 
         public void SetClickable(bool clickable)

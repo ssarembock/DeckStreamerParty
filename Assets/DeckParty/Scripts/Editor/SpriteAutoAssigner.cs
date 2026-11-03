@@ -90,7 +90,7 @@ namespace DeckParty.EditorTools
             foreach (var (alias, type) in s_Aliases)
                 if (!guestKeys.ContainsKey(alias)) guestKeys[alias] = type;
 
-            int guests = 0, streamers = 0, venues = 0, skins = 0;
+            int guests = 0, streamers = 0, venues = 0, skins = 0, avatars = 0;
             var unmatched = new List<string>();
 
             foreach (var (sprite, path) in FindSprites(DeckPartyPaths.Art))
@@ -102,6 +102,23 @@ namespace DeckParty.EditorTools
                 if (TryAssignSkin(db, key, sprite)) { skins++; continue; }
                 if (TryAssignVenue(db, key, sprite, inBackgrounds)) { venues++; continue; }
                 if (TryAssignStreamer(db, key, sprite, inStreamers)) { streamers++; continue; }
+
+                // Round chat avatars: "LoyalFan_Avatar", "avatar_loyal_fan", "LoyalFan_Head"...
+                string avatarKey = AvatarKey(key);
+                if (avatarKey != null)
+                {
+                    string strippedAvatar = StripPrefix(avatarKey, s_GuestPrefixes);
+                    if (guestKeys.TryGetValue(strippedAvatar, out var avatarType) || guestKeys.TryGetValue(avatarKey, out avatarType))
+                    {
+                        var avatarArt = db.GetGuestArt(avatarType);
+                        if (avatarArt != null)
+                        {
+                            if (avatarArt.avatar != sprite) avatars++;
+                            avatarArt.avatar = sprite;
+                            continue;
+                        }
+                    }
+                }
 
                 string guestKey = StripPrefix(key, s_GuestPrefixes);
                 if (guestKeys.TryGetValue(guestKey, out var guestType) || guestKeys.TryGetValue(key, out guestType))
@@ -124,7 +141,7 @@ namespace DeckParty.EditorTools
             GameDatabase.ResetCache();
 
             var report = new StringBuilder();
-            report.AppendLine($"Assigned {guests} guest portrait(s), {streamers} streamer portrait(s), {venues} background image(s) and {skins} UI skin sprite(s).");
+            report.AppendLine($"Assigned {guests} guest portrait(s), {avatars} chat avatar(s), {streamers} streamer portrait(s), {venues} background image(s) and {skins} UI skin sprite(s).");
             if (unmatched.Count > 0)
             {
                 report.AppendLine();
@@ -135,7 +152,21 @@ namespace DeckParty.EditorTools
 
             if (quiet) Debug.Log("[DeckParty] Art auto-assign: " + report.ToString().Split('\n')[0].Trim());
             else EditorUtility.DisplayDialog("Deck Party: sprites assigned", report.ToString(), "OK");
-            return guests + streamers + venues + skins;
+            return guests + avatars + streamers + venues + skins;
+        }
+
+        static readonly string[] s_AvatarMarks = { "avatar", "head" };
+
+        /// <summary>The viewer part of an avatar sprite's name ("loyalfanavatar" -> "loyalfan"), or null when it isn't one.</summary>
+        static string AvatarKey(string key)
+        {
+            foreach (var mark in s_AvatarMarks)
+            {
+                if (key.Length <= mark.Length) continue;
+                if (key.EndsWith(mark)) return key.Substring(0, key.Length - mark.Length);
+                if (key.StartsWith(mark)) return key.Substring(mark.Length);
+            }
+            return null;
         }
 
         [MenuItem("Deck Party/Art/Assign Selected Sheet to Guests in Roster Order", priority = 1)]

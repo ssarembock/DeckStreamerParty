@@ -190,3 +190,66 @@ MonoBehaviour:
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconAddViewer
+    slot: 25
+    sprite: {fileID: 21300000, guid: d329cd05659c2ac4bbb05b53fc9132b9, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconEndStream
+    slot: 26
+    sprite: {fileID: 21300000, guid: 1365eade6cc0ef441bfa04103d9cef6c, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconAudience
+    slot: 27
+    sprite: {fileID: 21300000, guid: ecfee4c671c03d74a99cf379a0d4e0a2, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconMenu
+    slot: 28
+    sprite: {fileID: 21300000, guid: aa9e17d49a944644d9aa7afa6646356c, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconAction
+    slot: 29
+    sprite: {fileID: 21300000, guid: 8b35a4e9b85145541ac2bd791cdc0676, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconGoLive
+    slot: 30
+    sprite: {fileID: 21300000, guid: 03c1a9d3f1b0c3c4797222c04aed6064, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconClose
+    slot: 31
+    sprite: {fileID: 21300000, guid: c5f9bb4c53486ac4faad870e12da7838, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconNight
+    slot: 32
+    sprite: {fileID: 21300000, guid: 21237ded836472e4184100b5f106d27b, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: AvatarRing
+    slot: 33
+    sprite: {fileID: 21300000, guid: da293bc77bf06a141ab5cdd679becd7d, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}

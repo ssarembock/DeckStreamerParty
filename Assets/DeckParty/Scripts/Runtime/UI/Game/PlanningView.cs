@@ -66,6 +66,14 @@ namespace DeckParty.UI
         [Tooltip("Free For All: covers the shop until it opens for everyone (Go to the Shop, then the 3-2-1).")]
         [SerializeField] internal ShopGateView gate;
 
+        [Header("Icon buttons (website look)")]
+        [SerializeField] internal TooltipTrigger rolodexTooltip;
+        [SerializeField] internal TooltipTrigger nextNightTooltip;
+        [Tooltip("Shown on the next-night button normally (Go Live).")]
+        [SerializeField] internal GameObject nextNightIcon;
+        [Tooltip("Shown instead while you're marked ready (press again to cancel).")]
+        [SerializeField] internal GameObject nextReadyIcon;
+
         [Header("Shop grid")]
         [Tooltip("Tiles never get narrower than this (more columns fit on wider screens).")]
         [SerializeField] internal float minTileWidth = 190f;
@@ -149,15 +157,33 @@ namespace DeckParty.UI
 
             var expandBlocker = PartyEngine.GetExpandBlocker(s);
             expandButton.interactable = expandBlocker == null && !locked;
-            expandLabel.text = s.Capacity >= GameRules.MaxCapacity
-                ? Loc.Get("shop.cap_maxed")
-                : Loc.Get("shop.raise_cap", ("from", s.Capacity), ("to", s.Capacity + 1), ("cost", $"<color=#6BE38B>{GameIcons.Amount(ResourceIcon.Cash, PartyEngine.ExpansionCost(s))}</color>"));
-            if (expandTooltip != null) expandTooltip.Text = watching || waitingForTurn ? lockReason
-                : expandBlocker != null ? Loc.Error(expandBlocker) : Loc.Get("shop.raise_cap_tip");
+            bool maxed = s.Capacity >= GameRules.MaxCapacity;
+            string expandWords = maxed ? Loc.Get("shop.cap_maxed")
+                : Loc.Get("shop.raise_cap", ("from", s.Capacity), ("to", s.Capacity + 1), ("cost", GameIcons.Amount(ResourceIcon.Cash, PartyEngine.ExpansionCost(s))));
+            if (expandLabel != null)
+            {
+                // Icon buttons carry numbers only (Sub Cap now -> next, and the price); the words are in the tooltip.
+                expandLabel.text = rolodexTooltip != null
+                    ? (maxed ? s.Capacity.ToString() : $"+1   {GameIcons.Amount(ResourceIcon.Cash, PartyEngine.ExpansionCost(s))}")
+                    : expandWords;
+            }
+            if (expandTooltip != null)
+            {
+                string why = watching || waitingForTurn ? lockReason : expandBlocker != null ? Loc.Error(expandBlocker) : null;
+                expandTooltip.Text = rolodexTooltip != null
+                    ? $"<b>{expandWords}</b>\n{Loc.Get("shop.raise_cap_tip")}" + (why != null ? "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : string.Empty)
+                    : why ?? Loc.Get("shop.raise_cap_tip");
+            }
 
-            rolodexLabel.text = (watching
+            string audienceWords = watching
                 ? Loc.Get("shop.view_audience_other", "player", ctx.Owner, "count", s.PermanentCount)
-                : Loc.Get("shop.view_audience", "count", s.PermanentCount)) + "  <color=#B9AED6>[R]</color>";
+                : Loc.Get("shop.view_audience", "count", s.PermanentCount);
+            if (rolodexTooltip != null)
+            {
+                if (rolodexLabel != null) rolodexLabel.text = s.PermanentCount.ToString();
+                rolodexTooltip.Text = audienceWords + "  <color=#B9AED6>[R]</color>";
+            }
+            else if (rolodexLabel != null) rolodexLabel.text = audienceWords + "  <color=#B9AED6>[R]</color>";
 
             if (power != null) power.Render(s, ctx.RivalsAvailable, locked ? lockReason : null, ctx.Owner);
 
@@ -211,47 +237,59 @@ namespace DeckParty.UI
         void RenderNextButton(PlayerState s, PlanningContext ctx, bool watching)
         {
             bool nextInteractable = true;
+            bool ready = false;
+            string words;
+            string waiting;
             if (ctx.ShopGated && !watching)
             {
                 // Free For All: the next night waits until everyone has shopped.
                 nextInteractable = false;
-                nextNightLabel.text = Loc.Get("shop.ready_for", "night", s.Night + 1);
-                waitingLabel.text = Loc.Get("shop.gate_hint");
+                words = Loc.Get("shop.ready_for", "night", s.Night + 1);
+                waiting = Loc.Get("shop.gate_hint");
             }
             else if (watching)
             {
                 nextInteractable = false;
-                nextNightLabel.text = ctx.Turns ? Loc.Get("shop.other_shopping", "player", ctx.Owner) : Loc.Get("shop.watching", "player", ctx.Owner);
-                waitingLabel.text = Loc.Get(ctx.Turns ? "shop.turn_ends_hint" : "shop.go_back_hint");
+                words = ctx.Turns ? Loc.Get("shop.other_shopping", "player", ctx.Owner) : Loc.Get("shop.watching", "player", ctx.Owner);
+                waiting = Loc.Get(ctx.Turns ? "shop.turn_ends_hint" : "shop.go_back_hint");
             }
             else if (ctx.Turns)
             {
                 if (ctx.MyTurn)
                 {
-                    nextNightLabel.text = Loc.Get("shop.end_turn") + "  <size=70%>[Space]</size>";
-                    waitingLabel.text = string.IsNullOrEmpty(ctx.NextName)
+                    words = Loc.Get("shop.end_turn") + "  <size=70%>[Space]</size>";
+                    waiting = string.IsNullOrEmpty(ctx.NextName)
                         ? Loc.Get("shop.next_night_after", "night", s.Night + 1)
                         : Loc.Get("shop.next_player", "player", ctx.NextName);
                 }
                 else
                 {
                     nextInteractable = false;
-                    nextNightLabel.text = Loc.Get("shop.waiting_turn");
-                    waitingLabel.text = string.IsNullOrEmpty(ctx.ActiveName) ? string.Empty : Loc.Get("shop.their_turn", "player", ctx.ActiveName);
+                    words = Loc.Get("shop.waiting_turn");
+                    waiting = string.IsNullOrEmpty(ctx.ActiveName) ? string.Empty : Loc.Get("shop.their_turn", "player", ctx.ActiveName);
                 }
             }
             else if (ctx.Multiplayer && ctx.SyncNights)
             {
-                nextNightLabel.text = ctx.LocalReady ? Loc.Get("shop.cancel_ready") : Loc.Get("shop.ready_for", "night", s.Night + 1);
-                waitingLabel.text = ctx.LocalReady
+                ready = ctx.LocalReady;
+                words = ctx.LocalReady ? Loc.Get("shop.cancel_ready") : Loc.Get("shop.ready_for", "night", s.Night + 1);
+                waiting = ctx.LocalReady
                     ? (string.IsNullOrEmpty(ctx.WaitingFor) ? Loc.Get("shop.starting") : Loc.Get("shop.waiting_for", "players", ctx.WaitingFor))
                     : Loc.Get("shop.everyone_ready_hint");
             }
             else
             {
-                nextNightLabel.text = Loc.Get("shop.start_night", "night", s.Night + 1) + "  <size=70%>[Space]</size>";
-                waitingLabel.text = string.Empty;
+                words = Loc.Get("shop.start_night", "night", s.Night + 1) + "  <size=70%>[Space]</size>";
+                waiting = string.Empty;
             }
+
+            // Icon button: the words go to the tooltip, the icon shows Go Live (or a tick while you're ready).
+            if (nextNightTooltip != null) nextNightTooltip.Text = words;
+            if (nextNightLabel != null) nextNightLabel.text = nextNightTooltip != null ? (s.Night + 1).ToString() : words;
+            if (nextNightIcon != null) nextNightIcon.SetActive(!ready);
+            if (nextReadyIcon != null) nextReadyIcon.SetActive(ready);
+            // In single player the waiting line has nothing to say; in multiplayer it names who you're waiting for.
+            if (waitingLabel != null) waitingLabel.text = nextNightTooltip != null && !ctx.Multiplayer ? string.Empty : waiting;
             nextNightButton.interactable = nextInteractable;
         }
 

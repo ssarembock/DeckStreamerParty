@@ -347,11 +347,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412305
-    m_Localized: Subs
+    m_Localized: Fama
     m_Metadata:
       m_Items: []
   - m_Id: 479412306
-    m_Localized: Subs regaladas
+    m_Localized: Fama
     m_Metadata:
       m_Items: []
   - m_Id: 479412307
@@ -371,11 +371,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412311
-    m_Localized: Diamante
+    m_Localized: Play
     m_Metadata:
       m_Items: []
   - m_Id: 479412312
-    m_Localized: Diamantes
+    m_Localized: Plays
     m_Metadata:
       m_Items: []
   - m_Id: 479412313
@@ -399,7 +399,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412318
-    m_Localized: '{count} {count:plural:Diamante|Diamantes}'
+    m_Localized: '{count} {count:plural:Play|Plays}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412319
@@ -451,7 +451,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412331
-    m_Localized: Diamante
+    m_Localized: Play
     m_Metadata:
       m_Items: []
   - m_Id: 479412332
@@ -495,7 +495,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412342
-    m_Localized: DIAMANTE
+    m_Localized: PLAY
     m_Metadata:
       m_Items: []
   - m_Id: 479412343
@@ -739,11 +739,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606530
-    m_Localized: "\xA1{count} DIAMANTES EN UN STREAM! \xA1Ganaste!"
+    m_Localized: "\xA1{count} PLAYS EN UN STREAM! \xA1Ganaste!"
     m_Metadata:
       m_Items: []
   - m_Id: 483606531
-    m_Localized: "\xA1{count} DIAMANTES EN UN STREAM! \xA1{player} gana!"
+    m_Localized: "\xA1{count} PLAYS EN UN STREAM! \xA1{player} gana!"
     m_Metadata:
       m_Items: []
   - m_Id: 483606532
@@ -1155,9 +1155,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606632
-    m_Localized: "Logra un stream con <b>4 espectadores Diamante en el chat al mismo
+    m_Localized: "Logra un stream con <b>4 espectadores Play en el chat al mismo
       tiempo</b> y term\xEDnalo con \xE9xito antes de tu \xFAltima noche (25 por
-      defecto). Reclutar cuatro Diamantes no alcanza: tienen que aparecer juntos."
+      defecto). Reclutar cuatro Plays no alcanza: tienen que aparecer juntos."
     m_Metadata:
       m_Items: []
   - m_Id: 483606633
@@ -1210,7 +1210,7 @@ MonoBehaviour:
       Las cuotas se pagan con tu {icon:cash}; lo que no puedas pagar cuesta <b>7
       {icon:subs} por cada 1 {icon:cash}</b>.\\nEl stock de la tienda es <b>compartido
       entre todos los jugadores</b>: cada espectador normal tiene 4 copias para toda
-      la partida y puedes tener como m\xE1ximo 4 de cada uno; los Diamantes son ilimitados.
+      la partida y puedes tener como m\xE1ximo 4 de cada uno; los Plays son ilimitados.
       No puedes sacar espectadores de tu Audiencia, as\xED que cada fichaje cambia
       tus probabilidades."
     m_Metadata:
@@ -1263,25 +1263,25 @@ MonoBehaviour:
       para ver su tablero en vivo. En el modo <b>Por turnos</b> (el predeterminado)
       los jugadores transmiten uno tras otro cada noche mientras los dem\xE1s ven
       lo que se\xF1ala, elige y compra; la temporada termina despu\xE9s de la primera
-      noche en que alguien logra un stream de 4 Diamantes. El host puede poner un
-      temporizador de turno. En <b>Noches sincronizadas</b> todos juegan la misma
-      noche a la vez y la siguiente empieza cuando todos est\xE1n listos. En <b>Carrera</b>
-      cada uno juega a su ritmo y el primer stream de 4 Diamantes gana al instante.
-      Si nadie gana, se lo lleva la mejor cantidad de Diamantes en un stream exitoso."
+      noche en que alguien logra un stream de 4 Plays. El host puede poner un temporizador
+      de turno. En <b>Noches sincronizadas</b> todos juegan la misma noche a la vez
+      y la siguiente empieza cuando todos est\xE1n listos. En <b>Carrera</b> cada
+      uno juega a su ritmo y el primer stream de 4 Plays gana al instante. Si nadie
+      gana, se lo lleva la mejor cantidad de Plays en un stream exitoso."
     m_Metadata:
       m_Items: []
   - m_Id: 483606649
-    m_Localized: "<b>Ganar:</b> 4 Diamantes en un stream exitoso.\\n<b>\xCDconos:</b>
-      {icon:subs} Subs regaladas   {icon:cash} Plata   {icon:risk} Riesgo de desplataformaci\xF3n
-      (pasa el mouse sobre cualquier \xEDcono para ver qu\xE9 es).\\n<b>Sumar espectador:</b>
-      entra al chat el pr\xF3ximo de la fila.  <b>Terminar el stream:</b> cobra los
-      {icon:subs} y la {icon:cash} de todos.\\n<b>3 de {icon:risk} neto</b> = te
-      desplataforman (sin ganancias, un espectador recibe un baneo temporal).\\n<b>Pasarte
-      del cupo</b> = se cae el servidor (sin ganancias).\\n<b>Comunidades:</b> cada
-      espectador distinto en el chat suma un punto a su comunidad; m\xE1s puntos,
+    m_Localized: "<b>Ganar:</b> 4 Plays en un stream exitoso.\\n<b>\xCDconos:</b>
+      {icon:subs} Fama   {icon:cash} Plata   {icon:risk} Riesgo de desplataformaci\xF3n  
+      {icon:plays} Plays (pasa el mouse sobre cualquier \xEDcono para ver qu\xE9
+      es).\\n<b>Sumar espectador:</b> entra al chat el pr\xF3ximo de la fila.  <b>Terminar
+      el stream:</b> cobra la {icon:subs} y la {icon:cash} de todos.\\n<b>3 de {icon:risk}
+      neto</b> = te desplataforman (sin ganancias, un espectador recibe un baneo
+      temporal).\\n<b>Pasarte del cupo</b> = se cae el servidor (sin ganancias).\\n<b>Comunidades:</b>
+      cada espectador distinto en el chat suma un punto a su comunidad; m\xE1s puntos,
       m\xE1s bonificaci\xF3n (Ritmo de comunidades, arriba del chat).\\n<b>Tienda:</b>
-      las {icon:subs} reclutan espectadores (el stock es compartido entre todos),
-      la {icon:cash} sube el cupo y paga los poderes activos del streamer.\\n<b>Teclas:</b>
+      la {icon:subs} recluta espectadores (el stock es compartido entre todos), la
+      {icon:cash} sube el cupo y paga los poderes activos del streamer.\\n<b>Teclas:</b>
       Espacio sumar/confirmar/siguiente noche, E terminar el stream, R Audiencia,
       Esc men\xFA, F11 pantalla completa."
     m_Metadata:

@@ -17,6 +17,9 @@ MonoBehaviour:
     key: LoyalFan
     type: 0
     portrait: {fileID: -2898329082005346111, guid: 85ac7cfbc0e04ed4e8453957652be675, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -28,6 +31,9 @@ MonoBehaviour:
     key: Whale
     type: 1
     portrait: {fileID: -1144078954, guid: be8983e799f3ca74eaea994305bffe85, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -39,6 +45,9 @@ MonoBehaviour:
     key: IneffectiveTroll
     type: 2
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 33
     characterPrefab: {fileID: 0}
@@ -50,6 +59,9 @@ MonoBehaviour:
     key: Producer
     type: 3
     portrait: {fileID: 94037863979579222, guid: d34aba27b6570a044b9b4db92a8973b1, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -61,6 +73,9 @@ MonoBehaviour:
     key: ChatAdmin
     type: 4
     portrait: {fileID: -1712503410, guid: 85ac7cfbc0e04ed4e8453957652be675, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -72,6 +87,9 @@ MonoBehaviour:
     key: Normie
     type: 5
     portrait: {fileID: 667513976212898483, guid: 654255d8368643a4c98793560e591dc3, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -83,6 +101,9 @@ MonoBehaviour:
     key: MildlyRiskyCollaborator
     type: 6
     portrait: {fileID: 1804695789, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4
     characterPrefab: {fileID: 0}
@@ -94,6 +115,9 @@ MonoBehaviour:
     key: JuniorPrManager
     type: 7
     portrait: {fileID: 785415261557809399, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -105,6 +129,9 @@ MonoBehaviour:
     key: DieHardFan
     type: 8
     portrait: {fileID: -2119688159, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -116,6 +143,9 @@ MonoBehaviour:
     key: MarketingManager
     type: 9
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -127,6 +157,9 @@ MonoBehaviour:
     key: DegenDog
     type: 10
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4096
     characterPrefab: {fileID: 0}
@@ -138,6 +171,9 @@ MonoBehaviour:
     key: Trollface
     type: 11
     portrait: {fileID: 1464234329955669435, guid: 22737974618bd104dac319073f2a3f14, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 288
     characterPrefab: {fileID: 0}
@@ -149,6 +185,9 @@ MonoBehaviour:
     key: Pepe
     type: 12
     portrait: {fileID: 541896646, guid: f2248c449efb82747bb5106359d41f34, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 260
     characterPrefab: {fileID: 0}
@@ -160,6 +199,9 @@ MonoBehaviour:
     key: Gigachad
     type: 13
     portrait: {fileID: -2088211175, guid: f2248c449efb82747bb5106359d41f34, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 528
     characterPrefab: {fileID: 0}
@@ -171,6 +213,9 @@ MonoBehaviour:
     key: ThisIsFineDog
     type: 14
     portrait: {fileID: -2092036663, guid: f2248c449efb82747bb5106359d41f34, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 260
     characterPrefab: {fileID: 0}
@@ -182,6 +227,9 @@ MonoBehaviour:
     key: Wojak
     type: 15
     portrait: {fileID: 7193592329560644690, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 260
     characterPrefab: {fileID: 0}
@@ -193,6 +241,9 @@ MonoBehaviour:
     key: GrumpyCat
     type: 16
     portrait: {fileID: 1557067447, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 260
     characterPrefab: {fileID: 0}
@@ -204,6 +255,9 @@ MonoBehaviour:
     key: NyanCat
     type: 17
     portrait: {fileID: -2107843817, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 260
     characterPrefab: {fileID: 0}
@@ -215,6 +269,9 @@ MonoBehaviour:
     key: StonksGuy
     type: 18
     portrait: {fileID: 1804695789, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 16
     characterPrefab: {fileID: 0}
@@ -226,6 +283,9 @@ MonoBehaviour:
     key: Cheems
     type: 19
     portrait: {fileID: 1189930840, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 513
     characterPrefab: {fileID: 0}
@@ -237,6 +297,9 @@ MonoBehaviour:
     key: ChadVsVirgin
     type: 20
     portrait: {fileID: 785415261557809399, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 544
     characterPrefab: {fileID: 0}
@@ -248,6 +311,9 @@ MonoBehaviour:
     key: Doomer
     type: 21
     portrait: {fileID: -2119688159, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 516
     characterPrefab: {fileID: 0}
@@ -259,6 +325,9 @@ MonoBehaviour:
     key: NpcWojak
     type: 22
     portrait: {fileID: 692109619, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1032
     characterPrefab: {fileID: 0}
@@ -270,6 +339,9 @@ MonoBehaviour:
     key: ForeverAlone
     type: 23
     portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 257
     characterPrefab: {fileID: 0}
@@ -281,6 +353,9 @@ MonoBehaviour:
     key: MeGusta
     type: 24
     portrait: {fileID: 1661188788, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 288
     characterPrefab: {fileID: 0}
@@ -292,6 +367,9 @@ MonoBehaviour:
     key: KeyboardCat
     type: 25
     portrait: {fileID: 1464234329955669435, guid: 22737974618bd104dac319073f2a3f14, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 264
     characterPrefab: {fileID: 0}
@@ -303,6 +381,9 @@ MonoBehaviour:
     key: BongoCat
     type: 26
     portrait: {fileID: 1587852471, guid: 22737974618bd104dac319073f2a3f14, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 520
     characterPrefab: {fileID: 0}
@@ -314,6 +395,9 @@ MonoBehaviour:
     key: PopCat
     type: 27
     portrait: {fileID: 1567478799, guid: 22737974618bd104dac319073f2a3f14, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 516
     characterPrefab: {fileID: 0}
@@ -325,6 +409,9 @@ MonoBehaviour:
     key: BigChungus
     type: 28
     portrait: {fileID: 1645326131, guid: 22737974618bd104dac319073f2a3f14, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 516
     characterPrefab: {fileID: 0}
@@ -336,6 +423,9 @@ MonoBehaviour:
     key: UgandanKnuckles
     type: 29
     portrait: {fileID: -162210258, guid: 22737974618bd104dac319073f2a3f14, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 544
     characterPrefab: {fileID: 0}
@@ -347,6 +437,9 @@ MonoBehaviour:
     key: OverlyAttachedGirlfriend
     type: 30
     portrait: {fileID: 9205303203659863379, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 257
     characterPrefab: {fileID: 0}
@@ -358,6 +451,9 @@ MonoBehaviour:
     key: DisasterGirl
     type: 31
     portrait: {fileID: -1577711586, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 32
     characterPrefab: {fileID: 0}
@@ -369,6 +465,9 @@ MonoBehaviour:
     key: HideThePainHarold
     type: 32
     portrait: {fileID: 28286594, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 132
     characterPrefab: {fileID: 0}
@@ -380,6 +479,9 @@ MonoBehaviour:
     key: SuccessKid
     type: 33
     portrait: {fileID: -570074226, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 260
     characterPrefab: {fileID: 0}
@@ -391,6 +493,9 @@ MonoBehaviour:
     key: BadLuckBrian
     type: 34
     portrait: {fileID: 1211086218, guid: 625fcb6bfcce4fb45ad37f1fe4e6dd07, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 260
     characterPrefab: {fileID: 0}
@@ -402,6 +507,9 @@ MonoBehaviour:
     key: TungTungTungSahur
     type: 35
     portrait: {fileID: 5649303986351544168, guid: 71ad138068d067f48ab2b13065017c03, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 516
     characterPrefab: {fileID: 0}
@@ -413,6 +521,9 @@ MonoBehaviour:
     key: TralaleroTralala
     type: 36
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 516
     characterPrefab: {fileID: 0}
@@ -424,6 +535,9 @@ MonoBehaviour:
     key: BombardiroCrocodilo
     type: 37
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 544
     characterPrefab: {fileID: 0}
@@ -435,6 +549,9 @@ MonoBehaviour:
     key: BallerinaCappuccina
     type: 38
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 516
     characterPrefab: {fileID: 0}
@@ -446,6 +563,9 @@ MonoBehaviour:
     key: SkibidiToilet
     type: 39
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 544
     characterPrefab: {fileID: 0}
@@ -457,6 +577,9 @@ MonoBehaviour:
     key: SigmaMale
     type: 40
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 528
     characterPrefab: {fileID: 0}
@@ -468,6 +591,9 @@ MonoBehaviour:
     key: Karen
     type: 41
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1184
     characterPrefab: {fileID: 0}
@@ -479,6 +605,9 @@ MonoBehaviour:
     key: Rickroll
     type: 42
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 288
     characterPrefab: {fileID: 0}
@@ -490,6 +619,9 @@ MonoBehaviour:
     key: DistractedBoyfriend
     type: 43
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 260
     characterPrefab: {fileID: 0}
@@ -501,6 +633,9 @@ MonoBehaviour:
     key: Drakeposting
     type: 44
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 260
     characterPrefab: {fileID: 0}
@@ -512,6 +647,9 @@ MonoBehaviour:
     key: ConfusedMathLady
     type: 45
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 16
     characterPrefab: {fileID: 0}
@@ -523,6 +661,9 @@ MonoBehaviour:
     key: SideEyeChloe
     type: 46
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 516
     characterPrefab: {fileID: 0}
@@ -534,6 +675,9 @@ MonoBehaviour:
     key: RollSafe
     type: 47
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1028
     characterPrefab: {fileID: 0}
@@ -545,6 +689,9 @@ MonoBehaviour:
     key: DistraughtCat
     type: 48
     portrait: {fileID: 1567478799, guid: 22737974618bd104dac319073f2a3f14, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4096
     characterPrefab: {fileID: 0}
@@ -556,6 +703,9 @@ MonoBehaviour:
     key: DancingBaby
     type: 49
     portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 260
     characterPrefab: {fileID: 0}
@@ -567,6 +717,9 @@ MonoBehaviour:
     key: BigBoomer
     type: 50
     portrait: {fileID: 1323879217, guid: 85ac7cfbc0e04ed4e8453957652be675, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 128
     characterPrefab: {fileID: 0}
@@ -578,6 +731,9 @@ MonoBehaviour:
     key: ClippoTheClanker
     type: 51
     portrait: {fileID: 1538896756, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 8192
     characterPrefab: {fileID: 0}
@@ -589,6 +745,9 @@ MonoBehaviour:
     key: BiggerStar
     type: 52
     portrait: {fileID: 2024471885, guid: be8983e799f3ca74eaea994305bffe85, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2052
     characterPrefab: {fileID: 0}
@@ -600,6 +759,9 @@ MonoBehaviour:
     key: PrecociousYouth
     type: 53
     portrait: {fileID: 1908536649, guid: 85ac7cfbc0e04ed4e8453957652be675, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4
     characterPrefab: {fileID: 0}
@@ -611,6 +773,9 @@ MonoBehaviour:
     key: InternetStarpower
     type: 54
     portrait: {fileID: -6384077978806157326, guid: 15231334d3254cb46995f2da925dbf7f, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2052
     characterPrefab: {fileID: 0}
@@ -622,6 +787,9 @@ MonoBehaviour:
     key: PlatformOwner
     type: 55
     portrait: {fileID: -2041527551682163859, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2048
     characterPrefab: {fileID: 0}
@@ -633,6 +801,9 @@ MonoBehaviour:
     key: MainstreamCelebrity
     type: 56
     portrait: {fileID: 2595682619125052946, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2052
     characterPrefab: {fileID: 0}
@@ -644,6 +815,9 @@ MonoBehaviour:
     key: SeniorMarketingManager
     type: 57
     portrait: {fileID: -801302851, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 258
     characterPrefab: {fileID: 0}
@@ -655,6 +829,9 @@ MonoBehaviour:
     key: Evangelist
     type: 58
     portrait: {fileID: 958500471, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -666,6 +843,9 @@ MonoBehaviour:
     key: InfluentialTroll
     type: 59
     portrait: {fileID: -832105217, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 32
     characterPrefab: {fileID: 0}
@@ -677,6 +857,9 @@ MonoBehaviour:
     key: CybersecurityEngineer
     type: 60
     portrait: {fileID: -1551627727, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 10
     characterPrefab: {fileID: 0}
@@ -688,6 +871,9 @@ MonoBehaviour:
     key: PaidSponsorship
     type: 61
     portrait: {fileID: -1375932157, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 16
     characterPrefab: {fileID: 0}
@@ -699,6 +885,9 @@ MonoBehaviour:
     key: PromoCodeUser
     type: 62
     portrait: {fileID: -265884576, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -710,6 +899,9 @@ MonoBehaviour:
     key: AccountManager
     type: 63
     portrait: {fileID: -1630023046, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -721,6 +913,9 @@ MonoBehaviour:
     key: CryptoEnthusiast
     type: 64
     portrait: {fileID: 785415261557809399, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 0
     characterPrefab: {fileID: 0}
@@ -732,6 +927,9 @@ MonoBehaviour:
     key: GenerousDonator
     type: 65
     portrait: {fileID: -844526406, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 17
     characterPrefab: {fileID: 0}
@@ -743,6 +941,9 @@ MonoBehaviour:
     key: PrManager
     type: 66
     portrait: {fileID: 614249705, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -754,6 +955,9 @@ MonoBehaviour:
     key: HighlyRiskyCollaborator
     type: 67
     portrait: {fileID: -2452879, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4
     characterPrefab: {fileID: 0}
@@ -765,6 +969,9 @@ MonoBehaviour:
     key: ChatArbitrator
     type: 68
     portrait: {fileID: -679116045, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -776,6 +983,9 @@ MonoBehaviour:
     key: BotDetector
     type: 69
     portrait: {fileID: 2078254843, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 8
     characterPrefab: {fileID: 0}
@@ -787,6 +997,9 @@ MonoBehaviour:
     key: RiskyOrbiter
     type: 70
     portrait: {fileID: 1315259534, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4
     characterPrefab: {fileID: 0}
@@ -798,6 +1011,9 @@ MonoBehaviour:
     key: SocialMediaManager
     type: 71
     portrait: {fileID: -859353344, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 514
     characterPrefab: {fileID: 0}
@@ -809,6 +1025,9 @@ MonoBehaviour:
     key: BillionaireBenefactor
     type: 72
     portrait: {fileID: 7016762480026511513, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 144
     characterPrefab: {fileID: 0}
@@ -820,6 +1039,9 @@ MonoBehaviour:
     key: TechAdmin
     type: 73
     portrait: {fileID: 1398632798, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 8
     characterPrefab: {fileID: 0}
@@ -831,6 +1053,9 @@ MonoBehaviour:
     key: OnlineScandal
     type: 74
     portrait: {fileID: 1533252833, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4
     characterPrefab: {fileID: 0}
@@ -842,6 +1067,9 @@ MonoBehaviour:
     key: Gatekeeper
     type: 75
     portrait: {fileID: -736008928, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 33
     characterPrefab: {fileID: 0}
@@ -853,6 +1081,9 @@ MonoBehaviour:
     key: BingeBunny
     type: 76
     portrait: {fileID: -402697210, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -864,6 +1095,9 @@ MonoBehaviour:
     key: HateWatcher
     type: 77
     portrait: {fileID: 192185646, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 32
     characterPrefab: {fileID: 0}
@@ -875,6 +1109,9 @@ MonoBehaviour:
     key: Affiliate
     type: 78
     portrait: {fileID: 460826966, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 16
     characterPrefab: {fileID: 0}
@@ -886,6 +1123,9 @@ MonoBehaviour:
     key: MasterOfCurrency
     type: 79
     portrait: {fileID: -1936838312, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 144
     characterPrefab: {fileID: 0}
@@ -897,6 +1137,9 @@ MonoBehaviour:
     key: ExecutivePr
     type: 80
     portrait: {fileID: 388132257, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 130
     characterPrefab: {fileID: 0}
@@ -908,6 +1151,9 @@ MonoBehaviour:
     key: GenZWithJob
     type: 81
     portrait: {fileID: 1037714254, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 512
     characterPrefab: {fileID: 0}
@@ -919,6 +1165,9 @@ MonoBehaviour:
     key: Bot
     type: 82
     portrait: {fileID: -1698263413, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 0
     characterPrefab: {fileID: 0}
@@ -932,6 +1181,8 @@ MonoBehaviour:
     portrait: {fileID: 5939000425473442714, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 1
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: e3c32a2a35d2877498821d1a19b54f11, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -942,6 +1193,8 @@ MonoBehaviour:
     portrait: {fileID: -1581881588, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 4
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: a3b19b4f1f38a804c8318afe3115cc0e, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -952,6 +1205,8 @@ MonoBehaviour:
     portrait: {fileID: 345372882, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 1
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: 65d7e3e1d1686fe4eab873a6cb1b2fc8, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -962,6 +1217,8 @@ MonoBehaviour:
     portrait: {fileID: 530116710, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 0
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: 0ad9f64671f715240baf1d25555a71d4, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -972,6 +1229,8 @@ MonoBehaviour:
     portrait: {fileID: -7370818230038034924, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 0
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: 47441aaa016e7f0478868c96347476dd, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -982,6 +1241,8 @@ MonoBehaviour:
     portrait: {fileID: 2010778748, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 3
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: 43bdcb9fdb8a1b34496f101b3760c194, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -992,6 +1253,8 @@ MonoBehaviour:
     portrait: {fileID: 862293246, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 5
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: 8e7fb000acf9e52439c24329987f771b, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -1002,6 +1265,8 @@ MonoBehaviour:
     portrait: {fileID: -2112622103, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 2
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: d3ae4620800c373428979f11c8561d45, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -1012,6 +1277,8 @@ MonoBehaviour:
     portrait: {fileID: -6066641247672683931, guid: 76f9156630a8aec4f98759a0773065ce, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 5
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: b77b850d9976d4b44a3699a982190195, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -1022,6 +1289,8 @@ MonoBehaviour:
     portrait: {fileID: -6216498727382737166, guid: 4840cbe81dc6bcb49a4382169e07ac35, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 2
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: a4314b960d66b6b4a882979bcc16f8f3, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -1032,6 +1301,8 @@ MonoBehaviour:
     portrait: {fileID: -127041018, guid: 4840cbe81dc6bcb49a4382169e07ac35, type: 3}
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
+    platform: 3
+    platformSeeded: 1
     venue: {fileID: 11400000, guid: 672b7d3c34c954f4689f74de010f836b, type: 2}
     color: {r: 1, g: 1, b: 1, a: 0}
     quotes:
@@ -1156,6 +1427,98 @@ MonoBehaviour:
   - name: Bots
     community: 13
     icon: {fileID: -2109503479, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
+  platforms:
+  - name: Cough
+    platform: 0
+    accent: {r: 1, g: 0.1764706, b: 0.1764706, a: 1}
+    accentContent: {r: 1, g: 1, b: 1, a: 1}
+    size: 84
+    logo: {fileID: 0}
+    partA: {fileID: 0}
+    partB: {fileID: 0}
+    partC: {fileID: 0}
+    pointA: {x: 0.9, y: 0.45}
+    pointB: {x: 0.5, y: 0.5}
+    partSize: 0.28
+    travel: 1.1
+    speed: 1
+    rest: 1.4
+  - name: Lookout
+    platform: 1
+    accent: {r: 0.5686275, g: 0.27450982, b: 1, a: 1}
+    accentContent: {r: 1, g: 1, b: 1, a: 1}
+    size: 84
+    logo: {fileID: 0}
+    partA: {fileID: 0}
+    partB: {fileID: 0}
+    partC: {fileID: 0}
+    pointA: {x: 0.37, y: 0.6}
+    pointB: {x: 0.63, y: 0.6}
+    partSize: 0.12
+    travel: 0.05
+    speed: 1
+    rest: 0.5
+  - name: Post
+    platform: 2
+    accent: {r: 0.05882353, g: 0.078431375, b: 0.09803922, a: 1}
+    accentContent: {r: 1, g: 1, b: 1, a: 1}
+    size: 84
+    logo: {fileID: 0}
+    partA: {fileID: 0}
+    partB: {fileID: 0}
+    partC: {fileID: 0}
+    pointA: {x: 0.5, y: 0.5}
+    pointB: {x: 0.5, y: 0.5}
+    partSize: 0.3
+    travel: 0.5
+    speed: 1
+    rest: 2.4
+  - name: Stomp
+    platform: 3
+    accent: {r: 0.3254902, g: 0.9882353, b: 0.09411765, a: 1}
+    accentContent: {r: 0.043137256, g: 0.05490196, b: 0.05882353, a: 1}
+    size: 84
+    logo: {fileID: 0}
+    partA: {fileID: 0}
+    partB: {fileID: 0}
+    partC: {fileID: 0}
+    pointA: {x: 0.5, y: 0.28}
+    pointB: {x: 0.5, y: 0.5}
+    partSize: 0.46
+    travel: 0.24
+    speed: 1
+    rest: 1.1
+  - name: Tunes
+    platform: 4
+    accent: {r: 0.11372549, g: 0.7254902, b: 0.32941177, a: 1}
+    accentContent: {r: 0.043137256, g: 0.05490196, b: 0.05882353, a: 1}
+    size: 84
+    logo: {fileID: 0}
+    partA: {fileID: 0}
+    partB: {fileID: 0}
+    partC: {fileID: 0}
+    pointA: {x: 0.5, y: 0.5}
+    pointB: {x: 0.5, y: 0.5}
+    partSize: 0.3
+    travel: 0.5
+    speed: 1
+    rest: 2.4
+  - name: Swipe
+    platform: 5
+    accent: {r: 0.99607843, g: 0.17254902, b: 0.33333334, a: 1}
+    accentContent: {r: 1, g: 1, b: 1, a: 1}
+    size: 84
+    logo: {fileID: 0}
+    partA: {fileID: 0}
+    partB: {fileID: 0}
+    partC: {fileID: 0}
+    pointA: {x: 0.5, y: 0.5}
+    pointB: {x: 0.5, y: 0.5}
+    partSize: 0.42
+    travel: 0.5
+    speed: 1
+    rest: 0.35
+  noStreamerPlatform: 1
   groupIcons:
   - name: Community
     group: 0

@@ -34,6 +34,17 @@ namespace DeckParty
         ScrollHandle = 22,
         Glow = 23,
         ButtonSecondary = 24,
+        // Icon buttons of the stream and shop (V5: buttons show an icon, the words are in their hover tooltip).
+        IconAddViewer = 25,
+        IconEndStream = 26,
+        IconAudience = 27,
+        IconMenu = 28,
+        IconAction = 29,
+        IconGoLive = 30,
+        IconClose = 31,
+        IconNight = 32,
+        /// <summary>The round border of the chat avatars (and their highlight).</summary>
+        AvatarRing = 33,
     }
 
     [Serializable]

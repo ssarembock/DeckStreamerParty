@@ -251,7 +251,7 @@ MonoBehaviour:
   - m_Id: 504578064
     m_Localized: 'Current Thing: on joining, copies the printed {icon:subs} and {icon:cash}
       of the viewer who joined just before him. Not their action, {icon:risk} or
-      Diamond.'
+      Play.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578065
@@ -468,9 +468,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578112
-    m_Localized: 'Action: another non-Diamond viewer temporarily becomes a random
-      different character from the queue, with its stats and action. Back to normal
-      after the stream.'
+    m_Localized: 'Action: another non-Play viewer temporarily becomes a random different
+      character from the queue, with its stats and action. Back to normal after the
+      stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578113
@@ -767,7 +767,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262483
-    m_Localized: 'DIAMOND. Opinion Express: adds 1 {icon:risk}.'
+    m_Localized: '{icon:plays} Opinion Express: adds 1 {icon:risk}.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262484
@@ -775,7 +775,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262485
-    m_Localized: 'DIAMOND. Market Collapse: costs 3 {icon:cash} when scored.'
+    m_Localized: '{icon:plays} Market Collapse: costs 3 {icon:cash} when scored.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262486
@@ -783,7 +783,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262487
-    m_Localized: 'DIAMOND. Uplifting: brings one random viewer along when joining.'
+    m_Localized: '{icon:plays} Uplifting: brings one random viewer along when joining.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262488
@@ -791,7 +791,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262489
-    m_Localized: DIAMOND. No extra effect.
+    m_Localized: '{icon:plays} No extra effect.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262490
@@ -799,7 +799,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262491
-    m_Localized: 'DIAMOND. Can Do No Wrong: cancels 1 {icon:risk} while in chat.'
+    m_Localized: '{icon:plays} Can Do No Wrong: cancels 1 {icon:risk} while in chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262492
@@ -807,8 +807,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262493
-    m_Localized: 'DIAMOND. Action: remove one viewer for the rest of the stream (even
-      itself).'
+    m_Localized: '{icon:plays} Action: remove one viewer for the rest of the stream
+      (even itself).'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262494
@@ -820,7 +820,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262496
-    m_Localized: DIAMOND. Mass Appeal.
+    m_Localized: '{icon:plays} Mass Appeal.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262497
@@ -828,7 +828,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262498
-    m_Localized: DIAMOND. Product Placement.
+    m_Localized: '{icon:plays} Product Placement.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262499
@@ -1094,8 +1094,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008644
-    m_Localized: 'DIAMOND. Action: summon any viewer from the queue, even another
-      Diamond.'
+    m_Localized: '{icon:plays} Action: summon any viewer from the queue, even another
+      Play.'
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008645

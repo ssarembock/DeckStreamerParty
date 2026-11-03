@@ -73,6 +73,11 @@ namespace DeckParty.UI
 
         RectTransform Viewport => scroll != null && scroll.viewport != null ? scroll.viewport : area;
 
+        /// <summary>The design size of one chat seat (round avatars, or the old 200x290 cards).</summary>
+        Vector2 Design => cardPrefab != null ? cardPrefab.DesignSize : new Vector2(GuestCardView.DesignWidth, GuestCardView.DesignHeight);
+
+        Vector2 CellAt(float scale) => Design * scale;
+
         public void Render(PlayerState s)
         {
             m_State = s;
@@ -172,7 +177,7 @@ namespace DeckParty.UI
             if (scrolling)
             {
                 finalScale = MinCardScale;
-                float cellW = GuestCardView.DesignWidth * finalScale;
+                float cellW = Design.x * finalScale;
                 finalColumns = Mathf.Clamp(Mathf.FloorToInt((width + spacing) / (cellW + spacing)), 1, maxColumns);
             }
 
@@ -184,7 +189,7 @@ namespace DeckParty.UI
             CardScale = finalScale;
             grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             grid.constraintCount = finalColumns;
-            grid.cellSize = GuestCardView.CellSize(finalScale);
+            grid.cellSize = CellAt(finalScale);
             if (scroll != null) scroll.vertical = scrolling;
             var gridRect = (RectTransform)grid.transform;
             gridRect.anchoredPosition = new Vector2(shift, gridRect.anchoredPosition.y);
@@ -192,7 +197,7 @@ namespace DeckParty.UI
             foreach (var card in m_Cards) card.SetScale(finalScale);
         }
 
-        static float ScaleFor(int capacity, int columns, float width, float height, float spacing)
+        float ScaleFor(int capacity, int columns, float width, float height, float spacing)
         {
             int rows = Mathf.CeilToInt(capacity / (float)columns);
             return Mathf.Min(CardScaleFor(width, columns, spacing, true), CardScaleFor(height, rows, spacing, false));
@@ -204,7 +209,7 @@ namespace DeckParty.UI
         /// </summary>
         float AvoidObstacle(int capacity, int columns, ref float scale, float width, float height, float spacing)
         {
-            var cell = GuestCardView.CellSize(scale);
+            var cell = CellAt(scale);
             int rows = Mathf.CeilToInt(capacity / (float)columns);
             int lastRow = capacity - (rows - 1) * columns;
             float blockW = columns * cell.x + (columns - 1) * spacing;
@@ -233,7 +238,7 @@ namespace DeckParty.UI
             // No room to slide: fit the rectangle to the width left of the facecam and centre it there.
             float room = Mathf.Max(1f, obstacleLeft);
             scale = Mathf.Max(MinCardScale, Mathf.Min(scale, CardScaleFor(room, columns, spacing, true)));
-            float narrowW = columns * GuestCardView.DesignWidth * scale + (columns - 1) * spacing;
+            float narrowW = columns * Design.x * scale + (columns - 1) * spacing;
             return Mathf.Min(0f, (room - narrowW) * 0.5f - (width - narrowW) * 0.5f);
         }
 
@@ -256,10 +261,10 @@ namespace DeckParty.UI
             return new Vector2(rect.xMax - Mathf.Max(rect.xMin, min.x), Mathf.Min(rect.yMax, max.y) - rect.yMin);
         }
 
-        static float CardScaleFor(float space, int count, float spacing, bool horizontal)
+        float CardScaleFor(float space, int count, float spacing, bool horizontal)
         {
             float cell = (space - spacing * (count - 1)) / count;
-            return cell / (horizontal ? GuestCardView.DesignWidth : GuestCardView.DesignHeight);
+            return cell / (horizontal ? Design.x : Design.y);
         }
     }
 }

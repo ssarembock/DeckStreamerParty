@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
-    /// <summary>"Choose a viewer" prompt shown while an action is picking its targets.</summary>
+    /// <summary>
+    /// "Choose a viewer" prompt shown while an action is picking its targets. Cancel and Confirm are icon buttons in the
+    /// website look (their words and hotkeys in the tooltip); older scenes with text buttons still work.
+    /// </summary>
     public sealed class TargetingBannerView : MonoBehaviour
     {
         [SerializeField] internal GameObject root;
@@ -18,6 +21,8 @@ namespace DeckParty.UI
         public event Action ConfirmClicked;
 
         TMP_Text m_ConfirmLabel;
+        TooltipTrigger m_ConfirmTooltip;
+        bool m_IconButtons;
         Vector2 m_LabelOffsetMax;
 
         void Awake()
@@ -26,6 +31,9 @@ namespace DeckParty.UI
             if (confirmButton == null) confirmButton = CreateConfirmButton();
             confirmButton.onClick.AddListener(() => ConfirmClicked?.Invoke());
             m_ConfirmLabel = confirmButton.GetComponentInChildren<TMP_Text>(true);
+            confirmButton.TryGetComponent(out m_ConfirmTooltip);
+            m_IconButtons = m_ConfirmTooltip != null && m_ConfirmLabel == null;
+            if (cancelButton.TryGetComponent<TooltipTrigger>(out var cancelTip)) cancelTip.Text = Loc.Get("common.cancel") + "  [Esc]";
             m_LabelOffsetMax = label.rectTransform.offsetMax;
             confirmButton.gameObject.SetActive(false);
             root.SetActive(false);
@@ -50,7 +58,8 @@ namespace DeckParty.UI
 
         public void Show(string text)
         {
-            label.text = text + $"  <color=#B9AED6>{Loc.Get("target.esc_cancels")}</color>";
+            // Icon buttons say "[Esc]" on hover; the old text buttons need the reminder in the prompt.
+            label.text = m_IconButtons ? text : text + $"  <color=#B9AED6>{Loc.Get("target.esc_cancels")}</color>";
             if (!root.activeSelf)
             {
                 root.SetActive(true);
@@ -65,6 +74,8 @@ namespace DeckParty.UI
             confirmButton.gameObject.SetActive(visible);
             confirmButton.interactable = interactable;
             if (m_ConfirmLabel != null) m_ConfirmLabel.text = text ?? Loc.Get("common.confirm");
+            if (m_ConfirmTooltip != null) m_ConfirmTooltip.Text = (text ?? Loc.Get("common.confirm")) + "  [Space]";
+            if (m_IconButtons) return;
             var rect = (RectTransform)confirmButton.transform;
             label.rectTransform.offsetMax = visible ? new Vector2(m_LabelOffsetMax.x - rect.sizeDelta.x - 12f, m_LabelOffsetMax.y) : m_LabelOffsetMax;
         }

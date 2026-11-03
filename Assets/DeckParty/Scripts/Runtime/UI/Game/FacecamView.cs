@@ -28,6 +28,8 @@ namespace DeckParty.UI
         [Tooltip("Optional strip to the left of the square (the emote buttons in multiplayer).")]
         [SerializeField] internal RectTransform sideStrip;
         [SerializeField] internal LayoutElement layoutElement;
+        [Tooltip("Website look: no name plate on the video; hovering it names the streamer (and player).")]
+        [SerializeField] internal TooltipTrigger tooltip;
 
         [Tooltip("Largest square while the side strip is showing.")]
         public float sizeWithSide = 280f;
@@ -82,11 +84,10 @@ namespace DeckParty.UI
                 if (portrait != null) portrait.SetIdle(anxious ? CharacterState.Anxious : CharacterState.Idle);
             }
 
-            if (nameLabel != null)
-            {
-                string streamer = none ? GuestVisuals.Colored(Loc.Get("facecam.off"), UIPalette.TextDim) : StreamerVisuals.NameTag(type);
-                nameLabel.text = playerName == null ? streamer : $"{streamer}\n<size=70%>{GuestVisuals.Colored(playerName, playerColor)}</size>";
-            }
+            string streamerName = none ? GuestVisuals.Colored(Loc.Get("facecam.off"), UIPalette.TextDim) : StreamerVisuals.NameTag(type);
+            string caption = playerName == null ? streamerName : $"{streamerName}\n<size=70%>{GuestVisuals.Colored(playerName, playerColor)}</size>";
+            if (nameLabel != null) nameLabel.text = caption;
+            if (tooltip != null) tooltip.Text = playerName == null ? $"<b>{streamerName}</b>" : $"<b>{streamerName}</b>\n{GuestVisuals.Colored(playerName, playerColor)}";
         }
 
         /// <summary>A one-shot reaction (Hit, Celebrate, Select). Static portraits just get the punch.</summary>

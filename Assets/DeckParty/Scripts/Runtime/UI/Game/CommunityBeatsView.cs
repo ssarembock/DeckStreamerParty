@@ -38,6 +38,8 @@ namespace DeckParty.UI
         [SerializeField] internal RectTransform[] avoid;
         [Tooltip("Space kept between the avoided text and the chips, plus the row's own margin from the bubble edge.")]
         [SerializeField] internal float avoidPadding = 48f;
+        [Tooltip("Light (website) chip colours: the chips sit on a white panel.")]
+        [SerializeField] internal bool siteStyle;
 
         PlayerState m_State;
         bool m_Hooked;
@@ -93,15 +95,19 @@ namespace DeckParty.UI
                         chip.icon.sprite = GameIcons.Sprite(chip.community);
                         chip.icon.preserveAspect = true;
                     }
-                    if (chip.background != null) chip.background.color = points > 0 ? CommunityVisuals.Color(chip.community).WithAlpha(0.35f) : UIPalette.PanelDeep.WithAlpha(0.7f);
+                    if (chip.background != null)
+                        chip.background.color = points > 0
+                            ? CommunityVisuals.Color(chip.community).WithAlpha(siteStyle ? 0.28f : 0.35f)
+                            : siteStyle ? SitePalette.SurfaceAlt : UIPalette.PanelDeep.WithAlpha(0.7f);
+                    string dim = siteStyle ? "#9A9AA6" : "#B9AED6";
                     if (chip.pointsLabel != null)
-                        chip.pointsLabel.text = max > 0 ? $"{points}<size=60%><color=#B9AED6>/{max}</color></size>" : points.ToString();
+                        chip.pointsLabel.text = max > 0 ? $"{points}<size=60%><color={dim}>/{max}</color></size>" : points.ToString();
                     if (chip.effectLabel != null)
                     {
                         chip.effectLabel.text = CommunityVisuals.ChipEffect(chip.community, points);
-                        chip.effectLabel.color = points > 0 ? UIPalette.Text : UIPalette.TextDim;
+                        chip.effectLabel.color = points > 0 ? (siteStyle ? SitePalette.Text : UIPalette.Text) : siteStyle ? SitePalette.TextFaint : UIPalette.TextDim;
                     }
-                    if (chip.group != null) chip.group.alpha = points > 0 ? 1f : 0.5f;
+                    if (chip.group != null) chip.group.alpha = points > 0 ? 1f : siteStyle ? 0.6f : 0.5f;
 
                     // Every point bestows a bigger bonus: make the rise felt.
                     if (chip.last >= 0 && points > chip.last && isActiveAndEnabled)

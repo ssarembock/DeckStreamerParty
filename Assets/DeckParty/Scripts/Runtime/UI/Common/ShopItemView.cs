@@ -8,11 +8,11 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// One viewer for sale in the shop grid: a big picture, the name, the community icons, the price (icon and number) and
-    /// how many are left. Everything else (what it scores, ability, how many you own) is in the hover tooltip or the
-    /// Audience [R]. Click to buy.
+    /// One viewer for sale in the shop grid: a big picture, the community icons, the price (icon and number) and how many are
+    /// left ("x3"). The name and everything else (what it scores, ability, how many you own) is in the hover tooltip or the
+    /// Audience [R]. Click to buy. Drawn as a white website card (the stream and shop use the light <see cref="SitePalette"/>).
     /// "Left" is how many more this player can recruit: the shop's stock is shared by every player in the match, and
-    /// non-Diamond viewers are also capped per player.
+    /// non-Plays viewers are also capped per player.
     /// </summary>
     public sealed class ShopItemView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
@@ -32,7 +32,11 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text leftLabel;
         [SerializeField] internal Image dim;
         [SerializeField] internal TMP_Text soldOutLabel;
+        [Tooltip("Website look: an icon over the picture when none are left (instead of the SOLD OUT text).")]
+        [SerializeField] internal GameObject soldOutBadge;
         [SerializeField] internal TooltipTrigger tooltip;
+        [Tooltip("Light (website) colours for the frame and labels.")]
+        [SerializeField] internal bool siteStyle;
 
         public GuestType Type { get; private set; }
         public event Action<GuestType> BuyClicked;
@@ -102,22 +106,26 @@ namespace DeckParty.UI
             if (groupIcon != null) groupIcon.gameObject.SetActive(false);
             if (communities != null) communities.Bind(type);
             if (diamondBadge != null) diamondBadge.SetActive(info.IsDiamond);
-            if (frame != null) frame.color = info.IsDiamond ? Color.Lerp(UIPalette.Border, UIPalette.Gold, 0.75f) : UIPalette.Border;
+            var border = siteStyle ? SitePalette.Border : UIPalette.Border;
+            if (frame != null) frame.color = info.IsDiamond ? Color.Lerp(border, siteStyle ? SitePalette.Gold : UIPalette.Gold, 0.75f) : border;
 
             bool affordable = state.Pop >= info.Cost;
             if (priceLabel != null)
             {
                 // The icon and the number only: hovering the icon names the resource.
                 priceLabel.text = $"<size=125%>{GameIcons.Tag(ResourceIcon.Subs)}</size> {info.Cost}";
-                priceLabel.color = affordable ? UIPalette.Gold : UIPalette.Red;
+                priceLabel.color = affordable ? (siteStyle ? SitePalette.Text : UIPalette.Gold) : (siteStyle ? SitePalette.Danger : UIPalette.Red);
             }
 
             int left = PartyEngine.ShopLeft(state, type);
             bool soldOut = left <= 0;
             if (leftLabel != null)
             {
-                leftLabel.text = left == int.MaxValue ? Loc.Get("shop.left_unlimited") : Loc.Get("shop.left", "count", left);
-                leftLabel.color = soldOut ? UIPalette.Red : left == 1 ? UIPalette.Orange : UIPalette.TextDim;
+                if (siteStyle) leftLabel.text = left == int.MaxValue ? string.Empty : "×" + Mathf.Max(0, left);
+                else leftLabel.text = left == int.MaxValue ? Loc.Get("shop.left_unlimited") : Loc.Get("shop.left", "count", left);
+                leftLabel.color = soldOut ? (siteStyle ? SitePalette.Danger : UIPalette.Red)
+                    : left == 1 ? (siteStyle ? SitePalette.Warning : UIPalette.Orange)
+                    : siteStyle ? SitePalette.TextFaint : UIPalette.TextDim;
             }
 
             bool canBuy = blocker == null;
@@ -128,14 +136,19 @@ namespace DeckParty.UI
                 soldOutLabel.gameObject.SetActive(soldOut);
                 soldOutLabel.text = Loc.Get("shop.sold_out");
             }
+            if (soldOutBadge != null) soldOutBadge.SetActive(soldOut);
 
             if (tooltip != null)
             {
                 var shopState = state;
                 string why = blocker;
+                int copies = left;
                 tooltip.Provider = () =>
                 {
                     string text = GuestVisuals.Tooltip(type, null, null, shopState);
+                    // The tile shows "x3": the tooltip says what that means.
+                    if (siteStyle) text += "\n" + GuestVisuals.Colored(copies <= 0 ? Loc.Get("shop.sold_out")
+                        : copies == int.MaxValue ? Loc.Get("shop.left_unlimited") : Loc.Get("shop.left", "count", copies), UIPalette.TextDim);
                     return why != null ? text + "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : text;
                 };
             }

@@ -235,7 +235,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 437469235
     m_Localized: "A temporada come\xE7a: {0}, {1} noites. Vence a primeira live de
-      {2} Diamantes!"
+      {2} Plays!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469236
@@ -272,7 +272,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469244
-    m_Localized: '{0} teve {1} Diamantes numa live. Mais um e vence!'
+    m_Localized: '{0} teve {1} Plays numa live. Mais um e vence!'
     m_Metadata:
       m_Items: []
   - m_Id: 437469245
@@ -292,11 +292,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469249
-    m_Localized: '{0} fez uma live de {1} Diamantes e vence!'
+    m_Localized: '{0} fez uma live de {1} Plays e vence!'
     m_Metadata:
       m_Items: []
   - m_Id: 437469250
-    m_Localized: '{0} fez uma live de {1} Diamantes! Terminando a noite {2}...'
+    m_Localized: '{0} fez uma live de {1} Plays! Terminando a noite {2}...'
     m_Metadata:
       m_Items: []
   - m_Id: 437469251
@@ -308,11 +308,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469253
-    m_Localized: '{0} vence a temporada com uma live de {1} Diamantes na noite {2}!'
+    m_Localized: '{0} vence a temporada com uma live de {1} Plays na noite {2}!'
     m_Metadata:
       m_Items: []
   - m_Id: 437469254
-    m_Localized: "Ningu\xE9m chegou a {1} Diamantes. {0} leva com um recorde de {2}."
+    m_Localized: "Ningu\xE9m chegou a {1} Plays. {0} leva com um recorde de {2}."
     m_Metadata:
       m_Items: []
   - m_Id: 416590245085184

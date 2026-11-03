@@ -16,6 +16,8 @@ namespace DeckParty.EditorTools
     internal sealed class UIPrefabs
     {
         public GuestCardView GuestCard;
+        /// <summary>The round viewer avatar in the stream chat (and the waiting-viewer panel).</summary>
+        public GuestCardView ChatAvatar;
         public GuestRowView GuestRow;
         public ShopItemView ShopItem;
         public ScenarioItemView ScenarioItem;
@@ -37,6 +39,20 @@ namespace DeckParty.EditorTools
         public const float BadgeRowTop = 152f;
         public const float ShopRowHeight = 140f;
         public const float ShopPortrait = 116f;
+    }
+
+    /// <summary>
+    /// The round chat avatar's layout (design size; the chat scales it to fit). Change these, then run
+    /// Deck Party > Setup > Rebuild Scenes and UI Prefabs.
+    /// </summary>
+    internal static class AvatarLayout
+    {
+        public const float Width = 180f;
+        public const float Height = 206f;
+        /// <summary>The circle's diameter (ring included).</summary>
+        public const float Circle = 150f;
+        /// <summary>Space above the circle.</summary>
+        public const float CircleTop = 8f;
     }
 
     /// <summary>Creates folders, data assets, the network session prefab and the UI prefabs.</summary>
@@ -127,6 +143,7 @@ namespace DeckParty.EditorTools
             int reset = db.EnsureAllGuests();
             db.EnsureAllGroupIcons();
             db.EnsureAllCommunityIcons();
+            db.EnsureAllPlatforms();
             if (reset > 0)
                 Debug.LogWarning($"[DeckParty] The viewer roster changed: {reset} portrait/animation setting(s) belonged to removed characters and were cleared. Re-assign them with Deck Party > Select Game Database.");
 
@@ -209,6 +226,15 @@ namespace DeckParty.EditorTools
                     case SkinSlot.IconDoor: Set(entry, EditorUI.Door, Image.Type.Simple); break;
                     case SkinSlot.IconCrown: Set(entry, EditorUI.Crown, Image.Type.Simple); break;
                     case SkinSlot.IconCheck: Set(entry, EditorUI.Check, Image.Type.Simple); break;
+                    case SkinSlot.IconAddViewer: Set(entry, EditorUI.AddViewer, Image.Type.Simple); break;
+                    case SkinSlot.IconEndStream: Set(entry, EditorUI.EndStream, Image.Type.Simple); break;
+                    case SkinSlot.IconAudience: Set(entry, EditorUI.Audience, Image.Type.Simple); break;
+                    case SkinSlot.IconMenu: Set(entry, EditorUI.Menu, Image.Type.Simple); break;
+                    case SkinSlot.IconAction: Set(entry, EditorUI.Action, Image.Type.Simple); break;
+                    case SkinSlot.IconGoLive: Set(entry, EditorUI.GoLive, Image.Type.Simple); break;
+                    case SkinSlot.IconClose: Set(entry, EditorUI.Close, Image.Type.Simple); break;
+                    case SkinSlot.IconNight: Set(entry, EditorUI.Night, Image.Type.Simple); break;
+                    case SkinSlot.AvatarRing: Set(entry, EditorUI.Ring, Image.Type.Simple); break;
                 }
             }
         }
@@ -275,6 +301,7 @@ namespace DeckParty.EditorTools
         public static void EnsureUIPrefabs(bool overwrite)
         {
             Ensure<GuestCardView>(DeckPartyPaths.GuestCardPrefab, BuildGuestCard, overwrite);
+            Ensure<GuestCardView>(DeckPartyPaths.ChatAvatarPrefab, BuildChatAvatar, overwrite);
             Ensure<GuestRowView>(DeckPartyPaths.GuestRowPrefab, BuildGuestRow, overwrite);
             Ensure<ShopItemView>(DeckPartyPaths.ShopItemPrefab, BuildShopItem, overwrite);
             Ensure<ScenarioItemView>(DeckPartyPaths.ScenarioItemPrefab, BuildScenarioItem, overwrite);
@@ -291,6 +318,7 @@ namespace DeckParty.EditorTools
             return new UIPrefabs
             {
                 GuestCard = LoadPrefab<GuestCardView>(DeckPartyPaths.GuestCardPrefab),
+                ChatAvatar = LoadPrefab<GuestCardView>(DeckPartyPaths.ChatAvatarPrefab),
                 GuestRow = LoadPrefab<GuestRowView>(DeckPartyPaths.GuestRowPrefab),
                 ShopItem = LoadPrefab<ShopItemView>(DeckPartyPaths.ShopItemPrefab),
                 ScenarioItem = LoadPrefab<ScenarioItemView>(DeckPartyPaths.ScenarioItemPrefab),
@@ -381,17 +409,12 @@ namespace DeckParty.EditorTools
             countLabel.rectTransform.Stretch();
             count.gameObject.SetActive(false);
 
-            var nameLabel = EditorUI.Text(content, "Name", "-", 22, UIPalette.Text, TextAlignmentOptions.Center, true, false, false);
-            nameLabel.rectTransform.TopBand(CardLayout.NameTop, 28, 6, 6);
-            nameLabel.enableAutoSizing = true;
-            nameLabel.fontSizeMin = 14;
-            nameLabel.fontSizeMax = 22;
-
-            var stats = EditorUI.Text(content, "Stats", "-", 19, UIPalette.Text, TextAlignmentOptions.Center, false, false, false);
-            stats.rectTransform.TopBand(CardLayout.StatsTop, 24, 4, 4);
+            // No name on the card (V5: names only show in the hover tooltip); the stats take its place under the portrait.
+            var stats = EditorUI.Text(content, "Stats", "-", 21, UIPalette.Text, TextAlignmentOptions.Center, false, false, false);
+            stats.rectTransform.TopBand(CardLayout.NameTop + 6, 30, 4, 4);
             stats.enableAutoSizing = true;
             stats.fontSizeMin = 11;
-            stats.fontSizeMax = 19;
+            stats.fontSizeMax = 21;
 
             var ability = EditorUI.Button(content, "Ability", "-", ButtonStyle.Secondary, 18, out var abilityLabel);
             ability.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0), new Vector2(0, 6), new Vector2(184, 38), new Vector2(0.5f, 0));
@@ -431,7 +454,7 @@ namespace DeckParty.EditorTools
             view.portrait = portrait;
             view.placeholder = placeholder;
             view.initialsLabel = initials;
-            view.nameLabel = nameLabel;
+            view.nameLabel = null;
             view.statsLabel = stats;
             view.starBadge = star.gameObject;
             view.troubleBadge = trouble.gameObject;
@@ -443,6 +466,129 @@ namespace DeckParty.EditorTools
             view.countLabel = countLabel;
             view.abilityButton = ability;
             view.abilityLabel = abilityLabel;
+            view.abilityTooltip = abilityTooltip;
+            view.dim = dim;
+            view.tooltip = tooltip;
+            view.characterPortrait = characterPortrait;
+            view.communities = communities;
+            return root.gameObject;
+        }
+
+        /// <summary>
+        /// The round chat avatar (V5): the viewer's head in a circle with a state ring, the Plays / risk / cancels-risk badges
+        /// around it, community icons on the left, the action button (a bolt) at the bottom-right and the live stats in a
+        /// dark pill underneath. No name: it's in the hover tooltip. Driven by <see cref="GuestCardView"/> in avatar mode.
+        /// </summary>
+        static GameObject BuildChatAvatar()
+        {
+            var size = new Vector2(AvatarLayout.Width, AvatarLayout.Height);
+            const float circle = AvatarLayout.Circle;
+            const float top = AvatarLayout.CircleTop;
+
+            var root = EditorUI.Rect(null, "ChatAvatar");
+            root.sizeDelta = size;
+            var visual = EditorUI.Rect(root, "Visual").Place(new Vector2(0.5f, 0.5f), Vector2.zero, size);
+            var anim = EditorUI.Rect(visual, "Anim").Stretch();
+
+            // Targeting highlight: a ring just outside the avatar (pulses gold, pink when picked).
+            var highlight = EditorUI.Image(anim, "Highlight", UIPalette.Gold, EditorUI.Ring, SkinSlot.AvatarRing);
+            highlight.rectTransform.Place(new Vector2(0.5f, 1), new Vector2(0, -top + 10), new Vector2(circle + 20, circle + 20), new Vector2(0.5f, 1));
+            highlight.enabled = false;
+
+            // An open seat: a faint grey circle.
+            var empty = EditorUI.Rect(anim, "Empty").Place(new Vector2(0.5f, 1), new Vector2(0, -top), new Vector2(circle, circle), new Vector2(0.5f, 1));
+            var emptyFill = EditorUI.Image(empty, "Fill", SitePalette.SurfaceAlt, EditorUI.Circle);
+            emptyFill.rectTransform.Stretch(6, 6, 6, 6);
+            var emptyRing = EditorUI.Image(empty, "Ring", SitePalette.Border.WithAlpha(0.7f), EditorUI.Ring, SkinSlot.AvatarRing);
+            emptyRing.rectTransform.Stretch();
+            empty.gameObject.SetActive(false);
+
+            var content = EditorUI.Rect(anim, "Content").Stretch();
+
+            // The circle: wiggles (around its centre) while the viewer's action is unused.
+            var face = EditorUI.Rect(content, "Face").Place(new Vector2(0.5f, 1), new Vector2(0, -top - circle * 0.5f), new Vector2(circle, circle), new Vector2(0.5f, 0.5f));
+            var maskImage = EditorUI.Image(face, "Mask", SitePalette.SurfaceAlt, EditorUI.Circle);
+            maskImage.rectTransform.Stretch(6, 6, 6, 6);
+            maskImage.gameObject.AddComponent<Mask>().showMaskGraphic = true;
+            var placeholder = EditorUI.Image(maskImage.transform, "Placeholder", UIPalette.Teal, EditorUI.Circle, SkinSlot.Circle);
+            placeholder.rectTransform.Stretch();
+            var initials = EditorUI.Text(placeholder.transform, "Initials", "Gu", 52, UIPalette.Night, TextAlignmentOptions.Center, true, true, false);
+            initials.rectTransform.Stretch();
+            var portrait = EditorUI.Image(maskImage.transform, "Portrait", Color.white);
+            portrait.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(circle - 12, circle - 12));
+            portrait.preserveAspect = true;
+            portrait.enabled = false;
+            var characterPortrait = portrait.gameObject.AddComponent<CharacterPortrait>();
+            characterPortrait.image = portrait;
+            var ring = EditorUI.Image(face, "Ring", SitePalette.Border, EditorUI.Ring, SkinSlot.AvatarRing);
+            ring.rectTransform.Stretch();
+            var dim = EditorUI.Image(face, "Dim", new Color(0.03f, 0.02f, 0.06f, 0.55f), EditorUI.Circle);
+            dim.rectTransform.Stretch(6, 6, 6, 6);
+            dim.enabled = false;
+
+            // Badges around the circle.
+            var star = EditorUI.Icon(content, "PlaysBadge", EditorUI.Star, UIPalette.Gold, SkinSlot.IconStar, 40);
+            star.rectTransform.Place(new Vector2(0, 1), new Vector2(2, -2), new Vector2(40, 40), new Vector2(0, 1));
+            var trouble = EditorUI.Icon(content, "TroubleBadge", EditorUI.Cross, UIPalette.Red, SkinSlot.IconTrouble, 38);
+            trouble.rectTransform.Place(new Vector2(1, 1), new Vector2(-2, -2), new Vector2(38, 38), new Vector2(1, 1));
+            var calm = EditorUI.Icon(content, "CancelBadge", EditorUI.Shield, UIPalette.Teal, SkinSlot.IconCancel, 34);
+            calm.rectTransform.Place(new Vector2(1, 1), new Vector2(-4, -44), new Vector2(34, 34), new Vector2(1, 1));
+            var communities = CommunityIcons(content, "Communities", 28, false);
+            ((RectTransform)communities.transform).Place(new Vector2(0, 1), new Vector2(4, -48), new Vector2(28, 3 * 28 + 2 * 4), new Vector2(0, 1));
+
+            var bonusLabel = EditorUI.Pill(content, "BonusBadge", 18, out var bonus);
+            bonus.color = UIPalette.Pink;
+            bonus.rectTransform.Place(new Vector2(0, 1), new Vector2(4, -(top + circle - 30)), new Vector2(64, 30), new Vector2(0, 1));
+            bonusLabel.text = "+1";
+
+            var ability = EditorUI.IconButton(content, "Ability", EditorUI.Action, SkinSlot.IconAction, EditorUI.SiteButton.Accent, new Vector2(52, 52), 30, out _, null, true);
+            ((RectTransform)ability.transform).Place(new Vector2(1, 1), new Vector2(-4, -(top + circle - 54)), new Vector2(52, 52), new Vector2(1, 1));
+            var abilityTooltip = ability.GetComponent<TooltipTrigger>();
+            abilityTooltip.overlay = true;
+
+            // What the viewer brings in right now: icons and numbers on a dark pill.
+            var stats = EditorUI.Pill(content, "Stats", 22, out var statsPill);
+            statsPill.rectTransform.BottomBand(2, 38, 16, 16);
+            stats.text = "-";
+
+            var button = root.gameObject.AddComponent<Button>();
+            button.targetGraphic = maskImage;
+            button.transition = Selectable.Transition.None;
+            EditorUI.NoNavigation(button);
+            var feedback = root.gameObject.AddComponent<ButtonFeedback>();
+            feedback.hoverScale = 1.04f;
+            feedback.hoverSound = false;
+            var tooltip = root.gameObject.AddComponent<TooltipTrigger>();
+
+            var view = root.gameObject.AddComponent<GuestCardView>();
+            view.designSize = size;
+            view.avatarMode = true;
+            view.statusShaders = false;
+            view.faceRoot = face;
+            view.faceMask = maskImage.rectTransform;
+            view.emptyFill = emptyFill;
+            view.button = button;
+            view.visual = visual;
+            view.animRoot = anim;
+            view.frame = ring;
+            view.highlight = highlight;
+            view.content = content.gameObject;
+            view.emptyState = empty.gameObject;
+            view.portrait = portrait;
+            view.placeholder = placeholder;
+            view.initialsLabel = initials;
+            view.nameLabel = null;
+            view.statsLabel = stats;
+            view.starBadge = star.gameObject;
+            view.troubleBadge = trouble.gameObject;
+            view.troubleIcon = trouble;
+            view.cancelBadge = calm.gameObject;
+            view.bonusBadge = bonus.gameObject;
+            view.bonusLabel = bonusLabel;
+            view.countBadge = null;
+            view.countLabel = null;
+            view.abilityButton = ability;
+            view.abilityLabel = null;
             view.abilityTooltip = abilityTooltip;
             view.dim = dim;
             view.tooltip = tooltip;
@@ -541,26 +687,26 @@ namespace DeckParty.EditorTools
         }
 
         /// <summary>
-        /// A shop tile. Everything is anchored by proportion, so the tile works at whatever size the shop grid gives it:
-        /// the picture fills the top, then the name, then the price (icon + number) and copies left. Community icons
-        /// top-left, Diamond top-right.
+        /// A shop tile in the website look: a white card with a thin border. Everything is anchored by proportion, so the tile
+        /// works at whatever size the shop grid gives it: the picture fills the top, then the price (icon + number) and how many
+        /// are left ("x3"). Community icons top-left, Plays top-right. No name: it's in the hover tooltip.
         /// </summary>
         static GameObject BuildShopItem()
         {
             var root = EditorUI.Rect(null, "ShopItem");
-            root.sizeDelta = new Vector2(220, 300);
+            root.sizeDelta = new Vector2(220, 260);
             var anim = EditorUI.Rect(root, "Anim").Stretch();
 
-            var frame = EditorUI.Image(anim, "Frame", UIPalette.Border, EditorUI.Rounded, SkinSlot.CardFrame);
+            var frame = EditorUI.Image(anim, "Frame", SitePalette.Border, EditorUI.RoundedSmall);
             frame.type = Image.Type.Sliced;
             frame.rectTransform.Stretch();
-            var background = EditorUI.Image(anim, "Background", UIPalette.PanelAlt, EditorUI.Rounded, SkinSlot.PanelAlt, true);
+            var background = EditorUI.Image(anim, "Background", SitePalette.Surface, EditorUI.RoundedSmall, null, true);
             background.type = Image.Type.Sliced;
-            background.rectTransform.Stretch(3, 3, 3, 3);
+            background.rectTransform.Stretch(2, 2, 2, 2);
 
-            var portraitBg = EditorUI.Image(anim, "PortraitBg", UIPalette.PanelDeep, EditorUI.Rounded);
+            var portraitBg = EditorUI.Image(anim, "PortraitBg", SitePalette.SurfaceAlt, EditorUI.RoundedSmall);
             portraitBg.type = Image.Type.Sliced;
-            portraitBg.rectTransform.Box(new Vector2(0.05f, 0.30f), new Vector2(0.95f, 0.965f), Vector2.zero, Vector2.zero);
+            portraitBg.rectTransform.Box(new Vector2(0.05f, 0.2f), new Vector2(0.95f, 0.96f), Vector2.zero, Vector2.zero);
             var placeholder = EditorUI.Image(portraitBg.transform, "Placeholder", UIPalette.Teal, EditorUI.Circle, SkinSlot.Circle);
             placeholder.rectTransform.Box(new Vector2(0.14f, 0.1f), new Vector2(0.86f, 0.9f), Vector2.zero, Vector2.zero);
             var fitter = placeholder.gameObject.AddComponent<AspectRatioFitter>();
@@ -574,33 +720,26 @@ namespace DeckParty.EditorTools
             portrait.enabled = false;
             portrait.gameObject.AddComponent<CharacterPortrait>().image = portrait;
 
-            var communities = CommunityIcons(anim, "Communities", 40, true);
-            ((RectTransform)communities.transform).Place(new Vector2(0, 1), new Vector2(10, -10), new Vector2(3 * 40 + 2 * 4, 40), new Vector2(0, 1));
+            var communities = CommunityIcons(anim, "Communities", 38, true);
+            ((RectTransform)communities.transform).Place(new Vector2(0, 1), new Vector2(10, -10), new Vector2(3 * 38 + 2 * 4, 38), new Vector2(0, 1));
             var star = EditorUI.Icon(anim, "DiamondBadge", EditorUI.Star, UIPalette.Gold, SkinSlot.IconStar, 40);
             star.rectTransform.Place(new Vector2(1, 1), new Vector2(-10, -10), new Vector2(40, 40), new Vector2(1, 1));
 
-            var name = EditorUI.Text(anim, "Name", "-", 22, UIPalette.Text, TextAlignmentOptions.Center, true, false, true);
-            name.rectTransform.Box(new Vector2(0.04f, 0.15f), new Vector2(0.96f, 0.295f), Vector2.zero, Vector2.zero);
-            name.fontSizeMin = 13;
-            name.overflowMode = TextOverflowModes.Ellipsis;
-
-            // The price is the Gifted Subs icon and the number (ShopItemView writes it).
-            var price = EditorUI.Text(anim, "Price", "-", 26, UIPalette.Gold, TextAlignmentOptions.MidlineLeft, true, false, false);
-            price.rectTransform.Box(new Vector2(0.07f, 0.03f), new Vector2(0.6f, 0.15f), Vector2.zero, Vector2.zero);
+            // The price is the Clout icon and the number; "x3" is how many are left (ShopItemView writes both).
+            var price = EditorUI.Text(anim, "Price", "-", 28, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
+            price.rectTransform.Box(new Vector2(0.06f, 0.02f), new Vector2(0.66f, 0.18f), Vector2.zero, Vector2.zero);
             price.fontSizeMin = 14;
-            var left = EditorUI.Text(anim, "Left", "-", 18, UIPalette.TextDim, TextAlignmentOptions.MidlineRight, false, false, false);
-            left.rectTransform.Box(new Vector2(0.5f, 0.03f), new Vector2(0.93f, 0.15f), Vector2.zero, Vector2.zero);
+            var left = EditorUI.Text(anim, "Left", "-", 22, SitePalette.TextFaint, TextAlignmentOptions.MidlineRight, true, false, false);
+            left.rectTransform.Box(new Vector2(0.6f, 0.02f), new Vector2(0.94f, 0.18f), Vector2.zero, Vector2.zero);
             left.fontSizeMin = 11;
 
-            var dim = EditorUI.Image(anim, "Dim", new Color(0.03f, 0.02f, 0.06f, 0.55f), EditorUI.Rounded);
+            // Can't buy: a white veil (the light site's "disabled"); none left: a red X over the picture.
+            var dim = EditorUI.Image(anim, "Dim", new Color(1f, 1f, 1f, 0.62f), EditorUI.RoundedSmall);
             dim.type = Image.Type.Sliced;
             dim.rectTransform.Stretch();
             dim.enabled = false;
-            var soldOut = EditorUI.Text(anim, "SoldOut", "-", 34, UIPalette.Red, TextAlignmentOptions.Center, true, true, false);
-            soldOut.rectTransform.Place(new Vector2(0.5f, 0.62f), Vector2.zero, new Vector2(220, 60));
-            soldOut.rectTransform.localRotation = Quaternion.Euler(0, 0, 12f);
-            soldOut.outlineWidth = 0.2f;
-            soldOut.outlineColor = new Color32(0, 0, 0, 230);
+            var soldOut = EditorUI.Icon(anim, "SoldOut", EditorUI.Close, SitePalette.Danger.WithAlpha(0.85f), SkinSlot.IconClose, 90);
+            soldOut.rectTransform.Place(new Vector2(0.5f, 0.6f), Vector2.zero, new Vector2(90, 90));
             soldOut.gameObject.SetActive(false);
 
             var button = root.gameObject.AddComponent<Button>();
@@ -619,13 +758,15 @@ namespace DeckParty.EditorTools
             view.portrait = portrait;
             view.placeholder = placeholder;
             view.initialsLabel = initials;
-            view.nameLabel = name;
+            view.nameLabel = null;
             view.communities = communities;
             view.diamondBadge = star.gameObject;
             view.priceLabel = price;
             view.leftLabel = left;
             view.dim = dim;
-            view.soldOutLabel = soldOut;
+            view.soldOutLabel = null;
+            view.soldOutBadge = soldOut.gameObject;
+            view.siteStyle = true;
             view.tooltip = tooltip;
             return root.gameObject;
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DeckParty.Core;
 using TMPro;
 using UnityEngine;
@@ -6,7 +7,12 @@ using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
-    /// <summary>"Add Viewer to Chat" and "End the Stream" buttons, score projection, the risky-viewers count and the waiting-viewer panel.</summary>
+    /// <summary>
+    /// The chat's typing area: the Add Viewer and End the Stream icon buttons (their words, hotkeys and blockers are in the
+    /// hover tooltips), what ending now would bank (icons and numbers), how many risky viewers are still in the queue (an
+    /// icon and a number), who's next when an effect reveals it (their faces), and the waiting-viewer panel.
+    /// Older scenes with text buttons still work: every label is optional.
+    /// </summary>
     public sealed class PartyControlsView : MonoBehaviour
     {
         [SerializeField] internal Button doorButton;
@@ -16,8 +22,18 @@ namespace DeckParty.UI
         [SerializeField] internal Button endButton;
         [SerializeField] internal Image endButtonImage;
         [SerializeField] internal TMP_Text endLabel;
+        [Tooltip("What ending the stream now would bank (icons and numbers).")]
         [SerializeField] internal TMP_Text endSubLabel;
+        [Tooltip("Risky viewers still in the queue (an icon and a number).")]
         [SerializeField] internal TMP_Text riskLabel;
+        [Tooltip("Optional pill behind the risky-queue count (hidden when there are none).")]
+        [SerializeField] internal GameObject riskBadge;
+
+        [Header("Who's next (X-Ray, Side Eye Chloe)")]
+        [SerializeField] internal GameObject queueRoot;
+        [SerializeField] internal Image[] queueBacks;
+        [SerializeField] internal Image[] queueFaces;
+        [SerializeField] internal TooltipTrigger[] queueTips;
 
         [Header("Peek")]
         [SerializeField] internal GameObject peekPanel;
@@ -31,8 +47,14 @@ namespace DeckParty.UI
         public event Action AdmitClicked;
         public event Action RejectClicked;
 
+        static readonly List<int> s_Next = new List<int>();
+
         Color m_EndBaseColor;
         bool m_WinReady;
+        TooltipTrigger m_EndTooltip;
+        PlayerState m_State;
+        bool m_Targeting;
+        bool m_Interactive = true;
 
         void Awake()
         {
@@ -41,29 +63,33 @@ namespace DeckParty.UI
             admitButton.onClick.AddListener(() => AdmitClicked?.Invoke());
             rejectButton.onClick.AddListener(() => RejectClicked?.Invoke());
             if (endButtonImage != null) m_EndBaseColor = endButtonImage.color;
-            if (endButton.TryGetComponent<TooltipTrigger>(out m_EndTooltip)) m_EndTooltip.Text = Loc.Get("controls.end_tip");
+            endButton.TryGetComponent(out m_EndTooltip);
+            SetTip(admitButton, Loc.Get("controls.approve"));
+            SetTip(rejectButton, Loc.Get("controls.deny"));
             Loc.Changed += OnLanguageChanged;
         }
 
         void OnDestroy() => Loc.Changed -= OnLanguageChanged;
 
-        TooltipTrigger m_EndTooltip;
-        PlayerState m_State;
-        bool m_Targeting;
-        bool m_Interactive = true;
-
         void OnLanguageChanged()
         {
-            if (m_EndTooltip != null) m_EndTooltip.Text = Loc.Get("controls.end_tip");
+            SetTip(admitButton, Loc.Get("controls.approve"));
+            SetTip(rejectButton, Loc.Get("controls.deny"));
             if (m_State != null) Render(m_State, m_Targeting, m_Interactive);
+        }
+
+        static void SetTip(Component target, string text)
+        {
+            if (target != null && target.TryGetComponent<TooltipTrigger>(out var trigger)) trigger.Text = text;
         }
 
         public bool WinReady => m_WinReady;
 
         void Update()
         {
+            // Four Plays in chat: the End button pulses gold and the platform colour.
             if (m_WinReady && endButtonImage != null)
-                endButtonImage.color = Color.Lerp(UIPalette.Gold, UIPalette.Pink, 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 6f));
+                endButtonImage.color = Color.Lerp(SitePalette.Gold, SiteTheme.Accent, 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 6f));
         }
 
         /// <param name="interactive">False while watching someone else's party (or waiting for your turn): everything is shown, nothing is clickable.</param>
@@ -76,10 +102,19 @@ namespace DeckParty.UI
             var doorBlocker = PartyEngine.GetDoorBlocker(s);
             string doorBlockerText = doorBlocker != null ? Loc.Error(doorBlocker) : null;
             doorButton.interactable = doorBlocker == null && !targeting && interactive;
-            doorLabel.text = Loc.Get("controls.add_viewer");
-            var next = NextGuestPreview(s);
-            doorSubLabel.text = doorBlockerText ?? (next ?? Loc.Get("controls.queue_count", "count", s.Pool.Count)) + (interactive ? "  <color=#B9AED6>[Space]</color>" : string.Empty);
-            if (doorTooltip != null) doorTooltip.Text = doorBlockerText ?? Loc.Get("controls.add_viewer_tip");
+            if (doorLabel != null) doorLabel.text = Loc.Get("controls.add_viewer");
+            string next = NextGuestPreview(s);
+            if (doorSubLabel != null)
+                doorSubLabel.text = doorBlockerText ?? (next ?? Loc.Get("controls.queue_count", "count", s.Pool.Count)) + (interactive ? "  <color=#B9AED6>[Space]</color>" : string.Empty);
+            if (doorTooltip != null)
+            {
+                string tip = $"<b>{Loc.Get("controls.add_viewer")}</b>  <color=#B9AED6>[Space]</color>\n{Loc.Get("controls.add_viewer_tip")}\n" +
+                             GuestVisuals.Colored(Loc.Get("controls.queue_count", "count", s.Pool.Count), UIPalette.TextDim);
+                if (next != null) tip += "\n" + next;
+                if (doorBlockerText != null) tip += "\n" + GuestVisuals.Colored(doorBlockerText, UIPalette.Orange);
+                doorTooltip.Text = tip;
+            }
+            RenderQueue(s);
 
             var endBlocker = PartyEngine.GetEndPartyBlocker(s);
             endButton.interactable = endBlocker == null && !targeting && interactive;
@@ -87,26 +122,78 @@ namespace DeckParty.UI
             int penalty = PartyEngine.ProjectPenalty(s, cash);
             int diamonds = PartyEngine.DiamondsPresent(s);
             m_WinReady = diamonds >= GameRules.DiamondsToWin && endBlocker == null;
-            endLabel.text = Loc.Get(m_WinReady ? "controls.end_win" : "controls.end");
+            if (endLabel != null) endLabel.text = Loc.Get(m_WinReady ? "controls.end_win" : "controls.end");
             var sub = $"{GuestVisuals.PopText(pop)}  {GuestVisuals.CashText(cash)}";
-            if (penalty > 0) sub += $"  <color=#FF5A5A>{Loc.Get("controls.fees", "count", penalty)}</color>";
-            endSubLabel.text = sub + (interactive ? "  <color=#B9AED6>[E]</color>" : string.Empty);
+            if (penalty > 0) sub += $"  <color=#FF5A5A>-{penalty}</color>";
+            if (endSubLabel != null) endSubLabel.text = endLabel != null && interactive ? sub + "  <color=#B9AED6>[E]</color>" : sub;
+            if (m_EndTooltip != null)
+            {
+                string tip = $"<b>{Loc.Get(m_WinReady ? "controls.end_win" : "controls.end")}</b>  <color=#B9AED6>[E]</color>\n{Loc.Get("controls.end_tip")}\n{sub}";
+                if (penalty > 0) tip += "  " + GuestVisuals.Colored(Loc.Get("controls.fees", "count", penalty), UIPalette.Red);
+                if (endBlocker != null) tip += "\n" + GuestVisuals.Colored(Loc.Error(endBlocker), UIPalette.Orange);
+                m_EndTooltip.Text = tip;
+            }
             if (!m_WinReady && endButtonImage != null) endButtonImage.color = m_EndBaseColor;
 
-            riskLabel.text = RiskText(s);
+            RenderRisk(s);
 
             peekPanel.SetActive(peeking);
             if (peeking)
             {
                 var g = s.Find(s.PeekedId);
                 if (g != null) peekCard.ShowGuest(g, s, false);
-                peekTitle.text = Loc.Get("controls.waiting_viewer");
+                if (peekTitle != null) peekTitle.text = Loc.Get("controls.waiting_viewer");
                 admitButton.interactable = !s.HouseFull && interactive;
                 rejectButton.interactable = interactive;
             }
         }
 
-        /// <summary>Side Eye Chloe shows who's next in the queue; the Rude Radiologist's X-Ray shows the next three.</summary>
+        /// <summary>The faces of the viewers an effect has revealed as next in the queue (names on hover).</summary>
+        void RenderQueue(PlayerState s)
+        {
+            if (queueRoot == null || queueFaces == null) return;
+            NextGuests(s, s_Next);
+            queueRoot.SetActive(s_Next.Count > 0);
+            for (int i = 0; i < queueFaces.Length; i++)
+            {
+                bool show = i < s_Next.Count;
+                var back = queueBacks != null && i < queueBacks.Length ? queueBacks[i] : null;
+                var host = back != null ? back.gameObject : queueFaces[i] != null ? queueFaces[i].gameObject : null;
+                if (host != null) host.SetActive(show);
+                if (!show) continue;
+                var g = s.Find(s_Next[i]);
+                if (g == null) continue;
+                var art = GameDatabase.Instance.GetGuestArt(g.Kind);
+                var sprite = art != null && art.avatar != null ? art.avatar : GuestVisuals.Portrait(g.Kind);
+                if (queueFaces[i] != null)
+                {
+                    queueFaces[i].sprite = sprite;
+                    queueFaces[i].enabled = sprite != null;
+                    queueFaces[i].preserveAspect = true;
+                }
+                if (back != null) back.color = Color.Lerp(SitePalette.SurfaceAlt, GuestVisuals.Tint(g.Kind), sprite != null ? 0.2f : 0.85f);
+                var tip = queueTips != null && i < queueTips.Length ? queueTips[i] : null;
+                if (tip != null)
+                {
+                    var kind = g.Kind;
+                    tip.Provider = () => GuestVisuals.Tooltip(kind);
+                }
+            }
+        }
+
+        static void NextGuests(PlayerState s, List<int> into)
+        {
+            into.Clear();
+            var xray = PartyEngine.XRayQueue(s);
+            if (xray.Count > 0)
+            {
+                into.AddRange(xray);
+                return;
+            }
+            if (s.Pool.Count > 0 && s.CountInHouse(GuestType.SideEyeChloe) > 0) into.Add(s.Pool[0]);
+        }
+
+        /// <summary>Side Eye Chloe shows who's next in the queue; the Rude Radiologist's X-Ray shows the next three (tooltip text).</summary>
         static string NextGuestPreview(PlayerState s)
         {
             var xray = PartyEngine.XRayQueue(s);
@@ -131,7 +218,7 @@ namespace DeckParty.UI
         /// How many viewers with Deplatform Risk are still in the queue: a fact, not the odds. Players work out their chances
         /// from what they can see. Red when one more Deplatform Risk would get the stream banned.
         /// </summary>
-        static string RiskText(PlayerState s)
+        void RenderRisk(PlayerState s)
         {
             int troubleWaiting = 0;
             for (int i = 0; i < s.Pool.Count; i++)
@@ -139,10 +226,18 @@ namespace DeckParty.UI
                 var g = s.Find(s.Pool[i]);
                 if (PartyEngine.WouldArriveRisky(g)) troubleWaiting++;
             }
-            if (troubleWaiting == 0) return string.Empty;
-
             bool oneAway = PartyEngine.NetTrouble(s) >= GameRules.RaidTroubleThreshold - 1;
-            return GuestVisuals.Colored(Loc.Get("controls.risky_waiting", "count", troubleWaiting), oneAway ? UIPalette.Red : UIPalette.TextDim);
+            if (riskBadge != null)
+            {
+                // Website style: an icon and the number in a pill; the sentence is in the tooltip.
+                riskBadge.SetActive(troubleWaiting > 0);
+                if (riskLabel != null) riskLabel.text = $"{GameIcons.Tag(ResourceIcon.Risk)} " + (oneAway ? $"<color=#FF6B6B>{troubleWaiting}</color>" : troubleWaiting.ToString());
+                if (riskBadge.TryGetComponent<TooltipTrigger>(out var tip)) tip.Text = Loc.Get("controls.risky_waiting", "count", troubleWaiting);
+                return;
+            }
+            if (riskLabel == null) return;
+            riskLabel.text = troubleWaiting == 0 ? string.Empty
+                : GuestVisuals.Colored(Loc.Get("controls.risky_waiting", "count", troubleWaiting), oneAway ? UIPalette.Red : UIPalette.TextDim);
         }
     }
 }

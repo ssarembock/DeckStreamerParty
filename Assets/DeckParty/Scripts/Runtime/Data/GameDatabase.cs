@@ -15,6 +15,13 @@ namespace DeckParty
         public GuestType type;
         [Tooltip("Character portrait from your sprite sheet. Leave empty for the coloured placeholder. Always used as the fallback.")]
         public Sprite portrait;
+        [Tooltip("Head-only picture for the round chat avatar (stream chat and the waiting-viewer panel). It fills the circle. " +
+                 "Leave empty to show the portrait zoomed in on the head (Avatar Zoom / Avatar Offset).")]
+        public Sprite avatar;
+        [Tooltip("Without an Avatar sprite: how far the portrait is zoomed inside the chat circle (1 = whole portrait).")]
+        [Range(1f, 4f)] public float avatarZoom = 1.8f;
+        [Tooltip("Without an Avatar sprite: where the portrait sits in the circle, in circle widths (negative y moves it down, showing the top of the portrait).")]
+        public Vector2 avatarOffset = new Vector2(0f, -0.32f);
         [Tooltip("Placeholder / accent colour. Alpha 0 = use the colour of the viewer's first community.")]
         public Color tint = new Color(1f, 1f, 1f, 0f);
         [Tooltip("The viewer's communities (none, one or several). Every different viewer in chat from a community gives it a point; " +
@@ -51,6 +58,10 @@ namespace DeckParty
         public GameObject characterPrefab;
         [Tooltip("Optional controller for the prefab (or for the portrait on its own).")]
         public RuntimeAnimatorController animatorController;
+        [Tooltip("The satirical platform they stream on: picks the animated logo at the top-left of the stream and shop, and the button colour.")]
+        public StreamPlatform platform;
+        /// <summary>Set once the streamer's built-in platform has been filled in, so your choice is kept afterwards.</summary>
+        [HideInInspector] public bool platformSeeded;
         [Tooltip("The stream setup (background) shown while this streamer is live.")]
         public VenueDefinition venue;
         [Tooltip("Accent colour. Alpha 0 = use the built-in colour.")]
@@ -171,6 +182,12 @@ namespace DeckParty
         [Tooltip("An icon for each community, shown on cards, shop tiles, tooltips, in text and on the Community Beats chips.")]
         public List<CommunityIcon> communityIcons = new List<CommunityIcon>();
 
+        [Header("Platforms (the website look of the stream and shop)")]
+        [Tooltip("One entry per satirical platform: the animated logo's sprites, placement and timing, and the button colour.")]
+        public List<PlatformArt> platforms = new List<PlatformArt>();
+        [Tooltip("The platform shown when a player has no streamer.")]
+        public StreamPlatform noStreamerPlatform = StreamPlatform.Lookout;
+
         /// <summary>Old character group icons (groups were replaced by communities). Hidden; kept so nothing you assigned is lost.</summary>
         [HideInInspector] public List<GroupIcon> groupIcons = new List<GroupIcon>();
 
@@ -288,6 +305,29 @@ namespace DeckParty
             foreach (var entry in communityIcons)
                 if (entry != null && entry.community == community) return entry.icon;
             return null;
+        }
+
+        /// <summary>The art for a platform, or null when the database has no entry for it (the logo then uses built-in shapes).</summary>
+        public PlatformArt GetPlatformArt(StreamPlatform platform)
+        {
+            if (platforms == null) return null;
+            foreach (var entry in platforms)
+                if (entry != null && entry.platform == platform) return entry;
+            return null;
+        }
+
+        /// <summary>One entry per platform, with the built-in colours and placements (art and tuning you change are kept).</summary>
+        public void EnsureAllPlatforms()
+        {
+            if (platforms == null) platforms = new List<PlatformArt>();
+            platforms.RemoveAll(p => p == null || !Enum.IsDefined(typeof(StreamPlatform), p.platform));
+            foreach (StreamPlatform platform in Enum.GetValues(typeof(StreamPlatform)))
+            {
+                var entry = platforms.Find(p => p.platform == platform);
+                if (entry == null) platforms.Add(entry = PlatformArt.CreateDefault(platform));
+                entry.name = PlatformArt.Title(platform);
+            }
+            platforms.Sort((a, b) => a.platform.CompareTo(b.platform));
         }
 
         /// <summary>One icon slot per community (icons you assign are kept).</summary>
@@ -454,6 +494,11 @@ namespace DeckParty
                 var existing = streamers.Find(s => s.type == type);
                 if (existing == null) streamers.Add(existing = new StreamerArt { type = type });
                 existing.name = type.ToString();
+                if (!existing.platformSeeded)
+                {
+                    existing.platformSeeded = true;
+                    existing.platform = StreamerVisuals.DefaultPlatform(type);
+                }
                 if (existing.quotes == null) existing.quotes = new List<string>();
                 if (!existing.quotesSeeded)
                 {

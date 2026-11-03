@@ -252,7 +252,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578064
     m_Localized: "Lo de moda: al entrar, copia {icon:subs} base y el {icon:cash}
-      del espectador que entr\xF3 justo antes. No su acci\xF3n, {icon:risk} ni Diamante."
+      del espectador que entr\xF3 justo antes. No su acci\xF3n, {icon:risk} ni Play."
     m_Metadata:
       m_Items: []
   - m_Id: 504578065
@@ -470,7 +470,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578112
-    m_Localized: "Acci\xF3n: otro espectador que no sea Diamante se convierte temporalmente
+    m_Localized: "Acci\xF3n: otro espectador que no sea Play se convierte temporalmente
       en otro personaje al azar de la fila, con sus stats y su acci\xF3n. Vuelve
       a la normalidad despu\xE9s del stream."
     m_Metadata:
@@ -770,7 +770,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262483
-    m_Localized: 'DIAMANTE. Expreso de opiniones: suma 1 {icon:risk}.'
+    m_Localized: '{icon:plays} Expreso de opiniones: suma 1 {icon:risk}.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262484
@@ -778,7 +778,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262485
-    m_Localized: 'DIAMANTE. Colapso del mercado: cuesta 3 {icon:cash} al puntuar.'
+    m_Localized: '{icon:plays} Colapso del mercado: cuesta 3 {icon:cash} al puntuar.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262486
@@ -786,7 +786,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262487
-    m_Localized: 'DIAMANTE. Inspirador: al entrar trae a un espectador al azar.'
+    m_Localized: '{icon:plays} Inspirador: al entrar trae a un espectador al azar.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262488
@@ -794,7 +794,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262489
-    m_Localized: DIAMANTE. Sin efecto extra.
+    m_Localized: '{icon:plays} Sin efecto extra.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262490
@@ -802,8 +802,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262491
-    m_Localized: "DIAMANTE. No puede equivocarse: mientras est\xE1 en el chat, anula
-      1 {icon:risk}."
+    m_Localized: "{icon:plays} No puede equivocarse: mientras est\xE1 en el chat,
+      anula 1 {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262492
@@ -811,7 +811,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262493
-    m_Localized: "DIAMANTE. Acci\xF3n: saca a un espectador por el resto del stream
+    m_Localized: "{icon:plays} Acci\xF3n: saca a un espectador por el resto del stream
       (incluso a s\xED mismo)."
     m_Metadata:
       m_Items: []
@@ -824,7 +824,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262496
-    m_Localized: DIAMANTE. Atractivo masivo.
+    m_Localized: '{icon:plays} Atractivo masivo.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262497
@@ -832,7 +832,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262498
-    m_Localized: "DIAMANTE. Colocaci\xF3n de producto."
+    m_Localized: "{icon:plays} Colocaci\xF3n de producto."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262499
@@ -1100,8 +1100,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008644
-    m_Localized: "DIAMANTE. Acci\xF3n: invoca a cualquier espectador de la fila,
-      incluso a otro Diamante."
+    m_Localized: "{icon:plays} Acci\xF3n: invoca a cualquier espectador de la fila,
+      incluso a otro Play."
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008645

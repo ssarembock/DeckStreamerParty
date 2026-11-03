@@ -347,11 +347,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412305
-    m_Localized: Subs
+    m_Localized: Fama
     m_Metadata:
       m_Items: []
   - m_Id: 479412306
-    m_Localized: Subs de presente
+    m_Localized: Fama
     m_Metadata:
       m_Items: []
   - m_Id: 479412307
@@ -371,11 +371,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412311
-    m_Localized: Diamante
+    m_Localized: Play
     m_Metadata:
       m_Items: []
   - m_Id: 479412312
-    m_Localized: Diamantes
+    m_Localized: Plays
     m_Metadata:
       m_Items: []
   - m_Id: 479412313
@@ -399,7 +399,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412318
-    m_Localized: '{count} {count:plural:Diamante|Diamantes}'
+    m_Localized: '{count} {count:plural:Play|Plays}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412319
@@ -451,7 +451,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412331
-    m_Localized: Diamante
+    m_Localized: Play
     m_Metadata:
       m_Items: []
   - m_Id: 479412332
@@ -495,7 +495,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412342
-    m_Localized: DIAMANTE
+    m_Localized: PLAY
     m_Metadata:
       m_Items: []
   - m_Id: 479412343
@@ -739,11 +739,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606530
-    m_Localized: "{count} DIAMANTES NUMA LIVE! Voc\xEA venceu!"
+    m_Localized: "{count} PLAYS NUMA LIVE! Voc\xEA venceu!"
     m_Metadata:
       m_Items: []
   - m_Id: 483606531
-    m_Localized: '{count} DIAMANTES NUMA LIVE! {player} venceu!'
+    m_Localized: '{count} PLAYS NUMA LIVE! {player} venceu!'
     m_Metadata:
       m_Items: []
   - m_Id: 483606532
@@ -1154,9 +1154,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606632
-    m_Localized: "Fa\xE7a uma live com <b>4 espectadores Diamante no chat ao mesmo
-      tempo</b> e encerre com sucesso antes da sua \xFAltima noite (25 por padr\xE3o).
-      Recrutar quatro Diamantes n\xE3o basta: eles precisam aparecer juntos."
+    m_Localized: "Fa\xE7a uma live com <b>4 espectadores Play no chat ao mesmo tempo</b>
+      e encerre com sucesso antes da sua \xFAltima noite (25 por padr\xE3o). Recrutar
+      quatro Plays n\xE3o basta: eles precisam aparecer juntos."
     m_Metadata:
       m_Items: []
   - m_Id: 483606633
@@ -1209,7 +1209,7 @@ MonoBehaviour:
       As taxas s\xE3o pagas com a sua {icon:cash}; o que faltar custa <b>7 {icon:subs}
       por cada 1 {icon:cash}</b>.\\nO estoque da loja \xE9 <b>dividido entre todos
       os jogadores</b>: cada espectador normal tem 4 c\xF3pias pra partida inteira
-      e voc\xEA pode ter no m\xE1ximo 4 de cada; Diamantes s\xE3o ilimitados. Voc\xEA
+      e voc\xEA pode ter no m\xE1ximo 4 de cada; Plays s\xE3o ilimitados. Voc\xEA
       n\xE3o pode tirar espectadores da sua Audi\xEAncia, ent\xE3o cada recrutamento
       muda as suas chances."
     m_Metadata:
@@ -1262,27 +1262,26 @@ MonoBehaviour:
       pra ver o tabuleiro dele ao vivo. No modo <b>Em turnos</b> (o padr\xE3o) os
       jogadores fazem live um depois do outro a cada noite enquanto os outros veem
       o que ele aponta, escolhe e compra; a temporada acaba depois da primeira noite
-      em que algu\xE9m faz uma live de 4 Diamantes. O host pode ativar um cron\xF4metro
+      em que algu\xE9m faz uma live de 4 Plays. O host pode ativar um cron\xF4metro
       de turno. Em <b>Noites sincronizadas</b> todos jogam a mesma noite ao mesmo
       tempo e a pr\xF3xima come\xE7a quando todo mundo estiver pronto. Em <b>Corrida</b>
-      cada um joga no seu ritmo e a primeira live de 4 Diamantes vence na hora. Se
-      ningu\xE9m vencer, leva quem teve mais Diamantes numa live bem-sucedida."
+      cada um joga no seu ritmo e a primeira live de 4 Plays vence na hora. Se ningu\xE9m
+      vencer, leva quem teve mais Plays numa live bem-sucedida."
     m_Metadata:
       m_Items: []
   - m_Id: 483606649
-    m_Localized: "<b>Vit\xF3ria:</b> 4 Diamantes numa live bem-sucedida.\\n<b>\xCDcones:</b>
-      {icon:subs} Subs de presente   {icon:cash} Grana   {icon:risk} Risco de desplataformiza\xE7\xE3o
-      (passe o mouse sobre qualquer \xEDcone pra ver o que \xE9).\\n<b>Adicionar
+    m_Localized: "<b>Vit\xF3ria:</b> 4 Plays numa live bem-sucedida.\\n<b>\xCDcones:</b>
+      {icon:subs} Fama   {icon:cash} Grana   {icon:risk} Risco de desplataformiza\xE7\xE3o  
+      {icon:plays} Plays (passe o mouse sobre qualquer \xEDcone pra ver o que \xE9).\\n<b>Adicionar
       espectador:</b> o pr\xF3ximo da fila entra no chat.  <b>Encerrar a live:</b>
-      guarda os {icon:subs} e a {icon:cash} de todo mundo.\\n<b>3 de {icon:risk}
-      l\xEDquido</b> = live desplataformizada (sem pagamento, um espectador leva
-      ban tempor\xE1rio).\\n<b>Passar do limite</b> = o servidor cai (sem pagamento).\\n<b>Comunidades:</b>
-      cada espectador diferente no chat d\xE1 um ponto pra sua comunidade; mais pontos,
-      mais b\xF4nus (Ritmo das comunidades, no topo do chat).\\n<b>Loja:</b> {icon:subs}
-      recrutam espectadores (o estoque \xE9 dividido entre todos), a {icon:cash}
-      aumenta o limite e paga os poderes ativos do streamer.\\n<b>Teclas:</b> Espa\xE7o
-      adicionar/confirmar/pr\xF3xima noite, E encerrar a live, R Audi\xEAncia, Esc
-      menu, F11 tela cheia."
+      guarda a {icon:subs} e a {icon:cash} de todo mundo.\\n<b>3 de {icon:risk} l\xEDquido</b>
+      = live desplataformizada (sem pagamento, um espectador leva ban tempor\xE1rio).\\n<b>Passar
+      do limite</b> = o servidor cai (sem pagamento).\\n<b>Comunidades:</b> cada
+      espectador diferente no chat d\xE1 um ponto pra sua comunidade; mais pontos,
+      mais b\xF4nus (Ritmo das comunidades, no topo do chat).\\n<b>Loja:</b> a {icon:subs}
+      recruta espectadores (o estoque \xE9 dividido entre todos), a {icon:cash} aumenta
+      o limite e paga os poderes ativos do streamer.\\n<b>Teclas:</b> Espa\xE7o adicionar/confirmar/pr\xF3xima
+      noite, E encerrar a live, R Audi\xEAncia, Esc menu, F11 tela cheia."
     m_Metadata:
       m_Items: []
   - m_Id: 416591918612480

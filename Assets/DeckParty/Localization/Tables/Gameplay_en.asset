@@ -347,11 +347,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412305
-    m_Localized: Subs
+    m_Localized: Clout
     m_Metadata:
       m_Items: []
   - m_Id: 479412306
-    m_Localized: Gifted Subs
+    m_Localized: Clout
     m_Metadata:
       m_Items: []
   - m_Id: 479412307
@@ -371,11 +371,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412311
-    m_Localized: Diamond
+    m_Localized: Play
     m_Metadata:
       m_Items: []
   - m_Id: 479412312
-    m_Localized: Diamonds
+    m_Localized: Plays
     m_Metadata:
       m_Items: []
   - m_Id: 479412313
@@ -399,7 +399,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412318
-    m_Localized: '{count} {count:plural:Diamond|Diamonds}'
+    m_Localized: '{count} {count:plural:Play|Plays}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412319
@@ -451,7 +451,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412331
-    m_Localized: Diamond
+    m_Localized: Play
     m_Metadata:
       m_Items: []
   - m_Id: 479412332
@@ -495,7 +495,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412342
-    m_Localized: DIAMOND
+    m_Localized: PLAY
     m_Metadata:
       m_Items: []
   - m_Id: 479412343
@@ -738,11 +738,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606530
-    m_Localized: '{count} DIAMONDS IN ONE STREAM! You win!'
+    m_Localized: '{count} PLAYS IN ONE STREAM! You win!'
     m_Metadata:
       m_Items: []
   - m_Id: 483606531
-    m_Localized: '{count} DIAMONDS IN ONE STREAM! {player} wins!'
+    m_Localized: '{count} PLAYS IN ONE STREAM! {player} wins!'
     m_Metadata:
       m_Items: []
   - m_Id: 483606532
@@ -1152,9 +1152,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606632
-    m_Localized: 'Pull off one stream with <b>4 Diamond viewers in chat at the same
+    m_Localized: 'Pull off one stream with <b>4 Play viewers in chat at the same
       time</b>, and end it successfully before your final night (25 by default).
-      Recruiting four Diamonds isn''t enough: they have to show up together.'
+      Recruiting four Plays isn''t enough: they have to show up together.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606633
@@ -1206,8 +1206,8 @@ MonoBehaviour:
       Fees are paid from your {icon:cash}; any unpaid amount costs <b>7 {icon:subs}
       per {icon:cash}</b>.\nThe shop''s stock is <b>shared by every player</b>: each
       normal viewer has 4 copies for the whole match, and you can own at most 4 of
-      each; Diamonds are unlimited. You can''t remove viewers from your Audience,
-      so every recruit changes your odds.'
+      each; Plays are unlimited. You can''t remove viewers from your Audience, so
+      every recruit changes your odds.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606641
@@ -1256,20 +1256,20 @@ MonoBehaviour:
       see their board live. In <b>Take Turns</b> mode (the default) players stream
       one after another each night while everyone else watches what they point at,
       pick and buy, and the season ends after the first night someone pulls off a
-      4-Diamond stream. The host can set a turn timer. In <b>Synchronized Nights</b>
+      stream with 4 Plays. The host can set a turn timer. In <b>Synchronized Nights</b>
       mode everyone plays the same night at once and the next night starts when every
       player is ready. In <b>Race</b> mode everyone plays at their own pace and the
-      first 4-Diamond stream wins instantly. If nobody wins, the best Diamond count
+      first stream with 4 Plays wins instantly. If nobody wins, the best Play count
       in a successful stream takes it.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606649
-    m_Localized: <b>Win:</b> 4 Diamonds in one successful stream.\n<b>Icons:</b>
-      {icon:subs} Gifted Subs   {icon:cash} Cash   {icon:risk} Deplatform Risk (hover
-      any icon to see what it is).\n<b>Add Viewer:</b> the next viewer in the queue
-      joins chat.  <b>End the Stream:</b> banks everyone's {icon:subs} and {icon:cash}.\n<b>3
-      net {icon:risk}</b> = deplatformed (no payout, one viewer gets a Temporary
-      Ban).\n<b>Over your Sub Cap</b> = Server Down (no payout).\n<b>Communities:</b>
+    m_Localized: <b>Win:</b> 4 {icon:plays} Plays in one successful stream.\n<b>Icons:</b>
+      {icon:subs} Clout   {icon:cash} Cash   {icon:risk} Deplatform Risk   {icon:plays}
+      Plays (hover any icon to see what it is).\n<b>Add Viewer:</b> the next viewer
+      in the queue joins chat.  <b>End the Stream:</b> banks everyone's {icon:subs}
+      and {icon:cash}.\n<b>3 net {icon:risk}</b> = deplatformed (no payout, one viewer
+      gets a Temporary Ban).\n<b>Over your Sub Cap</b> = Server Down (no payout).\n<b>Communities:</b>
       each different viewer in chat scores a point for their community; points give
       growing bonuses (Community Beats, top of the chat).\n<b>Shop:</b> {icon:subs}
       recruit viewers (the stock is shared by every player), {icon:cash} raises your

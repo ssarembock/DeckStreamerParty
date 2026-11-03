@@ -240,7 +240,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 496189492
     m_Localized: Atrapa gratis a un espectador al azar de la tienda (costo 6 o menos,
-      que no sea Diamante).
+      que no sea Play).
     m_Metadata:
       m_Items: []
   - m_Id: 496189493

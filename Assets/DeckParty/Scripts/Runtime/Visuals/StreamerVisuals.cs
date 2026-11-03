@@ -130,5 +130,38 @@ namespace DeckParty
 
         /// <summary>The background (stream setup) used while this streamer is live, or null for the player's own choice.</summary>
         public static VenueDefinition Venue(StreamerType type) => GameDatabase.Instance.GetStreamerArt(type)?.venue;
+
+        /// <summary>The satirical platform the streamer broadcasts on (Game Database > Streamers > Platform).</summary>
+        public static StreamPlatform Platform(StreamerType type)
+        {
+            var db = GameDatabase.Instance;
+            if (type == StreamerType.None) return db.noStreamerPlatform;
+            var art = db.GetStreamerArt(type);
+            return art != null && art.platformSeeded ? art.platform : DefaultPlatform(type);
+        }
+
+        /// <summary>Each streamer's starting platform (change it in the Game Database).</summary>
+        public static StreamPlatform DefaultPlatform(StreamerType type)
+        {
+            switch (type)
+            {
+                case StreamerType.MrShark:
+                case StreamerType.IRunFast:
+                    return StreamPlatform.Cough;
+                case StreamerType.BroJogan:
+                    return StreamPlatform.Tunes;
+                case StreamerType.RudeRadiologist:
+                case StreamerType.EthicalFboi:
+                    return StreamPlatform.Stomp;
+                case StreamerType.ManimMakethMan:
+                case StreamerType.StrategicAbomination:
+                    return StreamPlatform.Post;
+                case StreamerType.SoftHardBodyMan:
+                case StreamerType.Palmane:
+                    return StreamPlatform.Swipe;
+                default:
+                    return StreamPlatform.Lookout;
+            }
+        }
     }
 }

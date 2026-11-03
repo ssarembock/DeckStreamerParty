@@ -26,14 +26,39 @@ namespace DeckParty.UI
         [SerializeField] internal GameObject emptyState;
         [SerializeField] internal GameObject content;
 
+        [Header("Website look (optional)")]
+        [Tooltip("Hovering the streamer: name, power, what it does and its status (the words that used to sit on the card).")]
+        [SerializeField] internal TooltipTrigger infoTooltip;
+        [Tooltip("A small badge with the turns left before the active can be used again.")]
+        [SerializeField] internal GameObject cooldownBadge;
+        [SerializeField] internal TMP_Text cooldownLabel;
+        [Tooltip("Shown while the active is armed for the next stream.")]
+        [SerializeField] internal GameObject armedBadge;
+
         public event Action UseClicked;
         public RectTransform UseButtonRect => useButton != null ? (RectTransform)useButton.transform : null;
 
         string m_Owner;
+        PlayerState m_State;
+        bool m_Rivals;
 
         void Awake()
         {
             if (useButton != null) useButton.onClick.AddListener(() => UseClicked?.Invoke());
+            if (infoTooltip != null) infoTooltip.Provider = InfoTooltip;
+        }
+
+        string InfoTooltip()
+        {
+            if (m_State == null) return null;
+            var type = m_State.Streamer;
+            if (type == StreamerType.None) return Loc.Get("power.none");
+            var info = StreamerCatalog.Get(type);
+            string text = $"<b><size=115%>{StreamerVisuals.NameTag(type)}</size></b>\n" +
+                          GuestVisuals.Colored(StreamerVisuals.KindLabel(type), UIPalette.Gold) + "   " + GuestVisuals.Colored(StreamerVisuals.PowerName(type), UIPalette.Pink) + "\n" +
+                          StreamerVisuals.PowerDescription(type);
+            text += "\n" + (info.IsPassive ? GuestVisuals.Colored(Loc.Get("power.passive"), UIPalette.Teal) : Status(m_State, info, m_Rivals));
+            return text;
         }
 
         void OnDisable() => ResetPose();
@@ -58,11 +83,16 @@ namespace DeckParty.UI
                 ResetPose();
             }
 
+            m_State = s;
+            m_Rivals = rivalsAvailable;
             var type = s.Streamer;
             var info = StreamerCatalog.Get(type);
             bool hasStreamer = type != StreamerType.None;
             if (emptyState != null) emptyState.SetActive(!hasStreamer);
             if (content != null) content.SetActive(hasStreamer);
+            if (cooldownBadge != null) cooldownBadge.SetActive(hasStreamer && info.IsActive && s.PowerCooldown > 0 && !s.PowerArmed);
+            if (cooldownLabel != null) cooldownLabel.text = s.PowerCooldown.ToString();
+            if (armedBadge != null) armedBadge.SetActive(hasStreamer && s.PowerArmed);
             if (!hasStreamer)
             {
                 if (useButton != null) useButton.gameObject.SetActive(false);
@@ -98,9 +128,17 @@ namespace DeckParty.UI
 
             if (useButton == null) return;
             useButton.gameObject.SetActive(true);
-            if (useLabel != null) useLabel.text = Loc.Get("power.use", "cost", StreamerVisuals.CostText(StreamerCatalog.Cost(s)));
+            string useWords = Loc.Get("power.use", "cost", StreamerVisuals.CostText(StreamerCatalog.Cost(s)));
+            // Icon button: just the price next to the icon; the words are in the tooltip.
+            if (useLabel != null) useLabel.text = infoTooltip != null ? StreamerVisuals.CostText(StreamerCatalog.Cost(s)) : useWords;
             useButton.interactable = blocker == null && lockReason == null;
-            if (useTooltip != null) useTooltip.Text = lockReason ?? (blocker != null ? Loc.Error(blocker) : StreamerVisuals.CostRules(type));
+            if (useTooltip != null)
+            {
+                string why = lockReason ?? (blocker != null ? Loc.Error(blocker) : null);
+                useTooltip.Text = infoTooltip != null
+                    ? $"<b>{StreamerVisuals.PowerName(type)}</b>  {useWords}\n{StreamerVisuals.CostRules(type)}" + (why != null ? "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : string.Empty)
+                    : why ?? StreamerVisuals.CostRules(type);
+            }
         }
 
         static string Status(PlayerState s, StreamerInfo info, bool rivalsAvailable)

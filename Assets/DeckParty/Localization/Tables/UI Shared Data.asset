@@ -1719,6 +1719,14 @@ MonoBehaviour:
     m_Key: lobby.ffa_only
     m_Metadata:
       m_Items: []
+  - m_Id: 994296326209536
+    m_Key: chat.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 994296414289920
+    m_Key: hud.tip.plays_term
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

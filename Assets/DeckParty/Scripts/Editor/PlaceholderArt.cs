@@ -26,6 +26,16 @@ namespace DeckParty.EditorTools
         public const string DoorName = "icon_door";
         public const string CrownName = "icon_host";
         public const string CheckName = "icon_check";
+        // V5 website look: icon buttons and the chat avatar ring.
+        public const string AddViewerName = "icon_add_viewer";
+        public const string EndStreamName = "icon_end_stream";
+        public const string AudienceName = "icon_audience";
+        public const string MenuName = "icon_menu";
+        public const string ActionName = "icon_action";
+        public const string GoLiveName = "icon_go_live";
+        public const string CloseName = "icon_close";
+        public const string NightName = "icon_night";
+        public const string RingName = "ui_ring";
 
         public static string PathOf(string name) => $"{Folder}/{name}.png";
 
@@ -81,7 +91,57 @@ namespace DeckParty.EditorTools
                 return Mathf.Min(a, b) - 11f;
             }, Vector4.zero, overwrite);
 
+            GenerateSiteIcons(overwrite);
             AssetDatabase.Refresh();
+        }
+
+        /// <summary>The website look's button icons (white, tinted by the UI) and the avatar ring.</summary>
+        static void GenerateSiteIcons(bool overwrite)
+        {
+            // A person with a plus: add a viewer to chat.
+            Write(AddViewerName, 128, 128, p =>
+            {
+                float head = (p - new Vector2(-16, 24)).magnitude - 19f;
+                float body = SdRoundBox(p - new Vector2(-16, -36), new Vector2(34, 24), 22);
+                float plusH = SdRoundBox(p - new Vector2(38, 20), new Vector2(20, 6), 3);
+                float plusV = SdRoundBox(p - new Vector2(38, 20), new Vector2(6, 20), 3);
+                return Mathf.Min(Mathf.Min(head, body), Mathf.Min(plusH, plusV));
+            }, Vector4.zero, overwrite);
+            // A stop square: end the stream.
+            Write(EndStreamName, 128, 128, p => SdRoundBox(p, new Vector2(40, 40), 10), Vector4.zero, overwrite);
+            // Two people: the Audience.
+            Write(AudienceName, 128, 128, p =>
+            {
+                float backHead = (p - new Vector2(22, 26)).magnitude - 16f;
+                float backBody = SdRoundBox(p - new Vector2(22, -22), new Vector2(28, 22), 20);
+                float frontHead = (p - new Vector2(-18, 18)).magnitude - 18f;
+                float frontBody = SdRoundBox(p - new Vector2(-18, -36), new Vector2(32, 24), 22);
+                float front = Mathf.Min(frontHead, frontBody);
+                // A gap around the front person so the two read apart.
+                float back = Mathf.Max(Mathf.Min(backHead, backBody), -(front - 6f));
+                return Mathf.Min(front, back);
+            }, Vector4.zero, overwrite);
+            // Three bars: the menu.
+            Write(MenuName, 128, 128, p => Mathf.Min(SdRoundBox(p - new Vector2(0, 30), new Vector2(46, 7), 7),
+                Mathf.Min(SdRoundBox(p, new Vector2(46, 7), 7), SdRoundBox(p - new Vector2(0, -30), new Vector2(46, 7), 7))), Vector4.zero, overwrite);
+            // A lightning bolt: use a viewer's action / the streamer's active.
+            Write(ActionName, 128, 128, p => SdPolygon(p, new[]
+            {
+                new Vector2(14, 60), new Vector2(-34, -6), new Vector2(-4, -6), new Vector2(-16, -60), new Vector2(34, 8), new Vector2(4, 8),
+            }) - 2f, Vector4.zero, overwrite);
+            // A play triangle: go live (start the next night).
+            Write(GoLiveName, 128, 128, p => SdPolygon(p, new[] { new Vector2(-30, 46), new Vector2(-30, -46), new Vector2(48, 0) }) - 5f, Vector4.zero, overwrite);
+            // A thin X: cancel / deny.
+            Write(CloseName, 128, 128, p =>
+            {
+                var a = Rotate(p, 45f);
+                var b = Rotate(p, -45f);
+                return Mathf.Min(SdRoundBox(a, new Vector2(48, 8), 8), SdRoundBox(b, new Vector2(48, 8), 8));
+            }, Vector4.zero, overwrite);
+            // A crescent moon: the night counter.
+            Write(NightName, 128, 128, p => Mathf.Max(p.magnitude - 48f, -((p - new Vector2(22, 14)).magnitude - 40f)), Vector4.zero, overwrite);
+            // A ring: the round chat avatars' border.
+            Write(RingName, 128, 128, p => Mathf.Abs(p.magnitude - 58f) - 4.5f, Vector4.zero, overwrite);
         }
 
         // ------------------------------------------------------------------ rasterising

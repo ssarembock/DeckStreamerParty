@@ -7,7 +7,7 @@ namespace DeckParty.UI
 {
     /// <summary>
     /// Multiplayer strip above the board: whose party is on screen, whose turn it is, and a button to jump between
-    /// boards. Built at runtime from existing widgets, so Game scenes generated before it existed get it too.
+    /// boards. Built at runtime, so Game scenes generated before it existed get it too. Light, like the rest of the site.
     /// </summary>
     public sealed class ViewBarView : MonoBehaviour
     {
@@ -62,30 +62,48 @@ namespace DeckParty.UI
             label.enableAutoSizing = true;
             label.fontSizeMin = 14f;
             label.fontSizeMax = 24f;
-            label.color = UIPalette.Text;
+            label.color = SitePalette.Text;
             label.alignment = TextAlignmentOptions.MidlineLeft;
             label.richText = true;
             label.raycastTarget = false;
             view.m_Label = label;
 
-            var buttonGo = Instantiate(buttonTemplate.gameObject, rect);
-            buttonGo.name = "SwitchBoard";
-            buttonGo.SetActive(true);
+            // The button is built here (the HUD's buttons are icon-only now, so they can't serve as a text-button template).
+            var buttonGo = new GameObject("SwitchBoard", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
             var buttonRect = (RectTransform)buttonGo.transform;
+            buttonRect.SetParent(rect, false);
             buttonRect.anchorMin = buttonRect.anchorMax = new Vector2(1f, 0.5f);
             buttonRect.pivot = new Vector2(1f, 0.5f);
             buttonRect.anchoredPosition = new Vector2(-6f, 0f);
             buttonRect.sizeDelta = new Vector2(ButtonWidth, Height - 10f);
+            var buttonImage = buttonGo.GetComponent<Image>();
+            buttonImage.sprite = RuntimeSprites.Rounded;
+            buttonImage.type = Image.Type.Sliced;
+            buttonImage.color = SitePalette.Outline;
             view.m_Button = buttonGo.GetComponent<Button>();
-            view.m_Button.onClick.RemoveAllListeners();
+            view.m_Button.targetGraphic = buttonImage;
+            var navigation = view.m_Button.navigation;
+            navigation.mode = Navigation.Mode.None;
+            view.m_Button.navigation = navigation;
             view.m_Button.onClick.AddListener(() => view.m_OnClick?.Invoke());
-            view.m_ButtonLabel = buttonGo.GetComponentInChildren<TMP_Text>(true);
-            if (view.m_ButtonLabel != null)
-            {
-                view.m_ButtonLabel.enableAutoSizing = true;
-                view.m_ButtonLabel.fontSizeMin = 14f;
-                view.m_ButtonLabel.fontSizeMax = 22f;
-            }
+            buttonGo.AddComponent<ButtonFeedback>();
+
+            var buttonLabelGo = new GameObject("Label", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            var buttonLabelRect = (RectTransform)buttonLabelGo.transform;
+            buttonLabelRect.SetParent(buttonRect, false);
+            buttonLabelRect.anchorMin = Vector2.zero;
+            buttonLabelRect.anchorMax = Vector2.one;
+            buttonLabelRect.offsetMin = new Vector2(10f, 2f);
+            buttonLabelRect.offsetMax = new Vector2(-10f, -2f);
+            view.m_ButtonLabel = buttonLabelGo.GetComponent<TextMeshProUGUI>();
+            view.m_ButtonLabel.font = textTemplate.font;
+            view.m_ButtonLabel.color = Color.white;
+            view.m_ButtonLabel.alignment = TextAlignmentOptions.Center;
+            view.m_ButtonLabel.fontStyle = FontStyles.Bold;
+            view.m_ButtonLabel.raycastTarget = false;
+            view.m_ButtonLabel.enableAutoSizing = true;
+            view.m_ButtonLabel.fontSizeMin = 14f;
+            view.m_ButtonLabel.fontSizeMax = 22f;
 
             view.Set(string.Empty, UIPalette.Teal, null, null);
             return view;
@@ -105,7 +123,8 @@ namespace DeckParty.UI
         public void Set(string text, Color accent, string buttonText, Action onClick)
         {
             m_Label.text = text;
-            m_Background.color = Color.Lerp(UIPalette.PanelDeep, accent, 0.22f).WithAlpha(0.95f);
+            // A light notice strip in the site's look, tinted with the player's colour.
+            m_Background.color = Color.Lerp(SitePalette.Surface, accent, 0.18f);
 
             bool showButton = !string.IsNullOrEmpty(buttonText);
             m_Button.gameObject.SetActive(showButton);

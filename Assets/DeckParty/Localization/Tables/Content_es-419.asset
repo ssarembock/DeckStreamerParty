@@ -28,8 +28,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274881
     m_Localized: Tu primera temporada en vivo. Habituales confiables, Productor y
-      Admin del chat para manejar la sala, un colaborador riesgoso y tres Diamantes
-      amigables.
+      Admin del chat para manejar la sala, un colaborador riesgoso y tres Plays amigables.
     m_Metadata:
       m_Items: []
   - m_Id: 433274882
@@ -99,7 +98,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274896
-    m_Localized: Once espectadores al azar y tres Diamantes al azar. Gana cinco seguidas
+    m_Localized: Once espectadores al azar y tres Plays al azar. Gana cinco seguidas
       para conseguir la Cereza.
     m_Metadata:
       m_Items: []

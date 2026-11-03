@@ -55,8 +55,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125576
-    m_Localized: <b>Gifted Subs</b>\nViewers bring them in during a stream. Spend
-      them in the shop to recruit new viewers.
+    m_Localized: <b>Clout</b>\nViewers bring it in during a stream. Spend it in the
+      shop to recruit new viewers.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125577
@@ -85,7 +85,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125583
-    m_Localized: Diamonds {count}/{max}
+    m_Localized: Plays {count}/{max}
     m_Metadata:
       m_Items: []
   - m_Id: 1574125584
@@ -107,7 +107,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125588
-    m_Localized: '<b>Diamonds</b>\nThis stream: {now}\nIn your Audience: {owned}\nBest
+    m_Localized: '<b>Plays</b>\nThis stream: {now}\nIn your Audience: {owned}\nBest
       ever in one stream: {best}\nGet {goal} in one stream to win!'
     m_Metadata:
       m_Items: []
@@ -121,7 +121,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125591
-    m_Localized: '{count} Diamonds are here! End the stream now to win!'
+    m_Localized: '{count} Plays are here! End the stream now to win!'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125592
@@ -448,7 +448,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514205
-    m_Localized: 'Diamonds owned: {owned}    Best Diamonds in one stream: {best}'
+    m_Localized: 'Plays owned: {owned}    Best Plays in one stream: {best}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514206
@@ -524,7 +524,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514224
-    m_Localized: '{subs}  {cash}  Diamonds owned {owned}  best {best}'
+    m_Localized: '{subs}  {cash}  Plays owned {owned}  best {best}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514225
@@ -536,8 +536,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514227
-    m_Localized: '{count} Diamonds streamed together on night {night} of {total}.
-      {set} cleared!'
+    m_Localized: '{count} Plays streamed together on night {night} of {total}. {set}
+      cleared!'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514228
@@ -549,7 +549,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514230
-    m_Localized: No {count}-Diamond stream this time. Your best was {best} at once.
+    m_Localized: No stream with {count} Plays this time. Your best was {best} at
+      once.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514231
@@ -569,15 +570,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514235
-    m_Localized: A {count}-Diamond stream on night {night}.
+    m_Localized: A stream with {count} Plays on night {night}.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514236
-    m_Localized: 'Nobody reached {count} Diamonds. Best Diamond count: {best}.'
+    m_Localized: 'Nobody reached {count} Plays. Best Play count: {best}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514237
-    m_Localized: '{count}-DIAMOND STREAM!'
+    m_Localized: '{count} PLAYS IN ONE STREAM!'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514238
@@ -595,7 +596,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514241
     m_Localized: 'Earned: {icon:subs} {subs}   {icon:cash} {cash}    Audience: {viewers}
-      viewers ({diamonds} Diamonds)    Sub Cap: {cap}'
+      viewers ({diamonds} Plays)    Sub Cap: {cap}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514242
@@ -773,7 +774,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514285
-    m_Localized: Welcome to {set}! Get {count} Diamonds into one stream within {nights}
+    m_Localized: Welcome to {set}! Get {count} Plays into one stream within {nights}
       nights.
     m_Metadata:
       m_Items: []
@@ -899,11 +900,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514316
-    m_Localized: '{count} Diamonds in one stream!'
+    m_Localized: '{count} Plays in one stream!'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514317
-    m_Localized: No {count}-Diamond stream this time
+    m_Localized: No stream with {count} Plays this time
     m_Metadata:
       m_Items: []
   - m_Id: 1582514318
@@ -1069,7 +1070,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514355
-    m_Localized: '{actor}: choose a non-Diamond viewer to Rickroll.'
+    m_Localized: '{actor}: choose a non-Play viewer to Rickroll.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514356
@@ -1138,7 +1139,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514372
-    m_Localized: Go live, grow your Audience and get {count} Diamonds into one stream.
+    m_Localized: Go live, grow your Audience and get {count} Plays into one stream.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514373
@@ -1219,7 +1220,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: 'Character set: <color=#FFC94A>11 random viewers + 3 random Diamonds</color>,
+    m_Localized: 'Character set: <color=#FFC94A>11 random viewers + 3 random Plays</color>,
       rolled when the season starts.'
     m_Metadata:
       m_Items: []
@@ -1249,8 +1250,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514399
-    m_Localized: Up to 6 players. Same character set, separate streams. First 4-Diamond
-      stream wins.
+    m_Localized: Up to 6 players. Same character set, separate streams. First stream
+      with 4 Plays wins.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514400
@@ -1420,19 +1421,19 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514441
     m_Localized: each night, players stream one after another while everyone else
-      watches live. The season ends after the first night someone gets {count} Diamonds.
+      watches live. The season ends after the first night someone gets {count} Plays.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514442
-    m_Localized: play at your own pace. The first {count}-Diamond stream wins instantly.
-      Click a player to watch them.
+    m_Localized: play at your own pace. The first stream with {count} Plays wins
+      instantly. Click a player to watch them.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514443
     m_Localized: 'everyone streams at the same time and nobody can watch anyone else.
       When every stream is over and everyone clicks Go to the Shop, a 3-2-1 countdown
       opens the shop for all at once: first come, first served. The first night someone
-      gets {count} Diamonds ends the season. The only mode for 3 or more players.'
+      gets {count} Plays ends the season. The only mode for 3 or more players.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514444
@@ -1772,6 +1773,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 736683856445440
     m_Localized: 'More than {count} players: Free For All is the only mode.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 994296326209536
+    m_Localized: Stream Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 994296414289920
+    m_Localized: <b>Plays</b>\nViewers with this icon are Plays. Have {goal} in chat
+      at once and end the stream well to win.
     m_Metadata:
       m_Items: []
   references:
