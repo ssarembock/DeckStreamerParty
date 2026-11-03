@@ -59,8 +59,16 @@ namespace DeckParty
             return sprite != null ? sprite : CommunityPlaceholder(community);
         }
 
-        /// <summary>White for your own (coloured) art; the resource colour while a white placeholder shape stands in.</summary>
-        public static Color Tint(ResourceIcon icon) => IsPlaceholder(Sprite(icon)) ? ResourceColor(icon) : Color.white;
+        /// <summary>
+        /// The skin slot's colour when Override Color is ticked (as for any coloured art, so it also wins over the placeholder
+        /// name check below); otherwise the resource colour while a white placeholder shape stands in, and white for your art.
+        /// </summary>
+        public static Color Tint(ResourceIcon icon)
+        {
+            var entry = GameDatabase.Instance.skin != null ? GameDatabase.Instance.skin.Get(SlotOf(icon)) : null;
+            if (entry != null && entry.sprite != null && entry.overrideColor) return entry.color;
+            return IsPlaceholder(Sprite(icon)) ? ResourceColor(icon) : Color.white;
+        }
 
         public static Color ResourceColor(ResourceIcon icon) =>
             icon == ResourceIcon.Cash ? UIPalette.Green : icon == ResourceIcon.Risk ? UIPalette.Red : UIPalette.Gold;

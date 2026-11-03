@@ -987,6 +987,62 @@ MonoBehaviour:
     m_Key: char.GenZWithJob.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 736681897705472
+    m_Key: char.DegenDog.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008640
+    m_Key: char.DegenDog.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008641
+    m_Key: char.DistraughtCat.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008642
+    m_Key: char.DistraughtCat.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008643
+    m_Key: char.Evangelist.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008644
+    m_Key: char.Evangelist.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008645
+    m_Key: char.Evangelist.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008646
+    m_Key: char.PromoCodeUser.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008647
+    m_Key: char.PromoCodeUser.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008648
+    m_Key: char.CryptoEnthusiast.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008649
+    m_Key: char.CryptoEnthusiast.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008650
+    m_Key: char.CryptoEnthusiast.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008651
+    m_Key: char.Bot.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008652
+    m_Key: char.Bot.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

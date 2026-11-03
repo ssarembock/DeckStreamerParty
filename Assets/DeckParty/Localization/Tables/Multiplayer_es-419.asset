@@ -87,7 +87,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469200
-    m_Localized: Noches sincronizadas
+    m_Localized: Todos contra todos
     m_Metadata:
       m_Items: []
   - m_Id: 437469201
@@ -99,7 +99,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469203
-    m_Localized: noches sincronizadas
+    m_Localized: todos contra todos
     m_Metadata:
       m_Items: []
   - m_Id: 437469204
@@ -332,6 +332,26 @@ MonoBehaviour:
   - m_Id: 675188590198784
     m_Localized: "\xA1Los Apocal\xEDpticos de {0} maldicen el pr\xF3ximo stream de
       todos ({1}% por espectador)!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680563916800
+    m_Localized: "M\xE1s de {0} jugadores: cambiado a Todos contra todos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219968
+    m_Localized: La tienda abre para todos cuando terminen todos los streams.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219969
+    m_Localized: "\xA1Casi! La tienda abre en un momento."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219970
+    m_Localized: "\xA1La tienda est\xE1 abierta: el que llega primero, se lo lleva!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219971
+    m_Localized: "\xA1Los bots de {0} invaden el pr\xF3ximo stream de {2} ({1})!"
     m_Metadata:
       m_Items: []
   references:

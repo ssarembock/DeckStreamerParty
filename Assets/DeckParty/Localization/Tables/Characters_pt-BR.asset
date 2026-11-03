@@ -1078,6 +1078,68 @@ MonoBehaviour:
       no chat (at\xE9 9 {icon:cash}), mesmo se a live acabar mal."
     m_Metadata:
       m_Items: []
+  - m_Id: 736681897705472
+    m_Localized: Cachorro Degen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008640
+    m_Localized: "Tanta sinergia: +1 {icon:subs} por cada comunidade diferente no
+      chat (m\xE1x. +5). Outros Cachorros Degen n\xE3o contam."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008641
+    m_Localized: Gato Desolado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008642
+    m_Localized: "Todo mundo me abandona: ganha +2 {icon:subs} e +1 {icon:cash} sempre
+      que outro espectador sai ou \xE9 expulso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008643
+    m_Localized: Evangelista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008644
+    m_Localized: "DIAMANTE. A\xE7\xE3o: invoque qualquer espectador da fila, at\xE9
+      outro Diamante."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008645
+    m_Localized: Leve 2, pague 1!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008646
+    m_Localized: "Ca\xE7ador de cupom"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008647
+    m_Localized: "+5 {icon:subs}, mas s\xF3 se o chat estiver cheio na pontua\xE7\xE3o.
+      Sempre custa 1 {icon:cash}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008648
+    m_Localized: Entusiasta de cripto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008649
+    m_Localized: "A\xE7\xE3o: pontue agora mesmo outro espectador do chat, penalidades
+      inclu\xEDdas (entra na hora). Ele ainda pontua de novo quando a live acaba."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008650
+    m_Localized: Rug Pull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008651
+    m_Localized: Bot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008652
+    m_Localized: "Um bot de spam da live de um rival. Ocupa um espa\xE7o no chat
+      e n\xE3o ganha nada. Some depois desta live."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

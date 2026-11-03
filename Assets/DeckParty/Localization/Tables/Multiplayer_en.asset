@@ -87,7 +87,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469200
-    m_Localized: Synchronized Nights
+    m_Localized: Free For All
     m_Metadata:
       m_Items: []
   - m_Id: 437469201
@@ -99,7 +99,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469203
-    m_Localized: synchronized nights
+    m_Localized: free for all
     m_Metadata:
       m_Items: []
   - m_Id: 437469204
@@ -317,6 +317,26 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675188590198784
     m_Localized: '{0}''s Doomsdayers curse everyone''s next stream ({1}% per viewer)!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680563916800
+    m_Localized: 'More than {0} players: switched to Free For All.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219968
+    m_Localized: The shop opens for everyone once every stream is over.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219969
+    m_Localized: Almost! The shop opens in a moment.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219970
+    m_Localized: 'The shop is open: first come, first served!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219971
+    m_Localized: '{0}''s Bots invade {2}''s next stream ({1})!'
     m_Metadata:
       m_Items: []
   references:

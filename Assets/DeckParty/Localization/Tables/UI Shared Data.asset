@@ -1563,6 +1563,162 @@ MonoBehaviour:
     m_Key: game.doom_other
     m_Metadata:
       m_Items: []
+  - m_Id: 736683764170752
+    m_Key: shop.first_come
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251136
+    m_Key: shop.lock_gate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251137
+    m_Key: shop.gate_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251138
+    m_Key: gate.notice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251139
+    m_Key: gate.countdown_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251140
+    m_Key: gate.countdown_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251141
+    m_Key: gate.still_streaming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251142
+    m_Key: gate.not_ready_yet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251143
+    m_Key: gate.everyone_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251144
+    m_Key: gate.waiting_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251145
+    m_Key: gate.cancel_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251146
+    m_Key: gate.stream_over_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251147
+    m_Key: gate.ready_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251148
+    m_Key: gate.go_to_shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251149
+    m_Key: players.ready_for_shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251150
+    m_Key: players.stream_over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251151
+    m_Key: game.memetics_repeat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251152
+    m_Key: game.memetics_repeat_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251153
+    m_Key: game.bots_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251154
+    m_Key: game.bots_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251155
+    m_Key: game.bots_sent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251156
+    m_Key: game.shop_open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251157
+    m_Key: game.shop_open_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251158
+    m_Key: game.ffa_no_watching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251159
+    m_Key: bar.ffa_countdown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251160
+    m_Key: bar.ffa_shopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251161
+    m_Key: bar.ffa_streaming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251162
+    m_Key: bar.ffa_all_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251163
+    m_Key: bar.round_summary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251164
+    m_Key: summary.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251165
+    m_Key: summary.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251166
+    m_Key: summary.night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251167
+    m_Key: summary.next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251168
+    m_Key: summary.next_heat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251169
+    m_Key: summary.next_doom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251170
+    m_Key: summary.next_bots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251171
+    m_Key: summary.next_power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251172
+    m_Key: summary.next_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683856445440
+    m_Key: lobby.ffa_only
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

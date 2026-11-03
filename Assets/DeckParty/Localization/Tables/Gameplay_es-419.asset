@@ -1184,11 +1184,9 @@ MonoBehaviour:
       neto no pasa nada; con <b>3 te desplataforman</b>: el stream termina sin ganancias
       y le das a un espectador un <b>baneo temporal</b> (se pierde el pr\xF3ximo
       stream). El Normie, el Fan ac\xE9rrimo y la Estrella de internet <b>anulan</b>
-      1 {icon:risk} cada uno mientras est\xE1n en el chat (Cheems tambi\xE9n, si
-      hay un Doge cerca), igual que cada 3 puntos de {icon:CoreFanbase} N\xFAcleo
-      de fans. Algunos espectadores suman {icon:risk} con sus acciones; el Perro
-      \"Todo bien\" convence a la plataforma una vez y el \xC1rbitro del chat quita
-      el riesgo."
+      1 {icon:risk} cada uno mientras est\xE1n en el chat, igual que cada 3 puntos
+      de {icon:CoreFanbase} N\xFAcleo de fans. Algunos espectadores suman {icon:risk}
+      con sus acciones; el \xC1rbitro del chat quita el riesgo."
     m_Metadata:
       m_Items: []
   - m_Id: 483606637
@@ -1198,9 +1196,8 @@ MonoBehaviour:
   - m_Id: 483606638
     m_Localized: "No puedes sumar espectadores cuando llegas a tu cupo, pero los
       que <b>traen</b> a otros (Gerente de marketing, Esc\xE1ndalo en l\xEDnea, Estrella
-      m\xE1s grande) o los que ocupan m\xE1s lugar (Big Chungus ocupa 3) pueden hacerte
-      pasar. Si pasa, <b>se cae el servidor</b> y el stream termina sin ganancias.
-      \xA1Deja lugar libre!"
+      m\xE1s grande) pueden hacerte pasar. Si pasa, <b>se cae el servidor</b> y el
+      stream termina sin ganancias. \xA1Deja lugar libre!"
     m_Metadata:
       m_Items: []
   - m_Id: 483606639
@@ -1223,16 +1220,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606642
-    m_Localized: "Cada espectador pertenece a un grupo (Animales, Wojak, Rage Comic,
-      Reacciones, Brainrot, o Por definir mientras se decide) y cada acci\xF3n tiene
-      un tipo (Reclutar, Echar, Modificar, Mezclar, Espiar, Econom\xEDa). Doge ama
-      los grupos mezclados (Por definir no cuenta), Bongo Cat potencia a los Animales
-      y el Beb\xE9 Bailar\xEDn premia dos acciones seguidas del mismo tipo. Algunas
-      acciones te piden elegir una opci\xF3n primero y luego uno o m\xE1s espectadores;
+    m_Localized: "Cada acci\xF3n tiene un tipo (Reclutar, Echar, Modificar, Mezclar,
+      Espiar, Econom\xEDa). Algunas acciones te piden elegir uno o dos espectadores;
       las que usan varios espectadores muestran un bot\xF3n Confirmar. Los cambios
-      permanentes (Chad vs Virgen, Tung Tung, Brian Mala Suerte, Afiliado, Centennial
-      con trabajo) quedan en esa carta para siempre. Pasa el cursor sobre un espectador
-      para ver su grupo, tipo de acci\xF3n y los efectos de esta noche."
+      permanentes (el c\xF3digo del Afiliado, Centennial con trabajo) quedan en esa
+      carta para siempre. Pasa el cursor sobre un espectador para ver sus comunidades,
+      tipo de acci\xF3n y los efectos de esta noche."
     m_Metadata:
       m_Items: []
   - m_Id: 483606643
@@ -1679,7 +1672,81 @@ MonoBehaviour:
       stream.\\n{icon:Zoomer} <b>Zoomer</b>: dos tiradas separadas de 20% por punto
       (hasta 80%): +6 {icon:subs}, y -3 {icon:cash}.\\n{icon:ArmchairActivists} <b>Activistas
       de sill\xF3n</b>: 10% por punto (hasta 50%) de que cada Activista de sill\xF3n
-      no punt\xFAe."
+      no punt\xFAe.\\n{icon:Clout} <b>Fama</b>: 10% por punto (hasta 40%) de que
+      cada espectador fuera del N\xFAcleo de fans traiga +1 {icon:subs} m\xE1s cada
+      vez que punt\xFAa.\\n{icon:MemeticsDivision} <b>Divisi\xF3n Mem\xE9tica</b>:
+      1% por punto (hasta 10%) de que todo el stream punt\xFAe dos veces.\\n{icon:Bots}
+      <b>Bots</b> (multijugador): al puntuar el stream, 10% por punto (hasta 40%)
+      por cada espectador Bots de mandar un Bot (ocupa lugar, no gana nada) al pr\xF3ximo
+      stream del siguiente jugador."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682300358656
+    m_Localized: Fama
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467520
+    m_Localized: "Todos quieren su parte. Cada espectador fuera del {icon:CoreFanbase}
+      N\xFAcleo de fans tiene un {per}% de probabilidad por punto ({top}% con {max}
+      puntos) de traer +{subs} {icon:subs} m\xE1s cada vez que punt\xFAa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467521
+    m_Localized: "Ahora: {value}% de que cada espectador fuera del N\xFAcleo de fans
+      traiga 1 {icon:subs} m\xE1s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467522
+    m_Localized: "Divisi\xF3n Mem\xE9tica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467523
+    m_Localized: "Reposteado para siempre. Cada punto da un {per}% de probabilidad
+      ({top}% con {max} puntos) de que todo el stream punt\xFAe una segunda vez:
+      cada espectador y cada recompensa de comunidad, con todas las tiradas de nuevo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467524
+    m_Localized: "Ahora: {value}% de probabilidad de que el stream punt\xFAe dos
+      veces."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467525
+    m_Localized: Bots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467526
+    m_Localized: "Multijugador. Al puntuar tu stream, cada espectador Bots del chat
+      tiene un {per}% de probabilidad por punto ({top}% con {max} puntos) de mandar
+      un Bot al pr\xF3ximo stream del siguiente jugador. Un Bot ocupa un lugar en
+      el chat y no gana nada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467527
+    m_Localized: 'Ahora: {value}% de que cada espectador Bots mande un Bot.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467528
+    m_Localized: '{viewer} trae fama extra: {subs}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467529
+    m_Localized: "\xA1La Divisi\xF3n Mem\xE9tica repostea todo el stream: punt\xFAa
+      otra vez ({value}% de probabilidad)!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467530
+    m_Localized: "Bots enviados al pr\xF3ximo stream del siguiente jugador: {count}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467531
+    m_Localized: "Los bots de {player} van al pr\xF3ximo stream del siguiente jugador:
+      {count}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467532
+    m_Localized: 'Bots rivales se unieron a la Audiencia de este stream: {count}.
+      Ocupan lugar y no ganan nada.'
     m_Metadata:
       m_Items: []
   references:

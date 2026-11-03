@@ -1448,8 +1448,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514443
-    m_Localized: todos juegan la misma noche a la vez. La primera noche en que alguien
-      junta {count} Diamantes termina la temporada. Haz clic en un jugador para mirarlo.
+    m_Localized: "todos transmiten a la vez y nadie puede ver a los dem\xE1s. Cuando
+      terminan todos los streams y cada uno toca Ir a la tienda, una cuenta regresiva
+      3-2-1 abre la tienda para todos a la vez: el que llega primero, se lo lleva.
+      La primera noche en que alguien junta {count} Diamantes termina la temporada.
+      El \xFAnico modo para 3 o m\xE1s jugadores."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514444
@@ -1632,6 +1635,171 @@ MonoBehaviour:
   - m_Id: 675191551377418
     m_Localized: "Apocal\xEDpticos rivales: en este stream cada espectador de {player}
       tiene un {value}% de probabilidad de no puntuar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683764170752
+    m_Localized: EL PRIMERO SE LO LLEVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251136
+    m_Localized: La tienda abre para todos a la vez cuando terminen todos los streams.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251137
+    m_Localized: "Primero la tienda: la pr\xF3xima noche empieza cuando todos hayan
+      comprado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251138
+    m_Localized: 'La tienda es del que llega primero: todos entran juntos cuando
+      termina la cuenta regresiva y el stock es compartido.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251139
+    m_Localized: "Prep\xE1rate..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251140
+    m_Localized: "Todos est\xE1n listos. La tienda abre en:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251141
+    m_Localized: "Todav\xEDa transmitiendo: {players}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251142
+    m_Localized: "Todav\xEDa no llegan a la tienda: {players}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251143
+    m_Localized: "Todos los dem\xE1s est\xE1n listos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251144
+    m_Localized: Esperando en la puerta de la tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251145
+    m_Localized: "Todav\xEDa no estoy listo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251146
+    m_Localized: "\xA1Stream terminado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251147
+    m_Localized: "Ve a la tienda cuando est\xE9s listo. Abre cuando est\xE9n todos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251148
+    m_Localized: Ir a la tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251149
+    m_Localized: En la tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251150
+    m_Localized: Stream terminado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251151
+    m_Localized: "\xA1PUNT\xDAA OTRA VEZ!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251152
+    m_Localized: "La Divisi\xF3n Mem\xE9tica reposte\xF3 el stream ({value}% de probabilidad)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251153
+    m_Localized: 'Bots rivales invadieron tu Audiencia: {count} para este stream.
+      Ocupan lugar y no ganan nada.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251154
+    m_Localized: '{count} bots rivales se unieron a la Audiencia de {player} en este
+      stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251155
+    m_Localized: "\xA1{count} bots enviados al siguiente jugador!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251156
+    m_Localized: "\xA1TIENDA ABIERTA!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251157
+    m_Localized: El que llega primero, se lo lleva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251158
+    m_Localized: "Todos contra todos: los streams son privados. Abre el resumen de
+      la ronda arriba del tablero para ver qu\xE9 hizo cada uno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251159
+    m_Localized: <b>Todos contra todos</b>  <color=#FFC94A>La tienda abre en {seconds}...</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251160
+    m_Localized: "<b>Todos contra todos</b>  <color=#FF9A3D>\xA1La tienda est\xE1
+      abierta: el que llega primero, se lo lleva!</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251161
+    m_Localized: <b>Todos contra todos</b>  <color=#B9AED6>Todos transmiten a la
+      vez. Faltan {count} para llegar a la tienda.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251162
+    m_Localized: "<b>Todos contra todos</b>  <color=#6BE38B>Todos est\xE1n listos
+      para la tienda.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251163
+    m_Localized: Resumen de la ronda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251164
+    m_Localized: Resumen de la ronda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251165
+    m_Localized: "Todav\xEDa nada: los primeros streams siguen en vivo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251166
+    m_Localized: Noche {night}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251167
+    m_Localized: "Esperando en los pr\xF3ximos streams"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251168
+    m_Localized: '{risk} por el raid de un rival'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251169
+    m_Localized: "maldici\xF3n de los Apocal\xEDpticos ({value}% por espectador)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251170
+    m_Localized: '{count} bots en la Audiencia'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251171
+    m_Localized: '{power} listo'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251172
+    m_Localized: Nada especial.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683856445440
+    m_Localized: "M\xE1s de {count} jugadores: Todos contra todos es el \xFAnico
+      modo."
     m_Metadata:
       m_Items: []
   references:

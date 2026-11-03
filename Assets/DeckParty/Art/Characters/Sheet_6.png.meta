@@ -103,10 +103,10 @@ TextureImporter:
       name: Sheet_6_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1536
-        height: 1024
+        x: 33
+        y: 613
+        width: 262
+        height: 321
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,6 +117,116 @@ TextureImporter:
       bones: []
       spriteID: 1c823e05e0117c7d0800000000000000
       internalID: -2898329082005346111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sheet_6_1
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 614
+        width: 261
+        height: 293
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 628aae74f3d46174498c725897f76807
+      internalID: 718252044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sheet_6_2
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 613
+        width: 232
+        height: 321
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24c8c71e3f64a854a8d2d2172aaac139
+      internalID: 1323879217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sheet_6_3
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 605
+        width: 266
+        height: 335
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a856678885b660e4dad685de07ebe9c9
+      internalID: 2082835907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sheet_6_4
+      rect:
+        serializedVersion: 2
+        x: 954
+        y: 610
+        width: 234
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f87e1fab5e1f1284dac629daeab997c8
+      internalID: 1908536649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sheet_6_5
+      rect:
+        serializedVersion: 2
+        x: 1259
+        y: 614
+        width: 241
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9123895d8899d74d825b26deec5fc53
+      internalID: -1712503410
       vertices: []
       indices: 
       edges: []
@@ -136,6 +246,11 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Sheet_6_0: -2898329082005346111
+      Sheet_6_1: 718252044
+      Sheet_6_2: 1323879217
+      Sheet_6_3: 2082835907
+      Sheet_6_4: 1908536649
+      Sheet_6_5: -1712503410
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

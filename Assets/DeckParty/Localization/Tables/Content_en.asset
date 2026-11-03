@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 370360320
-    m_Localized: Starter Stream
+    m_Localized: First Stream
     m_Metadata:
       m_Items: []
   - m_Id: 433274880
@@ -27,63 +27,64 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274881
-    m_Localized: Your first season live. Dependable regulars, a couple of moderators,
-      Doge and Cheems, and three friendly Diamonds.
+    m_Localized: Your first season live. Dependable regulars, a Producer and a Chat
+      Admin to run the room, one risky collaborator and three friendly Diamonds.
     m_Metadata:
       m_Items: []
   - m_Id: 433274882
-    m_Localized: Cat Cafe
+    m_Localized: Fan Club
     m_Metadata:
       m_Items: []
   - m_Id: 433274883
-    m_Localized: The internet runs on animals
+    m_Localized: Loyalty pays
     m_Metadata:
       m_Items: []
   - m_Id: 433274884
-    m_Localized: Every animal meme in one room. Bongo Cat drums up its community,
-      Nyan Cat chains arrivals, Doge rewards variety and Big Chungus needs a big
-      Sub Cap.
+    m_Localized: 'Build a real {icon:CoreFanbase} Core Fanbase: every three different
+      regulars cancel a {icon:risk}, so trolls and orbiters become safe money. Binge
+      Bunny and the Promo Code User love a packed chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 433274885
-    m_Localized: Doomscroll
+    m_Localized: Viral Moment
     m_Metadata:
       m_Items: []
   - m_Id: 433274886
-    m_Localized: '{icon:risk} is good content'
+    m_Localized: Clout chasing
     m_Metadata:
       m_Items: []
   - m_Id: 433274887
-    m_Localized: Wojaks feed on suffering. Doomer and Me Gusta love {icon:risk},
-      Gigachad and Sigma want the spotlight alone, and This Is Fine Dog keeps the
-      platform guessing.
+    m_Localized: Collaborators, scandals and celebrities. {icon:Content} Content
+      makes viewers outside your fanbase score twice and {icon:Clout} Clout tops
+      them up with extra {icon:subs}, but the risk piles up fast.
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
-    m_Localized: Italian Brainrot
+    m_Localized: Meme Lab
     m_Metadata:
       m_Items: []
   - m_Id: 433274889
-    m_Localized: Tung tung tung tung
+    m_Localized: Such synergy
     m_Metadata:
       m_Items: []
   - m_Id: 433274890
-    m_Localized: Chaos on a loop. Strikes, shuffles, bombardments and infections.
-      Pop Cat and Dancing Baby turn every action into {icon:subs}.
+    m_Localized: The {icon:MemeticsDivision} Memetics Division might make the whole
+      stream score twice. Degen Dog wants a chat full of different communities, and
+      Distraught Cat cashes in every time someone gets kicked.
     m_Metadata:
       m_Items: []
   - m_Id: 433274891
-    m_Localized: Reaction Channel
+    m_Localized: Staff Meeting
     m_Metadata:
       m_Items: []
   - m_Id: 433274892
-    m_Localized: Control the narrative
+    m_Localized: Run a tight ship
     m_Metadata:
       m_Items: []
   - m_Id: 433274893
-    m_Localized: Manipulators and schemers. Rearrange the queue, swap, zero and double
-      stats, convert {icon:subs} to {icon:cash} and back, and protect your stars
-      from bad luck.
+    m_Localized: The whole team on payroll. {icon:Staff} Staff may waive their own
+      {icon:cash} costs, {icon:Techspertise} Techspertise may bring a crashed server
+      back, and every action gets the right viewer in or the wrong one out.
     m_Metadata:
       m_Items: []
   - m_Id: 433274894
@@ -260,45 +261,45 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416590601601024
-    m_Localized: Talent Agency
+    m_Localized: Generation Gap
     m_Metadata:
       m_Items: []
   - m_Id: 416590672904192
-    m_Localized: The audience classics
+    m_Localized: OK boomer
     m_Metadata:
       m_Items: []
   - m_Id: 416590672904193
-    m_Localized: Back to basics. Reliable earners, a Producer to call in the right
-      viewer, a Cybersecurity Engineer on the door and a Comedian who needs a full
-      chat.
+    m_Localized: '{icon:Boomer} Boomer pays in {icon:cash}, {icon:Millennial} Millennial
+      in {icon:subs} and {icon:Zoomer} Zoomer rolls the dice. The Master of Currency
+      and the Executive PR cash in on every risky viewer in chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 416590672904194
-    m_Localized: Damage Control
+    m_Localized: Crypto Winter
     m_Metadata:
       m_Items: []
   - m_Id: 416590672904195
-    m_Localized: Risk pays, if you can contain it
-    m_Metadata:
-      m_Items: []
-  - m_Id: 416590672904196
-    m_Localized: Risky collaborators bring the money and the Hate-Watcher can't make
-      up their mind. Master of Currency and Executive PR cash in on the chaos while
-      the Chat Arbitrator keeps the peace.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 416590672904197
-    m_Localized: Money Talks
-    m_Metadata:
-      m_Items: []
-  - m_Id: 416590672904198
     m_Localized: Cash out before it crashes
     m_Metadata:
       m_Items: []
+  - m_Id: 416590672904196
+    m_Localized: '{icon:FinanceBros} Finance Bros may double every {icon:cash} reward.
+      Rug pull with the Crypto Enthusiast, stack Checkout Codes, grow your Gen Z
+      with Job and let the Online Scandal fill the room.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904197
+    m_Localized: Comment Section
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904198
+    m_Localized: Don't feed the trolls
+    m_Metadata:
+      m_Items: []
   - m_Id: 416590672904199
-    m_Localized: Rug pulls, checkout codes and softball interviews. Bank {icon:subs}
-      mid-stream with the Crypto Guy, grow your Gen Z with Job and let the Online
-      Scandal fill the room.
+    m_Localized: '{icon:Trolls} Trolls pay out even when you get deplatformed. Ride
+      the risk with the Chat Arbitrator on standby, and in multiplayer let Clippo
+      The Clanker''s {icon:Bots} Bots spam the next streamer.'
     m_Metadata:
       m_Items: []
   references:

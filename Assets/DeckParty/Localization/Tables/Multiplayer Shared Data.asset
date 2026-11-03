@@ -315,6 +315,26 @@ MonoBehaviour:
     m_Key: mp.doom
     m_Metadata:
       m_Items: []
+  - m_Id: 736680563916800
+    m_Key: mp.ffa_forced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219968
+    m_Key: mp.shop_closed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219969
+    m_Key: mp.shop_countdown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219970
+    m_Key: mp.shop_open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219971
+    m_Key: mp.bots
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

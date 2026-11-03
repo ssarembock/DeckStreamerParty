@@ -1183,11 +1183,9 @@ MonoBehaviour:
       de {icon:risk} l\xEDquido tudo bem; com <b>3 a live \xE9 desplataformizada</b>:
       ela acaba sem pagamento e voc\xEA d\xE1 um <b>ban tempor\xE1rio</b> a um espectador
       (ele fica fora da pr\xF3xima live). O Normie, o F\xE3 raiz e a Estrela da internet
-      <b>anulam</b> 1 {icon:risk} cada enquanto est\xE3o no chat (o Cheems tamb\xE9m,
-      se tiver um Doge por perto), assim como cada 3 pontos de {icon:CoreFanbase}
-      Base de f\xE3s. Alguns espectadores adicionam {icon:risk} com as a\xE7\xF5es;
-      o Cachorro \"T\xE1 tudo bem\" convence a plataforma uma vez e o \xC1rbitro
-      do chat tira o risco."
+      <b>anulam</b> 1 {icon:risk} cada enquanto est\xE3o no chat, assim como cada
+      3 pontos de {icon:CoreFanbase} Base de f\xE3s. Alguns espectadores adicionam
+      {icon:risk} com as a\xE7\xF5es; o \xC1rbitro do chat tira o risco."
     m_Metadata:
       m_Items: []
   - m_Id: 483606637
@@ -1197,8 +1195,8 @@ MonoBehaviour:
   - m_Id: 483606638
     m_Localized: "Voc\xEA n\xE3o pode adicionar espectadores quando bate o limite,
       mas quem <b>traz</b> outros (Gerente de marketing, Esc\xE2ndalo online, Estrela
-      maior) ou ocupa mais espa\xE7o (Big Chungus ocupa 3) pode estourar. Se acontecer,
-      <b>o servidor cai</b> e a live acaba sem pagamento. Deixe espa\xE7o sobrando!"
+      maior) pode estourar. Se acontecer, <b>o servidor cai</b> e a live acaba sem
+      pagamento. Deixe espa\xE7o sobrando!"
     m_Metadata:
       m_Items: []
   - m_Id: 483606639
@@ -1221,17 +1219,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606642
-    m_Localized: "Todo espectador pertence a um grupo (Bichos, Wojak, Rage Comic,
-      Rea\xE7\xF5es, Brainrot, ou A definir enquanto n\xE3o \xE9 decidido) e toda
-      a\xE7\xE3o tem um tipo (Recrutar, Expulsar, Modificar, Embaralhar, Espiar,
-      Economia). O Doge adora grupos misturados (A definir n\xE3o conta), o Bongo
-      Cat fortalece os Bichos e o Beb\xEA Dan\xE7ante premia duas a\xE7\xF5es seguidas
-      do mesmo tipo. Algumas a\xE7\xF5es pedem pra escolher uma op\xE7\xE3o primeiro
-      e depois um ou mais espectadores; as que usam v\xE1rios espectadores mostram
-      um bot\xE3o Confirmar. Mudan\xE7as permanentes (Chad vs Virgem, Tung Tung,
-      Brian Azarado, Afiliado, Gera\xE7\xE3o Z empregado) ficam naquela carta pra
-      sempre. Passe o mouse sobre um espectador pra ver o grupo, o tipo de a\xE7\xE3o
-      e os efeitos desta noite."
+    m_Localized: "Toda a\xE7\xE3o tem um tipo (Recrutar, Expulsar, Modificar, Embaralhar,
+      Espiar, Economia). Algumas a\xE7\xF5es pedem pra escolher um ou dois espectadores;
+      as que usam v\xE1rios espectadores mostram um bot\xE3o Confirmar. Mudan\xE7as
+      permanentes (o cupom do Afiliado, Gera\xE7\xE3o Z empregado) ficam naquela
+      carta pra sempre. Passe o mouse sobre um espectador pra ver as comunidades,
+      o tipo de a\xE7\xE3o e os efeitos desta noite."
     m_Metadata:
       m_Items: []
   - m_Id: 483606643
@@ -1678,7 +1671,80 @@ MonoBehaviour:
       pontua.\\n{icon:Zoomer} <b>Zoomer</b>: duas rolagens separadas de 20% por ponto
       (at\xE9 80%): +6 {icon:subs}, e -3 {icon:cash}.\\n{icon:ArmchairActivists}
       <b>Ativistas de sof\xE1</b>: 10% por ponto (at\xE9 50%) de cada Ativista de
-      sof\xE1 n\xE3o pontuar."
+      sof\xE1 n\xE3o pontuar.\\n{icon:Clout} <b>Fama</b>: 10% por ponto (at\xE9 40%)
+      de cada espectador fora da Base de f\xE3s trazer +1 {icon:subs} a mais toda
+      vez que pontua.\\n{icon:MemeticsDivision} <b>Divis\xE3o Mem\xE9tica</b>: 1%
+      por ponto (at\xE9 10%) de a live inteira pontuar duas vezes.\\n{icon:Bots}
+      <b>Bots</b> (multijogador): quando a live pontua, 10% por ponto (at\xE9 40%)
+      por espectador Bots de mandar um Bot (ocupa espa\xE7o, n\xE3o ganha nada) pra
+      pr\xF3xima live do pr\xF3ximo jogador."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682300358656
+    m_Localized: Fama
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467520
+    m_Localized: "Todo mundo quer um peda\xE7o. Cada espectador fora da {icon:CoreFanbase}
+      Base de f\xE3s tem {per}% de chance por ponto ({top}% com {max} pontos) de
+      trazer +{subs} {icon:subs} a mais toda vez que pontua."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467521
+    m_Localized: "Agora: {value}% de chance de cada espectador fora da Base de f\xE3s
+      trazer 1 {icon:subs} a mais."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467522
+    m_Localized: "Divis\xE3o Mem\xE9tica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467523
+    m_Localized: "Repostado pra sempre. Cada ponto d\xE1 {per}% de chance ({top}%
+      com {max} pontos) de a live inteira pontuar uma segunda vez: cada espectador
+      e cada recompensa de comunidade, com todas as rolagens de novo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467524
+    m_Localized: 'Agora: {value}% de chance de a live pontuar duas vezes.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467525
+    m_Localized: Bots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467526
+    m_Localized: "Multijogador. Quando a sua live pontua, cada espectador Bots no
+      chat tem {per}% de chance por ponto ({top}% com {max} pontos) de mandar um
+      Bot pra pr\xF3xima live do pr\xF3ximo jogador. Um Bot ocupa um espa\xE7o no
+      chat e n\xE3o ganha nada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467527
+    m_Localized: 'Agora: {value}% de chance de cada espectador Bots mandar um Bot.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467528
+    m_Localized: '{viewer} traz fama extra: {subs}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467529
+    m_Localized: "A Divis\xE3o Mem\xE9tica reposta a live inteira: ela pontua de
+      novo ({value}% de chance)!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467530
+    m_Localized: "Bots enviados pra pr\xF3xima live do pr\xF3ximo jogador: {count}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467531
+    m_Localized: "Os bots de {player} v\xE3o pra pr\xF3xima live do pr\xF3ximo jogador:
+      {count}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467532
+    m_Localized: "Bots rivais entraram na Audi\xEAncia desta live: {count}. Ocupam
+      espa\xE7o e n\xE3o ganham nada."
     m_Metadata:
       m_Items: []
   references:

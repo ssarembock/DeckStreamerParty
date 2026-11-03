@@ -31,7 +31,8 @@ The UI Skin is `Assets/DeckParty/Data/UISkin.asset` (also linked from the Game D
 
 Guidelines:
 - **Shape:** square icons, readable at about 24 px, because they sit inside text.
-- **Coloured art:** in the UI Skin entry, tick **Override Color** and leave it white, so the HUD doesn't tint your colours.
+- **Coloured art:** in the UI Skin entry, tick **Override Color** and leave it white, so neither the HUD nor the icons inside text tint your colours. This matters most if you named the files `icon_pop`, `icon_cash` or `icon_trouble`: those are also the placeholders' names, so the text icons would otherwise be tinted gold, green or red.
+- **Auto-assign:** sprites under `Assets/DeckParty/Art` named `IconPop`, `IconCash` or `IconTrouble` (any case, with or without `_`, `ui_` or `skin_`) are slotted by **Deck Party > Art > Auto-Assign Sprites by Name**.
 - **When changes show:** icons inside text are built when the game starts, so restart Play mode after changing them.
 
 ## 3. Communities

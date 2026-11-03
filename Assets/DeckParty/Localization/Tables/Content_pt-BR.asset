@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 370360320
-    m_Localized: Live de iniciante
+    m_Localized: Primeira live
     m_Metadata:
       m_Items: []
   - m_Id: 433274880
@@ -27,63 +27,66 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274881
-    m_Localized: "Sua primeira temporada ao vivo. Fi\xE9is de confian\xE7a, uns moderadores,
-      Doge e Cheems e tr\xEAs Diamantes amig\xE1veis."
+    m_Localized: "Sua primeira temporada ao vivo. Regulares confi\xE1veis, Produtor
+      e Admin do chat cuidando da sala, um colaborador arriscado e tr\xEAs Diamantes
+      amig\xE1veis."
     m_Metadata:
       m_Items: []
   - m_Id: 433274882
-    m_Localized: "Caf\xE9 dos Gatos"
+    m_Localized: "F\xE3-clube"
     m_Metadata:
       m_Items: []
   - m_Id: 433274883
-    m_Localized: "A internet roda \xE0 base de bichos"
+    m_Localized: Lealdade compensa
     m_Metadata:
       m_Items: []
   - m_Id: 433274884
-    m_Localized: "Todos os memes de bicho numa sala s\xF3. O Bongo Cat agita a comunidade
-      dele, o Nyan Cat encadeia chegadas, o Doge premia a variedade e o Big Chungus
-      precisa de um limite grande."
+    m_Localized: "Monte uma verdadeira {icon:CoreFanbase} Base de f\xE3s: cada tr\xEAs
+      regulares diferentes anulam 1 {icon:risk}, ent\xE3o trolls e orbitadores viram
+      dinheiro garantido. Coelho maratonista e Ca\xE7ador de cupom amam um chat lotado."
     m_Metadata:
       m_Items: []
   - m_Id: 433274885
-    m_Localized: Doomscroll
+    m_Localized: Momento viral
     m_Metadata:
       m_Items: []
   - m_Id: 433274886
-    m_Localized: "{icon:risk} \xE9 conte\xFAdo"
+    m_Localized: "Ca\xE7ando fama"
     m_Metadata:
       m_Items: []
   - m_Id: 433274887
-    m_Localized: "Os Wojaks se alimentam de sofrimento. Doomer e Me Gusta amam {icon:risk},
-      Gigachad e o Macho Sigma querem os holofotes s\xF3 pra eles, e o Cachorro \"T\xE1
-      tudo bem\" deixa a plataforma na d\xFAvida."
+    m_Localized: "Colaboradores, esc\xE2ndalos e celebridades. {icon:Content} Conte\xFAdo
+      faz os espectadores fora da sua base pontuarem duas vezes e {icon:Clout} Fama
+      ainda d\xE1 {icon:subs} extras, mas o risco acumula r\xE1pido."
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
-    m_Localized: Brainrot Italiano
+    m_Localized: "Laborat\xF3rio de memes"
     m_Metadata:
       m_Items: []
   - m_Id: 433274889
-    m_Localized: Tung tung tung tung
+    m_Localized: Tanta sinergia
     m_Metadata:
       m_Items: []
   - m_Id: 433274890
-    m_Localized: "Caos em loop. Pancadas, embaralhadas, bombardeios e infec\xE7\xF5es.
-      Pop Cat e o Beb\xEA Dan\xE7ante transformam cada a\xE7\xE3o em {icon:subs}."
+    m_Localized: "A {icon:MemeticsDivision} Divis\xE3o Mem\xE9tica pode fazer a live
+      inteira pontuar duas vezes. Cachorro Degen quer um chat cheio de comunidades
+      diferentes e Gato Desolado lucra toda vez que algu\xE9m \xE9 expulso."
     m_Metadata:
       m_Items: []
   - m_Id: 433274891
-    m_Localized: Canal de React
+    m_Localized: "Reuni\xE3o de equipe"
     m_Metadata:
       m_Items: []
   - m_Id: 433274892
-    m_Localized: Controle a narrativa
+    m_Localized: Tudo sob controle
     m_Metadata:
       m_Items: []
   - m_Id: 433274893
-    m_Localized: Manipuladores e articuladores. Reorganize a fila, troque, zere e
-      dobre status, converta {icon:subs} em {icon:cash} e vice-versa, e proteja suas
-      estrelas do azar.
+    m_Localized: "A equipe inteira na folha de pagamento. {icon:Staff} Equipe pode
+      dispensar os pr\xF3prios custos de {icon:cash}, {icon:Techspertise} Tecnoexperts
+      pode trazer de volta um servidor ca\xEDdo e cada a\xE7\xE3o p\xF5e o espectador
+      certo pra dentro ou o errado pra fora."
     m_Metadata:
       m_Items: []
   - m_Id: 433274894
@@ -265,45 +268,46 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416590601601024
-    m_Localized: "Ag\xEAncia de talentos"
+    m_Localized: "Conflito de gera\xE7\xF5es"
     m_Metadata:
       m_Items: []
   - m_Id: 416590672904192
-    m_Localized: "Os cl\xE1ssicos da audi\xEAncia"
+    m_Localized: OK boomer
     m_Metadata:
       m_Items: []
   - m_Id: 416590672904193
-    m_Localized: "De volta ao b\xE1sico. Espectadores que rendem, um Produtor pra
-      chamar o espectador certo, um Engenheiro de ciberseguran\xE7a na porta e um
-      Comediante que precisa do chat cheio."
+    m_Localized: '{icon:Boomer} Boomer paga em {icon:cash}, {icon:Millennial} Millennial
+      em {icon:subs} e {icon:Zoomer} Zoomer joga os dados. Mestre da grana e Diretor
+      de PR lucram com cada espectador arriscado no chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 416590672904194
-    m_Localized: Controle de danos
+    m_Localized: Inverno cripto
     m_Metadata:
       m_Items: []
   - m_Id: 416590672904195
-    m_Localized: "Risco d\xE1 dinheiro, se voc\xEA conseguir segurar"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 416590672904196
-    m_Localized: "Os collabs arriscados trazem a grana e o Hater n\xE3o se decide.
-      O Mestre da grana e o Diretor de PR lucram com o caos enquanto o \xC1rbitro
-      do chat mant\xE9m a paz."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 416590672904197
-    m_Localized: Dinheiro fala mais alto
-    m_Metadata:
-      m_Items: []
-  - m_Id: 416590672904198
     m_Localized: Saque antes que despenque
     m_Metadata:
       m_Items: []
+  - m_Id: 416590672904196
+    m_Localized: "{icon:FinanceBros} Finance Bros pode dobrar cada recompensa de
+      {icon:cash}. D\xEA um rug pull com o Entusiasta de cripto, acumule cupons,
+      fa\xE7a seu Gera\xE7\xE3o Z empregado crescer e deixe o Esc\xE2ndalo online
+      lotar a sala."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904197
+    m_Localized: "Se\xE7\xE3o de coment\xE1rios"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416590672904198
+    m_Localized: "N\xE3o alimente os trolls"
+    m_Metadata:
+      m_Items: []
   - m_Id: 416590672904199
-    m_Localized: "Rug pulls, cupons e entrevistas chapa-branca. Garanta {icon:subs}
-      no meio da live com o Cara das criptos, fa\xE7a seu Gera\xE7\xE3o Z empregado
-      crescer e deixe o Esc\xE2ndalo online lotar o chat."
+    m_Localized: "{icon:Trolls} Trolls paga mesmo quando voc\xEA \xE9 desplataformizado.
+      Arrisque com o \xC1rbitro do chat de prontid\xE3o e, no multijogador, deixe
+      os {icon:Bots} Bots de Clippo, o Lataria spammarem o pr\xF3ximo streamer."
     m_Metadata:
       m_Items: []
   references:

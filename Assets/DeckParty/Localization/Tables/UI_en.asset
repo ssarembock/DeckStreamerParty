@@ -1429,8 +1429,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514443
-    m_Localized: everyone plays the same night at once. The first night someone gets
-      {count} Diamonds ends the season. Click a player to watch them.
+    m_Localized: 'everyone streams at the same time and nobody can watch anyone else.
+      When every stream is over and everyone clicks Go to the Shop, a 3-2-1 countdown
+      opens the shop for all at once: first come, first served. The first night someone
+      gets {count} Diamonds ends the season. The only mode for 3 or more players.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514444
@@ -1609,6 +1611,167 @@ MonoBehaviour:
   - m_Id: 675191551377418
     m_Localized: 'Rival Doomsdayers: each of {player}''s viewers has a {value}% chance
       to score nothing this stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683764170752
+    m_Localized: FIRST COME, FIRST SERVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251136
+    m_Localized: The shop opens for everyone at once, when every stream is over.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251137
+    m_Localized: 'Shop first: the next night starts after everyone has shopped.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251138
+    m_Localized: 'The shop is first come, first served: everyone goes in together
+      when the countdown ends, and the stock is shared.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251139
+    m_Localized: Get ready...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251140
+    m_Localized: 'Everyone is ready. The shop opens in:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251141
+    m_Localized: 'Still streaming: {players}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251142
+    m_Localized: 'Not at the shop yet: {players}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251143
+    m_Localized: Everyone else is ready.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251144
+    m_Localized: Waiting at the shop door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251145
+    m_Localized: Not ready yet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251146
+    m_Localized: Stream over!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251147
+    m_Localized: Head to the shop when you're ready. It opens when everyone is there.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251148
+    m_Localized: Go to the Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251149
+    m_Localized: At the shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251150
+    m_Localized: Stream over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251151
+    m_Localized: SCORED AGAIN!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251152
+    m_Localized: The Memetics Division reposted the stream ({value}% chance)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251153
+    m_Localized: 'Rival Bots invaded your Audience: {count} for this stream. They
+      take a space and earn nothing.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251154
+    m_Localized: '{count} rival Bots joined {player}''s Audience for this stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251155
+    m_Localized: '{count} Bots sent to the next player!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251156
+    m_Localized: SHOP OPEN!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251157
+    m_Localized: First come, first served
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251158
+    m_Localized: 'Free For All: streams are private. Open the round summary above
+      the board to see what everyone did.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251159
+    m_Localized: <b>Free For All</b>  <color=#FFC94A>The shop opens in {seconds}...</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251160
+    m_Localized: '<b>Free For All</b>  <color=#FF9A3D>The shop is open: first come,
+      first served!</color>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251161
+    m_Localized: <b>Free For All</b>  <color=#B9AED6>Everyone streams at once. Waiting
+      for {count} to get to the shop.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251162
+    m_Localized: <b>Free For All</b>  <color=#6BE38B>Everyone is ready for the shop.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251163
+    m_Localized: Round Summary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251164
+    m_Localized: Round Summary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251165
+    m_Localized: 'Nothing yet: the first streams are still live.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251166
+    m_Localized: Night {night}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251167
+    m_Localized: Waiting for the next streams
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251168
+    m_Localized: '{risk} from a rival''s raid'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251169
+    m_Localized: Doomsdayers curse ({value}% per viewer)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251170
+    m_Localized: '{count} Bots in the Audience'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251171
+    m_Localized: '{power} ready'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251172
+    m_Localized: Nothing special.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683856445440
+    m_Localized: 'More than {count} players: Free For All is the only mode.'
     m_Metadata:
       m_Items: []
   references:

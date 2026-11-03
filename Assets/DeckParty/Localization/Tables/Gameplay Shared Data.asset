@@ -1555,6 +1555,62 @@ MonoBehaviour:
     m_Key: rules.communities.body
     m_Metadata:
       m_Items: []
+  - m_Id: 736682300358656
+    m_Key: community.Clout.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467520
+    m_Key: community.Clout.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467521
+    m_Key: community.Clout.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467522
+    m_Key: community.MemeticsDivision.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467523
+    m_Key: community.MemeticsDivision.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467524
+    m_Key: community.MemeticsDivision.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467525
+    m_Key: community.Bots.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467526
+    m_Key: community.Bots.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467527
+    m_Key: community.Bots.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467528
+    m_Key: log.clout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467529
+    m_Key: log.memetics_repeat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467530
+    m_Key: log.bots_sent_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467531
+    m_Key: log.bots_sent_other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467532
+    m_Key: log.bots_arrived
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

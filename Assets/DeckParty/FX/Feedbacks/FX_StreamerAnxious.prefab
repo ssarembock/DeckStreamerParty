@@ -135,8 +135,8 @@ MonoBehaviour:
   DebugActive: 0
   InScriptDrivenPause: 0
   FeedbacksList:
-  - rid: 2741550451676152103
-  - rid: 2741550451676152104
+  - rid: 7761574684867952729
+  - rid: 7761574684867952730
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   RestoreInitialValuesOnDisable: 0
@@ -148,11 +148,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2741550451676152103
+    - rid: 7761574684867952729
       type: {class: MMF_Position, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -2129725485
+        UniqueID: 1821986375
         Label: Shake
         OriginalLabel: 
         ChannelMode: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
         Space: 1
         RandomizeRemap: 0
         MovementMode: 0
-        AnimatePositionDuration: 0.3
+        AnimatePositionDuration: 0.28
         AnimatePositionSpeed: 1
         AnimatePositionTween:
           MMTweenDefinitionType: 1
@@ -262,7 +262,7 @@ MonoBehaviour:
           EnumConditions: 0100010000000000000000000000000000000000000000000000000000000000
         RemapCurveZero: 0
         RemapCurveZeroAlt: 0
-        RemapCurveOne: 6
+        RemapCurveOne: 4
         RemapCurveOneAlt: 1
         AnimateX: 1
         AnimatePositionTweenX:
@@ -360,53 +360,53 @@ MonoBehaviour:
             - serializedVersion: 3
               time: 0
               value: 0
-              inSlope: -2.2222223
-              outSlope: -2.2222223
+              inSlope: -2.5
+              outSlope: -2.5
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
               time: 0.12
-              value: -0.26666668
-              inSlope: 0.55555534
-              outSlope: 0.55555534
+              value: -0.3
+              inSlope: 0.62499976
+              outSlope: 0.62499976
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
               time: 0.3
-              value: 0.33333334
-              inSlope: -0.11111164
-              outSlope: -0.11111164
+              value: 0.375
+              inSlope: -0.1250006
+              outSlope: -0.1250006
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
               time: 0.45
-              value: -0.20000002
-              inSlope: -0.6993469
-              outSlope: -0.6993469
+              value: -0.22500001
+              inSlope: -0.7867652
+              outSlope: -0.7867652
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
               time: 0.62
-              value: 0.16666667
-              inSlope: 0.3839869
-              outSlope: 0.3839869
+              value: 0.1875
+              inSlope: 0.43198523
+              outSlope: 0.43198523
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
               time: 0.8
-              value: -0.083333336
-              inSlope: -0.4861111
-              outSlope: -0.4861111
+              value: -0.09375
+              inSlope: -0.546875
+              outSlope: -0.546875
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
@@ -414,8 +414,8 @@ MonoBehaviour:
             - serializedVersion: 3
               time: 1
               value: 0
-              inSlope: 0.41666672
-              outSlope: 0.41666672
+              inSlope: 0.46875006
+              outSlope: 0.46875006
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
@@ -508,11 +508,11 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-    - rid: 2741550451676152104
+    - rid: 7761574684867952730
       type: {class: MMF_Rotation, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -613513669
+        UniqueID: 59021657
         Label: Wobble
         OriginalLabel: 
         ChannelMode: 0
@@ -586,10 +586,10 @@ MonoBehaviour:
         Mode: 1
         RotationSpace: 1
         MovementMode: 0
-        AnimateRotationDuration: 0.3
+        AnimateRotationDuration: 0.28
         AnimatePositionSpeed: 1
         RemapCurveZero: 0
-        RemapCurveOne: 4
+        RemapCurveOne: 2.5
         AnimateX: 0
         AnimateRotationTweenX:
           MMTweenDefinitionType: 1

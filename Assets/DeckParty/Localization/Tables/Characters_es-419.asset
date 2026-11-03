@@ -1077,6 +1077,68 @@ MonoBehaviour:
       entra al chat (hasta 9 {icon:cash}), aunque el stream termine mal.'
     m_Metadata:
       m_Items: []
+  - m_Id: 736681897705472
+    m_Localized: Perro Degen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008640
+    m_Localized: "Tanta sinergia: +1 {icon:subs} por cada comunidad distinta en el
+      chat (m\xE1x. +5). Otros Perros Degen no cuentan."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008641
+    m_Localized: Gato Desconsolado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008642
+    m_Localized: 'Todos me abandonan: gana +2 {icon:subs} y +1 {icon:cash} cada vez
+      que otro espectador se va o lo echan.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008643
+    m_Localized: Evangelista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008644
+    m_Localized: "DIAMANTE. Acci\xF3n: invoca a cualquier espectador de la fila,
+      incluso a otro Diamante."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008645
+    m_Localized: "\xA12x1!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008646
+    m_Localized: Usuario de cupones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008647
+    m_Localized: "+5 {icon:subs}, pero solo si el chat est\xE1 lleno al puntuar.
+      Siempre cuesta 1 {icon:cash}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008648
+    m_Localized: Entusiasta cripto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008649
+    m_Localized: "Acci\xF3n: punt\xFAa ahora mismo a otro espectador del chat, penalizaciones
+      incluidas (se cobra al instante). Igual vuelve a puntuar al terminar el stream."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008650
+    m_Localized: Rug Pull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008651
+    m_Localized: Bot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008652
+    m_Localized: Un bot de spam del stream de un rival. Ocupa un lugar en el chat
+      y no gana nada. Se va al terminar este stream.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

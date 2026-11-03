@@ -135,8 +135,8 @@ MonoBehaviour:
   DebugActive: 0
   InScriptDrivenPause: 0
   FeedbacksList:
-  - rid: 7761574661956567129
-  - rid: 7761574661956567130
+  - rid: 7761574684867952731
+  - rid: 7761574684867952732
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   RestoreInitialValuesOnDisable: 0
@@ -148,11 +148,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7761574661956567129
+    - rid: 7761574684867952731
       type: {class: MMF_Scale, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: 1591607809
+        UniqueID: -651521653
         Label: Pop In
         OriginalLabel: 
         ChannelMode: 0
@@ -375,11 +375,11 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-    - rid: 7761574661956567130
+    - rid: 7761574684867952732
       type: {class: MMF_Rotation, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -24250499
+        UniqueID: -176644498
         Label: Wobble
         OriginalLabel: 
         ChannelMode: 0

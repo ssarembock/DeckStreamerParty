@@ -16,7 +16,7 @@ MonoBehaviour:
   - name: Loyal Fan
     key: LoyalFan
     type: 0
-    portrait: {fileID: 2408035347343583912, guid: f2248c449efb82747bb5106359d41f34, type: 3}
+    portrait: {fileID: -2898329082005346111, guid: 85ac7cfbc0e04ed4e8453957652be675, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -27,7 +27,7 @@ MonoBehaviour:
   - name: Whale
     key: Whale
     type: 1
-    portrait: {fileID: 541896646, guid: f2248c449efb82747bb5106359d41f34, type: 3}
+    portrait: {fileID: -1144078954, guid: be8983e799f3ca74eaea994305bffe85, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -38,7 +38,7 @@ MonoBehaviour:
   - name: Ineffective Troll
     key: IneffectiveTroll
     type: 2
-    portrait: {fileID: -2092036663, guid: f2248c449efb82747bb5106359d41f34, type: 3}
+    portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 33
     characterPrefab: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   - name: Producer
     key: Producer
     type: 3
-    portrait: {fileID: 541896646, guid: f2248c449efb82747bb5106359d41f34, type: 3}
+    portrait: {fileID: 94037863979579222, guid: d34aba27b6570a044b9b4db92a8973b1, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -60,7 +60,7 @@ MonoBehaviour:
   - name: Chat Admin
     key: ChatAdmin
     type: 4
-    portrait: {fileID: 1557067447, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
+    portrait: {fileID: -1712503410, guid: 85ac7cfbc0e04ed4e8453957652be675, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -71,7 +71,7 @@ MonoBehaviour:
   - name: Normie
     key: Normie
     type: 5
-    portrait: {fileID: -2107843817, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
+    portrait: {fileID: 667513976212898483, guid: 654255d8368643a4c98793560e591dc3, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -544,7 +544,7 @@ MonoBehaviour:
   - name: Distraught Cat
     key: DistraughtCat
     type: 48
-    portrait: {fileID: 0}
+    portrait: {fileID: 1567478799, guid: 22737974618bd104dac319073f2a3f14, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4096
     characterPrefab: {fileID: 0}
@@ -566,7 +566,7 @@ MonoBehaviour:
   - name: Big Boomer
     key: BigBoomer
     type: 50
-    portrait: {fileID: 0}
+    portrait: {fileID: 1323879217, guid: 85ac7cfbc0e04ed4e8453957652be675, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 128
     characterPrefab: {fileID: 0}
@@ -577,7 +577,7 @@ MonoBehaviour:
   - name: Clippo The Clanker
     key: ClippoTheClanker
     type: 51
-    portrait: {fileID: 0}
+    portrait: {fileID: 1538896756, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 8192
     characterPrefab: {fileID: 0}
@@ -588,7 +588,7 @@ MonoBehaviour:
   - name: Bigger Star
     key: BiggerStar
     type: 52
-    portrait: {fileID: 0}
+    portrait: {fileID: 2024471885, guid: be8983e799f3ca74eaea994305bffe85, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2052
     characterPrefab: {fileID: 0}
@@ -599,7 +599,7 @@ MonoBehaviour:
   - name: Precocious Youth
     key: PrecociousYouth
     type: 53
-    portrait: {fileID: 0}
+    portrait: {fileID: 1908536649, guid: 85ac7cfbc0e04ed4e8453957652be675, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4
     characterPrefab: {fileID: 0}
@@ -610,7 +610,7 @@ MonoBehaviour:
   - name: Internet Starpower
     key: InternetStarpower
     type: 54
-    portrait: {fileID: 0}
+    portrait: {fileID: -6384077978806157326, guid: 15231334d3254cb46995f2da925dbf7f, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2052
     characterPrefab: {fileID: 0}
@@ -621,7 +621,7 @@ MonoBehaviour:
   - name: Platform Owner
     key: PlatformOwner
     type: 55
-    portrait: {fileID: 0}
+    portrait: {fileID: -2041527551682163859, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2048
     characterPrefab: {fileID: 0}
@@ -632,7 +632,7 @@ MonoBehaviour:
   - name: Mainstream Celebrity
     key: MainstreamCelebrity
     type: 56
-    portrait: {fileID: 0}
+    portrait: {fileID: 2595682619125052946, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2052
     characterPrefab: {fileID: 0}
@@ -643,7 +643,7 @@ MonoBehaviour:
   - name: Senior Marketing Manager
     key: SeniorMarketingManager
     type: 57
-    portrait: {fileID: 0}
+    portrait: {fileID: -801302851, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 258
     characterPrefab: {fileID: 0}
@@ -654,7 +654,7 @@ MonoBehaviour:
   - name: Evangelist
     key: Evangelist
     type: 58
-    portrait: {fileID: 0}
+    portrait: {fileID: 958500471, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -665,7 +665,7 @@ MonoBehaviour:
   - name: Influential Troll
     key: InfluentialTroll
     type: 59
-    portrait: {fileID: 0}
+    portrait: {fileID: -832105217, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 32
     characterPrefab: {fileID: 0}
@@ -676,7 +676,7 @@ MonoBehaviour:
   - name: Cybersecurity Engineer
     key: CybersecurityEngineer
     type: 60
-    portrait: {fileID: 0}
+    portrait: {fileID: -1551627727, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 10
     characterPrefab: {fileID: 0}
@@ -687,7 +687,7 @@ MonoBehaviour:
   - name: Paid Sponsorship
     key: PaidSponsorship
     type: 61
-    portrait: {fileID: 0}
+    portrait: {fileID: -1375932157, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 16
     characterPrefab: {fileID: 0}
@@ -698,7 +698,7 @@ MonoBehaviour:
   - name: Promo Code User
     key: PromoCodeUser
     type: 62
-    portrait: {fileID: 21300000, guid: bbf4155401ecb5442a0d48111c7d9459, type: 3}
+    portrait: {fileID: -265884576, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -709,7 +709,7 @@ MonoBehaviour:
   - name: Account Manager
     key: AccountManager
     type: 63
-    portrait: {fileID: 0}
+    portrait: {fileID: -1630023046, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -720,7 +720,7 @@ MonoBehaviour:
   - name: Crypto Enthusiast
     key: CryptoEnthusiast
     type: 64
-    portrait: {fileID: 0}
+    portrait: {fileID: 785415261557809399, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 0
     characterPrefab: {fileID: 0}
@@ -731,7 +731,7 @@ MonoBehaviour:
   - name: Generous Donator
     key: GenerousDonator
     type: 65
-    portrait: {fileID: 0}
+    portrait: {fileID: -844526406, guid: ec83b91354b48b141af347487aaa4afa, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 17
     characterPrefab: {fileID: 0}
@@ -742,7 +742,7 @@ MonoBehaviour:
   - name: PR Manager
     key: PrManager
     type: 66
-    portrait: {fileID: 0}
+    portrait: {fileID: 614249705, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -753,7 +753,7 @@ MonoBehaviour:
   - name: Highly Risky Collaborator
     key: HighlyRiskyCollaborator
     type: 67
-    portrait: {fileID: 0}
+    portrait: {fileID: -2452879, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4
     characterPrefab: {fileID: 0}
@@ -764,7 +764,7 @@ MonoBehaviour:
   - name: Chat Arbitrator
     key: ChatArbitrator
     type: 68
-    portrait: {fileID: 0}
+    portrait: {fileID: -679116045, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 2
     characterPrefab: {fileID: 0}
@@ -775,7 +775,7 @@ MonoBehaviour:
   - name: Bot Detector
     key: BotDetector
     type: 69
-    portrait: {fileID: 0}
+    portrait: {fileID: 2078254843, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 8
     characterPrefab: {fileID: 0}
@@ -786,7 +786,7 @@ MonoBehaviour:
   - name: Risky Orbiter
     key: RiskyOrbiter
     type: 70
-    portrait: {fileID: 0}
+    portrait: {fileID: 1315259534, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4
     characterPrefab: {fileID: 0}
@@ -797,7 +797,7 @@ MonoBehaviour:
   - name: Social Media Manager
     key: SocialMediaManager
     type: 71
-    portrait: {fileID: 0}
+    portrait: {fileID: -859353344, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 514
     characterPrefab: {fileID: 0}
@@ -808,7 +808,7 @@ MonoBehaviour:
   - name: Billionaire Benefactor
     key: BillionaireBenefactor
     type: 72
-    portrait: {fileID: 0}
+    portrait: {fileID: 7016762480026511513, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 144
     characterPrefab: {fileID: 0}
@@ -819,7 +819,7 @@ MonoBehaviour:
   - name: Tech Admin
     key: TechAdmin
     type: 73
-    portrait: {fileID: 0}
+    portrait: {fileID: 1398632798, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 8
     characterPrefab: {fileID: 0}
@@ -830,7 +830,7 @@ MonoBehaviour:
   - name: Online Scandal
     key: OnlineScandal
     type: 74
-    portrait: {fileID: 0}
+    portrait: {fileID: 1533252833, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 4
     characterPrefab: {fileID: 0}
@@ -841,7 +841,7 @@ MonoBehaviour:
   - name: Gatekeeper
     key: Gatekeeper
     type: 75
-    portrait: {fileID: 0}
+    portrait: {fileID: -736008928, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 33
     characterPrefab: {fileID: 0}
@@ -852,7 +852,7 @@ MonoBehaviour:
   - name: Binge Bunny
     key: BingeBunny
     type: 76
-    portrait: {fileID: 0}
+    portrait: {fileID: -402697210, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 1
     characterPrefab: {fileID: 0}
@@ -863,7 +863,7 @@ MonoBehaviour:
   - name: Hate-Watcher
     key: HateWatcher
     type: 77
-    portrait: {fileID: 0}
+    portrait: {fileID: 192185646, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 32
     characterPrefab: {fileID: 0}
@@ -874,7 +874,7 @@ MonoBehaviour:
   - name: Affiliate
     key: Affiliate
     type: 78
-    portrait: {fileID: 0}
+    portrait: {fileID: 460826966, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 16
     characterPrefab: {fileID: 0}
@@ -885,7 +885,7 @@ MonoBehaviour:
   - name: Master of Currency
     key: MasterOfCurrency
     type: 79
-    portrait: {fileID: 0}
+    portrait: {fileID: -1936838312, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 144
     characterPrefab: {fileID: 0}
@@ -896,7 +896,7 @@ MonoBehaviour:
   - name: Executive PR
     key: ExecutivePr
     type: 80
-    portrait: {fileID: 0}
+    portrait: {fileID: 388132257, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 130
     characterPrefab: {fileID: 0}
@@ -907,7 +907,7 @@ MonoBehaviour:
   - name: Gen Z with Job
     key: GenZWithJob
     type: 81
-    portrait: {fileID: 0}
+    portrait: {fileID: 1037714254, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 512
     characterPrefab: {fileID: 0}
@@ -918,7 +918,7 @@ MonoBehaviour:
   - name: Bot
     key: Bot
     type: 82
-    portrait: {fileID: 0}
+    portrait: {fileID: -1698263413, guid: 7d6a42edfd0c0ff4cb20d84f50891d87, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 0
     characterPrefab: {fileID: 0}
@@ -1096,10 +1096,10 @@ MonoBehaviour:
     - {fileID: -3853156051452739233, guid: 81237588d90cd814ebb99d7a0157be14, type: 3}
     - {fileID: 96307011405003670, guid: 81237588d90cd814ebb99d7a0157be14, type: 3}
     - {fileID: -2452615842964545730, guid: 81237588d90cd814ebb99d7a0157be14, type: 3}
-    calmInterval: 3.2
-    tenseInterval: 1.8
-    heatedInterval: 0.9
-    size: 64
+    calmInterval: 7
+    tenseInterval: 4.65
+    heatedInterval: 3.48
+    size: 50.2
     rise: 110
     lifetime: 1.8
   emotes:
@@ -1116,46 +1116,46 @@ MonoBehaviour:
   communityIcons:
   - name: CoreFanbase
     community: 0
-    icon: {fileID: 0}
+    icon: {fileID: -3718661556379673043, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Staff
     community: 1
-    icon: {fileID: 0}
+    icon: {fileID: 876949719, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Content
     community: 2
-    icon: {fileID: 0}
+    icon: {fileID: -1990347680, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Techspertise
     community: 3
-    icon: {fileID: 0}
+    icon: {fileID: 1611085012, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: FinanceBros
     community: 4
-    icon: {fileID: 0}
+    icon: {fileID: 1694016268, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Trolls
     community: 5
-    icon: {fileID: 0}
+    icon: {fileID: -879461028, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Doomsdayers
     community: 6
-    icon: {fileID: 0}
+    icon: {fileID: -1792304835, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Boomer
     community: 7
-    icon: {fileID: 0}
+    icon: {fileID: -354942310, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Millennial
     community: 8
-    icon: {fileID: 0}
+    icon: {fileID: -449042378, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Zoomer
     community: 9
-    icon: {fileID: 0}
+    icon: {fileID: -1886377628, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: ArmchairActivists
     community: 10
-    icon: {fileID: 0}
+    icon: {fileID: 634339175, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Clout
     community: 11
-    icon: {fileID: 0}
+    icon: {fileID: -1864278347, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: MemeticsDivision
     community: 12
-    icon: {fileID: 0}
+    icon: {fileID: -60197656, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Bots
     community: 13
-    icon: {fileID: 0}
+    icon: {fileID: -2109503479, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   groupIcons:
   - name: Community
     group: 0

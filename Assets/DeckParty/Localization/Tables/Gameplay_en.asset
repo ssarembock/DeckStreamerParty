@@ -1180,10 +1180,9 @@ MonoBehaviour:
       fine; at <b>3 the stream gets deplatformed</b>: it ends with no payout and
       you give one viewer a <b>Temporary Ban</b> (they sit out the next stream).
       Normie, Die Hard Fan and Internet Starpower <b>cancel</b> 1 {icon:risk} each
-      while in chat (Cheems does too when a Doge is around), and so does every 3
-      points of {icon:CoreFanbase} Core Fanbase. Some viewers add {icon:risk} with
-      their actions; This Is Fine Dog talks the platform out of it once, and the
-      Chat Arbitrator clears risk.'
+      while in chat, and so does every 3 points of {icon:CoreFanbase} Core Fanbase.
+      Some viewers add {icon:risk} with their actions; the Chat Arbitrator clears
+      risk.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606637
@@ -1192,10 +1191,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606638
     m_Localized: You can't add viewers once you've hit your Sub Cap, but viewers
-      who <b>bring</b> others (Marketing Manager, Online Scandal, Bigger Star) or
-      take extra space (Big Chungus takes 3) can push you over it. If that happens
-      the <b>server goes down</b> and the stream ends with no payout. Leave spare
-      room!
+      who <b>bring</b> others (Marketing Manager, Online Scandal, Bigger Star) can
+      push you over it. If that happens the <b>server goes down</b> and the stream
+      ends with no payout. Leave spare room!
     m_Metadata:
       m_Items: []
   - m_Id: 483606639
@@ -1217,15 +1215,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606642
-    m_Localized: Every viewer belongs to a group (Animal, Wojak, Rage Comic, Reaction,
-      Brainrot, or TBD while it's still being decided) and every action has a type
-      (Recruit, Remove, Modify, Shuffle, Scout, Economy). Doge loves mixed groups
-      (TBD doesn't count), Bongo Cat buffs Animals and Dancing Baby rewards two actions
-      of the same type in a row. Some actions ask you to pick an option first, then
-      one or more viewers; actions that take several viewers show a Confirm button.
-      Permanent changes (Chad vs Virgin, Tung Tung, Bad Luck Brian, Affiliate, Gen
-      Z with Job) stay with that viewer card forever. Hover any viewer to see its
-      group, action type and tonight's effects.
+    m_Localized: Every action has a type (Recruit, Remove, Modify, Shuffle, Scout,
+      Economy). Some actions ask you to pick one or two viewers; actions that take
+      several viewers show a Confirm button. Permanent changes (the Affiliate's Checkout
+      Code, Gen Z with Job) stay with that viewer card forever. Hover any viewer
+      to see its communities, action type and tonight's effects.
     m_Metadata:
       m_Items: []
   - m_Id: 483606643
@@ -1666,7 +1660,78 @@ MonoBehaviour:
       +2 {icon:subs} and -1 {icon:cash} per point when the stream is scored.\n{icon:Zoomer}
       <b>Zoomer</b>: two separate rolls of 20% per point (up to 80%): +6 {icon:subs},
       and -3 {icon:cash}.\n{icon:ArmchairActivists} <b>Armchair Activists</b>: 10%
-      per point (up to 50%) that each Armchair Activist scores nothing.'
+      per point (up to 50%) that each Armchair Activist scores nothing.\n{icon:Clout}
+      <b>Clout</b>: 10% per point (up to 40%) that each viewer outside the Core Fanbase
+      brings +1 {icon:subs} more each time they score.\n{icon:MemeticsDivision} <b>Memetics
+      Division</b>: 1% per point (up to 10%) that the whole stream scores twice.\n{icon:Bots}
+      <b>Bots</b> (multiplayer): when the stream is scored, 10% per point (up to
+      40%) for each Bots viewer to send a Bot (takes a space, earns nothing) into
+      the next player''s next stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682300358656
+    m_Localized: Clout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467520
+    m_Localized: Everyone wants a piece. Each viewer outside the {icon:CoreFanbase}
+      Core Fanbase has a {per}% chance per point ({top}% at {max} points) to bring
+      +{subs} {icon:subs} more, every time they score.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467521
+    m_Localized: 'Now: {value}% for each viewer outside the Core Fanbase to bring
+      one more {icon:subs}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467522
+    m_Localized: Memetics Division
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467523
+    m_Localized: 'Reposted forever. Each point gives a {per}% chance ({top}% at {max}
+      points) that the whole stream scores a second time: every viewer and every
+      community reward, all rolled again.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467524
+    m_Localized: 'Now: {value}% chance the stream scores twice.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467525
+    m_Localized: Bots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467526
+    m_Localized: Multiplayer. When your stream is scored, each Bots viewer in chat
+      has a {per}% chance per point ({top}% at {max} points) to send a Bot into the
+      next player's next stream. A Bot takes a space in chat and earns nothing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467527
+    m_Localized: 'Now: {value}% chance for each Bots viewer to send a Bot.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467528
+    m_Localized: '{viewer} brings extra clout: {subs}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467529
+    m_Localized: 'The Memetics Division reposts the whole stream: it scores again
+      ({value}% chance)!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467530
+    m_Localized: 'Bots sent to the next player''s next stream: {count}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467531
+    m_Localized: 'Bots from {player} head for the next player''s next stream: {count}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736682367467532
+    m_Localized: 'Rival Bots joined this stream''s Audience: {count}. They take a
+      space and earn nothing.'
     m_Metadata:
       m_Items: []
   references:

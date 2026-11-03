@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db5ffe347599e4468d45ed45c90b551, type: 3}
   m_Name: FxLibrary
   m_EditorClassIdentifier: 
-  recipeRevision: 1
+  recipeRevision: 2
   durationMultiplier: 1
   shakeMultiplier: 1
   cues:

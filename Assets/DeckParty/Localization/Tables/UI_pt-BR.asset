@@ -1446,9 +1446,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514443
-    m_Localized: "todo mundo joga a mesma noite ao mesmo tempo. A primeira noite
-      em que algu\xE9m junta {count} Diamantes encerra a temporada. Clique num jogador
-      pra assistir."
+    m_Localized: "todo mundo faz live ao mesmo tempo e ningu\xE9m v\xEA os outros.
+      Quando todas as lives acabam e cada um clica em Ir pra loja, uma contagem 3-2-1
+      abre a loja pra todos ao mesmo tempo: quem chegar primeiro leva. A primeira
+      noite em que algu\xE9m junta {count} Diamantes encerra a temporada. O \xFAnico
+      modo pra 3 ou mais jogadores."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514444
@@ -1630,6 +1632,171 @@ MonoBehaviour:
   - m_Id: 675191551377418
     m_Localized: "Apocal\xEDpticos rivais: nesta live cada espectador de {player}
       tem {value}% de chance de n\xE3o pontuar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683764170752
+    m_Localized: QUEM CHEGAR PRIMEIRO LEVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251136
+    m_Localized: A loja abre pra todos ao mesmo tempo quando todas as lives acabarem.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251137
+    m_Localized: "Primeiro a loja: a pr\xF3xima noite come\xE7a quando todo mundo
+      tiver comprado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251138
+    m_Localized: "A loja \xE9 de quem chegar primeiro: todo mundo entra junto quando
+      a contagem acaba, e o estoque \xE9 compartilhado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251139
+    m_Localized: Prepare-se...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251140
+    m_Localized: "Todo mundo est\xE1 pronto. A loja abre em:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251141
+    m_Localized: 'Ainda ao vivo: {players}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251142
+    m_Localized: "Ainda n\xE3o chegaram na loja: {players}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251143
+    m_Localized: "Todo mundo j\xE1 est\xE1 pronto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251144
+    m_Localized: Esperando na porta da loja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251145
+    m_Localized: "Ainda n\xE3o estou pronto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251146
+    m_Localized: Live encerrada!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251147
+    m_Localized: "V\xE1 pra loja quando estiver pronto. Ela abre quando todo mundo
+      estiver l\xE1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251148
+    m_Localized: Ir pra loja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251149
+    m_Localized: Na loja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251150
+    m_Localized: Live encerrada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251151
+    m_Localized: PONTUOU DE NOVO!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251152
+    m_Localized: "A Divis\xE3o Mem\xE9tica repostou a live ({value}% de chance)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251153
+    m_Localized: "Bots rivais invadiram a sua Audi\xEAncia: {count} nesta live. Ocupam
+      espa\xE7o e n\xE3o ganham nada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251154
+    m_Localized: "{count} bots rivais entraram na Audi\xEAncia de {player} nesta
+      live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251155
+    m_Localized: "{count} bots enviados pro pr\xF3ximo jogador!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251156
+    m_Localized: LOJA ABERTA!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251157
+    m_Localized: Quem chegar primeiro leva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251158
+    m_Localized: "Todos contra todos: as lives s\xE3o privadas. Abra o resumo da
+      rodada acima do tabuleiro pra ver o que cada um fez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251159
+    m_Localized: <b>Todos contra todos</b>  <color=#FFC94A>A loja abre em {seconds}...</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251160
+    m_Localized: "<b>Todos contra todos</b>  <color=#FF9A3D>A loja est\xE1 aberta:
+      quem chegar primeiro leva!</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251161
+    m_Localized: <b>Todos contra todos</b>  <color=#B9AED6>Todo mundo faz live ao
+      mesmo tempo. Faltam {count} pra chegar na loja.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251162
+    m_Localized: "<b>Todos contra todos</b>  <color=#6BE38B>Todo mundo est\xE1 pronto
+      pra loja.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251163
+    m_Localized: Resumo da rodada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251164
+    m_Localized: Resumo da rodada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251165
+    m_Localized: "Nada ainda: as primeiras lives ainda est\xE3o rolando."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251166
+    m_Localized: Noite {night}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251167
+    m_Localized: "Esperando nas pr\xF3ximas lives"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251168
+    m_Localized: '{risk} pelo raid de um rival'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251169
+    m_Localized: "maldi\xE7\xE3o dos Apocal\xEDpticos ({value}% por espectador)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251170
+    m_Localized: "{count} bots na Audi\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251171
+    m_Localized: '{power} pronto'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683852251172
+    m_Localized: Nada de especial.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736683856445440
+    m_Localized: "Mais de {count} jogadores: Todos contra todos \xE9 o \xFAnico modo."
     m_Metadata:
       m_Items: []
   references:

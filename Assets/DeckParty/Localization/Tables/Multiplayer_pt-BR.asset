@@ -87,7 +87,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469200
-    m_Localized: Noites sincronizadas
+    m_Localized: Todos contra todos
     m_Metadata:
       m_Items: []
   - m_Id: 437469201
@@ -99,7 +99,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469203
-    m_Localized: noites sincronizadas
+    m_Localized: todos contra todos
     m_Metadata:
       m_Items: []
   - m_Id: 437469204
@@ -326,6 +326,26 @@ MonoBehaviour:
   - m_Id: 675188590198784
     m_Localized: "Os Apocal\xEDpticos de {0} amaldi\xE7oam a pr\xF3xima live de todo
       mundo ({1}% por espectador)!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680563916800
+    m_Localized: 'Mais de {0} jogadores: mudou pra Todos contra todos.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219968
+    m_Localized: A loja abre pra todos quando todas as lives acabarem.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219969
+    m_Localized: Quase! A loja abre em um instante.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219970
+    m_Localized: "A loja est\xE1 aberta: quem chegar primeiro leva!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736680635219971
+    m_Localized: "Os bots de {0} invadem a pr\xF3xima live de {2} ({1})!"
     m_Metadata:
       m_Items: []
   references:

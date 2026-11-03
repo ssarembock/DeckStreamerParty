@@ -1071,6 +1071,68 @@ MonoBehaviour:
       join chat (up to 9 {icon:cash}), even if the stream ends badly.'
     m_Metadata:
       m_Items: []
+  - m_Id: 736681897705472
+    m_Localized: Degen Dog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008640
+    m_Localized: 'Such Synergy: +1 {icon:subs} for each different community in chat
+      (max +5). Other Degen Dogs don''t count.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008641
+    m_Localized: Distraught Cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008642
+    m_Localized: 'Everyone Leaves Me: gains +2 {icon:subs} and +1 {icon:cash} whenever
+      another viewer leaves or is kicked.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008643
+    m_Localized: Evangelist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008644
+    m_Localized: 'DIAMOND. Action: summon any viewer from the queue, even another
+      Diamond.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008645
+    m_Localized: 2-for-1!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008646
+    m_Localized: Promo Code User
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008647
+    m_Localized: +5 {icon:subs}, but only if chat is full when scored. Always costs
+      1 {icon:cash}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008648
+    m_Localized: Crypto Enthusiast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008649
+    m_Localized: 'Action: score another viewer in chat right now, penalties included
+      (banked straight away). They still score again when the stream ends.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008650
+    m_Localized: Rug Pull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008651
+    m_Localized: Bot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 736681969008652
+    m_Localized: A spam bot from a rival's stream. Takes up a space in chat and earns
+      nothing. Gone after this stream.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
