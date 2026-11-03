@@ -1727,6 +1727,46 @@ MonoBehaviour:
     m_Key: hud.tip.plays_term
     m_Metadata:
       m_Items: []
+  - m_Id: 1064940082913280
+    m_Key: beats.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159488
+    m_Key: recap.stream_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159489
+    m_Key: recap.shop_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159490
+    m_Key: recap.continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159491
+    m_Key: recap.recruited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159492
+    m_Key: recap.nothing_bought
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159493
+    m_Key: recap.sub_cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159494
+    m_Key: recap.active_used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159495
+    m_Key: recap.streak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159496
+    m_Key: recap.bots_sent
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

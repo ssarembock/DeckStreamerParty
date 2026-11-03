@@ -441,8 +441,12 @@ namespace DeckParty.UI
             m_AfterSequence = true;
             try { ProcessEvents(after, events, ViewingOwn ? null : NameOf(m_ViewId)); }
             finally { m_AfterSequence = false; }
-            banner.Show(Loc.Get("result.success"), Loc.Get("game.scored_total", "subs", GuestVisuals.PopText(after.LastPop), "cash", GuestVisuals.CashText(after.LastCash)), UIPalette.Gold, 1.4f);
-            Fx.Play(FxCue.BannerSlam, banner.transform);
+            // When the stream summary is about to open it says this (with the numbers), so the banner would only repeat it.
+            if (!StreamRecapPending)
+            {
+                banner.Show(Loc.Get("result.success"), Loc.Get("game.scored_total", "subs", GuestVisuals.PopText(after.LastPop), "cash", GuestVisuals.CashText(after.LastCash)), UIPalette.Gold, 1.4f);
+                Fx.Play(FxCue.BannerSlam, banner.transform);
+            }
             RenderAll();
         }
 

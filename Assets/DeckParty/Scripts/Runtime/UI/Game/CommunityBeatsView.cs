@@ -26,6 +26,8 @@ namespace DeckParty.UI
             public TMP_Text pointsLabel;
             public TMP_Text effectLabel;
             public TooltipTrigger tooltip;
+            [Tooltip("The halo, rays and shader shine shown while this community's score is at its maximum.")]
+            public CommunityMaxFx maxFx;
             [NonSerialized] public int last;
         }
 
@@ -84,6 +86,7 @@ namespace DeckParty.UI
                     if (!show)
                     {
                         chip.last = -1;
+                        if (chip.maxFx != null) chip.maxFx.SetMaxed(false, Color.white);
                         continue;
                     }
                     width += ChipWidth(chip.root);
@@ -116,6 +119,9 @@ namespace DeckParty.UI
                         AudioService.PlayPitched(Sfx.Coin, 1.1f + 0.05f * points, 0.5f);
                     }
                     chip.last = live ? points : -1;
+
+                    // At the maximum (5/5, 9/9...) the icon shines (CommunityMaxFx: halo, rays, shader glow).
+                    if (chip.maxFx != null) chip.maxFx.SetMaxed(live && max > 0 && points >= max, CommunityVisuals.Color(chip.community));
                 }
             }
 

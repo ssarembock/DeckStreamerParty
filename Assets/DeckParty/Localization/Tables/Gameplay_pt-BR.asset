@@ -631,7 +631,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412376
-    m_Localized: "\u2014 Noite {night} \u2014"
+    m_Localized: "\u2014 Live {night} \u2014"
     m_Metadata:
       m_Items: []
   - m_Id: 479412377
@@ -1098,7 +1098,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606618
-    m_Localized: "Essa foi a \xFAltima noite."
+    m_Localized: "Essa foi a \xFAltima live."
     m_Metadata:
       m_Items: []
   - m_Id: 483606619
@@ -1160,7 +1160,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606633
-    m_Localized: Cada noite tem duas partes
+    m_Localized: Cada rodada tem duas partes
     m_Metadata:
       m_Items: []
   - m_Id: 483606634
@@ -1248,7 +1248,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606646
     m_Localized: "<b>Espa\xE7o</b> adicionar espectador / confirmar / pr\xF3xima
-      noite   <b>E</b> encerrar a live   <b>R</b> Audi\xEAncia   <b>Esc</b> cancelar
+      live   <b>E</b> encerrar a live   <b>R</b> Audi\xEAncia   <b>Esc</b> cancelar
       / menu   <b>F11</b> tela cheia."
     m_Metadata:
       m_Items: []

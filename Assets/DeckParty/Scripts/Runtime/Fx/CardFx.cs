@@ -156,6 +156,20 @@ namespace DeckParty
             if (AppSettings.ReduceFlashing) m_RandomGlitch = false;
         }
 
+        /// <summary>
+        /// A steady highlight for a non-card graphic (a maxed community icon): an outline, a breathing sine glow and a
+        /// travelling shine, all in <paramref name="color"/>. Off clears them again.
+        /// </summary>
+        public void SetHighlight(bool on, Color color)
+        {
+            if (!Active) return;
+            Clear();
+            if (!on) return;
+            SetOutline(color, 0.9f);
+            SetGlow(color, 0.8f);
+            SetShine(Color.white, 0.85f);
+        }
+
         void SetOutline(Color color, float amount)
         {
             m_OutlineColor = color;

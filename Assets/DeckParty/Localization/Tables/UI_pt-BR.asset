@@ -73,7 +73,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125580
-    m_Localized: Noite <b>{night}</b><size=70%>/{total}</size>
+    m_Localized: Live <b>{night}</b><size=70%>/{total}</size>
     m_Metadata:
       m_Items: []
   - m_Id: 1574125581
@@ -298,7 +298,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125634
-    m_Localized: "A noite {night} come\xE7a depois da sua vez."
+    m_Localized: "A live {night} come\xE7a depois da sua vez."
     m_Metadata:
       m_Items: []
   - m_Id: 1574125635
@@ -318,7 +318,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125639
-    m_Localized: Pronto para a noite {night}
+    m_Localized: Pronto para a live {night}
     m_Metadata:
       m_Items: []
   - m_Id: 1574125640
@@ -330,11 +330,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125642
-    m_Localized: "A pr\xF3xima noite come\xE7a quando todo mundo estiver pronto."
+    m_Localized: "A pr\xF3xima live come\xE7a quando todo mundo estiver pronto."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514176
-    m_Localized: "Come\xE7ar a noite {night}"
+    m_Localized: "Come\xE7ar a live {night}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514177
@@ -517,7 +517,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514221
-    m_Localized: VENCEU na noite {night}!
+    m_Localized: VENCEU na live {night}!
     m_Metadata:
       m_Items: []
   - m_Id: 1582514222
@@ -525,7 +525,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514223
-    m_Localized: Noite {night}
+    m_Localized: Live {night}
     m_Metadata:
       m_Items: []
   - m_Id: 1582514224
@@ -541,8 +541,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514227
-    m_Localized: "{count} Plays juntos numa live na noite {night} de {total}. {set}
-      conclu\xEDdo!"
+    m_Localized: "{count} Plays juntos na live {night} de {total}. {set} conclu\xEDdo!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514228
@@ -575,7 +574,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514235
-    m_Localized: Uma live de {count} Plays na noite {night}.
+    m_Localized: "Live {night}: {count} Plays numa live s\xF3."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514236
@@ -775,11 +774,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514284
-    m_Localized: Bem-vindo de volta! Continuando {set} na noite {night}.
+    m_Localized: Bem-vindo de volta! Continuando {set} na live {night}.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514285
-    m_Localized: Bem-vindo a {set}! Junte {count} Plays numa live em {nights} noites.
+    m_Localized: Bem-vindo a {set}! Junte {count} Plays numa live em {nights} lives.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514286
@@ -787,25 +786,25 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514287
-    m_Localized: 'Temporada multijogador: {set}, {nights} noites, {mode}.'
+    m_Localized: 'Temporada multijogador: {set}, {nights} lives, {mode}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514288
-    m_Localized: NOITE {night}
+    m_Localized: LIVE {night}
     m_Metadata:
       m_Items: []
   - m_Id: 1582514289
-    m_Localized: '{set}  -  {count:plural:resta|restam} {count} {count:plural:noite|noites}
+    m_Localized: '{set}  -  {count:plural:resta|restam} {count} {count:plural:live|lives}
       depois desta'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514290
-    m_Localized: '{count:plural:Resta|Restam} {count} {count:plural:noite|noites}
-      depois desta'
+    m_Localized: '{count:plural:Resta|Restam} {count} {count:plural:live|lives} depois
+      desta'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514291
-    m_Localized: "A \xFAltima noite!"
+    m_Localized: "A \xFAltima live!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514292
@@ -817,7 +816,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514294
-    m_Localized: Noite {night} de {total}
+    m_Localized: Live {night} de {total}
     m_Metadata:
       m_Items: []
   - m_Id: 1582514295
@@ -1158,7 +1157,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514374
-    m_Localized: '{set} - Noite {night}/{total}'
+    m_Localized: '{set} - Live {night}/{total}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514375
@@ -1228,7 +1227,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514391
-    m_Localized: '{count} {count:plural:noite|noites}'
+    m_Localized: '{count} {count:plural:live|lives}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
@@ -1433,9 +1432,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514441
-    m_Localized: "a cada noite os jogadores fazem live um depois do outro enquanto
-      os outros assistem ao vivo. A temporada acaba depois da primeira noite em que
-      algu\xE9m junta {count} Plays."
+    m_Localized: "a cada rodada os jogadores fazem live um depois do outro enquanto
+      os outros assistem ao vivo. A temporada acaba depois da primeira rodada em
+      que algu\xE9m junta {count} Plays."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514442
@@ -1447,7 +1446,7 @@ MonoBehaviour:
     m_Localized: "todo mundo faz live ao mesmo tempo e ningu\xE9m v\xEA os outros.
       Quando todas as lives acabam e cada um clica em Ir pra loja, uma contagem 3-2-1
       abre a loja pra todos ao mesmo tempo: quem chegar primeiro leva. A primeira
-      noite em que algu\xE9m junta {count} Plays encerra a temporada. O \xFAnico
+      rodada em que algu\xE9m junta {count} Plays encerra a temporada. O \xFAnico
       modo pra 3 ou mais jogadores."
     m_Metadata:
       m_Items: []
@@ -1641,7 +1640,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251137
-    m_Localized: "Primeiro a loja: a pr\xF3xima noite come\xE7a quando todo mundo
+    m_Localized: "Primeiro a loja: a pr\xF3xima live come\xE7a quando todo mundo
       tiver comprado."
     m_Metadata:
       m_Items: []
@@ -1766,7 +1765,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251166
-    m_Localized: Noite {night}
+    m_Localized: Live {night}
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251167
@@ -1804,6 +1803,46 @@ MonoBehaviour:
   - m_Id: 994296414289920
     m_Localized: "<b>Plays</b>\\nEspectadores com este \xEDcone s\xE3o Plays. Tenha
       {goal} no chat ao mesmo tempo e encerre bem a live pra vencer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940082913280
+    m_Localized: Pulso das comunidades
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159488
+    m_Localized: Resumo das lives
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159489
+    m_Localized: Resumo da loja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159490
+    m_Localized: "Continuar  [Espa\xE7o]"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159491
+    m_Localized: Recrutados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159492
+    m_Localized: Nenhum espectador novo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159493
+    m_Localized: "Limite do chat {from} \u2192 {to}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159494
+    m_Localized: "Ativa: {power} \xD7{count}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159495
+    m_Localized: "Sequ\xEAncia \xD7{count}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159496
+    m_Localized: '{count} {count:plural:Bot enviado|Bots enviados} para um rival'
     m_Metadata:
       m_Items: []
   references:

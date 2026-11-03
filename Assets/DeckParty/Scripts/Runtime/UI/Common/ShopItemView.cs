@@ -37,6 +37,9 @@ namespace DeckParty.UI
         [SerializeField] internal TooltipTrigger tooltip;
         [Tooltip("Light (website) colours for the frame and labels.")]
         [SerializeField] internal bool siteStyle;
+        [Tooltip("Card backs peeking out behind the tile (up and to the left), nearest first: one shows for every copy left " +
+                 "after the top one, so the pile shrinks as the shop runs out.")]
+        [SerializeField] internal GameObject[] stack;
 
         public GuestType Type { get; private set; }
         public event Action<GuestType> BuyClicked;
@@ -84,6 +87,18 @@ namespace DeckParty.UI
 
         public void OnPointerExit(PointerEventData eventData) => Hovered?.Invoke(this, false);
 
+        /// <summary>
+        /// The pile under the tile: one card back per copy left after the top card (Plays viewers never run out, so their pile
+        /// is always full). The back that disappears after a purchase is the farthest one, so the pile visibly shrinks.
+        /// </summary>
+        void SetStack(int left)
+        {
+            if (stack == null) return;
+            int backs = left == int.MaxValue ? stack.Length : Mathf.Clamp(left - 1, 0, stack.Length);
+            for (int i = 0; i < stack.Length; i++)
+                if (stack[i] != null && stack[i].activeSelf != (i < backs)) stack[i].SetActive(i < backs);
+        }
+
         /// <param name="state">The player whose shop this is (their wallet, collection and copies left).</param>
         /// <param name="blocker">Why it can't be bought right now (already localized), or null.</param>
         public void Bind(GuestType type, PlayerState state, string blocker)
@@ -106,7 +121,7 @@ namespace DeckParty.UI
             if (groupIcon != null) groupIcon.gameObject.SetActive(false);
             if (communities != null) communities.Bind(type);
             if (diamondBadge != null) diamondBadge.SetActive(info.IsDiamond);
-            var border = siteStyle ? SitePalette.Border : UIPalette.Border;
+            var border = siteStyle ? SitePalette.Outline : UIPalette.Border;
             if (frame != null) frame.color = info.IsDiamond ? Color.Lerp(border, siteStyle ? SitePalette.Gold : UIPalette.Gold, 0.75f) : border;
 
             bool affordable = state.Pop >= info.Cost;
@@ -119,13 +134,14 @@ namespace DeckParty.UI
 
             int left = PartyEngine.ShopLeft(state, type);
             bool soldOut = left <= 0;
+            SetStack(left);
             if (leftLabel != null)
             {
                 if (siteStyle) leftLabel.text = left == int.MaxValue ? string.Empty : "×" + Mathf.Max(0, left);
                 else leftLabel.text = left == int.MaxValue ? Loc.Get("shop.left_unlimited") : Loc.Get("shop.left", "count", left);
                 leftLabel.color = soldOut ? (siteStyle ? SitePalette.Danger : UIPalette.Red)
                     : left == 1 ? (siteStyle ? SitePalette.Warning : UIPalette.Orange)
-                    : siteStyle ? SitePalette.TextFaint : UIPalette.TextDim;
+                    : siteStyle ? SitePalette.TextDim : UIPalette.TextDim;
             }
 
             bool canBuy = blocker == null;

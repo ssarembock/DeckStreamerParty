@@ -85,8 +85,8 @@ namespace DeckParty.UI
             if (popIcon != null) popIcon.color = GameIcons.Tint(ResourceIcon.Subs);
             if (cashIcon != null) cashIcon.color = GameIcons.Tint(ResourceIcon.Cash);
             // Your own art keeps its colours; the white placeholder shapes take the site's grey.
-            if (nightIcon != null) nightIcon.color = GameIcons.SlotTint(SkinSlot.IconNight, SitePalette.TextDim);
-            if (capacityIcon != null) capacityIcon.color = GameIcons.SlotTint(SkinSlot.IconDoor, SitePalette.TextDim);
+            if (nightIcon != null) nightIcon.color = GameIcons.SlotTint(SkinSlot.IconNight, SitePalette.Text);
+            if (capacityIcon != null) capacityIcon.color = GameIcons.SlotTint(SkinSlot.IconDoor, SitePalette.Text);
         }
 
         static void SetButton(Button button, string text)

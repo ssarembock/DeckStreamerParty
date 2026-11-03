@@ -28,12 +28,19 @@ namespace DeckParty.EditorTools
         const float ChatHeaderHeight = 54f;
         /// <summary>The chat's grey typing area along the bottom, with the two buttons.</summary>
         const float InputHeight = 124f;
-        /// <summary>The channel column right of the chat (facecam and Community Beats).</summary>
-        const float ChannelWidth = 336f;
+        /// <summary>
+        /// The channel column right of the chat: Community Beats on top, the facecam square at the bottom (the usual streamer
+        /// layout: the camera sits in the bottom-right corner). 370 = the old 336 px facecam + 10%.
+        /// </summary>
+        const float ChannelWidth = 370f;
+        /// <summary>Space between the chat window's border and the avatars, left and right.</summary>
+        const float ChatSidePadding = 44f;
+        /// <summary>The Community Beats panel's title band (icon, "Community Beats", then a grey line).</summary>
+        const float BeatsHeaderHeight = 52f;
         /// <summary>Community Beats chips (two columns in the channel column).</summary>
-        const float BeatChipWidth = 150f;
-        const float BeatChipHeight = 58f;
-        const float BeatChipGap = 8f;
+        const float BeatChipWidth = 167f;
+        const float BeatChipHeight = 54f;
+        const float BeatChipGap = 6f;
 
         public static void Build()
         {
@@ -87,6 +94,7 @@ namespace DeckParty.EditorTools
             var picker = BuildPicker(overlay, prefabs);
             var rolodex = BuildRolodex(overlay, prefabs);
             var roundSummary = BuildRoundSummary(overlay);
+            var recap = BuildRecap(overlay);
             var pause = BuildPauseMenu(overlay);
             var gameOver = BuildGameOver(overlay, prefabs);
             SceneCommon.CreateOverlays(overlay);
@@ -111,6 +119,7 @@ namespace DeckParty.EditorTools
             controller.communityBeats = beats;
             controller.outcomeSplash = splash;
             controller.roundSummary = roundSummary;
+            controller.recap = recap;
             controller.picker = picker;
             controller.rolodex = rolodex;
             controller.gameOver = gameOver;
@@ -140,8 +149,9 @@ namespace DeckParty.EditorTools
             page.rectTransform.Stretch();
             var strip = EditorUI.Image(canvas, "HeaderStrip", SitePalette.Surface);
             strip.rectTransform.TopBand(0, HeaderHeight);
-            var line = EditorUI.Line(canvas, "HeaderLine", SitePalette.Divider);
-            line.rectTransform.TopBand(HeaderHeight, 2);
+            // The menu bar is a panel: a strong black edge under it.
+            var line = EditorUI.Line(canvas, "HeaderLine", SitePalette.Outline);
+            line.rectTransform.TopBand(HeaderHeight, 2.5f);
         }
 
         // ------------------------------------------------------------------ the menu bar (HUD)
@@ -159,10 +169,10 @@ namespace DeckParty.EditorTools
             var divider = EditorUI.Line(bar, "Divider", SitePalette.Divider);
             EditorUI.Layout(divider, 2, 52, 0, 0);
 
-            var night = Stat(bar, "Night", EditorUI.Night, SkinSlot.IconNight, SitePalette.TextDim, 150, out var nightIcon, out var nightTip);
+            var night = Stat(bar, "Night", EditorUI.Night, SkinSlot.IconNight, SitePalette.Text, 150, out var nightIcon, out var nightTip);
             var pop = Stat(bar, "Pop", EditorUI.Sparkle, SkinSlot.IconPop, UIPalette.Gold, 150, out var popIcon, out _);
             var cash = Stat(bar, "Cash", EditorUI.Coin, SkinSlot.IconCash, UIPalette.Green, 140, out var cashIcon, out _);
-            var capacity = Stat(bar, "House", EditorUI.Door, SkinSlot.IconDoor, SitePalette.TextDim, 150, out var capacityIcon, out _);
+            var capacity = Stat(bar, "House", EditorUI.Door, SkinSlot.IconDoor, SitePalette.Text, 150, out var capacityIcon, out _);
 
             var trouble = Meter(bar, "Trouble", EditorUI.Cross, SkinSlot.IconTrouble, GameRules.RaidTroubleThreshold, out var troublePips);
             var stars = Meter(bar, "Stars", EditorUI.Star, SkinSlot.IconStar, GameRules.DiamondsToWin, out var starPips);
@@ -263,12 +273,13 @@ namespace DeckParty.EditorTools
             var inner = EditorUI.SitePanel(chatRoot, "Window", SitePalette.Surface, SitePalette.Outline, 2f);
             inner.transform.parent.GetComponent<RectTransform>().Stretch();
 
-            var title = EditorUI.Text(inner.transform, "Title", "chat.title", 24, SitePalette.TextDim, TextAlignmentOptions.Center, true, false, false);
+            var title = EditorUI.Text(inner.transform, "Title", "chat.title", 26, SitePalette.Text, TextAlignmentOptions.Center, true, false, false);
             title.rectTransform.TopBand(0, ChatHeaderHeight, 20, 20);
             var titleLine = EditorUI.Line(inner.transform, "TitleLine", SitePalette.Divider);
             titleLine.rectTransform.TopBand(ChatHeaderHeight, 2, 0, 0);
 
-            var area = EditorUI.Rect(inner.transform, "HouseArea").Box(Vector2.zero, Vector2.one, new Vector2(18, InputHeight + 14), new Vector2(-18, -(ChatHeaderHeight + 14)));
+            // More room between the window's border and the avatars on both sides.
+            var area = EditorUI.Rect(inner.transform, "HouseArea").Box(Vector2.zero, Vector2.one, new Vector2(ChatSidePadding, InputHeight + 14), new Vector2(-ChatSidePadding, -(ChatHeaderHeight + 14)));
 
             // Link lines (pairs and chains of viewers) draw under the avatars.
             var linksRect = EditorUI.Rect(area, "LinkLines").Stretch();
@@ -311,10 +322,10 @@ namespace DeckParty.EditorTools
             view.hintLabel = null;
             view.avoid = null;
 
-            // The channel column: the facecam on top, Community Beats below.
+            // The channel column: Community Beats on top, the facecam in the bottom-right corner (like a streamer's camera).
             var column = EditorUI.Rect(partyRoot, "Channel").Box(new Vector2(1, 0), new Vector2(1, 1), new Vector2(-ChannelWidth, 0), Vector2.zero);
-            facecam = BuildFacecam(column, out overlay);
             beatsView = BuildCommunityBeats(column);
+            facecam = BuildFacecam(column, out overlay);
 
             // Viewer emojis float above the avatars (and above the window's edge).
             var emojiLayer = EditorUI.Rect(partyRoot, "ViewerEmojis").Stretch();
@@ -331,7 +342,8 @@ namespace DeckParty.EditorTools
         /// </summary>
         static PartyControlsView BuildTypingArea(Transform window, RectTransform chatRoot, UIPrefabs prefabs)
         {
-            var line = EditorUI.Line(window, "TypingLine", SitePalette.Border);
+            // A divider inside the chat window: light grey (the grey typing area is the one grey surface of the stream).
+            var line = EditorUI.Line(window, "TypingLine", SitePalette.Divider);
             line.rectTransform.BottomBand(InputHeight, 2, 0, 0);
             var input = EditorUI.Image(window, "TypingArea", SitePalette.SurfaceAlt, EditorUI.RoundedSmall);
             input.type = Image.Type.Sliced;
@@ -340,27 +352,33 @@ namespace DeckParty.EditorTools
             var topFill = EditorUI.Image(input.transform, "TopFill", SitePalette.SurfaceAlt);
             topFill.rectTransform.TopBand(0, 16, 0, 0);
 
-            var door = EditorUI.IconButton(input.transform, "Door", EditorUI.AddViewer, SkinSlot.IconAddViewer, EditorUI.SiteButton.Accent, new Vector2(176, 84), 48, out _);
-            ((RectTransform)door.transform).Place(new Vector2(0.5f, 0.5f), new Vector2(-98, 0), new Vector2(176, 84));
-            var end = EditorUI.IconButton(input.transform, "EndParty", EditorUI.EndStream, SkinSlot.IconEndStream, EditorUI.SiteButton.Dark, new Vector2(176, 84), 40, out _);
-            ((RectTransform)end.transform).Place(new Vector2(0.5f, 0.5f), new Vector2(98, 0), new Vector2(176, 84));
+            // The two main buttons, wider and fanned out from the centre (a 40 px gap between them; the faces of the next viewers still fit on their left at 1080p in multiplayer).
+            const float buttonWidth = 200f;
+            const float buttonGap = 40f;
+            const float buttonX = buttonWidth * 0.5f + buttonGap * 0.5f;
+            var door = EditorUI.IconButton(input.transform, "Door", EditorUI.AddViewer, SkinSlot.IconAddViewer, EditorUI.SiteButton.Accent, new Vector2(buttonWidth, 84), 50, out _);
+            ((RectTransform)door.transform).Place(new Vector2(0.5f, 0.5f), new Vector2(-buttonX, 0), new Vector2(buttonWidth, 84));
+            var end = EditorUI.IconButton(input.transform, "EndParty", EditorUI.EndStream, SkinSlot.IconEndStream, EditorUI.SiteButton.Dark, new Vector2(buttonWidth, 84), 42, out _);
+            ((RectTransform)end.transform).Place(new Vector2(0.5f, 0.5f), new Vector2(buttonX, 0), new Vector2(buttonWidth, 84));
 
-            // What ending now would bank: icons and numbers on a dark pill.
+            // The information moves out with them, to the two ends of the typing area:
+            // what ending now would bank (icons and numbers on a dark pill) at the right end...
+            const float edge = 28f;
             var projection = EditorUI.Pill(input.transform, "Projection", 24, out var projectionPill);
-            projectionPill.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(206, 0), new Vector2(240, 48), new Vector2(0, 0.5f));
+            projectionPill.rectTransform.Place(new Vector2(1, 0.5f), new Vector2(-edge, 0), new Vector2(240, 48), new Vector2(1, 0.5f));
             projectionPill.raycastTarget = false;
 
-            // Risky viewers still waiting: the risk icon and a number.
+            // ...and the risky viewers still waiting (the risk icon and a number) at the left end.
             var risk = EditorUI.Pill(input.transform, "RiskyQueue", 24, out var riskPill);
-            riskPill.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(-206, 0), new Vector2(104, 48), new Vector2(1, 0.5f));
+            riskPill.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(edge, 0), new Vector2(104, 48), new Vector2(0, 0.5f));
             EditorUI.Tooltip(riskPill);
             riskPill.gameObject.SetActive(false);
 
-            // Who's next, when an effect reveals it (X-Ray, Side Eye Chloe): their faces, names on hover.
+            // Who's next, when an effect reveals it (X-Ray, Side Eye Chloe): their faces (names on hover), right of the count.
             const int faces = 3;
-            const float faceSize = 52f;
-            var queue = EditorUI.Rect(input.transform, "NextUp").Place(new Vector2(0.5f, 0.5f), new Vector2(-326, 0), new Vector2(faces * faceSize + (faces - 1) * 6, faceSize), new Vector2(1, 0.5f));
-            EditorUI.HLayout(queue, 6, EditorUI.Pad(0), TextAnchor.MiddleRight, false, false, false, false);
+            const float faceSize = 48f;
+            var queue = EditorUI.Rect(input.transform, "NextUp").Place(new Vector2(0, 0.5f), new Vector2(edge + 104 + 12, 0), new Vector2(faces * faceSize + (faces - 1) * 6, faceSize), new Vector2(0, 0.5f));
+            EditorUI.HLayout(queue, 6, EditorUI.Pad(0), TextAnchor.MiddleLeft, false, false, false, false);
             var backs = new Image[faces];
             var arts = new Image[faces];
             var tips = new TooltipTrigger[faces];
@@ -418,10 +436,21 @@ namespace DeckParty.EditorTools
         /// </summary>
         static CommunityBeatsView BuildCommunityBeats(Transform column)
         {
-            var fill = EditorUI.SitePanel(column, "CommunityPanel", SitePalette.Surface, SitePalette.Border, 2f);
-            ((RectTransform)fill.transform.parent).Box(Vector2.zero, Vector2.one, Vector2.zero, new Vector2(0, -(ChannelWidth + Gap)));
+            // Above the facecam (which takes the bottom ChannelWidth px of the column).
+            var fill = EditorUI.SitePanel(column, "CommunityPanel", SitePalette.Surface, SitePalette.Outline, 2f);
+            ((RectTransform)fill.transform.parent).Box(Vector2.zero, Vector2.one, new Vector2(0, ChannelWidth + Gap), Vector2.zero);
 
-            var row = EditorUI.Rect(fill.transform, "CommunityBeats").Stretch(10, 12, 10, 12);
+            // Title band: the community icon and "Community Beats", then a light grey line across the panel.
+            var header = EditorUI.Rect(fill.transform, "Header").TopBand(0, BeatsHeaderHeight, 16, 16);
+            EditorUI.HLayout(header, 10, EditorUI.Pad(0), TextAnchor.MiddleLeft, true, true, false, false);
+            var headerIcon = EditorUI.Icon(header, "Icon", EditorUI.Audience, SitePalette.Text, SkinSlot.IconAudience, 30);
+            EditorUI.Layout(headerIcon, 30, 30, 0);
+            var headerTitle = EditorUI.Text(header, "Title", "beats.title", 24, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
+            EditorUI.Layout(headerTitle, 280, BeatsHeaderHeight, 1);
+            var headerLine = EditorUI.Line(fill.transform, "HeaderLine", SitePalette.Divider);
+            headerLine.rectTransform.TopBand(BeatsHeaderHeight, 2, 0, 0);
+
+            var row = EditorUI.Rect(fill.transform, "CommunityBeats").Stretch(10, BeatsHeaderHeight + 12, 10, 12);
             var layout = row.gameObject.AddComponent<GridLayoutGroup>();
             layout.cellSize = new Vector2(BeatChipWidth, BeatChipHeight);
             layout.spacing = new Vector2(BeatChipGap, BeatChipGap);
@@ -445,14 +474,29 @@ namespace DeckParty.EditorTools
                 background.type = Image.Type.Sliced;
                 var group = background.gameObject.AddComponent<CanvasGroup>();
 
+                // At the maximum score: a sunburst and a gold halo behind the icon (CommunityMaxFx), centred on it.
+                var maxRoot = EditorUI.Rect(background.transform, "MaxFx").Place(new Vector2(0, 0.5f), new Vector2(8 + 19, 0), Vector2.zero);
+                var rays = EditorUI.Image(maxRoot, "Rays", Color.white, null);
+                rays.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(88, 88));
+                rays.enabled = false;
+                var halo = EditorUI.Image(maxRoot, "Halo", Color.white, EditorUI.Glow);
+                halo.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(70, 70));
+                halo.enabled = false;
+
                 // Icon on the left, the score on top, the current bonus underneath.
                 var icon = EditorUI.Image(background.transform, "Icon", Color.white, EditorUI.Circle);
                 icon.preserveAspect = true;
                 icon.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(8, 0), new Vector2(38, 38), new Vector2(0, 0.5f));
 
+                var maxFx = background.gameObject.AddComponent<CommunityMaxFx>();
+                maxFx.icon = icon;
+                maxFx.halo = halo;
+                maxFx.rays = rays;
+                maxFx.punchTarget = background.rectTransform;
+
                 var points = EditorUI.Text(background.transform, "Points", "0", 24, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
                 points.rectTransform.Box(new Vector2(0, 0.45f), Vector2.one, new Vector2(54, 0), new Vector2(-6, -2));
-                var effect = EditorUI.Text(background.transform, "Effect", "-", 16, SitePalette.TextFaint, TextAlignmentOptions.MidlineLeft, false, false, false);
+                var effect = EditorUI.Text(background.transform, "Effect", "-", 16, SitePalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
                 effect.rectTransform.Box(Vector2.zero, new Vector2(1, 0.45f), new Vector2(54, 2), new Vector2(-6, 0));
                 effect.fontSizeMin = 10;
 
@@ -466,6 +510,7 @@ namespace DeckParty.EditorTools
                     pointsLabel = points,
                     effectLabel = effect,
                     tooltip = EditorUI.Tooltip(background),
+                    maxFx = maxFx,
                 };
             }
 
@@ -506,14 +551,18 @@ namespace DeckParty.EditorTools
             return rect.gameObject.AddComponent<TurnTimerView>();
         }
 
-        /// <summary>The "pick a viewer" prompt: a dark notice over the top of the chat, with Confirm and Cancel icon buttons.</summary>
+        /// <summary>The "pick a viewer" prompt: a white notice with a black border over the top of the chat, with Confirm and Cancel icon buttons.</summary>
         static TargetingBannerView BuildTargetingBanner(RectTransform partyRoot)
         {
             var host = EditorUI.Rect(partyRoot, "Targeting").TopBand(ChatHeaderHeight + 10, 76, 40, ChannelWidth + Gap + 40);
-            var panel = EditorUI.Image(host, "Root", SitePalette.Outline.WithAlpha(0.96f), EditorUI.RoundedSmall, null, true);
+            // Root = the black border (ViewBarView copies its sprite); the white fill sits inside it.
+            var panel = EditorUI.Image(host, "Root", SitePalette.Outline, EditorUI.RoundedSmall, null, true);
             panel.type = Image.Type.Sliced;
             panel.rectTransform.Stretch();
-            var label = EditorUI.Text(panel.transform, "Label", "-", 24, Color.white, TextAlignmentOptions.MidlineLeft);
+            var panelFill = EditorUI.Image(panel.transform, "Fill", SitePalette.Surface, EditorUI.RoundedSmall);
+            panelFill.type = Image.Type.Sliced;
+            panelFill.rectTransform.Stretch(EditorUI.ModalBorder, EditorUI.ModalBorder, EditorUI.ModalBorder, EditorUI.ModalBorder);
+            var label = EditorUI.Readable(EditorUI.Text(panel.transform, "Label", "-", 24, SitePalette.Text, TextAlignmentOptions.MidlineLeft));
             label.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(24, 4), new Vector2(-(2 * 72 + 12 + 24), -4));
             label.enableAutoSizing = true;
             label.fontSizeMin = 16;
@@ -544,7 +593,7 @@ namespace DeckParty.EditorTools
             const float columnWidth = 400f;
             var root = EditorUI.Rect(mainArea, "Planning").Stretch();
 
-            var left = EditorUI.SitePanel(root, "Streamer", SitePalette.Surface, SitePalette.Border, 2f);
+            var left = EditorUI.SitePanel(root, "Streamer", SitePalette.Surface, SitePalette.Outline, 2f);
             ((RectTransform)left.transform.parent).Box(new Vector2(0, 0), new Vector2(0, 1), Vector2.zero, new Vector2(columnWidth, 0));
             EditorUI.VLayout(left, 16, EditorUI.Pad(22, 22), TextAnchor.UpperCenter, true, true, true, false);
 
@@ -558,7 +607,7 @@ namespace DeckParty.EditorTools
             var spacer = EditorUI.Rect(left.transform, "Spacer");
             EditorUI.Layout(spacer, -1, 10, -1, 1);
 
-            var waiting = EditorUI.Text(left.transform, "Waiting", string.Empty, 20, SitePalette.TextDim, TextAlignmentOptions.Center);
+            var waiting = EditorUI.Text(left.transform, "Waiting", string.Empty, 20, SitePalette.Text, TextAlignmentOptions.Center);
             EditorUI.Layout(waiting, -1, 56);
             var next = EditorUI.IconButton(left.transform, "NextNight", EditorUI.GoLive, SkinSlot.IconGoLive, EditorUI.SiteButton.Accent, new Vector2(300, 110), 62, out var goLiveIcon);
             EditorUI.Layout(next, -1, 110);
@@ -567,7 +616,7 @@ namespace DeckParty.EditorTools
             readyIcon.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Content;
             readyIcon.gameObject.SetActive(false);
 
-            var shop = EditorUI.SitePanel(root, "Shop", SitePalette.Surface, SitePalette.Border, 2f);
+            var shop = EditorUI.SitePanel(root, "Shop", SitePalette.Surface, SitePalette.Outline, 2f);
             ((RectTransform)shop.transform.parent).Box(Vector2.zero, Vector2.one, new Vector2(columnWidth + Gap, 0), Vector2.zero);
             // PlanningView writes the title (it names the player when you're watching someone else's shop).
             var shopTitle = EditorUI.Text(shop.transform, "Header", "-", 36, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
@@ -578,6 +627,9 @@ namespace DeckParty.EditorTools
             scroll.GetComponent<RectTransform>().Box(Vector2.zero, Vector2.one, new Vector2(16, 16), new Vector2(-16, -96));
             var grid = shopContent.GetComponent<GridLayoutGroup>();
             grid.childAlignment = TextAnchor.UpperLeft;
+            // Roomier gaps between the tiles: each tile has a pile of card backs peeking out up and to the left (up to 21 px).
+            grid.spacing = new Vector2(38, 36);
+            grid.padding = new RectOffset(30, 10, 30, 12);
             LightScrollbar(scroll);
             var gate = BuildShopGate(shop.transform);
 
@@ -600,7 +652,10 @@ namespace DeckParty.EditorTools
             view.shopItemPrefab = prefabs.ShopItem;
             view.power = power;
             view.gate = gate;
-            view.tileAspect = 1.18f;
+            // Narrower, playing-card shaped tiles (about 5:7).
+            view.minTileWidth = 160f;
+            view.maxTileWidth = 196f;
+            view.tileAspect = 1.4f;
             root.gameObject.SetActive(false);
             return view;
         }
@@ -631,24 +686,26 @@ namespace DeckParty.EditorTools
         static ShopGateView BuildShopGate(Transform shop)
         {
             var host = EditorUI.Rect(shop, "ShopGate").Stretch();
-            var panel = EditorUI.Panel(host, "Root", UIPalette.PanelDeep.WithAlpha(0.97f), SkinSlot.Panel, true);
+            // A white card with a black border over the shop (black text; the 3-2-1 stays gold with a black outline).
+            var panelFill = EditorUI.SitePanel(host, "Root", SitePalette.Surface, SitePalette.Outline, EditorUI.ModalBorder, true);
+            var panel = (Image)panelFill.transform.parent.GetComponent<Image>();
             panel.rectTransform.Stretch(10, 10, 10, 10);
 
-            var title = EditorUI.Text(panel.transform, "Title", "-", 52, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
+            var title = EditorUI.Readable(EditorUI.Text(panel.transform, "Title", "-", 48, SitePalette.Text, TextAlignmentOptions.Center, true, true, false));
             title.rectTransform.TopBand(70, 72, 40, 40);
-            var body = EditorUI.Text(panel.transform, "Body", "-", 26, UIPalette.Text, TextAlignmentOptions.Top);
+            var body = EditorUI.Readable(EditorUI.Text(panel.transform, "Body", "-", 26, SitePalette.Text, TextAlignmentOptions.Top));
             body.rectTransform.TopBand(160, 130, 90, 90);
 
             var countdown = EditorUI.Text(panel.transform, "Countdown", "3", 220, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
             countdown.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(0, -30), new Vector2(420, 280));
-            countdown.outlineWidth = 0.2f;
-            countdown.outlineColor = new Color32(0, 0, 0, 220);
+            countdown.outlineWidth = 0.25f;
+            countdown.outlineColor = new Color32(0, 0, 0, 255);
             countdown.gameObject.SetActive(false);
 
-            var ready = EditorUI.Button(panel.transform, "Ready", "-", ButtonStyle.Primary, 34, out var readyLabel);
+            var ready = EditorUI.SiteTextButton(panel.transform, "Ready", "-", EditorUI.SiteButton.Accent, 34, out var readyLabel);
             ready.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0), new Vector2(0, 150), new Vector2(560, 110), new Vector2(0.5f, 0));
 
-            var notice = EditorUI.Text(panel.transform, "Notice", "-", 22, UIPalette.Orange, TextAlignmentOptions.Center);
+            var notice = EditorUI.Readable(EditorUI.Text(panel.transform, "Notice", "-", 22, SitePalette.Warning, TextAlignmentOptions.Center));
             notice.rectTransform.BottomBand(46, 76, 90, 90);
 
             var view = host.gameObject.AddComponent<ShopGateView>();
@@ -756,11 +813,24 @@ namespace DeckParty.EditorTools
 
         // ------------------------------------------------------------------ side panel
 
+        /// <summary>
+        /// A white card with a strong black border whose own Image is the border (so layout elements and views can sit on it
+        /// directly): the white fill is its first child, and everything added afterwards draws on top.
+        /// </summary>
+        static Image BorderedCard(Transform parent, string name)
+        {
+            var border = EditorUI.Image(parent, name, SitePalette.Outline, EditorUI.RoundedSmall, null, true);
+            border.type = Image.Type.Sliced;
+            var fill = EditorUI.Image(border.transform, "Fill", SitePalette.Surface, EditorUI.RoundedSmall);
+            fill.type = Image.Type.Sliced;
+            fill.rectTransform.Stretch(2, 2, 2, 2);
+            return border;
+        }
+
         static OpponentsView BuildOpponents(RectTransform side, UIPrefabs prefabs)
         {
             // A white card like the rest of the site (the player rows inside keep their dark cards).
-            var panel = EditorUI.Image(side, "Players", SitePalette.Surface, EditorUI.RoundedSmall, null, true);
-            panel.type = Image.Type.Sliced;
+            var panel = BorderedCard(side, "Players");
             EditorUI.Layout(panel, -1, 280, -1, -1, -1, 200);
             var title = EditorUI.Text(panel.transform, "Header", "-", 26, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
             title.rectTransform.TopBand(12, 36, 20, 20);
@@ -780,8 +850,7 @@ namespace DeckParty.EditorTools
         /// </summary>
         static EmoteView BuildEmoteBar(RectTransform side)
         {
-            var panel = EditorUI.Image(side, GameController.EmoteBarName, SitePalette.Surface, EditorUI.RoundedSmall, null, true);
-            panel.type = Image.Type.Sliced;
+            var panel = BorderedCard(side, GameController.EmoteBarName);
             EditorUI.Layout(panel, -1, 200, -1, -1, -1, 130);
             var buttons = EditorUI.Rect(panel.transform, "Buttons").Stretch(12, 12, 12, 12);
             var emotes = buttons.gameObject.AddComponent<EmoteView>();
@@ -846,7 +915,8 @@ namespace DeckParty.EditorTools
         /// </summary>
         static FacecamView BuildFacecam(RectTransform column, out StreamOverlayView overlay)
         {
-            var row = EditorUI.Rect(column, "Facecam").Place(new Vector2(0.5f, 1), Vector2.zero, new Vector2(ChannelWidth, ChannelWidth), new Vector2(0.5f, 1));
+            // Bottom of the channel column: the streamer camera sits in the bottom-right corner of the page.
+            var row = EditorUI.Rect(column, "Facecam").Place(new Vector2(0.5f, 0), Vector2.zero, new Vector2(ChannelWidth, ChannelWidth), new Vector2(0.5f, 0));
             var hit = row.gameObject.AddComponent<Image>();
             hit.color = new Color(0, 0, 0, 0);
             var tooltip = EditorUI.Tooltip(row);
@@ -919,22 +989,28 @@ namespace DeckParty.EditorTools
         {
             var host = EditorUI.Rect(overlay, "Banner").Stretch();
             var group = host.gameObject.AddComponent<CanvasGroup>();
-            var panel = EditorUI.Panel(host, "Panel", UIPalette.PanelDeep, SkinSlot.Panel, false);
-            panel.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(0, 80), new Vector2(1300, 240));
-            var title = EditorUI.Text(panel.transform, "Title", "-", 110, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
-            title.rectTransform.TopBand(14, 140, 20, 20);
+            // A white card with a black border; the callout's colour is the stripe along the top (and the title, darkened to read on white).
+            var fill = EditorUI.SitePanel(host, "Panel", SitePalette.Surface, SitePalette.Outline, EditorUI.ModalBorder, false);
+            var panel = fill.transform.parent.GetComponent<Image>();
+            panel.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(0, 80), new Vector2(1100, 200));
+            var accent = EditorUI.Image(fill.transform, "Accent", UIPalette.Gold, null);
+            accent.rectTransform.TopBand(0, 10, 0, 0);
+            var title = EditorUI.Text(panel.transform, "Title", "-", 80, SitePalette.Text, TextAlignmentOptions.Center, true, true, false);
+            title.rectTransform.TopBand(22, 108, 20, 20);
             title.enableAutoSizing = true;
-            title.fontSizeMin = 50;
-            title.fontSizeMax = 110;
-            var subtitle = EditorUI.Text(panel.transform, "Subtitle", string.Empty, 34, UIPalette.Text, TextAlignmentOptions.Center, false, false, false);
-            subtitle.rectTransform.TopBand(158, 56, 30, 30);
+            title.fontSizeMin = 40;
+            title.fontSizeMax = 80;
+            var subtitle = EditorUI.Readable(EditorUI.Text(panel.transform, "Subtitle", string.Empty, 30, SitePalette.Text, TextAlignmentOptions.Center, false, false, false));
+            subtitle.rectTransform.TopBand(132, 50, 30, 30);
 
             var view = host.gameObject.AddComponent<BannerView>();
             view.group = group;
             view.panel = panel.rectTransform;
-            view.background = panel;
+            view.background = fill;
             view.titleLabel = title;
             view.subtitleLabel = subtitle;
+            view.accent = accent;
+            view.siteStyle = true;
             return view;
         }
 
@@ -965,14 +1041,15 @@ namespace DeckParty.EditorTools
 
         static GuestPickerView BuildPicker(RectTransform overlay, UIPrefabs prefabs)
         {
-            var host = EditorUI.ModalShell(overlay, "GuestPicker", new Vector2(1500, 860), out var root, out var panel);
-            var title = EditorUI.Text(panel, "Title", "-", 40, UIPalette.Text, TextAlignmentOptions.Center, true, true, false);
+            var host = EditorUI.ModalShell(overlay, "GuestPicker", new Vector2(1500, 860), out var root, out var panel, true);
+            var title = EditorUI.Readable(EditorUI.Text(panel, "Title", "-", 40, SitePalette.Text, TextAlignmentOptions.Center, true, true, false));
             title.rectTransform.TopBand(26, 54, 40, 40);
-            var hint = EditorUI.Text(panel, "Hint", string.Empty, 24, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
+            var hint = EditorUI.Readable(EditorUI.Text(panel, "Hint", string.Empty, 24, SitePalette.TextDim, TextAlignmentOptions.Center, false, false, false));
             hint.rectTransform.TopBand(82, 34, 40, 40);
-            EditorUI.Scroll(panel, "Guests", out var grid, 16, EditorUI.Pad(10), GuestCardView.CellSize(0.72f)).GetComponent<RectTransform>()
-                .Box(Vector2.zero, Vector2.one, new Vector2(30, 112), new Vector2(-30, -128));
-            var cancel = EditorUI.Button(panel, "Cancel", "Cancel  [Esc]", ButtonStyle.Ghost, 28);
+            var pickerScroll = EditorUI.Scroll(panel, "Guests", out var grid, 16, EditorUI.Pad(10), GuestCardView.CellSize(0.72f));
+            pickerScroll.GetComponent<RectTransform>().Box(Vector2.zero, Vector2.one, new Vector2(30, 112), new Vector2(-30, -128));
+            LightScrollbar(pickerScroll);
+            var cancel = EditorUI.SiteTextButton(panel, "Cancel", "Cancel  [Esc]", EditorUI.SiteButton.Light, 26);
             cancel.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0), new Vector2(0, 26), new Vector2(340, 72), new Vector2(0.5f, 0));
 
             var view = host.gameObject.AddComponent<GuestPickerView>();
@@ -987,14 +1064,17 @@ namespace DeckParty.EditorTools
 
         static RolodexView BuildRolodex(RectTransform overlay, UIPrefabs prefabs)
         {
-            var host = EditorUI.ModalShell(overlay, "Rolodex", new Vector2(1640, 920), out var root, out var panel);
-            var title = EditorUI.Text(panel, "Title", "-", 42, UIPalette.Text, TextAlignmentOptions.Center, true, true, false);
+            var host = EditorUI.ModalShell(overlay, "Rolodex", new Vector2(1640, 920), out var root, out var panel, true);
+            var title = EditorUI.Readable(EditorUI.Text(panel, "Title", "-", 42, SitePalette.Text, TextAlignmentOptions.Center, true, true, false));
             title.rectTransform.TopBand(24, 56, 40, 40);
-            var summary = EditorUI.Text(panel, "Summary", string.Empty, 22, UIPalette.Text, TextAlignmentOptions.Center);
+            var summary = EditorUI.Readable(EditorUI.Text(panel, "Summary", string.Empty, 22, SitePalette.Text, TextAlignmentOptions.Center));
             summary.rectTransform.TopBand(82, 76, 60, 60);
-            EditorUI.Scroll(panel, "Guests", out var grid, 14, EditorUI.Pad(10), GuestCardView.CellSize(0.62f)).GetComponent<RectTransform>()
-                .Box(Vector2.zero, Vector2.one, new Vector2(30, 112), new Vector2(-30, -166));
-            var close = EditorUI.Button(panel, "Close", "common.close_r", ButtonStyle.Primary, 28);
+            var line = EditorUI.Line(panel, "SummaryLine", SitePalette.Divider);
+            line.rectTransform.TopBand(160, 2, 40, 40);
+            var rolodexScroll = EditorUI.Scroll(panel, "Guests", out var grid, 14, EditorUI.Pad(10), GuestCardView.CellSize(0.62f));
+            rolodexScroll.GetComponent<RectTransform>().Box(Vector2.zero, Vector2.one, new Vector2(30, 112), new Vector2(-30, -166));
+            LightScrollbar(rolodexScroll);
+            var close = EditorUI.SiteTextButton(panel, "Close", "common.close_r", EditorUI.SiteButton.Dark, 26);
             close.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0), new Vector2(0, 26), new Vector2(300, 72), new Vector2(0.5f, 0));
 
             var view = host.gameObject.AddComponent<RolodexView>();
@@ -1010,15 +1090,18 @@ namespace DeckParty.EditorTools
         /// <summary>The round summary (Free For All): one scrolling text with every player's round. RoundSummaryView writes it.</summary>
         static RoundSummaryView BuildRoundSummary(RectTransform overlay)
         {
-            var host = EditorUI.ModalShell(overlay, "RoundSummary", new Vector2(1200, 880), out var root, out var panel);
-            var title = EditorUI.Text(panel, "Title", "-", 44, UIPalette.Text, TextAlignmentOptions.Center, true, true, false);
+            var host = EditorUI.ModalShell(overlay, "RoundSummary", new Vector2(1200, 880), out var root, out var panel, true);
+            var title = EditorUI.Readable(EditorUI.Text(panel, "Title", "-", 40, SitePalette.Text, TextAlignmentOptions.Center, true, true, false));
             title.rectTransform.TopBand(24, 58, 40, 40);
+            var titleLine = EditorUI.Line(panel, "TitleLine", SitePalette.Divider);
+            titleLine.rectTransform.TopBand(88, 2, 40, 40);
             var scroll = EditorUI.Scroll(panel, "Lines", out var content, 0, EditorUI.Pad(8));
             scroll.GetComponent<RectTransform>().Box(Vector2.zero, Vector2.one, new Vector2(40, 116), new Vector2(-40, -96));
-            var body = EditorUI.Text(content, "Body", string.Empty, 24, UIPalette.Text, TextAlignmentOptions.TopLeft);
+            LightScrollbar(scroll);
+            var body = EditorUI.Readable(EditorUI.Text(content, "Body", string.Empty, 24, SitePalette.Text, TextAlignmentOptions.TopLeft));
             body.enableAutoSizing = false;
             body.fontSize = 24;
-            var close = EditorUI.Button(panel, "Close", "common.close", ButtonStyle.Primary, 28);
+            var close = EditorUI.SiteTextButton(panel, "Close", "common.close", EditorUI.SiteButton.Dark, 26);
             close.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0), new Vector2(0, 26), new Vector2(300, 72), new Vector2(0.5f, 0));
 
             var view = host.gameObject.AddComponent<RoundSummaryView>();
@@ -1027,6 +1110,96 @@ namespace DeckParty.EditorTools
             view.bodyLabel = body;
             view.scroll = scroll;
             view.closeButton = close;
+            return view;
+        }
+
+        /// <summary>
+        /// The stream / shop summary pop-up (UIFixes): a white card with a black border, a short title ("Great stream!") and a
+        /// subtitle (which stream), a grey line, then one column per player with their streamer's round avatar, their name and
+        /// streamer, the result and the key numbers, light grey lines between the columns, and Continue. RecapView fills it.
+        /// </summary>
+        static RecapView BuildRecap(RectTransform overlay)
+        {
+            const float columnWidth = 248f;
+            const float avatarSize = 108f;
+            var host = EditorUI.ModalShell(overlay, "StreamRecap", new Vector2(900, 660), out var root, out var panel, true);
+
+            var title = EditorUI.Text(panel, "Title", "-", 44, SitePalette.Text, TextAlignmentOptions.Center, true, true, false);
+            title.rectTransform.TopBand(20, 56, 30, 30);
+            title.fontSizeMin = 26;
+            var subtitle = EditorUI.Text(panel, "Subtitle", string.Empty, 22, SitePalette.TextDim, TextAlignmentOptions.Center, false, false, false);
+            subtitle.rectTransform.TopBand(78, 30, 30, 30);
+            var titleLine = EditorUI.Line(panel, "TitleLine", SitePalette.Divider);
+            titleLine.rectTransform.TopBand(122, 2, 30, 30);
+
+            var columns = EditorUI.Rect(panel, "Columns").Box(Vector2.zero, Vector2.one, new Vector2(30, 108), new Vector2(-30, -136));
+            EditorUI.HLayout(columns, 0, EditorUI.Pad(0), TextAnchor.UpperCenter, true, true, false, true);
+
+            // The column template (inactive; RecapView clones one per player).
+            var column = EditorUI.Rect(columns, "ColumnTemplate");
+            EditorUI.Layout(column, columnWidth, -1, 0, 1);
+            EditorUI.VLayout(column, 4, new RectOffset(14, 14, 8, 8), TextAnchor.UpperCenter, true, true, true, false);
+
+            var avatarRow = EditorUI.Rect(column, "Avatar");
+            EditorUI.Layout(avatarRow, -1, avatarSize + 8);
+            var avatar = EditorUI.Rect(avatarRow, "Frame").Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(avatarSize, avatarSize));
+            var mask = EditorUI.Image(avatar, "Mask", SitePalette.SurfaceAlt, EditorUI.Circle);
+            mask.rectTransform.Stretch(4, 4, 4, 4);
+            mask.gameObject.AddComponent<Mask>().showMaskGraphic = true;
+            var placeholder = EditorUI.Image(mask.transform, "Placeholder", UIPalette.Purple, EditorUI.Circle);
+            placeholder.rectTransform.Stretch();
+            var initials = EditorUI.Text(placeholder.transform, "Initials", "?", 40, Color.white, TextAlignmentOptions.Center, true, true, false);
+            initials.rectTransform.Stretch();
+            var portrait = EditorUI.Image(mask.transform, "Art", Color.white);
+            portrait.rectTransform.Stretch(2, 2, 2, 2);
+            portrait.preserveAspect = true;
+            portrait.enabled = false;
+            var ring = EditorUI.Image(avatar, "Ring", SitePalette.Outline, EditorUI.Ring, SkinSlot.AvatarRing);
+            ring.rectTransform.Stretch();
+
+            var name = EditorUI.Readable(EditorUI.Text(column, "Name", "-", 24, SitePalette.Text, TextAlignmentOptions.Center, true, true, false));
+            EditorUI.Layout(name, -1, 32);
+            var streamer = EditorUI.Text(column, "Streamer", "-", 18, SitePalette.TextDim, TextAlignmentOptions.Center, false, false, false);
+            EditorUI.Layout(streamer, -1, 24);
+            var headline = EditorUI.Text(column, "Headline", "-", 22, SitePalette.Text, TextAlignmentOptions.Center, true, true, false);
+            EditorUI.Layout(headline, -1, 34);
+            var bodyLine = EditorUI.Line(column, "Line", SitePalette.Divider);
+            EditorUI.Layout(bodyLine, -1, 2);
+            var body = EditorUI.Text(column, "Body", "-", 21, SitePalette.Text, TextAlignmentOptions.Top);
+            EditorUI.Layout(body, -1, 160, -1, 1);
+            body.fontSizeMin = 13;
+            body.lineSpacing = 8f;
+
+            var columnView = column.gameObject.AddComponent<RecapColumnView>();
+            columnView.portrait = portrait;
+            columnView.placeholder = placeholder;
+            columnView.initialsLabel = initials;
+            columnView.ring = ring;
+            columnView.nameLabel = name;
+            columnView.streamerLabel = streamer;
+            columnView.headlineLabel = headline;
+            columnView.bodyLabel = body;
+            column.gameObject.SetActive(false);
+
+            // The light grey line between two players' columns.
+            var divider = EditorUI.Line(columns, "DividerTemplate", SitePalette.Divider);
+            EditorUI.Layout(divider, 2, -1, 0, 1);
+            divider.gameObject.SetActive(false);
+
+            var close = EditorUI.SiteTextButton(panel, "Continue", "recap.continue", EditorUI.SiteButton.Dark, 26);
+            close.GetComponent<RectTransform>().Place(new Vector2(0.5f, 0), new Vector2(0, 26), new Vector2(320, 66), new Vector2(0.5f, 0));
+
+            var view = host.gameObject.AddComponent<RecapView>();
+            view.root = root;
+            view.panel = panel;
+            view.titleLabel = title;
+            view.subtitleLabel = subtitle;
+            view.columnsRoot = columns;
+            view.columnTemplate = columnView;
+            view.dividerTemplate = divider.gameObject;
+            view.closeButton = close;
+            view.columnWidth = columnWidth + 2;
+            view.panelPadding = 60f;
             return view;
         }
 

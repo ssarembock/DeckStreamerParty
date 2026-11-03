@@ -13,6 +13,10 @@ namespace DeckParty.UI
         [SerializeField] internal Image background;
         [SerializeField] internal TMP_Text titleLabel;
         [SerializeField] internal TMP_Text subtitleLabel;
+        [Tooltip("Website look: a white card with a black border; the callout's colour goes on this stripe and (darkened to " +
+                 "read on white) on the title, instead of tinting the whole panel.")]
+        [SerializeField] internal Image accent;
+        [SerializeField] internal bool siteStyle;
 
         Coroutine m_Routine;
 
@@ -32,10 +36,18 @@ namespace DeckParty.UI
         IEnumerator Play(string title, string subtitle, Color color, float hold)
         {
             titleLabel.text = title;
-            titleLabel.color = color;
-            subtitleLabel.text = subtitle ?? string.Empty;
+            subtitleLabel.text = siteStyle ? LightText.Adapt(subtitle ?? string.Empty) : subtitle ?? string.Empty;
             subtitleLabel.gameObject.SetActive(!string.IsNullOrEmpty(subtitle));
-            if (background != null) background.color = new Color(color.r * 0.25f, color.g * 0.25f, color.b * 0.25f, 0.88f);
+            if (siteStyle)
+            {
+                titleLabel.color = LightText.Readable(color);
+                if (accent != null) accent.color = color;
+            }
+            else
+            {
+                titleLabel.color = color;
+                if (background != null) background.color = new Color(color.r * 0.25f, color.g * 0.25f, color.b * 0.25f, 0.88f);
+            }
 
             group.alpha = 0f;
             panel.localScale = Vector3.one * 0.6f;

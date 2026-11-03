@@ -73,7 +73,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125580
-    m_Localized: Noche <b>{night}</b><size=70%>/{total}</size>
+    m_Localized: Stream <b>{night}</b><size=70%>/{total}</size>
     m_Metadata:
       m_Items: []
   - m_Id: 1574125581
@@ -300,7 +300,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125634
-    m_Localized: "La noche {night} empieza despu\xE9s de tu turno."
+    m_Localized: "El stream {night} empieza despu\xE9s de tu turno."
     m_Metadata:
       m_Items: []
   - m_Id: 1574125635
@@ -320,7 +320,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125639
-    m_Localized: Listo para la noche {night}
+    m_Localized: Listo para el stream {night}
     m_Metadata:
       m_Items: []
   - m_Id: 1574125640
@@ -332,11 +332,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125642
-    m_Localized: "La pr\xF3xima noche empieza cuando todos est\xE9n listos."
+    m_Localized: "El pr\xF3ximo stream empieza cuando todos est\xE9n listos."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514176
-    m_Localized: Empezar la noche {night}
+    m_Localized: Empezar el stream {night}
     m_Metadata:
       m_Items: []
   - m_Id: 1582514177
@@ -520,7 +520,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514221
-    m_Localized: "\xA1GAN\xD3 en la noche {night}!"
+    m_Localized: "\xA1GAN\xD3 en el stream {night}!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514222
@@ -528,7 +528,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514223
-    m_Localized: Noche {night}
+    m_Localized: Stream {night}
     m_Metadata:
       m_Items: []
   - m_Id: 1582514224
@@ -544,8 +544,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514227
-    m_Localized: "{count} Plays juntos en un stream en la noche {night} de {total}.
-      \xA1{set} completado!"
+    m_Localized: "{count} Plays juntos en el stream {night} de {total}. \xA1{set}
+      completado!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514228
@@ -578,7 +578,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514235
-    m_Localized: Un stream de {count} Plays en la noche {night}.
+    m_Localized: 'Stream {night}: {count} Plays en un solo stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514236
@@ -778,12 +778,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514284
-    m_Localized: "\xA1Bienvenido de nuevo! Sigues con {set} en la noche {night}."
+    m_Localized: "\xA1Bienvenido de nuevo! Sigues con {set} en el stream {night}."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514285
     m_Localized: "\xA1Bienvenido a {set}! Junta {count} Plays en un stream en {nights}
-      noches."
+      streams."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514286
@@ -791,25 +791,25 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514287
-    m_Localized: 'Temporada multijugador: {set}, {nights} noches, {mode}.'
+    m_Localized: 'Temporada multijugador: {set}, {nights} streams, {mode}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514288
-    m_Localized: NOCHE {night}
+    m_Localized: STREAM {night}
     m_Metadata:
       m_Items: []
   - m_Id: 1582514289
-    m_Localized: "{set}  -  {count:plural:queda|quedan} {count} {count:plural:noche|noches}
-      despu\xE9s de esta"
+    m_Localized: "{set}  -  {count:plural:queda|quedan} {count} {count:plural:stream|streams}
+      despu\xE9s de este"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514290
-    m_Localized: "{count:plural:Queda|Quedan} {count} {count:plural:noche|noches}
-      despu\xE9s de esta"
+    m_Localized: "{count:plural:Queda|Quedan} {count} {count:plural:stream|streams}
+      despu\xE9s de este"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514291
-    m_Localized: "\xA1La \xFAltima noche!"
+    m_Localized: "\xA1El \xFAltimo stream!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514292
@@ -821,7 +821,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514294
-    m_Localized: Noche {night} de {total}
+    m_Localized: Stream {night} de {total}
     m_Metadata:
       m_Items: []
   - m_Id: 1582514295
@@ -1162,7 +1162,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514374
-    m_Localized: '{set} - Noche {night}/{total}'
+    m_Localized: '{set} - Stream {night}/{total}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514375
@@ -1231,7 +1231,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514391
-    m_Localized: '{count} {count:plural:noche|noches}'
+    m_Localized: '{count} {count:plural:stream|streams}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
@@ -1437,8 +1437,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514441
-    m_Localized: "cada noche los jugadores transmiten uno tras otro mientras los
-      dem\xE1s miran en vivo. La temporada termina despu\xE9s de la primera noche
+    m_Localized: "en cada ronda los jugadores transmiten uno tras otro mientras los
+      dem\xE1s miran en vivo. La temporada termina despu\xE9s de la primera ronda
       en que alguien junta {count} Plays."
     m_Metadata:
       m_Items: []
@@ -1451,7 +1451,7 @@ MonoBehaviour:
     m_Localized: "todos transmiten a la vez y nadie puede ver a los dem\xE1s. Cuando
       terminan todos los streams y cada uno toca Ir a la tienda, una cuenta regresiva
       3-2-1 abre la tienda para todos a la vez: el que llega primero, se lo lleva.
-      La primera noche en que alguien junta {count} Plays termina la temporada. El
+      La primera ronda en que alguien junta {count} Plays termina la temporada. El
       \xFAnico modo para 3 o m\xE1s jugadores."
     m_Metadata:
       m_Items: []
@@ -1646,7 +1646,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251137
-    m_Localized: "Primero la tienda: la pr\xF3xima noche empieza cuando todos hayan
+    m_Localized: "Primero la tienda: el pr\xF3ximo stream empieza cuando todos hayan
       comprado."
     m_Metadata:
       m_Items: []
@@ -1770,7 +1770,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251166
-    m_Localized: Noche {night}
+    m_Localized: Stream {night}
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251167
@@ -1809,6 +1809,46 @@ MonoBehaviour:
   - m_Id: 994296414289920
     m_Localized: "<b>Plays</b>\\nLos espectadores con este \xEDcono son Plays. Ten
       {goal} en el chat a la vez y termina bien el stream para ganar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940082913280
+    m_Localized: Pulso de comunidades
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159488
+    m_Localized: Resumen de los streams
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159489
+    m_Localized: Resumen de la tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159490
+    m_Localized: 'Continuar  [Espacio]'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159491
+    m_Localized: Reclutados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159492
+    m_Localized: Sin espectadores nuevos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159493
+    m_Localized: "Cupo del chat {from} \u2192 {to}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159494
+    m_Localized: "Activa: {power} \xD7{count}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159495
+    m_Localized: "Racha \xD7{count}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064940196159496
+    m_Localized: '{count} {count:plural:Bot enviado|Bots enviados} a un rival'
     m_Metadata:
       m_Items: []
   references:

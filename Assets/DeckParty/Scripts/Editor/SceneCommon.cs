@@ -193,15 +193,18 @@ namespace DeckParty.EditorTools
         public static void CreateOverlays(Transform overlay)
         {
             // Modal dialog
-            var host = EditorUI.ModalShell(overlay, "ModalDialog", new Vector2(940, 460), out var root, out var panel);
-            var title = EditorUI.Text(panel, "Title", "Title", 44, UIPalette.Text, TextAlignmentOptions.Center, true, true, false);
+            // Every pop-up is a white card with a strong black border and black text (UIFixes).
+            var host = EditorUI.ModalShell(overlay, "ModalDialog", new Vector2(940, 460), out var root, out var panel, true);
+            var title = EditorUI.Readable(EditorUI.Text(panel, "Title", "Title", 40, SitePalette.Text, TextAlignmentOptions.Center, true, true, false));
             title.rectTransform.TopBand(32, 60, 40, 40);
-            var message = EditorUI.Text(panel, "Message", "Message", 28, UIPalette.TextDim, TextAlignmentOptions.Center);
-            message.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(56, 136), new Vector2(-56, -104));
-            var buttons = EditorUI.Rect(panel, "Buttons").BottomBand(36, 84, 70, 70);
+            var titleLine = EditorUI.Line(panel, "TitleLine", SitePalette.Divider);
+            titleLine.rectTransform.TopBand(104, 2, 40, 40);
+            var message = EditorUI.Readable(EditorUI.Text(panel, "Message", "Message", 27, SitePalette.Text, TextAlignmentOptions.Center));
+            message.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(56, 136), new Vector2(-56, -118));
+            var buttons = EditorUI.Rect(panel, "Buttons").BottomBand(36, 80, 70, 70);
             EditorUI.HLayout(buttons, 24, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, true, true);
-            var cancel = EditorUI.Button(buttons, "Cancel", "common.cancel", ButtonStyle.Normal, 28, out var cancelLabel);
-            var confirm = EditorUI.Button(buttons, "Confirm", "common.ok", ButtonStyle.Primary, 28, out var confirmLabel);
+            var cancel = EditorUI.SiteTextButton(buttons, "Cancel", "common.cancel", EditorUI.SiteButton.Light, 26, out var cancelLabel);
+            var confirm = EditorUI.SiteTextButton(buttons, "Confirm", "common.ok", EditorUI.SiteButton.Dark, 26, out var confirmLabel);
             // The dialog sets these per use, so they must not be overwritten by their localized captions.
             Object.DestroyImmediate(cancelLabel.GetComponent<LocalizedLabel>());
             Object.DestroyImmediate(confirmLabel.GetComponent<LocalizedLabel>());
@@ -217,11 +220,11 @@ namespace DeckParty.EditorTools
             // Toast
             var toastRect = EditorUI.Rect(overlay, "Toast").Place(new Vector2(0.5f, 1), new Vector2(0, -22), new Vector2(1180, 84), new Vector2(0.5f, 1));
             var group = toastRect.gameObject.AddComponent<CanvasGroup>();
-            var toastBg = EditorUI.Image(toastRect, "Background", UIPalette.PanelDeep, EditorUI.Rounded, SkinSlot.Tooltip);
-            toastBg.rectTransform.Stretch();
+            var toastBg = EditorUI.SitePanel(toastRect, "Background", SitePalette.Surface, SitePalette.Outline, EditorUI.ModalBorder, false);
+            ((RectTransform)toastBg.transform.parent).Stretch();
             var accent = EditorUI.Image(toastRect, "Accent", UIPalette.Teal, EditorUI.RoundedSmall);
-            accent.rectTransform.Box(new Vector2(0, 0), new Vector2(0, 1), new Vector2(0, 8), new Vector2(12, -8));
-            var toastLabel = EditorUI.Text(toastRect, "Label", string.Empty, 26, UIPalette.Text, TextAlignmentOptions.Center);
+            accent.rectTransform.Box(new Vector2(0, 0), new Vector2(0, 1), new Vector2(10, 12), new Vector2(20, -12));
+            var toastLabel = EditorUI.Readable(EditorUI.Text(toastRect, "Label", string.Empty, 26, SitePalette.Text, TextAlignmentOptions.Center));
             toastLabel.rectTransform.Stretch(30, 8, 20, 8);
             toastLabel.enableAutoSizing = true;
             toastLabel.fontSizeMin = 16;
@@ -234,14 +237,20 @@ namespace DeckParty.EditorTools
             // Tooltip
             var tipHost = EditorUI.Rect(overlay, "Tooltip").Stretch();
             var tipGroup = tipHost.gameObject.AddComponent<CanvasGroup>();
-            var tipPanel = EditorUI.Image(tipHost, "Panel", UIPalette.PanelDeep.WithAlpha(0.98f), EditorUI.Rounded, SkinSlot.Tooltip);
+            // Hover pop-ups: a white card, a strong black border and black text (pale colours in the text are darkened).
+            var tipPanel = EditorUI.Image(tipHost, "Panel", SitePalette.Outline, EditorUI.RoundedSmall);
+            tipPanel.type = Image.Type.Sliced;
             tipPanel.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
             tipPanel.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
             tipPanel.rectTransform.pivot = new Vector2(0, 1);
             tipPanel.rectTransform.sizeDelta = new Vector2(440, 120);
+            var tipFill = EditorUI.Image(tipPanel.transform, "Fill", SitePalette.Surface, EditorUI.RoundedSmall);
+            tipFill.type = Image.Type.Sliced;
+            tipFill.rectTransform.Stretch(2.5f, 2.5f, 2.5f, 2.5f);
+            tipFill.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
             EditorUI.VLayout(tipPanel, 0, EditorUI.Pad(20, 16), TextAnchor.UpperLeft, true, true, true, false);
             EditorUI.Fit(tipPanel, false, true);
-            var tipLabel = EditorUI.Text(tipPanel.transform, "Label", string.Empty, 21, UIPalette.Text, TextAlignmentOptions.TopLeft);
+            var tipLabel = EditorUI.Readable(EditorUI.Text(tipPanel.transform, "Label", string.Empty, 21, SitePalette.Text, TextAlignmentOptions.TopLeft));
             var tooltip = tipHost.gameObject.AddComponent<TooltipView>();
             tooltip.panel = tipPanel.rectTransform;
             tooltip.label = tipLabel;

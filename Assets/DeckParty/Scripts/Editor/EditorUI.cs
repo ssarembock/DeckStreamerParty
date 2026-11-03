@@ -273,13 +273,23 @@ namespace DeckParty.EditorTools
         public static Button IconButton(Transform parent, string name, Sprite icon, SkinSlot iconSlot, SiteButton style, Vector2 size, float iconSize,
             out Image iconImage, string tooltip = null, bool round = false)
         {
-            var background = Image(parent, name, SiteFill(style), round ? Circle : RoundedSmall, null, true);
+            // Light buttons are white with a strong black border (the site's look); the border is the button's own Image.
+            bool bordered = style == SiteButton.Light;
+            var background = Image(parent, name, bordered ? SitePalette.Outline : SiteFill(style), round ? Circle : RoundedSmall, null, true);
             if (!round) background.type = UnityEngine.UI.Image.Type.Sliced;
             background.rectTransform.sizeDelta = size;
             if (style == SiteButton.Accent) background.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Fill;
+            Image fill = null;
+            if (bordered)
+            {
+                fill = Image(background.transform, "Fill", SiteFill(style), round ? Circle : RoundedSmall, null, false);
+                if (!round) fill.type = UnityEngine.UI.Image.Type.Sliced;
+                fill.rectTransform.Stretch(2.5f, 2.5f, 2.5f, 2.5f);
+            }
 
             var button = background.gameObject.AddComponent<Button>();
-            button.targetGraphic = background;
+            // Hover and press tint the white fill (tinting the black border wouldn't show).
+            button.targetGraphic = fill != null ? fill : background;
             var colors = button.colors;
             colors.normalColor = Color.white;
             colors.highlightedColor = new Color(0.92f, 0.92f, 0.95f, 1f);
@@ -299,7 +309,7 @@ namespace DeckParty.EditorTools
         }
 
         public static Color SiteFill(SiteButton style) =>
-            style == SiteButton.Accent ? SitePalette.Accent : style == SiteButton.Dark ? SitePalette.Outline : SitePalette.SurfaceAlt;
+            style == SiteButton.Accent ? SitePalette.Accent : style == SiteButton.Dark ? SitePalette.Outline : SitePalette.Surface;
 
         public static Color SiteContent(SiteButton style) => style == SiteButton.Light ? SitePalette.Text : Color.white;
 
@@ -316,6 +326,64 @@ namespace DeckParty.EditorTools
             inner.rectTransform.Stretch(borderWidth, borderWidth, borderWidth, borderWidth);
             return inner;
         }
+
+        /// <summary>
+        /// Like <see cref="SitePanel"/> but with square corners (no sprite: a plain rectangle and a plain border), for playing
+        /// cards and pictures. Returns the inner fill; the border is its parent, named <paramref name="name"/>.
+        /// </summary>
+        public static Image SharpPanel(Transform parent, string name, Color fill, Color border, float borderWidth = 3f, bool raycast = false)
+        {
+            var outer = Image(parent, name, border, null, null, raycast);
+            var inner = Image(outer.transform, "Fill", fill, null, null, false);
+            inner.rectTransform.Stretch(borderWidth, borderWidth, borderWidth, borderWidth);
+            return inner;
+        }
+
+        /// <summary>Keeps this text readable on a white pop-up (pale colours in it are darkened, see <see cref="ReadableOnLight"/>).</summary>
+        public static T Readable<T>(T text) where T : TMP_Text
+        {
+            if (text != null && text.GetComponent<ReadableOnLight>() == null) text.gameObject.AddComponent<ReadableOnLight>();
+            return text;
+        }
+
+        /// <summary>
+        /// A text button for the white pop-ups: <see cref="SiteButton.Dark"/> is black with white text (the main choice),
+        /// <see cref="SiteButton.Light"/> is white with a black border and black text, <see cref="SiteButton.Accent"/> takes the
+        /// platform colour.
+        /// </summary>
+        public static Button SiteTextButton(Transform parent, string name, string label, SiteButton style, float fontSize, out TextMeshProUGUI labelText)
+        {
+            var background = Image(parent, name, style == SiteButton.Accent ? SitePalette.Accent : SitePalette.Outline, RoundedSmall, null, true);
+            background.type = UnityEngine.UI.Image.Type.Sliced;
+            if (style == SiteButton.Accent) background.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Fill;
+            if (style == SiteButton.Light)
+            {
+                var fill = Image(background.transform, "Fill", SitePalette.Surface, RoundedSmall, null, false);
+                fill.type = UnityEngine.UI.Image.Type.Sliced;
+                fill.rectTransform.Stretch(2.5f, 2.5f, 2.5f, 2.5f);
+            }
+
+            var button = background.gameObject.AddComponent<Button>();
+            button.targetGraphic = background;
+            var colors = button.colors;
+            colors.normalColor = Color.white;
+            colors.highlightedColor = new Color(0.9f, 0.9f, 0.93f, 1f);
+            colors.pressedColor = new Color(0.75f, 0.75f, 0.8f, 1f);
+            colors.selectedColor = Color.white;
+            colors.disabledColor = new Color(0.8f, 0.8f, 0.84f, 0.45f);
+            colors.fadeDuration = 0.08f;
+            button.colors = colors;
+            NoNavigation(button);
+            background.gameObject.AddComponent<ButtonFeedback>();
+
+            labelText = Text(background.transform, "Label", label, fontSize, style == SiteButton.Light ? SitePalette.Text : Color.white, TextAlignmentOptions.Center, true, false, false);
+            labelText.rectTransform.Stretch(14, 4, 14, 4);
+            if (style == SiteButton.Accent) labelText.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Content;
+            return button;
+        }
+
+        public static Button SiteTextButton(Transform parent, string name, string label, SiteButton style, float fontSize = 28f) =>
+            SiteTextButton(parent, name, label, style, fontSize, out _);
 
         /// <summary>A hairline divider.</summary>
         public static Image Line(Transform parent, string name, Color color, float thickness = 2f)
@@ -580,17 +648,30 @@ namespace DeckParty.EditorTools
             return trigger;
         }
 
-        /// <summary>Full-screen modal shell: a component host (always active) with a Root child holding a dimmer and a centred panel.</summary>
-        public static RectTransform ModalShell(Transform parent, string name, Vector2 panelSize, out GameObject root, out RectTransform panel)
+        /// <summary>
+        /// Full-screen modal shell: a component host (always active) with a Root child holding a dimmer and a centred panel.
+        /// <paramref name="light"/>: the website pop-up look (a white card with a strong black border, under a lighter dim);
+        /// otherwise the dark menu panel. Put the content under <paramref name="panel"/> either way.
+        /// </summary>
+        public static RectTransform ModalShell(Transform parent, string name, Vector2 panelSize, out GameObject root, out RectTransform panel, bool light = false)
         {
             var host = Rect(parent, name).Stretch();
             var rootRect = Rect(host, "Root").Stretch();
             root = rootRect.gameObject;
-            var dim = Image(rootRect, "Dim", new Color(0.02f, 0.01f, 0.05f, 0.72f), null, null, true);
+            var dim = Image(rootRect, "Dim", light ? new Color(0.06f, 0.06f, 0.08f, 0.55f) : new Color(0.02f, 0.01f, 0.05f, 0.72f), null, null, true);
             dim.rectTransform.Stretch();
+            if (light)
+            {
+                var fill = SitePanel(rootRect, "Panel", SitePalette.Surface, SitePalette.Outline, ModalBorder, true);
+                panel = ((RectTransform)fill.transform.parent).Place(new Vector2(0.5f, 0.5f), Vector2.zero, panelSize);
+                return host;
+            }
             var panelImage = Panel(rootRect, "Panel", UIPalette.PanelDeep, SkinSlot.Panel, true);
             panel = panelImage.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, panelSize);
             return host;
         }
+
+        /// <summary>The black border of the white pop-ups.</summary>
+        public const float ModalBorder = 3f;
     }
 }

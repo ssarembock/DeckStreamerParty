@@ -694,19 +694,39 @@ namespace DeckParty.EditorTools
         static GameObject BuildShopItem()
         {
             var root = EditorUI.Rect(null, "ShopItem");
-            root.sizeDelta = new Vector2(220, 260);
+            root.sizeDelta = new Vector2(190, 266);
+
+            // The pile: card backs peeking out up and to the left, one per copy left after the top card (ShopItemView).
+            // Farthest first in the hierarchy so the nearest back draws over it, and the tile over them all.
+            const int backs = 3;
+            const float step = 7f;
+            var stack = new GameObject[backs];
+            var pile = EditorUI.Rect(root, "Stack").Stretch();
+            for (int i = backs - 1; i >= 0; i--)
+            {
+                float offset = step * (i + 1);
+                var back = EditorUI.SharpPanel(pile, "Back" + (i + 1), SitePalette.Surface, SitePalette.Outline, 2.5f);
+                var backRect = (RectTransform)back.transform.parent;
+                backRect.Box(Vector2.zero, Vector2.one, new Vector2(-offset, offset), new Vector2(-offset, offset));
+                // A faint inner line, like the printed border on the back of a playing card.
+                var inner = EditorUI.SharpPanel(back.transform, "Print", SitePalette.Surface, SitePalette.Divider, 2f);
+                ((RectTransform)inner.transform.parent).Stretch(8, 8, 8, 8);
+                stack[i] = backRect.gameObject;
+            }
+
             var anim = EditorUI.Rect(root, "Anim").Stretch();
 
-            var frame = EditorUI.Image(anim, "Frame", SitePalette.Border, EditorUI.RoundedSmall);
-            frame.type = Image.Type.Sliced;
+            // A playing card: square corners, a strong black border.
+            var frame = EditorUI.Image(anim, "Frame", SitePalette.Outline, null);
             frame.rectTransform.Stretch();
-            var background = EditorUI.Image(anim, "Background", SitePalette.Surface, EditorUI.RoundedSmall, null, true);
-            background.type = Image.Type.Sliced;
-            background.rectTransform.Stretch(2, 2, 2, 2);
+            var background = EditorUI.Image(anim, "Background", SitePalette.Surface, null, null, true);
+            background.rectTransform.Stretch(3, 3, 3, 3);
 
-            var portraitBg = EditorUI.Image(anim, "PortraitBg", SitePalette.SurfaceAlt, EditorUI.RoundedSmall);
-            portraitBg.type = Image.Type.Sliced;
-            portraitBg.rectTransform.Box(new Vector2(0.05f, 0.2f), new Vector2(0.95f, 0.96f), Vector2.zero, Vector2.zero);
+            // The picture: a plain rectangle with a thin black border.
+            var portraitBorder = EditorUI.Image(anim, "PortraitBorder", SitePalette.Outline, null);
+            portraitBorder.rectTransform.Box(new Vector2(0.07f, 0.19f), new Vector2(0.93f, 0.95f), Vector2.zero, Vector2.zero);
+            var portraitBg = EditorUI.Image(portraitBorder.transform, "PortraitBg", SitePalette.SurfaceAlt, null);
+            portraitBg.rectTransform.Stretch(2, 2, 2, 2);
             var placeholder = EditorUI.Image(portraitBg.transform, "Placeholder", UIPalette.Teal, EditorUI.Circle, SkinSlot.Circle);
             placeholder.rectTransform.Box(new Vector2(0.14f, 0.1f), new Vector2(0.86f, 0.9f), Vector2.zero, Vector2.zero);
             var fitter = placeholder.gameObject.AddComponent<AspectRatioFitter>();
@@ -720,22 +740,21 @@ namespace DeckParty.EditorTools
             portrait.enabled = false;
             portrait.gameObject.AddComponent<CharacterPortrait>().image = portrait;
 
-            var communities = CommunityIcons(anim, "Communities", 38, true);
-            ((RectTransform)communities.transform).Place(new Vector2(0, 1), new Vector2(10, -10), new Vector2(3 * 38 + 2 * 4, 38), new Vector2(0, 1));
-            var star = EditorUI.Icon(anim, "DiamondBadge", EditorUI.Star, UIPalette.Gold, SkinSlot.IconStar, 40);
-            star.rectTransform.Place(new Vector2(1, 1), new Vector2(-10, -10), new Vector2(40, 40), new Vector2(1, 1));
+            var communities = CommunityIcons(anim, "Communities", 34, true);
+            ((RectTransform)communities.transform).Place(new Vector2(0, 1), new Vector2(10, -10), new Vector2(3 * 34 + 2 * 4, 34), new Vector2(0, 1));
+            var star = EditorUI.Icon(anim, "DiamondBadge", EditorUI.Star, UIPalette.Gold, SkinSlot.IconStar, 36);
+            star.rectTransform.Place(new Vector2(1, 1), new Vector2(-10, -10), new Vector2(36, 36), new Vector2(1, 1));
 
             // The price is the Clout icon and the number; "x3" is how many are left (ShopItemView writes both).
             var price = EditorUI.Text(anim, "Price", "-", 28, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
             price.rectTransform.Box(new Vector2(0.06f, 0.02f), new Vector2(0.66f, 0.18f), Vector2.zero, Vector2.zero);
             price.fontSizeMin = 14;
-            var left = EditorUI.Text(anim, "Left", "-", 22, SitePalette.TextFaint, TextAlignmentOptions.MidlineRight, true, false, false);
+            var left = EditorUI.Text(anim, "Left", "-", 22, SitePalette.TextDim, TextAlignmentOptions.MidlineRight, true, false, false);
             left.rectTransform.Box(new Vector2(0.6f, 0.02f), new Vector2(0.94f, 0.18f), Vector2.zero, Vector2.zero);
             left.fontSizeMin = 11;
 
             // Can't buy: a white veil (the light site's "disabled"); none left: a red X over the picture.
-            var dim = EditorUI.Image(anim, "Dim", new Color(1f, 1f, 1f, 0.62f), EditorUI.RoundedSmall);
-            dim.type = Image.Type.Sliced;
+            var dim = EditorUI.Image(anim, "Dim", new Color(1f, 1f, 1f, 0.62f), null);
             dim.rectTransform.Stretch();
             dim.enabled = false;
             var soldOut = EditorUI.Icon(anim, "SoldOut", EditorUI.Close, SitePalette.Danger.WithAlpha(0.85f), SkinSlot.IconClose, 90);
@@ -768,6 +787,7 @@ namespace DeckParty.EditorTools
             view.soldOutBadge = soldOut.gameObject;
             view.siteStyle = true;
             view.tooltip = tooltip;
+            view.stack = stack;
             return root.gameObject;
         }
 

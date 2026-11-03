@@ -296,11 +296,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469250
-    m_Localized: '{0} fez uma live de {1} Plays! Terminando a noite {2}...'
+    m_Localized: '{0} fez uma live de {1} Plays! Terminando a live {2}...'
     m_Metadata:
       m_Items: []
   - m_Id: 437469251
-    m_Localized: "Come\xE7a a noite {0}!"
+    m_Localized: "Come\xE7a a live {0}!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469252
@@ -308,7 +308,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469253
-    m_Localized: '{0} vence a temporada com uma live de {1} Plays na noite {2}!'
+    m_Localized: '{0} vence a temporada com {1} Plays numa live na live {2}!'
     m_Metadata:
       m_Items: []
   - m_Id: 437469254

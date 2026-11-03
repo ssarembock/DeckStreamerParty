@@ -884,7 +884,7 @@ MonoBehaviour:
   - name: Promo Code User
     key: PromoCodeUser
     type: 62
-    portrait: {fileID: -265884576, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
+    portrait: {fileID: 21300000, guid: bbf4155401ecb5442a0d48111c7d9459, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1432,17 +1432,17 @@ MonoBehaviour:
     platform: 0
     accent: {r: 1, g: 0.1764706, b: 0.1764706, a: 1}
     accentContent: {r: 1, g: 1, b: 1, a: 1}
-    size: 84
-    logo: {fileID: 0}
-    partA: {fileID: 0}
-    partB: {fileID: 0}
+    size: 100
+    logo: {fileID: -8439911166604744002, guid: 4b3f183903a8d1d4597a872a0d132ac7, type: 3}
+    partA: {fileID: 6057415966378255706, guid: 4b3f183903a8d1d4597a872a0d132ac7, type: 3}
+    partB: {fileID: 1340677447350887519, guid: 4b3f183903a8d1d4597a872a0d132ac7, type: 3}
     partC: {fileID: 0}
     pointA: {x: 0.9, y: 0.45}
     pointB: {x: 0.5, y: 0.5}
-    partSize: 0.28
+    partSize: 0.4
     travel: 1.1
     speed: 1
-    rest: 1.4
+    rest: 4
   - name: Lookout
     platform: 1
     accent: {r: 0.5686275, g: 0.27450982, b: 1, a: 1}

@@ -56,6 +56,20 @@ namespace DeckParty
             return Mathf.Max(body * (x <= 0.4f ? 1f : 0f), head);
         }));
 
+        static Sprite s_Rays;
+
+        /// <summary>A soft sunburst (12 tapering rays from a bright core): the "maxed" shine behind community icons.</summary>
+        public static Sprite Rays => s_Rays != null ? s_Rays : (s_Rays = Build("dp_rays", 128, Vector4.zero, (x, y) =>
+        {
+            float d = Mathf.Sqrt(x * x + y * y);
+            if (d >= 1f) return 0f;
+            float angle = Mathf.Atan2(y, x);
+            float ray = Mathf.Pow(Mathf.Abs(Mathf.Cos(angle * 6f)), 8f);
+            float fade = Mathf.Clamp01(1f - d);
+            float core = Mathf.Clamp01(1f - d * 2.2f);
+            return Mathf.Max(ray * fade * fade * 1.4f, core * core);
+        }));
+
         static Sprite s_TailDown;
 
         /// <summary>A soft triangle pointing down (the chat bubble's tail until real art is assigned).</summary>

@@ -298,11 +298,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469250
-    m_Localized: "\xA1{0} logr\xF3 un stream de {1} Plays! Terminando la noche {2}..."
+    m_Localized: "\xA1{0} logr\xF3 un stream de {1} Plays! Terminando el stream {2}..."
     m_Metadata:
       m_Items: []
   - m_Id: 437469251
-    m_Localized: "\xA1Empieza la noche {0}!"
+    m_Localized: "\xA1Empieza el stream {0}!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469252
@@ -311,7 +311,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469253
-    m_Localized: "\xA1{0} gana la temporada con un stream de {1} Plays en la noche
+    m_Localized: "\xA1{0} gana la temporada con {1} Plays en un stream en el stream
       {2}!"
     m_Metadata:
       m_Items: []

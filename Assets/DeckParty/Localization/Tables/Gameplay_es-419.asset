@@ -631,7 +631,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412376
-    m_Localized: "\u2014 Noche {night} \u2014"
+    m_Localized: "\u2014 Stream {night} \u2014"
     m_Metadata:
       m_Items: []
   - m_Id: 479412377
@@ -1099,7 +1099,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606618
-    m_Localized: "Esa fue la \xFAltima noche."
+    m_Localized: "Ese fue el \xFAltimo stream."
     m_Metadata:
       m_Items: []
   - m_Id: 483606619
@@ -1161,7 +1161,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606633
-    m_Localized: Cada noche tiene dos partes
+    m_Localized: Cada ronda tiene dos partes
     m_Metadata:
       m_Items: []
   - m_Id: 483606634
@@ -1248,7 +1248,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606646
-    m_Localized: "<b>Espacio</b> sumar espectador / confirmar / siguiente noche  
+    m_Localized: "<b>Espacio</b> sumar espectador / confirmar / siguiente stream  
       <b>E</b> terminar el stream   <b>R</b> Audiencia   <b>Esc</b> cancelar / men\xFA  
       <b>F11</b> pantalla completa."
     m_Metadata:

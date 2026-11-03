@@ -289,11 +289,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469250
-    m_Localized: '{0} pulled off a stream with {1} Plays! Finishing night {2}...'
+    m_Localized: '{0} pulled off a stream with {1} Plays! Finishing stream {2}...'
     m_Metadata:
       m_Items: []
   - m_Id: 437469251
-    m_Localized: Night {0} begins!
+    m_Localized: Stream {0} begins!
     m_Metadata:
       m_Items: []
   - m_Id: 437469252
@@ -301,7 +301,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469253
-    m_Localized: '{0} wins the season: {1} Plays in one stream on night {2}!'
+    m_Localized: '{0} wins the season: {1} Plays in one stream on stream {2}!'
     m_Metadata:
       m_Items: []
   - m_Id: 437469254

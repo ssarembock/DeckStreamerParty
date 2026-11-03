@@ -631,7 +631,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412376
-    m_Localized: '- Night {night} -'
+    m_Localized: '- Stream {night} -'
     m_Metadata:
       m_Items: []
   - m_Id: 479412377
@@ -1096,7 +1096,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606618
-    m_Localized: That was the final night.
+    m_Localized: That was the final stream.
     m_Metadata:
       m_Items: []
   - m_Id: 483606619
@@ -1158,7 +1158,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606633
-    m_Localized: A night has two halves
+    m_Localized: A round has two halves
     m_Metadata:
       m_Items: []
   - m_Id: 483606634
@@ -1241,7 +1241,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606646
-    m_Localized: <b>Space</b> add viewer / confirm picks / next night   <b>E</b>
+    m_Localized: <b>Space</b> add viewer / confirm picks / next stream   <b>E</b>
       end the stream   <b>R</b> Audience   <b>Esc</b> cancel / menu   <b>F11</b>
       fullscreen.
     m_Metadata:

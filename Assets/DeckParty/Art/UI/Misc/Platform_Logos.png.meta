@@ -1,0 +1,579 @@
+fileFormatVersion: 2
+guid: 4b3f183903a8d1d4597a872a0d132ac7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8439911166604744002
+    second: Platform_Logos_0
+  - first:
+      213: 8952171438217015074
+    second: Platform_Logos_1
+  - first:
+      213: -8237639298559034161
+    second: Platform_Logos_2
+  - first:
+      213: 1340677447350887519
+    second: Platform_Logos_3
+  - first:
+      213: 1254015402038711558
+    second: Platform_Logos_4
+  - first:
+      213: -3510644303694755323
+    second: Platform_Logos_5
+  - first:
+      213: 1451966364787759572
+    second: Platform_Logos_6
+  - first:
+      213: 894514111080176986
+    second: Platform_Logos_7
+  - first:
+      213: 6057415966378255706
+    second: Platform_Logos_8
+  - first:
+      213: -1433943883949097098
+    second: Platform_Logos_9
+  - first:
+      213: 4794471249112167058
+    second: Platform_Logos_10
+  - first:
+      213: 5547172236818763418
+    second: Platform_Logos_11
+  - first:
+      213: -1953737203285755990
+    second: Platform_Logos_12
+  - first:
+      213: -8092395554360235795
+    second: Platform_Logos_13
+  - first:
+      213: 7544940136617492048
+    second: Platform_Logos_14
+  - first:
+      213: 7350558355362365781
+    second: Platform_Logos_15
+  - first:
+      213: 5957043784093439198
+    second: Platform_Logos_16
+  - first:
+      213: 5251631419357308761
+    second: Platform_Logos_17
+  - first:
+      213: -5024655265692399813
+    second: Platform_Logos_18
+  - first:
+      213: -8034824100967990135
+    second: Platform_Logos_19
+  - first:
+      213: 735918622566910033
+    second: Platform_Logos_20
+  - first:
+      213: 8369376835159263579
+    second: Platform_Logos_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Platform_Logos_0
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 347
+        width: 194
+        height: 261
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebaeba2b2896fda80800000000000000
+      internalID: -8439911166604744002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_1
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 375
+        width: 197
+        height: 201
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22fa25f0e708c3c70800000000000000
+      internalID: 8952171438217015074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_2
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 351
+        width: 204
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcc379de3b60ead80800000000000000
+      internalID: -8237639298559034161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_5
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 356
+        width: 204
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50a86812b9fa74fc0800000000000000
+      internalID: -3510644303694755323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_6
+      rect:
+        serializedVersion: 2
+        x: 673
+        y: 374
+        width: 182
+        height: 187
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d95df647bb662410800000000000000
+      internalID: 1451966364787759572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_8
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 218
+        width: 104
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5561c45ab3401450800000000000000
+      internalID: 6057415966378255706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_10
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 219
+        width: 39
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2927729e232698240800000000000000
+      internalID: 4794471249112167058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_11
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 219
+        width: 39
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9ecd7b52c38bfc40800000000000000
+      internalID: 5547172236818763418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_12
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 198
+        width: 124
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa7ffad6d5ee2e4e0800000000000000
+      internalID: -1953737203285755990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_13
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 260
+        width: 52
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de868606e1902bf80800000000000000
+      internalID: -8092395554360235795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_14
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 201
+        width: 25
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05e3ca6541305b860800000000000000
+      internalID: 7544940136617492048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_15
+      rect:
+        serializedVersion: 2
+        x: 919
+        y: 284
+        width: 95
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 551472811ed620660800000000000000
+      internalID: 7350558355362365781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_17
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 233
+        width: 54
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 957a21a93fa81e840800000000000000
+      internalID: 5251631419357308761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_18
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 238
+        width: 113
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b37cb9958a6d44ab0800000000000000
+      internalID: -5024655265692399813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_20
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 198
+        width: 49
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15802b19612863a00800000000000000
+      internalID: 735918622566910033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_21
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 185
+        width: 130
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b590d0383eff52470800000000000000
+      internalID: 8369376835159263579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Platform_Logos_3
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 235
+        width: 49
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 014f29d96ae3f2b4db92aeabc0112605
+      internalID: 1340677447350887519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Platform_Logos_0: -8439911166604744002
+      Platform_Logos_1: 8952171438217015074
+      Platform_Logos_10: 4794471249112167058
+      Platform_Logos_11: 5547172236818763418
+      Platform_Logos_12: -1953737203285755990
+      Platform_Logos_13: -8092395554360235795
+      Platform_Logos_14: 7544940136617492048
+      Platform_Logos_15: 7350558355362365781
+      Platform_Logos_16: 5957043784093439198
+      Platform_Logos_17: 5251631419357308761
+      Platform_Logos_18: -5024655265692399813
+      Platform_Logos_19: -8034824100967990135
+      Platform_Logos_2: -8237639298559034161
+      Platform_Logos_20: 735918622566910033
+      Platform_Logos_21: 8369376835159263579
+      Platform_Logos_3: 1340677447350887519
+      Platform_Logos_4: 1254015402038711558
+      Platform_Logos_5: -3510644303694755323
+      Platform_Logos_6: 1451966364787759572
+      Platform_Logos_7: 894514111080176986
+      Platform_Logos_8: 6057415966378255706
+      Platform_Logos_9: -1433943883949097098
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

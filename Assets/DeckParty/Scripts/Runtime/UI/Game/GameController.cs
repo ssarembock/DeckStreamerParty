@@ -127,6 +127,7 @@ namespace DeckParty.UI
 
             if (State != null)
             {
+                TrackRecap(LocalId, State, null);
                 ApplyVenue(true);
                 RenderAll();
                 IntroBanner();
@@ -177,6 +178,7 @@ namespace DeckParty.UI
             m_Session = new NetworkGameSession(net);
             m_VenueChoice = AppSettings.VenueId;
             m_ViewId = net.LocalClientId;
+            m_RecapActive = net.ActivePlayer;
             if (net.TakingTurns && net.ActivePlayer != DeckPartyNetSession.NoPlayer) m_ViewId = net.ActivePlayer;
 
             opponents.gameObject.SetActive(true);
@@ -240,7 +242,9 @@ namespace DeckParty.UI
         void SetEmotesVisible(bool visible)
         {
             emotes.gameObject.SetActive(visible);
+            // The panel is the buttons' parent, or its parent when the panel has a border (bordered panels hold a "Fill").
             var panel = emotes.transform.parent;
+            if (panel != null && panel.name != EmoteBarName) panel = panel.parent;
             if (panel != null && panel.name == EmoteBarName) panel.gameObject.SetActive(visible);
         }
 
@@ -340,6 +344,7 @@ namespace DeckParty.UI
         {
             bool own = owner == LocalId;
             RecordRound(owner, s, events);
+            TrackRecap(owner, s, events);
             var lines = Describe(s, events, own ? null : NameOf(owner));
             Remember(owner, lines);
             bool switched = false;
@@ -473,6 +478,7 @@ namespace DeckParty.UI
         void OnActivePlayerChanged(ulong active)
         {
             if (!TakingTurns) return;
+            TrackRecapTurn(active);
             m_Presence.Clear();
             if (presence != null) presence.Clear();
             if (active == DeckPartyNetSession.NoPlayer)
@@ -1217,11 +1223,19 @@ namespace DeckParty.UI
             UpdatePresence();
             UpdateTurnTimer();
             UpdateShopGate();
+            UpdateRecap();
             if (State == null || InputHelper.IsTyping) return;
 
             if (m_Scoring)
             {
                 if (InputHelper.Pressed(HotKey.Space) || InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Escape) || PointerClicked()) SkipScoring();
+                return;
+            }
+
+            // The stream / shop summary: Space, Enter or Esc closes it (nothing else reacts meanwhile).
+            if (RecapOpen)
+            {
+                if (InputHelper.Pressed(HotKey.Space) || InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Escape)) recap.Close();
                 return;
             }
 
