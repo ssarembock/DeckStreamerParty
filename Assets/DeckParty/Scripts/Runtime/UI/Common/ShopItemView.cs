@@ -124,11 +124,14 @@ namespace DeckParty.UI
             var border = siteStyle ? SitePalette.Outline : UIPalette.Border;
             if (frame != null) frame.color = info.IsDiamond ? Color.Lerp(border, siteStyle ? SitePalette.Gold : UIPalette.Gold, 0.75f) : border;
 
-            bool affordable = state.Pop >= info.Cost;
+            // Shop Control's discount / rival Saboteurs' surcharge on the next recruit: the old price struck through.
+            int cost = PartyEngine.RecruitCost(state, type);
+            bool affordable = state.Pop >= cost;
             if (priceLabel != null)
             {
                 // The icon and the number only: hovering the icon names the resource.
-                priceLabel.text = $"<size=125%>{GameIcons.Tag(ResourceIcon.Subs)}</size> {info.Cost}";
+                string was = cost != info.Cost ? $"<s><size=80%>{info.Cost}</size></s> " : string.Empty;
+                priceLabel.text = $"<size=125%>{GameIcons.Tag(ResourceIcon.Subs)}</size> {was}{cost}";
                 priceLabel.color = affordable ? (siteStyle ? SitePalette.Text : UIPalette.Gold) : (siteStyle ? SitePalette.Danger : UIPalette.Red);
             }
 

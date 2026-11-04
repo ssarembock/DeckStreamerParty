@@ -341,7 +341,7 @@ namespace DeckParty.Core
                 NetTrouble = NetTrouble(s),
                 Troublemakers = TroublemakerCount(s),
                 Empty = s.EmptySpaces,
-                Full = s.HouseFull,
+                Full = IsChatFull(s),
                 Guests = guests.Length,
                 ChungusBonus = Math.Max(0, Math.Min(GameRules.BigChungusMaxBonus, s.Capacity - GameRules.BigChungusCapacityBase)),
                 Suffering = new bool[guests.Length],
@@ -470,8 +470,46 @@ namespace DeckParty.Core
             return available < 0 ? -available * GameRules.CashShortfallPopPenalty : 0;
         }
 
+        /// <summary>The next Sub Cap upgrade's price, after Boomers' discount for this shop.</summary>
         public static int ExpansionCost(PlayerState s) =>
-            GameRules.ExpansionCost(s.Expansions) + (s.Streamer == StreamerType.BroJogan ? StreamerCatalog.BigStudioUpgradeTax : 0);
+            Math.Max(0, GameRules.ExpansionCost(s.Expansions) + (s.Streamer == StreamerType.BroJogan ? StreamerCatalog.BigStudioUpgradeTax : 0) - s.ExpansionDiscount);
+
+        /// <summary>
+        /// What recruiting this viewer costs right now: its price, less your Shop Control discount and plus rival Saboteurs'
+        /// surcharge (both only on your next recruit).
+        /// </summary>
+        public static int RecruitCost(PlayerState s, GuestType type) =>
+            Math.Max(0, GuestCatalog.Get(type).Cost - s.RecruitDiscount + s.IncomingSabotage);
+
+        /// <summary>Whether "chat is full" bonuses apply: full, or within Full Stream's slack of full.</summary>
+        public static bool IsChatFull(PlayerState s) =>
+            s.HouseFull || s.EmptySpaces <= Communities.FullStreamSlack(CommunityScore(s, Community.FullStream));
+
+        /// <summary>
+        /// The community that can give this viewer's action extra uses this stream: Gatekeepers for evictions (removals and
+        /// sending viewers back), Marketers for recruits, Voyeurs for peeks. Null when the viewer isn't in that community.
+        /// </summary>
+        public static Community? ExtraUseCommunity(GuestInstance actor)
+        {
+            if (actor == null || !actor.Info.HasAbility) return null;
+            var ability = actor.Info.Ability;
+            Community community;
+            if (ability == AbilityKind.SendBack || actor.Info.ActionCategory == ActionCategory.Remove) community = Community.Gatekeepers;
+            else if (actor.Info.ActionCategory == ActionCategory.Recruit) community = Community.Marketers;
+            else if (actor.Info.ActionCategory == ActionCategory.Scout) community = Community.Voyeurs;
+            else return null;
+            return GuestCatalog.InCommunity(actor.Kind, community) ? community : (Community?)null;
+        }
+
+        /// <summary>Extra uses of this community's actions still available this stream.</summary>
+        public static int ExtraUsesLeft(PlayerState s, Community community)
+        {
+            int allowed = Communities.ExtraUses(community, CommunityScore(s, community));
+            int used = community == Community.Gatekeepers ? s.PartyExtraEvictions
+                : community == Community.Marketers ? s.PartyExtraRecruits
+                : community == Community.Voyeurs ? s.PartyExtraPeeks : allowed;
+            return Math.Max(0, allowed - used);
+        }
 
         // ================================================================== queries: what can be done
 
@@ -536,6 +574,9 @@ namespace DeckParty.Core
                     break;
                 case AbilityKind.Interview:
                     if (s.PartyInterviewUsed) return Err.Of("err.interview_used");
+                    break;
+                case AbilityKind.SendBack:
+                    if (s.House.Count < 2) return Err.Of("err.no_target");
                     break;
             }
 
@@ -729,7 +770,8 @@ namespace DeckParty.Core
             if (!info.Purchasable) return Err.Of("err.cant_buy", Err.Guest(type));
             if (s.CountOwned(type) >= info.MaxCopies) return Err.Of("err.max_copies", info.MaxCopies, Err.Guest(type));
             if (SharedLeft(s, type) <= 0) return Err.Of("err.sold_out", Err.Guest(type));
-            if (s.Pop < info.Cost) return Err.Of("err.needs_gifted_subs", info.Cost);
+            int cost = RecruitCost(s, type);
+            if (s.Pop < cost) return Err.Of("err.needs_gifted_subs", cost);
             return null;
         }
 
@@ -777,6 +819,7 @@ namespace DeckParty.Core
             ClearParty(s);
             s.DoomOut = 0;
             s.BotsOut = 0;
+            s.SabotageOut = 0;
             s.BannedThisParty = s.BannedNextParty;
             s.BannedNextParty = -1;
             s.RaidSuspects.Clear();
@@ -797,6 +840,14 @@ namespace DeckParty.Core
             Emit(ev, GameEventType.NightStarted, null, s.Night);
             if (bots > 0) Emit(ev, GameEventType.BotsArrived, null, bots);
             ApplyStreamerEffects(s, ev);
+
+            // Mods from the last stream: this one starts with 1 Deplatform Risk cancelled.
+            if (s.ModsShieldNext)
+            {
+                s.ModsShieldNext = false;
+                s.PartyShield += 1;
+                Emit(ev, GameEventType.ModsShield, null, 2, 1);
+            }
         }
 
         static void ClearParty(PlayerState s)
@@ -822,6 +873,9 @@ namespace DeckParty.Core
             s.PartyXRay = false;
             s.PartyInterviewUsed = false;
             s.PartyDoom = 0;
+            s.PartyExtraEvictions = 0;
+            s.PartyExtraRecruits = 0;
+            s.PartyExtraPeeks = 0;
 
             foreach (var g in s.Rolodex) g.ResetParty();
             s.Rolodex.RemoveAll(g => g.Temporary);
@@ -1195,7 +1249,10 @@ namespace DeckParty.Core
                 for (int i = 0; i < s.House.Count; i++)
                 {
                     var cat = s.Find(s.House[i]);
-                    if (cat != null && cat.Kind == GuestType.DistraughtCat) Gain(s, cat, 2, 1, ev);
+                    // Everyone Leaves Me: +1 Subs or +1 Cash, at random.
+                    if (cat == null || cat.Kind != GuestType.DistraughtCat) continue;
+                    if (DeterministicRandom.Range(ref s.RngState, 2) == 0) Gain(s, cat, 1, 0, ev);
+                    else Gain(s, cat, 0, 1, ev);
                 }
             }
 
@@ -1348,10 +1405,14 @@ namespace DeckParty.Core
             Emit(ev, GameEventType.TrollsPaid, null, subs, cash);
         }
 
-        /// <summary>Techspertise: a chance (by points, max 3) that the server comes back and the stream still scores.</summary>
+        /// <summary>
+        /// Hype Men (and the retired Techspertise): a chance (by points, max 3) that the server comes back and the stream
+        /// still scores.
+        /// </summary>
         static bool TryRestoreServer(PlayerState s, List<GameEvent> ev)
         {
-            int chance = Communities.TechspertiseChance(CommunityScore(s, Community.Techspertise));
+            var scores = CommunityScores(s);
+            int chance = Communities.HypeMenChance(scores[(int)Community.HypeMen]) + Communities.TechspertiseChance(scores[(int)Community.Techspertise]);
             if (!Roll(s, chance)) return false;
             Emit(ev, GameEventType.ServerRestored, null, chance, s.Occupancy, s.Capacity);
             ScoreStream(s, ev);
@@ -1383,6 +1444,9 @@ namespace DeckParty.Core
             var actor = s.Find(actorId);
             var kind = actor.Info.Ability;
             int a = cmd.TargetA, b = cmd.TargetB, c = cmd.TargetC;
+            // Gatekeepers / Marketers / Voyeurs: decided before the action, while the actor still counts for its community.
+            var extraCommunity = ExtraUseCommunity(actor);
+            bool extraUse = extraCommunity.HasValue && ExtraUsesLeft(s, extraCommunity.Value) > 0;
             s.UsedAbilities.Add(actorId);
             Emit(ev, GameEventType.AbilityUsed, actor, a, b, cmd.Option);
             OnActionUsed(s, actor, ev);
@@ -1714,6 +1778,36 @@ namespace DeckParty.Core
                     Emit(ev, GameEventType.CashBoosted, target, 1, target.BonusCash);
                     break;
                 }
+
+                case AbilityKind.SendBack:
+                {
+                    // PR Manager: 5 random viewers. Junior PR Manager: 1, then one more every time this card uses it.
+                    int count = actor.Kind == GuestType.PrManager ? GameRules.PrManagerSendBack : actor.ActionUses + 1;
+                    var others = new List<int>(s.House);
+                    others.Remove(actorId);
+                    int sent = 0;
+                    for (int k = 0; k < count && others.Count > 0 && s.Phase == GamePhase.Party; k++)
+                    {
+                        int index = DeterministicRandom.Range(ref s.RngState, others.Count);
+                        int id = others[index];
+                        others.RemoveAt(index);
+                        if (RemoveFromParty(s, id, LeaveReason.SentOutside, actorId, true, ev)) sent++;
+                    }
+                    Emit(ev, GameEventType.SentBack, actor, sent, count);
+                    CheckRaid(s, ev);
+                    break;
+                }
+            }
+
+            actor.ActionUses++;
+
+            if (extraUse && s.Phase == GamePhase.Party && s.House.Contains(actorId) && s.UsedAbilities.Remove(actorId))
+            {
+                var community = extraCommunity.Value;
+                if (community == Community.Gatekeepers) s.PartyExtraEvictions++;
+                else if (community == Community.Marketers) s.PartyExtraRecruits++;
+                else s.PartyExtraPeeks++;
+                Emit(ev, GameEventType.ActionRefreshed, actor, (int)community, ExtraUsesLeft(s, community));
             }
 
             return CommandResult.Success;
@@ -1785,6 +1879,13 @@ namespace DeckParty.Core
             int doom = Math.Min(Communities.DoomMaxPoints, scores[(int)Community.Doomsdayers]);
             int bots = RollBots(s, scores, ev);
             int penalty = 0;
+            CommunityAftermath(s, scores, ev);
+            var boomers = new List<int>();
+            foreach (var id in s.House)
+            {
+                var g = s.Find(id);
+                if (g != null && !g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Boomer)) boomers.Add(id);
+            }
 
             s.Streak++;
             if (s.Streamer == StreamerType.ManimMakethMan)
@@ -1837,7 +1938,89 @@ namespace DeckParty.Core
                 return;
             }
 
+            RetireBoomers(s, boomers, scores[(int)Community.Millennial], ev);
             AfterParty(s, ev);
+        }
+
+        /// <summary>
+        /// What a scored stream's communities leave behind: Gen-Z viewers grow for good, Mods may cancel a Risk next stream,
+        /// Boomers and Shop Control discount the coming shop, and Saboteurs aim a surcharge at the rivals (the host delivers it).
+        /// </summary>
+        static void CommunityAftermath(PlayerState s, int[] scores, List<GameEvent> ev)
+        {
+            int growth = Communities.GenZGrowth(scores[(int)Community.GenZ]);
+            if (growth > 0)
+            {
+                foreach (var id in s.House)
+                {
+                    var g = s.Find(id);
+                    if (g == null || g.Temporary || !GuestCatalog.InCommunity(g.Type, Community.GenZ)) continue;
+                    int subs = 0, cash = 0;
+                    for (int k = 0; k < growth; k++)
+                    {
+                        bool canSubs = g.BaseInfo.Pop + g.BonusPop < GameRules.PermanentCashCap;
+                        bool canCash = g.BaseInfo.Cash + g.BonusCash < GameRules.PermanentCashCap;
+                        if (!canSubs && !canCash) break;
+                        bool pickSubs = DeterministicRandom.Range(ref s.RngState, 2) == 0;
+                        if (pickSubs ? !canSubs : !canCash) pickSubs = !pickSubs;
+                        if (pickSubs)
+                        {
+                            g.BonusPop++;
+                            subs++;
+                        }
+                        else
+                        {
+                            g.BonusCash++;
+                            cash++;
+                        }
+                    }
+                    if (subs + cash > 0) Emit(ev, GameEventType.GenZGrowth, g, subs, cash);
+                }
+            }
+
+            int mods = Communities.ModsChance(scores[(int)Community.Mods]);
+            if (Roll(s, mods))
+            {
+                s.ModsShieldNext = true;
+                Emit(ev, GameEventType.ModsShield, null, 1, mods);
+            }
+
+            s.ExpansionDiscount = Communities.BoomerDiscount(scores[(int)Community.Boomer]);
+            if (s.ExpansionDiscount > 0) Emit(ev, GameEventType.ShopPerk, null, (int)Community.Boomer, s.ExpansionDiscount);
+            s.RecruitDiscount = Communities.ShopControlDiscount(scores[(int)Community.ShopControl]);
+            if (s.RecruitDiscount > 0) Emit(ev, GameEventType.ShopPerk, null, (int)Community.ShopControl, s.RecruitDiscount);
+            s.SabotageOut = Communities.SabotageAmount(scores[(int)Community.Saboteurs]);
+            if (s.SabotageOut > 0) Emit(ev, GameEventType.ShopPerk, null, (int)Community.Saboteurs, s.SabotageOut);
+        }
+
+        /// <summary>
+        /// Boomers: each one who was in the scored stream has a chance to leave your Audience for good. Every time one does,
+        /// a random Millennial you own inherits +1 Cash for good, once per Millennials point (at least once). Without a
+        /// Millennial nothing is inherited.
+        /// </summary>
+        static void RetireBoomers(PlayerState s, List<int> boomers, int millennialPoints, List<GameEvent> ev)
+        {
+            foreach (var id in boomers)
+            {
+                var boomer = s.Find(id);
+                if (boomer == null || !Roll(s, Communities.BoomerRetirePercent)) continue;
+                s.Rolodex.Remove(boomer);
+                if (s.BannedNextParty == id) s.BannedNextParty = -1;
+                Emit(ev, GameEventType.BoomerRetired, boomer);
+
+                int times = Communities.Inheritances(millennialPoints);
+                for (int k = 0; k < times; k++)
+                {
+                    var heirs = new List<GuestInstance>();
+                    foreach (var g in s.Rolodex)
+                        if (!g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Millennial) && g.BaseInfo.Cash + g.BonusCash < GameRules.PermanentCashCap)
+                            heirs.Add(g);
+                    if (heirs.Count == 0) break;
+                    var heir = heirs[DeterministicRandom.Range(ref s.RngState, heirs.Count)];
+                    heir.BonusCash += Communities.InheritanceCash;
+                    Emit(ev, GameEventType.Inheritance, heir, Communities.InheritanceCash, heir.BonusCash);
+                }
+            }
         }
 
         /// <summary>
@@ -1871,10 +2054,11 @@ namespace DeckParty.Core
             int doom = Communities.DoomChance(s.PartyDoom);
             int silence = Communities.ArmchairSilenceChance(scores[(int)Community.ArmchairActivists]);
             int encore = Communities.ContentEncoreChance(scores[(int)Community.Content]);
+            int fanEncore = Communities.CoreFanbaseEncoreChance(scores[(int)Community.CoreFanbase]);
             int staff = Communities.StaffFreeChance(scores[(int)Community.Staff]);
             int finance = Communities.FinanceDoubleChance(scores[(int)Community.FinanceBros]);
             int clout = Communities.CloutChance(scores[(int)Community.Clout]);
-            if (doom + silence + encore + staff + finance + clout == 0) return;
+            if (doom + silence + encore + fanEncore + staff + finance + clout == 0) return;
 
             for (int i = 0; i < s.House.Count && i < pops.Length; i++)
             {
@@ -1901,10 +2085,11 @@ namespace DeckParty.Core
 
                 bool fan = GuestCatalog.InCommunity(g.Kind, Community.CoreFanbase);
                 int times = 1;
-                if (!fan && Roll(s, encore))
+                // Core Fanbase: the regulars may score twice. Content: everyone else may.
+                if (fan ? Roll(s, fanEncore) : Roll(s, encore))
                 {
                     times = 2;
-                    Emit(ev, GameEventType.CommunityBonus, g, (int)Community.Content, 0, tag);
+                    Emit(ev, GameEventType.CommunityBonus, g, (int)(fan ? Community.CoreFanbase : Community.Content), 0, tag);
                 }
 
                 // Clout: the viewers outside the Core Fanbase may each bring one more Gifted Sub, every time they score.
@@ -1947,16 +2132,8 @@ namespace DeckParty.Core
         /// </summary>
         static void ScoreCommunityRewards(PlayerState s, int[] scores, ref int pop, ref int cash, List<GameEvent> ev)
         {
-            foreach (var community in new[] { Community.Boomer, Community.Millennial })
-            {
-                int points = scores[(int)community];
-                if (points <= 0) continue;
-                Communities.FixedReward(community, points, out int subs, out int money);
-                pop += subs;
-                cash += money;
-                Emit(ev, GameEventType.CommunityReward, null, (int)community, subs, money);
-            }
-
+            // V5: Boomers and Millennials no longer pay a fixed amount here (see CommunityAftermath / RetireBoomers).
+            // Only the retired Zoomer roll is left, and nobody is a Zoomer any more.
             int chance = Communities.ZoomerChance(scores[(int)Community.Zoomer]);
             if (chance <= 0) return;
             int zoomerSubs = Roll(s, chance) ? Communities.ZoomerSubs : 0;
@@ -2034,10 +2211,13 @@ namespace DeckParty.Core
             var blocker = GetBuyBlocker(s, type);
             if (blocker != null) return CommandResult.Fail(blocker);
 
-            var info = GuestCatalog.Get(type);
-            s.Pop -= info.Cost;
+            // Shop Control's discount and rival Saboteurs' surcharge only touch this one recruit.
+            int cost = RecruitCost(s, type);
+            s.Pop -= cost;
+            s.RecruitDiscount = 0;
+            s.IncomingSabotage = 0;
             var g = AddGuest(s, type);
-            Emit(ev, GameEventType.GuestPurchased, g, info.Cost);
+            Emit(ev, GameEventType.GuestPurchased, g, cost);
             return CommandResult.Success;
         }
 
@@ -2058,6 +2238,9 @@ namespace DeckParty.Core
         {
             if (s.Phase != GamePhase.Planning) return CommandResult.Fail(Err.Of("err.finish_stream"));
             if (s.IsFinalNight) return CommandResult.Fail(Err.Of("err.final_night"));
+            // Boomers' and Shop Control's discounts were for this shop only.
+            s.ExpansionDiscount = 0;
+            s.RecruitDiscount = 0;
             s.Night++;
             BeginParty(s, ev);
             return CommandResult.Success;

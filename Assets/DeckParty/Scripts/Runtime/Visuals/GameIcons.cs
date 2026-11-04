@@ -128,6 +128,15 @@ namespace DeckParty
                 case Community.Clout: return new Color(1.00f, 0.88f, 0.35f);
                 case Community.MemeticsDivision: return new Color(1.00f, 0.45f, 0.95f);
                 case Community.Bots: return new Color(0.66f, 0.78f, 0.88f);
+                case Community.GenZ: return new Color(0.80f, 0.96f, 0.22f);
+                case Community.Gatekeepers: return new Color(0.92f, 0.44f, 0.30f);
+                case Community.HypeMen: return new Color(1.00f, 0.80f, 0.25f);
+                case Community.Mods: return UIPalette.Teal;
+                case Community.FullStream: return new Color(0.36f, 0.74f, 1.00f);
+                case Community.Marketers: return UIPalette.Green;
+                case Community.Saboteurs: return new Color(0.78f, 0.20f, 0.32f);
+                case Community.ShopControl: return new Color(0.56f, 0.46f, 0.96f);
+                case Community.Voyeurs: return new Color(0.95f, 0.55f, 0.85f);
                 default: return UIPalette.Red;
             }
         }
@@ -227,7 +236,7 @@ namespace DeckParty
                 (RiskId, Sprite(ResourceIcon.Risk)),
                 (PlaysId, Sprite(ResourceIcon.Plays)),
             };
-            foreach (var community in Communities.All) entries.Add((Id(community), Sprite(community)));
+            foreach (var community in Communities.Every) entries.Add((Id(community), Sprite(community)));
 
             // One sprite asset per texture (sheets and placeholders can differ); the first holds the rest as fallbacks.
             var byTexture = new Dictionary<Texture2D, List<(string id, Sprite sprite)>>();
@@ -426,6 +435,7 @@ namespace DeckParty
                     bool stone = sx * sx + sy * sy < 0.2f * 0.2f;
                     return fruit && !stone;
                 }
+                case Community.GenZ:
                 case Community.Zoomer:
                 {
                     // Phone: a tall rounded slab with a dark screen.
@@ -472,6 +482,70 @@ namespace DeckParty
                     float by = y - 0.52f;
                     bool ball = x * x + by * by < 0.09f * 0.09f;
                     return (face && !eye && !mouth) || antenna || ball;
+                }
+                case Community.Gatekeepers:
+                {
+                    // Padlock: a body with a keyhole and a shackle.
+                    bool body = Mathf.Abs(x) < 0.46f && y > -0.55f && y < 0.08f;
+                    bool hole = (x * x + (y + 0.16f) * (y + 0.16f) < 0.09f * 0.09f) || (Mathf.Abs(x) < 0.04f && y > -0.38f && y < -0.16f);
+                    float sy = y - 0.08f;
+                    float r = Mathf.Sqrt(x * x + sy * sy);
+                    bool shackle = sy >= 0f && r > 0.2f && r < 0.33f;
+                    return (body && !hole) || shackle;
+                }
+                case Community.HypeMen:
+                    // Megaphone: a cone and a handle.
+                    return InTriangle(x, y, -0.3f, 0.12f, 0.55f, 0.55f, 0.55f, -0.55f) && x < 0.55f
+                        || (Mathf.Abs(y) < 0.16f && x > -0.55f && x <= -0.3f)
+                        || (Mathf.Abs(x + 0.12f) < 0.07f && y < -0.1f && y > -0.5f);
+                case Community.Mods:
+                {
+                    // Shield: flat top, pointed bottom, with a tick cut out.
+                    bool top = Mathf.Abs(x) < 0.5f && y > -0.05f && y < 0.55f;
+                    bool point = y <= -0.05f && y > -0.62f && Mathf.Abs(x) < 0.5f * (y + 0.62f) / 0.57f;
+                    bool tick = Mathf.Abs((y - 0.02f) + (x + 0.12f)) < 0.07f && x > -0.3f && x < -0.1f
+                             || Mathf.Abs((y + 0.08f) - (x + 0.08f) * 1.3f) < 0.07f && x >= -0.12f && x < 0.3f;
+                    return (top || point) && !tick;
+                }
+                case Community.FullStream:
+                    // Signal bars, all full.
+                    return (y > -0.5f && y < -0.1f && Mathf.Abs(x + 0.4f) < 0.11f)
+                        || (y > -0.5f && y < 0.15f && Mathf.Abs(x) < 0.11f)
+                        || (y > -0.5f && y < 0.5f && Mathf.Abs(x - 0.4f) < 0.11f);
+                case Community.Marketers:
+                {
+                    // Target: a ring and a bullseye.
+                    float r = Mathf.Sqrt(x * x + y * y);
+                    return (r > 0.38f && r < 0.56f) || r < 0.2f;
+                }
+                case Community.Saboteurs:
+                {
+                    // Bomb: a round body and a fuse.
+                    float bx = x + 0.08f, by = y + 0.1f;
+                    bool body = bx * bx + by * by < 0.42f * 0.42f;
+                    bool fuse = Mathf.Abs((y - 0.32f) - (x - 0.2f)) < 0.07f && x > 0.12f && x < 0.42f;
+                    float sx = x - 0.48f, sy = y - 0.52f;
+                    bool spark = sx * sx + sy * sy < 0.1f * 0.1f;
+                    return body || fuse || spark;
+                }
+                case Community.ShopControl:
+                {
+                    // Shopping bag: a body with a handle.
+                    bool bag = Mathf.Abs(x) < 0.46f && y > -0.55f && y < 0.18f;
+                    float hy = y - 0.18f;
+                    float r = Mathf.Sqrt(x * x + hy * hy);
+                    bool handle = hy >= 0f && r > 0.18f && r < 0.3f;
+                    return bag || handle;
+                }
+                case Community.Voyeurs:
+                {
+                    // Eye: an almond with a pupil.
+                    float ex = x / 0.66f, ey = y / 0.36f;
+                    bool almond = Mathf.Abs(ey) < 1f - ex * ex && Mathf.Abs(ex) < 1f;
+                    float r = Mathf.Sqrt(x * x + y * y);
+                    bool iris = r < 0.24f;
+                    bool pupil = r < 0.1f;
+                    return (almond && !iris) || pupil;
                 }
                 default:
                 {

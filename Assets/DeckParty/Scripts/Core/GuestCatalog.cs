@@ -47,12 +47,14 @@ namespace DeckParty.Core
         // ------------------------------------------------------------------ the roster
 
         /// <summary>
-        /// Viewer cards put aside in V4.2. They keep their code, rules, art and communities, but the current build never uses
-        /// them: no shop, preset, Random Mix or Open Lobby offers them and the Game Database's viewer list hides them. Take a
-        /// type out of this set to bring it back.
+        /// Viewer cards put aside in V4.2 (and Degen Dog in V5). They keep their code, rules, art and communities, but the
+        /// current build never uses them: no shop, preset, Random Mix or Open Lobby offers them and the Game Database's viewer
+        /// list hides them. Take a type out of this set to bring it back.
         /// </summary>
         static readonly HashSet<GuestType> s_PutAside = new HashSet<GuestType>
         {
+            // V5 (ViewerCardsAndCommunityLogic.xlsx): Degen Dog and its Memetics Division are out of the game for now.
+            GuestType.DegenDog,
             GuestType.Trollface, GuestType.Pepe, GuestType.Gigachad, GuestType.ThisIsFineDog, GuestType.Wojak, GuestType.GrumpyCat,
             GuestType.NyanCat, GuestType.StonksGuy, GuestType.Cheems, GuestType.ChadVsVirgin, GuestType.Doomer, GuestType.NpcWojak,
             GuestType.ForeverAlone, GuestType.MeGusta, GuestType.KeyboardCat, GuestType.BongoCat, GuestType.PopCat, GuestType.BigChungus,
@@ -68,7 +70,10 @@ namespace DeckParty.Core
         /// <summary>Put aside: kept in the code but out of the current build (see <see cref="s_PutAside"/>).</summary>
         public static bool IsPutAside(GuestType type) => s_PutAside.Contains(type);
 
-        /// <summary>Not a card anyone owns: the Bot a rival's Bots community sends into your next stream.</summary>
+        /// <summary>
+        /// Not a card anyone owns: the Bot a rival's Bots community sends into your next stream. The Bots community is retired
+        /// in V5, so no Bot is ever sent (the token stays in the code).
+        /// </summary>
         public static bool IsToken(GuestType type) => type == GuestType.Bot;
 
         /// <summary>A viewer card in the current build (not put aside, not a token).</summary>
@@ -104,57 +109,66 @@ namespace DeckParty.Core
         const CommunityMask Clout = CommunityMask.Clout;
         const CommunityMask Memetics = CommunityMask.MemeticsDivision;
         const CommunityMask Bots = CommunityMask.Bots;
+        const CommunityMask GenZ = CommunityMask.GenZ;
+        const CommunityMask Gatekeepers = CommunityMask.Gatekeepers;
+        const CommunityMask HypeMen = CommunityMask.HypeMen;
+        const CommunityMask Mods = CommunityMask.Mods;
+        const CommunityMask FullStream = CommunityMask.FullStream;
+        const CommunityMask Marketers = CommunityMask.Marketers;
+        const CommunityMask Voyeurs = CommunityMask.Voyeurs;
 
         /// <summary>
-        /// The communities each roster card starts with (the V4.2 card table). The Game Database copies these and you can
-        /// change them there (Viewers > Communities); <see cref="SetCommunities"/> applies your edits. Cards not listed have
-        /// no community. Nobody is a Doomsdayer or an Armchair Activist in the current roster.
+        /// The communities each roster card starts with (V5: the Cards tab of ViewerCardsAndCommunityLogic.xlsx). The Game
+        /// Database copies these and you can change them there (Viewers > Communities); <see cref="SetCommunities"/> applies
+        /// your edits. Cards not listed have no community. The sheet's Memetics Division, Bots and Clout tags were dropped,
+        /// since those communities are out of the game. Nobody is a Saboteur or in Shop Control yet.
         /// </summary>
         static readonly Dictionary<GuestType, CommunityMask> s_RosterCommunities = new Dictionary<GuestType, CommunityMask>
         {
-            { GuestType.IneffectiveTroll, Core | Trolls },
             { GuestType.LoyalFan, Core },
-            { GuestType.InfluentialTroll, Trolls },
-            { GuestType.Producer, Staff },
             { GuestType.Whale, Core },
-            { GuestType.ChatAdmin, Staff },
-            { GuestType.CybersecurityEngineer, Staff | Tech },
-            { GuestType.Gatekeeper, Core | Trolls },
-            { GuestType.Normie, Core },
-            { GuestType.PaidSponsorship, Finance },
-            { GuestType.AccountManager, Staff },
-            { GuestType.BingeBunny, Core },
-            { GuestType.PromoCodeUser, Core },
-            // Crypto Enthusiast: the table names "Independent Researcher", which isn't a community (yet), so none.
-            { GuestType.GenerousDonator, Core | Finance },
-            { GuestType.HateWatcher, Trolls },
-            { GuestType.JuniorPrManager, Staff },
-            { GuestType.MarketingManager, Staff },
+            { GuestType.IneffectiveTroll, Core | Trolls },
+            { GuestType.InfluentialTroll, Trolls },
+            { GuestType.Producer, Staff | Marketers },
+            { GuestType.ChatAdmin, Staff | Gatekeepers },
+            { GuestType.Normie, Core | Mods },
+            { GuestType.CybersecurityEngineer, Staff | Voyeurs },
+            { GuestType.PaidSponsorship, Boomer },
+            { GuestType.Gatekeeper, Core },
             { GuestType.MildlyRiskyCollaborator, Content },
+            { GuestType.JuniorPrManager, Staff | GenZ },
+            { GuestType.MarketingManager, Staff | Marketers },
+            { GuestType.PromoCodeUser, Core | FullStream },
+            { GuestType.AccountManager, Staff },
+            // Crypto Enthusiast: no community.
+            { GuestType.GenerousDonator, HypeMen },
+            { GuestType.BingeBunny, Core },
+            { GuestType.HateWatcher, Trolls },
+            { GuestType.PrManager, Staff | Gatekeepers },
             { GuestType.HighlyRiskyCollaborator, Content },
-            { GuestType.PrManager, Staff },
-            { GuestType.Affiliate, Finance },
-            { GuestType.ChatArbitrator, Staff },
-            { GuestType.DieHardFan, Core },
+            { GuestType.DieHardFan, Core | Mods },
+            { GuestType.ChatArbitrator, Staff | Mods },
             { GuestType.RiskyOrbiter, Content },
-            { GuestType.BotDetector, Tech },
-            { GuestType.MasterOfCurrency, Finance | Boomer },
-            { GuestType.SocialMediaManager, Staff | Zoomer },
-            { GuestType.BillionaireBenefactor, Boomer | Finance },
-            { GuestType.TechAdmin, Tech },
+            { GuestType.Affiliate, GenZ | Staff },
+            { GuestType.DistraughtCat, Gatekeepers },
+            { GuestType.BotDetector, Gatekeepers },
+            { GuestType.SocialMediaManager, Staff | Voyeurs },
+            { GuestType.MasterOfCurrency, Boomer | Trolls },
+            { GuestType.BillionaireBenefactor, Boomer },
+            { GuestType.TechAdmin, Gatekeepers },
+            { GuestType.OnlineScandal, Content | HypeMen },
             { GuestType.ExecutivePr, Staff | Boomer },
-            { GuestType.OnlineScandal, Content },
-            { GuestType.GenZWithJob, Zoomer },
+            { GuestType.GenZWithJob, GenZ },
             { GuestType.BigBoomer, Boomer },
-            { GuestType.ClippoTheClanker, Bots },
-            { GuestType.BiggerStar, Content | Clout },
+            { GuestType.ClippoTheClanker, Staff },
+            { GuestType.BiggerStar, Content },
             { GuestType.PrecociousYouth, Content },
-            { GuestType.InternetStarpower, Content | Clout },
-            { GuestType.PlatformOwner, Clout },
-            { GuestType.MainstreamCelebrity, Clout | Content },
+            { GuestType.InternetStarpower, Content },
+            { GuestType.PlatformOwner, Boomer | Gatekeepers },
+            { GuestType.MainstreamCelebrity, Content },
             { GuestType.SeniorMarketingManager, Staff | Millennial },
-            { GuestType.Evangelist, Core },
-            { GuestType.DistraughtCat, Memetics },
+            { GuestType.Evangelist, Core | HypeMen },
+            // Put aside in V5 (kept for when it comes back).
             { GuestType.DegenDog, Memetics },
         };
 
@@ -203,12 +217,15 @@ namespace DeckParty.Core
 
         static CommunityMask[] s_Communities;
 
-        /// <summary>The viewer's communities (your Game Database edits once applied, otherwise the defaults).</summary>
+        /// <summary>
+        /// The viewer's communities in the game (your Game Database edits once applied, otherwise the defaults). Retired
+        /// communities are left out, so they never score.
+        /// </summary>
         public static CommunityMask CommunitiesOf(GuestType type)
         {
             if (s_Communities == null) ResetCommunities();
             int index = (int)type;
-            return index >= 0 && index < s_Communities.Length ? s_Communities[index] : CommunityMask.None;
+            return index >= 0 && index < s_Communities.Length ? s_Communities[index] & Communities.ActiveMask : CommunityMask.None;
         }
 
         public static bool InCommunity(GuestType type, Community community) => Communities.Has(CommunitiesOf(type), community);
@@ -272,20 +289,20 @@ namespace DeckParty.Core
                 new GuestInfo(GuestType.IneffectiveTroll, "Ineffective Troll", 0, Tbd,
                     "Starting viewer only. Lots of noise, a little risk.", pop: 2, trouble: true, purchasable: false),
                 new GuestInfo(GuestType.Producer, "Producer", 3, Tbd,
-                    "Action: choose any viewer in the queue to join chat, if there's room.", ability: AbilityKind.Fetch, abilityName: "Shoutout"),
+                    "Action: choose any viewer in the queue to join chat, if there's room.", pop: 1, cash: -1, ability: AbilityKind.Fetch, abilityName: "Shoutout"),
                 new GuestInfo(GuestType.ChatAdmin, "Chat Admin", 4, Tbd,
-                    "Action: remove one viewer from chat for the rest of the stream (even the Chat Admin).", ability: AbilityKind.Boot, abilityName: "Remove From Chat"),
+                    "Action: remove one viewer from chat for the rest of the stream (even the Chat Admin).", pop: 1, cash: -1, ability: AbilityKind.Boot, abilityName: "Remove From Chat"),
                 new GuestInfo(GuestType.Normie, "Normie", 4, Tbd,
                     "Cancels 1 Deplatform Risk while in chat.", pop: 1, cancels: true),
                 new GuestInfo(GuestType.MildlyRiskyCollaborator, "Mildly Risky Collaborator", 5, Tbd,
                     "Big numbers, a little risk.", pop: 3, cash: 2, trouble: true),
                 new GuestInfo(GuestType.JuniorPrManager, "Junior PR Manager", 5, Tbd,
-                    "Action: send everyone in chat back to the queue so they can join again. Used actions stay used.",
-                    pop: 2, ability: AbilityKind.Reset, abilityName: "Situation Defusal"),
+                    "Action: send 1 random viewer in chat back to the queue; every use sends one more (2, 3...). Used actions stay used.",
+                    pop: 2, cash: -1, ability: AbilityKind.SendBack, abilityName: "Situation Defusal"),
                 new GuestInfo(GuestType.DieHardFan, "Die Hard Fan", 7, Tbd,
-                    "Uncancellable: cancels 1 Deplatform Risk while in chat.", pop: 2, cancels: true),
+                    "Uncancellable: cancels 1 Deplatform Risk while in chat.", pop: 2, cash: 1, cancels: true),
                 new GuestInfo(GuestType.MarketingManager, "Marketing Manager", 5, Tbd,
-                    "Viral Moment: brings one random viewer along when joining. Can push chat over the Sub Cap.", pop: 3, brings: 1),
+                    "Viral Moment: brings one random viewer along when joining. Can push chat over the Sub Cap.", pop: 4, cash: -1, brings: 1),
 
                 // --- Meme guests 1-10 ---
                 new GuestInfo(GuestType.DegenDog, "Degen Dog", 7, Animal,
@@ -390,15 +407,15 @@ namespace DeckParty.Core
                     "Action: a guest becomes immune to further action effects tonight, good or bad. What they already have stays.",
                     pop: 2, ability: AbilityKind.Immunity, abilityName: "Can't Lose If You Don't Play"),
                 new GuestInfo(GuestType.DistraughtCat, "Distraught Cat", 7, Animal,
-                    "Everyone Leaves Me: gains +2 Subs and +1 $ whenever another guest leaves or is evicted."),
+                    "Everyone Leaves Me: gains +1 Subs or +1 $ (at random) whenever another guest leaves or is evicted."),
                 new GuestInfo(GuestType.DancingBaby, "Dancing Baby", 10, Reaction,
                     "Looping Animation: whenever two actions in a row are the same type, gains +3 Subs (max +9 per party).", pop: 1),
 
                 // --- Diamonds ---
                 new GuestInfo(GuestType.BigBoomer, "Big Boomer", 25, Tbd,
-                    "DIAMOND. Opinion Express: adds 1 Deplatform Risk.", trouble: true, diamond: true),
+                    "DIAMOND. Opinion Express: adds 1 Deplatform Risk.", cash: 1, trouble: true, diamond: true),
                 new GuestInfo(GuestType.ClippoTheClanker, "Clippo The Clanker", 30, Tbd,
-                    "DIAMOND. Market Collapse: costs 3 $ when scored.", cash: -3, diamond: true),
+                    "DIAMOND. Market Collapse: costs 1 $ and 2 Subs when scored.", pop: -2, cash: -1, diamond: true),
                 new GuestInfo(GuestType.BiggerStar, "Bigger Star", 35, Tbd,
                     "DIAMOND. Uplifting: brings one random viewer along when joining.", diamond: true, brings: 1),
                 new GuestInfo(GuestType.PrecociousYouth, "Precocious Youth", 40, Tbd,
@@ -406,11 +423,11 @@ namespace DeckParty.Core
                 new GuestInfo(GuestType.InternetStarpower, "Internet Starpower", 45, Tbd,
                     "DIAMOND. Can Do No Wrong: cancels 1 Deplatform Risk while in chat.", diamond: true, cancels: true),
                 new GuestInfo(GuestType.PlatformOwner, "Platform Owner", 45, Tbd,
-                    "DIAMOND. Action: remove one viewer for the rest of the stream (even itself).", diamond: true, ability: AbilityKind.Boot, abilityName: "Free The Speech!"),
+                    "DIAMOND. Action: remove one viewer for the rest of the stream (even itself).", cash: 3, diamond: true, ability: AbilityKind.Boot, abilityName: "Free The Speech!"),
                 new GuestInfo(GuestType.MainstreamCelebrity, "Mainstream Celebrity", 50, Tbd,
                     "DIAMOND. Mass Appeal.", pop: 3, diamond: true),
                 new GuestInfo(GuestType.SeniorMarketingManager, "Senior Marketing Manager", 50, Tbd,
-                    "DIAMOND. Product Placement.", cash: 3, diamond: true),
+                    "DIAMOND. Product Placement.", pop: 4, cash: -1, diamond: true),
                 new GuestInfo(GuestType.Evangelist, "Evangelist", 55, Tbd,
                     "DIAMOND. Action: summon any viewer from the queue, even another Diamond.", diamond: true, ability: AbilityKind.Fetch, abilityName: "2-for-1!"),
 
@@ -419,9 +436,9 @@ namespace DeckParty.Core
                     "Lots of Subs, but trouble follows.", pop: 4, trouble: true),
                 new GuestInfo(GuestType.CybersecurityEngineer, "Cybersecurity Engineer", 4, Tbd,
                     "Action: look at the next viewer in the queue, then let them in or deny them for the rest of the stream.",
-                    pop: 2, ability: AbilityKind.Peek, abilityName: "Read Access"),
+                    pop: 3, cash: -1, ability: AbilityKind.Peek, abilityName: "Read Access"),
                 new GuestInfo(GuestType.PaidSponsorship, "Paid Sponsorship", 4, Tbd,
-                    "Pays well, but viewers skip the ad: -1 Subs when scored.", pop: -1, cash: 2),
+                    "Pays well, but viewers skip the ad: -1 Subs when scored.", pop: -1, cash: 3),
                 new GuestInfo(GuestType.PromoCodeUser, "Promo Code User", 5, Tbd,
                     "+5 Subs, but only if chat is full when scored. Always costs 1 $.", cash: -1),
                 new GuestInfo(GuestType.AccountManager, "Account Manager", 5, Tbd,
@@ -430,15 +447,15 @@ namespace DeckParty.Core
                     "Action: score another viewer in chat right now, penalties included (banked straight away). They still score again when the stream ends.",
                     pop: 1, cash: -1, ability: AbilityKind.Photograph, abilityName: "Rug Pull"),
                 new GuestInfo(GuestType.GenerousDonator, "Generous Donator", 5, Tbd,
-                    "Give to the Rich!: when joining, brings in the next viewer from the queue and scores them once right away (banked).", pop: 1),
+                    "Give to the Rich!: when joining, brings in the next viewer from the queue and scores them once right away (banked).", pop: 1, cash: 1),
                 new GuestInfo(GuestType.PrManager, "PR Manager", 6, Tbd,
-                    "Action: send everyone in chat back to the queue so they can join again. Used actions stay used.",
-                    pop: 1, cash: 1, ability: AbilityKind.Reset, abilityName: "Damage Control"),
+                    "Action: send 5 random viewers in chat back to the queue so they can join again. Used actions stay used.",
+                    pop: 3, cash: -1, ability: AbilityKind.SendBack, abilityName: "Damage Control"),
                 new GuestInfo(GuestType.HighlyRiskyCollaborator, "Highly Risky Collaborator", 6, Tbd,
                     "#NotHimToo?: big money, big risk.", cash: 4, trouble: true),
                 new GuestInfo(GuestType.ChatArbitrator, "Chat Arbitrator", 7, Tbd,
                     "Action: clear the Deplatform Risk of every risky viewer in chat for the rest of the stream, even if they leave and come back.",
-                    ability: AbilityKind.Calm, abilityName: "Keep the Peace"),
+                    cash: -1, ability: AbilityKind.Calm, abilityName: "Keep the Peace"),
                 new GuestInfo(GuestType.BotDetector, "Bot Detector", 8, Tbd,
                     "Action: remove two viewers sitting next to each other in chat for the rest of the stream (the Bot Detector can be one of them).",
                     pop: 1, ability: AbilityKind.BootPair, abilityName: "Bot Removal"),
@@ -446,7 +463,7 @@ namespace DeckParty.Core
                     "Brings Subs and money, and a little risk.", pop: 2, cash: 3, trouble: true),
                 new GuestInfo(GuestType.SocialMediaManager, "Social Media Manager", 8, Tbd,
                     "Action: look at the next viewer in the queue, then let them in or deny them for the rest of the stream.",
-                    cash: 2, ability: AbilityKind.Peek, abilityName: "Sneak Peek"),
+                    pop: 3, cash: -1, ability: AbilityKind.Peek, abilityName: "Sneak Peek"),
                 new GuestInfo(GuestType.BillionaireBenefactor, "Billionaire Benefactor", 9, Tbd,
                     "Action (once per stream for all of them): every viewer in chat drops to 0 Subs tonight, and you bank 1 $ right now for each Billionaire Benefactor in chat.",
                     cash: 5, ability: AbilityKind.Interview, abilityName: "Softball Interview"),
@@ -467,7 +484,7 @@ namespace DeckParty.Core
                 new GuestInfo(GuestType.MasterOfCurrency, "Master of Currency", 8, Tbd,
                     "Chaos Ladder: +2 $ for every viewer in chat who still has Deplatform Risk (cancelled risk still counts).", cash: 1),
                 new GuestInfo(GuestType.ExecutivePr, "Executive PR", 11, Tbd,
-                    "No Bad Press: +2 Subs for every viewer in chat who still has Deplatform Risk (cancelled risk still counts)."),
+                    "No Bad Press: +2 Subs for every viewer in chat who still has Deplatform Risk (cancelled risk still counts).", pop: 1, cash: -1),
                 new GuestInfo(GuestType.GenZWithJob, "Gen Z with Job", 12, Tbd,
                     "Secure The Bag: permanently gains +1 $ every time they join chat (up to 9 $), even if the stream ends badly."),
 

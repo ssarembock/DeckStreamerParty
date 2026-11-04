@@ -190,6 +190,48 @@ namespace DeckParty.UI
                             effects.FloatText(GameIcons.Tag(Community.Bots) + " " + GuestVisuals.Colored(Loc.Get("game.bots_sent", "count", e.A), CommunityVisuals.Color(Community.Bots)), new Vector2(0f, -90f), 40f);
                         break;
 
+                    // --- V5 communities ---
+                    case GameEventType.ActionRefreshed:
+                    {
+                        // Gatekeepers / Marketers / Voyeurs: the card's action lights up again.
+                        var community = (Community)e.A;
+                        m_Pulses.Add(e.GuestId);
+                        effects.FloatText(GameIcons.Tag(community) + " " + GuestVisuals.Colored(Loc.Get("game.action_again"), CommunityVisuals.Color(community)), new Vector2(0f, -60f), 36f);
+                        Consider(Sfx.Ability, 4);
+                        break;
+                    }
+                    case GameEventType.SentBack:
+                        m_Pulses.Add(e.GuestId);
+                        Consider(Sfx.Boot, 4);
+                        break;
+                    case GameEventType.GenZGrowth:
+                        if (who == null)
+                            ToastView.Show(GameIcons.Tag(Community.GenZ) + " " + Loc.Get("game.genz_growth", "viewer", GuestVisuals.NameTag(e.Guest), "values", EventText.Amounts(e.A, e.B)), ToastKind.Success);
+                        Consider(Sfx.Coin, 3);
+                        break;
+                    case GameEventType.ModsShield:
+                        if (who == null)
+                            effects.FloatText(GameIcons.Tag(Community.Mods) + " " + GuestVisuals.Colored(Loc.Get(e.A == 2 ? "game.mods_applied" : "game.mods_ready"), CommunityVisuals.Color(Community.Mods)), new Vector2(0f, -120f), 40f);
+                        Consider(Sfx.Notify, 3);
+                        break;
+                    case GameEventType.BoomerRetired:
+                        // Satire, not subtle: a Boomer leaves the Audience for good.
+                        if (who == null)
+                        {
+                            ToastView.Show(GameIcons.Tag(Community.Boomer) + " " + Loc.Get("game.boomer_retired", "viewer", GuestVisuals.NameTag(e.Guest)), ToastKind.Warning);
+                            effects.Flash(CommunityVisuals.Color(Community.Boomer));
+                        }
+                        Consider(Sfx.Defeat, 6);
+                        break;
+                    case GameEventType.Inheritance:
+                        if (who == null)
+                        {
+                            ToastView.Show(GameIcons.Tag(Community.Millennial) + " " + Loc.Get("game.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "cash", GuestVisuals.CashText(e.A)), ToastKind.Success);
+                            effects.FloatText(GameIcons.Tag(Community.Millennial) + " " + GuestVisuals.CashText(e.A), new Vector2(0f, -40f), 40f);
+                        }
+                        Consider(Sfx.Coin, 6);
+                        break;
+
                     case GameEventType.PartyEnded:
                         effects.FloatText($"{GuestVisuals.PopText(e.A)}   {GuestVisuals.CashText(e.B)}", new Vector2(0f, 60f));
                         if (facecam != null) facecam.React(CharacterState.Celebrate);
@@ -464,6 +506,7 @@ namespace DeckParty.UI
                 string label;
                 switch (community)
                 {
+                    case Community.CoreFanbase:
                     case Community.Content: label = Loc.Get("score.tag.encore"); break;
                     case Community.Staff: label = Loc.Get("score.tag.free"); break;
                     case Community.FinanceBros: label = Loc.Get("score.tag.cash_double"); break;

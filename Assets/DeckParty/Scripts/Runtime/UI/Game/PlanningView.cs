@@ -160,6 +160,9 @@ namespace DeckParty.UI
             bool maxed = s.Capacity >= GameRules.MaxCapacity;
             string expandWords = maxed ? Loc.Get("shop.cap_maxed")
                 : Loc.Get("shop.raise_cap", ("from", s.Capacity), ("to", s.Capacity + 1), ("cost", GameIcons.Amount(ResourceIcon.Cash, PartyEngine.ExpansionCost(s))));
+            // Boomers made upgrades cheaper for this shop.
+            if (!maxed && s.ExpansionDiscount > 0)
+                expandWords += "\n" + GameIcons.Tag(Community.Boomer) + " " + Loc.Get("log.perk_boomer", "value", s.ExpansionDiscount);
             if (expandLabel != null)
             {
                 // Icon buttons carry numbers only (Sub Cap now -> next, and the price); the words are in the tooltip.

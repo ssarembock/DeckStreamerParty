@@ -156,6 +156,7 @@ namespace DeckParty.Core
         BootPair,   // Bot Detector: remove two guests sitting next to each other.
         Interview,  // Billionaire Benefactor: everyone's Subs drop to 0; bank 1 Cash per Billionaire Benefactor.
         Style,      // Affiliate: a guest permanently earns +1 Cash.
+        SendBack,   // Junior PR Manager (1, 2, 3... random viewers, growing per use) / PR Manager (5): random viewers back to the queue.
     }
 
     /// <summary>Effect families for actions. Dancing Baby rewards two in a row from the same family.</summary>

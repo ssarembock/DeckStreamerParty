@@ -65,6 +65,8 @@ namespace DeckParty.Core
         public const int PromoCodeFullBonus = 5;
         /// <summary>Master of Currency ($) and Executive PR (Subs): bonus per viewer still carrying Deplatform Risk.</summary>
         public const int PerRiskyViewerBonus = 2;
+        /// <summary>PR Manager's Damage Control: random viewers sent back to the queue.</summary>
+        public const int PrManagerSendBack = 5;
 
         /// <summary>
         /// When true, guest fees are paid from banked Cash before the Gifted Subs penalty applies.

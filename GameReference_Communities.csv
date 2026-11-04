@@ -1,0 +1,15 @@
+Name,Game logic,Max value
+Core Fanbase,The regulars. Every 3 points cancel 1 Risk while they're in chat.,No limit
+Staff,The people the stream pays. Each point gives every Staff viewer a 10% chance to have their Cash cost waived each time they're scored.,9 (90%)
+Content,Each point gives every viewer outside the Core Fanbase a 10% chance to score twice when the stream ends.,9 (90%)
+Techspertise,"If the server goes down (chat over the Sub Cap), the stream may still score: 20% / 40% / 50% at 1 / 2 / 3 points.",3 (50%)
+Finance Bros,Each point gives every viewer a 10% chance to score their Cash reward twice.,9 (90%)
+Trolls,"If the stream gets deplatformed (Risk over the limit), each point pays 1 random Clout or Cash. This doesn't apply if you end the stream yourself or the server goes down.",No limit
+Doomsdayers,"Multiplayer only. After your successful stream, each point gives every viewer in your rivals' next stream a 4% chance to score nothing.",5 (20%)
+Boomer,"Old money, old opinions. When the stream is scored, each point gives +2 Cash and -1 Clout (fixed, once per stream).",No limit
+Millennial,"Very online, slightly broke. When the stream is scored, each point gives +2 Clout and -1 Cash (fixed, once per stream).",No limit
+Zoomer,"Chaotic. When the stream is scored, two separate rolls, each with a 20% chance per point: +6 Clout, and -3 Cash.",4 (80%)
+Armchair Activists,All talk. Each point gives every Armchair Activist in chat a 10% chance to score nothing when the stream ends. Other viewers aren't affected.,5 (50%)
+Clout,"Everyone wants a piece. Each viewer outside the Core Fanbase has a 10% chance per point to bring +1 Clout more, every time they score.",4 (40%)
+Memetics Division,"Reposted forever. Each point gives a 1% chance that the whole stream scores a second time: every viewer and every community reward, all rolled again.",10 (10%)
+Bots,"Multiplayer only. When your stream is scored, each Bots viewer in chat has a 10% chance per point to send a Bot into the next player's next stream. A Bot takes a space in chat and earns nothing. At most 6 Bots can wait for one player.",4 (40%)

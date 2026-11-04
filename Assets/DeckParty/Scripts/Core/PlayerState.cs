@@ -46,6 +46,7 @@ namespace DeckParty.Core
         public int StrikeCount;     // Tung Tung Tung Sahur strikes so far (0-2).
         public bool Temporary;      // Ugandan Knuckles copy or a rival's Bot: vanishes when the party ends.
         public bool Wolf;           // Hate-Watcher: hate-watching (risky) since their last entrance. Flips on every entrance.
+        public int ActionUses;      // Times this card's action has been used, ever (Junior PR Manager sends one more viewer each time).
 
         // Tonight only (cleared when the party ends)
         public int PartyPop;               // Subs this guest gained tonight.
@@ -192,6 +193,24 @@ namespace DeckParty.Core
         public int IncomingBots;
         /// <summary>Bots your last scored stream sent, waiting for the host to pass them to the next player.</summary>
         public int BotsOut;
+
+        // Communities (V5)
+        /// <summary>Gatekeepers: extra eviction-action uses already taken this stream.</summary>
+        public int PartyExtraEvictions;
+        /// <summary>Marketers: extra recruit-action uses already taken this stream.</summary>
+        public int PartyExtraRecruits;
+        /// <summary>Voyeurs: extra peek-action uses already taken this stream.</summary>
+        public int PartyExtraPeeks;
+        /// <summary>Boomers: Cash off every Sub Cap upgrade in this shop (set when a stream is scored, gone when the next starts).</summary>
+        public int ExpansionDiscount;
+        /// <summary>Shop Control: Clout off your first recruit in this shop (set when a stream is scored, gone when the next starts).</summary>
+        public int RecruitDiscount;
+        /// <summary>Rival Saboteurs: Clout added to your next recruit (cleared by that purchase).</summary>
+        public int IncomingSabotage;
+        /// <summary>Saboteurs points your last scored stream earned, waiting for the host to pass them to your rivals.</summary>
+        public int SabotageOut;
+        /// <summary>Mods: your next stream starts with 1 Deplatform Risk cancelled.</summary>
+        public bool ModsShieldNext;
 
         // Current stream: streamer power effects
         public int PartyHeat;          // Deplatform Risk from rivals' raids.

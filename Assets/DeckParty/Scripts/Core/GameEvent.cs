@@ -92,6 +92,15 @@ namespace DeckParty.Core
         MemeticsRepeat = 65,   // Memetics Division: the whole stream scores a second time. A = chance %
         BotsSent = 66,         // Your Bots community sent Bots to the next player's next stream. A = count, B = chance per Bots viewer (%)
         BotsArrived = 67,      // A rival's Bots joined your Audience for this stream. A = count
+
+        // V5 communities
+        ActionRefreshed = 68,  // Gatekeepers / Marketers / Voyeurs: the action can be used again. Guest = actor, A = Community, B = extra uses left
+        BoomerRetired = 69,    // A Boomer left your Audience for good after the stream. Guest = the Boomer (no longer owned)
+        Inheritance = 70,      // Millennials: a Millennial inherited from a Boomer. Guest = Millennial, A = Cash gained, B = new permanent Cash bonus
+        GenZGrowth = 71,       // Gen-Z: a viewer grew for good. Guest, A = Subs gained, B = Cash gained
+        ModsShield = 72,       // Mods: A = 1: your next stream will start with 1 Risk cancelled (B = chance %); A = 2: applied as this stream starts
+        ShopPerk = 73,         // A stream earned a shop effect. A = Community (Boomer, ShopControl, Saboteurs), B = amount
+        SentBack = 74,         // Junior PR Manager / PR Manager sent random viewers back to the queue. Guest = actor, A = count sent
     }
 
     public struct GameEvent

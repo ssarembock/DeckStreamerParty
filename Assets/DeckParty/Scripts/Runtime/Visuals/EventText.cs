@@ -225,6 +225,7 @@ namespace DeckParty
                     {
                         case Community.Staff:
                             return tag + Loc.Get("log.staff_free", "viewer", viewer, "cash", GuestVisuals.CashText(-e.B));
+                        case Community.CoreFanbase:
                         case Community.Content:
                             return tag + Loc.Get("log.content_encore", "viewer", viewer);
                         case Community.FinanceBros:
@@ -252,7 +253,31 @@ namespace DeckParty
                     return GameIcons.Tag(community) + " " + Loc.Get("log.community_reward", "community", name, "values", Amounts(e.B, e.C));
                 }
                 case GameEventType.ServerRestored:
-                    return GameIcons.Tag(Community.Techspertise) + " " + GuestVisuals.Colored(Loc.Get("log.server_restored", "value", e.A), UIPalette.Teal);
+                    return GameIcons.Tag(Community.HypeMen) + " " + GuestVisuals.Colored(Loc.Get("log.server_restored", "value", e.A), UIPalette.Teal);
+
+                // --- V5 communities ---
+                case GameEventType.ActionRefreshed:
+                {
+                    var community = (Community)e.A;
+                    return GameIcons.Tag(community) + " " + Loc.Get("log.action_again", "viewer", viewer, "count", e.B);
+                }
+                case GameEventType.SentBack:
+                    return Loc.Get("log.sent_back", "viewer", viewer, "count", e.A);
+                case GameEventType.GenZGrowth:
+                    return GameIcons.Tag(Community.GenZ) + " " + Loc.Get("log.genz_growth", "viewer", GuestVisuals.NameTag(e.Guest), "values", Amounts(e.A, e.B));
+                case GameEventType.ModsShield:
+                    return GameIcons.Tag(Community.Mods) + " " + GuestVisuals.Colored(Loc.Get(e.A == 2 ? "log.mods_applied" : "log.mods_ready", "value", e.B), UIPalette.Teal);
+                case GameEventType.ShopPerk:
+                {
+                    var community = (Community)e.A;
+                    string key = community == Community.Boomer ? "log.perk_boomer" : community == Community.ShopControl ? "log.perk_shop_control" : "log.perk_saboteurs";
+                    if (community == Community.Saboteurs && !Multiplayer) return null;
+                    return GameIcons.Tag(community) + " " + Loc.Get(key, "value", e.B);
+                }
+                case GameEventType.BoomerRetired:
+                    return GameIcons.Tag(Community.Boomer) + " " + GuestVisuals.Colored(Loc.Get("log.boomer_retired", "viewer", GuestVisuals.NameTag(e.Guest)), UIPalette.Orange);
+                case GameEventType.Inheritance:
+                    return GameIcons.Tag(Community.Millennial) + " " + Loc.Get("log.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "cash", GuestVisuals.CashText(e.A));
                 case GameEventType.TrollsPaid:
                     return GameIcons.Tag(Community.Trolls) + " " + GuestVisuals.Colored(Loc.Get("log.trolls_paid", "values", Amounts(e.A, e.B)), UIPalette.Orange);
                 case GameEventType.DoomApplied:

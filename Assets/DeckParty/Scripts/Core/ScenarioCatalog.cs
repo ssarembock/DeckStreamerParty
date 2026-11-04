@@ -35,87 +35,63 @@ namespace DeckParty.Core
     {
         public const int RandomScenarioId = 5;
         public const int SandboxScenarioId = 6;
-        /// <summary>Preset character sets (ids 0-4 and 7-9; 5 and 6 are Random Mix and Open Lobby).</summary>
-        public const int PresetCount = 8;
+        /// <summary>Preset character sets (ids 0-4; 5 and 6 are Random Mix and Open Lobby).</summary>
+        public const int PresetCount = 5;
 
         const int RandomRegularGuests = 11;
         const int RandomDiamondGuests = 3;
 
-        // V4.2: eight sets built from the current 44-card roster, one per community idea. Every regular viewer is in at least
-        // one set. Ids are kept (progress is stored per id), so a set's completion carries over to the set that replaced it.
+        // V5: five preset sets, one per Party House scenario (Alien Invitation, High or Low, Best Wishes, Money Management,
+        // A Magical Night), each holding the new versions of that scenario's guests and stars. Guests this game doesn't have
+        // were swapped for the closest viewer (Private Eye -> Cybersecurity Engineer, Dancer and Cheerleader -> Binge Bunny,
+        // Magician -> Distraught Cat). The first set has one Play, like Alien Invitation; the others have two.
+        // Ids are kept (progress is stored per id); the old sets 7-9 are gone.
         static readonly ScenarioDefinition[] s_All =
         {
-            new ScenarioDefinition(0, "First Stream", "Learn the ropes",
-                "Your first season live. Dependable regulars, a Producer and a Chat Admin to run the room, one risky collaborator and three friendly Diamonds.",
+            new ScenarioDefinition(0, "Going Live", "Your first broadcast",
+                "A gentle first season: cheap regulars, a Producer and a Chat Admin to run the room, and one Play to collect.",
                 "bedroom", new[]
                 {
-                    GuestType.LoyalFan, GuestType.Whale, GuestType.Producer, GuestType.ChatAdmin, GuestType.Normie,
-                    GuestType.MildlyRiskyCollaborator, GuestType.MarketingManager, GuestType.BingeBunny, GuestType.DieHardFan, GuestType.PaidSponsorship,
-                    GuestType.Gatekeeper,
-                    GuestType.PrecociousYouth, GuestType.MainstreamCelebrity, GuestType.BigBoomer,
+                    GuestType.Producer, GuestType.ChatAdmin, GuestType.Normie, GuestType.CybersecurityEngineer, GuestType.PaidSponsorship,
+                    GuestType.MildlyRiskyCollaborator, GuestType.MarketingManager, GuestType.PromoCodeUser, GuestType.BingeBunny,
+                    GuestType.BillionaireBenefactor, GuestType.InfluentialTroll,
+                    GuestType.PrecociousYouth,
                 }),
-            new ScenarioDefinition(1, "Fan Club", "Loyalty pays",
-                "Build a real Core Fanbase: every three different regulars cancel a Deplatform Risk, so trolls and orbiters become safe money. Binge Bunny and the Promo Code User love a packed chat.",
-                "content_house", new[]
-                {
-                    GuestType.LoyalFan, GuestType.Whale, GuestType.Normie, GuestType.Gatekeeper, GuestType.BingeBunny,
-                    GuestType.PromoCodeUser, GuestType.GenerousDonator, GuestType.DieHardFan, GuestType.InfluentialTroll, GuestType.HateWatcher,
-                    GuestType.RiskyOrbiter,
-                    GuestType.Evangelist, GuestType.InternetStarpower, GuestType.BigBoomer,
-                }),
-            new ScenarioDefinition(2, "Viral Moment", "Clout chasing",
-                "Collaborators, scandals and celebrities. Content makes viewers outside your fanbase score twice and Clout tops them up with extra Subs, but the risk piles up fast.",
+            new ScenarioDefinition(1, "Clickbait Roulette", "Big risks, bigger numbers",
+                "Risky collaborators and hate-watchers pay well, the Master of Currency cashes in on every one of them, and Gen-Z grows while the Junior PR Manager keeps chat moving.",
                 "city_irl", new[]
                 {
-                    GuestType.MildlyRiskyCollaborator, GuestType.HighlyRiskyCollaborator, GuestType.RiskyOrbiter, GuestType.OnlineScandal, GuestType.MarketingManager,
-                    GuestType.PaidSponsorship, GuestType.Affiliate, GuestType.ChatArbitrator, GuestType.Producer, GuestType.SocialMediaManager,
-                    GuestType.InfluentialTroll,
-                    GuestType.BiggerStar, GuestType.InternetStarpower, GuestType.MainstreamCelebrity,
+                    GuestType.RiskyOrbiter, GuestType.DieHardFan, GuestType.SocialMediaManager, GuestType.JuniorPrManager, GuestType.CybersecurityEngineer,
+                    GuestType.MasterOfCurrency, GuestType.GenZWithJob, GuestType.TechAdmin, GuestType.HighlyRiskyCollaborator,
+                    GuestType.HateWatcher, GuestType.InfluentialTroll,
+                    GuestType.MainstreamCelebrity, GuestType.BiggerStar,
                 }),
-            new ScenarioDefinition(3, "Meme Lab", "Such synergy",
-                "The Memetics Division might make the whole stream score twice. Degen Dog wants a chat full of different communities, and Distraught Cat cashes in every time someone gets kicked.",
-                "cursed_stream", new[]
+            new ScenarioDefinition(2, "Brand Deal Wishlist", "Be careful what you wish for",
+                "Rug pulls, Checkout Codes and PR spin. The Evangelist grants a second Play, the Big Boomer brings the opinions, and the Executive PR loves a scandal.",
+                "content_house", new[]
                 {
-                    GuestType.DegenDog, GuestType.DistraughtCat, GuestType.ChatAdmin, GuestType.TechAdmin, GuestType.BotDetector,
-                    GuestType.JuniorPrManager, GuestType.CybersecurityEngineer, GuestType.Gatekeeper, GuestType.SocialMediaManager, GuestType.MasterOfCurrency,
-                    GuestType.GenZWithJob,
-                    GuestType.ClippoTheClanker, GuestType.PlatformOwner, GuestType.SeniorMarketingManager,
+                    GuestType.MildlyRiskyCollaborator, GuestType.Affiliate, GuestType.ChatArbitrator, GuestType.PrManager, GuestType.CryptoEnthusiast,
+                    GuestType.BingeBunny, GuestType.OnlineScandal, GuestType.ExecutivePr, GuestType.Normie,
+                    GuestType.TechAdmin, GuestType.HateWatcher,
+                    GuestType.Evangelist, GuestType.BigBoomer,
                 }),
-            new ScenarioDefinition(4, "Staff Meeting", "Run a tight ship",
-                "The whole team on payroll. Staff may waive their own Cash costs, Techspertise may bring a crashed server back, and every action gets the right viewer in or the wrong one out.",
+            new ScenarioDefinition(3, "Monetization Meeting", "Every cent accounted for",
+                "Staff on payroll, sponsors on call and a Clanker that costs a fortune. Count every coin: the Senior Marketing Manager pays, and inherits from any Boomer who leaves.",
                 "studio_stage", new[]
                 {
-                    GuestType.Producer, GuestType.ChatAdmin, GuestType.CybersecurityEngineer, GuestType.AccountManager, GuestType.JuniorPrManager,
-                    GuestType.MarketingManager, GuestType.PrManager, GuestType.ChatArbitrator, GuestType.SocialMediaManager, GuestType.ExecutivePr,
-                    GuestType.TechAdmin,
-                    GuestType.SeniorMarketingManager, GuestType.PlatformOwner, GuestType.Evangelist,
+                    GuestType.SocialMediaManager, GuestType.PrManager, GuestType.ChatAdmin, GuestType.Affiliate, GuestType.CryptoEnthusiast,
+                    GuestType.CybersecurityEngineer, GuestType.DieHardFan, GuestType.AccountManager, GuestType.PaidSponsorship,
+                    GuestType.HighlyRiskyCollaborator, GuestType.RiskyOrbiter,
+                    GuestType.ClippoTheClanker, GuestType.SeniorMarketingManager,
                 }),
-            new ScenarioDefinition(7, "Generation Gap", "OK boomer",
-                "Boomers pay in Cash, Millennials in Subs and Zoomers roll the dice. Master of Currency and Executive PR cash in on every risky viewer in chat.",
-                "content_house", new[]
-                {
-                    GuestType.MasterOfCurrency, GuestType.BillionaireBenefactor, GuestType.ExecutivePr, GuestType.SocialMediaManager, GuestType.GenZWithJob,
-                    GuestType.Whale, GuestType.InfluentialTroll, GuestType.HighlyRiskyCollaborator, GuestType.HateWatcher, GuestType.Gatekeeper,
-                    GuestType.LoyalFan,
-                    GuestType.BigBoomer, GuestType.SeniorMarketingManager, GuestType.PrecociousYouth,
-                }),
-            new ScenarioDefinition(8, "Crypto Winter", "Cash out before it crashes",
-                "Finance Bros may double every Cash reward. Rug pull with the Crypto Enthusiast, stack Checkout Codes, grow your Gen Z with Job and let the Online Scandal fill the room.",
-                "city_irl", new[]
-                {
-                    GuestType.CryptoEnthusiast, GuestType.Affiliate, GuestType.PaidSponsorship, GuestType.GenerousDonator, GuestType.BillionaireBenefactor,
-                    GuestType.MasterOfCurrency, GuestType.AccountManager, GuestType.GenZWithJob, GuestType.Whale, GuestType.OnlineScandal,
-                    GuestType.Normie,
-                    GuestType.ClippoTheClanker, GuestType.SeniorMarketingManager, GuestType.BiggerStar,
-                }),
-            new ScenarioDefinition(9, "Comment Section", "Don't feed the trolls",
-                "Trolls pay out even when you get deplatformed. Ride the risk with the Chat Arbitrator on standby, and in multiplayer let Clippo's Bots spam the next streamer.",
+            new ScenarioDefinition(4, "Algorithm Magic", "One perfect stream",
+                "Gatekeepers everywhere: kick, kick again and let the Distraught Cat cash in. Generous Donators and Online Scandals keep the chat full for the Platform Owner and the Internet Starpower.",
                 "cursed_stream", new[]
                 {
-                    GuestType.InfluentialTroll, GuestType.HateWatcher, GuestType.Gatekeeper, GuestType.HighlyRiskyCollaborator, GuestType.RiskyOrbiter,
-                    GuestType.MildlyRiskyCollaborator, GuestType.ChatArbitrator, GuestType.BotDetector, GuestType.DieHardFan, GuestType.ExecutivePr,
-                    GuestType.Normie,
-                    GuestType.BigBoomer, GuestType.ClippoTheClanker, GuestType.InternetStarpower,
+                    GuestType.BillionaireBenefactor, GuestType.OnlineScandal, GuestType.GenerousDonator, GuestType.BotDetector, GuestType.Gatekeeper,
+                    GuestType.GenZWithJob, GuestType.Normie, GuestType.DieHardFan, GuestType.ChatAdmin,
+                    GuestType.TechAdmin, GuestType.DistraughtCat,
+                    GuestType.PlatformOwner, GuestType.InternetStarpower,
                 }),
             new ScenarioDefinition(RandomScenarioId, "Random Mix", "A fresh character set every time",
                 "Eleven random guests and three random Diamonds. Win five in a row to earn the Cherry.",

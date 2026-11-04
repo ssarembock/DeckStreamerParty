@@ -66,7 +66,7 @@ namespace DeckParty.EditorTools
             if (m_ShowStreamers) DrawStreamers(db);
 
             EditorGUILayout.Space(8);
-            m_ShowViewers = EditorGUILayout.Foldout(m_ShowViewers, $"Viewers ({GuestCatalog.Roster.Count} in the roster, plus the Bot)", true, EditorStyles.foldoutHeader);
+            m_ShowViewers = EditorGUILayout.Foldout(m_ShowViewers, $"Viewers ({GuestCatalog.Roster.Count} in the roster)", true, EditorStyles.foldoutHeader);
             if (m_ShowViewers) DrawViewers(db);
 
             EditorGUILayout.Space(8);
@@ -90,8 +90,24 @@ namespace DeckParty.EditorTools
                 foreach (var name in s_StreamArt)
                 {
                     var property = serializedObject.FindProperty(name);
-                    if (property != null) EditorGUILayout.PropertyField(property, true);
+                    if (property == null) continue;
+                    if (name == "communityIcons") DrawCommunityIcons(property);
+                    else EditorGUILayout.PropertyField(property, true);
                 }
+            }
+        }
+
+        /// <summary>One icon slot per community in the game (retired communities keep their icons, hidden).</summary>
+        static void DrawCommunityIcons(SerializedProperty list)
+        {
+            EditorGUILayout.LabelField("Community Icons", EditorStyles.boldLabel);
+            for (int i = 0; i < list.arraySize; i++)
+            {
+                var element = list.GetArrayElementAtIndex(i);
+                var community = (Community)element.FindPropertyRelative("community").intValue;
+                if (Communities.IsRetired(community)) continue;
+                string label = Loc.EnglishRaw($"community.{community}.name");
+                EditorGUILayout.PropertyField(element.FindPropertyRelative("icon"), new GUIContent(string.IsNullOrEmpty(label) ? community.ToString() : label));
             }
         }
 
@@ -237,7 +253,7 @@ namespace DeckParty.EditorTools
             {
                 EditorGUILayout.LabelField("Communities: tick any number per viewer (Nothing = no community). Edits apply straight away.", EditorStyles.miniLabel);
                 if (GUILayout.Button("Reset All Communities", GUILayout.Width(170)) &&
-                    EditorUtility.DisplayDialog("Reset communities", "Put every viewer back on the built-in communities (the V4.2 card table)? Your community edits are lost.", "Reset", "Cancel"))
+                    EditorUtility.DisplayDialog("Reset communities", "Put every viewer back on the built-in communities (the V5 card table)? Your community edits are lost.", "Reset", "Cancel"))
                 {
                     serializedObject.ApplyModifiedProperties();
                     Undo.RecordObject(target, "Reset Communities");
@@ -247,17 +263,42 @@ namespace DeckParty.EditorTools
                 }
             }
 
-            EditorGUILayout.LabelField("Only the current roster is listed (put-aside viewers keep their art in the database, hidden). " +
-                                       "The Bot is the token the Bots community sends: give it a portrait like any viewer.", EditorStyles.wordWrappedMiniLabel);
+            EditorGUILayout.LabelField("Only the current roster is listed (put-aside viewers such as Degen Dog, and the Bot token, keep their art " +
+                                       "in the database, hidden). Only the communities in the game can be ticked.", EditorStyles.wordWrappedMiniLabel);
 
             var guests = serializedObject.FindProperty("guests");
             for (int i = 0; i < guests.arraySize && i < db.guests.Count; i++)
             {
                 var art = db.guests[i];
-                if (art == null || GuestCatalog.IsPutAside(art.type) || !Matches(art)) continue;
+                if (art == null || !GuestCatalog.InRoster(art.type) || !Matches(art)) continue;
                 var element = guests.GetArrayElementAtIndex(i);
                 DrawRow(art, element, i);
             }
+        }
+
+        /// <summary>
+        /// A multi-select of the communities in the game only. Ticks of retired communities stay saved in the mask (hidden),
+        /// so nothing is lost if they come back; the rules ignore them.
+        /// </summary>
+        static void CommunityMaskField(SerializedProperty property)
+        {
+            var active = Communities.All;
+            var names = new string[active.Length];
+            for (int i = 0; i < active.Length; i++) names[i] = ObjectNames.NicifyVariableName(Loc.EnglishRaw($"community.{active[i]}.name") ?? active[i].ToString());
+
+            int stored = property.intValue;
+            int shown = 0;
+            for (int i = 0; i < active.Length; i++)
+                if ((stored & (1 << (int)active[i])) != 0) shown |= 1 << i;
+
+            EditorGUI.BeginChangeCheck();
+            int picked = EditorGUILayout.MaskField(new GUIContent("Communities"), shown, names);
+            if (!EditorGUI.EndChangeCheck()) return;
+
+            int result = stored & ~(int)Communities.ActiveMask;
+            for (int i = 0; i < active.Length; i++)
+                if ((picked & (1 << i)) != 0) result |= 1 << (int)active[i];
+            property.intValue = result;
         }
 
         bool Matches(GuestArt art)
@@ -289,8 +330,7 @@ namespace DeckParty.EditorTools
                         EditorGUILayout.LabelField(art.name + badge, kind, EditorStyles.boldLabel);
                         EditorGUILayout.PropertyField(element.FindPropertyRelative("portrait"), new GUIContent("Portrait (fallback)"));
                         EditorGUILayout.PropertyField(element.FindPropertyRelative("avatar"), new GUIContent("Avatar (head, chat circle)"));
-                        if (!GuestCatalog.IsToken(art.type))
-                            EditorGUILayout.PropertyField(element.FindPropertyRelative("communities"), new GUIContent("Communities"));
+                        if (!GuestCatalog.IsToken(art.type)) CommunityMaskField(element.FindPropertyRelative("communities"));
                     }
                     if (GUILayout.Button(m_Expanded == index ? "Less" : "Animation...", GUILayout.Width(90), GUILayout.Height(38)))
                         m_Expanded = m_Expanded == index ? -1 : index;

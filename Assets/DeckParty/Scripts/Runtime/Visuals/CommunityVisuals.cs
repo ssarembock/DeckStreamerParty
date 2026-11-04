@@ -19,47 +19,36 @@ namespace DeckParty
         public static string Description(Community community)
         {
             int max = Communities.MaxPoints(community);
-            int per, subs = 0, cash = 0;
+            int per;
             switch (community)
             {
+                case Community.CoreFanbase: per = Communities.CoreFanbasePercentPerPoint; break;
                 case Community.Staff: per = Communities.StaffPercentPerPoint; break;
                 case Community.Content: per = Communities.ContentPercentPerPoint; break;
+                case Community.HypeMen: per = Communities.HypeMenPercentPerPoint; break;
+                case Community.Mods: per = Communities.ModsPercentPerPoint; break;
+                case Community.Boomer: per = Communities.BoomerDiscountPerPoint; break;
+                // Retired.
                 case Community.FinanceBros: per = Communities.FinancePercentPerPoint; break;
                 case Community.Doomsdayers: per = Communities.DoomPercentPerPoint; break;
                 case Community.ArmchairActivists: per = Communities.ArmchairPercentPerPoint; break;
-                case Community.Clout:
-                    per = Communities.CloutPercentPerPoint;
-                    subs = Communities.CloutSubs;
-                    break;
+                case Community.Clout: per = Communities.CloutPercentPerPoint; break;
                 case Community.MemeticsDivision: per = Communities.MemeticsPercentPerPoint; break;
                 case Community.Bots: per = Communities.BotsPercentPerPoint; break;
-                case Community.Zoomer:
-                    per = Communities.ZoomerPercentPerPoint;
-                    subs = Communities.ZoomerSubs;
-                    cash = Communities.ZoomerCashCost;
-                    break;
-                case Community.Boomer:
-                    per = 0;
-                    subs = Communities.BoomerSubsCostPerPoint;
-                    cash = Communities.BoomerCashPerPoint;
-                    break;
-                case Community.Millennial:
-                    per = 0;
-                    subs = Communities.MillennialSubsPerPoint;
-                    cash = Communities.MillennialCashCostPerPoint;
-                    break;
-                default: per = 0; break;
+                case Community.Zoomer: per = Communities.ZoomerPercentPerPoint; break;
+                default: per = 1; break;
             }
             return Loc.Get($"community.{community}.desc",
                 ("every", Communities.CoreFanbasePointsPerCancel),
                 ("per", per),
                 ("max", max),
                 ("top", Communities.Effect(community, max)),
+                ("retire", Communities.BoomerRetirePercent),
                 ("t1", Communities.TechspertiseChance(1)),
                 ("t2", Communities.TechspertiseChance(2)),
                 ("t3", Communities.TechspertiseChance(3)),
-                ("subs", subs),
-                ("cash", cash));
+                ("subs", community == Community.Zoomer ? Communities.ZoomerSubs : Communities.CloutSubs),
+                ("cash", Communities.ZoomerCashCost));
         }
 
         public static Color Color(Community community) => GameIcons.CommunityColor(community);
@@ -78,10 +67,11 @@ namespace DeckParty
                 sb.Append("\n\n").Append(GuestVisuals.Colored(PointsText(community, points), UIPalette.Gold));
                 if (points > 0)
                 {
-                    // Boomer / Millennial name both amounts (always shown as positive numbers in the text).
-                    Communities.FixedReward(community, points, out int subs, out int cash);
-                    sb.Append("\n").Append(GuestVisuals.Colored(Loc.Get($"community.{community}.now",
-                        ("value", Communities.Effect(community, points)), ("subs", System.Math.Abs(subs)), ("cash", System.Math.Abs(cash))), UIPalette.Gold));
+                    int value = Communities.Effect(community, points);
+                    // Extra action uses: how many are left right now.
+                    if (community == Community.Gatekeepers || community == Community.Marketers || community == Community.Voyeurs)
+                        value = PartyEngine.ExtraUsesLeft(state, community);
+                    sb.Append("\n").Append(GuestVisuals.Colored(Loc.Get($"community.{community}.now", ("value", value)), UIPalette.Gold));
                 }
             }
             return sb.ToString();
@@ -94,29 +84,22 @@ namespace DeckParty
             return max > 0 ? Loc.Get("community.points_max", "count", points, "max", max) : Loc.Get("community.points", "count", points);
         }
 
-        /// <summary>The compact effect under a Community Beats chip: "-1 [risk]", "30%", "+2"...</summary>
+        /// <summary>The compact effect under a Community Beats chip: "30%", "+2", "-1 [cash]"...</summary>
         public static string ChipEffect(Community community, int points)
         {
             int effect = Communities.Effect(community, points);
+            if (Communities.IsChance(community)) return effect + "%";
+            string subs = GameIcons.Tag(ResourceIcon.Subs);
+            string cash = GameIcons.Tag(ResourceIcon.Cash);
             switch (community)
             {
-                case Community.CoreFanbase:
-                    return effect > 0
-                        ? $"-{effect} {GameIcons.Tag(ResourceIcon.Risk)}"
-                        : $"{points}/{Communities.CoreFanbasePointsPerCancel}";
-                case Community.Trolls:
-                    return "+" + effect;
-                case Community.Boomer:
-                case Community.Millennial:
-                {
-                    // Per point while nobody's here, the stream's total once there are points.
-                    Communities.FixedReward(community, System.Math.Max(1, points), out int subs, out int cash);
-                    string subsText = (subs >= 0 ? "+" : "") + subs + GameIcons.Tag(ResourceIcon.Subs);
-                    string cashText = (cash >= 0 ? "+" : "") + cash + GameIcons.Tag(ResourceIcon.Cash);
-                    return community == Community.Boomer ? cashText + " " + subsText : subsText + " " + cashText;
-                }
-                default:
-                    return effect + "%";
+                // Per point while nobody's here, the stream's total once there are points.
+                case Community.Boomer: return $"-{Communities.BoomerDiscount(Mathf.Max(1, points))}{cash}";
+                case Community.ShopControl: return $"-{Communities.ShopControlDiscount(Mathf.Max(1, points))}{subs}";
+                case Community.Saboteurs: return $"+{Communities.SabotageAmount(Mathf.Max(1, points))}{subs}";
+                case Community.Millennial: return $"x{Communities.Inheritances(points)}";
+                case Community.FullStream: return $"-{effect}";
+                default: return "+" + effect;
             }
         }
 

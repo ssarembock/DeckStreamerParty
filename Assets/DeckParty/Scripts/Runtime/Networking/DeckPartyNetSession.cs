@@ -564,6 +564,7 @@ namespace DeckParty.Networking
             ServerAnnounce(sender, m_Scratch);
             ServerSendDoom(sender, state);
             ServerSendBots(sender, state);
+            ServerSendSabotage(sender, state);
             // A Free For All player whose stream ended badly may have taken back their shop ready mark with it.
             if (state.Phase != GamePhase.Planning) m_ReadyForShop.Remove(sender);
             ServerUpdateSummary(sender);
@@ -833,6 +834,28 @@ namespace DeckParty.Networking
                 ServerBroadcastState(kv.Key, null);
             }
             if (cursed > 0) ServerHeadline(Core.Err.Of("mp.doom", PlayerName(sender), Communities.DoomChance(points)));
+        }
+
+        /// <summary>
+        /// Saboteurs: a scored stream's Saboteurs points make every rival's next recruit cost that much more Clout. Several
+        /// don't add up: a rival keeps the biggest surcharge until their next recruit.
+        /// </summary>
+        void ServerSendSabotage(ulong sender, PlayerState state)
+        {
+            int amount = state.SabotageOut;
+            if (amount <= 0) return;
+            state.SabotageOut = 0;
+
+            int hit = 0;
+            foreach (var kv in m_Games)
+            {
+                if (kv.Key == sender || !IsConnectedPlayer(kv.Key) || kv.Value.IsGameOver) continue;
+                hit++;
+                if (kv.Value.IncomingSabotage >= amount) continue;
+                kv.Value.IncomingSabotage = amount;
+                ServerBroadcastState(kv.Key, null);
+            }
+            if (hit > 0) ServerHeadline(Core.Err.Of("mp.sabotage", PlayerName(sender), amount));
         }
 
         /// <summary>
@@ -1159,6 +1182,7 @@ namespace DeckParty.Networking
                 ServerAnnounce(clientId, m_Scratch);
                 ServerSendDoom(clientId, s);
                 ServerSendBots(clientId, s);
+                ServerSendSabotage(clientId, s);
             }
             ServerUpdateSummary(clientId);
             ServerEndTurn(clientId, s.IsGameOver ? GameOverTurnDelay : 0f);

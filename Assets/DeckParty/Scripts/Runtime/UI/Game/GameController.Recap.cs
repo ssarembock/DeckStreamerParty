@@ -49,6 +49,9 @@ namespace DeckParty.UI
             public int StreakBonus;
             public bool Restored;
             public int BotsSent;
+            public readonly List<GuestType> Retired = new List<GuestType>();
+            public readonly List<GuestType> Heirs = new List<GuestType>();
+            public bool ModsReady;
         }
 
         sealed class ShopRecord
@@ -147,6 +150,15 @@ namespace DeckParty.UI
                             break;
                         case GameEventType.BotsSent:
                             if (r.Stream != null && !r.Stream.Done) r.Stream.BotsSent += e.A;
+                            break;
+                        case GameEventType.BoomerRetired:
+                            if (r.Stream != null && !r.Stream.Done) r.Stream.Retired.Add(e.Guest);
+                            break;
+                        case GameEventType.Inheritance:
+                            if (r.Stream != null && !r.Stream.Done) r.Stream.Heirs.Add(e.Guest);
+                            break;
+                        case GameEventType.ModsShield:
+                            if (r.Stream != null && !r.Stream.Done && e.A == 1) r.Stream.ModsReady = true;
                             break;
                     }
                 }
@@ -363,8 +375,13 @@ namespace DeckParty.UI
             if (stream.Outcome == PartyOutcome.Success || stream.Plays > 0)
                 Line(sb, GameIcons.Tag(ResourceIcon.Plays), stream.Plays.ToString(), Loc.Get("term.diamonds"));
             if (stream.StreakBonus > 0) sb.Append(Loc.Get("recap.streak", "count", stream.StreakBonus)).Append('\n');
-            if (stream.Restored) sb.Append(GameIcons.Tag(Community.Techspertise)).Append(' ').Append(Loc.Get("game.server_restored")).Append('\n');
+            if (stream.Restored) sb.Append(GameIcons.Tag(Community.HypeMen)).Append(' ').Append(Loc.Get("game.server_restored")).Append('\n');
             if (stream.BotsSent > 0) sb.Append(GameIcons.Tag(Community.Bots)).Append(' ').Append(Loc.Get("recap.bots_sent", "count", stream.BotsSent)).Append('\n');
+            foreach (var boomer in stream.Retired)
+                sb.Append(GameIcons.Tag(Community.Boomer)).Append(' ').Append(Loc.Get("recap.boomer_retired", "viewer", GuestVisuals.NameTag(boomer))).Append('\n');
+            foreach (var heir in stream.Heirs)
+                sb.Append(GameIcons.Tag(Community.Millennial)).Append(' ').Append(Loc.Get("recap.inheritance", "viewer", GuestVisuals.NameTag(heir))).Append('\n');
+            if (stream.ModsReady) sb.Append(GameIcons.Tag(Community.Mods)).Append(' ').Append(Loc.Get("game.mods_ready")).Append('\n');
             entry.body = sb.ToString().TrimEnd('\n');
             return entry;
         }

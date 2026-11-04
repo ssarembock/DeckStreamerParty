@@ -1,0 +1,45 @@
+Name,Old Name,Community,Core Mechanic,Clout,Cash,Description
+Loyal Fan,Old Friend,Core Fanbase,Basic Clout,1,0,+1 Clout. A basic starting viewer.
+Whale,Rich Pal,Core Fanbase,Basic Cash,0,1,+1 Cash. A basic starting viewer.
+Ineffective Troll,Wild Buddy,Core Fanbase; Trolls,Risk for reward,2,0,"+2 Clout, 1 Risk. Starting viewer only (can't be bought)."
+Influential Troll,Monkey,Trolls,Risk for reward,4,0,"+4 Clout, 1 Risk."
+Producer,Driver,Staff,Recruit (search the queue),0,0,"Action (Shoutout): choose any viewer in the queue to join chat, if there's room."
+Chat Admin,Security,Staff,Remove (evict a viewer),0,0,Action (Remove From Chat): remove one viewer from chat for the rest of the stream (it can remove itself).
+Normie,Hippy,Core Fanbase,Cancel Risk,1,0,+1 Clout. Cancels 1 Risk while in chat.
+Cybersecurity Engineer,Watch Dog,Staff; Techspertise,Scout (peek and deny),2,0,"+2 Clout. Action (Read Access): look at the next viewer in the queue, then let them in or deny them for the rest of the stream."
+Paid Sponsorship,Ticket Taker,Finance Bros,Trade Clout for Cash,-1,2,"+2 Cash, -1 Clout."
+Gatekeeper,Introvert,Core Fanbase; Trolls,Scales with empty chat spaces,1,0,"You Shall Not Watch!: +1 Clout, plus +1 Clout for every empty space in chat when scored."
+Mildly Risky Collaborator,Rock Star,Content,Risk for reward,3,2,"+3 Clout, +2 Cash, 1 Risk."
+Junior PR Manager,Grillmaster,Staff,Shuffle (reset chat to the queue),2,0,+2 Clout. Action (Situation Defusal): send everyone in chat back to the queue so they can join again. Used actions stay used.
+Marketing Manager,Mr. Popular,Staff,Brings extra viewers,3,0,+3 Clout. Viral Moment: brings one random viewer along when joining. This can push chat over the Sub Cap.
+Promo Code User,Comedian,Core Fanbase,Full-chat bonus,0,-1,"Always costs 1 Cash when scored. +5 Clout, but only if chat is full when scored."
+Account Manager,Caterer,Staff,Trade Cash for Clout,4,-1,"+4 Clout, -1 Cash."
+Crypto Enthusiast,Photographer,None,Instant scoring (bank now),1,-1,"+1 Clout, -1 Cash. Action (Rug Pull): score another viewer in chat right now, penalties included, and bank it straight away. That viewer still scores again when the stream ends."
+Generous Donator,Greeter,Core Fanbase; Finance Bros,Brings and instantly scores a viewer,1,0,"+1 Clout. Give to the Rich!: when joining, brings in the next viewer from the queue and scores them once right away (banked)."
+Binge Bunny,Mascot,Core Fanbase,Synergy (per Loyal Fan),1,0,"Algorithmic Rabbit Hole: +1 Clout, plus +1 Clout for every Loyal Fan in chat."
+Hate-Watcher,Werewolf,Trolls,Alternating Risk,4,0,"+4 Clout. Switches mood every time they join: hate-watching (1 Risk) on the first entrance, harmless on the next, and so on."
+PR Manager,Athlete,Staff,Shuffle (reset chat to the queue),1,1,"+1 Clout, +1 Cash. Action (Damage Control): send everyone in chat back to the queue so they can join again. Used actions stay used."
+Highly Risky Collaborator,Gangster,Content,Risk for reward,0,4,"#NotHimToo?: +4 Cash, 1 Risk."
+Die Hard Fan,Cute Dog,Core Fanbase,Cancel Risk,2,0,+2 Clout. Uncancellable: cancels 1 Risk while in chat.
+Chat Arbitrator,Counselor,Staff,Clear Risk (whole chat),0,0,"Action (Keep the Peace): clear the Risk of every risky viewer in chat for the rest of the stream, even if they leave and come back."
+Risky Orbiter,Gambler,Content,Risk for reward,2,3,"+2 Clout, +3 Cash, 1 Risk."
+Affiliate,Stylist,Finance Bros,Permanent upgrade (Cash),0,-1,Costs 1 Cash when scored. Action (Checkout Code): a viewer in chat permanently earns +1 Cash more (up to 9 Cash).
+Degen Dog,None (new card),Memetics Division,Community synergy,1,0,"Such Synergy: +1 Clout, plus +1 Clout for each different community in chat (max +5). Other Degen Dogs don't count."
+Distraught Cat,None (new card),Memetics Division,Rewarded when viewers leave,0,0,Everyone Leaves Me: gains +2 Clout and +1 Cash whenever another viewer leaves or is kicked.
+Bot Detector,Cupid,Techspertise,Remove (evict two neighbours),1,0,+1 Clout. Action (Bot Removal): remove two viewers sitting next to each other in chat for the rest of the stream (the Bot Detector can be one of them).
+Social Media Manager,Spy,Staff; Zoomer,Scout (peek and deny),0,2,"+2 Cash. Action (Sneak Peek): look at the next viewer in the queue, then let them in or deny them for the rest of the stream."
+Master of Currency,Writer,Finance Bros; Boomer,Scales with risky viewers (Cash),0,1,"Chaos Ladder: +1 Cash, plus +2 Cash for every viewer in chat who still has Risk (cancelled Risk still counts)."
+Billionaire Benefactor,Auctioneer,Finance Bros; Boomer,Convert chat Clout to Cash,0,5,"+5 Cash. Action (Softball Interview, once per stream for all of them): every viewer in chat drops to 0 Clout for this stream, and you bank 1 Cash right now for each Billionaire Benefactor in chat."
+Tech Admin,Wrestler,Techspertise,Remove (evict a viewer),2,0,+2 Clout. Action (Admin Rights): remove one viewer for the rest of the stream (it can remove itself).
+Online Scandal,Celebrity,Content,Brings extra viewers,2,3,"+2 Clout, +3 Cash. Unwanted Guests: brings two random viewers along when joining. This can push chat over the Sub Cap."
+Executive PR,Bartender,Staff; Boomer,Scales with risky viewers (Clout),0,0,No Bad Press: +2 Clout for every viewer in chat who still has Risk (cancelled Risk still counts).
+Gen Z with Job,Climber,Zoomer,Permanent growth (Cash per entrance),0,0,"Secure The Bag: permanently gains +1 Cash every time they join chat (up to 9 Cash), even if the stream ends badly."
+Big Boomer,Dinosaur,Boomer,Play + Risk,0,0,Play. Opinion Express: 1 Risk.
+Clippo The Clanker,Dragon,Bots,Play + Cash cost,0,-3,Play. Market Collapse: costs 3 Cash when scored.
+Bigger Star,Mermaid,Content; Clout,Play + brings an extra viewer,0,0,Play. Uplifting: brings one random viewer along when joining.
+Precocious Youth,Alien,Content,Play (no extra effect),0,0,Play. No extra effect.
+Internet Starpower,Unicorn,Content; Clout,Play + Cancel Risk,0,0,Play. Can Do No Wrong: cancels 1 Risk while in chat.
+Platform Owner,Ghost,Clout,Play + Remove (evict a viewer),0,0,Play. Action (Free The Speech!): remove one viewer for the rest of the stream (it can remove itself).
+Mainstream Celebrity,Superhero,Content; Clout,Play + Clout,3,0,Play. Mass Appeal: +3 Clout.
+Senior Marketing Manager,Leprechaun,Staff; Millennial,Play + Cash,0,3,Play. Product Placement: +3 Cash.
+Evangelist,Genie,Core Fanbase,Play + Recruit (search the queue),0,0,"Play. Action (2-for-1!): summon any viewer from the queue, even another Play."

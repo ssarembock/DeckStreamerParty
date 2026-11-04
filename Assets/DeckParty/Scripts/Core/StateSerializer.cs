@@ -13,9 +13,10 @@ namespace DeckParty.Core
         /// <summary>
         /// v2: meme roster, per-guest party modifiers, ordered waiting line. v3: streamers and their powers.
         /// v4: audience classics (permanent Cash, Hate-Watcher mood, Softball Interview) and the shared shop.
-        /// v5: rival Doomsdayers. v6: Bots in flight.
+        /// v5: rival Doomsdayers. v6: Bots in flight. v7: V5 communities (extra action uses, shop perks, Mods shield, Saboteurs)
+        /// and each card's action use count.
         /// </summary>
-        const byte FormatVersion = 6;
+        const byte FormatVersion = 7;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -102,6 +103,17 @@ namespace DeckParty.Core
                 // v6: Bots
                 w.Write((byte)Math.Min(255, Math.Max(0, s.IncomingBots)));
                 w.Write((byte)Math.Min(255, Math.Max(0, s.BotsOut)));
+
+                // v7: V5 communities
+                w.Write((byte)Math.Min(255, Math.Max(0, s.PartyExtraEvictions)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.PartyExtraRecruits)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.PartyExtraPeeks)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.ExpansionDiscount)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.RecruitDiscount)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.IncomingSabotage)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.SabotageOut)));
+                w.Write(s.ModsShieldNext);
+                for (int i = 0; i < s.Rolodex.Count; i++) w.Write((short)Math.Min(short.MaxValue, Math.Max(0, s.Rolodex[i].ActionUses)));
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -226,6 +238,20 @@ namespace DeckParty.Core
                 {
                     s.IncomingBots = r.ReadByte();
                     s.BotsOut = r.ReadByte();
+                }
+
+                // v6 and older saves predate the V5 communities.
+                if (version >= 7)
+                {
+                    s.PartyExtraEvictions = r.ReadByte();
+                    s.PartyExtraRecruits = r.ReadByte();
+                    s.PartyExtraPeeks = r.ReadByte();
+                    s.ExpansionDiscount = r.ReadByte();
+                    s.RecruitDiscount = r.ReadByte();
+                    s.IncomingSabotage = r.ReadByte();
+                    s.SabotageOut = r.ReadByte();
+                    s.ModsShieldNext = r.ReadBoolean();
+                    for (int i = 0; i < s.Rolodex.Count; i++) s.Rolodex[i].ActionUses = r.ReadInt16();
                 }
 
                 int eventCount = ReadCount(r);

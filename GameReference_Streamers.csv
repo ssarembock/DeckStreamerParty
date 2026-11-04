@@ -1,0 +1,13 @@
+Streamer,Title,Power,Type,Cost and cooldown,Game logic
+Fate,The Debate Lord,Raid,"Active, rival (multiplayer)","1 Cash (+1 per use), cooldown 2","Pick a rival: their next stream starts with +1 Risk. Raids alone can't push a stream past 2 Risk."
+Bro Jogan,The Three-Hour Podcaster,Three-Hour Episode,Passive,None,Start with +1 Sub Cap. Sub Cap upgrades cost 1 Cash more.
+Shinobi,The Headband Legend,Smoke Bomb,"Active, next stream","2 Cash (+1 per use), cooldown 2",Your next stream ignores 1 Risk.
+IRunFast,The Human Siren,Bark at Chat,Passive,None,Viewers carrying Risk earn +1 Clout.
+MrShark,The Giveaway King,"$10,000 Giveaway","Active, next stream","3 Cash (+1 per use), cooldown 2","In your next stream, every viewer earns +1 Clout."
+Ethical F**kboi,The Mansion Socialist,Wealth Tax,"Active, rival (multiplayer)","1 Cash (+1 per use), cooldown 2",The richest rival pays you up to 2 Cash.
+Soft Hard Body Man,"Looks Hard, Is Soft",Soft Landing,Passive,None,"When your stream gets deplatformed, you still bank half that stream's Clout."
+Strategic Abomination,"Two Heads, Zero Chill",Double Move,"Active, next stream","2 Cash (+1 per use), cooldown 2","In your next stream, the first viewer action you use can be used again."
+Palmane,Gotta Catch 'Em (Legally),Pal Sphere,"Active, instant","2 Cash (+1 per use), cooldown 3","Catch a random viewer from the shop (cost 6 or less, not a Play) for free."
+Manim Maketh Man,The Animated Proof,Beautiful Sequence,Passive,None,"Each great stream in a row earns +1, +2, +3... Clout (max +5). A failed stream resets it."
+Rude Radiologist,Two-Time Back-to-Back Diagnostician,X-Ray Vision,"Active, next stream","1 Cash (+1 per use), once per turn","In your next stream, see the next 3 viewers in your queue."
+No Streamer,Classic rules,None,None,None,Play the classic game without a streamer power.

@@ -1448,12 +1448,12 @@ MonoBehaviour:
     accent: {r: 0.5686275, g: 0.27450982, b: 1, a: 1}
     accentContent: {r: 1, g: 1, b: 1, a: 1}
     size: 84
-    logo: {fileID: 0}
-    partA: {fileID: 0}
+    logo: {fileID: -3510644303694755323, guid: 4b3f183903a8d1d4597a872a0d132ac7, type: 3}
+    partA: {fileID: 4794471249112167058, guid: 4b3f183903a8d1d4597a872a0d132ac7, type: 3}
     partB: {fileID: 0}
     partC: {fileID: 0}
-    pointA: {x: 0.37, y: 0.6}
-    pointB: {x: 0.63, y: 0.6}
+    pointA: {x: 0.15, y: 0.6}
+    pointB: {x: 0.85, y: 0.6}
     partSize: 0.12
     travel: 0.05
     speed: 1

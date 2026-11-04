@@ -116,6 +116,7 @@ namespace DeckParty.Core
                 case AbilityKind.Calm:
                 case AbilityKind.Style: return ActionCategory.Modify;
                 case AbilityKind.Reset:
+                case AbilityKind.SendBack:
                 case AbilityKind.SwapOrder:
                 case AbilityKind.Rickroll: return ActionCategory.Shuffle;
                 case AbilityKind.Inspect:

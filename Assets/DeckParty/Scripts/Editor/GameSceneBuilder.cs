@@ -466,8 +466,8 @@ namespace DeckParty.EditorTools
             var cursedTip = EditorUI.Tooltip(cursed);
             cursed.gameObject.SetActive(false);
 
-            var chips = new CommunityBeatsView.Chip[Communities.Count];
-            for (int i = 0; i < Communities.Count; i++)
+            var chips = new CommunityBeatsView.Chip[Communities.All.Length];
+            for (int i = 0; i < Communities.All.Length; i++)
             {
                 var community = Communities.All[i];
                 var background = EditorUI.Image(row, "Beat_" + community, SitePalette.SurfaceAlt, EditorUI.RoundedSmall, null, true);

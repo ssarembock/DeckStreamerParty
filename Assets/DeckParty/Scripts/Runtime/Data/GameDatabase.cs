@@ -202,12 +202,14 @@ namespace DeckParty
 
         /// <summary>
         /// 1: the first seven communities. 2: Boomer, Millennial, Zoomer and Armchair Activists. 3: the V4.2 card table (Clout,
-        /// Memetics Division and Bots; every roster card takes the table's communities).
+        /// Memetics Division and Bots; every roster card takes the table's communities). 4: the V5 card table
+        /// (ViewerCardsAndCommunityLogic.xlsx: Gen-Z, Gatekeepers, Hype Men, Mods, Full Stream, Marketers, Voyeurs...; every
+        /// roster card takes the table's communities again).
         /// </summary>
-        public const int CommunityDefaultsRevision = 3;
+        public const int CommunityDefaultsRevision = 4;
 
-        /// <summary>The revision whose built-in communities replace a roster card's (instead of merging into them).</summary>
-        const int RosterTableRevision = 3;
+        /// <summary>Whether a revision's built-in communities replace a roster card's (instead of merging into them).</summary>
+        static bool IsRosterTableRevision(int revision) => revision == 3 || revision == 4;
 
         static CommunityMask AddedInRevision(int revision)
         {
@@ -220,14 +222,14 @@ namespace DeckParty
 
         /// <summary>
         /// A viewer's communities with the defaults of any communities added since this database was seeded. The V4.2 card
-        /// table redefined every roster card's communities, so those take the table once (put-aside cards keep theirs).
+        /// and V5 card tables redefined every roster card's communities, so those take each table once (put-aside cards keep theirs).
         /// </summary>
         CommunityMask WithNewDefaults(GuestArt art)
         {
             var mask = art.communities;
             for (int revision = Math.Max(1, communitiesRevision) + 1; revision <= CommunityDefaultsRevision; revision++)
             {
-                if (revision == RosterTableRevision)
+                if (IsRosterTableRevision(revision))
                 {
                     if (GuestCatalog.InRoster(art.type)) mask = GuestCatalog.DefaultCommunitiesOf(art.type);
                     continue;
