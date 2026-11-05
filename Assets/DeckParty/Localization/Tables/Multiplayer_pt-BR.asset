@@ -348,6 +348,11 @@ MonoBehaviour:
     m_Localized: "Os bots de {0} invadem a pr\xF3xima live de {2} ({1})!"
     m_Metadata:
       m_Items: []
+  - m_Id: 1670121132744704
+    m_Localized: "Os Sabotadores de {0} fazem o pr\xF3ximo recrutamento de cada rival
+      custar {1} {icon:subs} a mais!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -737,8 +737,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262476
-    m_Localized: 'Action: send everyone in chat back to the queue so they can join
-      again. Used actions stay used.'
+    m_Localized: 'Action: send 1 random viewer in chat back to the queue. Every use
+      sends one more (2, 3...), for good. Used actions stay used.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262477
@@ -775,7 +775,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262485
-    m_Localized: '{icon:plays} Market Collapse: costs 3 {icon:cash} when scored.'
+    m_Localized: '{icon:plays} Market Collapse: costs 1 {icon:cash} and 2 {icon:subs}
+      when scored.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262486
@@ -918,8 +919,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262519
-    m_Localized: 'Action: send everyone in chat back to the queue so they can join
-      again. Used actions stay used.'
+    m_Localized: 'Action: send 5 random viewers in chat back to the queue so they
+      can join again. Used actions stay used.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262520
@@ -1085,8 +1086,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008642
-    m_Localized: 'Everyone Leaves Me: gains +2 {icon:subs} and +1 {icon:cash} whenever
-      another viewer leaves or is kicked.'
+    m_Localized: 'Everyone Leaves Me: gains +1 {icon:subs} or +1 {icon:cash} (at
+      random) whenever another viewer leaves or is kicked.'
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008643

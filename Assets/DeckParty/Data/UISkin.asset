@@ -87,7 +87,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconPop
     slot: 10
-    sprite: {fileID: -462918764, guid: 49f1933b941fc874d8f4a413749f0ca3, type: 3}
+    sprite: {fileID: -2145036898, guid: 49f1933b941fc874d8f4a413749f0ca3, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -108,14 +108,14 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconStar
     slot: 13
-    sprite: {fileID: -2145036898, guid: 49f1933b941fc874d8f4a413749f0ca3, type: 3}
+    sprite: {fileID: 4803741439785087915, guid: 015c4e4a33a398a43bea3545cc892b87, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconCancel
     slot: 14
-    sprite: {fileID: 21300000, guid: 19dacc4ba72f30942ab39997eb699ad2, type: 3}
+    sprite: {fileID: -1257932166371681089, guid: f96969a581cfc6b4bbf5e6a9669ca516, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconAddViewer
     slot: 25
-    sprite: {fileID: 21300000, guid: d329cd05659c2ac4bbb05b53fc9132b9, type: 3}
+    sprite: {fileID: -1303867249, guid: 49f1933b941fc874d8f4a413749f0ca3, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconAudience
     slot: 27
-    sprite: {fileID: 21300000, guid: ecfee4c671c03d74a99cf379a0d4e0a2, type: 3}
+    sprite: {fileID: -6050495603430480006, guid: f96969a581cfc6b4bbf5e6a9669ca516, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconGoLive
     slot: 30
-    sprite: {fileID: 21300000, guid: 03c1a9d3f1b0c3c4797222c04aed6064, type: 3}
+    sprite: {fileID: -2861935906149516205, guid: f96969a581cfc6b4bbf5e6a9669ca516, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -249,6 +249,20 @@ MonoBehaviour:
   - name: AvatarRing
     slot: 33
     sprite: {fileID: 21300000, guid: da293bc77bf06a141ab5cdd679becd7d, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconCommunityBeats
+    slot: 34
+    sprite: {fileID: 4310999393211808734, guid: 015c4e4a33a398a43bea3545cc892b87, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconStreamChat
+    slot: 35
+    sprite: {fileID: 863866869824979863, guid: 95f49b277e165f24ab7d5eea3e80062a, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0

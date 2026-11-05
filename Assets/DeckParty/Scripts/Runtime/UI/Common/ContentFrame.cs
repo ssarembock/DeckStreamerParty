@@ -14,8 +14,10 @@ namespace DeckParty.UI
     {
         [Tooltip("Widest shape the UI is allowed to take (21:9 = 2.333). Wider screens get side margins.")]
         public float maxAspect = 21f / 9f;
-        [Tooltip("Optional side panel (anchored to the right edge) that widens with the screen.")]
+        [Tooltip("Optional side panel (anchored to the right edge, or the left with Side On Left) that widens with the screen.")]
         public RectTransform sidePanel;
+        [Tooltip("The side panel sits at the left edge, before the main area (the players in multiplayer, left of the Stream Chat).")]
+        public bool sideOnLeft;
         [Tooltip("Optional main area that ends where the side panel starts.")]
         public RectTransform mainArea;
         public float minSideWidth = 420f;
@@ -62,9 +64,16 @@ namespace DeckParty.UI
 
             if (sidePanel == null) return;
             float side = Mathf.Lerp(minSideWidth, maxSideWidth, Mathf.InverseLerp(1700f, 2520f, width));
+            m_LastSideUsed = SideUsed();
+            if (sideOnLeft)
+            {
+                sidePanel.offsetMin = new Vector2(gap, sidePanel.offsetMin.y);
+                sidePanel.offsetMax = new Vector2(gap + side, sidePanel.offsetMax.y);
+                if (mainArea != null) mainArea.offsetMin = new Vector2(m_LastSideUsed ? side + gap * 2f : gap, mainArea.offsetMin.y);
+                return;
+            }
             sidePanel.offsetMin = new Vector2(-side - gap, sidePanel.offsetMin.y);
             sidePanel.offsetMax = new Vector2(-gap, sidePanel.offsetMax.y);
-            m_LastSideUsed = SideUsed();
             if (mainArea != null) mainArea.offsetMax = new Vector2(m_LastSideUsed ? -side - gap * 2f : -gap, mainArea.offsetMax.y);
         }
 

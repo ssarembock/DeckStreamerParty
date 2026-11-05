@@ -19,74 +19,72 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 370360320
-    m_Localized: Primer stream
+    m_Localized: En vivo
     m_Metadata:
       m_Items: []
   - m_Id: 433274880
-    m_Localized: "Aprende lo b\xE1sico"
+    m_Localized: "Tu primera transmisi\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 433274881
-    m_Localized: Tu primera temporada en vivo. Habituales confiables, Productor y
-      Admin del chat para manejar la sala, un colaborador riesgoso y tres Plays amigables.
+    m_Localized: 'Una primera temporada tranquila: regulares baratos, staff para
+      manejar la sala y un solo {icon:plays} para coleccionar.'
     m_Metadata:
       m_Items: []
   - m_Id: 433274882
-    m_Localized: Club de fans
+    m_Localized: Ruleta clickbait
     m_Metadata:
       m_Items: []
   - m_Id: 433274883
-    m_Localized: La lealtad paga
+    m_Localized: "Grandes riesgos, n\xFAmeros m\xE1s grandes"
     m_Metadata:
       m_Items: []
   - m_Id: 433274884
-    m_Localized: "Arma un verdadero {icon:CoreFanbase} N\xFAcleo de fans: cada tres
-      habituales distintos anulan 1 {icon:risk}, as\xED que los trolls y los orbitadores
-      se vuelven dinero seguro. Conejo maratonero y Usuario de cupones aman el chat
-      lleno."
+    m_Localized: "Colaboradores riesgosos y haters pagan bien, un {icon:Boomer} Boomer
+      saca provecho de cada uno, la {icon:GenZ} Gen Z crece y los {icon:Voyeurs}
+      Mirones esp\xEDan qui\xE9n viene."
     m_Metadata:
       m_Items: []
   - m_Id: 433274885
-    m_Localized: Momento viral
+    m_Localized: Lista de deseos de marcas
     m_Metadata:
       m_Items: []
   - m_Id: 433274886
-    m_Localized: A la caza de fama
+    m_Localized: Cuidado con lo que deseas
     m_Metadata:
       m_Items: []
   - m_Id: 433274887
-    m_Localized: "Colaboradores, esc\xE1ndalos y celebridades. {icon:Content} Contenido
-      hace que los espectadores fuera de tu n\xFAcleo punt\xFAen dos veces y {icon:Clout}
-      Fama les suma {icon:subs} extra, pero el riesgo se acumula r\xE1pido."
+    m_Localized: "Estafas, c\xF3digos de descuento y giros de PR. Los {icon:HypeMen}
+      Animadores llenan el chat, los {icon:Mods} Mods mantienen la paz y arriba esperan
+      dos {icon:plays} muy distintos."
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
-    m_Localized: Laboratorio de memes
+    m_Localized: "Reuni\xF3n de monetizaci\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 433274889
-    m_Localized: Tanta sinergia
+    m_Localized: Cada centavo cuenta
     m_Metadata:
       m_Items: []
   - m_Id: 433274890
-    m_Localized: "La {icon:MemeticsDivision} Divisi\xF3n Mem\xE9tica puede hacer
-      que todo el stream punt\xFAe dos veces. Perro Degen quiere un chat lleno de
-      comunidades distintas y Gato Desconsolado gana cada vez que echan a alguien."
+    m_Localized: "El {icon:Staff} Staff en n\xF3mina, patrocinadores a la orden y
+      un {icon:plays} que cuesta una fortuna. Cuenta cada moneda: un {icon:Millennial}
+      Millennial hereda cada vez que un {icon:Boomer} Boomer se desconecta."
     m_Metadata:
       m_Items: []
   - m_Id: 433274891
-    m_Localized: "Reuni\xF3n de equipo"
+    m_Localized: Magia del algoritmo
     m_Metadata:
       m_Items: []
   - m_Id: 433274892
-    m_Localized: Todo bajo control
+    m_Localized: Un stream perfecto
     m_Metadata:
       m_Items: []
   - m_Id: 433274893
-    m_Localized: "Todo el equipo en n\xF3mina. {icon:Staff} Staff puede perdonar
-      sus propios costos de {icon:cash}, {icon:Techspertise} Tecnoexpertos puede
-      revivir un servidor ca\xEDdo y cada acci\xF3n hace entrar al espectador correcto
-      o sacar al equivocado."
+    m_Localized: '{icon:Gatekeepers} Guardianes por todas partes: echa, vuelve a
+      echar y gana con cada salida. Los {icon:HypeMen} Animadores llenan el chat
+      para dos {icon:plays} raros.'
     m_Metadata:
       m_Items: []
   - m_Id: 433274894

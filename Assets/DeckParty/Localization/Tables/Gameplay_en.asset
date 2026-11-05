@@ -651,7 +651,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412381
-    m_Localized: '{viewer} is sent back to the queue.'
+    m_Localized: '{viewer} sends {count} back to the queue.'
     m_Metadata:
       m_Items: []
   - m_Id: 479412382
@@ -1180,9 +1180,9 @@ MonoBehaviour:
       fine; at <b>3 the stream gets deplatformed</b>: it ends with no payout and
       you give one viewer a <b>Temporary Ban</b> (they sit out the next stream).
       Normie, Die Hard Fan and Internet Starpower <b>cancel</b> 1 {icon:risk} each
-      while in chat, and so does every 3 points of {icon:CoreFanbase} Core Fanbase.
-      Some viewers add {icon:risk} with their actions; the Chat Arbitrator clears
-      risk.'
+      while in chat, and {icon:Mods} Mods may cancel 1 more at the start of your
+      next stream. Some viewers add {icon:risk} with their actions; the Chat Arbitrator
+      clears risk.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606637
@@ -1432,12 +1432,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091265
-    m_Localized: The regulars. Every {every} points cancel 1 {icon:risk} while they're
-      in chat.
+    m_Localized: The regulars. Each point gives every Core Fanbase viewer a {per}%
+      chance to score twice when the stream ends ({top}% at {max} points).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091266
-    m_Localized: Cancelling {value} {icon:risk} right now.
+    m_Localized: 'Now: {value}% chance per Core Fanbase viewer to score twice.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091267
@@ -1495,7 +1495,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091279
-    m_Localized: Trolls
+    m_Localized: Troll Army
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091280
@@ -1523,31 +1523,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091285
-    m_Localized: Boomer
+    m_Localized: Boomers
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091286
-    m_Localized: Old money, old opinions. When the stream is scored, each point gives
-      +{cash} {icon:cash} and -{subs} {icon:subs}.
+    m_Localized: Old money, old opinions. Each point makes Sub Cap upgrades {per}
+      {icon:cash} cheaper in your next shop. After a scored stream, each Boomer in
+      chat has a {retire}% chance to log off for good (they leave your Audience).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
-    m_Localized: 'Now: +{cash} {icon:cash} and -{subs} {icon:subs} when the stream
-      is scored.'
+    m_Localized: 'Now: Sub Cap upgrades {value} {icon:cash} cheaper next shop.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091288
-    m_Localized: Millennial
+    m_Localized: Millennials
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091289
-    m_Localized: Very online, slightly broke. When the stream is scored, each point
-      gives +{subs} {icon:subs} and -{cash} {icon:cash}.
+    m_Localized: Very online, waiting on the inheritance. Each time a Boomer leaves
+      your Audience, a random Millennial you own earns +1 {icon:cash} for good, once
+      per point (at least once).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
-    m_Localized: 'Now: +{subs} {icon:subs} and -{cash} {icon:cash} when the stream
-      is scored.'
+    m_Localized: 'Now: {value}x inheritance per departed Boomer.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091291
@@ -1616,7 +1616,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091306
-    m_Localized: Server Down, but Techspertise brought it back ({value}% chance)!
+    m_Localized: Server Down, but the Hype Men brought it back ({value}% chance)!
       The stream still scores.
     m_Metadata:
       m_Items: []
@@ -1646,27 +1646,28 @@ MonoBehaviour:
       (the small icons on their card). Each <b>different</b> viewer in chat gives
       their community a point; two copies of the same card count once, and a viewer
       who leaves takes their point with them. Every point makes the bonus bigger.
-      Watch the <b>Community Beats</b> at the top of the chat and hover any community
-      icon to see exactly what it does:\n{icon:CoreFanbase} <b>Core Fanbase</b>:
-      every 3 points cancel 1 {icon:risk}.\n{icon:Staff} <b>Staff</b>: 10% per point
-      that a Staff viewer''s {icon:cash} cost is waived.\n{icon:Content} <b>Content</b>:
-      10% per point that a viewer outside the Core Fanbase scores twice.\n{icon:Techspertise}
-      <b>Techspertise</b>: 20 / 40 / 50% that a Server Down stream still scores.\n{icon:FinanceBros}
-      <b>Finance Bros</b>: 10% per point that a {icon:cash} reward doubles.\n{icon:Trolls}
-      <b>Trolls</b>: 1 random {icon:subs} or {icon:cash} per point when you get deplatformed.\n{icon:Doomsdayers}
-      <b>Doomsdayers</b> (multiplayer): 4% per point that each viewer in your rivals''
-      next stream scores nothing.\n{icon:Boomer} <b>Boomer</b>: +2 {icon:cash} and
-      -1 {icon:subs} per point when the stream is scored.\n{icon:Millennial} <b>Millennial</b>:
-      +2 {icon:subs} and -1 {icon:cash} per point when the stream is scored.\n{icon:Zoomer}
-      <b>Zoomer</b>: two separate rolls of 20% per point (up to 80%): +6 {icon:subs},
-      and -3 {icon:cash}.\n{icon:ArmchairActivists} <b>Armchair Activists</b>: 10%
-      per point (up to 50%) that each Armchair Activist scores nothing.\n{icon:Clout}
-      <b>Clout</b>: 10% per point (up to 40%) that each viewer outside the Core Fanbase
-      brings +1 {icon:subs} more each time they score.\n{icon:MemeticsDivision} <b>Memetics
-      Division</b>: 1% per point (up to 10%) that the whole stream scores twice.\n{icon:Bots}
-      <b>Bots</b> (multiplayer): when the stream is scored, 10% per point (up to
-      40%) for each Bots viewer to send a Bot (takes a space, earns nothing) into
-      the next player''s next stream.'
+      Watch the <b>Community Beats</b> beside the chat and hover any community icon
+      to see exactly what it does:\n{icon:CoreFanbase} <b>Core Fanbase</b>: 10% per
+      point that a Core Fanbase viewer scores twice.\n{icon:Staff} <b>Staff</b>:
+      10% per point that a Staff viewer''s {icon:cash} cost is waived.\n{icon:Content}
+      <b>Content</b>: 10% per point that a viewer outside the Core Fanbase scores
+      twice.\n{icon:Boomer} <b>Boomers</b>: Sub Cap upgrades cost 1 {icon:cash} less
+      per point in your next shop; after a stream each Boomer has a 10% chance to
+      leave your Audience for good.\n{icon:Millennial} <b>Millennials</b>: when a
+      Boomer leaves, a random Millennial you own earns +1 {icon:cash} for good, once
+      per point.\n{icon:GenZ} <b>Gen-Z</b>: after a stream, each Gen-Z viewer grows
+      +1 {icon:subs} or {icon:cash} for good per point (up to 3).\n{icon:Gatekeepers}
+      <b>Gatekeepers</b>: one more removal per point this stream.\n{icon:HypeMen}
+      <b>Hype Men</b>: 10 / 20 / 30% that a Server Down stream still scores.\n{icon:Trolls}
+      <b>Troll Army</b>: 1 random {icon:subs} or {icon:cash} per point when you get
+      deplatformed.\n{icon:Mods} <b>Mods</b>: 10% per point (up to 30%) that your
+      next stream starts with 1 {icon:risk} cancelled.\n{icon:FullStream} <b>Full
+      Stream</b>: full-chat bonuses allow 1 empty space per point.\n{icon:Marketers}
+      <b>Marketers</b>: one more recruit per point this stream.\n{icon:Voyeurs} <b>Voyeurs</b>:
+      one more peek per point this stream (up to 2).\n{icon:ShopControl} <b>Shop
+      Control</b>: your first recruit in the next shop costs 1 {icon:subs} less per
+      point.\n{icon:Saboteurs} <b>Saboteurs</b> (multiplayer): every rival''s next
+      recruit costs 1 {icon:subs} more per point.'
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656
@@ -1732,6 +1733,162 @@ MonoBehaviour:
   - m_Id: 736682367467532
     m_Localized: 'Rival Bots joined this stream''s Audience: {count}. They take a
       space and earn nothing.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670122953072640
+    m_Localized: Gen-Z
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570112
+    m_Localized: Start weak, grow fast. After a scored stream, each Gen-Z viewer
+      in chat gains +1 {icon:subs} or +1 {icon:cash} for good (at random), once per
+      point (up to {max}).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570113
+    m_Localized: 'Now: each Gen-Z viewer grows {value}x after the stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570114
+    m_Localized: Gatekeepers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570115
+    m_Localized: Nobody gets in. Each point gives one more use of a Gatekeeper's
+      removal action this stream (the extra uses are shared).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570116
+    m_Localized: 'Now: {value} extra use(s) left.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570117
+    m_Localized: Hype Men
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570118
+    m_Localized: They bring friends. If the server goes down (chat over the Sub Cap),
+      each point gives a {per}% chance the stream still scores ({top}% at {max} points).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570119
+    m_Localized: 'Now: {value}% chance the stream still scores if the server goes
+      down.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570120
+    m_Localized: Mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570121
+    m_Localized: Keeping it civil. When the stream is scored, each point gives a
+      {per}% chance that your next stream starts with 1 {icon:risk} cancelled ({top}%
+      at {max} points).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570122
+    m_Localized: 'Now: {value}% chance to cancel 1 {icon:risk} next stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570123
+    m_Localized: Full Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570124
+    m_Localized: Packed house. Bonuses that need a full chat count chat as full with
+      up to 1 empty space per point (up to {max}).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570125
+    m_Localized: 'Now: chat counts as full with up to {value} empty space(s).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570126
+    m_Localized: Marketers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570127
+    m_Localized: They know who to call. Each point gives one more use of a Marketer's
+      recruit action this stream (the extra uses are shared).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570128
+    m_Localized: 'Now: {value} extra use(s) left.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570129
+    m_Localized: Voyeurs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570130
+    m_Localized: Always watching. Each point gives one more use of a Voyeur's peek
+      action this stream (up to {max}, shared).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570131
+    m_Localized: 'Now: {value} extra use(s) left.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570132
+    m_Localized: Shop Control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570133
+    m_Localized: Friends in the shop. When the stream is scored, each point makes
+      your first recruit in the next shop cost 1 {icon:subs} less (up to {max}).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570134
+    m_Localized: 'Now: your next recruit costs {value} {icon:subs} less.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570135
+    m_Localized: Saboteurs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570136
+    m_Localized: Multiplayer. When the stream is scored, each point makes every rival's
+      next recruit cost 1 {icon:subs} more (up to {max}).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570137
+    m_Localized: 'Now: rivals'' next recruit costs {value} {icon:subs} more.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513152
+    m_Localized: '{viewer} can use their action again ({count} extra left).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513153
+    m_Localized: '{viewer} grows for good: {values}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513154
+    m_Localized: 'Mods ({value}%): your next stream starts with 1 {icon:risk} cancelled.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513155
+    m_Localized: Mods cancel 1 {icon:risk} this stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513156
+    m_Localized: Sub Cap upgrades cost {value} {icon:cash} less in this shop.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513157
+    m_Localized: Your next recruit costs {value} {icon:subs} less.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513158
+    m_Localized: Your rivals' next recruit costs {value} {icon:subs} more.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513159
+    m_Localized: '{viewer} logged off for good and left your Audience.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513160
+    m_Localized: '{viewer} inherits {cash} for good.'
     m_Metadata:
       m_Items: []
   references:

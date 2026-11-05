@@ -335,6 +335,10 @@ MonoBehaviour:
     m_Key: mp.bots
     m_Metadata:
       m_Items: []
+  - m_Id: 1670121132744704
+    m_Key: mp.sabotage
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

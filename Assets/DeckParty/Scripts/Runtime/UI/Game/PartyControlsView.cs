@@ -214,6 +214,12 @@ namespace DeckParty.UI
             return next != null ? Loc.Get("controls.next_up", "viewer", GuestVisuals.NameTag(next.Kind)) : null;
         }
 
+        /// <summary>Hides the risky-queue badge (it sits in the menu bar, so it would otherwise stay up in the shop).</summary>
+        public void HideRisk()
+        {
+            if (riskBadge != null && riskBadge.activeSelf) riskBadge.SetActive(false);
+        }
+
         /// <summary>
         /// How many viewers with Deplatform Risk are still in the queue: a fact, not the odds. Players work out their chances
         /// from what they can see. Red when one more Deplatform Risk would get the stream banned.

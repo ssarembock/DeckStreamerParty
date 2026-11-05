@@ -235,6 +235,8 @@ namespace DeckParty.EditorTools
                     case SkinSlot.IconClose: Set(entry, EditorUI.Close, Image.Type.Simple); break;
                     case SkinSlot.IconNight: Set(entry, EditorUI.Night, Image.Type.Simple); break;
                     case SkinSlot.AvatarRing: Set(entry, EditorUI.Ring, Image.Type.Simple); break;
+                    case SkinSlot.IconCommunityBeats: Set(entry, EditorUI.Audience, Image.Type.Simple); break;
+                    case SkinSlot.IconStreamChat: Set(entry, EditorUI.Chat, Image.Type.Simple); break;
                 }
             }
         }
@@ -520,7 +522,7 @@ namespace DeckParty.EditorTools
             portrait.enabled = false;
             var characterPortrait = portrait.gameObject.AddComponent<CharacterPortrait>();
             characterPortrait.image = portrait;
-            var ring = EditorUI.Image(face, "Ring", SitePalette.Border, EditorUI.Ring, SkinSlot.AvatarRing);
+            var ring = EditorUI.Image(face, "Ring", SitePalette.Outline, EditorUI.Ring, SkinSlot.AvatarRing);
             ring.rectTransform.Stretch();
             var dim = EditorUI.Image(face, "Dim", new Color(0.03f, 0.02f, 0.06f, 0.55f), EditorUI.Circle);
             dim.rectTransform.Stretch(6, 6, 6, 6);
@@ -533,8 +535,9 @@ namespace DeckParty.EditorTools
             trouble.rectTransform.Place(new Vector2(1, 1), new Vector2(-2, -2), new Vector2(38, 38), new Vector2(1, 1));
             var calm = EditorUI.Icon(content, "CancelBadge", EditorUI.Shield, UIPalette.Teal, SkinSlot.IconCancel, 34);
             calm.rectTransform.Place(new Vector2(1, 1), new Vector2(-4, -44), new Vector2(34, 34), new Vector2(1, 1));
-            var communities = CommunityIcons(content, "Communities", 28, false);
-            ((RectTransform)communities.transform).Place(new Vector2(0, 1), new Vector2(4, -48), new Vector2(28, 3 * 28 + 2 * 4), new Vector2(0, 1));
+            // Community icons on the ring: each in a small black circle along the bottom of the ring, fanned out from the
+            // centre when there's more than one. Drawn over the ring (and the dim), and they wiggle with the face.
+            var communities = ArcCommunityIcons(face, circle);
 
             var bonusLabel = EditorUI.Pill(content, "BonusBadge", 18, out var bonus);
             bonus.color = UIPalette.Pink;
@@ -546,9 +549,14 @@ namespace DeckParty.EditorTools
             var abilityTooltip = ability.GetComponent<TooltipTrigger>();
             abilityTooltip.overlay = true;
 
-            // What the viewer brings in right now: icons and numbers on a dark pill.
+            // What the viewer brings in right now: just the icons and numbers (no pill behind them). Pale colours are
+            // darkened so they read on the white chat.
             var stats = EditorUI.Pill(content, "Stats", 22, out var statsPill);
-            statsPill.rectTransform.BottomBand(2, 38, 16, 16);
+            statsPill.rectTransform.BottomBand(2, 38, 8, 8);
+            statsPill.enabled = false;
+            statsPill.raycastTarget = false;
+            stats.color = SitePalette.Text;
+            EditorUI.Readable(stats);
             stats.text = "-";
 
             var button = root.gameObject.AddComponent<Button>();
@@ -595,6 +603,45 @@ namespace DeckParty.EditorTools
             view.characterPortrait = characterPortrait;
             view.communities = communities;
             return root.gameObject;
+        }
+
+        /// <summary>
+        /// The chat avatar's community icons: three slots, each a 30 px icon on a white circle with a black border (40 px), laid out by
+        /// <see cref="CommunityIconsView"/> along the bottom of the avatar's ring.
+        /// </summary>
+        static CommunityIconsView ArcCommunityIcons(RectTransform face, float circle)
+        {
+            const int slots = 3;
+            const float badgeSize = 40f;
+            const float border = 2.5f;
+            // The icon sits on the white interior with a little white showing around it.
+            const float iconInset = 5f;
+            var root = EditorUI.Rect(face, "Communities").Stretch();
+            var view = root.gameObject.AddComponent<CommunityIconsView>();
+            view.arc = true;
+            // On the ring's line, a touch inside so the circles don't run into the reward text below.
+            view.arcRadius = circle * 0.5f - 9f;
+            view.arcStep = 28f;
+            view.icons = new Image[slots];
+            view.tooltips = new TooltipTrigger[slots];
+            view.badges = new RectTransform[slots];
+            for (int i = 0; i < slots; i++)
+            {
+                var badge = EditorUI.Image(root, "Community" + (i + 1), SitePalette.Outline, EditorUI.Circle);
+                badge.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(0, -view.arcRadius), new Vector2(badgeSize, badgeSize));
+                var interior = EditorUI.Image(badge.transform, "Fill", SitePalette.Surface, EditorUI.Circle);
+                interior.rectTransform.Stretch(border, border, border, border);
+                var icon = EditorUI.Image(badge.transform, "Icon", Color.white, EditorUI.Circle, null, true);
+                icon.preserveAspect = true;
+                icon.rectTransform.Stretch(iconInset, iconInset, iconInset, iconInset);
+                var trigger = EditorUI.Tooltip(icon);
+                trigger.overlay = true;
+                badge.gameObject.SetActive(false);
+                view.icons[i] = icon;
+                view.tooltips[i] = trigger;
+                view.badges[i] = badge.rectTransform;
+            }
+            return view;
         }
 
         /// <summary>Three community icon slots (vertical or horizontal), each with an overlay tooltip.</summary>

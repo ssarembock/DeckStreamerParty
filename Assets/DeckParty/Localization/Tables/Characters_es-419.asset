@@ -740,8 +740,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262476
-    m_Localized: "Acci\xF3n: manda a todos los del chat de vuelta a la fila para
-      que vuelvan a entrar. Las acciones usadas siguen usadas."
+    m_Localized: "Acci\xF3n: manda 1 espectador al azar del chat de vuelta a la fila.
+      Cada uso manda uno m\xE1s (2, 3...) para siempre. Las acciones usadas siguen
+      usadas."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262477
@@ -778,7 +779,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262485
-    m_Localized: '{icon:plays} Colapso del mercado: cuesta 3 {icon:cash} al puntuar.'
+    m_Localized: '{icon:plays} Colapso del mercado: cuesta 1 {icon:cash} y 2 {icon:subs}
+      al puntuar.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262486
@@ -923,8 +925,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262519
-    m_Localized: "Acci\xF3n: manda a todos los del chat de vuelta a la fila para
-      que vuelvan a entrar. Las acciones usadas siguen usadas."
+    m_Localized: "Acci\xF3n: manda 5 espectadores al azar del chat de vuelta a la
+      fila para que vuelvan a entrar. Las acciones usadas siguen usadas."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262520
@@ -1091,8 +1093,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008642
-    m_Localized: 'Todos me abandonan: gana +2 {icon:subs} y +1 {icon:cash} cada vez
-      que otro espectador se va o lo echan.'
+    m_Localized: 'Todos me abandonan: gana +1 {icon:subs} o +1 {icon:cash} (al azar)
+      cada vez que otro espectador se va o lo echan.'
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008643

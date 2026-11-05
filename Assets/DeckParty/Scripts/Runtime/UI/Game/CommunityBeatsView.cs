@@ -98,10 +98,10 @@ namespace DeckParty.UI
                         chip.icon.sprite = GameIcons.Sprite(chip.community);
                         chip.icon.preserveAspect = true;
                     }
+                    // Website style: no background per entry, just the icon and the numbers (the clear image still takes the hover).
                     if (chip.background != null)
-                        chip.background.color = points > 0
-                            ? CommunityVisuals.Color(chip.community).WithAlpha(siteStyle ? 0.28f : 0.35f)
-                            : siteStyle ? SitePalette.SurfaceAlt : UIPalette.PanelDeep.WithAlpha(0.7f);
+                        chip.background.color = siteStyle ? new Color(0f, 0f, 0f, 0f)
+                            : points > 0 ? CommunityVisuals.Color(chip.community).WithAlpha(0.35f) : UIPalette.PanelDeep.WithAlpha(0.7f);
                     string dim = siteStyle ? "#9A9AA6" : "#B9AED6";
                     if (chip.pointsLabel != null)
                         chip.pointsLabel.text = max > 0 ? $"{points}<size=60%><color={dim}>/{max}</color></size>" : points.ToString();

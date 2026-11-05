@@ -651,7 +651,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412381
-    m_Localized: '{viewer} vuelve a la fila.'
+    m_Localized: '{viewer} manda {count} de vuelta a la fila.'
     m_Metadata:
       m_Items: []
   - m_Id: 479412382
@@ -1184,9 +1184,9 @@ MonoBehaviour:
       neto no pasa nada; con <b>3 te desplataforman</b>: el stream termina sin ganancias
       y le das a un espectador un <b>baneo temporal</b> (se pierde el pr\xF3ximo
       stream). El Normie, el Fan ac\xE9rrimo y la Estrella de internet <b>anulan</b>
-      1 {icon:risk} cada uno mientras est\xE1n en el chat, igual que cada 3 puntos
-      de {icon:CoreFanbase} N\xFAcleo de fans. Algunos espectadores suman {icon:risk}
-      con sus acciones; el \xC1rbitro del chat quita el riesgo."
+      1 {icon:risk} cada uno mientras est\xE1n en el chat, y los {icon:Mods} Mods
+      pueden anular 1 m\xE1s al empezar tu pr\xF3ximo stream. Algunos espectadores
+      suman {icon:risk} con sus acciones; el \xC1rbitro del chat quita el riesgo."
     m_Metadata:
       m_Items: []
   - m_Id: 483606637
@@ -1443,12 +1443,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091265
-    m_Localized: "Los de siempre. Cada {every} puntos cancelan 1 {icon:risk} mientras
-      est\xE9n en el chat."
+    m_Localized: "Los de siempre. Cada punto da a cada espectador del N\xFAcleo de
+      fans un {per}% de probabilidad de puntuar dos veces al terminar el stream ({top}%
+      con {max} puntos)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091266
-    m_Localized: Ahora cancela {value} {icon:risk}.
+    m_Localized: "Ahora: {value}% de probabilidad por espectador del N\xFAcleo de
+      fans de puntuar dos veces."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091267
@@ -1506,7 +1508,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091279
-    m_Localized: Trolls
+    m_Localized: "Ej\xE9rcito troll"
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091280
@@ -1534,29 +1536,33 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091285
-    m_Localized: Boomer
+    m_Localized: Boomers
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091286
-    m_Localized: Dinero viejo, opiniones viejas. Al puntuar el stream, cada punto
-      da +{cash} {icon:cash} y -{subs} {icon:subs}.
+    m_Localized: "Dinero viejo, opiniones viejas. Cada punto hace que subir el cupo
+      cueste {per} {icon:cash} menos en tu pr\xF3xima tienda. Tras un stream que
+      punt\xFAa, cada Boomer del chat tiene un {retire}% de probabilidad de desconectarse
+      para siempre (deja tu audiencia)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
-    m_Localized: 'Ahora: +{cash} {icon:cash} y -{subs} {icon:subs} al puntuar.'
+    m_Localized: "Ahora: subir el cupo cuesta {value} {icon:cash} menos en la pr\xF3xima
+      tienda."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091288
-    m_Localized: Millennial
+    m_Localized: Millennials
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091289
-    m_Localized: "Siempre en l\xEDnea, un poco en quiebra. Al puntuar el stream,
-      cada punto da +{subs} {icon:subs} y -{cash} {icon:cash}."
+    m_Localized: "Siempre en l\xEDnea, esperando la herencia. Cada vez que un Boomer
+      deja tu audiencia, un Millennial tuyo al azar gana +1 {icon:cash} para siempre,
+      una vez por punto (al menos una vez)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
-    m_Localized: 'Ahora: +{subs} {icon:subs} y -{cash} {icon:cash} al puntuar.'
+    m_Localized: 'Ahora: {value} herencia(s) por Boomer que se va.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091291
@@ -1625,8 +1631,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091306
-    m_Localized: "\xA1Se cay\xF3 el servidor, pero los Tecnoexpertos lo levantaron
-      ({value}% de probabilidad)! El stream igual punt\xFAa."
+    m_Localized: "\xA1Se cay\xF3 el servidor, pero los Animadores lo levantaron ({value}%
+      de probabilidad)! El stream igual punt\xFAa."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091307
@@ -1656,29 +1662,31 @@ MonoBehaviour:
       (los \xEDconos peque\xF1os de su carta). Cada espectador <b>distinto</b> en
       el chat le da un punto a su comunidad; dos copias de la misma carta cuentan
       una vez, y un espectador que se va se lleva su punto. Cada punto agranda la
-      bonificaci\xF3n. Mira el <b>Ritmo de comunidades</b> arriba del chat y pasa
-      el mouse sobre cualquier \xEDcono de comunidad para ver qu\xE9 hace:\\n{icon:CoreFanbase}
-      <b>N\xFAcleo de fans</b>: cada 3 puntos anulan 1 {icon:risk}.\\n{icon:Staff}
-      <b>Staff</b>: 10% por punto de no cobrar el {icon:cash} de un espectador del
-      Staff.\\n{icon:Content} <b>Contenido</b>: 10% por punto de que un espectador
-      fuera del N\xFAcleo de fans punt\xFAe dos veces.\\n{icon:Techspertise} <b>Tecnoexpertos</b>:
-      20 / 40 / 50% de que un stream con el servidor ca\xEDdo igual punt\xFAe.\\n{icon:FinanceBros}
-      <b>Finance Bros</b>: 10% por punto de duplicar una ganancia de {icon:cash}.\\n{icon:Trolls}
-      <b>Trolls</b>: 1 {icon:subs} o {icon:cash} al azar por punto si te desplataforman.\\n{icon:Doomsdayers}
-      <b>Apocal\xEDpticos</b> (multijugador): 4% por punto de que cada espectador
-      del pr\xF3ximo stream de tus rivales no punt\xFAe.\\n{icon:Boomer} <b>Boomer</b>:
-      +2 {icon:cash} y -1 {icon:subs} por punto al puntuar el stream.\\n{icon:Millennial}
-      <b>Millennial</b>: +2 {icon:subs} y -1 {icon:cash} por punto al puntuar el
-      stream.\\n{icon:Zoomer} <b>Zoomer</b>: dos tiradas separadas de 20% por punto
-      (hasta 80%): +6 {icon:subs}, y -3 {icon:cash}.\\n{icon:ArmchairActivists} <b>Activistas
-      de sill\xF3n</b>: 10% por punto (hasta 50%) de que cada Activista de sill\xF3n
-      no punt\xFAe.\\n{icon:Clout} <b>Fama</b>: 10% por punto (hasta 40%) de que
-      cada espectador fuera del N\xFAcleo de fans traiga +1 {icon:subs} m\xE1s cada
-      vez que punt\xFAa.\\n{icon:MemeticsDivision} <b>Divisi\xF3n Mem\xE9tica</b>:
-      1% por punto (hasta 10%) de que todo el stream punt\xFAe dos veces.\\n{icon:Bots}
-      <b>Bots</b> (multijugador): al puntuar el stream, 10% por punto (hasta 40%)
-      por cada espectador Bots de mandar un Bot (ocupa lugar, no gana nada) al pr\xF3ximo
-      stream del siguiente jugador."
+      bonificaci\xF3n. Mira el <b>Ritmo de comunidades</b> junto al chat y pasa el
+      mouse sobre cualquier \xEDcono de comunidad para ver qu\xE9 hace:\\n{icon:CoreFanbase}
+      <b>N\xFAcleo de fans</b>: 10% por punto de que un espectador del N\xFAcleo
+      de fans punt\xFAe dos veces.\\n{icon:Staff} <b>Staff</b>: 10% por punto de
+      no cobrar el {icon:cash} de un espectador del Staff.\\n{icon:Content} <b>Contenido</b>:
+      10% por punto de que un espectador fuera del N\xFAcleo de fans punt\xFAe dos
+      veces.\\n{icon:Boomer} <b>Boomers</b>: en tu pr\xF3xima tienda subir el cupo
+      cuesta 1 {icon:cash} menos por punto; tras un stream cada Boomer tiene un 10%
+      de probabilidad de dejar tu audiencia para siempre.\\n{icon:Millennial} <b>Millennials</b>:
+      cuando se va un Boomer, un Millennial tuyo al azar gana +1 {icon:cash} para
+      siempre, una vez por punto.\\n{icon:GenZ} <b>Gen Z</b>: tras un stream, cada
+      espectador Gen Z crece +1 {icon:subs} o {icon:cash} para siempre por punto
+      (hasta 3).\\n{icon:Gatekeepers} <b>Guardianes</b>: una expulsi\xF3n m\xE1s
+      por punto en este stream.\\n{icon:HypeMen} <b>Animadores</b>: 10 / 20 / 30%
+      de que un stream con el servidor ca\xEDdo igual punt\xFAe.\\n{icon:Trolls}
+      <b>Ej\xE9rcito troll</b>: 1 {icon:subs} o {icon:cash} al azar por punto si
+      te desplataforman.\\n{icon:Mods} <b>Mods</b>: 10% por punto (hasta 30%) de
+      que tu pr\xF3ximo stream empiece con 1 {icon:risk} anulado.\\n{icon:FullStream}
+      <b>Stream lleno</b>: las bonificaciones de chat lleno permiten 1 lugar vac\xEDo
+      por punto.\\n{icon:Marketers} <b>Marketeros</b>: un reclutamiento m\xE1s por
+      punto en este stream.\\n{icon:Voyeurs} <b>Mirones</b>: un espionaje m\xE1s
+      por punto en este stream (hasta 2).\\n{icon:ShopControl} <b>Control de tienda</b>:
+      tu primer reclutamiento de la pr\xF3xima tienda cuesta 1 {icon:subs} menos
+      por punto.\\n{icon:Saboteurs} <b>Saboteadores</b> (multijugador): el pr\xF3ximo
+      reclutamiento de cada rival cuesta 1 {icon:subs} m\xE1s por punto."
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656
@@ -1747,6 +1755,168 @@ MonoBehaviour:
   - m_Id: 736682367467532
     m_Localized: 'Bots rivales se unieron a la Audiencia de este stream: {count}.
       Ocupan lugar y no ganan nada.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670122953072640
+    m_Localized: Gen Z
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570112
+    m_Localized: "Empiezan flojos, crecen r\xE1pido. Tras un stream que punt\xFAa,
+      cada espectador Gen Z del chat gana +1 {icon:subs} o +1 {icon:cash} para siempre
+      (al azar), una vez por punto (hasta {max})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570113
+    m_Localized: 'Ahora: cada espectador Gen Z crece {value} vez/veces tras el stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570114
+    m_Localized: Guardianes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570115
+    m_Localized: "Aqu\xED no entra nadie. Cada punto da un uso m\xE1s de la acci\xF3n
+      de sacar de un Guardi\xE1n en este stream (los usos extra se comparten)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570116
+    m_Localized: 'Ahora: quedan {value} uso(s) extra.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570117
+    m_Localized: Animadores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570118
+    m_Localized: "Traen amigos. Si se cae el servidor (chat por encima del cupo),
+      cada punto da un {per}% de probabilidad de que el stream igual punt\xFAe ({top}%
+      con {max} puntos)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570119
+    m_Localized: "Ahora: {value}% de probabilidad de que el stream punt\xFAe aunque
+      se caiga el servidor."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570120
+    m_Localized: Mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570121
+    m_Localized: "Mantienen el orden. Al puntuar el stream, cada punto da un {per}%
+      de probabilidad de que tu pr\xF3ximo stream empiece con 1 {icon:risk} anulado
+      ({top}% con {max} puntos)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570122
+    m_Localized: "Ahora: {value}% de probabilidad de anular 1 {icon:risk} el pr\xF3ximo
+      stream."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570123
+    m_Localized: Stream lleno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570124
+    m_Localized: "Lleno total. Las bonificaciones que piden el chat lleno lo cuentan
+      como lleno con hasta 1 lugar vac\xEDo por punto (hasta {max})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570125
+    m_Localized: "Ahora: el chat cuenta como lleno con hasta {value} lugar(es) vac\xEDo(s)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570126
+    m_Localized: Marketeros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570127
+    m_Localized: "Saben a qui\xE9n llamar. Cada punto da un uso m\xE1s de la acci\xF3n
+      de reclutar de un Marketero en este stream (los usos extra se comparten)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570128
+    m_Localized: 'Ahora: quedan {value} uso(s) extra.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570129
+    m_Localized: Mirones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570130
+    m_Localized: "Siempre mirando. Cada punto da un uso m\xE1s de la acci\xF3n de
+      espiar de un Mir\xF3n en este stream (hasta {max}, compartidos)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570131
+    m_Localized: 'Ahora: quedan {value} uso(s) extra.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570132
+    m_Localized: Control de tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570133
+    m_Localized: "Amigos en la tienda. Al puntuar el stream, cada punto hace que
+      tu primer reclutamiento de la pr\xF3xima tienda cueste 1 {icon:subs} menos
+      (hasta {max})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570134
+    m_Localized: "Ahora: tu pr\xF3ximo reclutamiento cuesta {value} {icon:subs} menos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570135
+    m_Localized: Saboteadores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570136
+    m_Localized: "Multijugador. Al puntuar el stream, cada punto hace que el pr\xF3ximo
+      reclutamiento de cada rival cueste 1 {icon:subs} m\xE1s (hasta {max})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123028570137
+    m_Localized: "Ahora: el pr\xF3ximo reclutamiento de los rivales cuesta {value}
+      {icon:subs} m\xE1s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513152
+    m_Localized: "{viewer} puede usar su acci\xF3n otra vez (quedan {count} extra)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513153
+    m_Localized: '{viewer} crece para siempre: {values}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513154
+    m_Localized: "Mods ({value}%): tu pr\xF3ximo stream empieza con 1 {icon:risk}
+      anulado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513155
+    m_Localized: Los Mods anulan 1 {icon:risk} en este stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513156
+    m_Localized: En esta tienda, subir el cupo cuesta {value} {icon:cash} menos.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513157
+    m_Localized: "Tu pr\xF3ximo reclutamiento cuesta {value} {icon:subs} menos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513158
+    m_Localized: "El pr\xF3ximo reclutamiento de tus rivales cuesta {value} {icon:subs}
+      m\xE1s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513159
+    m_Localized: "{viewer} se desconect\xF3 para siempre y dej\xF3 tu audiencia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670123070513160
+    m_Localized: '{viewer} hereda {cash} para siempre.'
     m_Metadata:
       m_Items: []
   references:

@@ -43,6 +43,7 @@ namespace DeckParty.EditorTools
         public static Sprite GoLive;
         public static Sprite Close;
         public static Sprite Night;
+        public static Sprite Chat;
         public static Sprite Ring;
 
         public static void LoadArt()
@@ -76,6 +77,7 @@ namespace DeckParty.EditorTools
             GoLive = PlaceholderArt.Load(PlaceholderArt.GoLiveName);
             Close = PlaceholderArt.Load(PlaceholderArt.CloseName);
             Night = PlaceholderArt.Load(PlaceholderArt.NightName);
+            Chat = PlaceholderArt.Load(PlaceholderArt.ChatName);
             Ring = PlaceholderArt.Load(PlaceholderArt.RingName);
         }
 
@@ -169,6 +171,14 @@ namespace DeckParty.EditorTools
             var image = Image(parent, name, color, sprite, slot);
             image.preserveAspect = true;
             image.rectTransform.sizeDelta = new Vector2(size, size);
+            // The colour tints the white placeholder shape only: art you put in the UI Skin keeps its own colours
+            // (multiplying it by black would turn it into a silhouette).
+            var skinned = image.GetComponent<SkinnedImage>();
+            if (skinned != null)
+            {
+                skinned.tintPlaceholderOnly = true;
+                skinned.placeholderTint = color;
+            }
             return image;
         }
 
@@ -319,12 +329,37 @@ namespace DeckParty.EditorTools
         /// </summary>
         public static Image SitePanel(Transform parent, string name, Color fill, Color border, float borderWidth = 2f, bool raycast = true)
         {
-            var outer = Image(parent, name, border, RoundedSmall, null, raycast);
-            outer.type = UnityEngine.UI.Image.Type.Sliced;
-            var inner = Image(outer.transform, "Fill", fill, RoundedSmall, null, false);
-            inner.type = UnityEngine.UI.Image.Type.Sliced;
+            var outer = Image(parent, name, border, PanelSprite, null, raycast);
+            var inner = Image(outer.transform, "Fill", fill, PanelSprite, null, false);
             inner.rectTransform.Stretch(borderWidth, borderWidth, borderWidth, borderWidth);
+            RoundPanel(outer, inner, borderWidth);
             return inner;
+        }
+
+        /// <summary>The corner radius of the site's panels, in pixels (the large rounded sprite, see PlaceholderArt).</summary>
+        public const float PanelRadius = 24f;
+
+        /// <summary>The sprite for panels: the large rounded rectangle (soft, gradual corners).</summary>
+        public static Sprite PanelSprite => Rounded;
+
+        /// <summary>
+        /// Gives a bordered panel soft corners: both images use the large rounded sprite, and the inner fill's corners are
+        /// tightened so the black border stays the same thickness all the way round the curve.
+        /// </summary>
+        public static void RoundPanel(Image outer, Image inner, float borderWidth)
+        {
+            if (outer != null)
+            {
+                outer.sprite = PanelSprite;
+                outer.type = UnityEngine.UI.Image.Type.Sliced;
+                outer.pixelsPerUnitMultiplier = 1f;
+            }
+            if (inner != null)
+            {
+                inner.sprite = PanelSprite;
+                inner.type = UnityEngine.UI.Image.Type.Sliced;
+                inner.pixelsPerUnitMultiplier = PanelRadius / Mathf.Max(1f, PanelRadius - borderWidth);
+            }
         }
 
         /// <summary>
@@ -672,6 +707,6 @@ namespace DeckParty.EditorTools
         }
 
         /// <summary>The black border of the white pop-ups.</summary>
-        public const float ModalBorder = 3f;
+        public const float ModalBorder = 3.5f;
     }
 }

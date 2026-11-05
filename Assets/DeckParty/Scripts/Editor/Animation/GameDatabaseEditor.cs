@@ -25,7 +25,7 @@ namespace DeckParty.EditorTools
         /// <summary>The stream art fields, drawn in their own section (and left out of the generic list at the bottom).</summary>
         static readonly string[] s_StreamArt =
         {
-            "viewerEmojis", "emotes", "deplatformImage", "serverDownImage", "communityIcons",
+            "viewerEmojis", "emotes", "deplatformImage", "serverDownImage", "chatFooterImage", "communityIcons",
         };
 
         /// <summary>Fields drawn elsewhere or no longer used (the V5 Stream Chat window replaced the chat bubble and its tail).</summary>
@@ -37,6 +37,30 @@ namespace DeckParty.EditorTools
         string m_Search = string.Empty;
         Filter m_Filter;
         bool m_ShowStreamArt = true;
+        bool m_ShowIcons = true;
+
+        /// <summary>The UI Skin's icon slots used by the stream and the shop, with where each one shows.</summary>
+        static readonly (SkinSlot slot, string label)[] s_UiIcons =
+        {
+            (SkinSlot.IconStreamChat, "Stream Chat title"),
+            (SkinSlot.IconCommunityBeats, "Community Beats title"),
+            (SkinSlot.IconAudience, "Audience button (menu bar, shop)"),
+            (SkinSlot.IconMenu, "Menu button"),
+            (SkinSlot.IconNight, "Stream counter (menu bar)"),
+            (SkinSlot.IconPop, "Clout (menu bar, text, prices)"),
+            (SkinSlot.IconCash, "Cash (menu bar, text)"),
+            (SkinSlot.IconDoor, "Sub Cap (menu bar, Raise Sub Cap)"),
+            (SkinSlot.IconTrouble, "Deplatform Risk (pips, risky queue, avatars)"),
+            (SkinSlot.IconStar, "Plays (pips, avatars)"),
+            (SkinSlot.IconAddViewer, "Add Viewer button"),
+            (SkinSlot.IconEndStream, "End the Stream button"),
+            (SkinSlot.IconCheck, "Approve / Confirm / Ready"),
+            (SkinSlot.IconClose, "Deny / Cancel"),
+            (SkinSlot.IconGoLive, "Go Live (shop)"),
+            (SkinSlot.IconAction, "Viewer action / streamer Use"),
+            (SkinSlot.IconCancel, "Cancels Risk badge (avatars)"),
+            (SkinSlot.AvatarRing, "Chat avatar ring"),
+        };
         bool m_ShowPlatforms = true;
         bool m_ShowViewers = true;
         bool m_ShowStreamers = true;
@@ -56,6 +80,10 @@ namespace DeckParty.EditorTools
 
             m_ShowStreamArt = EditorGUILayout.Foldout(m_ShowStreamArt, "Stream Art (emojis, emotes, stream endings, community icons)", true, EditorStyles.foldoutHeader);
             if (m_ShowStreamArt) DrawStreamArt();
+
+            EditorGUILayout.Space(8);
+            m_ShowIcons = EditorGUILayout.Foldout(m_ShowIcons, "UI Icons (stream and shop)", true, EditorStyles.foldoutHeader);
+            if (m_ShowIcons) DrawUiIcons(db);
 
             EditorGUILayout.Space(8);
             m_ShowPlatforms = EditorGUILayout.Foldout(m_ShowPlatforms, $"Platforms ({db.platforms.Count}: animated logos and button colours)", true, EditorStyles.foldoutHeader);
@@ -95,6 +123,40 @@ namespace DeckParty.EditorTools
                     else EditorGUILayout.PropertyField(property, true);
                 }
             }
+        }
+
+        /// <summary>
+        /// The stream and shop icons, edited in place on the UI Skin asset (Game Database > Skin): drop a sprite on a slot
+        /// to replace its placeholder.
+        /// </summary>
+        void DrawUiIcons(GameDatabase db)
+        {
+            if (db.skin == null)
+            {
+                EditorGUILayout.HelpBox("No UI Skin assigned (the Skin field below). Run Deck Party > Setup > Build Everything.", MessageType.Warning);
+                return;
+            }
+            EditorGUILayout.HelpBox(
+                "These are the UI Skin's icon slots (Deck Party > Select UI Skin shows all of them). Drop a sprite on a slot to replace the " +
+                "built-in placeholder. White placeholders are tinted by the game; your own art keeps its colours. Changes show the next time you press Play.",
+                MessageType.None);
+            db.skin.EnsureAllSlots();
+            var skin = new SerializedObject(db.skin);
+            var entries = skin.FindProperty("entries");
+            using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
+            {
+                foreach (var (slot, label) in s_UiIcons)
+                {
+                    for (int i = 0; i < entries.arraySize; i++)
+                    {
+                        var entry = entries.GetArrayElementAtIndex(i);
+                        if (entry.FindPropertyRelative("slot").intValue != (int)slot) continue;
+                        EditorGUILayout.PropertyField(entry.FindPropertyRelative("sprite"), new GUIContent(label, slot.ToString()));
+                        break;
+                    }
+                }
+            }
+            skin.ApplyModifiedProperties();
         }
 
         /// <summary>One icon slot per community in the game (retired communities keep their icons, hidden).</summary>

@@ -45,6 +45,10 @@ namespace DeckParty
         IconNight = 32,
         /// <summary>The round border of the chat avatars (and their highlight).</summary>
         AvatarRing = 33,
+        /// <summary>The icon in the Community Beats panel title.</summary>
+        IconCommunityBeats = 34,
+        /// <summary>The Stream Chat window's title (an icon instead of the words).</summary>
+        IconStreamChat = 35,
     }
 
     [Serializable]

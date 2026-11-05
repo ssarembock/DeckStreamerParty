@@ -717,7 +717,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262476
-    m_Localized: "\u6280\u80FD\uFF1A\u628A\u76F4\u64AD\u95F4\u6240\u6709\u4EBA\u9001\u56DE\u6392\u961F\u533A\uFF0C\u8BA9\u4ED6\u4EEC\u53EF\u4EE5\u518D\u8FDB\u6765\u4E00\u6B21\u3002\u5DF2\u7528\u8FC7\u7684\u6280\u80FD\u4ECD\u7B97\u7528\u8FC7\u3002"
+    m_Localized: "\u6280\u80FD\uFF1A\u628A\u76F4\u64AD\u95F4\u91CC 1 \u4F4D\u968F\u673A\u89C2\u4F17\u9001\u56DE\u6392\u961F\u533A\u3002\u6BCF\u7528\u4E00\u6B21\uFF0C\u4EE5\u540E\u5C31\u591A\u9001
+      1 \u4F4D\uFF082\u30013\u2026\u2026\uFF09\uFF0C\u6C38\u4E45\u6709\u6548\u3002\u5DF2\u7528\u8FC7\u7684\u6280\u80FD\u4ECD\u7B97\u7528\u8FC7\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262477
@@ -755,7 +756,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591587262485
     m_Localized: "{icon:plays} \u5E02\u573A\u5D29\u76D8\uFF1A\u7ED3\u7B97\u65F6\u82B1\u8D39
-      3 {icon:cash}\u3002"
+      1 {icon:cash} \u548C 2 {icon:subs}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262486
@@ -895,7 +896,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262519
-    m_Localized: "\u6280\u80FD\uFF1A\u628A\u76F4\u64AD\u95F4\u6240\u6709\u4EBA\u9001\u56DE\u6392\u961F\u533A\uFF0C\u8BA9\u4ED6\u4EEC\u53EF\u4EE5\u518D\u8FDB\u6765\u4E00\u6B21\u3002\u5DF2\u7528\u8FC7\u7684\u6280\u80FD\u4ECD\u7B97\u7528\u8FC7\u3002"
+    m_Localized: "\u6280\u80FD\uFF1A\u628A\u76F4\u64AD\u95F4\u91CC 5 \u4F4D\u968F\u673A\u89C2\u4F17\u9001\u56DE\u6392\u961F\u533A\uFF0C\u8BA9\u4ED6\u4EEC\u53EF\u4EE5\u518D\u8FDB\u6765\u4E00\u6B21\u3002\u5DF2\u7528\u8FC7\u7684\u6280\u80FD\u4ECD\u7B97\u7528\u8FC7\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262520
@@ -1058,8 +1059,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008642
-    m_Localized: "\u5927\u5BB6\u90FD\u79BB\u5F00\u6211\uFF1A\u6BCF\u5F53\u5176\u4ED6\u89C2\u4F17\u79BB\u5F00\u6216\u88AB\u8E22\u65F6
-      +2 {icon:subs}\u548C +1 {icon:cash}\u3002"
+    m_Localized: "\u5927\u5BB6\u90FD\u79BB\u5F00\u6211\uFF1A\u6BCF\u5F53\u5176\u4ED6\u89C2\u4F17\u79BB\u5F00\u6216\u88AB\u8E22\u65F6\uFF0C\u968F\u673A
+      +1 {icon:subs}\u6216 +1 {icon:cash}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008643

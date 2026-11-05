@@ -56,3 +56,29 @@ To close a summary, press Continue, click outside it, or press Space, Enter or E
 
 - The pause menu, the game over screen, the main menu screens, the Activity log and the dark cards in the picker and Audience keep their dark style. Their sliders, selectors and cards are built for dark panels, so they need a separate restyle if you want them white too.
 - The rival-power banner text and the anxious-streamer and presence overlays are built in code and unchanged.
+
+## 6. Layout update (floating menu bar, buttons under the chat)
+
+Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** to see it.
+
+| Area | Now |
+|---|---|
+| **Menu bar** | A white rounded panel with a pure black border, floating just below the top of the screen. The logo, stream count, Clout, Cash, Sub Cap, risk, Plays, Audience and Menu each sit in their own section between short grey separators. The icons are slightly bigger. |
+| **Risky queue** | Just the risk icon and the number of risky viewers still in the queue (no background or border), under the Audience button inside the menu bar, during a stream only. The bar is 128 px tall to fit it; the Audience and Menu buttons sit slightly above its middle. |
+| **Projected take** | The pill by the End the Stream button is gone. Hover End the Stream to see what ending now would bank. |
+| **Stream Chat** | The grey typing area is gone. Add Viewer and End the Stream are wider (320 px) and sit in a row under the chat window. Along the bottom of the window is a footer band for your picture. |
+| **Footer picture** | **Game Database > Stream Art > Chat Footer Image**: centred along the bottom of the chat, under the viewers. Nothing shows until you add one. |
+| **Near-deplatform warning** | The anxious-streamer pop-up now appears centred in that footer band, on top of the picture, instead of at the top of the screen. |
+| **Players panel** (multiplayer) | Now on the left, before the Stream Chat. |
+| **Borders** | Site panels (menu bar, chat, Community Beats, shop cards, players) have pure black borders, 4.5 px thick; pop-ups 3.5 px. |
+| **Community Beats** | Icons are 62 px (the old 38 px was raised in two steps); chips are 70 px tall, so the panel fits about 12 chips at 1080p. |
+| **Turn timer** | Top-right of the Stream Chat window's title band. |
+| **Grey dividers** | Horizontal ones are 4 px thick and stop 20 px short of each side of their panel; the vertical menu-bar and summary separators are 3 px. |
+| **Communities on chat avatars** | Each community icon (30 px) sits on a small white circle with a black border, sitting on the bottom of the avatar's ring. One community is centred at the bottom; two or three fan out evenly from there. The spacing is on the ChatAvatar prefab's **Community Icons View** (Arc Radius, Arc Step). |
+| **Rewards under each avatar** | Just the icons and numbers, with no dark pill behind them. |
+| **Near-deplatform warning** | 1480 × 210 px (never wider than the chat window: Max Width and Side Margin on its StreamerAnxietyView), with a larger portrait and text. The footer band grew to 224 px to hold it. |
+| **Avatar rings** | Pure black by default (gold for Plays, green when infected, teal when immune; the platform colour pulses while an action is unused). Empty seats stay faint grey. |
+| **Rounder panels** | Panels use the large rounded sprite (24 px corners instead of 11), with the inner fill matched so the black border keeps its thickness round the curve (EditorUI.RoundPanel). The facecam's video is clipped to the same rounded shape. |
+| **Community Beats entries** | No background or border: just the icon, the score and the bonus. |
+| **Title icons** | The Stream Chat title is a 160 px icon (UI Skin slot **IconStreamChat**, a speech-bubble placeholder; hover it for "Stream Chat") in a 176 px title band. Community Beats has no words, just a 120 px icon (**IconCommunityBeats**, separate from the Audience button's **IconAudience**; hover it for "Community Beats") in a 136 px band. Sizes: ChatTitleIcon, ChatHeaderHeight, BeatsTitleIcon, BeatsHeaderHeight in GameSceneBuilder. |
+| **UI Icons in the Game Database** | **Game Database > UI Icons (stream and shop)** lists the UI Skin's stream and shop icon slots with where each shows; drop a sprite on one to replace it. |

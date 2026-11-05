@@ -542,6 +542,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 16
+  tintPlaceholderOnly: 1
+  placeholderTint: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
 --- !u!1 &4339131760296599064
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,6 +633,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 17
+  tintPlaceholderOnly: 1
+  placeholderTint: {r: 0.41960785, g: 0.8901961, b: 0.54509807, a: 1}
 --- !u!1 &4399343006371887024
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,6 +921,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 1
+  tintPlaceholderOnly: 0
+  placeholderTint: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &9136424547435167530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1199,3 +1205,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 9
+  tintPlaceholderOnly: 0
+  placeholderTint: {r: 1, g: 1, b: 1, a: 1}

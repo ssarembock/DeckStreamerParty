@@ -12,6 +12,8 @@ namespace DeckParty.UI
     public sealed class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField, TextArea] internal string text;
+        [Tooltip("Optional: a strings-CSV key shown (in the current language) when Text is empty.")]
+        [SerializeField] internal string textKey;
         [Tooltip("Show above the tooltip of whatever this sits inside, and hand back to it on exit.")]
         [SerializeField] internal bool overlay;
 
@@ -31,7 +33,7 @@ namespace DeckParty.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            var content = Provider != null ? Provider() : text;
+            var content = Provider != null ? Provider() : !string.IsNullOrEmpty(text) ? text : !string.IsNullOrEmpty(textKey) ? Loc.Get(textKey) : null;
             if (string.IsNullOrEmpty(content)) return;
             if (overlay) TooltipView.ShowOverride(content, this);
             else TooltipView.Show(content, this);

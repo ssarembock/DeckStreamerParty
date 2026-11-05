@@ -340,6 +340,11 @@ MonoBehaviour:
     m_Localized: '{0}''s Bots invade {2}''s next stream ({1})!'
     m_Metadata:
       m_Items: []
+  - m_Id: 1670121132744704
+    m_Localized: '{0}''s Saboteurs make every rival''s next recruit cost {1} {icon:subs}
+      more!'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

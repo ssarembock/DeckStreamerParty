@@ -346,6 +346,11 @@ MonoBehaviour:
       \u4E2A\uFF09\uFF01"
     m_Metadata:
       m_Items: []
+  - m_Id: 1670121132744704
+    m_Localized: "{0} \u7684\u7834\u574F\u8005\u8BA9\u6240\u6709\u5BF9\u624B\u4E0B\u4E00\u6B21\u62DB\u52DF\u8D35
+      {1} {icon:subs}\uFF01"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

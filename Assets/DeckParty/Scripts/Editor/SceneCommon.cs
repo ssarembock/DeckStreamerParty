@@ -198,7 +198,7 @@ namespace DeckParty.EditorTools
             var title = EditorUI.Readable(EditorUI.Text(panel, "Title", "Title", 40, SitePalette.Text, TextAlignmentOptions.Center, true, true, false));
             title.rectTransform.TopBand(32, 60, 40, 40);
             var titleLine = EditorUI.Line(panel, "TitleLine", SitePalette.Divider);
-            titleLine.rectTransform.TopBand(104, 2, 40, 40);
+            titleLine.rectTransform.TopBand(104, 4, 40, 40);
             var message = EditorUI.Readable(EditorUI.Text(panel, "Message", "Message", 27, SitePalette.Text, TextAlignmentOptions.Center));
             message.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(56, 136), new Vector2(-56, -118));
             var buttons = EditorUI.Rect(panel, "Buttons").BottomBand(36, 80, 70, 70);

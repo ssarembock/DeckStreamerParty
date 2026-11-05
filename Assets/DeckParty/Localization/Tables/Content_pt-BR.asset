@@ -19,74 +19,72 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 370360320
-    m_Localized: Primeira live
+    m_Localized: Ao vivo
     m_Metadata:
       m_Items: []
   - m_Id: 433274880
-    m_Localized: "Aprenda o b\xE1sico"
+    m_Localized: "Sua primeira transmiss\xE3o"
     m_Metadata:
       m_Items: []
   - m_Id: 433274881
-    m_Localized: "Sua primeira temporada ao vivo. Regulares confi\xE1veis, Produtor
-      e Admin do chat cuidando da sala, um colaborador arriscado e tr\xEAs Plays
-      amig\xE1veis."
+    m_Localized: "Uma primeira temporada tranquila: regulares baratos, uma equipe
+      pra cuidar da sala e um s\xF3 {icon:plays} pra colecionar."
     m_Metadata:
       m_Items: []
   - m_Id: 433274882
-    m_Localized: "F\xE3-clube"
+    m_Localized: "Roleta ca\xE7a-clique"
     m_Metadata:
       m_Items: []
   - m_Id: 433274883
-    m_Localized: Lealdade compensa
+    m_Localized: "Riscos grandes, n\xFAmeros maiores"
     m_Metadata:
       m_Items: []
   - m_Id: 433274884
-    m_Localized: "Monte uma verdadeira {icon:CoreFanbase} Base de f\xE3s: cada tr\xEAs
-      regulares diferentes anulam 1 {icon:risk}, ent\xE3o trolls e orbitadores viram
-      dinheiro garantido. Coelho maratonista e Ca\xE7ador de cupom amam um chat lotado."
+    m_Localized: "Colaboradores arriscados e haters pagam bem, um {icon:Boomer} Boomer
+      lucra com cada um, a {icon:GenZ} Gera\xE7\xE3o Z cresce e os {icon:Voyeurs}
+      Bisbilhoteiros espiam quem vem a\xED."
     m_Metadata:
       m_Items: []
   - m_Id: 433274885
-    m_Localized: Momento viral
+    m_Localized: Lista de desejos de marcas
     m_Metadata:
       m_Items: []
   - m_Id: 433274886
-    m_Localized: "Ca\xE7ando fama"
+    m_Localized: Cuidado com o que deseja
     m_Metadata:
       m_Items: []
   - m_Id: 433274887
-    m_Localized: "Colaboradores, esc\xE2ndalos e celebridades. {icon:Content} Conte\xFAdo
-      faz os espectadores fora da sua base pontuarem duas vezes e {icon:Clout} Fama
-      ainda d\xE1 {icon:subs} extras, mas o risco acumula r\xE1pido."
+    m_Localized: "Golpes, cupons e jogadas de PR. Os {icon:HypeMen} Animadores lotam
+      o chat, os {icon:Mods} Mods mant\xEAm a paz e l\xE1 no topo esperam dois {icon:plays}
+      bem diferentes."
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
-    m_Localized: "Laborat\xF3rio de memes"
+    m_Localized: "Reuni\xE3o de monetiza\xE7\xE3o"
     m_Metadata:
       m_Items: []
   - m_Id: 433274889
-    m_Localized: Tanta sinergia
+    m_Localized: Cada centavo conta
     m_Metadata:
       m_Items: []
   - m_Id: 433274890
-    m_Localized: "A {icon:MemeticsDivision} Divis\xE3o Mem\xE9tica pode fazer a live
-      inteira pontuar duas vezes. Cachorro Degen quer um chat cheio de comunidades
-      diferentes e Gato Desolado lucra toda vez que algu\xE9m \xE9 expulso."
+    m_Localized: "A {icon:Staff} Equipe na folha, patrocinadores de plant\xE3o e
+      um {icon:plays} que custa uma fortuna. Conte cada moeda: um {icon:Millennial}
+      Millennial herda sempre que um {icon:Boomer} Boomer sai de vez."
     m_Metadata:
       m_Items: []
   - m_Id: 433274891
-    m_Localized: "Reuni\xE3o de equipe"
+    m_Localized: "M\xE1gica do algoritmo"
     m_Metadata:
       m_Items: []
   - m_Id: 433274892
-    m_Localized: Tudo sob controle
+    m_Localized: Uma live perfeita
     m_Metadata:
       m_Items: []
   - m_Id: 433274893
-    m_Localized: "A equipe inteira na folha de pagamento. {icon:Staff} Equipe pode
-      dispensar os pr\xF3prios custos de {icon:cash}, {icon:Techspertise} Tecnoexperts
-      pode trazer de volta um servidor ca\xEDdo e cada a\xE7\xE3o p\xF5e o espectador
-      certo pra dentro ou o errado pra fora."
+    m_Localized: "{icon:Gatekeepers} Porteiros por toda parte: expulse, expulse de
+      novo e lucre com cada sa\xEDda. Os {icon:HypeMen} Animadores lotam o chat para
+      dois {icon:plays} raros."
     m_Metadata:
       m_Items: []
   - m_Id: 433274894

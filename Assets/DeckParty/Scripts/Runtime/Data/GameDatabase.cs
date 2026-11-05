@@ -178,6 +178,11 @@ namespace DeckParty
         [Tooltip("Shown full-screen when chat goes over the Sub Cap and the stream ends.")]
         public Sprite serverDownImage;
 
+        [Header("Stream chat")]
+        [Tooltip("A picture centred along the bottom of the Stream Chat window, under the viewers. Leave empty for none. " +
+                 "The warning that the stream is one Deplatform Risk from being deplatformed appears on top of it.")]
+        public Sprite chatFooterImage;
+
         [Header("Viewer communities")]
         [Tooltip("An icon for each community, shown on cards, shop tiles, tooltips, in text and on the Community Beats chips.")]
         public List<CommunityIcon> communityIcons = new List<CommunityIcon>();

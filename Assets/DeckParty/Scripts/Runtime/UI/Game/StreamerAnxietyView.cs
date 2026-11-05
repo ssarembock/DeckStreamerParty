@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// When a stream is one Deplatform Risk from being deplatformed, the streamer drops in at the top of the screen looking
+    /// When a stream is one Deplatform Risk from being deplatformed, the streamer drops in at the bottom of the Stream Chat looking
     /// anxious (their Anxious animation if they have one, otherwise a sweating, trembling portrait), with an
     /// intermittent Feel shake. The panel sits on this object's RectTransform (move or resize it in the Game scene).
     /// </summary>
@@ -19,6 +19,10 @@ namespace DeckParty.UI
         public float shakePixels = 2.5f;
         [Tooltip("Strength of the panel's own jolt (Feel cue Streamer Anxious) each time.")]
         public float panelJolt = 0.6f;
+        [Tooltip("Widest the panel gets. It never gets wider than its parent (the Stream Chat window) minus Side Margin on each side.")]
+        public float maxWidth = 1480f;
+        [Tooltip("Space kept between the panel and the edges of its parent when the parent is narrower than Max Width.")]
+        public float sideMargin = 20f;
 
         RectTransform m_Root;
         RectTransform m_Panel;
@@ -48,10 +52,10 @@ namespace DeckParty.UI
             outline.effectDistance = new Vector2(3f, -3f);
 
             var frame = UiFactory.Rect("Portrait", m_Panel);
-            UiFactory.Place(frame, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(12f, -52f), new Vector2(116f, 52f));
+            UiFactory.Place(frame, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(20f, -90f), new Vector2(200f, 90f));
             m_Placeholder = UiFactory.Image("Placeholder", frame, UIPalette.Red, RuntimeSprites.Circle);
             UiFactory.Stretch(m_Placeholder.rectTransform);
-            m_Initials = UiFactory.Text("Initials", m_Placeholder.transform, 40f, Color.white, TextAlignmentOptions.Center, true);
+            m_Initials = UiFactory.Text("Initials", m_Placeholder.transform, 64f, Color.white, TextAlignmentOptions.Center, true);
             UiFactory.Stretch(m_Initials.rectTransform);
             var art = UiFactory.Image("Art", frame, Color.white);
             UiFactory.Stretch(art.rectTransform);
@@ -62,14 +66,14 @@ namespace DeckParty.UI
             for (int i = 0; i < 3; i++)
             {
                 var drop = UiFactory.Image("Sweat" + i, frame, new Color(0.55f, 0.85f, 1f, 0.9f), RuntimeSprites.Circle);
-                drop.rectTransform.sizeDelta = new Vector2(12f, 16f);
+                drop.rectTransform.sizeDelta = new Vector2(18f, 24f);
                 m_Drops.Add(drop.rectTransform);
             }
 
-            m_Title = UiFactory.Text("Title", m_Panel, 30f, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true);
-            UiFactory.Place(m_Title.rectTransform, new Vector2(0f, 0.5f), new Vector2(1f, 1f), new Vector2(130f, 0f), new Vector2(-16f, -8f));
-            m_Sub = UiFactory.Text("Subtitle", m_Panel, 22f, new Color(1f, 0.8f, 0.8f), TextAlignmentOptions.MidlineLeft);
-            UiFactory.Place(m_Sub.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0.5f), new Vector2(130f, 8f), new Vector2(-16f, 0f));
+            m_Title = UiFactory.Text("Title", m_Panel, 50f, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true);
+            UiFactory.Place(m_Title.rectTransform, new Vector2(0f, 0.5f), new Vector2(1f, 1f), new Vector2(228f, 0f), new Vector2(-28f, -14f));
+            m_Sub = UiFactory.Text("Subtitle", m_Panel, 36f, new Color(1f, 0.8f, 0.8f), TextAlignmentOptions.MidlineLeft);
+            UiFactory.Place(m_Sub.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0.5f), new Vector2(228f, 14f), new Vector2(-28f, 0f));
 
             m_Root.gameObject.SetActive(true);
             m_Panel.gameObject.SetActive(false);
@@ -96,6 +100,7 @@ namespace DeckParty.UI
                 Relabel();
                 if (!m_Showing)
                 {
+                    FitWidth();
                     m_Panel.gameObject.SetActive(true);
                     Fx.Play(FxCue.BannerSlam, m_Panel, 0.7f);
                     AudioService.Play(Sfx.Error, 0.45f);
@@ -115,9 +120,18 @@ namespace DeckParty.UI
                 : Loc.Get("anxious.sub", "streamer", StreamerVisuals.Name(m_Streamer));
         }
 
+        /// <summary>Max Width, or less when the parent (the chat window) is narrower.</summary>
+        void FitWidth()
+        {
+            if (m_Root == null || maxWidth <= 0f || !(m_Root.parent is RectTransform parent)) return;
+            float width = Mathf.Min(maxWidth, parent.rect.width - sideMargin * 2f);
+            if (width > 0f && !Mathf.Approximately(m_Root.sizeDelta.x, width)) m_Root.sizeDelta = new Vector2(width, m_Root.sizeDelta.y);
+        }
+
         void Update()
         {
             if (!m_Showing || m_Panel == null) return;
+            FitWidth();
             float t = Time.unscaledTime;
 
             // Nervous tremble of the portrait (on top of any Anxious animation).
@@ -129,7 +143,7 @@ namespace DeckParty.UI
             {
                 float phase = Mathf.Repeat(t * 0.9f + i * 0.33f, 1f);
                 float side = i % 2 == 0 ? 1f : -1f;
-                m_Drops[i].anchoredPosition = new Vector2(side * (30f + i * 6f), 38f - phase * 70f);
+                m_Drops[i].anchoredPosition = new Vector2(side * (45f + i * 9f), 57f - phase * 105f);
                 var image = m_Drops[i].GetComponent<Image>();
                 image.color = image.color.WithAlpha(phase < 0.8f ? 0.9f : (1f - phase) * 4.5f);
             }

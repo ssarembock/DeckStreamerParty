@@ -9,6 +9,10 @@ namespace DeckParty.UI
     public sealed class SkinnedImage : MonoBehaviour
     {
         [SerializeField] internal SkinSlot slot;
+        [Tooltip("Icons: tint only the built-in placeholder shapes with Placeholder Tint; your own art shows in its own colours " +
+                 "(unless the skin entry overrides the colour).")]
+        [SerializeField] internal bool tintPlaceholderOnly;
+        [SerializeField] internal Color placeholderTint = Color.white;
 
         public SkinSlot Slot
         {
@@ -40,7 +44,8 @@ namespace DeckParty.UI
             image.sprite = entry.sprite;
             image.type = entry.imageType;
             image.pixelsPerUnitMultiplier = Mathf.Max(0.01f, entry.pixelsPerUnitMultiplier);
-            if (entry.overrideColor) image.color = entry.color;
+            if (tintPlaceholderOnly) image.color = GameIcons.SlotTint(slot, placeholderTint);
+            else if (entry.overrideColor) image.color = entry.color;
         }
     }
 }

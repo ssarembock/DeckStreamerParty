@@ -359,13 +359,13 @@ namespace DeckParty.UI
             HideAbility();
         }
 
-        /// <summary>The avatar ring when no action is waiting: gold for Plays, green infected, teal immune, otherwise grey.</summary>
+        /// <summary>The avatar ring when no action is waiting: gold for Plays, green infected, teal immune, otherwise pure black.</summary>
         static Color AvatarRingColor(GuestInfo info, GuestInstance guest, bool live)
         {
             if (live && guest.Infected) return UIPalette.Green;
             if (live && guest.Immune) return UIPalette.Teal;
             if (info.IsDiamond) return SitePalette.Gold;
-            return SitePalette.Border;
+            return SitePalette.Outline;
         }
 
         /// <summary>

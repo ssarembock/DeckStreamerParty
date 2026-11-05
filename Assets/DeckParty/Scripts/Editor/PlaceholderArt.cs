@@ -35,6 +35,8 @@ namespace DeckParty.EditorTools
         public const string GoLiveName = "icon_go_live";
         public const string CloseName = "icon_close";
         public const string NightName = "icon_night";
+        /// <summary>A speech bubble with three dots: the Stream Chat title.</summary>
+        public const string ChatName = "icon_chat";
         public const string RingName = "ui_ring";
 
         public static string PathOf(string name) => $"{Folder}/{name}.png";
@@ -140,6 +142,18 @@ namespace DeckParty.EditorTools
             }, Vector4.zero, overwrite);
             // A crescent moon: the night counter.
             Write(NightName, 128, 128, p => Mathf.Max(p.magnitude - 48f, -((p - new Vector2(22, 14)).magnitude - 40f)), Vector4.zero, overwrite);
+            // A speech bubble with a tail and three dots: the Stream Chat title.
+            Write(ChatName, 128, 128, p =>
+            {
+                float bubble = SdRoundBox(p - new Vector2(0, 10), new Vector2(52, 36), 18);
+                // The tail: a small slanted box under the bottom-left of the bubble.
+                var q = p - new Vector2(-24, -32);
+                q = new Vector2(q.x * 0.8f + q.y * 0.6f, -q.x * 0.6f + q.y * 0.8f);
+                float tail = SdRoundBox(q, new Vector2(9, 14), 3);
+                float shape = Mathf.Min(bubble, tail);
+                float dots = Mathf.Min((p - new Vector2(-22, 10)).magnitude, Mathf.Min((p - new Vector2(0, 10)).magnitude, (p - new Vector2(22, 10)).magnitude)) - 7f;
+                return Mathf.Max(shape, -dots);
+            }, Vector4.zero, overwrite);
             // A ring: the round chat avatars' border.
             Write(RingName, 128, 128, p => Mathf.Abs(p.magnitude - 58f) - 4.5f, Vector4.zero, overwrite);
         }

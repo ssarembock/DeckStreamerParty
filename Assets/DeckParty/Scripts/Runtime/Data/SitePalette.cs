@@ -17,8 +17,8 @@ namespace DeckParty
         public static readonly Color SurfaceAlt = UIPalette.Hex(0xEFEFF1);
         /// <summary>Panel borders.</summary>
         public static readonly Color Border = UIPalette.Hex(0xD6D6DC);
-        /// <summary>The chat window's border (the brief: black bordered, slightly rounded).</summary>
-        public static readonly Color Outline = UIPalette.Hex(0x18181B);
+        /// <summary>Panel borders on the site: pure black (the menu bar, the chat window, Community Beats, the shop, pop-ups).</summary>
+        public static readonly Color Outline = UIPalette.Hex(0x000000);
         /// <summary>Hairlines between sections.</summary>
         public static readonly Color Divider = UIPalette.Hex(0xE3E3E8);
         public static readonly Color Text = UIPalette.Hex(0x0E0E10);

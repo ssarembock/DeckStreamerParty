@@ -103,7 +103,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125587
-    m_Localized: 'Smoke Bomb: -{count}'
+    m_Localized: 'Cancelled from the start: -{count}'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125588
@@ -1599,8 +1599,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675191551377415
-    m_Localized: Techspertise brought it back ({value}% chance). The stream still
-      scores.
+    m_Localized: Hype Men brought it back ({value}% chance). The stream still scores.
     m_Metadata:
       m_Items: []
   - m_Id: 675191551377416
@@ -1825,6 +1824,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1064940196159496
     m_Localized: '{count} {count:plural:Bot|Bots} sent to a rival'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124614017024
+    m_Localized: AGAIN!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960064
+    m_Localized: '{viewer} grows for good: {values}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960065
+    m_Localized: Next stream starts with 1 {icon:risk} cancelled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960066
+    m_Localized: Mods cancel 1 {icon:risk} this stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960067
+    m_Localized: '{viewer} logged off for good and left your Audience.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960068
+    m_Localized: '{viewer} inherits {cash} for good.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960069
+    m_Localized: '{viewer} left for good'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960070
+    m_Localized: '{viewer} inherited +1 {icon:cash}'
     m_Metadata:
       m_Items: []
   references:

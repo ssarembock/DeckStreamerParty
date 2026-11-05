@@ -104,7 +104,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125587
-    m_Localized: 'Bomba de humo: -{count}'
+    m_Localized: 'Anulado desde el inicio: -{count}'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125588
@@ -1619,8 +1619,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675191551377415
-    m_Localized: "Los Tecnoexpertos lo levantaron ({value}% de probabilidad). El
-      stream igual punt\xFAa."
+    m_Localized: "Los Animadores lo levantaron ({value}% de probabilidad). El stream
+      igual punt\xFAa."
     m_Metadata:
       m_Items: []
   - m_Id: 675191551377416
@@ -1849,6 +1849,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1064940196159496
     m_Localized: '{count} {count:plural:Bot enviado|Bots enviados} a un rival'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124614017024
+    m_Localized: "\xA1OTRA VEZ!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960064
+    m_Localized: '{viewer} crece para siempre: {values}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960065
+    m_Localized: "El pr\xF3ximo stream empieza con 1 {icon:risk} anulado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960066
+    m_Localized: Los Mods anulan 1 {icon:risk} en este stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960067
+    m_Localized: "{viewer} se desconect\xF3 para siempre y dej\xF3 tu audiencia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960068
+    m_Localized: '{viewer} hereda {cash} para siempre.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960069
+    m_Localized: '{viewer} se fue para siempre'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1670124655960070
+    m_Localized: "{viewer} hered\xF3 +1 {icon:cash}"
     m_Metadata:
       m_Items: []
   references:

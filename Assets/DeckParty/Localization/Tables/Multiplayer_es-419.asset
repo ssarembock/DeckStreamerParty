@@ -353,6 +353,11 @@ MonoBehaviour:
     m_Localized: "\xA1Los bots de {0} invaden el pr\xF3ximo stream de {2} ({1})!"
     m_Metadata:
       m_Items: []
+  - m_Id: 1670121132744704
+    m_Localized: "\xA1Los Saboteadores de {0} hacen que el pr\xF3ximo reclutamiento
+      de cada rival cueste {1} {icon:subs} m\xE1s!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
