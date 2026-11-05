@@ -42,7 +42,7 @@ If you hand-edit a scene, keep a note of what you changed or stop using Rebuild.
 | The title shine and glitch | MainMenu > the title object > **TitleShine** component | Sweep Seconds, Shine Color, Bob Pixels. Turn it off with the **Shiny Title** switch (N10) in the FX Library. |
 | Buttons, order, layout | MainMenu > **MainMenuScreen** | Move or restyle freely. The script links buttons by field, not by name. |
 | Which screen opens when | `Runtime/UI/Menu/MainMenuController.cs` | Single Player and Multiplayer go through Select Your Streamer first (`ShowStreamerSelect`). |
-| The menu background | The stream setup picked last, or the chosen streamer's setup (previewed behind the menu) | Change the setup's art (section 5) |
+| The menu background | Game Database > **Main Menu Backgrounds** | Drag images onto the list: they show in order behind every menu screen, fading from one to the next (**Seconds Per Image**). **Darken Images** keeps the pale menu text readable (0 = untouched). With no images the background is plain white and text with no panel behind it turns dark (`MenuBackdropText`). Stream setups don't affect it. |
 | Settings layout | MainMenu > **SettingsScreen**. The display and accessibility block is shared with the in-game menu (`SceneCommon.DisplayBlock`). | Edit in the scene, or change `DisplayBlock` and Rebuild |
 
 ### Streamer select screen
@@ -108,6 +108,8 @@ Keep any new card content inside the prefab's `Visual/Anim` object so it moves w
 ---
 
 ## 5. Backgrounds and stream setups
+
+The main menu has its own backgrounds (section 2); this section is about the stream setups only.
 
 | To change | Open | Do |
 |---|---|---|

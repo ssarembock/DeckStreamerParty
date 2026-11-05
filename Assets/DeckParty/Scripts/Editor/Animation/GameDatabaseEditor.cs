@@ -32,10 +32,12 @@ namespace DeckParty.EditorTools
         static readonly string[] s_Hidden =
         {
             "chatBubble", "chatBubbleTail", "chatBubbleTint", "platforms", "noStreamerPlatform",
+            "mainMenuBackgrounds", "mainMenuBackgroundSeconds", "mainMenuBackgroundDim",
         };
 
         string m_Search = string.Empty;
         Filter m_Filter;
+        bool m_ShowMainMenu = true;
         bool m_ShowStreamArt = true;
         bool m_ShowIcons = true;
 
@@ -78,6 +80,10 @@ namespace DeckParty.EditorTools
                 "States the game plays: Idle (no action) or Idle_Pre_Active / Active / Idle_Post_Active (with an action), Score, and optional Enter, Exit, Hit, Celebrate. " +
                 "Deck Party > Art > Validate Character Animations checks everything.", MessageType.Info);
 
+            m_ShowMainMenu = EditorGUILayout.Foldout(m_ShowMainMenu, $"Main Menu Backgrounds ({db.mainMenuBackgrounds.Count}: plain white when empty)", true, EditorStyles.foldoutHeader);
+            if (m_ShowMainMenu) DrawMainMenuBackgrounds();
+
+            EditorGUILayout.Space(8);
             m_ShowStreamArt = EditorGUILayout.Foldout(m_ShowStreamArt, "Stream Art (emojis, emotes, stream endings, community icons)", true, EditorStyles.foldoutHeader);
             if (m_ShowStreamArt) DrawStreamArt();
 
@@ -103,6 +109,21 @@ namespace DeckParty.EditorTools
             excluded.AddRange(s_Hidden);
             DrawPropertiesExcluding(serializedObject, excluded.ToArray());
             serializedObject.ApplyModifiedProperties();
+        }
+
+        void DrawMainMenuBackgrounds()
+        {
+            EditorGUILayout.HelpBox(
+                "The images behind every main menu screen, shown in list order and fading from one to the next (one image just stays). " +
+                "Select images in the Project window and drag them onto the list. Author them at 21:9 (e.g. 2520x1080) and keep anything important " +
+                "inside the central 16:9: they always fill the screen, so other shapes get cropped. Images in Art/Backgrounds import as sprites automatically. " +
+                "With no images the background is plain white and the menu's text turns dark. Stream setups (Venues) don't affect this.", MessageType.None);
+            using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
+            {
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mainMenuBackgrounds"), new GUIContent("Images"), true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mainMenuBackgroundSeconds"), new GUIContent("Seconds Per Image"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mainMenuBackgroundDim"), new GUIContent("Darken Images"));
+            }
         }
 
         void DrawStreamArt()

@@ -13,15 +13,8 @@ namespace DeckParty.UI
         [SerializeField] internal SettingsScreen settingsScreen;
         [SerializeField] internal HowToPlayScreen howToPlayScreen;
         [SerializeField] internal StreamerSelectScreen streamerSelectScreen;
-        [SerializeField] internal VenueBackgroundView background;
-        [SerializeField] internal float venueCycleSeconds = 9f;
 
         UIScreen m_Current;
-        float m_NextVenueAt;
-        int m_VenueIndex;
-        bool m_BackgroundLocked;
-
-        public VenueBackgroundView Background => background;
 
         void Start()
         {
@@ -36,9 +29,6 @@ namespace DeckParty.UI
             foreach (var screen in new UIScreen[] { mainScreen, singlePlayerScreen, multiplayerScreen, lobbyScreen, settingsScreen, howToPlayScreen, streamerSelectScreen })
                 if (screen != null) screen.gameObject.SetActive(false);
 
-            var venues = GameDatabase.Instance.Venues;
-            if (venues.Count > 0) background.Apply(venues[0]);
-            m_NextVenueAt = Time.unscaledTime + venueCycleSeconds;
             AudioService.PlayMusic(AudioService.MenuMusic());
 
             NetworkService.Instance.SessionEnded += OnSessionEnded;
@@ -59,17 +49,6 @@ namespace DeckParty.UI
 
         void Update()
         {
-            if (!m_BackgroundLocked && m_Current == mainScreen && Time.unscaledTime >= m_NextVenueAt)
-            {
-                var venues = GameDatabase.Instance.Venues;
-                if (venues.Count > 1)
-                {
-                    m_VenueIndex = (m_VenueIndex + 1) % venues.Count;
-                    background.Apply(venues[m_VenueIndex]);
-                }
-                m_NextVenueAt = Time.unscaledTime + venueCycleSeconds;
-            }
-
             if (InputHelper.Pressed(HotKey.Escape) && !InputHelper.IsTyping && !ModalDialog.IsOpen)
             {
                 if (m_Current == settingsScreen || m_Current == howToPlayScreen) ShowMain();
@@ -88,20 +67,11 @@ namespace DeckParty.UI
             }
         }
 
-        /// <summary>Lets a screen preview a venue on the menu background (null releases it back to the slideshow).</summary>
-        public void PreviewVenue(VenueDefinition venue)
-        {
-            m_BackgroundLocked = venue != null;
-            if (venue != null) background.Apply(venue);
-            m_NextVenueAt = Time.unscaledTime + venueCycleSeconds;
-        }
-
         void Switch(UIScreen next)
         {
             if (m_Current == next) return;
             if (m_Current != null) m_Current.Hide();
             m_Current = next;
-            if (next != singlePlayerScreen && next != lobbyScreen) m_BackgroundLocked = false;
             next.Show();
         }
 
@@ -129,7 +99,6 @@ namespace DeckParty.UI
 
             if (m_Current != null && m_Current != streamerSelectScreen) m_Current.Hide();
             m_Current = streamerSelectScreen;
-            m_BackgroundLocked = false;
             streamerSelectScreen.Open(mode, pick => OnStreamerPicked(mode, pick), () =>
             {
                 if (mode == StreamerSelectMode.Lobby) Switch(lobbyScreen);
@@ -154,9 +123,6 @@ namespace DeckParty.UI
                     Switch(lobbyScreen);
                     break;
             }
-            // A streamer brings their own stream setup: preview it behind the menu.
-            var venue = StreamerVisuals.Venue((Core.StreamerType)pick);
-            if (venue != null) PreviewVenue(venue);
         }
         public void ShowLobby() => Switch(lobbyScreen);
         public void ShowSettings() => Switch(settingsScreen);

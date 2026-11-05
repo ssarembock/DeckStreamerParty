@@ -274,9 +274,6 @@ namespace DeckParty.UI
         {
             if (m_VenueChoices == null || index < 0 || index >= m_VenueChoices.Count) return;
             AppSettings.VenueId = m_VenueChoices[index].id;
-            var settings = m_Session != null ? m_Session.Settings : MatchSettings.Default;
-            var venue = GameDatabase.Instance.ResolveVenue(AppSettings.VenueId, PartyEngine.CreateGame(settings.ScenarioId, 1));
-            m_Menu.PreviewVenue(venue);
         }
 
         void ToggleReady()

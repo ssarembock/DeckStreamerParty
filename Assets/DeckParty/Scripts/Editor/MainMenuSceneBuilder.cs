@@ -23,7 +23,7 @@ namespace DeckParty.EditorTools
             SceneCommon.CreateEventSystem();
 
             var backgroundCanvas = SceneCommon.CreateCanvas("BackgroundCanvas", -10, false);
-            var background = SceneCommon.CreateBackground(backgroundCanvas);
+            BuildBackground(backgroundCanvas);
 
             var canvas = SceneCommon.CreateCanvas("MenuCanvas", 0);
             var screens = EditorUI.Rect(canvas, "Screens").Stretch();
@@ -35,6 +35,7 @@ namespace DeckParty.EditorTools
             var settings = BuildSettingsScreen(screens);
             var howTo = BuildHowToPlayScreen(screens, prefabs);
             var select = StreamerSelectBuilder.Build(screens);
+            MarkBackdropText(screens);
 
             var overlay = SceneCommon.CreateCanvas("OverlayCanvas", 100);
             SceneCommon.CreateOverlays(overlay);
@@ -48,9 +49,47 @@ namespace DeckParty.EditorTools
             controller.settingsScreen = settings;
             controller.howToPlayScreen = howTo;
             controller.streamerSelectScreen = select;
-            controller.background = background;
 
             EditorSceneManager.SaveScene(scene, DeckPartyPaths.MainMenuScene);
+        }
+
+        // ------------------------------------------------------------------ background
+
+        /// <summary>Plain white, two image layers (for the fade) and a darkening layer; the view fills them from the Game Database.</summary>
+        static void BuildBackground(Transform canvas)
+        {
+            var root = EditorUI.Rect(canvas, "MainMenuBackground").Stretch();
+            EditorUI.Image(root, "PlainWhite", Color.white).rectTransform.Stretch();
+
+            var view = root.gameObject.AddComponent<MainMenuBackgroundView>();
+            view.current = CoverImage(root, "Current", out view.currentFitter);
+            view.next = CoverImage(root, "Next", out view.nextFitter);
+            view.dim = EditorUI.Image(root, "Dim", new Color(0.03f, 0.02f, 0.08f, 0.28f));
+            view.dim.rectTransform.Stretch();
+            view.dim.enabled = false;
+        }
+
+        static Image CoverImage(Transform parent, string name, out AspectRatioFitter fitter)
+        {
+            var image = EditorUI.Image(parent, name, Color.white);
+            image.rectTransform.Stretch();
+            image.enabled = false;
+            fitter = image.gameObject.AddComponent<AspectRatioFitter>();
+            fitter.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
+            fitter.aspectRatio = 16f / 9f;
+            return image;
+        }
+
+        /// <summary>Marks the text with no panel behind it, which sits straight on the background (see <see cref="MenuBackdropText"/>).</summary>
+        static void MarkBackdropText(Transform screens)
+        {
+            foreach (var text in screens.GetComponentsInChildren<TMP_Text>(true))
+            {
+                bool onPanel = false;
+                for (var parent = text.transform.parent; parent != screens && !onPanel; parent = parent.parent)
+                    onPanel = parent.GetComponent<Graphic>() != null;
+                if (!onPanel) text.gameObject.AddComponent<MenuBackdropText>();
+            }
         }
 
         // ------------------------------------------------------------------ main

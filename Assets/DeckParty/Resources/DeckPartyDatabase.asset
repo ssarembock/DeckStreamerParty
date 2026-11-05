@@ -1342,6 +1342,10 @@ MonoBehaviour:
   audio: {fileID: 11400000, guid: 93270d33cd5806648b9a504b8edb25ce, type: 2}
   fx: {fileID: 11400000, guid: 4d3f5767d94834b47868635c30c55b64, type: 2}
   portraitStage: {fileID: 3230262368666778877, guid: 37ba0a174d98f9e4f97a33e4ee04f39f, type: 3}
+  mainMenuBackgrounds:
+  - {fileID: 21300000, guid: 094695c8c733106489cffcd54acf090b, type: 3}
+  mainMenuBackgroundSeconds: 9
+  mainMenuBackgroundDim: 0.28
   chatBubble: {fileID: 21300000, guid: cbd7999bd59eeed48877008244147003, type: 3}
   chatBubbleTail: {fileID: 0}
   chatBubbleTint: {r: 1, g: 1, b: 1, a: 1}

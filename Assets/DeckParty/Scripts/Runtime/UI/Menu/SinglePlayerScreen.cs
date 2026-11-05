@@ -64,8 +64,6 @@ namespace DeckParty.UI
             Select(m_Selected >= 0 ? m_Selected : AppSettings.LastScenario);
         }
 
-        protected override void OnHide() => m_Menu.PreviewVenue(null);
-
         void BuildScenarioList()
         {
             if (m_Items.Count == 0)
@@ -149,7 +147,6 @@ namespace DeckParty.UI
 
             string note = choice == AppSettings.VenueEvolving ? " " + Loc.Get("single.evolving_note") : string.Empty;
             venueDescription.text = $"<b>{GameDatabase.VenueName(venue)}</b>{note}\n<color=#B9AED6>{ContentText.VenueDescription(venue)}</color>";
-            m_Menu.PreviewVenue(venue);
         }
 
         StreamerType PreviewStreamer => Streamer == StreamerCatalog.RandomPick || !StreamerCatalog.IsValid((StreamerType)Streamer) ? StreamerType.None : (StreamerType)Streamer;
