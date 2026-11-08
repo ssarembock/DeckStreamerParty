@@ -76,11 +76,35 @@ namespace DeckParty.UI
             if (floatArea == null) floatArea = (RectTransform)transform.root;
         }
 
+        /// <summary>Your recent emote times: the same anti-spam limit the host applies (<see cref="Emotes.Allowed"/>).</summary>
+        readonly System.Collections.Generic.List<float> m_Recent = new System.Collections.Generic.List<float>();
+        CanvasGroup m_Group;
+        float m_LastWarned = -10f;
+
         void Send(int index)
         {
-            if (Time.unscaledTime - m_LastSent < Emotes.Cooldown) return;
-            m_LastSent = Time.unscaledTime;
+            float now = Time.unscaledTime;
+            if (!Emotes.Allowed(m_Recent, now))
+            {
+                // A short "slow down" (not more than once every few seconds).
+                if (now - m_LastWarned > 3f)
+                {
+                    m_LastWarned = now;
+                    ToastView.Show(Loc.Get("emote.slow_down", "seconds", Mathf.CeilToInt(Emotes.WaitFor(m_Recent, now))), ToastKind.Warning);
+                }
+                return;
+            }
+            m_Recent.Add(now);
+            m_LastSent = now;
             EmoteClicked?.Invoke(index);
+        }
+
+        void Update()
+        {
+            // The buttons dim while you have to wait.
+            if (m_Group == null && !TryGetComponent(out m_Group)) m_Group = gameObject.AddComponent<CanvasGroup>();
+            float wait = Emotes.WaitFor(m_Recent, Time.unscaledTime);
+            m_Group.alpha = wait > 0f ? 0.45f : 1f;
         }
 
         /// <summary>

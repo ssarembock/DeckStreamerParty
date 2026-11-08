@@ -63,42 +63,12 @@ namespace DeckParty.UI
             }
 
             int count = entries.Count;
-            while (m_Columns.Count < count && columnTemplate != null)
-            {
-                var column = Instantiate(columnTemplate, columnsRoot);
-                column.name = "Column" + (m_Columns.Count + 1);
-                m_Columns.Add(column);
-            }
-            while (m_Dividers.Count < count - 1 && dividerTemplate != null)
-            {
-                var divider = Instantiate(dividerTemplate, columnsRoot);
-                divider.name = "Divider" + (m_Dividers.Count + 1);
-                m_Dividers.Add(divider);
-            }
-
-            // Column, line, column, line... in that order inside the layout.
-            int sibling = 0;
-            for (int i = 0; i < m_Columns.Count; i++)
-            {
-                bool on = i < count;
-                m_Columns[i].gameObject.SetActive(on);
-                if (!on) continue;
-                m_Columns[i].transform.SetSiblingIndex(sibling++);
-                m_Columns[i].Bind(entries[i]);
-                if (i < count - 1 && i < m_Dividers.Count)
-                {
-                    m_Dividers[i].SetActive(true);
-                    m_Dividers[i].transform.SetSiblingIndex(sibling++);
-                }
-            }
-            for (int i = Mathf.Max(0, count - 1); i < m_Dividers.Count; i++) m_Dividers[i].SetActive(false);
-
             if (panel != null)
             {
                 float width = Mathf.Clamp(count * columnWidth + panelPadding, minPanelWidth, maxPanelWidth);
                 panel.sizeDelta = new Vector2(width, panel.sizeDelta.y);
             }
-            if (columnsRoot != null) LayoutRebuilder.ForceRebuildLayoutImmediate(columnsRoot);
+            RecapColumns.Fill(columnsRoot, columnTemplate, dividerTemplate, m_Columns, m_Dividers, entries);
 
             if (m_Intro != null) StopCoroutine(m_Intro);
             m_Intro = StartCoroutine(Intro(count));

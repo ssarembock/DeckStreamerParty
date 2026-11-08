@@ -253,7 +253,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578064
     m_Localized: "A modinha: ao entrar, copia {icon:subs} base e o {icon:cash} de
-      quem entrou logo antes. N\xE3o a a\xE7\xE3o, o {icon:risk} nem o Play."
+      quem entrou logo antes. N\xE3o a a\xE7\xE3o, o {icon:risk} nem o Trof\xE9u."
     m_Metadata:
       m_Items: []
   - m_Id: 504578065
@@ -472,7 +472,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578112
-    m_Localized: "A\xE7\xE3o: outro espectador que n\xE3o seja Play vira temporariamente
+    m_Localized: "A\xE7\xE3o: outro espectador que n\xE3o seja Trof\xE9u vira temporariamente
       outro personagem aleat\xF3rio da fila, com status e a\xE7\xE3o dele. Volta
       ao normal depois da live."
     m_Metadata:
@@ -1104,7 +1104,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 736681969008644
     m_Localized: "{icon:plays} A\xE7\xE3o: invoque qualquer espectador da fila, at\xE9
-      outro Play."
+      outro Trof\xE9u."
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008645

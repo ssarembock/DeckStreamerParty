@@ -58,7 +58,7 @@ namespace DeckParty
         public GameObject characterPrefab;
         [Tooltip("Optional controller for the prefab (or for the portrait on its own).")]
         public RuntimeAnimatorController animatorController;
-        [Tooltip("The satirical platform they stream on: picks the animated logo at the top-left of the stream and shop, and the button colour.")]
+        [Tooltip("The satirical platform they stream on: picks the animated logo at the top-left of the stream and shop (nothing else changes).")]
         public StreamPlatform platform;
         /// <summary>Set once the streamer's built-in platform has been filled in, so your choice is kept afterwards.</summary>
         [HideInInspector] public bool platformSeeded;
@@ -195,7 +195,7 @@ namespace DeckParty
         public List<CommunityIcon> communityIcons = new List<CommunityIcon>();
 
         [Header("Platforms (the website look of the stream and shop)")]
-        [Tooltip("One entry per satirical platform: the animated logo's sprites, placement and timing, and the button colour.")]
+        [Tooltip("One entry per satirical platform: the animated logo's sprites, placement, timing and placeholder colours.")]
         public List<PlatformArt> platforms = new List<PlatformArt>();
         [Tooltip("The platform shown when a player has no streamer.")]
         public StreamPlatform noStreamerPlatform = StreamPlatform.Lookout;
@@ -216,12 +216,17 @@ namespace DeckParty
         /// 1: the first seven communities. 2: Boomer, Millennial, Zoomer and Armchair Activists. 3: the V4.2 card table (Clout,
         /// Memetics Division and Bots; every roster card takes the table's communities). 4: the V5 card table
         /// (ViewerCardsAndCommunityLogic.xlsx: Gen-Z, Gatekeepers, Hype Men, Mods, Full Stream, Marketers, Voyeurs...; every
-        /// roster card takes the table's communities again).
+        /// roster card takes the table's communities again). 5: the viewer card edits of 2026-11-08 (Crypto Enthusiast and
+        /// the new Dancing Jen join the Millennials; only those two cards change, so your other edits are kept).
         /// </summary>
-        public const int CommunityDefaultsRevision = 4;
+        public const int CommunityDefaultsRevision = 5;
 
         /// <summary>Whether a revision's built-in communities replace a roster card's (instead of merging into them).</summary>
         static bool IsRosterTableRevision(int revision) => revision == 3 || revision == 4;
+
+        /// <summary>Whether a revision resets this one card to its built-in communities (a revision that edits a few cards).</summary>
+        static bool ResetsCard(int revision, GuestType type) =>
+            revision == 5 && (type == GuestType.CryptoEnthusiast || type == GuestType.DancingJen);
 
         static CommunityMask AddedInRevision(int revision)
         {
@@ -241,6 +246,11 @@ namespace DeckParty
             var mask = art.communities;
             for (int revision = Math.Max(1, communitiesRevision) + 1; revision <= CommunityDefaultsRevision; revision++)
             {
+                if (ResetsCard(revision, art.type))
+                {
+                    mask = GuestCatalog.DefaultCommunitiesOf(art.type);
+                    continue;
+                }
                 if (IsRosterTableRevision(revision))
                 {
                     if (GuestCatalog.InRoster(art.type)) mask = GuestCatalog.DefaultCommunitiesOf(art.type);

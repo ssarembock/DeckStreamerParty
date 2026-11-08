@@ -44,6 +44,9 @@ namespace DeckParty.EditorTools
         public static Sprite Close;
         public static Sprite Night;
         public static Sprite Chat;
+        public static Sprite Timer;
+        public static Sprite Mute;
+        public static Sprite RemoveViewer;
         public static Sprite Ring;
 
         public static void LoadArt()
@@ -78,6 +81,9 @@ namespace DeckParty.EditorTools
             Close = PlaceholderArt.Load(PlaceholderArt.CloseName);
             Night = PlaceholderArt.Load(PlaceholderArt.NightName);
             Chat = PlaceholderArt.Load(PlaceholderArt.ChatName);
+            Timer = PlaceholderArt.Load(PlaceholderArt.TimerName);
+            Mute = PlaceholderArt.Load(PlaceholderArt.MuteName);
+            RemoveViewer = PlaceholderArt.Load(PlaceholderArt.RemoveViewerName);
             Ring = PlaceholderArt.Load(PlaceholderArt.RingName);
         }
 
@@ -268,12 +274,16 @@ namespace DeckParty.EditorTools
         /// <summary>How a website-look button is coloured.</summary>
         public enum SiteButton
         {
-            /// <summary>The platform's accent colour with its icon colour (Add Viewer, Go Live, actions).</summary>
+            /// <summary>The site accent with a white icon (Go Live, actions, Approve). The same on every platform.</summary>
             Accent,
-            /// <summary>Near-black with a white icon (End the Stream).</summary>
+            /// <summary>Black with a white icon or text (the main choice on pop-ups).</summary>
             Dark,
-            /// <summary>Light grey with a dark icon (Audience, Menu, Deny).</summary>
+            /// <summary>White with a black border and a dark icon (Audience, Menu, Deny).</summary>
             Light,
+            /// <summary>Always green with a white icon (Add Viewer).</summary>
+            Go,
+            /// <summary>Always red with a white icon (End the Stream).</summary>
+            Stop,
         }
 
         /// <summary>
@@ -318,8 +328,17 @@ namespace DeckParty.EditorTools
             return button;
         }
 
-        public static Color SiteFill(SiteButton style) =>
-            style == SiteButton.Accent ? SitePalette.Accent : style == SiteButton.Dark ? SitePalette.Outline : SitePalette.Surface;
+        public static Color SiteFill(SiteButton style)
+        {
+            switch (style)
+            {
+                case SiteButton.Accent: return SitePalette.Accent;
+                case SiteButton.Dark: return SitePalette.Outline;
+                case SiteButton.Go: return SitePalette.Go;
+                case SiteButton.Stop: return SitePalette.Stop;
+                default: return SitePalette.Surface;
+            }
+        }
 
         public static Color SiteContent(SiteButton style) => style == SiteButton.Light ? SitePalette.Text : Color.white;
 
@@ -384,11 +403,11 @@ namespace DeckParty.EditorTools
         /// <summary>
         /// A text button for the white pop-ups: <see cref="SiteButton.Dark"/> is black with white text (the main choice),
         /// <see cref="SiteButton.Light"/> is white with a black border and black text, <see cref="SiteButton.Accent"/> takes the
-        /// platform colour.
+        /// site accent (Go and Stop are green and red).
         /// </summary>
         public static Button SiteTextButton(Transform parent, string name, string label, SiteButton style, float fontSize, out TextMeshProUGUI labelText)
         {
-            var background = Image(parent, name, style == SiteButton.Accent ? SitePalette.Accent : SitePalette.Outline, RoundedSmall, null, true);
+            var background = Image(parent, name, style == SiteButton.Light ? SitePalette.Outline : SiteFill(style), RoundedSmall, null, true);
             background.type = UnityEngine.UI.Image.Type.Sliced;
             if (style == SiteButton.Accent) background.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Fill;
             if (style == SiteButton.Light)

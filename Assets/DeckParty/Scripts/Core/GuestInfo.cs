@@ -38,7 +38,8 @@ namespace DeckParty.Core
             int size = 1,
             AbilityKind ability = AbilityKind.None,
             string abilityName = null,
-            bool purchasable = true)
+            bool purchasable = true,
+            int maxCopies = 0)
         {
             Type = type;
             Name = name;
@@ -55,11 +56,20 @@ namespace DeckParty.Core
             Ability = ability;
             AbilityName = abilityName ?? ability.ToString();
             Purchasable = purchasable;
+            m_MaxCopies = maxCopies;
         }
+
+        // 0 = the standard limit (GameRules.MaxCopiesPerGuest). Group-scoring cards (Dancing Jen, Crypto Enthusiast)
+        // allow 5, so the top step of their table (25) can be reached.
+        readonly int m_MaxCopies;
 
         public bool HasAbility => Ability != AbilityKind.None;
 
-        public int MaxCopies => IsDiamond ? int.MaxValue : GameRules.MaxCopiesPerGuest;
+        /// <summary>Most copies one player may own (Trophies have no limit).</summary>
+        public int MaxCopies => IsDiamond ? int.MaxValue : m_MaxCopies > 0 ? m_MaxCopies : GameRules.MaxCopiesPerGuest;
+
+        /// <summary>Copies of this card in a match's shared shop (at least the per-player limit).</summary>
+        public int ShopStock => IsDiamond ? int.MaxValue : System.Math.Max(GameRules.SharedStockPerGuest, MaxCopies);
 
         public TargetMode Target => TargetFor(Ability);
 

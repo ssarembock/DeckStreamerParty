@@ -126,6 +126,8 @@ namespace DeckParty.Core
         public int Cash;
         public int Capacity = GameRules.StartingCapacity;
         public int Expansions;
+        /// <summary>Viewers removed for good with Remove a Viewer (each one makes the next cost 1 Cash more).</summary>
+        public int Removals;
 
         // Collection
         public readonly List<GuestInstance> Rolodex = new List<GuestInstance>();

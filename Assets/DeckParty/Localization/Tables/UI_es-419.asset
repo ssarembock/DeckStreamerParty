@@ -85,7 +85,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125583
-    m_Localized: Plays {count}/{max}
+    m_Localized: Trofeos {count}/{max}
     m_Metadata:
       m_Items: []
   - m_Id: 1574125584
@@ -108,7 +108,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125588
-    m_Localized: "<b>Plays</b>\\nEn este stream: {now}\\nEn tu Audiencia: {owned}\\nR\xE9cord
+    m_Localized: "<b>Trofeos</b>\\nEn este stream: {now}\\nEn tu Audiencia: {owned}\\nR\xE9cord
       en un stream: {best}\\n\xA1Consigue {goal} en un stream para ganar!"
     m_Metadata:
       m_Items: []
@@ -122,7 +122,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125591
-    m_Localized: "\xA1Est\xE1n los {count} Plays! \xA1Termina el stream ahora para
+    m_Localized: "\xA1Est\xE1n los {count} Trofeos! \xA1Termina el stream ahora para
       ganar!"
     m_Metadata:
       m_Items: []
@@ -455,7 +455,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514205
-    m_Localized: "Plays: {owned}    R\xE9cord de Plays en un stream: {best}"
+    m_Localized: "Trofeos: {owned}    R\xE9cord de Trofeos en un stream: {best}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514206
@@ -532,7 +532,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514224
-    m_Localized: "{subs}  {cash}  Plays {owned}  r\xE9cord {best}"
+    m_Localized: "{subs}  {cash}  Trofeos {owned}  r\xE9cord {best}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514225
@@ -544,7 +544,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514227
-    m_Localized: "{count} Plays juntos en el stream {night} de {total}. \xA1{set}
+    m_Localized: "{count} Trofeos juntos en el stream {night} de {total}. \xA1{set}
       completado!"
     m_Metadata:
       m_Items: []
@@ -557,7 +557,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514230
-    m_Localized: Esta vez no hubo stream de {count} Plays. Tu mejor marca fue {best}
+    m_Localized: Esta vez no hubo stream de {count} Trofeos. Tu mejor marca fue {best}
       a la vez.
     m_Metadata:
       m_Items: []
@@ -578,15 +578,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514235
-    m_Localized: 'Stream {night}: {count} Plays en un solo stream.'
+    m_Localized: 'Stream {night}: {count} Trofeos en un solo stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514236
-    m_Localized: "Nadie lleg\xF3 a {count} Plays. Mejor marca: {best}."
+    m_Localized: "Nadie lleg\xF3 a {count} Trofeos. Mejor marca: {best}."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514237
-    m_Localized: "\xA1STREAM DE {count} PLAYS!"
+    m_Localized: "\xA1STREAM DE {count} TROFEOS!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514238
@@ -604,7 +604,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514241
     m_Localized: 'Ganado: {icon:subs} {subs}   {icon:cash} {cash}    Audiencia: {viewers}
-      espectadores ({diamonds} Plays)    Cupo: {cap}'
+      espectadores ({diamonds} Trofeos)    Cupo: {cap}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514242
@@ -782,7 +782,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514285
-    m_Localized: "\xA1Bienvenido a {set}! Junta {count} Plays en un stream en {nights}
+    m_Localized: "\xA1Bienvenido a {set}! Junta {count} Trofeos en un stream en {nights}
       streams."
     m_Metadata:
       m_Items: []
@@ -912,11 +912,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514316
-    m_Localized: "\xA1{count} Plays en un stream!"
+    m_Localized: "\xA1{count} Trofeos en un stream!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514317
-    m_Localized: Esta vez no hubo stream de {count} Plays
+    m_Localized: Esta vez no hubo stream de {count} Trofeos
     m_Metadata:
       m_Items: []
   - m_Id: 1582514318
@@ -1084,7 +1084,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514355
-    m_Localized: '{actor}: elige un espectador que no sea Play para hacerle Rickroll.'
+    m_Localized: '{actor}: elige un espectador que no sea Trofeo para hacerle Rickroll.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514356
@@ -1153,8 +1153,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514372
-    m_Localized: Sal en vivo, haz crecer tu Audiencia y junta {count} Plays en un
-      solo stream.
+    m_Localized: Sal en vivo, haz crecer tu Audiencia y junta {count} Trofeos en
+      un solo stream.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514373
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: 'Elenco: <color=#FFC94A>11 espectadores al azar + 3 Plays al azar</color>,
+    m_Localized: 'Elenco: <color=#FFC94A>11 espectadores al azar + 3 Trofeos al azar</color>,
       sorteados al empezar la temporada.'
     m_Metadata:
       m_Items: []
@@ -1267,7 +1267,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514399
     m_Localized: Hasta 6 jugadores. Mismo elenco, streams separados. Gana el primer
-      stream de 4 Plays.
+      stream de 4 Trofeos.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514400
@@ -1385,7 +1385,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514428
-    m_Localized: Temporizador de turno
+    m_Localized: Temporizador del stream
     m_Metadata:
       m_Items: []
   - m_Id: 1582514429
@@ -1397,7 +1397,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514431
-    m_Localized: 'Temporizador de turno: {timer}'
+    m_Localized: "Temporizador del stream: {timer}  \xB7  Temporizador de la tienda:
+      {shop}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514432
@@ -1439,20 +1440,21 @@ MonoBehaviour:
   - m_Id: 1582514441
     m_Localized: "en cada ronda los jugadores transmiten uno tras otro mientras los
       dem\xE1s miran en vivo. La temporada termina despu\xE9s de la primera ronda
-      en que alguien junta {count} Plays."
+      en que alguien junta {count} Trofeos."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514442
-    m_Localized: juega a tu ritmo. El primer stream de {count} Plays gana al instante.
+    m_Localized: juega a tu ritmo. El primer stream de {count} Trofeos gana al instante.
       Haz clic en un jugador para mirarlo.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514443
-    m_Localized: "todos transmiten a la vez y nadie puede ver a los dem\xE1s. Cuando
-      terminan todos los streams y cada uno toca Ir a la tienda, una cuenta regresiva
-      3-2-1 abre la tienda para todos a la vez: el que llega primero, se lo lleva.
-      La primera ronda en que alguien junta {count} Plays termina la temporada. El
-      \xFAnico modo para 3 o m\xE1s jugadores."
+    m_Localized: "todos transmiten a la vez; haz clic en un jugador para ver su stream
+      en vivo (solo mirar) y en tu nombre para volver. Cuando terminan todos los
+      streams y cada uno toca Ir a la tienda, una cuenta regresiva 3-2-1 abre la
+      tienda para todos a la vez: el que llega primero, se lo lleva. La primera ronda
+      en que alguien junta {count} Trofeos termina la temporada. El \xFAnico modo
+      para 3 o m\xE1s jugadores."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514444
@@ -1807,8 +1809,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 994296414289920
-    m_Localized: "<b>Plays</b>\\nLos espectadores con este \xEDcono son Plays. Ten
-      {goal} en el chat a la vez y termina bien el stream para ganar."
+    m_Localized: "<b>Trofeos</b>\\nLos espectadores con este \xEDcono son Trofeos.
+      Ten {goal} en el chat a la vez y termina bien el stream para ganar."
     m_Metadata:
       m_Items: []
   - m_Id: 1064940082913280
@@ -1881,6 +1883,97 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670124655960070
     m_Localized: "{viewer} hered\xF3 +1 {icon:cash}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125118607360
+    m_Localized: Temporizador de la tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408000
+    m_Localized: '{subs}  {cash}  {icon:plays} {owned}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408001
+    m_Localized: Silenciar los emotes de {player} (solo en tu pantalla).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408002
+    m_Localized: Dejar de silenciar los emotes de {player}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408003
+    m_Localized: Silenciaste los emotes de {player}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408004
+    m_Localized: Los emotes de {player} vuelven a verse.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408005
+    m_Localized: Comunidades
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408006
+    m_Localized: '{count} {count:plural:espectador distinto|espectadores distintos}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408007
+    m_Localized: "m\xE1ximo {points} {points:plural:punto|puntos}: {effect}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408008
+    m_Localized: necesita {count} espectadores distintos para puntuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408009
+    m_Localized: "Todav\xEDa no hay comunidades en esta audiencia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408010
+    m_Localized: "Esperando a los dem\xE1s streamers"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408011
+    m_Localized: "\xA1Terminaron todos los streams!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408012
+    m_Localized: Quitar un espectador ({cost})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408013
+    m_Localized: "Saca para siempre una carta de espectador de tu audiencia. Cada
+      vez cuesta 1 {icon:cash} m\xE1s que la anterior. Tu audiencia conserva al menos
+      {min} espectadores."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408014
+    m_Localized: Quitar un espectador ({cost})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408015
+    m_Localized: "Elige la carta de espectador que quitar\xE1s para siempre. Tu audiencia
+      conserva al menos {min} espectadores."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408016
+    m_Localized: "\xBFQuitar para siempre?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408017
+    m_Localized: '{viewer} deja tu audiencia para siempre. Cuesta {cost}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408018
+    m_Localized: Quitar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125307351040
+    m_Localized: "{viewer} dej\xF3 tu audiencia para siempre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125307351041
+    m_Localized: '- {viewer} (quitado)'
     m_Metadata:
       m_Items: []
   references:

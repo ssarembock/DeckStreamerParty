@@ -252,7 +252,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578064
     m_Localized: "Lo de moda: al entrar, copia {icon:subs} base y el {icon:cash}
-      del espectador que entr\xF3 justo antes. No su acci\xF3n, {icon:risk} ni Play."
+      del espectador que entr\xF3 justo antes. No su acci\xF3n, {icon:risk} ni Trofeo."
     m_Metadata:
       m_Items: []
   - m_Id: 504578065
@@ -470,7 +470,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578112
-    m_Localized: "Acci\xF3n: otro espectador que no sea Play se convierte temporalmente
+    m_Localized: "Acci\xF3n: otro espectador que no sea Trofeo se convierte temporalmente
       en otro personaje al azar de la fila, con sus stats y su acci\xF3n. Vuelve
       a la normalidad despu\xE9s del stream."
     m_Metadata:
@@ -1103,7 +1103,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 736681969008644
     m_Localized: "{icon:plays} Acci\xF3n: invoca a cualquier espectador de la fila,
-      incluso a otro Play."
+      incluso a otro Trofeo."
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008645

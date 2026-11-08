@@ -37,6 +37,9 @@ namespace DeckParty.EditorTools
         public const string NightName = "icon_night";
         /// <summary>A speech bubble with three dots: the Stream Chat title.</summary>
         public const string ChatName = "icon_chat";
+        public const string TimerName = "icon_timer";
+        public const string MuteName = "icon_mute";
+        public const string RemoveViewerName = "icon_remove_viewer";
         public const string RingName = "ui_ring";
 
         public static string PathOf(string name) => $"{Folder}/{name}.png";
@@ -109,6 +112,14 @@ namespace DeckParty.EditorTools
                 float plusV = SdRoundBox(p - new Vector2(38, 20), new Vector2(6, 20), 3);
                 return Mathf.Min(Mathf.Min(head, body), Mathf.Min(plusH, plusV));
             }, Vector4.zero, overwrite);
+            // A person with a minus: remove a viewer from your Audience (shop).
+            Write(RemoveViewerName, 128, 128, p =>
+            {
+                float head = (p - new Vector2(-16, 24)).magnitude - 19f;
+                float body = SdRoundBox(p - new Vector2(-16, -36), new Vector2(34, 24), 22);
+                float minus = SdRoundBox(p - new Vector2(38, 20), new Vector2(20, 6), 3);
+                return Mathf.Min(Mathf.Min(head, body), minus);
+            }, Vector4.zero, overwrite);
             // A stop square: end the stream.
             Write(EndStreamName, 128, 128, p => SdRoundBox(p, new Vector2(40, 40), 10), Vector4.zero, overwrite);
             // Two people: the Audience.
@@ -142,6 +153,29 @@ namespace DeckParty.EditorTools
             }, Vector4.zero, overwrite);
             // A crescent moon: the night counter.
             Write(NightName, 128, 128, p => Mathf.Max(p.magnitude - 48f, -((p - new Vector2(22, 14)).magnitude - 40f)), Vector4.zero, overwrite);
+            // An hourglass: the stream and shop timers.
+            Write(TimerName, 128, 128, p =>
+            {
+                float caps = Mathf.Min(SdRoundBox(p - new Vector2(0, 50), new Vector2(38, 7), 4), SdRoundBox(p - new Vector2(0, -50), new Vector2(38, 7), 4));
+                // Two triangles meeting at a narrow neck.
+                float halfWidth = 6f + Mathf.Abs(p.y) * 0.62f;
+                float glass = Mathf.Max(Mathf.Abs(p.x) - halfWidth, Mathf.Abs(p.y) - 44f);
+                return Mathf.Min(caps, glass);
+            }, Vector4.zero, overwrite);
+            // A speaker with a slash: mute a player's emotes.
+            Write(MuteName, 128, 128, p =>
+            {
+                float box = SdRoundBox(p - new Vector2(-34, 0), new Vector2(12, 16), 3);
+                float coneHalf = 16f + (p.x + 22f) * 0.9f;
+                float cone = Mathf.Max(Mathf.Max(Mathf.Abs(p.y) - coneHalf, -(p.x + 22f)), p.x - 10f);
+                float speaker = Mathf.Min(box, cone);
+                // The slash, from top-right to bottom-left.
+                var d = new Vector2(0.7071f, 0.7071f);
+                float along = Vector2.Dot(p, d);
+                float across = Mathf.Abs(p.x * d.y - p.y * d.x);
+                float slash = Mathf.Max(across - 7f, Mathf.Abs(along) - 56f);
+                return Mathf.Min(Mathf.Max(speaker, -(across - 13f)), slash);
+            }, Vector4.zero, overwrite);
             // A speech bubble with a tail and three dots: the Stream Chat title.
             Write(ChatName, 128, 128, p =>
             {

@@ -101,6 +101,7 @@ namespace DeckParty.Core
         ModsShield = 72,       // Mods: A = 1: your next stream will start with 1 Risk cancelled (B = chance %); A = 2: applied as this stream starts
         ShopPerk = 73,         // A stream earned a shop effect. A = Community (Boomer, ShopControl, Saboteurs), B = amount
         SentBack = 74,         // Junior PR Manager / PR Manager sent random viewers back to the queue. Guest = actor, A = count sent
+        GuestDismissed = 75,   // Shop: Remove a Viewer took this viewer out of your Audience for good. Guest = the viewer (no longer owned), A = Cash paid
     }
 
     public struct GameEvent

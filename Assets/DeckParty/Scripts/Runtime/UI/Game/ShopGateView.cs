@@ -6,7 +6,8 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// Free For All: covers the shop until it opens for everyone. After your stream it says who is still streaming and holds
+    /// Free For All: covers the shop until it opens for everyone. After your stream it says who is still streaming ("Waiting
+    /// for other streamers"); once every stream is over it shows every player's stream summary (one column each) and holds
     /// the Go to the Shop button (you're ready); once everyone is, it shows the 3-2-1 countdown. The shop is first come, first
     /// served, so everyone goes in at the same moment.
     /// </summary>
@@ -20,6 +21,15 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text readyLabel;
         [SerializeField] internal TMP_Text noticeLabel;
 
+        [Header("Stream summary (once every stream of the round is over)")]
+        [Tooltip("Holds one column per player and the grey lines between them (a horizontal layout).")]
+        [SerializeField] internal RectTransform columnsRoot;
+        [SerializeField] internal RecapColumnView columnTemplate;
+        [SerializeField] internal GameObject dividerTemplate;
+
+        readonly System.Collections.Generic.List<RecapColumnView> m_Columns = new System.Collections.Generic.List<RecapColumnView>();
+        readonly System.Collections.Generic.List<GameObject> m_Dividers = new System.Collections.Generic.List<GameObject>();
+
         public event Action ReadyClicked;
 
         int m_Shown = -1;
@@ -30,12 +40,21 @@ namespace DeckParty.UI
         void Awake()
         {
             if (readyButton != null) readyButton.onClick.AddListener(() => ReadyClicked?.Invoke());
+            if (columnTemplate != null) columnTemplate.gameObject.SetActive(false);
+            if (dividerTemplate != null) dividerTemplate.SetActive(false);
             if (root != null) root.SetActive(false);
         }
 
-        /// <param name="buttonText">Null hides the button (during the countdown).</param>
-        public void Show(string title, string body, string notice, string buttonText)
+        /// <param name="buttonText">Null hides the button (while others still stream, and during the countdown).</param>
+        /// <param name="streams">Every player's stream summary, once all streams of the round are over (null hides the columns).</param>
+        public void Show(string title, string body, string notice, string buttonText, System.Collections.Generic.IList<RecapEntry> streams = null)
         {
+            if (columnsRoot != null)
+            {
+                bool columns = streams != null && streams.Count > 0;
+                columnsRoot.gameObject.SetActive(columns);
+                if (columns) RecapColumns.Fill(columnsRoot, columnTemplate, dividerTemplate, m_Columns, m_Dividers, streams);
+            }
             bool appearing = !IsShowing;
             if (root != null) root.SetActive(true);
             if (titleLabel != null) titleLabel.text = title;

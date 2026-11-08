@@ -68,6 +68,36 @@ namespace DeckParty.Core
         /// <summary>PR Manager's Damage Control: random viewers sent back to the queue.</summary>
         public const int PrManagerSendBack = 5;
 
+        // --- Group-scoring cards (viewer card edits, 2026-11-08) ---
+        // The copies in chat score one total together, read from a table by how many are in chat (1 to 5), instead of
+        // each copy scoring on its own. The original game's Dancer scored D squared each; Dancing Jen scores D squared in all.
+        static readonly int[] s_DancingJenClout = { 1, 4, 9, 16, 25 };
+        static readonly int[] s_CryptoEnthusiastCash = { -2, 1, 9, 16, 25 };
+
+        /// <summary>Copy limit (and shared shop stock) of the group-scoring cards, so the table's last step can be reached.</summary>
+        public const int GroupCardMaxCopies = 5;
+
+        /// <summary>Dancing Jen: Clout (Subs) the whole group scores with this many Jens in chat (25 at most).</summary>
+        public static int DancingJenClout(int copies) => GroupStep(s_DancingJenClout, copies);
+
+        /// <summary>Crypto Enthusiast: Cash the whole group scores with this many in chat (-2 alone, 25 at most).</summary>
+        public static int CryptoEnthusiastCash(int copies) => GroupStep(s_CryptoEnthusiastCash, copies);
+
+        /// <summary>The table as compact text for card stat lines ("1/4/9/16/25").</summary>
+        public static string DancingJenSteps => string.Join("/", s_DancingJenClout);
+
+        public static string CryptoEnthusiastSteps => string.Join("/", s_CryptoEnthusiastCash);
+
+        static int GroupStep(int[] table, int copies) => copies <= 0 ? 0 : table[Math.Min(copies, table.Length) - 1];
+
+        /// <summary>Remove a Viewer (shop): the first removal costs this much Cash, every one after costs 1 more, up to the max.</summary>
+        public const int FirstRemovalCost = 2;
+        public const int MaxRemovalCost = 12;
+        /// <summary>Remove a Viewer can't take your Audience below this many viewer cards.</summary>
+        public const int MinAudience = 5;
+
+        public static int RemovalCost(int removalsBought) => Math.Min(FirstRemovalCost + Math.Max(0, removalsBought), MaxRemovalCost);
+
         /// <summary>
         /// When true, guest fees are paid from banked Cash before the Gifted Subs penalty applies.
         /// When false, only the party's own Cash income can cover fees.

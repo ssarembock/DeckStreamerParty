@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DeckParty.Core
 {
     /// <summary>
-    /// Every guest type: the 82 viewer cards (the 44 of the current roster plus the ones put aside, see <see cref="IsPutAside"/>)
+    /// Every guest type: the 83 viewer cards (the 44 of the current roster plus the ones put aside, see <see cref="IsPutAside"/>)
     /// and the Bot token. The English names and descriptions here are fallbacks: players see the localized text from the
     /// strings CSV (keys char.&lt;GuestType&gt;.name / .desc / .action).
     /// </summary>
@@ -140,7 +140,7 @@ namespace DeckParty.Core
             { GuestType.MarketingManager, Staff | Marketers },
             { GuestType.PromoCodeUser, Core | FullStream },
             { GuestType.AccountManager, Staff },
-            // Crypto Enthusiast: no community.
+            { GuestType.CryptoEnthusiast, Millennial },
             { GuestType.GenerousDonator, HypeMen },
             { GuestType.BingeBunny, Core },
             { GuestType.HateWatcher, Trolls },
@@ -168,6 +168,7 @@ namespace DeckParty.Core
             { GuestType.MainstreamCelebrity, Content },
             { GuestType.SeniorMarketingManager, Staff | Millennial },
             { GuestType.Evangelist, Core | HypeMen },
+            { GuestType.DancingJen, Millennial },
             // Put aside in V5 (kept for when it comes back).
             { GuestType.DegenDog, Memetics },
         };
@@ -442,10 +443,11 @@ namespace DeckParty.Core
                 new GuestInfo(GuestType.PromoCodeUser, "Promo Code User", 5, Tbd,
                     "+5 Subs, but only if chat is full when scored. Always costs 1 $.", cash: -1),
                 new GuestInfo(GuestType.AccountManager, "Account Manager", 5, Tbd,
-                    "Plenty of Subs, but expects to be paid: costs 1 $ when scored.", pop: 4, cash: -1),
-                new GuestInfo(GuestType.CryptoEnthusiast, "Crypto Enthusiast", 5, Tbd,
-                    "Action: score another viewer in chat right now, penalties included (banked straight away). They still score again when the stream ends.",
-                    pop: 1, cash: -1, ability: AbilityKind.Photograph, abilityName: "Rug Pull"),
+                    "Action: a viewer in chat permanently earns +1 $ more (up to 9 $). Costs 1 $ when scored.",
+                    pop: 3, cash: -1, ability: AbilityKind.Style, abilityName: "Upsell"),
+                new GuestInfo(GuestType.CryptoEnthusiast, "Crypto Enthusiast", 6, Tbd,
+                    "To the Moon: Crypto Enthusiasts score together, -2 / 1 / 9 / 16 / 25 $ in total for 1 to 5 of them in chat.",
+                    maxCopies: GameRules.GroupCardMaxCopies),
                 new GuestInfo(GuestType.GenerousDonator, "Generous Donator", 5, Tbd,
                     "Give to the Rich!: when joining, brings in the next viewer from the queue and scores them once right away (banked).", pop: 1, cash: 1),
                 new GuestInfo(GuestType.PrManager, "PR Manager", 6, Tbd,
@@ -491,6 +493,11 @@ namespace DeckParty.Core
                 // --- V4.2: the Bots community's token (never bought, never kept) ---
                 new GuestInfo(GuestType.Bot, "Bot", 0, Tbd,
                     "A spam bot from a rival's stream. Takes up a space in chat and earns nothing. Gone after this stream.", purchasable: false),
+
+                // --- Viewer card edits (2026-11-08): the original game's Dancer, scored as a group ---
+                new GuestInfo(GuestType.DancingJen, "Dancing Jen", 7, Tbd,
+                    "Dance Break: Dancing Jens score together, 1 / 4 / 9 / 16 / 25 Subs in total for 1 to 5 of them in chat.",
+                    maxCopies: GameRules.GroupCardMaxCopies),
             };
 
             // Guard against an entry being out of order relative to the enum.

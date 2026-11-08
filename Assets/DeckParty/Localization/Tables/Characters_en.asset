@@ -251,7 +251,7 @@ MonoBehaviour:
   - m_Id: 504578064
     m_Localized: 'Current Thing: on joining, copies the printed {icon:subs} and {icon:cash}
       of the viewer who joined just before him. Not their action, {icon:risk} or
-      Play.'
+      Trophy.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578065
@@ -468,9 +468,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578112
-    m_Localized: 'Action: another non-Play viewer temporarily becomes a random different
-      character from the queue, with its stats and action. Back to normal after the
-      stream.'
+    m_Localized: 'Action: another non-Trophy viewer temporarily becomes a random
+      different character from the queue, with its stats and action. Back to normal
+      after the stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578113
@@ -1096,7 +1096,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 736681969008644
     m_Localized: '{icon:plays} Action: summon any viewer from the queue, even another
-      Play.'
+      Trophy.'
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008645

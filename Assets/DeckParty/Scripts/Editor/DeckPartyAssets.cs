@@ -237,6 +237,9 @@ namespace DeckParty.EditorTools
                     case SkinSlot.AvatarRing: Set(entry, EditorUI.Ring, Image.Type.Simple); break;
                     case SkinSlot.IconCommunityBeats: Set(entry, EditorUI.Audience, Image.Type.Simple); break;
                     case SkinSlot.IconStreamChat: Set(entry, EditorUI.Chat, Image.Type.Simple); break;
+                    case SkinSlot.IconTimer: Set(entry, EditorUI.Timer, Image.Type.Simple); break;
+                    case SkinSlot.IconMute: Set(entry, EditorUI.Mute, Image.Type.Simple); break;
+                    case SkinSlot.IconRemoveViewer: Set(entry, EditorUI.RemoveViewer, Image.Type.Simple); break;
                 }
             }
         }
@@ -899,18 +902,24 @@ namespace DeckParty.EditorTools
             streamerFrame.gameObject.SetActive(false);
 
             var name = EditorUI.Text(bg.transform, "Name", "-", 26, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
-            name.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(160, -40), new Vector2(-92, -6));
+            name.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(160, -40), new Vector2(-140, -6));
             name.overflowMode = TextOverflowModes.Ellipsis;
             var status = EditorUI.Text(bg.transform, "Status", "-", 16, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
-            status.rectTransform.Box(new Vector2(0, 0), new Vector2(1, 1), new Vector2(160, 4), new Vector2(-92, -40));
+            status.rectTransform.Box(new Vector2(0, 0), new Vector2(1, 1), new Vector2(160, 4), new Vector2(-140, -40));
             status.enableAutoSizing = true;
             status.fontSizeMin = 11;
             status.fontSizeMax = 16;
 
             var host = EditorUI.Icon(bg.transform, "HostIcon", EditorUI.Crown, UIPalette.Gold, SkinSlot.IconCrown, 32);
-            host.rectTransform.Place(new Vector2(1, 0.5f), new Vector2(-50, 0), new Vector2(32, 32), new Vector2(1, 0.5f));
+            host.rectTransform.Place(new Vector2(1, 0.5f), new Vector2(-96, 0), new Vector2(32, 32), new Vector2(1, 0.5f));
             var ready = EditorUI.Icon(bg.transform, "ReadyIcon", EditorUI.Check, UIPalette.Green, SkinSlot.IconCheck, 34);
-            ready.rectTransform.Place(new Vector2(1, 0.5f), new Vector2(-10, 0), new Vector2(34, 34), new Vector2(1, 0.5f));
+            ready.rectTransform.Place(new Vector2(1, 0.5f), new Vector2(-56, 0), new Vector2(34, 34), new Vector2(1, 0.5f));
+
+            // Mute this player's emotes (in-game Players panel only; PlayerRowView.SetMute shows it on other players' rows).
+            var mute = EditorUI.IconButton(bg.transform, "Mute", EditorUI.Mute, SkinSlot.IconMute, EditorUI.SiteButton.Light, new Vector2(40, 40), 24, out _, null, true);
+            ((RectTransform)mute.transform).Place(new Vector2(1, 0.5f), new Vector2(-8, 0), new Vector2(40, 40), new Vector2(1, 0.5f));
+            var muteFill = mute.transform.Find("Fill")?.GetComponent<Image>();
+            mute.gameObject.SetActive(false);
 
             var view = bg.gameObject.AddComponent<PlayerRowView>();
             view.background = bg;
@@ -923,6 +932,9 @@ namespace DeckParty.EditorTools
             view.streamerPortrait = streamerArt;
             view.streamerPlaceholder = streamerPlaceholder;
             view.streamerInitials = streamerInitials;
+            view.muteButton = mute;
+            view.muteFill = muteFill;
+            view.muteTooltip = mute.GetComponent<TooltipTrigger>();
             return bg.gameObject;
         }
 

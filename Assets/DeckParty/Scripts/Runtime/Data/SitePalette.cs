@@ -5,7 +5,7 @@ namespace DeckParty
     /// <summary>
     /// The light "streaming website" look of the stream and the shop: white surfaces on a pale page, near-black borders on
     /// the chat, grey dividers and dark text. Menus, the select screen and pop-up dialogs keep the dark <see cref="UIPalette"/>.
-    /// The one colour that changes per streamer is the platform accent (<see cref="SiteTheme"/>).
+    /// Every platform uses these same colours (2026-11-08): only the animated logo in the menu bar changes per platform.
     /// </summary>
     public static class SitePalette
     {
@@ -31,7 +31,11 @@ namespace DeckParty
         public static readonly Color Danger = UIPalette.Hex(0xE5484D);
         public static readonly Color Warning = UIPalette.Hex(0xF08C00);
         public static readonly Color Gold = UIPalette.Hex(0xF2B300);
-        /// <summary>The default accent, used until a platform is known.</summary>
+        /// <summary>The site's accent: primary buttons (Go Live, actions, Ready) and highlights. The same on every platform.</summary>
         public static readonly Color Accent = UIPalette.Hex(0x8A4FFF);
+        /// <summary>Add Viewer: always green.</summary>
+        public static readonly Color Go = UIPalette.Hex(0x1E9E4F);
+        /// <summary>End the Stream: always red.</summary>
+        public static readonly Color Stop = UIPalette.Hex(0xE5484D);
     }
 }

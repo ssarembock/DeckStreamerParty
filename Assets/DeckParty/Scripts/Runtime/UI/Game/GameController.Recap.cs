@@ -11,7 +11,7 @@ namespace DeckParty.UI
     /// after the shop (who recruited what, Sub Cap raises, actives used, resource changes). One column per player:
     ///  - Single player: your stream.
     ///  - Take Turns: the stream (then the shop) of the player whose turn it is, for everyone watching.
-    ///  - Free For All: every player's stream once the last stream of the round is over, and every player's shop once the
+    ///  - Free For All: every player's stream on the gate over the shop once the last stream of the round is over, and every player's shop once the
     ///    next round starts.
     /// Built from each player's state changes (open information) and events, so it needs nothing extra from the network.
     /// </summary>
@@ -20,6 +20,8 @@ namespace DeckParty.UI
         [Header("Summaries")]
         [Tooltip("The summary pop-up after each stream and (multiplayer) after each shop.")]
         [SerializeField] internal RecapView recap;
+        [Tooltip("Multiplayer: the shop summary panel at the bottom of the left column (fades after 10 seconds).")]
+        [SerializeField] internal ShopRecapPanelView shopRecapPanel;
 
         /// <summary>The numbers a summary compares (states are mutated in place, so these are copied).</summary>
         struct RecapSnap
@@ -61,6 +63,7 @@ namespace DeckParty.UI
             public RecapSnap Start;
             public RecapSnap End;
             public readonly List<GuestType> Recruited = new List<GuestType>();
+            public readonly List<GuestType> Removed = new List<GuestType>();
             public int PowersUsed;
         }
 
@@ -138,6 +141,9 @@ namespace DeckParty.UI
                         case GameEventType.GuestPurchased:
                         case GameEventType.PalCaught:
                             if (r.Shop != null && !r.Shop.Done) r.Shop.Recruited.Add(e.Guest);
+                            break;
+                        case GameEventType.GuestDismissed:
+                            if (r.Shop != null && !r.Shop.Done) r.Shop.Removed.Add(e.Guest);
                             break;
                         case GameEventType.PowerUsed:
                             if (r.Shop != null && !r.Shop.Done && isPlanning) r.Shop.PowersUsed++;
@@ -220,7 +226,9 @@ namespace DeckParty.UI
                     if (owner == m_Net.ActivePlayer) QueueRecap(RecapKind.Stream, night, owner);
                     break;
                 case MatchMode.SyncNights:
-                    CheckRoundRecap(RecapKind.Stream, night);
+                    // Free For All: no pop-up; every player's stream summary appears on the gate over the shop once the
+                    // last stream of the round is over (GameController.Rounds: RoundStreamEntries).
+                    if (View != null && View.Phase == GamePhase.Planning && !m_Scoring) planning.Render(View, PlanningCtx());
                     break;
                 default:
                     // Race: everyone plays their own season at their own pace, so only your own stream.
@@ -294,6 +302,18 @@ namespace DeckParty.UI
 
         void ShowRecap(PendingRecap pending)
         {
+            // Multiplayer shop summaries go to the panel at the bottom of the left column (it fades after 10 s), not a pop-up.
+            if (pending.Kind == RecapKind.Shop && shopRecapPanel != null)
+            {
+                var shops = new List<RecapEntry>();
+                foreach (var owner in pending.Owners)
+                    if (m_Recaps.TryGetValue(owner, out var shopRecord) && ShopEntry(owner, shopRecord.Shop) is RecapEntry shop) shops.Add(shop);
+                var state = View ?? State;
+                string when = state != null ? Loc.Get("game.night_of", "night", pending.Night, "total", state.TotalNights) : null;
+                if (shops.Count > 0) shopRecapPanel.Show(Loc.Get("recap.shop_title") + (when != null ? $"  <size=70%><color=#53535F>{when}</color></size>" : string.Empty), shops);
+                return;
+            }
+
             var entries = new List<RecapEntry>();
             PartyOutcome single = PartyOutcome.None;
             foreach (var owner in pending.Owners)
@@ -420,6 +440,7 @@ namespace DeckParty.UI
                 sb.Append("<color=#53535F>").Append(Loc.Get("recap.nothing_bought")).Append("</color>\n");
             }
 
+            foreach (var removed in shop.Removed) sb.Append(Loc.Get("recap.removed", "viewer", GuestVisuals.DisplayName(removed))).Append('\n');
             int raised = shop.End.Capacity - shop.Start.Capacity;
             if (raised > 0) sb.Append(Loc.Get("recap.sub_cap", ("from", shop.Start.Capacity), ("to", shop.End.Capacity), ("count", raised))).Append('\n');
             int powers = Mathf.Max(shop.PowersUsed, shop.End.PowerUses - shop.Start.PowerUses);

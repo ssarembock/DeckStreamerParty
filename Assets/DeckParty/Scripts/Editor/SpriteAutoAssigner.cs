@@ -63,6 +63,7 @@ namespace DeckParty.EditorTools
             ("scandal", GuestType.OnlineScandal), ("gatekeeper", GuestType.Gatekeeper), ("bunny", GuestType.BingeBunny),
             ("rabbit", GuestType.BingeBunny), ("hatewatcher", GuestType.HateWatcher), ("affiliate", GuestType.Affiliate),
             ("currency", GuestType.MasterOfCurrency), ("executivepr", GuestType.ExecutivePr), ("genz", GuestType.GenZWithJob),
+            ("jen", GuestType.DancingJen), ("dancer", GuestType.DancingJen),
         };
 
         [MenuItem("Deck Party/Art/Auto-Assign Sprites by Name", priority = 0)]

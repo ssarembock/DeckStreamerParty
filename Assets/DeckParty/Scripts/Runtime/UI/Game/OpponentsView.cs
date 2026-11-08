@@ -15,6 +15,10 @@ namespace DeckParty.UI
         [SerializeField] internal PlayerRowView rowPrefab;
 
         public event Action<ulong> PlayerClicked;
+        /// <summary>A player's mute button was pressed (toggle their emotes on this screen).</summary>
+        public event Action<ulong> MuteToggled;
+        /// <summary>Whether this player's emotes are muted on this screen (set by the game screen).</summary>
+        public Func<ulong, bool> IsMuted;
 
         readonly List<PlayerRowView> m_Rows = new List<PlayerRowView>();
         readonly List<ulong> m_RowIds = new List<ulong>();
@@ -35,6 +39,7 @@ namespace DeckParty.UI
                     int index = m_Rows.Count;
                     row.MakeClickable();
                     row.Clicked += () => OnRowClicked(index);
+                    row.MuteClicked += () => { if (index < m_RowIds.Count) MuteToggled?.Invoke(m_RowIds[index]); };
                     m_Rows.Add(row);
                     m_RowIds.Add(0);
                 }
@@ -42,12 +47,14 @@ namespace DeckParty.UI
                 var color = UIPalette.PlayerColor(p.ColorIndex);
                 m_RowIds[i] = p.ClientId;
                 m_Rows[i].gameObject.SetActive(true);
-                m_Rows[i].Set(p.DisplayName, Status(p, mode, session.ActivePlayer == p.ClientId, session.Stage), color,
+                m_Rows[i].Set(p.DisplayName, PanelLine(p), color,
                     mode != MatchMode.Race && (p.ReadyNextNight || (mode == MatchMode.SyncNights && session.Stage != RoundStage.Shopping && p.ReadyForShop)),
                     session.IsHostPlayer(p.ClientId), p.Rank, p.ClientId == session.LocalClientId);
                 m_Rows[i].SetStreamer((StreamerType)p.Streamer);
                 m_Rows[i].SetViewed(p.ClientId == viewedId, color);
                 m_Rows[i].SetPresence(PresenceLine != null ? PresenceLine(p.ClientId) : null);
+                bool other = p.ClientId != session.LocalClientId && p.Connected;
+                m_Rows[i].SetMute(other, other && IsMuted != null && IsMuted(p.ClientId));
             }
             for (int i = players.Count; i < m_Rows.Count; i++) m_Rows[i].gameObject.SetActive(false);
         }
@@ -67,7 +74,19 @@ namespace DeckParty.UI
             if (index < m_RowIds.Count && m_Rows[index].gameObject.activeSelf) PlayerClicked?.Invoke(m_RowIds[index]);
         }
 
-        /// <param name="stage">Free For All: where the round is (streams are private there, so no live details).</param>
+        /// <summary>
+        /// The in-game Players panel's line under a name: just the player's Clout and Cash and how many Trophy viewers they own
+        /// (the Trophy icon and a number). No stream number, status or record (watch a stream to see what they're doing).
+        /// </summary>
+        public static string PanelLine(NetPlayer p)
+        {
+            if (!p.Connected) return $"<color=#B9AED6>{Loc.Get("players.left")}</color>";
+            return Loc.Get("players.panel_line", ("subs", GuestVisuals.GiftedSubsText(p.Pop)),
+                ("cash", $"<color=#6BE38B>{GameIcons.Amount(ResourceIcon.Cash, p.Cash)}</color>"), ("owned", p.DiamondsOwned));
+        }
+
+        /// <summary>The longer status (game over table): stream, what the player is doing, resources and their record.</summary>
+        /// <param name="stage">Free For All: where the round is.</param>
         public static string Status(NetPlayer p, MatchMode mode, bool activeTurn, RoundStage stage = RoundStage.Shopping)
         {
             if (!p.Connected) return $"<color=#B9AED6>{Loc.Get("players.left")}</color>";

@@ -1,0 +1,85 @@
+Name,Original Name (Party House),Id,Status,Kind,Shop Cost (Clout),Clout,Cash,Deplatform Risk,Communities,Description
+Ineffective Troll,Wild Buddy,IneffectiveTroll,Active,Regular,Not sold (starting viewer),2,0,Yes,Core Fanbase; Troll Army,"Starting viewer only. Lots of noise, a little Deplatform Risk."
+Loyal Fan,Old Friend,LoyalFan,Active,Regular,2 (also a starting viewer),1,0,No,Core Fanbase,A basic starting viewer. Always shows up.
+Influential Troll,Monkey,InfluentialTroll,Active,Regular,3,4,0,Yes,Troll Army,"Lots of Clout, but trouble follows."
+Producer,Driver,Producer,Active,Regular,3,1,-1,No,Staff; Marketers,"Action (Shoutout): choose any viewer in the queue to join chat, if there's room."
+Whale,Rich Pal,Whale,Active,Regular,3 (also a starting viewer),0,1,No,Core Fanbase,A basic starting viewer who pays for your first Sub Cap upgrades.
+Chat Admin,Security,ChatAdmin,Active,Regular,4,1,-1,No,Staff; Gatekeepers,Action (Remove From Chat): remove one viewer from chat for the rest of the stream (even the Chat Admin).
+Cybersecurity Engineer,Watch Dog,CybersecurityEngineer,Active,Regular,4,3,-1,No,Staff; Voyeurs,"Action (Read Access): look at the next viewer in the queue, then let them in or deny them for the rest of the stream."
+Gatekeeper,Introvert,Gatekeeper,Active,Regular,4,1,0,No,Core Fanbase,You Shall Not Watch!: +1 Clout for every empty space in chat when scored.
+Normie,Hippie,Normie,Active,Regular,4,1,0,No,Core Fanbase; Mods,Cancels 1 Deplatform Risk while in chat.
+Paid Sponsorship,Ticket Taker,PaidSponsorship,Active,Regular,4,-1,3,No,Boomers,"Pays well, but viewers skip the ad: -1 Clout when scored."
+Account Manager,Caterer,AccountManager,Active,Regular,5,3,-1,No,Staff,Active: Permanently Increase any viewer card in chat by +1 cash reward. 
+Binge Bunny,Mascot,BingeBunny,Active,Regular,5,1,0,No,Core Fanbase,Algorithmic Rabbit Hole: +1 Clout for every Loyal Fan in chat.
+Crypto Enthusiast,Photographer,CryptoEnthusiast,Active,Regular,6,0,"-2, 1, 9, 16, 25",No,Millenial,New Logic: Score Similar to the Dancing Jen except it works on cash instead of clout and starts with a negative value. 
+Generous Donator,Greeter,GenerousDonator,Active,Regular,5,1,1,No,Hype Men,"Give to the Rich!: when joining, brings in the next viewer from the queue and scores them once right away (banked)."
+Hate-Watcher,Werewolf,HateWatcher,Active,Regular,5,4,0,Every other entrance,Troll Army,"Switches mood every time they join chat: hate-watching (+1 Deplatform Risk) on their first entrance, harmless on the next, and so on."
+Junior PR Manager,Grillmaster,JuniorPrManager,Active,Regular,5,2,-1,No,Staff; Gen-Z,"Action (Situation Defusal): send 1 random viewer in chat back to the queue. Every use sends one more (2, 3...), for good. Used actions stay used."
+Marketing Manager,Mr. Popular,MarketingManager,Active,Regular,5,4,-1,No,Staff; Marketers,Viral Moment: brings one random viewer along when joining. Can push chat over the Sub Cap.
+Mildly Risky Collaborator,Rock Star,MildlyRiskyCollaborator,Active,Regular,5,3,2,Yes,Content,"Big numbers, a little Deplatform Risk."
+Promo Code User,Comedian,PromoCodeUser,Active,Regular,5,0,-1,No,Core Fanbase; Full Stream,"+5 Clout, but only if chat is full when scored. Always costs 1 Cash."
+Highly Risky Collaborator,Gangster,HighlyRiskyCollaborator,Active,Regular,6,0,4,Yes,Content,"#NotHimToo?: big money, big Deplatform Risk."
+PR Manager,Athlete,PrManager,Active,Regular,6,3,-1,No,Staff; Gatekeepers,Action (Damage Control): send 5 random viewers in chat back to the queue so they can join again. Used actions stay used.
+Affiliate,Stylist,Affiliate,Active,Regular,7,0,-1,No,Gen-Z; Staff,Action (Checkout Code): a viewer in chat permanently earns +1 Cash more (up to 9 Cash). Costs 1 Cash when scored.
+Chat Arbitrator,Counselor,ChatArbitrator,Active,Regular,7,0,-1,No,Staff; Mods,"Action (Keep the Peace): clear the Deplatform Risk of every risky viewer in chat for the rest of the stream, even if they leave and come back."
+Die Hard Fan,Cute Dog,DieHardFan,Active,Regular,7,2,1,No,Core Fanbase; Mods,Uncancellable: cancels 1 Deplatform Risk while in chat.
+Distraught Cat,None (new to this game),DistraughtCat,Active,Regular,7,0,0,No,Gatekeepers,Everyone Leaves Me: gains +1 Clout or +1 Cash (at random) whenever another viewer leaves or is kicked.
+Risky Orbiter,Gambler,RiskyOrbiter,Active,Regular,7,2,3,Yes,Content,"Brings Clout and money, and a little Deplatform Risk."
+Bot Detector,Cupid,BotDetector,Active,Regular,8,1,0,No,Gatekeepers,Action (Bot Removal): remove two viewers sitting next to each other in chat for the rest of the stream (the Bot Detector can be one of them).
+Master of Currency,Writer,MasterOfCurrency,Active,Regular,8,0,1,No,Boomers; Troll Army,Chaos Ladder: +2 Cash for every viewer in chat who still has Deplatform Risk (cancelled Deplatform Risk still counts).
+Social Media Manager,Spy,SocialMediaManager,Active,Regular,8,3,-1,No,Staff; Voyeurs,"Action (Sneak Peek): look at the next viewer in the queue, then let them in or deny them for the rest of the stream."
+Billionaire Benefactor,Auctioneer,BillionaireBenefactor,Active,Regular,9,0,5,No,Boomers,"Action (once per stream for all of them): every viewer in chat drops to 0 Clout tonight, and you bank 1 Cash right now for each Billionaire Benefactor in chat."
+Tech Admin,Wrestler,TechAdmin,Active,Regular,9,2,0,No,Gatekeepers,Action (Admin Rights): remove one viewer for the rest of the stream (even the Tech Admin).
+Executive PR,Bartender,ExecutivePr,Active,Regular,11,1,-1,No,Staff; Boomers,No Bad Press: +2 Clout for every viewer in chat who still has Deplatform Risk (cancelled Deplatform Risk still counts).
+Online Scandal,Celebrity,OnlineScandal,Active,Regular,11,2,3,No,Content; Hype Men,Unwanted Guests: brings two random viewers along when joining. Can push chat over the Sub Cap.
+Gen Z with Job,Climber,GenZWithJob,Active,Regular,12,0,0,No,Gen-Z,"Secure The Bag: permanently gains +1 Cash every time they join chat (up to 9 Cash), even if the stream ends badly."
+Big Boomer,Dinosaur,BigBoomer,Active,Trophy,25,0,1,Yes,Boomers,Trophy. Opinion Express: adds 1 Deplatform Risk.
+Clippo The Clanker,Dragon,ClippoTheClanker,Active,Trophy,30,-2,-1,No,Staff,Trophy. Market Collapse: costs 1 Cash and 2 Clout when scored.
+Bigger Star,Mermaid,BiggerStar,Active,Trophy,35,0,0,No,Content,Trophy. Uplifting: brings one random viewer along when joining.
+Precocious Youth,Alien,PrecociousYouth,Active,Trophy,40,0,0,No,Content,Trophy. No extra effect.
+Internet Starpower,Unicorn,InternetStarpower,Active,Trophy,45,0,0,No,Content,Trophy. Can Do No Wrong: cancels 1 Deplatform Risk while in chat.
+Platform Owner,Ghost,PlatformOwner,Active,Trophy,45,0,3,No,Boomers; Gatekeepers,Trophy. Action (Free The Speech!): remove one viewer for the rest of the stream (even itself).
+Mainstream Celebrity,Superhero,MainstreamCelebrity,Active,Trophy,50,3,0,No,Content,Trophy. Mass Appeal.
+Senior Marketing Manager,Leprechaun,SeniorMarketingManager,Active,Trophy,50,4,-1,No,Staff; Millennials,Trophy. Product Placement.
+Evangelist,Genie,Evangelist,Active,Trophy,55,0,0,No,Core Fanbase; Hype Men,"Trophy. Action (2-for-1!): summon any viewer from the queue, even another Trophy."
+Cheems,None (new to this game),Cheems,Inactive,Regular,5,2,0,No,Core Fanbase; Zoomer (retired),"Don't Bonk Me: with a Doge in chat, cancels 1 Deplatform Risk and both Doge and Cheems get +2 Clout. Without one, -1 Clout per Deplatform Risk."
+Wojak,None (new to this game),Wojak,Inactive,Regular,5,1,0,No,Content; Millennials,"Shared Suffering: +2 Clout for every other viewer who is suffering (Deplatform Risk, negative stats, infected, zeroed or penalised), max +6."
+Bad Luck Brian,None (new to this game),BadLuckBrian,Inactive,Regular,6,4,0,Yes,Content; Millennials,"What Could Go Wrong?: once per stream, the first attempt to kick him or clear his Deplatform Risk fails, and he permanently gains +1 Clout."
+NPC Wojak,None (new to this game),NpcWojak,Inactive,Regular,6,0,0,No,Techspertise (retired); Armchair Activists (retired),"Current Thing: on joining, copies the printed Clout and Cash of the viewer who joined just before him. Not their action, Deplatform Risk or Trophy."
+Degen Dog,None (new to this game),DegenDog,Inactive,Regular,7,1,0,No,Memetics Division (retired),Such Synergy: +1 Clout for each different community in chat (max +5). Other Degen Dogs don't count.
+Doomer,None (new to this game),Doomer,Inactive,Regular,7,1,0,No,Content; Zoomer (retired),"Doomscroll: +2 Clout per Deplatform Risk in chat. At exactly 2 Deplatform Risk, also +2 Cash."
+Keyboard Cat,None (new to this game),KeyboardCat,Inactive,Regular,7,1,0,No,Techspertise (retired); Millennials,"Action (Play Him Off): kick another viewer. Gains +2 Clout if they had Deplatform Risk, otherwise +1 Cash. Their exit effects still happen."
+Side Eye Chloe,None (new to this game),SideEyeChloe,Inactive,Regular,7,1,0,No,Content; Zoomer (retired),While she's here you can see the next viewer in the queue. Action (Side Eye): send that viewer to the back of the queue.
+Forever Alone,None (new to this game),ForeverAlone,Inactive,Regular,8,1,0,No,Core Fanbase; Millennials,Table for One: +6 Clout if he's the only viewer when the stream ends. Otherwise +1 Clout per empty space.
+Karen,None (new to this game),Karen,Inactive,Regular,8,0,0,Yes,Troll Army; Boomers; Armchair Activists (retired),Action (I Demand a Refund): kick another viewer for the night and earn half their cost as Clout (max 8).
+Me Gusta,None (new to this game),MeGusta,Inactive,Regular,8,1,0,No,Troll Army; Millennials,"I Like That: gains +2 Clout whenever another viewer adds Deplatform Risk, and +1 Cash for each Deplatform Risk removed."
+Overly Attached Girlfriend,None (new to this game),OverlyAttachedGirlfriend,Inactive,Regular,8,1,0,No,Core Fanbase; Millennials,"Forever Yours: on joining, attaches to the best other viewer. Their Clout are doubled and they can't be kicked while she's here. If they're forced out, she leaves too."
+Pepe,None (new to this game),Pepe,Inactive,Regular,8,0,0,No,Content; Millennials,"Action (Mood Swing): choose Happy (+3 Clout), Sad (+3 Cash) or Angry (+6 Clout and +1 Deplatform Risk) until the stream ends."
+Stonks Guy,None (new to this game),StonksGuy,Inactive,Regular,8,0,1,No,Finance Bros (retired),"Action (Market Manipulation): invest 2 Clout or 1 Cash. If the stream succeeds you get triple back; if it fails, it's gone."
+Distracted Boyfriend,None (new to this game),DistractedBoyfriend,Inactive,Regular,9,2,0,No,Content; Millennials,"New Attraction: on joining, reveals 3 viewers in the queue. You may swap one viewer in chat for one of them; the replaced viewer sits out tonight."
+Grumpy Cat,None (new to this game),GrumpyCat,Inactive,Regular,9,2,0,No,Content; Millennials,Action (Absolutely Not): look at the next 3 viewers in the queue. Deny one for the night and choose who joins next.
+Pop Cat,None (new to this game),PopCat,Inactive,Regular,9,0,0,No,Content; Zoomer (retired),Pop Pop Pop: gains +1 Clout whenever any viewer uses an action. Every third action also earns +1 Cash.
+Roll Safe,None (new to this game),RollSafe,Inactive,Regular,9,2,0,No,Content; Armchair Activists (retired),"Action (Can't Lose If You Don't Play): a viewer becomes immune to further action effects tonight, good or bad. What they already have stays."
+Trollface,None (new to this game),Trollface,Inactive,Regular,9,0,0,Yes,Troll Army; Millennials,"Action (U Mad?): send another viewer back to the queue (they can join again tonight). Gains +2 Clout for every time that viewer has been trolled, including this one."
+Ugandan Knuckles,None (new to this game),UgandanKnuckles,Inactive,Regular,9,1,0,No,Troll Army; Zoomer (retired),"Follow Me: on joining, adds a temporary copy of himself to tonight's queue (copies don't make more copies). +1 Clout per other Knuckles in chat."
+Ballerina Cappuccina,None (new to this game),BallerinaCappuccina,Inactive,Regular,10,2,0,No,Content; Zoomer (retired),Action (Pirouette): two viewers swap their printed Clout for the rest of the night.
+Chad vs Virgin,None (new to this game),ChadVsVirgin,Inactive,Regular,10,2,0,No,Troll Army; Zoomer (retired),"Action (Know Your Place): compare printed Clout with another viewer. If theirs is lower, they permanently give Chad 1. If higher, Chad permanently loses 1."
+Dancing Baby,None (new to this game),DancingBaby,Inactive,Regular,10,1,0,No,Content; Millennials,"Looping Animation: whenever two actions in a row are the same type, gains +3 Clout (max +9 per stream)."
+Drakeposting,None (new to this game),Drakeposting,Inactive,Regular,10,1,0,No,Content; Millennials,Action (I Prefer This): pick two viewers. The first earns nothing tonight; the second doubles their printed Clout or Cash.
+Hide the Pain Harold,None (new to this game),HideThePainHarold,Inactive,Regular,10,2,0,No,Content; Boomers,Smile Through It: viewers in chat can't drop below their printed Clout. Gains +1 Clout for each drop he prevents (max +5).
+Bongo Cat,None (new to this game),BongoCat,Inactive,Regular,11,1,0,No,Techspertise (retired); Zoomer (retired),The Beat Goes On: every third viewer to join after Bongo Cat gives Bongo Cat and every viewer sharing one of its communities +2 Clout for the night.
+Rickroll,None (new to this game),Rickroll,Inactive,Regular,11,2,0,No,Troll Army; Millennials,"Action (Surprise!): another non-Trophy viewer temporarily becomes a random different character from the queue, with its stats and action. Back to normal after the stream."
+Tralalero Tralala,None (new to this game),TralaleroTralala,Inactive,Regular,11,3,0,No,Content; Zoomer (retired),Action (Tralalero Shuffle): swap two viewers' places in the joining order. Position-based bonuses update; join effects don't replay.
+Confused Math Lady,None (new to this game),ConfusedMathLady,Inactive,Regular,12,1,0,No,Finance Bros (retired),"Action (The Numbers Don't Add Up): for tonight, convert a viewer's Clout into Cash (2 Clout = 1 Cash) or their Cash into Clout (1 Cash = 2 Clout)."
+Success Kid,None (new to this game),SuccessKid,Inactive,Regular,12,1,0,No,Content; Millennials,"Action (Against All Odds): reroll the last viewer who joined at random (they go back to the queue and someone new joins), or peek at the next viewer and decide whether to approve them."
+This Is Fine Dog,None (new to this game),ThisIsFineDog,Inactive,Regular,12,1,0,No,Content; Millennials,"Denial: the first time Deplatform Risk would reach 3, the deplatforming is called off and all Deplatform Risk is cleared. This copy then leaves your Audience for good."
+Tung Tung Tung Sahur,None (new to this game),TungTungTungSahur,Inactive,Regular,12,2,0,No,Content; Zoomer (retired),Action (Three Strikes): strike another viewer. 1st strike: +2 Clout. 2nd: clears their Deplatform Risk. 3rd: kicks them and Tung Tung permanently gains +1 Clout. Strikes are remembered between streams.
+Disaster Girl,None (new to this game),DisasterGirl,Inactive,Regular,13,2,0,No,Troll Army,"Action (Accidental Fire): another viewer gets +1 Deplatform Risk and +3 Clout, and she gets +2 Clout. Can't be used if it would get the stream deplatformed."
+Skibidi Toilet,None (new to this game),SkibidiToilet,Inactive,Regular,13,2,0,Yes,Troll Army; Zoomer (retired),"Skibidi Invasion: on joining, infects another viewer (+2 Clout, +1 Deplatform Risk). Every time another viewer joins, the infection spreads to one more. Ends after the stream."
+Nyan Cat,None (new to this game),NyanCat,Inactive,Regular,14,1,0,No,Content; Millennials,"Rainbow Trail: every viewer without Deplatform Risk who joins after her in an unbroken row earns +1, +2, +3... Clout (max +6 each). A Deplatform Risk arrival breaks the chain."
+Sigma Male,None (new to this game),SigmaMale,Inactive,Regular,14,3,0,No,Finance Bros (retired); Zoomer (retired),The Grindset: +1 Clout per empty space (max +8). -1 Clout for every other Sigma Male in chat.
+Bombardiro Crocodilo,None (new to this game),BombardiroCrocodilo,Inactive,Regular,15,5,0,Yes,Troll Army; Zoomer (retired),Action (Bombardment): kick up to 3 other viewers and replace each one with a random viewer from the queue. Join and exit effects happen normally.
+Big Chungus,None (new to this game),BigChungus,Inactive,Regular,16,7,0,No,Content; Zoomer (retired),Absolute Chungus: takes up 3 spaces. +1 Clout for each point of Sub Cap above 10 (max +5).
+Gigachad,None (new to this game),Gigachad,Inactive,Regular,19,5,0,No,Finance Bros (retired); Zoomer (retired),Alpha Energy: +3 Clout if he's the only viewer with 5+ printed Clout. Each extra Gigachad gives every Gigachad -2 Clout.
+Bot,None (token),Bot,Inactive,Token,Not sold,0,0,No,None,A spam bot from a rival's stream. Takes up a space in chat and earns nothing. Gone after this stream.
+Dancing Jen,Dancer,DancingJen,Active,Regular,7,"1,4,9,16 or 25 depending on the number of Dancing Jens in chat. They are scored simulateneously and not individually. ",,,Millenial,"Score 1,4 9 ,16 , 25 (total) at scoring depending on the number of dancers in chat. Score the total of number of dancers in chat ^2 (with a maximum of 25). "

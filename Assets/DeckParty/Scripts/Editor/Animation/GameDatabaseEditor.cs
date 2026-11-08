@@ -6,7 +6,7 @@ namespace DeckParty.EditorTools
 {
     /// <summary>
     /// The Game Database inspector (Deck Party > Select Game Database): the stream art (viewer emojis, multiplayer emotes,
-    /// Deplatform / Server Down images, community icons), the platforms (animated logos and button colours), one compact row
+    /// Deplatform / Server Down images, community icons), the platforms (animated logos), one compact row
     /// per streamer with their platform and quotes, and one row per viewer with search and filters, the sprite (always the
     /// fallback), the round chat avatar, an optional Character Prefab and Animator Controller (which override the sprite),
     /// framing, and a checklist of the animation states the game looks for.
@@ -45,6 +45,9 @@ namespace DeckParty.EditorTools
         static readonly (SkinSlot slot, string label)[] s_UiIcons =
         {
             (SkinSlot.IconStreamChat, "Stream Chat title"),
+            (SkinSlot.IconTimer, "Countdown timers (hourglass)"),
+            (SkinSlot.IconRemoveViewer, "Remove a Viewer (shop)"),
+            (SkinSlot.IconMute, "Mute emotes (Players panel)"),
             (SkinSlot.IconCommunityBeats, "Community Beats title"),
             (SkinSlot.IconAudience, "Audience button (menu bar, shop)"),
             (SkinSlot.IconMenu, "Menu button"),
@@ -53,7 +56,7 @@ namespace DeckParty.EditorTools
             (SkinSlot.IconCash, "Cash (menu bar, text)"),
             (SkinSlot.IconDoor, "Sub Cap (menu bar, Raise Sub Cap)"),
             (SkinSlot.IconTrouble, "Deplatform Risk (pips, risky queue, avatars)"),
-            (SkinSlot.IconStar, "Plays (pips, avatars)"),
+            (SkinSlot.IconStar, "Trophies (pips, avatars, Players panel, text)"),
             (SkinSlot.IconAddViewer, "Add Viewer button"),
             (SkinSlot.IconEndStream, "End the Stream button"),
             (SkinSlot.IconCheck, "Approve / Confirm / Ready"),
@@ -92,7 +95,7 @@ namespace DeckParty.EditorTools
             if (m_ShowIcons) DrawUiIcons(db);
 
             EditorGUILayout.Space(8);
-            m_ShowPlatforms = EditorGUILayout.Foldout(m_ShowPlatforms, $"Platforms ({db.platforms.Count}: animated logos and button colours)", true, EditorStyles.foldoutHeader);
+            m_ShowPlatforms = EditorGUILayout.Foldout(m_ShowPlatforms, $"Platforms ({db.platforms.Count}: animated logos)", true, EditorStyles.foldoutHeader);
             if (m_ShowPlatforms) DrawPlatforms(db);
 
             EditorGUILayout.Space(8);
@@ -195,7 +198,7 @@ namespace DeckParty.EditorTools
         }
 
         /// <summary>
-        /// One block per satirical platform: the button colour and the animated logo's sprites, placement and timing, each
+        /// One block per satirical platform: the placeholder colours and the animated logo's sprites, placement and timing, each
         /// labelled with what it means on that platform (unused slots are hidden).
         /// </summary>
         void DrawPlatforms(GameDatabase db)
@@ -206,8 +209,9 @@ namespace DeckParty.EditorTools
                 return;
             }
             EditorGUILayout.HelpBox(
-                "Each streamer streams on one of these platforms (Streamers > Platform). The platform picks the animated logo at the top-left of the " +
-                "stream and shop, and the colour of its main buttons. Empty sprite slots use simple built-in shapes, so every logo animates before " +
+                "Each streamer streams on one of these platforms (Streamers > Platform). The platform only picks the animated logo at the top-left of the " +
+                "stream and shop: colours and buttons are the same on every platform. Empty sprite slots use simple built-in shapes (tinted with the " +
+                "Placeholder Colours), so every logo animates before " +
                 "you add art. Placement points are fractions of the logo box (0,0 bottom-left, 1,1 top-right). Changes show next game.", MessageType.None);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("noStreamerPlatform"), new GUIContent("No Streamer Platform"));
 
@@ -229,7 +233,8 @@ namespace DeckParty.EditorTools
                             EditorGUILayout.LabelField(ObjectNames.NicifyVariableName(art.platform.ToString()), $"{users} streamer{(users == 1 ? "" : "s")}", EditorStyles.boldLabel);
                             using (new EditorGUILayout.HorizontalScope())
                             {
-                                EditorGUILayout.PropertyField(element.FindPropertyRelative("accent"), new GUIContent("Button Colour"));
+                                EditorGUILayout.PropertyField(element.FindPropertyRelative("accent"), new GUIContent("Placeholder Colours",
+                                    "Colours of the built-in placeholder logo, used only while the logo has no sprite."));
                                 EditorGUILayout.PropertyField(element.FindPropertyRelative("accentContent"), GUIContent.none, GUILayout.Width(60));
                             }
                         }

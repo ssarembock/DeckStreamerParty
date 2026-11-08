@@ -23,7 +23,7 @@ namespace DeckParty.UI
     /// <para>
     /// The same view drives the round chat avatar (<see cref="avatarMode"/>, the ChatAvatar prefab): the viewer's head in a
     /// circle (Game Database > Avatar, or the portrait zoomed in), a ring whose colour shows their state, and while their
-    /// action is still unused the ring pulses in the platform colour and the avatar wiggles now and then. Names only show on hover.
+    /// action is still unused the ring pulses in the site accent and the avatar wiggles now and then. Names only show on hover.
     /// </para>
     /// </summary>
     public sealed class GuestCardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -181,7 +181,7 @@ namespace DeckParty.UI
         }
 
         /// <summary>
-        /// Avatar: while the viewer's action is unused, the ring pulses in the platform colour and the circle gives a little
+        /// Avatar: while the viewer's action is unused, the ring pulses in the site accent and the circle gives a little
         /// wiggle every few seconds, so players see at a glance which actions are still available.
         /// </summary>
         void UpdateActionCue()

@@ -104,8 +104,12 @@ namespace DeckParty
                 GameIcons.Tag(icon) + " " + Colored(value, zero ? UIPalette.TextDim : color);
 
             string risk = info.Trouble ? "+1" : info.CancelsTrouble ? "-1" : info.Type == GuestType.HateWatcher ? "0/+1" : "0";
-            return Item(ResourceIcon.Subs, Signed(info.Pop), info.Pop == 0, UIPalette.Gold) + "     " +
-                   Item(ResourceIcon.Cash, Signed(info.Cash), info.Cash == 0, UIPalette.Green) + "     " +
+            // Group-scoring cards: the group's total by how many are in chat (1 to 5).
+            bool jen = info.Type == GuestType.DancingJen, crypto = info.Type == GuestType.CryptoEnthusiast;
+            string subs = jen ? GameRules.DancingJenSteps : Signed(info.Pop);
+            string cash = crypto ? GameRules.CryptoEnthusiastSteps : Signed(info.Cash);
+            return Item(ResourceIcon.Subs, subs, info.Pop == 0 && !jen, UIPalette.Gold) + "     " +
+                   Item(ResourceIcon.Cash, cash, info.Cash == 0 && !crypto, UIPalette.Green) + "     " +
                    Item(ResourceIcon.Risk, risk, risk == "0", info.CancelsTrouble ? UIPalette.Teal : UIPalette.Red);
         }
 
@@ -130,6 +134,15 @@ namespace DeckParty
                     break;
                 case GuestType.GenZWithJob:
                     sb.Append(Colored(Loc.Get("card.grows_cash"), UIPalette.Green));
+                    break;
+                // Group-scoring cards: one total for all the copies in chat (1 to 5 of them).
+                case GuestType.DancingJen:
+                    sb.Append(Colored(Loc.Get("card.together", "value",
+                        Loc.Get("fmt.subs", "value", GameRules.DancingJenSteps, "n", 25)), UIPalette.Gold));
+                    break;
+                case GuestType.CryptoEnthusiast:
+                    sb.Append(Colored(Loc.Get("card.together", "value",
+                        Loc.Get("fmt.cash", "value", GameRules.CryptoEnthusiastSteps, "n", 25)), UIPalette.Green));
                     break;
                 default:
                     if (info.Pop != 0) sb.Append(PopText(info.Pop));

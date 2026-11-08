@@ -371,11 +371,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412311
-    m_Localized: Play
+    m_Localized: Trophy
     m_Metadata:
       m_Items: []
   - m_Id: 479412312
-    m_Localized: Plays
+    m_Localized: Trophies
     m_Metadata:
       m_Items: []
   - m_Id: 479412313
@@ -399,7 +399,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412318
-    m_Localized: '{count} {count:plural:Play|Plays}'
+    m_Localized: '{count} {count:plural:Trophy|Trophies}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412319
@@ -451,7 +451,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412331
-    m_Localized: Play
+    m_Localized: Trophy
     m_Metadata:
       m_Items: []
   - m_Id: 479412332
@@ -738,11 +738,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606530
-    m_Localized: '{count} PLAYS IN ONE STREAM! You win!'
+    m_Localized: '{count} TROPHIES IN ONE STREAM! You win!'
     m_Metadata:
       m_Items: []
   - m_Id: 483606531
-    m_Localized: '{count} PLAYS IN ONE STREAM! {player} wins!'
+    m_Localized: '{count} TROPHIES IN ONE STREAM! {player} wins!'
     m_Metadata:
       m_Items: []
   - m_Id: 483606532
@@ -1152,9 +1152,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606632
-    m_Localized: 'Pull off one stream with <b>4 Play viewers in chat at the same
+    m_Localized: 'Pull off one stream with <b>4 Trophy viewers in chat at the same
       time</b>, and end it successfully before your final night (25 by default).
-      Recruiting four Plays isn''t enough: they have to show up together.'
+      Recruiting four Trophies isn''t enough: they have to show up together.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606633
@@ -1206,8 +1206,8 @@ MonoBehaviour:
       Fees are paid from your {icon:cash}; any unpaid amount costs <b>7 {icon:subs}
       per {icon:cash}</b>.\nThe shop''s stock is <b>shared by every player</b>: each
       normal viewer has 4 copies for the whole match, and you can own at most 4 of
-      each; Plays are unlimited. You can''t remove viewers from your Audience, so
-      every recruit changes your odds.'
+      each; Trophies are unlimited. You can''t remove viewers from your Audience,
+      so every recruit changes your odds.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606641
@@ -1256,17 +1256,17 @@ MonoBehaviour:
       see their board live. In <b>Take Turns</b> mode (the default) players stream
       one after another each night while everyone else watches what they point at,
       pick and buy, and the season ends after the first night someone pulls off a
-      stream with 4 Plays. The host can set a turn timer. In <b>Synchronized Nights</b>
+      stream with 4 Trophies. The host can set a turn timer. In <b>Synchronized Nights</b>
       mode everyone plays the same night at once and the next night starts when every
       player is ready. In <b>Race</b> mode everyone plays at their own pace and the
-      first stream with 4 Plays wins instantly. If nobody wins, the best Play count
-      in a successful stream takes it.'
+      first stream with 4 Trophies wins instantly. If nobody wins, the best Trophy
+      count in a successful stream takes it.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606649
-    m_Localized: <b>Win:</b> 4 {icon:plays} Plays in one successful stream.\n<b>Icons:</b>
+    m_Localized: <b>Win:</b> 4 {icon:plays} Trophies in one successful stream.\n<b>Icons:</b>
       {icon:subs} Clout   {icon:cash} Cash   {icon:risk} Deplatform Risk   {icon:plays}
-      Plays (hover any icon to see what it is).\n<b>Add Viewer:</b> the next viewer
+      Trophies (hover any icon to see what it is).\n<b>Add Viewer:</b> the next viewer
       in the queue joins chat.  <b>End the Stream:</b> banks everyone's {icon:subs}
       and {icon:cash}.\n<b>3 net {icon:risk}</b> = deplatformed (no payout, one viewer
       gets a Temporary Ban).\n<b>Over your Sub Cap</b> = Server Down (no payout).\n<b>Communities:</b>
@@ -1643,28 +1643,28 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190146285569
     m_Localized: 'Every viewer belongs to none, one or several <b>communities</b>
-      (the small icons on their card). Each <b>different</b> viewer in chat gives
-      their community a point; two copies of the same card count once, and a viewer
-      who leaves takes their point with them. Every point makes the bonus bigger.
-      Watch the <b>Community Beats</b> beside the chat and hover any community icon
-      to see exactly what it does:\n{icon:CoreFanbase} <b>Core Fanbase</b>: 10% per
-      point that a Core Fanbase viewer scores twice.\n{icon:Staff} <b>Staff</b>:
-      10% per point that a Staff viewer''s {icon:cash} cost is waived.\n{icon:Content}
+      (the small icons on their card). A community scores once <b>two different</b>
+      viewers from it are in chat: two score 1 point, three score 2, and so on. Two
+      copies of the same card count once, and a viewer who leaves takes their point
+      with them. Every point makes the bonus bigger. Watch the <b>Community Beats</b>
+      beside the chat and hover any community icon to see exactly what it does:\n{icon:CoreFanbase}
+      <b>Core Fanbase</b>: 10% per point that a Core Fanbase viewer scores twice.\n{icon:Staff}
+      <b>Staff</b>: 10% per point that a Staff viewer''s {icon:cash} cost is waived.\n{icon:Content}
       <b>Content</b>: 10% per point that a viewer outside the Core Fanbase scores
       twice.\n{icon:Boomer} <b>Boomers</b>: Sub Cap upgrades cost 1 {icon:cash} less
       per point in your next shop; after a stream each Boomer has a 10% chance to
       leave your Audience for good.\n{icon:Millennial} <b>Millennials</b>: when a
       Boomer leaves, a random Millennial you own earns +1 {icon:cash} for good, once
       per point.\n{icon:GenZ} <b>Gen-Z</b>: after a stream, each Gen-Z viewer grows
-      +1 {icon:subs} or {icon:cash} for good per point (up to 3).\n{icon:Gatekeepers}
+      +1 {icon:subs} or {icon:cash} for good per point (up to 2).\n{icon:Gatekeepers}
       <b>Gatekeepers</b>: one more removal per point this stream.\n{icon:HypeMen}
-      <b>Hype Men</b>: 10 / 20 / 30% that a Server Down stream still scores.\n{icon:Trolls}
+      <b>Hype Men</b>: 10 / 20% that a Server Down stream still scores.\n{icon:Trolls}
       <b>Troll Army</b>: 1 random {icon:subs} or {icon:cash} per point when you get
-      deplatformed.\n{icon:Mods} <b>Mods</b>: 10% per point (up to 30%) that your
+      deplatformed.\n{icon:Mods} <b>Mods</b>: 10% per point (up to 20%) that your
       next stream starts with 1 {icon:risk} cancelled.\n{icon:FullStream} <b>Full
       Stream</b>: full-chat bonuses allow 1 empty space per point.\n{icon:Marketers}
       <b>Marketers</b>: one more recruit per point this stream.\n{icon:Voyeurs} <b>Voyeurs</b>:
-      one more peek per point this stream (up to 2).\n{icon:ShopControl} <b>Shop
+      one more peek per point this stream (up to 1).\n{icon:ShopControl} <b>Shop
       Control</b>: your first recruit in the next shop costs 1 {icon:subs} less per
       point.\n{icon:Saboteurs} <b>Saboteurs</b> (multiplayer): every rival''s next
       recruit costs 1 {icon:subs} more per point.'
@@ -1889,6 +1889,23 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123070513160
     m_Localized: '{viewer} inherits {cash} for good.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431123679961088
+    m_Localized: You can only remove viewers in the shop.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431123721904128
+    m_Localized: Your Audience must keep at least {0} viewers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431123721904129
+    m_Localized: You removed {viewer} from your Audience for good (-{cash} {icon:cash}).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431123721904130
+    m_Localized: '{player} removed {viewer} from their Audience for good (-{cash}
+      {icon:cash}).'
     m_Metadata:
       m_Items: []
   references:

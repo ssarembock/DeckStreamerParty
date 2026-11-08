@@ -1,7 +1,7 @@
 namespace DeckParty.Core
 {
     /// <summary>
-    /// All 83 guest types: the 82 viewer cards (44 in the current roster, the rest put aside; see
+    /// All 84 guest types: the viewer cards (44 in the current roster, the rest put aside; see
     /// <see cref="GuestCatalog.IsPutAside"/>) and the Bot token the Bots community sends. The numeric values are serialized
     /// (saves and network packets), so only ever append new entries at the end. Bump <see cref="StateSerializer"/>'s format
     /// version if you renumber. Identifiers follow the current English names; the Game Database migrates art stored under
@@ -107,6 +107,9 @@ namespace DeckParty.Core
 
         // --- V4.2: not a viewer card. Rival Bots communities send these into your next stream (takes a space, earns nothing). ---
         Bot = 82,
+
+        // --- Viewer card edits (2026-11-08): the original game's Dancer, scored as a group (see GameRules.DancingJenClout). ---
+        DancingJen = 83,
     }
 
     /// <summary>

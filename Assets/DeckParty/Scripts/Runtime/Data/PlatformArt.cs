@@ -5,7 +5,7 @@ namespace DeckParty
 {
     /// <summary>
     /// The satirical streaming platform a streamer broadcasts on. Purely visual: it picks the animated logo at the top-left of
-    /// the stream and shop and the accent colour of their buttons. Set per streamer in the Game Database. The names describe
+    /// the stream and shop (since 2026-11-08 nothing else changes per platform). Set per streamer in the Game Database. The names describe
     /// the parody logos; the real sites are never named in the game.
     /// </summary>
     public enum StreamPlatform
@@ -29,9 +29,9 @@ namespace DeckParty
         [HideInInspector] public string name;
         public StreamPlatform platform;
 
-        [Tooltip("The platform's button colour: primary buttons (Add Viewer, Go Live), highlights and the ring on viewers whose action is ready.")]
+        [Tooltip("Colour of the built-in placeholder logo (only used while the logo has no sprite). Buttons no longer change per platform.")]
         public Color accent = SitePalette.Accent;
-        [Tooltip("The icon colour on accent buttons: white or black, whichever reads best on the accent.")]
+        [Tooltip("Detail colour of the built-in placeholder logo (only used while the logo has no sprite).")]
         public Color accentContent = Color.white;
         [Tooltip("The logo's box, in pixels at 1080p.")]
         [Range(48f, 140f)] public float size = 84f;

@@ -97,13 +97,48 @@ namespace DeckParty.Networking
         public static string Describe(int seconds) => seconds <= 0 ? Loc.Get("timer.off") : Loc.Get("timer.seconds", "seconds", seconds);
     }
 
+    /// <summary>Which countdown is running in a match: none, the stream timer or the shop timer.</summary>
+    public enum MatchTimer : byte
+    {
+        None = 0,
+        Stream = 1,
+        Shop = 2,
+    }
+
+    /// <summary>Lobby choices for the shop timer (the stream timer uses <see cref="TurnTimers"/>): Off, 30, 60, 90 or 120 seconds.</summary>
+    public static class ShopTimers
+    {
+        public static readonly int[] Presets = { 0, 30, 60, 90, 120 };
+
+        public static string[] Labels
+        {
+            get
+            {
+                var labels = new string[Presets.Length];
+                for (int i = 0; i < Presets.Length; i++)
+                    labels[i] = Presets[i] <= 0 ? Loc.Get("timer.off") : Loc.Get("timer.seconds_short", "seconds", Presets[i]);
+                return labels;
+            }
+        }
+
+        public static int IndexOf(int seconds)
+        {
+            int index = Array.IndexOf(Presets, seconds);
+            return index >= 0 ? index : 0;
+        }
+
+        public static string Describe(int seconds) => seconds <= 0 ? Loc.Get("timer.off") : Loc.Get("timer.shop_seconds", "seconds", seconds);
+    }
+
     public struct MatchSettings : INetworkSerializable, IEquatable<MatchSettings>
     {
         public int ScenarioId;
         public byte Nights;
         public MatchMode Mode;
-        /// <summary>Take Turns: seconds per turn (0 = no timer).</summary>
+        /// <summary>The stream timer: seconds for one stream (Take Turns and Free For All; 0 = no timer).</summary>
         public ushort TurnSeconds;
+        /// <summary>The shop timer: seconds for one visit to the shop (Take Turns and Free For All; 0 = no timer).</summary>
+        public ushort ShopSeconds;
 
         public static MatchSettings Default => new MatchSettings
         {
@@ -119,11 +154,15 @@ namespace DeckParty.Networking
             serializer.SerializeValue(ref Nights);
             serializer.SerializeValue(ref Mode);
             serializer.SerializeValue(ref TurnSeconds);
+            serializer.SerializeValue(ref ShopSeconds);
         }
 
-        public bool Equals(MatchSettings other) => ScenarioId == other.ScenarioId && Nights == other.Nights && Mode == other.Mode && TurnSeconds == other.TurnSeconds;
+        public bool Equals(MatchSettings other) => ScenarioId == other.ScenarioId && Nights == other.Nights && Mode == other.Mode && TurnSeconds == other.TurnSeconds && ShopSeconds == other.ShopSeconds;
         public override bool Equals(object obj) => obj is MatchSettings other && Equals(other);
-        public override int GetHashCode() => (ScenarioId * 397) ^ (Nights * 31) ^ (int)Mode ^ (TurnSeconds << 8);
+        public override int GetHashCode() => (ScenarioId * 397) ^ (Nights * 31) ^ (int)Mode ^ (TurnSeconds << 8) ^ (ShopSeconds << 20);
+
+        /// <summary>Whether the stream and shop timers apply in this mode (not in Race, where everyone plays at their own pace).</summary>
+        public bool TimersApply => Mode == MatchMode.Turns || Mode == MatchMode.SyncNights;
     }
 
     /// <summary>A lobby member plus a live summary of their season (what opponents see).</summary>
@@ -358,8 +397,32 @@ namespace DeckParty.Networking
     public static class Emotes
     {
         public static readonly string[] All = { "POG", "KEKW", "LUL", "F", "W", "L", "o7", "<3", "monkaS", "Copium" };
-        public const float Cooldown = 1.2f;
+        /// <summary>Shortest time between two emotes from one player.</summary>
+        public const float Cooldown = 1.5f;
+        /// <summary>Anti-spam: at most <see cref="BurstCount"/> emotes per player in any <see cref="BurstWindow"/> seconds.</summary>
+        public const int BurstCount = 4;
+        public const float BurstWindow = 12f;
         public const int MaxSprites = 16;
+
+        /// <summary>
+        /// Whether one more emote fits the limits, given the times (seconds) of the sender's recent emotes, which it trims.
+        /// The host and the sending client both check, so spam never reaches anyone.
+        /// </summary>
+        public static bool Allowed(System.Collections.Generic.List<float> recent, float now)
+        {
+            recent.RemoveAll(t => now - t > BurstWindow);
+            if (recent.Count > 0 && now - recent[recent.Count - 1] < Cooldown) return false;
+            return recent.Count < BurstCount;
+        }
+
+        /// <summary>Seconds until the next emote is allowed (0 = now).</summary>
+        public static float WaitFor(System.Collections.Generic.List<float> recent, float now)
+        {
+            recent.RemoveAll(t => now - t > BurstWindow);
+            float wait = recent.Count > 0 ? Cooldown - (now - recent[recent.Count - 1]) : 0f;
+            if (recent.Count >= BurstCount) wait = Math.Max(wait, BurstWindow - (now - recent[0]));
+            return Math.Max(0f, wait);
+        }
 
         /// <summary>The sprite emotes, or null while the Game Database has none (the text emotes are used then).</summary>
         public static System.Collections.Generic.List<UnityEngine.Sprite> Sprites

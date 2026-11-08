@@ -78,6 +78,9 @@ namespace DeckParty
                 case GameEventType.GuestPurchased:
                     return mine ? Loc.Get("log.purchased_you", "viewer", viewer) : Loc.Get("log.purchased_other", "viewer", viewer, "player", owner);
 
+                case GameEventType.GuestDismissed:
+                    return mine ? Loc.Get("log.removed_you", "viewer", viewer, "cash", e.A) : Loc.Get("log.removed_other", ("viewer", viewer), ("player", owner), ("cash", e.A));
+
                 case GameEventType.HouseExpanded:
                     return Loc.Get("log.sub_cap_raised", "cap", e.A);
 

@@ -1799,6 +1799,94 @@ MonoBehaviour:
     m_Key: recap.inheritance
     m_Metadata:
       m_Items: []
+  - m_Id: 2431125118607360
+    m_Key: lobby.shop_timer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408000
+    m_Key: players.panel_line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408001
+    m_Key: players.mute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408002
+    m_Key: players.unmute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408003
+    m_Key: players.muted_toast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408004
+    m_Key: players.unmuted_toast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408005
+    m_Key: audience.communities_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408006
+    m_Key: audience.community_types
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408007
+    m_Key: audience.community_best
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408008
+    m_Key: audience.community_needs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408009
+    m_Key: audience.no_communities
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408010
+    m_Key: gate.waiting_streamers_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408011
+    m_Key: gate.streams_over_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408012
+    m_Key: shop.remove_viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408013
+    m_Key: shop.remove_viewer_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408014
+    m_Key: pick.remove_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408015
+    m_Key: pick.remove_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408016
+    m_Key: pick.remove_confirm_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408017
+    m_Key: pick.remove_confirm_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408018
+    m_Key: pick.remove_confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125307351040
+    m_Key: game.removed_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125307351041
+    m_Key: recap.removed
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

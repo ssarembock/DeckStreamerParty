@@ -127,7 +127,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469210
-    m_Localized: '{seconds} segundos por turno'
+    m_Localized: '{seconds} segundos por stream'
     m_Metadata:
       m_Items: []
   - m_Id: 437469211
@@ -237,7 +237,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 437469235
     m_Localized: "Empieza la temporada: {0}, {1} noches. \xA1Gana el primer stream
-      de {2} Plays!"
+      de {2} Trofeos!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469236
@@ -273,7 +273,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469244
-    m_Localized: "{0} tuvo {1} Plays en un stream. \xA1Uno m\xE1s y gana!"
+    m_Localized: "{0} tuvo {1} Trofeos en un stream. \xA1Uno m\xE1s y gana!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469245
@@ -294,11 +294,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469249
-    m_Localized: "\xA1{0} logr\xF3 un stream de {1} Plays y gana!"
+    m_Localized: "\xA1{0} logr\xF3 un stream de {1} Trofeos y gana!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469250
-    m_Localized: "\xA1{0} logr\xF3 un stream de {1} Plays! Terminando el stream {2}..."
+    m_Localized: "\xA1{0} logr\xF3 un stream de {1} Trofeos! Terminando el stream
+      {2}..."
     m_Metadata:
       m_Items: []
   - m_Id: 437469251
@@ -306,18 +307,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469252
-    m_Localized: "\xA1A {0} se le acab\xF3 el tiempo! Su stream termina y pasa el
-      turno."
+    m_Localized: "\xA1A {0} se le acab\xF3 el tiempo! Su stream termina (si hay que
+      banear, se elige un espectador al azar) y empieza el temporizador de la tienda."
     m_Metadata:
       m_Items: []
   - m_Id: 437469253
-    m_Localized: "\xA1{0} gana la temporada con {1} Plays en un stream en el stream
+    m_Localized: "\xA1{0} gana la temporada con {1} Trofeos en un stream en el stream
       {2}!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469254
-    m_Localized: "Nadie lleg\xF3 a {1} Plays. {0} se lo lleva con un r\xE9cord de
-      {2}."
+    m_Localized: "Nadie lleg\xF3 a {1} Trofeos. {0} se lo lleva con un r\xE9cord
+      de {2}."
     m_Metadata:
       m_Items: []
   - m_Id: 416590245085184
@@ -356,6 +357,47 @@ MonoBehaviour:
   - m_Id: 1670121132744704
     m_Localized: "\xA1Los Saboteadores de {0} hacen que el pr\xF3ximo reclutamiento
       de cada rival cueste {1} {icon:subs} m\xE1s!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121696055296
+    m_Localized: '{seconds} segundos por tienda'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998336
+    m_Localized: '{seconds} s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998337
+    m_Localized: "Temporizador del stream: cuando se acaba, el stream termina y punt\xFAa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998338
+    m_Localized: 'Temporizador de la tienda: cuando se acaba, terminas de comprar.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998339
+    m_Localized: Tu turno.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998340
+    m_Localized: Turno de {player}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998341
+    m_Localized: "A {0} se le acab\xF3 el tiempo de compras. Pasa el turno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998342
+    m_Localized: "\xA1Se acab\xF3 el tiempo! Todos los streams que siguen terminan
+      ahora y todos van a la tienda."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998343
+    m_Localized: "\xA1Se acab\xF3 el tiempo de compras! Empieza el pr\xF3ximo stream."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121742192640
+    m_Localized: "\xA1M\xE1s despacio! Podr\xE1s enviar otro emote en {seconds} s."
     m_Metadata:
       m_Items: []
   references:

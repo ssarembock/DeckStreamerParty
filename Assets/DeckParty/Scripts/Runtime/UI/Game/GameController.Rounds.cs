@@ -7,8 +7,8 @@ using UnityEngine;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// Free For All: the shop gate (Go to the Shop, the 3-2-1 countdown, first come first served) and the round summary. In
-    /// this mode every stream runs at once and nobody can watch anyone else, so the summary is how you see what the others did.
+    /// Free For All: the shop gate (Go to the Shop, the 3-2-1 countdown, first come first served) and the round summary.
+    /// Every stream runs at once; click a player in the Players panel to watch theirs (read-only), and your own name to come back.
     /// </summary>
     public sealed partial class GameController
     {
@@ -25,6 +25,8 @@ namespace DeckParty.UI
         void OnStageChanged(RoundStage stage)
         {
             if (planning.gate != null) planning.gate.ClearCountdown();
+            // The shop is about to open for everyone: whoever is watching another stream comes back to their own board.
+            if ((stage == RoundStage.Countdown || stage == RoundStage.Shopping) && !ViewingOwn) ShowBoard(LocalId);
             if (stage == RoundStage.Shopping && m_Net.Phase == MatchPhase.InGame && State != null && State.Phase == GamePhase.Planning)
             {
                 banner.Show(Loc.Get("game.shop_open"), Loc.Get("game.shop_open_sub"), UIPalette.Gold, 1.2f);
@@ -39,6 +41,8 @@ namespace DeckParty.UI
         {
             var s = State;
             if (m_Net == null || s == null || s.Phase != GamePhase.Planning || !ViewingOwn || m_Net.Stage != RoundStage.Streaming) return;
+            // Ready for the Shop only once every stream of the round is over (the summary is on the gate then).
+            if (!AllStreamsOver()) return;
             m_Net.TryGetLocalPlayer(out var me);
             m_Net.SetReadyForShop(!me.ReadyForShop);
             AudioService.Play(Sfx.Click);
@@ -71,12 +75,41 @@ namespace DeckParty.UI
             }
             ctx.StillStreaming = string.Join(", ", streaming);
             ctx.NotReadyForShop = string.Join(", ", notReady);
+            ctx.AllStreamsOver = streaming.Count == 0;
+            // The round's stream summary goes on the gate (it replaces the summary pop-up in Free For All).
+            ctx.StreamRecap = ctx.AllStreamsOver ? RoundStreamEntries() : null;
+        }
+
+        /// <summary>Free For All: whether every stream of this round is over (nobody still connected is streaming).</summary>
+        bool AllStreamsOver()
+        {
+            if (m_Net == null) return true;
+            foreach (var p in m_Net.PlayersSnapshot())
+                if (p.Connected && !p.Finished && p.GamePhase != GamePhase.Planning) return false;
+            return true;
+        }
+
+        /// <summary>Free For All: every player's summary of this round's stream (a column each), for the gate over the shop.</summary>
+        List<RecapEntry> RoundStreamEntries()
+        {
+            var own = State;
+            if (m_Net == null || own == null) return null;
+            var entries = new List<RecapEntry>();
+            foreach (var p in m_Net.PlayersSnapshot())
+            {
+                if (!p.Connected || !m_Recaps.TryGetValue(p.ClientId, out var r) || r.Stream == null || !r.Stream.Done || r.Stream.Night != own.Night) continue;
+                var entry = StreamEntry(p.ClientId, r.Stream);
+                if (entry != null) entries.Add(entry);
+            }
+            return entries.Count > 0 ? entries : null;
         }
 
         /// <summary>The bar above the board in Free For All: where the round is, and the round summary button.</summary>
         bool UpdateFreeForAllBar()
         {
             if (!FreeForAll || m_ViewBar == null || m_Net.Phase != MatchPhase.InGame) return false;
+            // Watching someone else: the usual watching bar, with the button back to your own stream.
+            if (!ViewingOwn) return false;
             string text;
             Color accent;
             switch (m_Net.Stage)

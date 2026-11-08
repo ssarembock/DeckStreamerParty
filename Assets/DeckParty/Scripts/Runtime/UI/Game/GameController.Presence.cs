@@ -121,7 +121,9 @@ namespace DeckParty.UI
         {
             if (m_Net == null || !m_Net.IsSpawned || m_Net.Phase != MatchPhase.InGame) return;
             // Only the player who can act has intent worth showing (in Take Turns, the active player).
-            if (!CanAct)
+            // Free For All: everyone acts at once, so only send it while somebody is actually watching your stream.
+            bool watched = !FreeForAll || (m_Net.TryGetLocalPlayer(out var me) && me.Watchers > 0);
+            if (!CanAct || !watched)
             {
                 if (m_LastSent.Kind != PresenceKind.None) Send(PresenceMessage.None);
                 return;
@@ -190,7 +192,7 @@ namespace DeckParty.UI
         /// <summary>The live status line under a player in the Players panel ("choosing Trollface's target..."), or null.</summary>
         string PresenceLine(ulong clientId)
         {
-            // Free For All: nobody watches anyone else, so nothing about what they're doing right now.
+            // Free For All: the Players panel stays short (watch a stream to see what that player is doing).
             if (clientId == LocalId || FreeForAll || !m_Presence.TryGetValue(clientId, out var msg)) return null;
             var s = m_Net != null ? m_Net.GetState(clientId) : null;
             if (s == null) return null;
@@ -225,9 +227,23 @@ namespace DeckParty.UI
         }
 
         /// <summary>Every player sees the emote pop up from the sender's avatar in the Players panel.</summary>
+        /// <summary>Players whose emotes you muted (Players panel). Only this screen is affected.</summary>
+        readonly HashSet<ulong> m_Muted = new HashSet<ulong>();
+
+        void ToggleMute(ulong clientId)
+        {
+            if (clientId == LocalId) return;
+            bool muted = m_Muted.Add(clientId);
+            if (!muted) m_Muted.Remove(clientId);
+            ToastView.Show(Loc.Get(muted ? "players.muted_toast" : "players.unmuted_toast", "player", NameOf(clientId)), ToastKind.Info);
+            AudioService.Play(Sfx.Click);
+            if (m_Net != null) opponents.Render(m_Net, m_ViewId);
+        }
+
         void OnEmoteReceived(ulong sender, int index)
         {
             if (emotes == null || !FxLibrary.Current.emotes) return;
+            if (m_Muted.Contains(sender)) return;
             var row = opponents != null && opponents.gameObject.activeInHierarchy ? opponents.RowFor(sender) : null;
             emotes.Show(NameOf(sender), ColorOf(sender), index, row != null ? row.AvatarRect : null);
         }
@@ -252,13 +268,23 @@ namespace DeckParty.UI
         void UpdateTurnTimer()
         {
             if (turnTimer == null) return;
-            if (m_Net == null || !m_Net.IsSpawned || !TakingTurns || m_Net.Phase != MatchPhase.InGame)
+            if (m_Net == null || !m_Net.IsSpawned || !m_Net.Settings.TimersApply || m_Net.Phase != MatchPhase.InGame || m_Net.Timer == MatchTimer.None)
             {
                 turnTimer.Render(-1f, null, false);
                 return;
             }
+            // Just the hourglass and the number; the hover says which timer and (Take Turns) whose turn it is.
+            bool shop = m_Net.Timer == MatchTimer.Shop;
             ulong active = m_Net.ActivePlayer;
-            turnTimer.Render(active == DeckPartyNetSession.NoPlayer ? -1f : m_Net.TurnSecondsLeft, NameOf(active), active == LocalId);
+            bool mine = !TakingTurns || active == LocalId;
+            if (TakingTurns && active == DeckPartyNetSession.NoPlayer)
+            {
+                turnTimer.Render(-1f, null, false);
+                return;
+            }
+            string tip = Loc.Get(shop ? "timer.shop_tip" : "timer.stream_tip");
+            if (TakingTurns) tip += "\n" + (mine ? Loc.Get("timer.yours_tip") : Loc.Get("timer.theirs_tip", "player", NameOf(active)));
+            turnTimer.Render(m_Net.TurnSecondsLeft, tip, mine);
         }
     }
 }

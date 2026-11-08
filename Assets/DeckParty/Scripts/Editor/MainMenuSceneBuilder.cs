@@ -338,6 +338,9 @@ namespace DeckParty.EditorTools
             var customTimer = EditorUI.Input(timerRow, "CustomSeconds", "lobby.custom_seconds", 24, 3);
             customTimer.contentType = TMP_InputField.ContentType.IntegerNumber;
             EditorUI.Layout(customTimer, 130, 60, 0);
+            // The shop timer (Take Turns and Free For All): its own countdown for the shop half.
+            var shopTimer = EditorUI.Selector(settings.transform, "ShopTimer", "lobby.shop_timer");
+            EditorUI.Layout(shopTimer, -1, 96);
             var summary = EditorUI.Text(settings.transform, "Summary", string.Empty, 19, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
             EditorUI.Layout(summary, -1, 110, -1, 1);
             summary.enableAutoSizing = true;
@@ -377,6 +380,7 @@ namespace DeckParty.EditorTools
             view.venueSelector = venue;
             view.timerSelector = timer;
             view.customTimerInput = customTimer;
+            view.shopTimerSelector = shopTimer;
             view.streamerButton = streamerButton;
             view.streamerLabel = streamerLabel;
             view.settingsSummary = summary;

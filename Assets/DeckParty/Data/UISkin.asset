@@ -267,3 +267,24 @@ MonoBehaviour:
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconTimer
+    slot: 36
+    sprite: {fileID: 21300000, guid: a0c4b99771ab1c9419c5adf3f83076ae, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconMute
+    slot: 37
+    sprite: {fileID: 21300000, guid: 918622da6a235a148803591c7482cbee, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconRemoveViewer
+    slot: 38
+    sprite: {fileID: 21300000, guid: 2c563be257a12fe4a8db2a9ea80c60bd, type: 3}
+    imageType: 0
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}

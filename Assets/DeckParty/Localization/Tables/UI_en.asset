@@ -85,7 +85,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125583
-    m_Localized: Plays {count}/{max}
+    m_Localized: Trophies {count}/{max}
     m_Metadata:
       m_Items: []
   - m_Id: 1574125584
@@ -107,7 +107,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125588
-    m_Localized: '<b>Plays</b>\nThis stream: {now}\nIn your Audience: {owned}\nBest
+    m_Localized: '<b>Trophies</b>\nThis stream: {now}\nIn your Audience: {owned}\nBest
       ever in one stream: {best}\nGet {goal} in one stream to win!'
     m_Metadata:
       m_Items: []
@@ -121,7 +121,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125591
-    m_Localized: '{count} Plays are here! End the stream now to win!'
+    m_Localized: '{count} Trophies are here! End the stream now to win!'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125592
@@ -448,7 +448,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514205
-    m_Localized: 'Plays owned: {owned}    Best Plays in one stream: {best}'
+    m_Localized: 'Trophies owned: {owned}    Best Trophies in one stream: {best}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514206
@@ -524,7 +524,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514224
-    m_Localized: '{subs}  {cash}  Plays owned {owned}  best {best}'
+    m_Localized: '{subs}  {cash}  Trophies owned {owned}  best {best}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514225
@@ -536,8 +536,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514227
-    m_Localized: '{count} Plays streamed together on stream {night} of {total}. {set}
-      cleared!'
+    m_Localized: '{count} Trophies streamed together on stream {night} of {total}.
+      {set} cleared!'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514228
@@ -549,8 +549,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514230
-    m_Localized: No stream with {count} Plays this time. Your best was {best} at
-      once.
+    m_Localized: No stream with {count} Trophies this time. Your best was {best}
+      at once.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514231
@@ -570,15 +570,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514235
-    m_Localized: 'Stream {night}: {count} Plays in one stream.'
+    m_Localized: 'Stream {night}: {count} Trophies in one stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514236
-    m_Localized: 'Nobody reached {count} Plays. Best Play count: {best}.'
+    m_Localized: 'Nobody reached {count} Trophies. Best Trophy count: {best}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514237
-    m_Localized: '{count} PLAYS IN ONE STREAM!'
+    m_Localized: '{count} TROPHIES IN ONE STREAM!'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514238
@@ -596,7 +596,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514241
     m_Localized: 'Earned: {icon:subs} {subs}   {icon:cash} {cash}    Audience: {viewers}
-      viewers ({diamonds} Plays)    Sub Cap: {cap}'
+      viewers ({diamonds} Trophies)    Sub Cap: {cap}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514242
@@ -774,7 +774,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514285
-    m_Localized: Welcome to {set}! Get {count} Plays into one stream within {nights}
+    m_Localized: Welcome to {set}! Get {count} Trophies into one stream within {nights}
       streams.
     m_Metadata:
       m_Items: []
@@ -901,11 +901,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514316
-    m_Localized: '{count} Plays in one stream!'
+    m_Localized: '{count} Trophies in one stream!'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514317
-    m_Localized: No stream with {count} Plays this time
+    m_Localized: No stream with {count} Trophies this time
     m_Metadata:
       m_Items: []
   - m_Id: 1582514318
@@ -1071,7 +1071,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514355
-    m_Localized: '{actor}: choose a non-Play viewer to Rickroll.'
+    m_Localized: '{actor}: choose a non-Trophy viewer to Rickroll.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514356
@@ -1140,7 +1140,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514372
-    m_Localized: Go live, grow your Audience and get {count} Plays into one stream.
+    m_Localized: Go live, grow your Audience and get {count} Trophies into one stream.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514373
@@ -1221,7 +1221,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: 'Character set: <color=#FFC94A>11 random viewers + 3 random Plays</color>,
+    m_Localized: 'Character set: <color=#FFC94A>11 random viewers + 3 random Trophies</color>,
       rolled when the season starts.'
     m_Metadata:
       m_Items: []
@@ -1252,7 +1252,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514399
     m_Localized: Up to 6 players. Same character set, separate streams. First stream
-      with 4 Plays wins.
+      with 4 Trophies wins.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514400
@@ -1369,7 +1369,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514428
-    m_Localized: Turn Timer
+    m_Localized: Stream Timer
     m_Metadata:
       m_Items: []
   - m_Id: 1582514429
@@ -1381,7 +1381,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514431
-    m_Localized: 'Turn timer: {timer}'
+    m_Localized: "Stream timer: {timer}  \xB7  Shop timer: {shop}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514432
@@ -1423,20 +1423,20 @@ MonoBehaviour:
   - m_Id: 1582514441
     m_Localized: each round, players stream one after another while everyone else
       watches live. The season ends after the first round in which someone gets {count}
-      Plays.
+      Trophies.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514442
-    m_Localized: play at your own pace. The first stream with {count} Plays wins
+    m_Localized: play at your own pace. The first stream with {count} Trophies wins
       instantly. Click a player to watch them.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514443
-    m_Localized: 'everyone streams at the same time and nobody can watch anyone else.
-      When every stream is over and everyone clicks Go to the Shop, a 3-2-1 countdown
-      opens the shop for all at once: first come, first served. The first round in
-      which someone gets {count} Plays ends the season. The only mode for 3 or more
-      players.'
+    m_Localized: 'everyone streams at the same time; click a player to watch their
+      stream live (read-only), and your own name to come back. When every stream
+      is over and everyone clicks Go to the Shop, a 3-2-1 countdown opens the shop
+      for all at once: first come, first served. The first round in which someone
+      gets {count} Trophies ends the season. The only mode for 3 or more players.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514444
@@ -1782,8 +1782,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 994296414289920
-    m_Localized: <b>Plays</b>\nViewers with this icon are Plays. Have {goal} in chat
-      at once and end the stream well to win.
+    m_Localized: <b>Trophies</b>\nViewers with this icon are Trophies. Have {goal}
+      in chat at once and end the stream well to win.
     m_Metadata:
       m_Items: []
   - m_Id: 1064940082913280
@@ -1856,6 +1856,97 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670124655960070
     m_Localized: '{viewer} inherited +1 {icon:cash}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125118607360
+    m_Localized: Shop Timer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408000
+    m_Localized: '{subs}  {cash}  {icon:plays} {owned}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408001
+    m_Localized: Mute {player}'s emotes (only on your screen).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408002
+    m_Localized: Unmute {player}'s emotes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408003
+    m_Localized: '{player}''s emotes are muted.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408004
+    m_Localized: '{player}''s emotes are back.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408005
+    m_Localized: Communities
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408006
+    m_Localized: '{count} different {count:plural:viewer|viewers}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408007
+    m_Localized: 'best {points} {points:plural:point|points}: {effect}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408008
+    m_Localized: needs {count} different viewers to score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408009
+    m_Localized: No communities in this Audience yet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408010
+    m_Localized: Waiting for other streamers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408011
+    m_Localized: Every stream is over!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408012
+    m_Localized: Remove a Viewer ({cost})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408013
+    m_Localized: Take one viewer card out of your Audience for good. Each removal
+      costs 1 {icon:cash} more than the last. Your Audience keeps at least {min}
+      viewers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408014
+    m_Localized: Remove a Viewer ({cost})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408015
+    m_Localized: Choose the viewer card to remove for good. Your Audience keeps at
+      least {min} viewers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408016
+    m_Localized: Remove for good?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408017
+    m_Localized: '{viewer} leaves your Audience for good. This costs {cost}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408018
+    m_Localized: Remove
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125307351040
+    m_Localized: '{viewer} left your Audience for good.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125307351041
+    m_Localized: '- {viewer} (removed)'
     m_Metadata:
       m_Items: []
   references:

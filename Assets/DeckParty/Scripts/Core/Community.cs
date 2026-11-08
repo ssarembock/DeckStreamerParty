@@ -4,8 +4,8 @@ namespace DeckParty.Core
 {
     /// <summary>
     /// A viewer's community. A viewer belongs to none, one or several (see <see cref="GuestCatalog.CommunitiesOf"/>).
-    /// Every <b>different</b> viewer in chat from a community gives it one point, in real time: two copies of the same card
-    /// count once, and a viewer leaving chat takes its point away. Points give the bonuses in <see cref="Communities"/>.
+    /// From the second <b>different</b> viewer in chat a community scores, in real time: two different viewers score 1 point, three score 2 and so on (two copies of the same card
+    /// count once), and a viewer leaving chat takes its point away. Points give the bonuses in <see cref="Communities"/>.
     /// Values are saved and sent over the network, so only ever append.
     /// <para>V5 (ViewerCardsAndCommunityLogic.xlsx): the communities in <see cref="Communities.All"/> are in the game. The
     /// others (<see cref="Communities.IsRetired"/>) keep their rules and art in the project but nobody belongs to them, so
@@ -74,54 +74,63 @@ namespace DeckParty.Core
     /// Community rules and tuning. Chances are whole percentages, rolled with the season's deterministic RNG, so the host
     /// and every client agree. The communities in the game (V5):
     /// <list type="bullet">
-    /// <item>Core Fanbase: 10% per point (max 90%) that each Core Fanbase viewer scores twice.</item>
-    /// <item>Staff: 10% per point (max 90%) that each Staff viewer's Cash cost is waived when they're scored.</item>
+    /// <item>Core Fanbase: 20% per point (max 4 points, 80%) that each Core Fanbase viewer scores twice.</item>
+    /// <item>Staff: 30% per point (max 3 points, 90%) that each Staff viewer's Cash cost is waived when they're scored.</item>
     /// <item>Boomers: each point makes Sub Cap upgrades 1 Cash cheaper in your next shop. After a scored stream each Boomer
     /// in chat has a 10% chance to leave your Audience for good (and a Millennial inherits).</item>
     /// <item>Gen-Z: after a scored stream, each Gen-Z viewer in chat permanently gains +1 Clout or +1 Cash (random) per point.</item>
     /// <item>Gatekeepers: each point gives one more use of a Gatekeeper's eviction action this stream.</item>
-    /// <item>Hype Men: 10% per point (max 30%) that a Server Down stream still scores.</item>
+    /// <item>Hype Men: 10% per point (max 2 points, 20%) that a Server Down stream still scores.</item>
     /// <item>Troll Army (Trolls): 1 random Clout or Cash per point when the stream is deplatformed.</item>
-    /// <item>Mods: 10% per point (max 30%), rolled when the stream is scored, that your next stream starts with 1 Risk cancelled.</item>
+    /// <item>Mods: 10% per point (max 2 points, 20%), rolled when the stream is scored, that your next stream starts with 1 Risk cancelled.</item>
     /// <item>Millennials: each time a Boomer leaves your Audience, a random Millennial you own permanently earns +1 Cash,
     /// once per point (at least once).</item>
     /// <item>Full Stream: "chat is full" bonuses count chat as full with up to 1 empty space per point.</item>
-    /// <item>Marketers: each point gives one more use of a Marketer's recruit action this stream.</item>
+    /// <item>Marketers: each point (max 3) gives one more use of a Marketer's recruit action this stream.</item>
     /// <item>Saboteurs (multiplayer): each point makes every rival's first recruit in their next shop cost 1 Clout more.</item>
     /// <item>Shop Control: each point makes your first recruit in the next shop cost 1 Clout less.</item>
-    /// <item>Voyeurs: each point (max 2) gives one more use of a Voyeur's peek action this stream.</item>
-    /// <item>Content: 10% per point (max 90%) that each viewer outside the Core Fanbase scores twice.</item>
+    /// <item>Voyeurs: each point (max 1) gives one more use of a Voyeur's peek action this stream.</item>
+    /// <item>Content: 30% per point (max 3 points, 90%) that each viewer outside the Core Fanbase scores twice.</item>
     /// </list>
     /// The retired communities' numbers are kept below for when they come back.
     /// </summary>
     public static class Communities
     {
+        /// <summary>
+        /// Different viewers from a community needed in chat before it scores its first point (PlayTestUpdates: one viewer is
+        /// not a community). Every further different viewer adds a point, so the score is (different viewers - 1).
+        /// </summary>
+        public const int MembersForFirstPoint = 2;
+
         /// <summary>Number of <see cref="Community"/> values (array size for scores). Not all of them are in the game.</summary>
         public const int Count = 23;
 
         // --- V5 communities ---
-        public const int CoreFanbasePercentPerPoint = 10;
-        public const int CoreFanbaseMaxPoints = 9;
-        public const int StaffPercentPerPoint = 10;
-        public const int StaffMaxPoints = 9;
-        public const int ContentPercentPerPoint = 10;
-        public const int ContentMaxPoints = 9;
+        // Viewer card edits (2026-11-08, Communities.csv): Core Fanbase 20% a point up to 4, Staff and Content 30% up to 3.
+        public const int CoreFanbasePercentPerPoint = 20;
+        public const int CoreFanbaseMaxPoints = 4;
+        public const int StaffPercentPerPoint = 30;
+        public const int StaffMaxPoints = 3;
+        public const int ContentPercentPerPoint = 30;
+        public const int ContentMaxPoints = 3;
         /// <summary>Boomers: Cash off each Sub Cap upgrade in the next shop, per point.</summary>
         public const int BoomerDiscountPerPoint = 1;
         /// <summary>Boomers: chance (%) that each Boomer in chat leaves the Audience for good after a scored stream.</summary>
         public const int BoomerRetirePercent = 10;
         /// <summary>Millennials: Cash a Millennial inherits each time.</summary>
         public const int InheritanceCash = 1;
-        public const int GenZMaxPoints = 3;
+        public const int GenZMaxPoints = 2;
         public const int HypeMenPercentPerPoint = 10;
-        public const int HypeMenMaxPoints = 3;
+        public const int HypeMenMaxPoints = 2;
         public const int TrollsRewardPerPoint = 1;
         public const int ModsPercentPerPoint = 10;
-        public const int ModsMaxPoints = 3;
+        public const int ModsMaxPoints = 2;
         public const int FullStreamMaxPoints = 3;
         public const int SaboteurMaxPoints = 5;
         public const int ShopControlMaxPoints = 5;
-        public const int VoyeursMaxPoints = 2;
+        public const int VoyeursMaxPoints = 1;
+        /// <summary>Marketers: extra recruit uses this stream, at most (Communities.csv, 2026-11-08).</summary>
+        public const int MarketersMaxPoints = 3;
 
         // --- retired communities (kept for when they come back) ---
         public const int CoreFanbasePointsPerCancel = 3;
@@ -208,6 +217,7 @@ namespace DeckParty.Core
                 case Community.Saboteurs: return SaboteurMaxPoints;
                 case Community.ShopControl: return ShopControlMaxPoints;
                 case Community.Voyeurs: return VoyeursMaxPoints;
+                case Community.Marketers: return MarketersMaxPoints;
                 // Retired.
                 case Community.Techspertise: return TechspertiseMaxPoints;
                 case Community.FinanceBros: return FinanceMaxPoints;

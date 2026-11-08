@@ -20,8 +20,15 @@ namespace DeckParty.UI
         [SerializeField] internal Image streamerPortrait;
         [SerializeField] internal Image streamerPlaceholder;
         [SerializeField] internal TMP_Text streamerInitials;
+        [Tooltip("Optional (in-game Players panel): mutes this player's emotes on your screen. Hidden on your own row.")]
+        [SerializeField] internal Button muteButton;
+        [Tooltip("The mute button's white fill; it turns red while the player is muted.")]
+        [SerializeField] internal Image muteFill;
+        [SerializeField] internal TooltipTrigger muteTooltip;
 
         public event Action Clicked;
+        /// <summary>The mute button was pressed (the Players panel toggles that player's emotes).</summary>
+        public event Action MuteClicked;
 
         /// <summary>The player's avatar: their streamer portrait, or the colour swatch for players without a streamer (emotes pop up from here).</summary>
         public RectTransform AvatarRect
@@ -117,6 +124,26 @@ namespace DeckParty.UI
             navigation.mode = Navigation.Mode.None;
             m_Button.navigation = navigation;
             m_Button.onClick.AddListener(() => Clicked?.Invoke());
+        }
+
+        bool m_MuteHooked;
+
+        /// <summary>
+        /// Shows the mute button (other players' rows in the in-game Players panel) and whether that player is muted: a red
+        /// fill while their emotes are hidden. <paramref name="available"/> false hides it (your own row, the lobby, results).
+        /// </summary>
+        public void SetMute(bool available, bool muted)
+        {
+            if (muteButton == null) return;
+            if (!m_MuteHooked)
+            {
+                m_MuteHooked = true;
+                muteButton.onClick.AddListener(() => MuteClicked?.Invoke());
+            }
+            muteButton.gameObject.SetActive(available);
+            if (!available) return;
+            if (muteFill != null) muteFill.color = muted ? SitePalette.Danger : SitePalette.Surface;
+            if (muteTooltip != null) muteTooltip.Text = Loc.Get(muted ? "players.unmute" : "players.mute", "player", m_Name ?? string.Empty);
         }
 
         /// <summary>Outlines the row whose stream is on screen. Call after <see cref="Set"/>.</summary>

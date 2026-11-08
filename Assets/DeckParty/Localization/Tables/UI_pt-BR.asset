@@ -85,7 +85,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125583
-    m_Localized: Plays {count}/{max}
+    m_Localized: "Trof\xE9us {count}/{max}"
     m_Metadata:
       m_Items: []
   - m_Id: 1574125584
@@ -108,7 +108,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125588
-    m_Localized: "<b>Plays</b>\\nNesta live: {now}\\nNa sua Audi\xEAncia: {owned}\\nRecorde
+    m_Localized: "<b>Trof\xE9us</b>\\nNesta live: {now}\\nNa sua Audi\xEAncia: {owned}\\nRecorde
       em uma live: {best}\\nJunte {goal} em uma live pra vencer!"
     m_Metadata:
       m_Items: []
@@ -122,7 +122,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125591
-    m_Localized: "Os {count} Plays est\xE3o aqui! Encerre a live agora pra vencer!"
+    m_Localized: "Os {count} Trof\xE9us est\xE3o aqui! Encerre a live agora pra vencer!"
     m_Metadata:
       m_Items: []
   - m_Id: 1574125592
@@ -452,7 +452,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514205
-    m_Localized: 'Plays: {owned}    Recorde de Plays em uma live: {best}'
+    m_Localized: "Trof\xE9us: {owned}    Recorde de Trof\xE9us em uma live: {best}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514206
@@ -529,7 +529,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514224
-    m_Localized: '{subs}  {cash}  Plays {owned}  recorde {best}'
+    m_Localized: "{subs}  {cash}  Trof\xE9us {owned}  recorde {best}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514225
@@ -541,7 +541,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514227
-    m_Localized: "{count} Plays juntos na live {night} de {total}. {set} conclu\xEDdo!"
+    m_Localized: "{count} Trof\xE9us juntos na live {night} de {total}. {set} conclu\xEDdo!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514228
@@ -553,8 +553,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514230
-    m_Localized: "Dessa vez n\xE3o rolou live de {count} Plays. Seu melhor foi {best}
-      de uma vez."
+    m_Localized: "Dessa vez n\xE3o rolou live de {count} Trof\xE9us. Seu melhor foi
+      {best} de uma vez."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514231
@@ -574,15 +574,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514235
-    m_Localized: "Live {night}: {count} Plays numa live s\xF3."
+    m_Localized: "Live {night}: {count} Trof\xE9us numa live s\xF3."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514236
-    m_Localized: "Ningu\xE9m chegou a {count} Plays. Melhor marca: {best}."
+    m_Localized: "Ningu\xE9m chegou a {count} Trof\xE9us. Melhor marca: {best}."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514237
-    m_Localized: LIVE DE {count} PLAYS!
+    m_Localized: "LIVE DE {count} TROF\xC9US!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514238
@@ -600,7 +600,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514241
     m_Localized: "Ganho: {icon:subs} {subs}   {icon:cash} {cash}    Audi\xEAncia:
-      {viewers} espectadores ({diamonds} Plays)    Limite: {cap}"
+      {viewers} espectadores ({diamonds} Trof\xE9us)    Limite: {cap}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514242
@@ -778,7 +778,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514285
-    m_Localized: Bem-vindo a {set}! Junte {count} Plays numa live em {nights} lives.
+    m_Localized: "Bem-vindo a {set}! Junte {count} Trof\xE9us numa live em {nights}
+      lives."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514286
@@ -907,11 +908,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514316
-    m_Localized: '{count} Plays numa live!'
+    m_Localized: "{count} Trof\xE9us numa live!"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514317
-    m_Localized: "Dessa vez n\xE3o rolou live de {count} Plays"
+    m_Localized: "Dessa vez n\xE3o rolou live de {count} Trof\xE9us"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514318
@@ -1079,7 +1080,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514355
-    m_Localized: "{actor}: escolha um espectador que n\xE3o seja Play pra dar Rickroll."
+    m_Localized: "{actor}: escolha um espectador que n\xE3o seja Trof\xE9u pra dar
+      Rickroll."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514356
@@ -1148,8 +1150,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514372
-    m_Localized: "Entre ao vivo, aumente sua Audi\xEAncia e junte {count} Plays numa
-      \xFAnica live."
+    m_Localized: "Entre ao vivo, aumente sua Audi\xEAncia e junte {count} Trof\xE9us
+      numa \xFAnica live."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514373
@@ -1231,7 +1233,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: "Elenco: <color=#FFC94A>11 espectadores aleat\xF3rios + 3 Plays
+    m_Localized: "Elenco: <color=#FFC94A>11 espectadores aleat\xF3rios + 3 Trof\xE9us
       aleat\xF3rios</color>, sorteados quando a temporada come\xE7a."
     m_Metadata:
       m_Items: []
@@ -1262,7 +1264,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514399
     m_Localized: "At\xE9 6 jogadores. Mesmo elenco, lives separadas. Vence a primeira
-      live de 4 Plays."
+      live de 4 Trof\xE9us."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514400
@@ -1380,7 +1382,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514428
-    m_Localized: "Cron\xF4metro de turno"
+    m_Localized: "Cron\xF4metro da live"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514429
@@ -1392,7 +1394,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514431
-    m_Localized: "Cron\xF4metro de turno: {timer}"
+    m_Localized: "Cron\xF4metro da live: {timer}  \xB7  Cron\xF4metro da loja: {shop}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514432
@@ -1434,20 +1436,21 @@ MonoBehaviour:
   - m_Id: 1582514441
     m_Localized: "a cada rodada os jogadores fazem live um depois do outro enquanto
       os outros assistem ao vivo. A temporada acaba depois da primeira rodada em
-      que algu\xE9m junta {count} Plays."
+      que algu\xE9m junta {count} Trof\xE9us."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514442
-    m_Localized: jogue no seu ritmo. A primeira live de {count} Plays vence na hora.
-      Clique num jogador pra assistir.
+    m_Localized: "jogue no seu ritmo. A primeira live de {count} Trof\xE9us vence
+      na hora. Clique num jogador pra assistir."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514443
-    m_Localized: "todo mundo faz live ao mesmo tempo e ningu\xE9m v\xEA os outros.
-      Quando todas as lives acabam e cada um clica em Ir pra loja, uma contagem 3-2-1
-      abre a loja pra todos ao mesmo tempo: quem chegar primeiro leva. A primeira
-      rodada em que algu\xE9m junta {count} Plays encerra a temporada. O \xFAnico
-      modo pra 3 ou mais jogadores."
+    m_Localized: "todo mundo faz live ao mesmo tempo; clique num jogador pra assistir
+      a live dele ao vivo (s\xF3 olhar) e no seu nome pra voltar. Quando todas as
+      lives acabam e cada um clica em Ir pra loja, uma contagem 3-2-1 abre a loja
+      pra todos ao mesmo tempo: quem chegar primeiro leva. A primeira rodada em que
+      algu\xE9m junta {count} Trof\xE9us encerra a temporada. O \xFAnico modo pra
+      3 ou mais jogadores."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514444
@@ -1801,8 +1804,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 994296414289920
-    m_Localized: "<b>Plays</b>\\nEspectadores com este \xEDcone s\xE3o Plays. Tenha
-      {goal} no chat ao mesmo tempo e encerre bem a live pra vencer."
+    m_Localized: "<b>Trof\xE9us</b>\\nEspectadores com este \xEDcone s\xE3o Trof\xE9us.
+      Tenha {goal} no chat ao mesmo tempo e encerre bem a live pra vencer."
     m_Metadata:
       m_Items: []
   - m_Id: 1064940082913280
@@ -1875,6 +1878,97 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670124655960070
     m_Localized: '{viewer} herdou +1 {icon:cash}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125118607360
+    m_Localized: "Cron\xF4metro da loja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408000
+    m_Localized: '{subs}  {cash}  {icon:plays} {owned}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408001
+    m_Localized: "Silenciar os emotes de {player} (s\xF3 na sua tela)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408002
+    m_Localized: Voltar a ver os emotes de {player}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408003
+    m_Localized: Os emotes de {player} foram silenciados.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408004
+    m_Localized: Os emotes de {player} voltaram.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408005
+    m_Localized: Comunidades
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408006
+    m_Localized: '{count} {count:plural:espectador diferente|espectadores diferentes}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408007
+    m_Localized: "m\xE1ximo {points} {points:plural:ponto|pontos}: {effect}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408008
+    m_Localized: precisa de {count} espectadores diferentes pra pontuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408009
+    m_Localized: "Ainda n\xE3o h\xE1 comunidades nesta audi\xEAncia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408010
+    m_Localized: Esperando os outros streamers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408011
+    m_Localized: Todas as lives acabaram!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408012
+    m_Localized: Remover um espectador ({cost})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408013
+    m_Localized: "Tire de vez uma carta de espectador da sua audi\xEAncia. Cada remo\xE7\xE3o
+      custa 1 {icon:cash} a mais que a anterior. Sua audi\xEAncia fica com pelo menos
+      {min} espectadores."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408014
+    m_Localized: Remover um espectador ({cost})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408015
+    m_Localized: "Escolha a carta de espectador pra remover de vez. Sua audi\xEAncia
+      fica com pelo menos {min} espectadores."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408016
+    m_Localized: Remover de vez?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408017
+    m_Localized: "{viewer} sai da sua audi\xEAncia de vez. Custa {cost}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125265408018
+    m_Localized: Remover
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125307351040
+    m_Localized: "{viewer} saiu da sua audi\xEAncia de vez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431125307351041
+    m_Localized: '- {viewer} (removido)'
     m_Metadata:
       m_Items: []
   references:

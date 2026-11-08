@@ -86,6 +86,7 @@ namespace DeckParty.Core
                 case CommandType.ExpandHouse: return Expand(s, events);
                 case CommandType.StartNextNight: return StartNextNight(s, events);
                 case CommandType.UseStreamerPower: return UsePower(s, events);
+                case CommandType.RemoveGuest: return Dismiss(s, cmd.TargetA, events);
                 default: return CommandResult.Fail(Err.Of("err.unknown_command"));
             }
         }
@@ -158,7 +159,8 @@ namespace DeckParty.Core
 
         /// <summary>
         /// Each community's score right now (indexed by <see cref="Community"/>): how many <b>different</b> viewers in chat
-        /// belong to it. Two copies of the same card count once; a Rickrolled viewer counts as the character they've become.
+        /// belong to it, minus one (a lone viewer is not a community, so it scores 0). Two copies of the same card count once; a
+        /// Rickrolled viewer counts as the character they've become.
         /// </summary>
         public static int[] CommunityScores(PlayerState s)
         {
@@ -176,6 +178,8 @@ namespace DeckParty.Core
                 for (int c = 0; c < Communities.Count; c++)
                     if ((mask & (1 << c)) != 0) scores[c]++;
             }
+            // One viewer is not a community: it takes two different viewers to score 1, three to score 2, and so on.
+            for (int c = 0; c < scores.Length; c++) scores[c] = Math.Max(0, scores[c] - Communities.MembersForFirstPoint + 1);
             return scores;
         }
 
@@ -227,6 +231,8 @@ namespace DeckParty.Core
         sealed class ScoreContext
         {
             public int Doges, Cheems, Gigachads, Sigmas, Knuckles, Harolds, LoyalFans;
+            /// <summary>Group-scoring cards in chat (Dancing Jen, Crypto Enthusiast) and the first copy of each (index), or -1.</summary>
+            public int Jens, Cryptos, JenLead = -1, CryptoLead = -1;
             /// <summary>Different communities among the viewers in chat other than Doges.</summary>
             public int CommunityCount;
             public int BigPrinted;
@@ -371,6 +377,14 @@ namespace DeckParty.Core
             {
                 var g = guests[i];
                 if (g == null) continue;
+                if (g.Kind == GuestType.DancingJen && ctx.Jens++ == 0) ctx.JenLead = i;
+                else if (g.Kind == GuestType.CryptoEnthusiast && ctx.Cryptos++ == 0) ctx.CryptoLead = i;
+            }
+
+            for (int i = 0; i < guests.Length; i++)
+            {
+                var g = guests[i];
+                if (g == null) continue;
                 bool penalised = (g.Kind == GuestType.Gigachad && ctx.Gigachads > 1) ||
                                  (g.Kind == GuestType.SigmaMale && ctx.Sigmas > 1) ||
                                  (g.Kind == GuestType.Cheems && ctx.Doges == 0 && ctx.NetTrouble > 0);
@@ -441,7 +455,26 @@ namespace DeckParty.Core
                 case GuestType.ExecutivePr:
                     pop += GameRules.PerRiskyViewerBonus * ctx.Troublemakers;
                     break;
+
+                // --- Group-scoring cards: the copies in chat share one total from the table ---
+                case GuestType.DancingJen:
+                    pop += GroupShare(GameRules.DancingJenClout(ctx.Jens), ctx.Jens, index == ctx.JenLead);
+                    break;
+                case GuestType.CryptoEnthusiast:
+                    cash += GroupShare(GameRules.CryptoEnthusiastCash(ctx.Cryptos), ctx.Cryptos, index == ctx.CryptoLead);
+                    break;
             }
+        }
+
+        /// <summary>
+        /// One copy's part of a group total: the total split evenly (3 Jens score 3 each = 9), the remainder on the first
+        /// copy in chat (2 Crypto Enthusiasts: +1 and 0). The parts always add up to the table's total.
+        /// </summary>
+        static int GroupShare(int total, int copies, bool lead)
+        {
+            if (copies <= 0) return 0;
+            int share = total / copies;
+            return lead ? total - share * (copies - 1) : share;
         }
 
         /// <summary>
@@ -788,7 +821,7 @@ namespace DeckParty.Core
         {
             if (GuestCatalog.Get(type).IsDiamond) return int.MaxValue;
             int rivals = (int)type < s.RivalTaken.Length ? s.RivalTaken[(int)type] : 0;
-            return Math.Max(0, GameRules.SharedStockPerGuest - TakenFromShop(s, type) - rivals);
+            return Math.Max(0, GuestCatalog.Get(type).ShopStock - TakenFromShop(s, type) - rivals);
         }
 
         /// <summary>
@@ -801,6 +834,36 @@ namespace DeckParty.Core
             if (!info.Purchasable) return 0;
             if (info.IsDiamond) return int.MaxValue;
             return Math.Max(0, Math.Min(info.MaxCopies - s.CountOwned(type), SharedLeft(s, type)));
+        }
+
+        /// <summary>What Remove a Viewer costs right now (Cash): 2 for the first, 1 more for each one since.</summary>
+        public static int RemovalCost(PlayerState s) => GameRules.RemovalCost(s.Removals);
+
+        /// <summary>Why Remove a Viewer can't be bought right now (null when it can). Doesn't check which viewer.</summary>
+        public static string GetRemoveBlocker(PlayerState s)
+        {
+            if (s.Phase != GamePhase.Planning) return Err.Of("err.remove_between");
+            if (s.PermanentCount <= GameRules.MinAudience) return Err.Of("err.min_audience", GameRules.MinAudience);
+            int cost = RemovalCost(s);
+            if (s.Cash < cost) return Err.Of("err.needs_cash", cost);
+            return null;
+        }
+
+        /// <summary>Remove a Viewer: pays the Cash and takes one card out of the Audience for good (it goes back to the shop's stock).</summary>
+        static CommandResult Dismiss(PlayerState s, int guestId, List<GameEvent> ev)
+        {
+            var blocker = GetRemoveBlocker(s);
+            if (blocker != null) return CommandResult.Fail(blocker);
+            var g = s.Find(guestId);
+            if (g == null || g.Temporary) return CommandResult.Fail(Err.Of("err.unknown_viewer"));
+
+            int cost = RemovalCost(s);
+            s.Cash -= cost;
+            s.Removals++;
+            s.Rolodex.Remove(g);
+            if (s.BannedNextParty == guestId) s.BannedNextParty = -1;
+            Emit(ev, GameEventType.GuestDismissed, g, cost);
+            return CommandResult.Success;
         }
 
         public static string GetExpandBlocker(PlayerState s)

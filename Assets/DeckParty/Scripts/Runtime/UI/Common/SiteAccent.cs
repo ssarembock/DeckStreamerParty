@@ -4,8 +4,8 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// Colours a graphic with the current platform's accent (<see cref="SiteTheme"/>): Fill for accent buttons and badges,
-    /// Content for the icon on an accent button, Line for accent text and outlines on white. Updates when the streamer on
+    /// Colours a graphic with the site accent (<see cref="SiteTheme"/>, the same on every platform): Fill for accent buttons and badges,
+    /// Content for the icon on an accent button, Line for accent text and outlines on white. Re-applies when the streamer on
     /// screen changes platform.
     /// </summary>
     [RequireComponent(typeof(Graphic))]

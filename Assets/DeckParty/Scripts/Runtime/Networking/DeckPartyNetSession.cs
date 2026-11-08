@@ -33,6 +33,8 @@ namespace DeckParty.Networking
         readonly NetworkVariable<ulong> m_ActivePlayer = new NetworkVariable<ulong>(NoPlayer);
         /// <summary>Take Turns timer: server time when the active player's turn runs out (0 = no timer running).</summary>
         readonly NetworkVariable<double> m_TurnDeadline = new NetworkVariable<double>(0);
+        /// <summary>Which timer is running (<see cref="MatchTimer"/>): the stream timer or the shop timer.</summary>
+        readonly NetworkVariable<byte> m_TimerKind = new NetworkVariable<byte>(0);
         /// <summary>Free For All: where the round is (a <see cref="RoundStage"/>).</summary>
         readonly NetworkVariable<byte> m_RoundStage = new NetworkVariable<byte>((byte)RoundStage.Streaming);
         /// <summary>Free For All: server time when the countdown ends and the shop opens.</summary>
@@ -51,9 +53,12 @@ namespace DeckParty.Networking
         readonly List<GameEvent> m_Scratch = new List<GameEvent>();
         Coroutine m_TurnRoutine;
         bool m_TurnEnding;
+        /// <summary>Host: which half of the turn / round the timers are on (set even when that half has no timer).</summary>
+        MatchTimer m_TimerStage;
         // Which board each player is looking at (for the "watching" count) and emote spam protection.
         readonly Dictionary<ulong, ulong> m_Viewing = new Dictionary<ulong, ulong>();
-        readonly Dictionary<ulong, float> m_LastEmote = new Dictionary<ulong, float>();
+        /// <summary>Each player's recent emote times (the host's anti-spam check, <see cref="Emotes.Allowed"/>).</summary>
+        readonly Dictionary<ulong, List<float>> m_EmoteTimes = new Dictionary<ulong, List<float>>();
         readonly Dictionary<ulong, float> m_LastPresence = new Dictionary<ulong, float>();
 
         public event Action PlayersChanged;
@@ -84,7 +89,7 @@ namespace DeckParty.Networking
         public ulong ActivePlayer => m_ActivePlayer.Value;
         public bool TakingTurns => Settings.Mode == MatchMode.Turns;
 
-        /// <summary>Free For All: streams run at once, nobody watches anyone else, and the shop opens for everyone together.</summary>
+        /// <summary>Free For All: streams run at once (anyone may watch anyone, read-only), and the shop opens for everyone together.</summary>
         public bool FreeForAll => Settings.Mode == MatchMode.SyncNights;
 
         /// <summary>Free For All: where the round is (always Shopping in the other modes, where everyone shops at their own pace).</summary>
@@ -115,7 +120,10 @@ namespace DeckParty.Networking
             }
         }
 
-        /// <summary>Seconds left in the active player's turn, or -1 when there's no timer.</summary>
+        /// <summary>The running countdown: the stream timer or the shop timer (None when neither runs).</summary>
+        public MatchTimer Timer => m_TurnDeadline.Value > 0 ? (MatchTimer)m_TimerKind.Value : MatchTimer.None;
+
+        /// <summary>Seconds left on the running timer (the stream or the shop), or -1 when there's no timer.</summary>
         public float TurnSecondsLeft
         {
             get
@@ -400,6 +408,7 @@ namespace DeckParty.Networking
             foreach (var id in m_Games.Keys) ServerBroadcastState(id, null);
             // Everyone starts on night 1 with the doors open, so the first player's turn needs no setup.
             m_ActivePlayer.Value = settings.Mode == MatchMode.Turns ? NextTurnPlayer() : NoPlayer;
+            ServerStartTimer(MatchTimer.Stream, FirstTimerGrace);
 
             ServerHeadline(Core.Err.Of("mp.season_begins", "@s" + settings.ScenarioId, settings.Nights) + Core.Err.Separator + GameRules.DiamondsToWin);
             NetworkManager.SceneManager.LoadScene(SceneNames.Game, LoadSceneMode.Single);
@@ -486,8 +495,9 @@ namespace DeckParty.Networking
             ulong sender = rpcParams.Receive.SenderClientId;
             if (index >= Emotes.Count || !IsConnectedPlayer(sender)) return;
             float now = Time.unscaledTime;
-            if (m_LastEmote.TryGetValue(sender, out var last) && now - last < Emotes.Cooldown) return;
-            m_LastEmote[sender] = now;
+            if (!m_EmoteTimes.TryGetValue(sender, out var recent)) m_EmoteTimes[sender] = recent = new List<float>();
+            if (!Emotes.Allowed(recent, now)) return;
+            recent.Add(now);
             ReceiveEmoteRpc(sender, index);
         }
 
@@ -539,7 +549,7 @@ namespace DeckParty.Networking
             }
 
             if (Settings.Mode == MatchMode.SyncNights && m_ReadyNextNight.Contains(sender) &&
-                (cmd.Type == CommandType.BuyGuest || cmd.Type == CommandType.ExpandHouse || cmd.Type == CommandType.UseStreamerPower))
+                (cmd.Type == CommandType.BuyGuest || cmd.Type == CommandType.ExpandHouse || cmd.Type == CommandType.UseStreamerPower || cmd.Type == CommandType.RemoveGuest))
             {
                 ServerReject(sender, "mp.marked_ready");
                 return;
@@ -569,6 +579,7 @@ namespace DeckParty.Networking
             if (state.Phase != GamePhase.Planning) m_ReadyForShop.Remove(sender);
             ServerUpdateSummary(sender);
             ServerSyncSharedShop();
+            ServerCheckTurnStage(sender, state);
             if (Settings.Mode == MatchMode.Turns && state.IsGameOver) ServerEndTurn(sender, GameOverTurnDelay);
             ServerEvaluateProgress();
         }
@@ -582,7 +593,8 @@ namespace DeckParty.Networking
 
         /// <summary>Commands that belong to the shop half of a turn (gated in Free For All until the shop opens).</summary>
         static bool IsShopCommand(CommandType type) =>
-            type == CommandType.BuyGuest || type == CommandType.ExpandHouse || type == CommandType.UseStreamerPower || type == CommandType.StartNextNight;
+            type == CommandType.BuyGuest || type == CommandType.ExpandHouse || type == CommandType.UseStreamerPower || type == CommandType.StartNextNight ||
+            type == CommandType.RemoveGuest;
 
         [Rpc(SendTo.Server)]
         void ReadyForShopRpc(bool ready, RpcParams rpcParams = default)
@@ -1074,6 +1086,7 @@ namespace DeckParty.Networking
         {
             m_ShopOpensAt.Value = NetworkManager.ServerTime.Time + MatchModes.ShopCountdownSeconds;
             m_RoundStage.Value = (byte)RoundStage.Countdown;
+            ServerStartTimer(MatchTimer.None);
         }
 
         void ServerOpenShop()
@@ -1081,6 +1094,7 @@ namespace DeckParty.Networking
             m_RoundStage.Value = (byte)RoundStage.Shopping;
             m_ShopOpensAt.Value = 0;
             ServerHeadline("mp.shop_open");
+            ServerStartTimer(MatchTimer.Shop);
             ServerEvaluateProgress();
         }
 
@@ -1104,7 +1118,11 @@ namespace DeckParty.Networking
 
             m_ReadyNextNight.Clear();
             m_ReadyForShop.Clear();
-            if (FreeForAll) m_RoundStage.Value = (byte)RoundStage.Streaming;
+            if (FreeForAll)
+            {
+                m_RoundStage.Value = (byte)RoundStage.Streaming;
+                ServerStartTimer(MatchTimer.Stream);
+            }
             foreach (var id in ids) ServerUpdateSummary(id);
             if (night > 0) ServerHeadline(Core.Err.Of("mp.night_begins", night));
         }
@@ -1116,6 +1134,7 @@ namespace DeckParty.Networking
         {
             m_ReadyNextNight.Add(clientId);
             m_TurnDeadline.Value = 0;
+            m_TimerKind.Value = (byte)MatchTimer.None;
             ServerUpdateSummary(clientId);
 
             if (delay <= 0f)
@@ -1141,37 +1160,50 @@ namespace DeckParty.Networking
             if (m_TurnRoutine != null) StopCoroutine(m_TurnRoutine);
             m_TurnRoutine = null;
             m_TurnEnding = false;
-            if (IsServer) m_TurnDeadline.Value = 0;
+            if (!IsServer) return;
+            m_TurnDeadline.Value = 0;
+            m_TimerKind.Value = (byte)MatchTimer.None;
         }
 
         void Update()
         {
             if (!IsServer || Phase != MatchPhase.InGame) return;
             if (FreeForAll && Stage == RoundStage.Countdown && NetworkManager.ServerTime.Time >= m_ShopOpensAt.Value) ServerOpenShop();
-            if (!TakingTurns || m_TurnEnding) return;
+            if (m_TurnEnding) return;
             double deadline = m_TurnDeadline.Value;
-            if (deadline > 0 && NetworkManager.ServerTime.Time >= deadline) ServerTurnTimedOut(ActivePlayer);
+            if (deadline <= 0 || NetworkManager.ServerTime.Time < deadline) return;
+            if (TakingTurns) ServerTurnTimedOut(ActivePlayer);
+            else if (FreeForAll) ServerRoundTimedOut();
+        }
+
+        /// <summary>Extra seconds on the very first timer of a match, while every player's game scene is still loading.</summary>
+        const float FirstTimerGrace = 5f;
+
+        /// <summary>
+        /// Starts the stream or the shop timer (Take Turns: for the active player; Free For All: for everyone at once).
+        /// The stage is remembered even when that timer is off, so the next half knows where the turn is.
+        /// </summary>
+        void ServerStartTimer(MatchTimer stage, float grace = 0f)
+        {
+            m_TimerStage = stage;
+            int seconds = stage == MatchTimer.Stream ? Settings.TurnSeconds : stage == MatchTimer.Shop ? Settings.ShopSeconds : 0;
+            if (!Settings.TimersApply) seconds = 0;
+            m_TurnDeadline.Value = seconds > 0 ? NetworkManager.ServerTime.Time + seconds + grace : 0;
+            m_TimerKind.Value = (byte)(seconds > 0 ? stage : MatchTimer.None);
         }
 
         /// <summary>
-        /// The turn timer ran out: the host finishes the turn the safest way. A waiting viewer is denied, a pending New
-        /// Attraction is skipped, the stream ends (and is scored normally), a Temporary Ban goes to the first suspect,
-        /// and the turn passes.
+        /// Finishes a player's stream the safest way when their stream timer runs out: a waiting viewer is denied, a pending
+        /// New Attraction is skipped, the stream ends (and is scored normally), and if they were deplatformed a random viewer
+        /// gets the Temporary Ban (someone must always be banned). Returns false if the player isn't playing any more.
         /// </summary>
-        void ServerTurnTimedOut(ulong clientId)
+        bool ServerFinishStream(ulong clientId)
         {
-            m_TurnDeadline.Value = 0;
-            if (!m_Games.TryGetValue(clientId, out var s))
-            {
-                ServerAdvanceTurn();
-                return;
-            }
-            ServerHeadline(Core.Err.Of("mp.timeout", PlayerName(clientId)));
-
+            if (!m_Games.TryGetValue(clientId, out var s)) return false;
             for (int guard = 0; guard < 8 && !s.IsGameOver && s.Phase != GamePhase.Planning; guard++)
             {
                 GameCommand cmd;
-                if (s.Phase == GamePhase.RaidBlame) cmd = GameCommand.Blame(s.RaidSuspects.Count > 0 ? s.RaidSuspects[0] : -1);
+                if (s.Phase == GamePhase.RaidBlame) cmd = GameCommand.Blame(RandomSuspect(s));
                 else if (s.PeekedId >= 0) cmd = GameCommand.RejectPeeked();
                 else if (s.AttractionPending) cmd = GameCommand.ResolveAttraction(-1, -1);
                 else cmd = GameCommand.EndParty();
@@ -1185,7 +1217,79 @@ namespace DeckParty.Networking
                 ServerSendSabotage(clientId, s);
             }
             ServerUpdateSummary(clientId);
+            return true;
+        }
+
+        /// <summary>A random viewer from the ones who could take the Temporary Ban.</summary>
+        static int RandomSuspect(PlayerState s) =>
+            s.RaidSuspects.Count > 0 ? s.RaidSuspects[UnityEngine.Random.Range(0, s.RaidSuspects.Count)] : -1;
+
+        /// <summary>
+        /// Take Turns: a timer ran out. The stream timer finishes the stream (then the shop timer starts); the shop timer
+        /// ends the turn. A player stuck on the Temporary Ban when time runs out gets a random viewer banned.
+        /// </summary>
+        void ServerTurnTimedOut(ulong clientId)
+        {
+            var stage = m_TimerStage;
+            m_TurnDeadline.Value = 0;
+            m_TimerKind.Value = (byte)MatchTimer.None;
+            if (!m_Games.TryGetValue(clientId, out var s))
+            {
+                ServerAdvanceTurn();
+                return;
+            }
+            ServerHeadline(Core.Err.Of(stage == MatchTimer.Shop ? "mp.timeout_shop" : "mp.timeout", PlayerName(clientId)));
+
+            if (stage == MatchTimer.Stream || s.Phase != GamePhase.Planning) ServerFinishStream(clientId);
+            if (stage == MatchTimer.Stream && !s.IsGameOver && s.Phase == GamePhase.Planning)
+            {
+                // The stream is over: now the shop has its own timer.
+                ServerStartTimer(MatchTimer.Shop);
+                ServerEvaluateProgress();
+                return;
+            }
             ServerEndTurn(clientId, s.IsGameOver ? GameOverTurnDelay : 0f);
+            ServerEvaluateProgress();
+        }
+
+        /// <summary>
+        /// Take Turns: when the active player's stream ends by itself (scored, deplatformed and banned, Server Down), their
+        /// shop timer starts.
+        /// </summary>
+        void ServerCheckTurnStage(ulong clientId, PlayerState state)
+        {
+            if (!TakingTurns || clientId != ActivePlayer || m_TurnEnding) return;
+            if (m_TimerStage == MatchTimer.Stream && state.Phase == GamePhase.Planning) ServerStartTimer(MatchTimer.Shop);
+        }
+
+        /// <summary>
+        /// Free For All: a timer ran out for everyone. The stream timer finishes every stream still running (a random viewer
+        /// gets any pending Temporary Ban) and marks everyone ready for the shop; the shop timer marks everyone ready for the
+        /// next stream.
+        /// </summary>
+        void ServerRoundTimedOut()
+        {
+            var stage = m_TimerStage;
+            m_TurnDeadline.Value = 0;
+            m_TimerKind.Value = (byte)MatchTimer.None;
+            ServerHeadline(stage == MatchTimer.Shop ? "mp.round_timeout_shop" : "mp.round_timeout_stream");
+            var ids = new List<ulong>(m_Games.Keys);
+            foreach (var id in ids)
+            {
+                if (!IsConnectedPlayer(id)) continue;
+                var s = m_Games[id];
+                if (s.IsGameOver) continue;
+                if (stage == MatchTimer.Stream && Stage == RoundStage.Streaming)
+                {
+                    if (s.Phase != GamePhase.Planning) ServerFinishStream(id);
+                    if (s.Phase == GamePhase.Planning) m_ReadyForShop.Add(id);
+                }
+                else if (stage == MatchTimer.Shop && Stage == RoundStage.Shopping && s.Phase == GamePhase.Planning && !s.IsFinalNight)
+                {
+                    m_ReadyNextNight.Add(id);
+                }
+                ServerUpdateSummary(id);
+            }
             ServerEvaluateProgress();
         }
 
@@ -1240,8 +1344,8 @@ namespace DeckParty.Networking
             }
             // Set after the state goes out, so clients already have the new night when they switch to this board.
             m_ActivePlayer.Value = clientId;
-            int seconds = Settings.TurnSeconds;
-            m_TurnDeadline.Value = seconds > 0 ? NetworkManager.ServerTime.Time + seconds : 0;
+            // Take Turns: the stream timer while the player streams, then the shop timer (ServerCheckTurnStage).
+            ServerStartTimer(s.Phase == GamePhase.Party ? MatchTimer.Stream : MatchTimer.Shop);
         }
 
         void ServerEndMatch()

@@ -39,11 +39,16 @@ namespace DeckParty.UI
         /// <summary>Free For All: rivals still streaming, and rivals done but not yet ready for the shop (comma lists).</summary>
         public string StillStreaming;
         public string NotReadyForShop;
+        /// <summary>Free For All: every stream of this round is over (only then can you click Ready for the Shop).</summary>
+        public bool AllStreamsOver;
+        /// <summary>Free For All: every player's stream summary for this round, shown on the gate once all streams are over.</summary>
+        public IList<RecapEntry> StreamRecap;
     }
 
     /// <summary>
-    /// Between streams. The left column holds the player's streamer card (with its active, when it has one), Raise Sub Cap,
-    /// the Audience button and the next-night button; the rest of the screen is the shop: a grid of viewers to recruit.
+    /// Between streams: one shop panel. The row under the title holds the player's streamer (with its active, when it has one),
+    /// Raise Sub Cap, Remove a Viewer,
+    /// the Audience button and the next-night button; under it is the grid of viewers to recruit.
     /// Everything shown belongs to the player whose board is on screen (yours, or the one you're watching); only the shop's
     /// stock is shared between players.
     /// </summary>
@@ -53,6 +58,10 @@ namespace DeckParty.UI
         [SerializeField] internal Button expandButton;
         [SerializeField] internal TMP_Text expandLabel;
         [SerializeField] internal TooltipTrigger expandTooltip;
+        [Tooltip("Remove a Viewer: pay Cash to take one card out of your Audience for good (the price rises with each use).")]
+        [SerializeField] internal Button removeButton;
+        [SerializeField] internal TMP_Text removeLabel;
+        [SerializeField] internal TooltipTrigger removeTooltip;
         [SerializeField] internal Button rolodexButton;
         [SerializeField] internal TMP_Text rolodexLabel;
         [SerializeField] internal Button nextNightButton;
@@ -83,6 +92,8 @@ namespace DeckParty.UI
 
         public event Action<GuestType> BuyClicked;
         public event Action ExpandClicked;
+        /// <summary>Remove a Viewer was pressed (the game screen opens the viewer picker).</summary>
+        public event Action RemoveClicked;
         public event Action RolodexClicked;
         public event Action NextNightClicked;
         public event Action PowerClicked;
@@ -104,6 +115,7 @@ namespace DeckParty.UI
         void Awake()
         {
             expandButton.onClick.AddListener(() => ExpandClicked?.Invoke());
+            if (removeButton != null) removeButton.onClick.AddListener(() => RemoveClicked?.Invoke());
             rolodexButton.onClick.AddListener(() => RolodexClicked?.Invoke());
             nextNightButton.onClick.AddListener(() => NextNightClicked?.Invoke());
             if (power != null) power.UseClicked += () => PowerClicked?.Invoke();
@@ -178,6 +190,8 @@ namespace DeckParty.UI
                     : why ?? Loc.Get("shop.raise_cap_tip");
             }
 
+            RenderRemove(s, locked, watching || waitingForTurn ? lockReason : null);
+
             string audienceWords = watching
                 ? Loc.Get("shop.view_audience_other", "player", ctx.Owner, "count", s.PermanentCount)
                 : Loc.Get("shop.view_audience", "count", s.PermanentCount);
@@ -211,6 +225,22 @@ namespace DeckParty.UI
             LayoutGrid();
         }
 
+        /// <summary>Remove a Viewer: the price on the button (a minus and the Cash), the words and any reason in its tooltip.</summary>
+        void RenderRemove(PlayerState s, bool locked, string lockReason)
+        {
+            if (removeButton == null) return;
+            var blocker = PartyEngine.GetRemoveBlocker(s);
+            removeButton.interactable = blocker == null && !locked;
+            string price = GameIcons.Amount(ResourceIcon.Cash, PartyEngine.RemovalCost(s));
+            if (removeLabel != null) removeLabel.text = "-1   " + price;
+            if (removeTooltip != null)
+            {
+                string why = lockReason ?? (blocker != null ? Loc.Error(blocker) : null);
+                removeTooltip.Text = $"<b>{Loc.Get("shop.remove_viewer", "cost", price)}</b>\n{Loc.Get("shop.remove_viewer_tip", "min", GameRules.MinAudience)}" +
+                                     (why != null ? "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : string.Empty);
+            }
+        }
+
         /// <summary>Free For All: the gate over the shop until it opens for everyone.</summary>
         void RenderGate(PlanningContext ctx, bool gated)
         {
@@ -224,17 +254,25 @@ namespace DeckParty.UI
             string notice = Loc.Get("gate.notice");
             if (ctx.Stage == RoundStage.Countdown)
             {
-                gate.Show(Loc.Get("gate.countdown_title"), Loc.Get("gate.countdown_body"), notice, null);
+                gate.Show(Loc.Get("gate.countdown_title"), Loc.Get("gate.countdown_body"), notice, null, ctx.StreamRecap);
                 return;
             }
 
-            string waiting = !string.IsNullOrEmpty(ctx.StillStreaming) ? Loc.Get("gate.still_streaming", "players", ctx.StillStreaming)
-                : !string.IsNullOrEmpty(ctx.NotReadyForShop) ? Loc.Get("gate.not_ready_yet", "players", ctx.NotReadyForShop)
+            // Others still streaming: just "Waiting for other streamers" (no summary yet, no button).
+            if (!ctx.AllStreamsOver)
+            {
+                gate.Show(Loc.Get("gate.waiting_streamers_title"), Loc.Get("gate.still_streaming", "players", ctx.StillStreaming), notice, null);
+                return;
+            }
+
+            // Every stream is over: the round's stream summary (a column per player) and Ready for the Shop.
+            string waiting = !string.IsNullOrEmpty(ctx.NotReadyForShop) ? Loc.Get("gate.not_ready_yet", "players", ctx.NotReadyForShop)
                 : Loc.Get("gate.everyone_ready");
             if (ctx.LocalReadyForShop)
-                gate.Show(Loc.Get("gate.waiting_title"), waiting, notice, Loc.Get("gate.cancel_ready"));
+                gate.Show(Loc.Get("gate.waiting_title"), waiting, notice, Loc.Get("gate.cancel_ready"), ctx.StreamRecap);
             else
-                gate.Show(Loc.Get("gate.stream_over_title"), Loc.Get("gate.ready_body") + "\n" + waiting, notice, Loc.Get("gate.go_to_shop") + "  <size=70%>[Space]</size>");
+                gate.Show(Loc.Get("gate.streams_over_title"), Loc.Get("gate.ready_body") + "  " + waiting, notice,
+                    Loc.Get("gate.go_to_shop") + "  <size=70%>[Space]</size>", ctx.StreamRecap);
         }
 
         void RenderNextButton(PlayerState s, PlanningContext ctx, bool watching)

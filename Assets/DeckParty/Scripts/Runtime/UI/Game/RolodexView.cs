@@ -15,6 +15,8 @@ namespace DeckParty.UI
         [SerializeField] internal RectTransform grid;
         [SerializeField] internal GuestCardView cardPrefab;
         [SerializeField] internal Button closeButton;
+        [Tooltip("Optional: the communities in this Audience (how many different viewers each has and what that can score).")]
+        [SerializeField] internal TMP_Text communitiesLabel;
 
         const float CardScale = 0.62f;
 
@@ -81,6 +83,43 @@ namespace DeckParty.UI
             else if (s.BannedNextParty >= 0 && s.Find(s.BannedNextParty) != null) summary += "\n" + Loc.Get("audience.banned_next", "viewer", GuestVisuals.NameTag(s.Find(s.BannedNextParty).Type));
             if (s.Streamer != StreamerType.None) summary += "\n" + Loc.Get("audience.streamer", "streamer", StreamerVisuals.NameTag(s.Streamer), "power", StreamerVisuals.PowerName(s.Streamer));
             summaryLabel.text = summary + $"\n<color=#B9AED6>{Loc.Get("audience.hint")}</color>";
+            if (communitiesLabel != null) communitiesLabel.text = CommunitiesText(s);
+        }
+
+        /// <summary>
+        /// Every community someone in the Audience belongs to: its icon and name, how many different viewer cards you own
+        /// from it, the best score they could make together in one chat (different viewers - 1, up to the cap) and the bonus at
+        /// that score. Hover an icon for the full rule. A community needs two different viewers to score at all.
+        /// </summary>
+        static string CommunitiesText(PlayerState s)
+        {
+            var sb = new System.Text.StringBuilder();
+            var seen = new HashSet<GuestType>();
+            var types = new int[Communities.Count];
+            foreach (var g in s.Rolodex)
+            {
+                if (g.Temporary || !seen.Add(g.Type)) continue;
+                var mask = GuestCatalog.CommunitiesOf(g.Type);
+                foreach (var community in Communities.All)
+                    if (Communities.Has(mask, community)) types[(int)community]++;
+            }
+
+            foreach (var community in Communities.All)
+            {
+                int count = types[(int)community];
+                if (count == 0) continue;
+                int best = Communities.Capped(community, count - Communities.MembersForFirstPoint + 1);
+                sb.Append(GameIcons.Tag(community)).Append(" <b>").Append(GuestVisuals.Colored(CommunityVisuals.Name(community), CommunityVisuals.Color(community)))
+                  .Append("</b>\n<size=85%>");
+                sb.Append(Loc.Get("audience.community_types", "count", count));
+                if (best > 0)
+                    sb.Append("  ·  ").Append(Loc.Get("audience.community_best", "points", best, "effect", CommunityVisuals.ChipEffect(community, best)));
+                else
+                    sb.Append("  ·  <color=#53535F>").Append(Loc.Get("audience.community_needs", "count", Communities.MembersForFirstPoint)).Append("</color>");
+                sb.Append("</size>\n\n");
+            }
+            if (sb.Length == 0) return $"<color=#53535F>{Loc.Get("audience.no_communities")}</color>";
+            return sb.ToString().TrimEnd('\n');
         }
 
         public void Close() => root.SetActive(false);

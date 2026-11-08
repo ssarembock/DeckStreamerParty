@@ -122,7 +122,7 @@ namespace DeckParty.UI
             AppSettings.Changed += UpdateFeedVisibility;
             UpdateFeedVisibility();
 
-            // Re-read the platform colours each game (they may have been edited in the Game Database since the last one).
+            // Re-read the platform each game (its logo may have been edited in the Game Database since the last one).
             SiteTheme.Apply(State != null ? StreamerVisuals.Platform(State.Streamer) : SiteTheme.Platform, true);
 
             if (State != null)
@@ -186,6 +186,8 @@ namespace DeckParty.UI
             if (TextChatOn) chat.Bind(net);
             if (feed != null) feed.MarkRead(SideTabsView.Tab.Chat);
             opponents.PlayerClicked += ShowBoard;
+            opponents.IsMuted = id => m_Muted.Contains(id);
+            opponents.MuteToggled += ToggleMute;
             opponents.PresenceLine = PresenceLine;
             EventText.PlayerName = index => ColoredName(net.ClientAtIndex(index));
             EventText.Multiplayer = true;
@@ -294,6 +296,7 @@ namespace DeckParty.UI
 
             planning.BuyClicked += type => Submit(GameCommand.Buy(type));
             planning.ExpandClicked += () => Submit(GameCommand.ExpandHouse());
+            planning.RemoveClicked += OpenRemovePicker;
             planning.RolodexClicked += ToggleRolodex;
             planning.NextNightClicked += NextNight;
             planning.PowerClicked += UseStreamerPower;
@@ -431,12 +434,8 @@ namespace DeckParty.UI
         void ShowBoard(ulong clientId)
         {
             if (m_Net == null) return;
-            // Free For All: everyone streams at once and nobody watches anyone else (the round summary tells what happened).
-            if (FreeForAll && clientId != LocalId)
-            {
-                ToastView.Show(Loc.Get("game.ffa_no_watching"), ToastKind.Info);
-                return;
-            }
+            // Every mode (Free For All included) lets you watch another player's stream live and read-only; clicking your own
+            // name brings you back and gives you your controls again.
             if (clientId != LocalId && m_Net.GetState(clientId) == null)
             {
                 ToastView.Show(Loc.Get("game.board_loading", "player", NameOf(clientId)), ToastKind.Info);
@@ -555,7 +554,7 @@ namespace DeckParty.UI
             bool act = CanAct;
             // Community icons show live scores for the stream on screen.
             CommunityVisuals.LiveState = s;
-            // The site takes the look of the on-screen streamer's platform (logo and button colour).
+            // The menu bar shows the on-screen streamer's platform logo (the only thing that changes per platform).
             SiteTheme.Apply(StreamerVisuals.Platform(s.Streamer));
 
             hud.Render(s);
@@ -643,7 +642,10 @@ namespace DeckParty.UI
                         bool used = s.UsedAbilities.Contains(g.Id);
                         var blocker = act ? PartyEngine.GetAbilityBlocker(s, g.Id) : null;
                         string reason = act ? (blocker != null ? Loc.Error(blocker) : null) : watchHint;
-                        card.ShowAbility(GuestVisuals.ActionName(g.Kind), act && blocker == null && !used, reason, used);
+                        bool usable = act && blocker == null && !used;
+                        card.ShowAbility(GuestVisuals.ActionName(g.Kind), usable, reason, used);
+                        // The whole avatar uses the action too, not just the small button on its ring.
+                        card.SetClickable(usable);
                     }
                     else
                     {
@@ -881,6 +883,38 @@ namespace DeckParty.UI
                 () => m_ChoosingRival = false);
         }
 
+        // ------------------------------------------------------------------ shop: Remove a Viewer
+
+        /// <summary>Remove a Viewer: pick one of your viewer cards, confirm, and it leaves your Audience for good (it costs Cash).</summary>
+        void OpenRemovePicker()
+        {
+            var s = State;
+            if (s == null || !CanAct || s.Phase != GamePhase.Planning) return;
+            if (ShopGated)
+            {
+                OnCommandRejected("mp.shop_closed");
+                return;
+            }
+            var blocker = PartyEngine.GetRemoveBlocker(s);
+            if (blocker != null)
+            {
+                OnCommandRejected(blocker);
+                return;
+            }
+            var ids = new List<int>();
+            foreach (var g in s.Rolodex)
+                if (!g.Temporary) ids.Add(g.Id);
+            string price = GameIcons.Amount(ResourceIcon.Cash, PartyEngine.RemovalCost(s));
+            picker.Open(Loc.Get("pick.remove_title", "cost", price), Loc.Get("pick.remove_hint", "min", GameRules.MinAudience), s, ids, pick =>
+            {
+                var chosen = State?.Find(pick);
+                if (chosen == null) return;
+                ModalDialog.Show(Loc.Get("pick.remove_confirm_title"),
+                    Loc.Get("pick.remove_confirm_body", "viewer", GuestVisuals.NameTag(chosen.Type), "cost", price),
+                    () => Submit(GameCommand.RemoveGuest(pick)), Loc.Get("pick.remove_confirm"), Loc.Get("common.cancel"));
+            });
+        }
+
         // ------------------------------------------------------------------ actions: option -> targets -> submit
 
         void BeginAbility(int actorId)
@@ -1082,8 +1116,18 @@ namespace DeckParty.UI
         void OnHouseCardClicked(GuestCardView card)
         {
             var s = State;
-            if (!Targeting || !CanAct || s == null || card.IsEmpty) return;
+            if (!CanAct || s == null || card.IsEmpty) return;
             int id = card.GuestId;
+
+            // Not targeting: clicking a viewer whose action is ready uses it (same as its action button).
+            if (!Targeting)
+            {
+                var clicked = s.Find(id);
+                if (clicked != null && clicked.Info.HasAbility && s.Phase == GamePhase.Party && !s.UsedAbilities.Contains(id)
+                    && PartyEngine.GetAbilityBlocker(s, id) == null)
+                    BeginAbility(id);
+                return;
+            }
 
             if (m_AttractionChoice >= 0)
             {

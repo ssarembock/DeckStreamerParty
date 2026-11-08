@@ -127,7 +127,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469210
-    m_Localized: '{seconds} segundos por turno'
+    m_Localized: '{seconds} segundos por live'
     m_Metadata:
       m_Items: []
   - m_Id: 437469211
@@ -235,7 +235,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 437469235
     m_Localized: "A temporada come\xE7a: {0}, {1} noites. Vence a primeira live de
-      {2} Plays!"
+      {2} Trof\xE9us!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469236
@@ -272,7 +272,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469244
-    m_Localized: '{0} teve {1} Plays numa live. Mais um e vence!'
+    m_Localized: "{0} teve {1} Trof\xE9us numa live. Mais um e vence!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469245
@@ -292,11 +292,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469249
-    m_Localized: '{0} fez uma live de {1} Plays e vence!'
+    m_Localized: "{0} fez uma live de {1} Trof\xE9us e vence!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469250
-    m_Localized: '{0} fez uma live de {1} Plays! Terminando a live {2}...'
+    m_Localized: "{0} fez uma live de {1} Trof\xE9us! Terminando a live {2}..."
     m_Metadata:
       m_Items: []
   - m_Id: 437469251
@@ -304,15 +304,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469252
-    m_Localized: O tempo de {0} acabou! A live termina e a vez passa.
+    m_Localized: "O tempo de {0} acabou! A live termina (se precisar banir, um espectador
+      aleat\xF3rio \xE9 escolhido) e o cron\xF4metro da loja come\xE7a."
     m_Metadata:
       m_Items: []
   - m_Id: 437469253
-    m_Localized: '{0} vence a temporada com {1} Plays numa live na live {2}!'
+    m_Localized: "{0} vence a temporada com {1} Trof\xE9us numa live na live {2}!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469254
-    m_Localized: "Ningu\xE9m chegou a {1} Plays. {0} leva com um recorde de {2}."
+    m_Localized: "Ningu\xE9m chegou a {1} Trof\xE9us. {0} leva com um recorde de
+      {2}."
     m_Metadata:
       m_Items: []
   - m_Id: 416590245085184
@@ -351,6 +353,47 @@ MonoBehaviour:
   - m_Id: 1670121132744704
     m_Localized: "Os Sabotadores de {0} fazem o pr\xF3ximo recrutamento de cada rival
       custar {1} {icon:subs} a mais!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121696055296
+    m_Localized: '{seconds} segundos por loja'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998336
+    m_Localized: '{seconds} s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998337
+    m_Localized: "Cron\xF4metro da live: quando acaba, a live termina e pontua."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998338
+    m_Localized: "Cron\xF4metro da loja: quando acaba, as compras terminam."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998339
+    m_Localized: Sua vez.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998340
+    m_Localized: Vez de {player}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998341
+    m_Localized: O tempo de compras de {0} acabou. A vez passa.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998342
+    m_Localized: Acabou o tempo! Todas as lives em andamento terminam agora e todo
+      mundo vai pra loja.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998343
+    m_Localized: "Acabou o tempo de compras! A pr\xF3xima live come\xE7a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121742192640
+    m_Localized: "Calma! Voc\xEA pode mandar outro emote em {seconds} s."
     m_Metadata:
       m_Items: []
   references:

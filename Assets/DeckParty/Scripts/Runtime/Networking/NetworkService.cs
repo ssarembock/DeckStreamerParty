@@ -51,8 +51,10 @@ namespace DeckParty.Networking
         /// deckparty-5: 82-viewer roster, state format v4, the shared shop and sprite emotes.
         /// deckparty-8: V4.2 roster, Clout / Memetics Division / Bots (state format v6) and Free For All's shop gate.
         /// deckparty-9: V5 communities and card logic (state format v7), five Party House-style character sets.
+        /// deckparty-10: playtest updates: stream / shop timers, Remove a Viewer (state format v8), emote limits.
+        /// deckparty-11: viewer card edits: Dancing Jen (GuestType 83), group scoring, Account Manager action, community caps.
         /// </summary>
-        public const string ProtocolVersion = "deckparty-9";
+        public const string ProtocolVersion = "deckparty-11";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

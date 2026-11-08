@@ -62,7 +62,11 @@ namespace DeckParty.UI
             endButton.onClick.AddListener(() => EndClicked?.Invoke());
             admitButton.onClick.AddListener(() => AdmitClicked?.Invoke());
             rejectButton.onClick.AddListener(() => RejectClicked?.Invoke());
-            if (endButtonImage != null) m_EndBaseColor = endButtonImage.color;
+            // Add Viewer is always green and End the Stream always red, on every platform (scenes built before this had
+            // platform colours on them: this fixes those too until they're rebuilt).
+            Paint(doorButton, SitePalette.Go);
+            Paint(endButton, SitePalette.Stop);
+            m_EndBaseColor = SitePalette.Stop;
             endButton.TryGetComponent(out m_EndTooltip);
             SetTip(admitButton, Loc.Get("controls.approve"));
             SetTip(rejectButton, Loc.Get("controls.deny"));
@@ -83,13 +87,22 @@ namespace DeckParty.UI
             if (target != null && target.TryGetComponent<TooltipTrigger>(out var trigger)) trigger.Text = text;
         }
 
+        /// <summary>Gives a main button its fixed colour (and stops the site accent from recolouring it).</summary>
+        static void Paint(Button button, Color color)
+        {
+            if (button == null || !button.TryGetComponent<Image>(out var image)) return;
+            if (image.TryGetComponent<SiteAccent>(out var accent)) accent.enabled = false;
+            image.color = color;
+        }
+
         public bool WinReady => m_WinReady;
 
         void Update()
         {
-            // Four Plays in chat: the End button pulses gold and the platform colour.
+            // Four Trophies in chat: the End button pulses (it stays red).
             if (m_WinReady && endButtonImage != null)
-                endButtonImage.color = Color.Lerp(SitePalette.Gold, SiteTheme.Accent, 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 6f));
+                endButtonImage.color = Color.Lerp(SitePalette.Stop, Color.Lerp(SitePalette.Stop, Color.white, 0.4f),
+                    0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 6f));
         }
 
         /// <param name="interactive">False while watching someone else's party (or waiting for your turn): everything is shown, nothing is clickable.</param>

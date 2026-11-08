@@ -43,8 +43,9 @@ namespace DeckParty.Core
 
         // V5: five preset sets, one per Party House scenario (Alien Invitation, High or Low, Best Wishes, Money Management,
         // A Magical Night), each holding the new versions of that scenario's guests and stars. Guests this game doesn't have
-        // were swapped for the closest viewer (Private Eye -> Cybersecurity Engineer, Dancer and Cheerleader -> Binge Bunny,
-        // Magician -> Distraught Cat). The first set has one Play, like Alien Invitation; the others have two.
+        // were swapped for the closest viewer (Private Eye -> Cybersecurity Engineer, Cheerleader -> Binge Bunny,
+        // Magician -> Distraught Cat); the Dancer is Dancing Jen since 2026-11-08. The first set has one Play, like Alien
+        // Invitation; the others have two.
         // Ids are kept (progress is stored per id); the old sets 7-9 are gone.
         static readonly ScenarioDefinition[] s_All =
         {
@@ -53,7 +54,7 @@ namespace DeckParty.Core
                 "bedroom", new[]
                 {
                     GuestType.Producer, GuestType.ChatAdmin, GuestType.Normie, GuestType.CybersecurityEngineer, GuestType.PaidSponsorship,
-                    GuestType.MildlyRiskyCollaborator, GuestType.MarketingManager, GuestType.PromoCodeUser, GuestType.BingeBunny,
+                    GuestType.MildlyRiskyCollaborator, GuestType.MarketingManager, GuestType.PromoCodeUser, GuestType.DancingJen,
                     GuestType.BillionaireBenefactor, GuestType.InfluentialTroll,
                     GuestType.PrecociousYouth,
                 }),
@@ -67,7 +68,7 @@ namespace DeckParty.Core
                     GuestType.MainstreamCelebrity, GuestType.BiggerStar,
                 }),
             new ScenarioDefinition(2, "Brand Deal Wishlist", "Be careful what you wish for",
-                "Rug pulls, Checkout Codes and PR spin. The Evangelist grants a second Play, the Big Boomer brings the opinions, and the Executive PR loves a scandal.",
+                "Crypto hype, Checkout Codes and PR spin. The Evangelist grants a second Play, the Big Boomer brings the opinions, and the Executive PR loves a scandal.",
                 "content_house", new[]
                 {
                     GuestType.MildlyRiskyCollaborator, GuestType.Affiliate, GuestType.ChatArbitrator, GuestType.PrManager, GuestType.CryptoEnthusiast,

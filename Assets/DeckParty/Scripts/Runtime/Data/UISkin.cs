@@ -49,6 +49,12 @@ namespace DeckParty
         IconCommunityBeats = 34,
         /// <summary>The Stream Chat window's title (an icon instead of the words).</summary>
         IconStreamChat = 35,
+        /// <summary>The countdown timers (stream and shop): an hourglass.</summary>
+        IconTimer = 36,
+        /// <summary>The mute-emotes button on each player in the Players panel.</summary>
+        IconMute = 37,
+        /// <summary>The shop's Remove a Viewer button.</summary>
+        IconRemoveViewer = 38,
     }
 
     [Serializable]

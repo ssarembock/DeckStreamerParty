@@ -23,6 +23,8 @@ namespace DeckParty.UI
         [SerializeField] internal OptionSelector nightsSelector;
         [SerializeField] internal OptionSelector venueSelector;
         [SerializeField] internal OptionSelector timerSelector;
+        [Tooltip("The shop timer (Take Turns and Free For All), separate from the stream timer above.")]
+        [SerializeField] internal OptionSelector shopTimerSelector;
         [SerializeField] internal TMP_InputField customTimerInput;
         [SerializeField] internal Button streamerButton;
         [SerializeField] internal TMP_Text streamerLabel;
@@ -55,6 +57,7 @@ namespace DeckParty.UI
             nightsSelector.Changed += _ => PushSettings();
             venueSelector.Changed += OnVenueChanged;
             if (timerSelector != null) timerSelector.Changed += _ => PushSettings();
+            if (shopTimerSelector != null) shopTimerSelector.Changed += _ => PushSettings();
             if (customTimerInput != null) customTimerInput.onEndEdit.AddListener(_ => PushSettings());
             if (streamerButton != null) streamerButton.onClick.AddListener(() => m_Menu.ShowStreamerSelect(StreamerSelectMode.Lobby));
             Loc.Changed += () =>
@@ -101,6 +104,11 @@ namespace DeckParty.UI
             {
                 timerSelector.SetTitle(Loc.Get("lobby.turn_timer"));
                 timerSelector.SetOptions(TurnTimers.Labels, 0);
+            }
+            if (shopTimerSelector != null)
+            {
+                shopTimerSelector.SetTitle(Loc.Get("lobby.shop_timer"));
+                shopTimerSelector.SetOptions(ShopTimers.Labels, 0);
             }
 
             m_VenueChoices = GameDatabase.Instance.VenueChoices();
@@ -174,12 +182,18 @@ namespace DeckParty.UI
             scenarioSelector.SetIndex(IndexOfScenario(settings.ScenarioId));
             modeSelector.SetIndex(MatchModes.IndexOf(settings.Mode));
             nightsSelector.SetIndex(IndexOfNights(settings.Nights));
-            bool turns = settings.Mode == MatchMode.Turns;
+            bool turns = settings.TimersApply;
             if (timerSelector != null)
             {
                 timerSelector.gameObject.SetActive(turns);
                 timerSelector.SetIndex(TurnTimers.IndexOf(settings.TurnSeconds));
                 timerSelector.Interactable = isHost;
+            }
+            if (shopTimerSelector != null)
+            {
+                shopTimerSelector.gameObject.SetActive(turns);
+                shopTimerSelector.SetIndex(ShopTimers.IndexOf(settings.ShopSeconds));
+                shopTimerSelector.Interactable = isHost;
             }
             if (customTimerInput != null)
             {
@@ -199,7 +213,7 @@ namespace DeckParty.UI
             summary.Append($"<b>{ContentText.ScenarioName(settings.ScenarioId)}</b> - {ContentText.ScenarioDescription(settings.ScenarioId)}\n");
             summary.Append(ModeSummary(settings.Mode));
             if (freeForAllOnly) summary.Append("\n<color=#FF9A3D>").Append(Loc.Get("lobby.ffa_only", "count", MatchModes.MaxPlayersForAnyMode)).Append("</color>");
-            if (turns) summary.Append("\n").Append(Loc.Get("lobby.timer_summary", "timer", TurnTimers.Describe(settings.TurnSeconds)));
+            if (turns) summary.Append("\n").Append(Loc.Get("lobby.timer_summary", "timer", TurnTimers.Describe(settings.TurnSeconds), "shop", ShopTimers.Describe(settings.ShopSeconds)));
             settingsSummary.text = summary.ToString();
 
             // Buttons
@@ -255,6 +269,7 @@ namespace DeckParty.UI
                 Mode = MatchModes.At(modeSelector.Index),
                 Nights = (byte)s_NightOptions[Mathf.Clamp(nightsSelector.Index, 0, s_NightOptions.Length - 1)],
                 TurnSeconds = (ushort)SelectedTimer(),
+                ShopSeconds = (ushort)(shopTimerSelector != null ? ShopTimers.Presets[Mathf.Clamp(shopTimerSelector.Index, 0, ShopTimers.Presets.Length - 1)] : 0),
             });
         }
 

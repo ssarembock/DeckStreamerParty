@@ -371,11 +371,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412311
-    m_Localized: Play
+    m_Localized: "Trof\xE9u"
     m_Metadata:
       m_Items: []
   - m_Id: 479412312
-    m_Localized: Plays
+    m_Localized: "Trof\xE9us"
     m_Metadata:
       m_Items: []
   - m_Id: 479412313
@@ -399,7 +399,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412318
-    m_Localized: '{count} {count:plural:Play|Plays}'
+    m_Localized: "{count} {count:plural:Trof\xE9u|Trof\xE9us}"
     m_Metadata:
       m_Items: []
   - m_Id: 479412319
@@ -451,7 +451,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412331
-    m_Localized: Play
+    m_Localized: "Trof\xE9u"
     m_Metadata:
       m_Items: []
   - m_Id: 479412332
@@ -739,11 +739,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606530
-    m_Localized: "{count} PLAYS NUMA LIVE! Voc\xEA venceu!"
+    m_Localized: "{count} TROF\xC9US NUMA LIVE! Voc\xEA venceu!"
     m_Metadata:
       m_Items: []
   - m_Id: 483606531
-    m_Localized: '{count} PLAYS NUMA LIVE! {player} venceu!'
+    m_Localized: "{count} TROF\xC9US NUMA LIVE! {player} venceu!"
     m_Metadata:
       m_Items: []
   - m_Id: 483606532
@@ -1154,9 +1154,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606632
-    m_Localized: "Fa\xE7a uma live com <b>4 espectadores Play no chat ao mesmo tempo</b>
-      e encerre com sucesso antes da sua \xFAltima noite (25 por padr\xE3o). Recrutar
-      quatro Plays n\xE3o basta: eles precisam aparecer juntos."
+    m_Localized: "Fa\xE7a uma live com <b>4 espectadores Trof\xE9u no chat ao mesmo
+      tempo</b> e encerre com sucesso antes da sua \xFAltima noite (25 por padr\xE3o).
+      Recrutar quatro Trof\xE9us n\xE3o basta: eles precisam aparecer juntos."
     m_Metadata:
       m_Items: []
   - m_Id: 483606633
@@ -1209,7 +1209,7 @@ MonoBehaviour:
       As taxas s\xE3o pagas com a sua {icon:cash}; o que faltar custa <b>7 {icon:subs}
       por cada 1 {icon:cash}</b>.\\nO estoque da loja \xE9 <b>dividido entre todos
       os jogadores</b>: cada espectador normal tem 4 c\xF3pias pra partida inteira
-      e voc\xEA pode ter no m\xE1ximo 4 de cada; Plays s\xE3o ilimitados. Voc\xEA
+      e voc\xEA pode ter no m\xE1ximo 4 de cada; Trof\xE9us s\xE3o ilimitados. Voc\xEA
       n\xE3o pode tirar espectadores da sua Audi\xEAncia, ent\xE3o cada recrutamento
       muda as suas chances."
     m_Metadata:
@@ -1262,22 +1262,22 @@ MonoBehaviour:
       pra ver o tabuleiro dele ao vivo. No modo <b>Em turnos</b> (o padr\xE3o) os
       jogadores fazem live um depois do outro a cada noite enquanto os outros veem
       o que ele aponta, escolhe e compra; a temporada acaba depois da primeira noite
-      em que algu\xE9m faz uma live de 4 Plays. O host pode ativar um cron\xF4metro
+      em que algu\xE9m faz uma live de 4 Trof\xE9us. O host pode ativar um cron\xF4metro
       de turno. Em <b>Noites sincronizadas</b> todos jogam a mesma noite ao mesmo
       tempo e a pr\xF3xima come\xE7a quando todo mundo estiver pronto. Em <b>Corrida</b>
-      cada um joga no seu ritmo e a primeira live de 4 Plays vence na hora. Se ningu\xE9m
-      vencer, leva quem teve mais Plays numa live bem-sucedida."
+      cada um joga no seu ritmo e a primeira live de 4 Trof\xE9us vence na hora.
+      Se ningu\xE9m vencer, leva quem teve mais Trof\xE9us numa live bem-sucedida."
     m_Metadata:
       m_Items: []
   - m_Id: 483606649
-    m_Localized: "<b>Vit\xF3ria:</b> 4 Plays numa live bem-sucedida.\\n<b>\xCDcones:</b>
+    m_Localized: "<b>Vit\xF3ria:</b> 4 Trof\xE9us numa live bem-sucedida.\\n<b>\xCDcones:</b>
       {icon:subs} Fama   {icon:cash} Grana   {icon:risk} Risco de desplataformiza\xE7\xE3o  
-      {icon:plays} Plays (passe o mouse sobre qualquer \xEDcone pra ver o que \xE9).\\n<b>Adicionar
-      espectador:</b> o pr\xF3ximo da fila entra no chat.  <b>Encerrar a live:</b>
-      guarda a {icon:subs} e a {icon:cash} de todo mundo.\\n<b>3 de {icon:risk} l\xEDquido</b>
-      = live desplataformizada (sem pagamento, um espectador leva ban tempor\xE1rio).\\n<b>Passar
-      do limite</b> = o servidor cai (sem pagamento).\\n<b>Comunidades:</b> cada
-      espectador diferente no chat d\xE1 um ponto pra sua comunidade; mais pontos,
+      {icon:plays} Trof\xE9us (passe o mouse sobre qualquer \xEDcone pra ver o que
+      \xE9).\\n<b>Adicionar espectador:</b> o pr\xF3ximo da fila entra no chat. 
+      <b>Encerrar a live:</b> guarda a {icon:subs} e a {icon:cash} de todo mundo.\\n<b>3
+      de {icon:risk} l\xEDquido</b> = live desplataformizada (sem pagamento, um espectador
+      leva ban tempor\xE1rio).\\n<b>Passar do limite</b> = o servidor cai (sem pagamento).\\n<b>Comunidades:</b>
+      cada espectador diferente no chat d\xE1 um ponto pra sua comunidade; mais pontos,
       mais b\xF4nus (Ritmo das comunidades, no topo do chat).\\n<b>Loja:</b> a {icon:subs}
       recruta espectadores (o estoque \xE9 dividido entre todos), a {icon:cash} aumenta
       o limite e paga os poderes ativos do streamer.\\n<b>Teclas:</b> Espa\xE7o adicionar/confirmar/pr\xF3xima
@@ -1656,30 +1656,31 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190146285569
     m_Localized: "Cada espectador pertence a nenhuma, uma ou v\xE1rias <b>comunidades</b>
-      (os \xEDconos pequenos na carta). Cada espectador <b>diferente</b> no chat
-      d\xE1 um ponto pra sua comunidade; duas c\xF3pias da mesma carta contam uma
-      vez, e um espectador que sai leva o ponto junto. Cada ponto aumenta o b\xF4nus.
-      Fique de olho no <b>Ritmo das comunidades</b> ao lado do chat e passe o mouse
-      sobre qualquer \xEDcone de comunidade pra ver o que ela faz:\\n{icon:CoreFanbase}
-      <b>Base de f\xE3s</b>: 10% por ponto de um espectador da Base de f\xE3s pontuar
-      duas vezes.\\n{icon:Staff} <b>Equipe</b>: 10% por ponto de n\xE3o cobrar o
-      {icon:cash} de um espectador da Equipe.\\n{icon:Content} <b>Conte\xFAdo</b>:
-      10% por ponto de um espectador fora da Base de f\xE3s pontuar duas vezes.\\n{icon:Boomer}
+      (os \xEDconos pequenos na carta). Uma comunidade come\xE7a a pontuar com <b>dois
+      espectadores diferentes</b> dela no chat: dois d\xE3o 1 ponto, tr\xEAs d\xE3o
+      2, e assim por diante. Duas c\xF3pias da mesma carta contam uma vez, e um espectador
+      que sai leva o ponto junto. Cada ponto aumenta o b\xF4nus. Fique de olho no
+      <b>Ritmo das comunidades</b> ao lado do chat e passe o mouse sobre qualquer
+      \xEDcone de comunidade pra ver o que ela faz:\\n{icon:CoreFanbase} <b>Base
+      de f\xE3s</b>: 10% por ponto de um espectador da Base de f\xE3s pontuar duas
+      vezes.\\n{icon:Staff} <b>Equipe</b>: 10% por ponto de n\xE3o cobrar o {icon:cash}
+      de um espectador da Equipe.\\n{icon:Content} <b>Conte\xFAdo</b>: 10% por ponto
+      de um espectador fora da Base de f\xE3s pontuar duas vezes.\\n{icon:Boomer}
       <b>Boomers</b>: na sua pr\xF3xima loja aumentar o limite custa 1 {icon:cash}
       a menos por ponto; depois de uma live cada Boomer tem 10% de chance de deixar
       sua audi\xEAncia de vez.\\n{icon:Millennial} <b>Millennials</b>: quando um
       Boomer sai, um Millennial seu aleat\xF3rio ganha +1 {icon:cash} pra sempre,
       uma vez por ponto.\\n{icon:GenZ} <b>Gera\xE7\xE3o Z</b>: depois de uma live,
       cada espectador da Gera\xE7\xE3o Z cresce +1 {icon:subs} ou {icon:cash} pra
-      sempre por ponto (at\xE9 3).\\n{icon:Gatekeepers} <b>Porteiros</b>: mais uma
+      sempre por ponto (at\xE9 2).\\n{icon:Gatekeepers} <b>Porteiros</b>: mais uma
       expuls\xE3o por ponto nesta live.\\n{icon:HypeMen} <b>Animadores</b>: 10 /
-      20 / 30% de uma live com o servidor ca\xEDdo ainda pontuar.\\n{icon:Trolls}
-      <b>Ex\xE9rcito troll</b>: 1 {icon:subs} ou {icon:cash} aleat\xF3rio por ponto
-      se a live for desplataformizada.\\n{icon:Mods} <b>Mods</b>: 10% por ponto (at\xE9
-      30%) de a sua pr\xF3xima live come\xE7ar com 1 {icon:risk} anulado.\\n{icon:FullStream}
+      20% de uma live com o servidor ca\xEDdo ainda pontuar.\\n{icon:Trolls} <b>Ex\xE9rcito
+      troll</b>: 1 {icon:subs} ou {icon:cash} aleat\xF3rio por ponto se a live for
+      desplataformizada.\\n{icon:Mods} <b>Mods</b>: 10% por ponto (at\xE9 20%) de
+      a sua pr\xF3xima live come\xE7ar com 1 {icon:risk} anulado.\\n{icon:FullStream}
       <b>Live lotada</b>: b\xF4nus de chat cheio permitem 1 espa\xE7o vazio por ponto.\\n{icon:Marketers}
       <b>Marqueteiros</b>: mais um recrutamento por ponto nesta live.\\n{icon:Voyeurs}
-      <b>Bisbilhoteiros</b>: mais uma espiada por ponto nesta live (at\xE9 2).\\n{icon:ShopControl}
+      <b>Bisbilhoteiros</b>: mais uma espiada por ponto nesta live (at\xE9 1).\\n{icon:ShopControl}
       <b>Controle da loja</b>: seu primeiro recrutamento na pr\xF3xima loja custa
       1 {icon:subs} a menos por ponto.\\n{icon:Saboteurs} <b>Sabotadores</b> (multijogador):
       o pr\xF3ximo recrutamento de cada rival custa 1 {icon:subs} a mais por ponto."
@@ -1914,6 +1915,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123070513160
     m_Localized: '{viewer} herda {cash} pra sempre.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431123679961088
+    m_Localized: "S\xF3 d\xE1 pra remover espectadores na loja."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431123721904128
+    m_Localized: "Sua audi\xEAncia precisa ficar com pelo menos {0} espectadores."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431123721904129
+    m_Localized: "Voc\xEA removeu {viewer} da sua audi\xEAncia de vez (-{cash} {icon:cash})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431123721904130
+    m_Localized: "{player} removeu {viewer} da audi\xEAncia de vez (-{cash} {icon:cash})."
     m_Metadata:
       m_Items: []
   references:

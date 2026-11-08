@@ -31,7 +31,7 @@ namespace DeckParty
             { GuestType.PrManager, S(null, CardPulse.Shine, 4f, UIPalette.Gold) },
             { GuestType.CybersecurityEngineer, S(null, CardPulse.Hologram, 0f, UIPalette.Teal) },
             { GuestType.SocialMediaManager, S(null, CardPulse.Hologram, 0f, UIPalette.Blue) },
-            { GuestType.CryptoEnthusiast, S(CardPulse.Shine, CardPulse.Glitch, 2f, UIPalette.Gold) },
+            { GuestType.AccountManager, S(CardPulse.Shine, null, 0f, UIPalette.Green) },
             { GuestType.ChatArbitrator, S(null, CardPulse.Frozen, 0f, UIPalette.Teal) },
             { GuestType.BotDetector, S(CardPulse.Glitch, null, 6f, UIPalette.Red) },
             { GuestType.BillionaireBenefactor, S(null, CardPulse.Shine, 0f, UIPalette.Green) },

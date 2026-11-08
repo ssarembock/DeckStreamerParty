@@ -41,6 +41,8 @@ sysinfo.txt
 mono_crash.*
 *.tmp
 *.unitypackage
+# ...and their .meta files (Unity deletes them on a PC that does not have the package, then they flip-flop).
+*.unitypackage.meta
 *.apk
 *.aab
 crashlytics-build.properties

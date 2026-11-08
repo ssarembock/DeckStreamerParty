@@ -80,8 +80,7 @@ namespace DeckParty.UI
                         var card = house.FindCard(e.GuestId);
                         if (card != null)
                         {
-                            string chip = e.B != 0 ? $"{GuestVisuals.PopText(e.A)} {GuestVisuals.CashText(e.B)}" : GuestVisuals.PopText(e.A);
-                            effects.FlyChip(chip, card.AnimRoot.position, hud.popLabel.transform.position);
+                            FlyResources(card.AnimRoot.position, e.A, e.B, false, null);
                         }
                         Fx.Play(FxCue.CounterPunch, hud.popLabel.transform, 1.2f);
                         Consider(Sfx.Coin, 4);
@@ -244,6 +243,10 @@ namespace DeckParty.UI
                     case GameEventType.GuestPurchased:
                         Consider(Sfx.Purchase, 4);
                         PurchaseFlourish(e.Guest);
+                        break;
+                    case GameEventType.GuestDismissed:
+                        if (who == null) ToastView.Show(Loc.Get("game.removed_you", "viewer", GuestVisuals.NameTag(e.Guest)), ToastKind.Info);
+                        Consider(Sfx.Boot, 4);
                         break;
                     case GameEventType.PalCaught:
                         Consider(Sfx.Purchase, 5);
@@ -450,8 +453,7 @@ namespace DeckParty.UI
                     // Boomer, Millennial and Zoomer fly from their Community Beats chips.
                     var community = (Community)e.A;
                     var from = communityBeats != null ? communityBeats.ChipPosition(community) : null;
-                    string reward = GameIcons.Tag(community) + "  " + EventText.Amounts(e.B, e.C);
-                    effects.FlyChip(reward, from ?? partyRoot.transform.position, hud.popLabel.transform.position);
+                    FlyResources(from ?? partyRoot.transform.position, e.B, e.C, false, GameIcons.Tag(community));
                     AudioService.PlayPitched(Sfx.Coin, 1.3f, 0.8f);
                     yield return Wait(step);
                     continue;
@@ -464,11 +466,12 @@ namespace DeckParty.UI
                     if (card.Portrait == null || !card.Portrait.Play(CharacterState.Score)) Fx.Play(FxCue.ScoreTick, card.AnimRoot);
                     else Fx.Play(FxCue.ScoreTick, card.AnimRoot, 0.6f);
                     if (card.Fx != null) card.Fx.Pulse(CardPulse.Shine, 0.7f);
-                    string chip = e.B != 0 ? $"{GuestVisuals.PopText(e.A)} {GuestVisuals.CashText(e.B)}" : GuestVisuals.PopText(e.A);
-                    // Community bonuses this viewer rolled in this scoring (twice, free, Cash doubled, cursed, Clout) ride along on the chip.
+                    // Each resource flies to its own icon in the menu bar: Clout to Clout, Cash to Cash, a Trophy to the Trophies.
+                    // Community bonuses this viewer rolled in this scoring (twice, free, Cash doubled...) ride along on the first chip.
                     string tags = CommunityTags(events, e.GuestId, e.C == 2 ? 2 : 0);
-                    if (tags.Length > 0) chip = tags + "  " + chip;
-                    effects.FlyChip(chip, card.AnimRoot.position, hud.popLabel.transform.position);
+                    var scorer = State != null ? View?.Find(e.GuestId) : null;
+                    bool trophy = scorer != null ? scorer.Info.IsDiamond : GuestCatalog.Get(e.Guest).IsDiamond;
+                    FlyResources(card.AnimRoot.position, e.A, e.B, trophy && e.C != 2, tags.Length > 0 ? tags : null);
                     if (tags.Length > 0 && card.Fx != null) card.Fx.Pulse(CardPulse.Shine);
                 }
                 AudioService.PlayPitched(Sfx.Coin, 1f + i * 0.06f, 0.8f);
@@ -490,6 +493,35 @@ namespace DeckParty.UI
                 Fx.Play(FxCue.BannerSlam, banner.transform);
             }
             RenderAll();
+        }
+
+        /// <summary>
+        /// Sends a take up to the menu bar, each resource to its own icon: Clout to the Clout icon, Cash to the Cash icon and a
+        /// Trophy (a Trophy viewer scoring) to the Trophy pips. <paramref name="prefix"/> (community tags or icon) rides on the
+        /// first chip. Zero amounts don't fly; with nothing at all, a "+0" goes to Clout so the viewer still visibly scores.
+        /// </summary>
+        void FlyResources(Vector3 from, int clout, int cash, bool trophy, string prefix)
+        {
+            var cloutTarget = hud.popIcon != null ? hud.popIcon.transform.position : hud.popLabel.transform.position;
+            var cashTarget = hud.cashIcon != null ? hud.cashIcon.transform.position : hud.cashLabel.transform.position;
+            var trophyTarget = hud.starsMeter != null ? hud.starsMeter.position : cloutTarget;
+            string lead = string.IsNullOrEmpty(prefix) ? string.Empty : prefix + "  ";
+            bool any = false;
+            // Fanned slightly so chips from the same viewer don't stack on top of each other.
+            if (clout != 0 || (cash == 0 && !trophy))
+            {
+                effects.FlyChip(lead + GuestVisuals.PopText(clout), from, cloutTarget);
+                lead = string.Empty;
+                any = true;
+            }
+            if (cash != 0)
+            {
+                effects.FlyChip(lead + GuestVisuals.CashText(cash), from + new Vector3(0f, any ? -34f : 0f, 0f), cashTarget, any ? 0.06f : 0f);
+                lead = string.Empty;
+                any = true;
+            }
+            if (trophy)
+                effects.FlyChip(lead + "+1 " + GameIcons.Tag(ResourceIcon.Plays), from + new Vector3(0f, any ? 34f : 0f, 0f), trophyTarget, any ? 0.12f : 0f);
         }
 
         /// <summary>

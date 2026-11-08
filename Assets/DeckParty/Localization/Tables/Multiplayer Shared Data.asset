@@ -339,6 +339,46 @@ MonoBehaviour:
     m_Key: mp.sabotage
     m_Metadata:
       m_Items: []
+  - m_Id: 2431121696055296
+    m_Key: timer.shop_seconds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998336
+    m_Key: timer.seconds_short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998337
+    m_Key: timer.stream_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998338
+    m_Key: timer.shop_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998339
+    m_Key: timer.yours_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998340
+    m_Key: timer.theirs_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998341
+    m_Key: mp.timeout_shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998342
+    m_Key: mp.round_timeout_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121737998343
+    m_Key: mp.round_timeout_shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431121742192640
+    m_Key: emote.slow_down
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
