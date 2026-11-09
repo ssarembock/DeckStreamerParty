@@ -261,7 +261,7 @@ namespace DeckParty.UI
             emptyState.SetActive(true);
             if (m_EmptyLabel == null) m_EmptyLabel = emptyState.GetComponentInChildren<TMP_Text>(true);
             if (m_EmptyLabel != null) m_EmptyLabel.text = label ?? string.Empty;
-            if (emptyFill != null) emptyFill.color = SitePalette.SurfaceAlt;
+            if (emptyFill != null) emptyFill.color = SiteColours.Get(SiteColourRole.SoftFill, transform);
             if (button != null) button.interactable = false;
             SetHighlight(CardHighlight.None);
             if (tooltip != null) tooltip.Provider = null;
@@ -332,7 +332,7 @@ namespace DeckParty.UI
             if (frame != null && avatarMode)
             {
                 // The ring shows the viewer's state; the action cue (pulsing accent) takes over while their action is unused.
-                m_FrameBase = AvatarRingColor(info, guest, live);
+                m_FrameBase = AvatarRingColor(info, guest, live, SiteColours.Get(SiteColourRole.PanelBorder, transform));
                 frame.color = m_FrameBase;
             }
             else if (frame != null)
@@ -359,13 +359,16 @@ namespace DeckParty.UI
             HideAbility();
         }
 
-        /// <summary>The avatar ring when no action is waiting: gold for Plays, green infected, teal immune, otherwise pure black.</summary>
-        static Color AvatarRingColor(GuestInfo info, GuestInstance guest, bool live)
+        /// <summary>
+        /// The avatar ring when no action is waiting: gold for Plays, green infected, teal immune, otherwise <paramref name="normal"/>
+        /// (the panel's border colour from UI Skin > Site Colours, black by default).
+        /// </summary>
+        static Color AvatarRingColor(GuestInfo info, GuestInstance guest, bool live, Color normal)
         {
             if (live && guest.Infected) return UIPalette.Green;
             if (live && guest.Immune) return UIPalette.Teal;
             if (info.IsDiamond) return SitePalette.Gold;
-            return SitePalette.Outline;
+            return normal;
         }
 
         /// <summary>
@@ -419,7 +422,7 @@ namespace DeckParty.UI
         {
             ShowEmpty(avatarMode ? null : $"<size=80%>{GuestVisuals.DisplayName(owner)}</size>");
             if (frame != null) frame.color = GuestVisuals.Tint(owner).WithAlpha(0.35f);
-            if (emptyFill != null) emptyFill.color = Color.Lerp(SitePalette.SurfaceAlt, GuestVisuals.Tint(owner), 0.35f);
+            if (emptyFill != null) emptyFill.color = Color.Lerp(SiteColours.Get(SiteColourRole.SoftFill, transform), GuestVisuals.Tint(owner), 0.35f);
         }
 
         public void SetCount(int count)

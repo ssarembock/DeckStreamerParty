@@ -917,7 +917,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 0
+    communities: 256
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -1175,6 +1175,20 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
+  - name: Dancing Jen
+    key: DancingJen
+    type: 83
+    portrait: {fileID: -2131563699, guid: 82cf2943f65f3004aa31e26f52227cbc, type: 3}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 256
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
   streamers:
   - name: Fate
     type: 1
@@ -1388,7 +1402,7 @@ MonoBehaviour:
   - {fileID: 1521659264739580947, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
   deplatformImage: {fileID: 21300000, guid: f558a3637bc663e4a8ea3135008f9b9f, type: 3}
   serverDownImage: {fileID: 21300000, guid: f558a3637bc663e4a8ea3135008f9b9f, type: 3}
-  chatFooterImage: {fileID: 4379249958137427876, guid: e5cd290dae18755498731c5060c38e94, type: 3}
+  chatFooterImage: {fileID: 0}
   communityIcons:
   - name: CoreFanbase
     community: 0
@@ -1474,7 +1488,7 @@ MonoBehaviour:
     partSize: 0.4
     travel: 1.1
     speed: 1
-    rest: 4
+    rest: 8
   - name: Lookout
     platform: 1
     accent: {r: 0.5686275, g: 0.27450982, b: 1, a: 1}
@@ -1488,7 +1502,7 @@ MonoBehaviour:
     pointB: {x: 0.85, y: 0.6}
     partSize: 0.12
     travel: 0.05
-    speed: 1
+    speed: 0.5
     rest: 0.5
   - name: Post
     platform: 2
@@ -1577,4 +1591,4 @@ MonoBehaviour:
     group: 7
     icon: {fileID: 0}
   communitiesSeeded: 1
-  communitiesRevision: 4
+  communitiesRevision: 5

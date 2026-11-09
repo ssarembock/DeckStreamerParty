@@ -1043,6 +1043,18 @@ MonoBehaviour:
     m_Key: char.Bot.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 2838161933295616
+    m_Key: char.AccountManager.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162012987392
+    m_Key: char.DancingJen.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162012987393
+    m_Key: char.DancingJen.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

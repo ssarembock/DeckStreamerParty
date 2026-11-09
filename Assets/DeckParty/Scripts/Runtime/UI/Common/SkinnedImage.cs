@@ -13,6 +13,9 @@ namespace DeckParty.UI
                  "(unless the skin entry overrides the colour).")]
         [SerializeField] internal bool tintPlaceholderOnly;
         [SerializeField] internal Color placeholderTint = Color.white;
+        [Tooltip("Icons on the website look's panels: the placeholder takes the text colour of the panel it sits in " +
+                 "(UI Skin > Site Colours) instead of Placeholder Tint, so it stays visible on any panel colour.")]
+        [SerializeField] internal bool siteText;
 
         public SkinSlot Slot
         {
@@ -38,14 +41,19 @@ namespace DeckParty.UI
             var skin = GameDatabase.Instance.skin;
             if (skin == null) return;
             var entry = skin.Get(slot);
-            if (entry == null || entry.sprite == null) return;
-
             var image = GetComponent<Image>();
-            image.sprite = entry.sprite;
-            image.type = entry.imageType;
-            image.pixelsPerUnitMultiplier = Mathf.Max(0.01f, entry.pixelsPerUnitMultiplier);
-            if (tintPlaceholderOnly) image.color = GameIcons.SlotTint(slot, placeholderTint);
-            else if (entry.overrideColor) image.color = entry.color;
+            bool hasArt = entry != null && entry.sprite != null;
+            if (hasArt)
+            {
+                image.sprite = entry.sprite;
+                image.type = entry.imageType;
+                image.pixelsPerUnitMultiplier = Mathf.Max(0.01f, entry.pixelsPerUnitMultiplier);
+            }
+            if (tintPlaceholderOnly) image.color = GameIcons.SlotTint(slot, PlaceholderTint);
+            else if (hasArt && entry.overrideColor) image.color = entry.color;
         }
+
+        /// <summary>The colour for the built-in white placeholder shape.</summary>
+        public Color PlaceholderTint => siteText ? SiteColours.Get(SiteColourRole.Text, transform) : placeholderTint;
     }
 }

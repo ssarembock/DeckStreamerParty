@@ -1648,26 +1648,27 @@ MonoBehaviour:
       copies of the same card count once, and a viewer who leaves takes their point
       with them. Every point makes the bonus bigger. Watch the <b>Community Beats</b>
       beside the chat and hover any community icon to see exactly what it does:\n{icon:CoreFanbase}
-      <b>Core Fanbase</b>: 10% per point that a Core Fanbase viewer scores twice.\n{icon:Staff}
-      <b>Staff</b>: 10% per point that a Staff viewer''s {icon:cash} cost is waived.\n{icon:Content}
-      <b>Content</b>: 10% per point that a viewer outside the Core Fanbase scores
-      twice.\n{icon:Boomer} <b>Boomers</b>: Sub Cap upgrades cost 1 {icon:cash} less
-      per point in your next shop; after a stream each Boomer has a 10% chance to
-      leave your Audience for good.\n{icon:Millennial} <b>Millennials</b>: when a
-      Boomer leaves, a random Millennial you own earns +1 {icon:cash} for good, once
-      per point.\n{icon:GenZ} <b>Gen-Z</b>: after a stream, each Gen-Z viewer grows
-      +1 {icon:subs} or {icon:cash} for good per point (up to 2).\n{icon:Gatekeepers}
-      <b>Gatekeepers</b>: one more removal per point this stream.\n{icon:HypeMen}
-      <b>Hype Men</b>: 10 / 20% that a Server Down stream still scores.\n{icon:Trolls}
-      <b>Troll Army</b>: 1 random {icon:subs} or {icon:cash} per point when you get
-      deplatformed.\n{icon:Mods} <b>Mods</b>: 10% per point (up to 20%) that your
-      next stream starts with 1 {icon:risk} cancelled.\n{icon:FullStream} <b>Full
-      Stream</b>: full-chat bonuses allow 1 empty space per point.\n{icon:Marketers}
-      <b>Marketers</b>: one more recruit per point this stream.\n{icon:Voyeurs} <b>Voyeurs</b>:
-      one more peek per point this stream (up to 1).\n{icon:ShopControl} <b>Shop
-      Control</b>: your first recruit in the next shop costs 1 {icon:subs} less per
-      point.\n{icon:Saboteurs} <b>Saboteurs</b> (multiplayer): every rival''s next
-      recruit costs 1 {icon:subs} more per point.'
+      <b>Core Fanbase</b>: 20% per point (up to 80%) that a Core Fanbase viewer scores
+      twice.\n{icon:Staff} <b>Staff</b>: 30% per point (up to 90%) that a Staff viewer''s
+      {icon:cash} cost is waived.\n{icon:Content} <b>Content</b>: 30% per point (up
+      to 90%) that a viewer outside the Core Fanbase scores twice.\n{icon:Boomer}
+      <b>Boomers</b>: Sub Cap upgrades cost 1 {icon:cash} less per point in your
+      next shop; after a stream each Boomer has a 10% chance to leave your Audience
+      for good.\n{icon:Millennial} <b>Millennials</b>: when a Boomer leaves, a random
+      Millennial you own earns +1 {icon:cash} for good, once per point.\n{icon:GenZ}
+      <b>Gen-Z</b>: after a stream, each Gen-Z viewer grows +1 {icon:subs} or {icon:cash}
+      for good per point (up to 2).\n{icon:Gatekeepers} <b>Gatekeepers</b>: one more
+      removal per point this stream.\n{icon:HypeMen} <b>Hype Men</b>: 10 / 20% that
+      a Server Down stream still scores.\n{icon:Trolls} <b>Troll Army</b>: 1 random
+      {icon:subs} or {icon:cash} per point when you get deplatformed.\n{icon:Mods}
+      <b>Mods</b>: 10% per point (up to 20%) that your next stream starts with 1
+      {icon:risk} cancelled.\n{icon:FullStream} <b>Full Stream</b>: full-chat bonuses
+      allow 1 empty space per point.\n{icon:Marketers} <b>Marketers</b>: one more
+      recruit per point this stream (up to 3).\n{icon:Voyeurs} <b>Voyeurs</b>: one
+      more peek per point this stream (up to 1).\n{icon:ShopControl} <b>Shop Control</b>:
+      your first recruit in the next shop costs 1 {icon:subs} less per point.\n{icon:Saboteurs}
+      <b>Saboteurs</b> (multiplayer): every rival''s next recruit costs 1 {icon:subs}
+      more per point.'
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656
@@ -1809,7 +1810,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123028570127
     m_Localized: They know who to call. Each point gives one more use of a Marketer's
-      recruit action this stream (the extra uses are shared).
+      recruit action this stream (up to {max}, shared).
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570128
@@ -1906,6 +1907,14 @@ MonoBehaviour:
   - m_Id: 2431123721904130
     m_Localized: '{player} removed {viewer} from their Audience for good (-{cash}
       {icon:cash}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162222702592
+    m_Localized: UPSOLD!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162356920320
+    m_Localized: '{value} together'
     m_Metadata:
       m_Items: []
   references:

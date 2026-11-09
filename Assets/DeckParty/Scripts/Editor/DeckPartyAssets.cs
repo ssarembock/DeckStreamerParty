@@ -486,6 +486,8 @@ namespace DeckParty.EditorTools
         /// </summary>
         static GameObject BuildChatAvatar()
         {
+            // The website look: the avatar's soft fills and stats follow UI Skin > Site Colours (its ring and badges keep their own).
+            using var siteColours = EditorUI.SiteColourScope();
             var size = new Vector2(AvatarLayout.Width, AvatarLayout.Height);
             const float circle = AvatarLayout.Circle;
             const float top = AvatarLayout.CircleTop;
@@ -559,6 +561,7 @@ namespace DeckParty.EditorTools
             statsPill.enabled = false;
             statsPill.raycastTarget = false;
             stats.color = SitePalette.Text;
+            EditorUI.TagSite(stats, SiteColourRole.Text);
             EditorUI.Readable(stats);
             stats.text = "-";
 
@@ -743,7 +746,10 @@ namespace DeckParty.EditorTools
         /// </summary>
         static GameObject BuildShopItem()
         {
+            // The tile and its card piles take the Shop tiles colours in UI Skin > Site Colours.
+            using var siteColours = EditorUI.SiteColourScope();
             var root = EditorUI.Rect(null, "ShopItem");
+            EditorUI.TagArea(root, SiteArea.ShopTiles);
             root.sizeDelta = new Vector2(190, 266);
 
             // The pile: card backs peeking out up and to the left, one per copy left after the top card (ShopItemView).
@@ -768,12 +774,15 @@ namespace DeckParty.EditorTools
 
             // A playing card: square corners, a strong black border.
             var frame = EditorUI.Image(anim, "Frame", SitePalette.Outline, null);
+            EditorUI.TagSite(frame, SiteColourRole.PanelBorder);
             frame.rectTransform.Stretch();
             var background = EditorUI.Image(anim, "Background", SitePalette.Surface, null, null, true);
+            EditorUI.TagSite(background, SiteColourRole.PanelFill);
             background.rectTransform.Stretch(3, 3, 3, 3);
 
             // The picture: a plain rectangle with a thin black border.
             var portraitBorder = EditorUI.Image(anim, "PortraitBorder", SitePalette.Outline, null);
+            EditorUI.TagSite(portraitBorder, SiteColourRole.PanelBorder);
             portraitBorder.rectTransform.Box(new Vector2(0.07f, 0.19f), new Vector2(0.93f, 0.95f), Vector2.zero, Vector2.zero);
             var portraitBg = EditorUI.Image(portraitBorder.transform, "PortraitBg", SitePalette.SurfaceAlt, null);
             portraitBg.rectTransform.Stretch(2, 2, 2, 2);

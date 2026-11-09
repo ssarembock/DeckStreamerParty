@@ -121,7 +121,7 @@ namespace DeckParty.UI
             if (groupIcon != null) groupIcon.gameObject.SetActive(false);
             if (communities != null) communities.Bind(type);
             if (diamondBadge != null) diamondBadge.SetActive(info.IsDiamond);
-            var border = siteStyle ? SitePalette.Outline : UIPalette.Border;
+            var border = siteStyle ? SiteColours.Get(SiteColourRole.PanelBorder, transform) : UIPalette.Border;
             if (frame != null) frame.color = info.IsDiamond ? Color.Lerp(border, siteStyle ? SitePalette.Gold : UIPalette.Gold, 0.75f) : border;
 
             // Shop Control's discount / rival Saboteurs' surcharge on the next recruit: the old price struck through.
@@ -132,7 +132,7 @@ namespace DeckParty.UI
                 // The icon and the number only: hovering the icon names the resource.
                 string was = cost != info.Cost ? $"<s><size=80%>{info.Cost}</size></s> " : string.Empty;
                 priceLabel.text = $"<size=125%>{GameIcons.Tag(ResourceIcon.Subs)}</size> {was}{cost}";
-                priceLabel.color = affordable ? (siteStyle ? SitePalette.Text : UIPalette.Gold) : (siteStyle ? SitePalette.Danger : UIPalette.Red);
+                priceLabel.color = affordable ? (siteStyle ? SiteColours.Get(SiteColourRole.Text, transform) : UIPalette.Gold) : (siteStyle ? SitePalette.Danger : UIPalette.Red);
             }
 
             int left = PartyEngine.ShopLeft(state, type);
@@ -144,7 +144,7 @@ namespace DeckParty.UI
                 else leftLabel.text = left == int.MaxValue ? Loc.Get("shop.left_unlimited") : Loc.Get("shop.left", "count", left);
                 leftLabel.color = soldOut ? (siteStyle ? SitePalette.Danger : UIPalette.Red)
                     : left == 1 ? (siteStyle ? SitePalette.Warning : UIPalette.Orange)
-                    : siteStyle ? SitePalette.TextDim : UIPalette.TextDim;
+                    : siteStyle ? SiteColours.Get(SiteColourRole.SecondaryText, transform) : UIPalette.TextDim;
             }
 
             bool canBuy = blocker == null;

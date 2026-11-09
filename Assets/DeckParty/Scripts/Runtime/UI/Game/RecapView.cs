@@ -54,11 +54,11 @@ namespace DeckParty.UI
             if (titleLabel != null)
             {
                 titleLabel.text = title;
-                titleLabel.color = LightText.Readable(titleColor);
+                titleLabel.color = LightText.ReadableOn(titleLabel.transform, titleColor);
             }
             if (subtitleLabel != null)
             {
-                subtitleLabel.text = LightText.Adapt(subtitle ?? string.Empty);
+                subtitleLabel.text = LightText.AdaptOn(subtitleLabel.transform, subtitle ?? string.Empty);
                 subtitleLabel.gameObject.SetActive(!string.IsNullOrEmpty(subtitle));
             }
 

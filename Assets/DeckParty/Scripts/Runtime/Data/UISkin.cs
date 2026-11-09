@@ -6,7 +6,10 @@ using UnityEngine.UI;
 
 namespace DeckParty
 {
-    /// <summary>Named UI art slots. Every skinned Image in the scenes and prefabs points at one of these.</summary>
+    /// <summary>
+    /// Named UI art slots. Every skinned Image in the scenes and prefabs points at one of these. The readable names and where
+    /// each one shows are in Editor/SkinSlotGuide.cs (the UI Skin inspector reads them): describe new slots there too.
+    /// </summary>
     public enum SkinSlot
     {
         Panel = 0,
@@ -74,7 +77,8 @@ namespace DeckParty
 
     /// <summary>
     /// Central UI art. Drop sprites from your UI sprite sheet into the slots (or run
-    /// Deck Party > Art > Auto-Assign Sprites) and every screen picks them up.
+    /// Deck Party > Art > Auto-Assign Sprites) and every screen picks them up. The inspector (Editor/UISkinEditor.cs) lists
+    /// every entry by name with where it shows.
     /// </summary>
     [CreateAssetMenu(menuName = "Deck Party/UI Skin", fileName = "UISkin")]
     public sealed class UISkin : ScriptableObject
@@ -85,6 +89,10 @@ namespace DeckParty
         public TMP_FontAsset headerFont;
 
         public List<SkinEntry> entries = new List<SkinEntry>();
+
+        [Tooltip("The colours of the website look (stream, shop, light pop-ups): page, panels, borders, dividers and text, " +
+                 "shared or per panel. Applied live; kept when the scenes are rebuilt.")]
+        public SiteColourSet siteColours = new SiteColourSet();
 
         [NonSerialized] Dictionary<SkinSlot, SkinEntry> m_Lookup;
 
@@ -114,7 +122,16 @@ namespace DeckParty
                 existing.name = slot.ToString();
             }
             entries.Sort((a, b) => a.slot.CompareTo(b.slot));
+            if (siteColours == null) siteColours = new SiteColourSet();
+            siteColours.EnsureAllAreas();
             m_Lookup = null;
+        }
+
+        /// <summary>Tells every skinned graphic to re-apply (after a change made from code rather than the inspector).</summary>
+        public void NotifyChanged()
+        {
+            m_Lookup = null;
+            SkinChanged?.Invoke();
         }
 
         void OnValidate()

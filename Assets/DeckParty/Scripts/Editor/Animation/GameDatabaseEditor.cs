@@ -41,30 +41,31 @@ namespace DeckParty.EditorTools
         bool m_ShowStreamArt = true;
         bool m_ShowIcons = true;
 
-        /// <summary>The UI Skin's icon slots used by the stream and the shop, with where each one shows.</summary>
-        static readonly (SkinSlot slot, string label)[] s_UiIcons =
+        /// <summary>The UI Skin's icon slots used by the stream and the shop (names and descriptions: SkinSlotGuide).</summary>
+        static readonly SkinSlot[] s_UiIcons =
         {
-            (SkinSlot.IconStreamChat, "Stream Chat title"),
-            (SkinSlot.IconTimer, "Countdown timers (hourglass)"),
-            (SkinSlot.IconRemoveViewer, "Remove a Viewer (shop)"),
-            (SkinSlot.IconMute, "Mute emotes (Players panel)"),
-            (SkinSlot.IconCommunityBeats, "Community Beats title"),
-            (SkinSlot.IconAudience, "Audience button (menu bar, shop)"),
-            (SkinSlot.IconMenu, "Menu button"),
-            (SkinSlot.IconNight, "Stream counter (menu bar)"),
-            (SkinSlot.IconPop, "Clout (menu bar, text, prices)"),
-            (SkinSlot.IconCash, "Cash (menu bar, text)"),
-            (SkinSlot.IconDoor, "Sub Cap (menu bar, Raise Sub Cap)"),
-            (SkinSlot.IconTrouble, "Deplatform Risk (pips, risky queue, avatars)"),
-            (SkinSlot.IconStar, "Trophies (pips, avatars, Players panel, text)"),
-            (SkinSlot.IconAddViewer, "Add Viewer button"),
-            (SkinSlot.IconEndStream, "End the Stream button"),
-            (SkinSlot.IconCheck, "Approve / Confirm / Ready"),
-            (SkinSlot.IconClose, "Deny / Cancel"),
-            (SkinSlot.IconGoLive, "Go Live (shop)"),
-            (SkinSlot.IconAction, "Viewer action / streamer Use"),
-            (SkinSlot.IconCancel, "Cancels Risk badge (avatars)"),
-            (SkinSlot.AvatarRing, "Chat avatar ring"),
+            // In the UI Skin inspector's order: resources, menu bar, stream, shop, players.
+            SkinSlot.IconPop,
+            SkinSlot.IconCash,
+            SkinSlot.IconTrouble,
+            SkinSlot.IconStar,
+            SkinSlot.IconCancel,
+            SkinSlot.IconNight,
+            SkinSlot.IconDoor,
+            SkinSlot.IconAudience,
+            SkinSlot.IconMenu,
+            SkinSlot.IconTimer,
+            SkinSlot.IconCommunityBeats,
+            SkinSlot.IconAddViewer,
+            SkinSlot.IconEndStream,
+            SkinSlot.AvatarRing,
+            SkinSlot.IconAction,
+            SkinSlot.IconCheck,
+            SkinSlot.IconClose,
+            SkinSlot.IconGoLive,
+            SkinSlot.IconRemoveViewer,
+            SkinSlot.IconCrown,
+            SkinSlot.IconMute,
         };
         bool m_ShowPlatforms = true;
         bool m_ShowViewers = true;
@@ -161,21 +162,23 @@ namespace DeckParty.EditorTools
                 return;
             }
             EditorGUILayout.HelpBox(
-                "These are the UI Skin's icon slots (Deck Party > Select UI Skin shows all of them). Drop a sprite on a slot to replace the " +
-                "built-in placeholder. White placeholders are tinted by the game; your own art keeps its colours. Changes show the next time you press Play.",
+                "The UI Skin's icons for the stream and the shop (hover a name to see where it shows). Deck Party > Select UI Skin " +
+                "lists every UI Skin entry with a description and a Find button. Drop a sprite on a slot to replace the built-in " +
+                "placeholder: white placeholders are tinted by the game, your own art keeps its colours.",
                 MessageType.None);
             db.skin.EnsureAllSlots();
             var skin = new SerializedObject(db.skin);
             var entries = skin.FindProperty("entries");
             using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {
-                foreach (var (slot, label) in s_UiIcons)
+                foreach (var slot in s_UiIcons)
                 {
                     for (int i = 0; i < entries.arraySize; i++)
                     {
                         var entry = entries.GetArrayElementAtIndex(i);
                         if (entry.FindPropertyRelative("slot").intValue != (int)slot) continue;
-                        EditorGUILayout.PropertyField(entry.FindPropertyRelative("sprite"), new GUIContent(label, slot.ToString()));
+                        var info = SkinSlotGuide.Get(slot);
+                        EditorGUILayout.PropertyField(entry.FindPropertyRelative("sprite"), new GUIContent(info.Name, info.Where));
                         break;
                     }
                 }

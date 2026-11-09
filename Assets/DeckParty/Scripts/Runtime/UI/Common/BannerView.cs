@@ -36,11 +36,11 @@ namespace DeckParty.UI
         IEnumerator Play(string title, string subtitle, Color color, float hold)
         {
             titleLabel.text = title;
-            subtitleLabel.text = siteStyle ? LightText.Adapt(subtitle ?? string.Empty) : subtitle ?? string.Empty;
+            subtitleLabel.text = siteStyle ? LightText.AdaptOn(subtitleLabel.transform, subtitle ?? string.Empty) : subtitle ?? string.Empty;
             subtitleLabel.gameObject.SetActive(!string.IsNullOrEmpty(subtitle));
             if (siteStyle)
             {
-                titleLabel.color = LightText.Readable(color);
+                titleLabel.color = LightText.ReadableOn(titleLabel.transform, color);
                 if (accent != null) accent.color = color;
             }
             else

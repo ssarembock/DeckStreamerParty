@@ -11,7 +11,7 @@ Normie,Hippie,Normie,Active,Regular,4,1,0,No,Core Fanbase; Mods,Cancels 1 Deplat
 Paid Sponsorship,Ticket Taker,PaidSponsorship,Active,Regular,4,-1,3,No,Boomers,"Pays well, but viewers skip the ad: -1 Clout when scored."
 Account Manager,Caterer,AccountManager,Active,Regular,5,3,-1,No,Staff,Active: Permanently Increase any viewer card in chat by +1 cash reward. 
 Binge Bunny,Mascot,BingeBunny,Active,Regular,5,1,0,No,Core Fanbase,Algorithmic Rabbit Hole: +1 Clout for every Loyal Fan in chat.
-Crypto Enthusiast,Photographer,CryptoEnthusiast,Active,Regular,6,0,"-2, 1, 9, 16, 25",No,Millenial,New Logic: Score Similar to the Dancing Jen except it works on cash instead of clout and starts with a negative value. 
+Crypto Enthusiast,Photographer,CryptoEnthusiast,Active,Regular,6,0,"0, 1, 4, 9, 16",No,Millenial,New Logic: Score Similar to the Dancing Jen except it works on cash instead of clout (0 for one on its own). 
 Generous Donator,Greeter,GenerousDonator,Active,Regular,5,1,1,No,Hype Men,"Give to the Rich!: when joining, brings in the next viewer from the queue and scores them once right away (banked)."
 Hate-Watcher,Werewolf,HateWatcher,Active,Regular,5,4,0,Every other entrance,Troll Army,"Switches mood every time they join chat: hate-watching (+1 Deplatform Risk) on their first entrance, harmless on the next, and so on."
 Junior PR Manager,Grillmaster,JuniorPrManager,Active,Regular,5,2,-1,No,Staff; Gen-Z,"Action (Situation Defusal): send 1 random viewer in chat back to the queue. Every use sends one more (2, 3...), for good. Used actions stay used."

@@ -24,12 +24,12 @@ namespace DeckParty.UI
         {
             if (m_Built) return;
             m_Built = true;
-            m_Border = UiFactory.Image("Border", transform, SitePalette.Outline, RuntimeSprites.Rounded, true);
+            m_Border = UiFactory.Image("Border", transform, SiteColours.Get(SiteColourRole.PanelBorder, transform), RuntimeSprites.Rounded, true);
             UiFactory.Stretch(m_Border.rectTransform);
-            m_Fill = UiFactory.Image("Fill", m_Border.transform, SitePalette.Surface, RuntimeSprites.Rounded);
+            m_Fill = UiFactory.Image("Fill", m_Border.transform, SiteColours.Get(SiteColourRole.PanelFill, transform), RuntimeSprites.Rounded);
             UiFactory.Stretch(m_Fill.rectTransform, 3f);
 
-            m_Icon = UiFactory.Image("Hourglass", transform, SitePalette.Text, null);
+            m_Icon = UiFactory.Image("Hourglass", transform, SiteColours.Get(SiteColourRole.Text, transform), null);
             m_Icon.preserveAspect = true;
             var iconRect = m_Icon.rectTransform;
             iconRect.anchorMin = new Vector2(0f, 0.5f);
@@ -38,7 +38,7 @@ namespace DeckParty.UI
             iconRect.anchoredPosition = new Vector2(12f, 0f);
             iconRect.sizeDelta = new Vector2(34f, 34f);
 
-            m_Label = UiFactory.Text("Seconds", transform, 30f, SitePalette.Text, TextAlignmentOptions.Center, true);
+            m_Label = UiFactory.Text("Seconds", transform, 30f, SiteColours.Get(SiteColourRole.Text, transform), TextAlignmentOptions.Center, true);
             var labelRect = m_Label.rectTransform;
             labelRect.anchorMin = Vector2.zero;
             labelRect.anchorMax = Vector2.one;
@@ -83,9 +83,10 @@ namespace DeckParty.UI
             int whole = Mathf.CeilToInt(seconds);
             bool warning = whole <= TurnTimers.WarningSeconds;
             m_Label.text = whole.ToString();
-            var ink = warning ? SitePalette.Danger : SitePalette.Text;
+            var ink = warning ? SitePalette.Danger : SiteColours.Get(SiteColourRole.Text, transform);
             m_Label.color = ink;
-            m_Border.color = warning ? SitePalette.Danger : SitePalette.Outline;
+            m_Border.color = warning ? SitePalette.Danger : SiteColours.Get(SiteColourRole.PanelBorder, transform);
+            m_Fill.color = SiteColours.Get(SiteColourRole.PanelFill, transform);
             m_Icon.color = GameIcons.SlotTint(SkinSlot.IconTimer, ink);
             if (m_Tooltip != null) m_Tooltip.Text = tip;
             if (warning && whole != m_LastSecond && whole > 0)

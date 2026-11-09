@@ -1662,24 +1662,24 @@ MonoBehaviour:
       que sai leva o ponto junto. Cada ponto aumenta o b\xF4nus. Fique de olho no
       <b>Ritmo das comunidades</b> ao lado do chat e passe o mouse sobre qualquer
       \xEDcone de comunidade pra ver o que ela faz:\\n{icon:CoreFanbase} <b>Base
-      de f\xE3s</b>: 10% por ponto de um espectador da Base de f\xE3s pontuar duas
-      vezes.\\n{icon:Staff} <b>Equipe</b>: 10% por ponto de n\xE3o cobrar o {icon:cash}
-      de um espectador da Equipe.\\n{icon:Content} <b>Conte\xFAdo</b>: 10% por ponto
-      de um espectador fora da Base de f\xE3s pontuar duas vezes.\\n{icon:Boomer}
-      <b>Boomers</b>: na sua pr\xF3xima loja aumentar o limite custa 1 {icon:cash}
-      a menos por ponto; depois de uma live cada Boomer tem 10% de chance de deixar
-      sua audi\xEAncia de vez.\\n{icon:Millennial} <b>Millennials</b>: quando um
-      Boomer sai, um Millennial seu aleat\xF3rio ganha +1 {icon:cash} pra sempre,
-      uma vez por ponto.\\n{icon:GenZ} <b>Gera\xE7\xE3o Z</b>: depois de uma live,
-      cada espectador da Gera\xE7\xE3o Z cresce +1 {icon:subs} ou {icon:cash} pra
-      sempre por ponto (at\xE9 2).\\n{icon:Gatekeepers} <b>Porteiros</b>: mais uma
-      expuls\xE3o por ponto nesta live.\\n{icon:HypeMen} <b>Animadores</b>: 10 /
-      20% de uma live com o servidor ca\xEDdo ainda pontuar.\\n{icon:Trolls} <b>Ex\xE9rcito
-      troll</b>: 1 {icon:subs} ou {icon:cash} aleat\xF3rio por ponto se a live for
-      desplataformizada.\\n{icon:Mods} <b>Mods</b>: 10% por ponto (at\xE9 20%) de
-      a sua pr\xF3xima live come\xE7ar com 1 {icon:risk} anulado.\\n{icon:FullStream}
+      de f\xE3s</b>: 20% por ponto (at\xE9 80%) de um espectador da Base de f\xE3s
+      pontuar duas vezes.\\n{icon:Staff} <b>Equipe</b>: 30% por ponto (at\xE9 90%)
+      de n\xE3o cobrar o {icon:cash} de um espectador da Equipe.\\n{icon:Content}
+      <b>Conte\xFAdo</b>: 30% por ponto (at\xE9 90%) de um espectador fora da Base
+      de f\xE3s pontuar duas vezes.\\n{icon:Boomer} <b>Boomers</b>: na sua pr\xF3xima
+      loja aumentar o limite custa 1 {icon:cash} a menos por ponto; depois de uma
+      live cada Boomer tem 10% de chance de deixar sua audi\xEAncia de vez.\\n{icon:Millennial}
+      <b>Millennials</b>: quando um Boomer sai, um Millennial seu aleat\xF3rio ganha
+      +1 {icon:cash} pra sempre, uma vez por ponto.\\n{icon:GenZ} <b>Gera\xE7\xE3o
+      Z</b>: depois de uma live, cada espectador da Gera\xE7\xE3o Z cresce +1 {icon:subs}
+      ou {icon:cash} pra sempre por ponto (at\xE9 2).\\n{icon:Gatekeepers} <b>Porteiros</b>:
+      mais uma expuls\xE3o por ponto nesta live.\\n{icon:HypeMen} <b>Animadores</b>:
+      10 / 20% de uma live com o servidor ca\xEDdo ainda pontuar.\\n{icon:Trolls}
+      <b>Ex\xE9rcito troll</b>: 1 {icon:subs} ou {icon:cash} aleat\xF3rio por ponto
+      se a live for desplataformizada.\\n{icon:Mods} <b>Mods</b>: 10% por ponto (at\xE9
+      20%) de a sua pr\xF3xima live come\xE7ar com 1 {icon:risk} anulado.\\n{icon:FullStream}
       <b>Live lotada</b>: b\xF4nus de chat cheio permitem 1 espa\xE7o vazio por ponto.\\n{icon:Marketers}
-      <b>Marqueteiros</b>: mais um recrutamento por ponto nesta live.\\n{icon:Voyeurs}
+      <b>Marqueteiros</b>: mais um recrutamento por ponto nesta live (at\xE9 3).\\n{icon:Voyeurs}
       <b>Bisbilhoteiros</b>: mais uma espiada por ponto nesta live (at\xE9 1).\\n{icon:ShopControl}
       <b>Controle da loja</b>: seu primeiro recrutamento na pr\xF3xima loja custa
       1 {icon:subs} a menos por ponto.\\n{icon:Saboteurs} <b>Sabotadores</b> (multijogador):
@@ -1831,7 +1831,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123028570127
     m_Localized: "Sabem quem chamar. Cada ponto d\xE1 mais um uso da a\xE7\xE3o de
-      recrutar de um Marqueteiro nesta live (os usos extras s\xE3o compartilhados)."
+      recrutar de um Marqueteiro nesta live (at\xE9 {max}, compartilhados)."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570128
@@ -1931,6 +1931,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2431123721904130
     m_Localized: "{player} removeu {viewer} da audi\xEAncia de vez (-{cash} {icon:cash})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162222702592
+    m_Localized: UPSELL!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162356920320
+    m_Localized: '{value} em grupo'
     m_Metadata:
       m_Items: []
   references:

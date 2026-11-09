@@ -446,7 +446,7 @@ namespace DeckParty.Core
                     "Action: a viewer in chat permanently earns +1 $ more (up to 9 $). Costs 1 $ when scored.",
                     pop: 3, cash: -1, ability: AbilityKind.Style, abilityName: "Upsell"),
                 new GuestInfo(GuestType.CryptoEnthusiast, "Crypto Enthusiast", 6, Tbd,
-                    "To the Moon: Crypto Enthusiasts score together, -2 / 1 / 9 / 16 / 25 $ in total for 1 to 5 of them in chat.",
+                    "To the Moon: Crypto Enthusiasts score together, 0 / 1 / 4 / 9 / 16 $ in total for 1 to 5 of them in chat.",
                     maxCopies: GameRules.GroupCardMaxCopies),
                 new GuestInfo(GuestType.GenerousDonator, "Generous Donator", 5, Tbd,
                     "Give to the Rich!: when joining, brings in the next viewer from the queue and scores them once right away (banked).", pop: 1, cash: 1),

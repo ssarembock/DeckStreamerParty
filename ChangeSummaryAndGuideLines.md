@@ -72,14 +72,14 @@ These come from your edited `ViewerList.csv` and `Communities.csv`.
 1. Let the scripts compile.
 2. Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs**. This adds Dancing Jen to the Game Database, gives Crypto Enthusiast and Dancing Jen their Millennials tag (no other viewer's communities change), rebuilds the green and red buttons and re-imports the strings.
 3. Give Dancing Jen a portrait in the Game Database. Sprites named `DancingJen`, `Jen` or `Dancer` are picked up by **Deck Party > Art > Auto-Assign Sprites by Name**.
-4. Multiplayer needs every player on this build (protocol `deckparty-11`). Saves still load.
+4. Multiplayer needs every player on this build (protocol `deckparty-12`). Saves still load.
 
 ### Viewer cards
 
 | Card | Now |
 |---|---|
 | **Account Manager** | 3 Clout, −1 Cash. New action **Upsell**: one viewer in chat permanently earns +1 Cash (up to 9), like the Affiliate's Checkout Code. |
-| **Crypto Enthusiast** | Costs 6. No Clout, no action (Rug Pull is gone). Millennials. All Crypto Enthusiasts in chat score Cash together: **−2 / 1 / 9 / 16 / 25** in total for 1 / 2 / 3 / 4 / 5 of them. |
+| **Crypto Enthusiast** | Costs 6. No Clout, no action (Rug Pull is gone). Millennials. All Crypto Enthusiasts in chat score Cash together: **0 / 1 / 4 / 9 / 16** in total for 1 / 2 / 3 / 4 / 5 of them. |
 | **Dancing Jen** (new) | The original game's Dancer. Costs 7. Millennials. All Dancing Jens in chat score Clout together: **1 / 4 / 9 / 16 / 25** in total for 1 / 2 / 3 / 4 / 5 of them. |
 
 ### Communities
@@ -109,7 +109,7 @@ The tooltips and the rules page show the new numbers in all 5 languages.
 
 1. **How a group's total is shown:** the total is split evenly across the copies in chat, so each of 3 Jens shows +3 (9 in all). If it doesn't split evenly, the first copy in chat takes the rest: with 2 Crypto Enthusiasts, the first scores +1 and the second 0. The total always matches your table. Community bonuses then apply to each copy's part. For example, Content gives each Jen its own chance to score its part again.
 2. **5 copies:** the usual limit is 4 copies of a card. Dancing Jen and Crypto Enthusiast allow 5 (owned and in the shared shop), so the 25 step can be reached.
-3. **Crypto's table is used exactly as written:** 2 Crypto Enthusiasts score +1 in total, and 3 score +9.
+3. **Crypto's table (changed later on 2026-11-08):** 0 / 1 / 4 / 9 / 16 Cash in total for 1 to 5 in chat, so one on its own earns nothing and 5 earn 16. Scoring works the same way as before; only the numbers changed.
 4. **Going Live:** Dancing Jen replaces Binge Bunny, which was standing in for the original Dancer. Brand Deal Wishlist keeps Binge Bunny (for the Cheerleader). Its description now says "Crypto hype" instead of "Rug pulls".
 5. **Account Manager vs Affiliate:** both now have the same action and −1 Cash, but the Account Manager is cheaper (5 vs 7) and earns 3 Clout. Worth a look when you next balance the Affiliate.
 6. **Marketers can't reach 3 yet:** only Producer and Marketing Manager are Marketers, so the most it can score is 1 point. Full Stream still can't score (only Promo Code User).

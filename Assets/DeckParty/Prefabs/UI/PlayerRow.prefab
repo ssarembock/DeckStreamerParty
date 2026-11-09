@@ -587,7 +587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
+  m_Color: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -619,6 +619,7 @@ MonoBehaviour:
   slot: 16
   tintPlaceholderOnly: 1
   placeholderTint: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
+  siteText: 0
 --- !u!1 &2257802051720392871
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,7 +679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  m_Color: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -710,6 +711,7 @@ MonoBehaviour:
   slot: 37
   tintPlaceholderOnly: 1
   placeholderTint: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  siteText: 0
 --- !u!1 &4339131760296599064
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,7 +771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.41960785, g: 0.8901961, b: 0.54509807, a: 1}
+  m_Color: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -801,6 +803,7 @@ MonoBehaviour:
   slot: 17
   tintPlaceholderOnly: 1
   placeholderTint: {r: 0.41960785, g: 0.8901961, b: 0.54509807, a: 1}
+  siteText: 0
 --- !u!1 &4376502934045447346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,7 +1216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18431373, g: 0.13725491, b: 0.3137255, a: 1}
+  m_Color: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1245,6 +1248,7 @@ MonoBehaviour:
   slot: 1
   tintPlaceholderOnly: 0
   placeholderTint: {r: 1, g: 1, b: 1, a: 1}
+  siteText: 0
 --- !u!114 &9136424547435167530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1500,7 +1504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.30980393, b: 0.54509807, a: 1}
+  m_Color: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1532,3 +1536,4 @@ MonoBehaviour:
   slot: 9
   tintPlaceholderOnly: 0
   placeholderTint: {r: 1, g: 1, b: 1, a: 1}
+  siteText: 0

@@ -184,7 +184,7 @@ namespace DeckParty.UI
                     queueFaces[i].enabled = sprite != null;
                     queueFaces[i].preserveAspect = true;
                 }
-                if (back != null) back.color = Color.Lerp(SitePalette.SurfaceAlt, GuestVisuals.Tint(g.Kind), sprite != null ? 0.2f : 0.85f);
+                if (back != null) back.color = Color.Lerp(SiteColours.Get(SiteColourRole.SoftFill, back.transform), GuestVisuals.Tint(g.Kind), sprite != null ? 0.2f : 0.85f);
                 var tip = queueTips != null && i < queueTips.Length ? queueTips[i] : null;
                 if (tip != null)
                 {

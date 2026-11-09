@@ -331,7 +331,7 @@ namespace DeckParty.UI
             if (pending.Kind == RecapKind.Shop)
             {
                 title = Loc.Get("recap.shop_title");
-                color = SitePalette.Text;
+                color = SiteColours.Get(SiteColourRole.Text, SiteArea.PopUps);
             }
             else if (entries.Count == 1)
             {
@@ -342,7 +342,7 @@ namespace DeckParty.UI
             else
             {
                 title = Loc.Get("recap.stream_title");
-                color = SitePalette.Text;
+                color = SiteColours.Get(SiteColourRole.Text, SiteArea.PopUps);
             }
 
             var any = View ?? State;

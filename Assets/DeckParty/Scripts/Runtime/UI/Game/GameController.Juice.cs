@@ -254,7 +254,9 @@ namespace DeckParty.UI
                         break;
                     case GameEventType.HouseExpanded:
                         Consider(Sfx.Expand, 4);
-                        Fx.Play(FxCue.CounterPunch, hud.capacityLabel.transform);
+                        // The menu bar no longer shows the Sub Cap: punch the shop's Raise Sub Cap button (or the old counter).
+                        if (hud.capacityLabel != null) Fx.Play(FxCue.CounterPunch, hud.capacityLabel.transform);
+                        else if (planning != null && planning.expandButton != null) Fx.Play(FxCue.CounterPunch, planning.ExpandButtonRect);
                         break;
                     case GameEventType.PowerUsed:
                     {
@@ -497,7 +499,7 @@ namespace DeckParty.UI
 
         /// <summary>
         /// Sends a take up to the menu bar, each resource to its own icon: Clout to the Clout icon, Cash to the Cash icon and a
-        /// Trophy (a Trophy viewer scoring) to the Trophy pips. <paramref name="prefix"/> (community tags or icon) rides on the
+        /// Trophy (a Trophy viewer scoring) to the Trophies count. <paramref name="prefix"/> (community tags or icon) rides on the
         /// first chip. Zero amounts don't fly; with nothing at all, a "+0" goes to Clout so the viewer still visibly scores.
         /// </summary>
         void FlyResources(Vector3 from, int clout, int cash, bool trophy, string prefix)

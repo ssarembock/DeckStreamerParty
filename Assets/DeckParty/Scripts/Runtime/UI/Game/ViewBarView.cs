@@ -62,7 +62,7 @@ namespace DeckParty.UI
             label.enableAutoSizing = true;
             label.fontSizeMin = 14f;
             label.fontSizeMax = 24f;
-            label.color = SitePalette.Text;
+            label.color = SiteColours.Get(SiteColourRole.Text);
             label.alignment = TextAlignmentOptions.MidlineLeft;
             label.richText = true;
             label.raycastTarget = false;
@@ -124,7 +124,8 @@ namespace DeckParty.UI
         {
             m_Label.text = text;
             // A light notice strip in the site's look, tinted with the player's colour.
-            m_Background.color = Color.Lerp(SitePalette.Surface, accent, 0.18f);
+            m_Background.color = Color.Lerp(SiteColours.Get(SiteColourRole.PanelFill, transform), accent, 0.18f);
+            m_Label.color = SiteColours.Get(SiteColourRole.Text, transform);
 
             bool showButton = !string.IsNullOrEmpty(buttonText);
             m_Button.gameObject.SetActive(showButton);

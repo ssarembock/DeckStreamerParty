@@ -72,7 +72,7 @@ namespace DeckParty.Core
         // The copies in chat score one total together, read from a table by how many are in chat (1 to 5), instead of
         // each copy scoring on its own. The original game's Dancer scored D squared each; Dancing Jen scores D squared in all.
         static readonly int[] s_DancingJenClout = { 1, 4, 9, 16, 25 };
-        static readonly int[] s_CryptoEnthusiastCash = { -2, 1, 9, 16, 25 };
+        static readonly int[] s_CryptoEnthusiastCash = { 0, 1, 4, 9, 16 };
 
         /// <summary>Copy limit (and shared shop stock) of the group-scoring cards, so the table's last step can be reached.</summary>
         public const int GroupCardMaxCopies = 5;
@@ -80,7 +80,7 @@ namespace DeckParty.Core
         /// <summary>Dancing Jen: Clout (Subs) the whole group scores with this many Jens in chat (25 at most).</summary>
         public static int DancingJenClout(int copies) => GroupStep(s_DancingJenClout, copies);
 
-        /// <summary>Crypto Enthusiast: Cash the whole group scores with this many in chat (-2 alone, 25 at most).</summary>
+        /// <summary>Crypto Enthusiast: Cash the whole group scores with this many in chat (nothing alone, 16 at most).</summary>
         public static int CryptoEnthusiastCash(int copies) => GroupStep(s_CryptoEnthusiastCash, copies);
 
         /// <summary>The table as compact text for card stat lines ("1/4/9/16/25").</summary>

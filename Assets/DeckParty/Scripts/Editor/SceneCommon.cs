@@ -220,7 +220,9 @@ namespace DeckParty.EditorTools
             // Toast
             var toastRect = EditorUI.Rect(overlay, "Toast").Place(new Vector2(0.5f, 1), new Vector2(0, -22), new Vector2(1180, 84), new Vector2(0.5f, 1));
             var group = toastRect.gameObject.AddComponent<CanvasGroup>();
-            var toastBg = EditorUI.SitePanel(toastRect, "Background", SitePalette.Surface, SitePalette.Outline, EditorUI.ModalBorder, false);
+            // The label sits beside the panel (not inside it), so the whole toast is the pop-up area.
+            EditorUI.TagArea(toastRect, SiteArea.PopUps);
+            var toastBg = EditorUI.SitePanel(toastRect, "Background", SitePalette.Surface, SitePalette.Outline, EditorUI.ModalBorder, false, SiteArea.PopUps);
             ((RectTransform)toastBg.transform.parent).Stretch();
             var accent = EditorUI.Image(toastRect, "Accent", UIPalette.Teal, EditorUI.RoundedSmall);
             accent.rectTransform.Box(new Vector2(0, 0), new Vector2(0, 1), new Vector2(10, 12), new Vector2(20, -12));
@@ -239,12 +241,15 @@ namespace DeckParty.EditorTools
             var tipGroup = tipHost.gameObject.AddComponent<CanvasGroup>();
             // Hover pop-ups: a white card, a strong black border and black text (pale colours in the text are darkened).
             var tipPanel = EditorUI.Image(tipHost, "Panel", SitePalette.Outline, EditorUI.RoundedSmall);
+            EditorUI.TagArea(tipPanel, SiteArea.Tooltips);
+            EditorUI.TagSite(tipPanel, SiteColourRole.PanelBorder);
             tipPanel.type = Image.Type.Sliced;
             tipPanel.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
             tipPanel.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
             tipPanel.rectTransform.pivot = new Vector2(0, 1);
             tipPanel.rectTransform.sizeDelta = new Vector2(440, 120);
             var tipFill = EditorUI.Image(tipPanel.transform, "Fill", SitePalette.Surface, EditorUI.RoundedSmall);
+            EditorUI.TagSite(tipFill, SiteColourRole.PanelFill);
             tipFill.type = Image.Type.Sliced;
             tipFill.rectTransform.Stretch(2.5f, 2.5f, 2.5f, 2.5f);
             tipFill.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;

@@ -55,10 +55,10 @@ namespace DeckParty.UI
             }
             if (headlineLabel != null)
             {
-                headlineLabel.text = LightText.Adapt(entry.headline ?? string.Empty);
+                headlineLabel.text = LightText.AdaptOn(headlineLabel.transform, entry.headline ?? string.Empty);
                 headlineLabel.gameObject.SetActive(!string.IsNullOrEmpty(entry.headline));
             }
-            if (bodyLabel != null) bodyLabel.text = LightText.Adapt(entry.body ?? string.Empty);
+            if (bodyLabel != null) bodyLabel.text = LightText.AdaptOn(bodyLabel.transform, entry.body ?? string.Empty);
         }
     }
 }

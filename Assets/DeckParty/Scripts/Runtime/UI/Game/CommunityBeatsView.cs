@@ -108,7 +108,9 @@ namespace DeckParty.UI
                     if (chip.effectLabel != null)
                     {
                         chip.effectLabel.text = CommunityVisuals.ChipEffect(chip.community, points);
-                        chip.effectLabel.color = points > 0 ? (siteStyle ? SitePalette.Text : UIPalette.Text) : siteStyle ? SitePalette.TextFaint : UIPalette.TextDim;
+                        chip.effectLabel.color = points > 0
+                            ? (siteStyle ? SiteColours.Get(SiteColourRole.Text, chip.effectLabel.transform) : UIPalette.Text)
+                            : siteStyle ? SiteColours.Get(SiteColourRole.FaintText, chip.effectLabel.transform) : UIPalette.TextDim;
                     }
                     if (chip.group != null) chip.group.alpha = points > 0 ? 1f : siteStyle ? 0.6f : 0.5f;
 

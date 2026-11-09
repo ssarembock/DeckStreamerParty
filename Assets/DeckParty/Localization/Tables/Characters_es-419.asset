@@ -894,8 +894,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262512
-    m_Localized: 'Muchos {icon:subs}, pero hay que pagarle: cuesta 1 {icon:cash}
-      al puntuar.'
+    m_Localized: "Acci\xF3n: un espectador del chat gana +1 {icon:cash} m\xE1s para
+      siempre (hasta 9 {icon:cash}). Cuesta 1 {icon:cash} al puntuar."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262513
@@ -1124,8 +1124,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008649
-    m_Localized: "Acci\xF3n: punt\xFAa ahora mismo a otro espectador del chat, penalizaciones
-      incluidas (se cobra al instante). Igual vuelve a puntuar al terminar el stream."
+    m_Localized: "Hasta la luna: todos los Entusiastas cripto del chat punt\xFAan
+      {icon:cash} juntos, 0 / 1 / 4 / 9 / 16 en total con 1 / 2 / 3 / 4 / 5 de ellos."
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008650
@@ -1139,6 +1139,19 @@ MonoBehaviour:
   - m_Id: 736681969008652
     m_Localized: Un bot de spam del stream de un rival. Ocupa un lugar en el chat
       y no gana nada. Se va al terminar este stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838161933295616
+    m_Localized: Venta extra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162012987392
+    m_Localized: Jen la Bailarina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162012987393
+    m_Localized: "Pausa de baile: todas las Jen la Bailarina del chat punt\xFAan
+      {icon:subs} juntas, 1 / 4 / 9 / 16 / 25 en total con 1 / 2 / 3 / 4 / 5 de ellas."
     m_Metadata:
       m_Items: []
   references:

@@ -7,8 +7,9 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// The site's menu bar (top of the stream and shop): night, Clout, Cash, Sub Cap, the Deplatform Risk pips and the Plays
-    /// pips, then the Audience and Menu icon buttons. Everything is an icon and a number; hovering any of it says what it is
+    /// The site's menu bar (top of the stream and shop): the stream count, then Clout, Cash and Trophies (in chat / needed to
+    /// win) in the middle, then the Audience and Menu icon buttons. It also lights the Deplatform Risk pips, which sit in the
+    /// Stream Chat's title band. Everything is an icon and a number; hovering any of it says what it is
     /// (the night's tooltip also names the character set).
     /// </summary>
     public sealed class HudView : MonoBehaviour
@@ -34,6 +35,8 @@ namespace DeckParty.UI
         [SerializeField] internal Image cashIcon;
         [SerializeField] internal Image nightIcon;
         [SerializeField] internal Image capacityIcon;
+        [Tooltip("The Trophy icon next to the Trophies count (in chat / needed to win).")]
+        [SerializeField] internal Image starsIcon;
         [SerializeField] internal TooltipTrigger nightTooltip;
         [Tooltip("The risk pips' block: what feedbacks punch when risk changes.")]
         [SerializeField] internal RectTransform troubleMeter;
@@ -52,6 +55,8 @@ namespace DeckParty.UI
         int m_LastCash = int.MinValue;
         int m_LastTrouble = -1;
         int m_LastDiamonds = -1;
+        /// <summary>The Deplatform Risk the pips show (0 outside a stream).</summary>
+        int m_PipTrouble;
         PlayerState m_State;
 
         void Awake()
@@ -84,9 +89,10 @@ namespace DeckParty.UI
             SetButton(menuButton, Loc.Get("hud.menu") + "  [Esc]");
             if (popIcon != null) popIcon.color = GameIcons.Tint(ResourceIcon.Subs);
             if (cashIcon != null) cashIcon.color = GameIcons.Tint(ResourceIcon.Cash);
-            // Your own art keeps its colours; the white placeholder shapes take the site's grey.
-            if (nightIcon != null) nightIcon.color = GameIcons.SlotTint(SkinSlot.IconNight, SitePalette.Text);
-            if (capacityIcon != null) capacityIcon.color = GameIcons.SlotTint(SkinSlot.IconDoor, SitePalette.Text);
+            if (starsIcon != null) starsIcon.color = GameIcons.Tint(ResourceIcon.Plays);
+            // Your own art keeps its colours; the white placeholder shapes take the menu bar's text colour (UI Skin > Site Colours).
+            if (nightIcon != null) nightIcon.color = GameIcons.SlotTint(SkinSlot.IconNight, SiteColours.Get(SiteColourRole.Text, nightIcon.transform));
+            if (capacityIcon != null) capacityIcon.color = GameIcons.SlotTint(SkinSlot.IconDoor, SiteColours.Get(SiteColourRole.Text, capacityIcon.transform));
         }
 
         static void SetButton(Button button, string text)
@@ -127,8 +133,10 @@ namespace DeckParty.UI
         {
             m_State = s;
             if (scenarioLabel != null) scenarioLabel.text = ContentText.ScenarioName(s.ScenarioId);
+            // The "/25" and "/4" parts in the menu bar's faint text colour (UI Skin > Site Colours).
+            string faint = "#" + ColorUtility.ToHtmlStringRGB(SiteColours.Get(SiteColourRole.FaintText, transform));
             if (nightLabel != null)
-                nightLabel.text = nightTooltip != null ? $"{s.Night}<size=70%><color=#9A9AA6>/{s.TotalNights}</color></size>" : Loc.Get("hud.night", "night", s.Night, "total", s.TotalNights);
+                nightLabel.text = nightTooltip != null ? $"{s.Night}<size=70%><color={faint}>/{s.TotalNights}</color></size>" : Loc.Get("hud.night", "night", s.Night, "total", s.TotalNights);
 
             popLabel.text = s.Pop.ToString();
             cashLabel.text = s.Cash.ToString();
@@ -138,17 +146,15 @@ namespace DeckParty.UI
             m_LastCash = s.Cash;
 
             bool party = s.Phase == GamePhase.Party;
-            capacityLabel.text = party ? $"{s.Occupancy}<size=70%><color=#9A9AA6>/{s.Capacity}</color></size>" : s.Capacity.ToString();
+            // Older scenes only: the menu bar no longer shows the Sub Cap (the chat's seats do).
+            if (capacityLabel != null)
+                capacityLabel.text = party ? $"{s.Occupancy}<size=70%><color={faint}>/{s.Capacity}</color></size>" : s.Capacity.ToString();
 
             int trouble = party ? PartyEngine.NetTrouble(s) : 0;
             int diamonds = party ? PartyEngine.DiamondsPresent(s) : 0;
 
-            for (int i = 0; i < troublePips.Length; i++)
-            {
-                bool lit = i < trouble;
-                var hot = i >= GameRules.RaidTroubleThreshold - 1 ? SitePalette.Danger : SitePalette.Warning;
-                troublePips[i].color = GameIcons.PipColor(ResourceIcon.Risk, lit, hot, SitePalette.Off);
-            }
+            m_PipTrouble = trouble;
+            ApplyRiskPips();
             if (troubleLabel != null)
             {
                 troubleLabel.enableAutoSizing = true;
@@ -157,14 +163,39 @@ namespace DeckParty.UI
                 troubleLabel.text = trouble >= GameRules.RaidTroubleThreshold - 1 && party ? $"<color=#FF5A5A>{riskText}</color>" : riskText;
             }
 
-            for (int i = 0; i < starPips.Length; i++)
-                starPips[i].color = GameIcons.PipColor(ResourceIcon.Plays, i < diamonds, SitePalette.Gold, SitePalette.Off);
-            if (starsLabel != null) starsLabel.text = Loc.Get("hud.diamonds", "count", diamonds, "max", GameRules.DiamondsToWin);
+            // Older scenes: a pip per Trophy. Now: one Trophy icon and "in chat / needed to win", counting up as Trophy viewers join.
+            if (starPips != null)
+                for (int i = 0; i < starPips.Length; i++)
+                    if (starPips[i] != null) starPips[i].color = GameIcons.PipColor(ResourceIcon.Plays, i < diamonds, SitePalette.Gold, SitePalette.Off);
+            if (starsLabel != null)
+                starsLabel.text = starsIcon != null
+                    ? $"{diamonds}<size=70%><color={faint}>/{GameRules.DiamondsToWin}</color></size>"
+                    : Loc.Get("hud.diamonds", "count", diamonds, "max", GameRules.DiamondsToWin);
 
             if (m_LastTrouble >= 0 && trouble > m_LastTrouble) UITween.Punch(this, RiskAnchor, 0.3f);
             if (m_LastDiamonds >= 0 && diamonds > m_LastDiamonds) UITween.Punch(this, PlaysAnchor, 0.3f);
             m_LastTrouble = trouble;
             m_LastDiamonds = diamonds;
+        }
+
+        /// <summary>
+        /// The pips sit in the Stream Chat window, which is switched off between streams. Switching it back on makes each pip's
+        /// SkinnedImage re-apply the UI Skin's colour (full colour for your own art), which made them look lit until the next
+        /// render. So they're re-coloured here every frame, after anything else has touched them (unchanged colours cost nothing).
+        /// </summary>
+        void LateUpdate() => ApplyRiskPips();
+
+        /// <summary>Lights the Deplatform Risk pips for the risk last rendered (red for the one that would get you deplatformed).</summary>
+        void ApplyRiskPips()
+        {
+            if (troublePips == null) return;
+            for (int i = 0; i < troublePips.Length; i++)
+            {
+                if (troublePips[i] == null) continue;
+                bool lit = i < m_PipTrouble;
+                var hot = i >= GameRules.RaidTroubleThreshold - 1 ? SitePalette.Danger : SitePalette.Warning;
+                troublePips[i].color = GameIcons.PipColor(ResourceIcon.Risk, lit, hot, SitePalette.Off);
+            }
         }
 
         string NightTooltip()

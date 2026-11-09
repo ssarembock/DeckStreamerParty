@@ -44,7 +44,7 @@ namespace DeckParty.UI
                 sb.Append("\n<size=88%>").Append(entry.body).Append("</size>");
             }
             if (titleLabel != null) titleLabel.text = title;
-            if (bodyLabel != null) bodyLabel.text = LightText.Adapt(sb.ToString());
+            if (bodyLabel != null) bodyLabel.text = LightText.AdaptOn(bodyLabel.transform, sb.ToString());
 
             gameObject.SetActive(true);
             transform.SetAsLastSibling();

@@ -38,6 +38,7 @@ To close a summary, press Continue, click outside it, or press Space, Enter or E
 - **Default style:** black text, a white fill and a black border (rounded `RoundedSmall`, or square for cards and pictures). Use light grey (`SitePalette.Divider`) only for lines that divide one panel. Use colour for meaning (resources, danger, the platform accent), not for surfaces.
 - **New pop-ups in the scene builders:** use `EditorUI.ModalShell(..., light: true)` and `EditorUI.SiteTextButton`. Wrap any label that shows rich text in `EditorUI.Readable(...)`. That adds `ReadableOnLight`, which darkens pale colours automatically, so existing strings can be reused.
 - **Square, card-like panels:** `EditorUI.SharpPanel`. **Bordered cards that hold a layout:** `GameSceneBuilder.BorderedCard`.
+- **Site Colours (UI Skin):** build site panels with `EditorUI.SitePanel(..., area)` (or `BorderedCard`) inside the Game scene builder, which opens `EditorUI.SiteColourScope()`. Panels, `SitePalette.Divider` lines, `SurfaceAlt` fills and `Text`/`TextDim`/`TextFaint` text then get a `SiteColour` and follow the UI Skin. Code that colours site graphics itself should use `SiteColours.Get(role, transform)`. Buttons are built inside `EditorUI.PlainColourScope()` and keep their own colours. A new named panel needs a `SiteArea` value (append it) and a row in the UI Skin inspector.
 - **Maxed effect tuning:** select a `Beat_<Community>` chip in the Game scene (under `Channel/CommunityPanel`). On **Community Max Fx** you can set the halo colour and the ray speed. The shader layer uses the FX Library's portrait uber material, so **Status Effects** must be on. The halo and rays work without it. Reduce Flashing calms the pulsing.
 - **Shop piles:** the three card backs are `Stack/Back1-3` in the ShopItem prefab. Tile sizes are on the Game scene's **Planning** object (Min/Max Tile Width, Tile Aspect).
 - **Icon slot:** the stream counter still uses the **IconNight** UI Skin slot (a moon placeholder). You may want to draw a stream or broadcast icon for it. The Community Beats title uses **IconAudience**.
@@ -82,3 +83,18 @@ Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** to see it.
 | **Community Beats entries** | No background or border: just the icon, the score and the bonus. |
 | **Title icons** | The Stream Chat title is a 160 px icon (UI Skin slot **IconStreamChat**, a speech-bubble placeholder; hover it for "Stream Chat") in a 176 px title band. Community Beats has no words, just a 120 px icon (**IconCommunityBeats**, separate from the Audience button's **IconAudience**; hover it for "Community Beats") in a 136 px band. Sizes: ChatTitleIcon, ChatHeaderHeight, BeatsTitleIcon, BeatsHeaderHeight in GameSceneBuilder. |
 | **UI Icons in the Game Database** | **Game Database > UI Icons (stream and shop)** lists the UI Skin's stream and shop icon slots with where each shows; drop a sprite on one to replace it. |
+
+## 7. Full-width menu bar, risk pips in the chat, buttons inside the chat (2026-11-08)
+
+Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** to see it.
+
+| Area | Now |
+|---|---|
+| **Menu bar** | A plain rectangle along the top edge of the screen, the full width of the screen (outside the 21:9 frame), with a border along its bottom edge only. Its colours are in UI Skin > Site Colours > Menu bar. |
+| **Menu bar items** | Left: the platform logo and the stream count. Centred on the screen: Clout, Cash and Trophies. Right: Audience and Menu, with the risky-queue count under Audience during a stream. The Sub Cap count is gone (the chat's seats show it); the Raise Sub Cap button in the shop is unchanged. |
+| **Trophies** | One Trophy icon and "in chat / needed to win" (for example 2/4), counting up as Trophy viewers join the stream. It shows 0 in the shop. Hover it for your Trophies owned and your best. |
+| **Deplatform Risk** | The three risk pips moved from the menu bar to the Stream Chat's title band, centred, where the Stream Chat title icon was (92 px each: `GameSceneBuilder.RiskPipSize`). They light up the same way; hover them for the details. The IconStreamChat UI Skin entry is no longer shown. |
+| **Stream Chat window** | It now reaches the bottom of the stream, level with the bottom of the facecam. |
+| **Add Viewer / End the Stream** | Inside the chat window, in a 112 px band along its bottom (`ButtonsBand`), 480 px wide each (50% wider than before). They sit about 12 px higher than before, to clear the window's border. |
+| **Next viewers' faces** (X-Ray) | Just above the buttons at the left of the chat (the wider buttons cover their old spot). |
+| **Waiting-viewer panel, footer picture, near-deplatform warning** | Moved up with the buttons' band, so they stay where they were on screen. |

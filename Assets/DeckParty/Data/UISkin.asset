@@ -20,15 +20,15 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: dd6763b767afa49409b08032e299dc6e, type: 3}
     imageType: 1
     pixelsPerUnitMultiplier: 1
-    overrideColor: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
+    overrideColor: 1
+    color: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
   - name: PanelAlt
     slot: 1
     sprite: {fileID: 21300000, guid: dd6763b767afa49409b08032e299dc6e, type: 3}
     imageType: 1
     pixelsPerUnitMultiplier: 1
-    overrideColor: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
+    overrideColor: 1
+    color: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
   - name: Button
     slot: 2
     sprite: {fileID: 21300000, guid: dd6763b767afa49409b08032e299dc6e, type: 3}
@@ -56,7 +56,7 @@ MonoBehaviour:
     imageType: 1
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
+    color: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
   - name: CardFrameStar
     slot: 6
     sprite: {fileID: 21300000, guid: dd6763b767afa49409b08032e299dc6e, type: 3}
@@ -160,8 +160,8 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: dd6763b767afa49409b08032e299dc6e, type: 3}
     imageType: 1
     pixelsPerUnitMultiplier: 1
-    overrideColor: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
+    overrideColor: 1
+    color: {r: 0.07058824, g: 0.07058824, b: 0.078431375, a: 1}
   - name: Tooltip
     slot: 21
     sprite: {fileID: 21300000, guid: dd6763b767afa49409b08032e299dc6e, type: 3}
@@ -288,3 +288,85 @@ MonoBehaviour:
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  siteColours:
+    page: {r: 0.09019608, g: 0.09019608, b: 0.101960786, a: 1}
+    panelFill: {r: 1, g: 1, b: 1, a: 1}
+    panelBorder: {r: 0, g: 0, b: 0, a: 1}
+    divider: {r: 0.8901961, g: 0.8901961, b: 0.9098039, a: 1}
+    softFill: {r: 0.9372549, g: 0.9372549, b: 0.94509804, a: 1}
+    text: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+    secondaryText: {r: 0.3254902, g: 0.3254902, b: 0.37254903, a: 1}
+    faintText: {r: 0.6039216, g: 0.6039216, b: 0.6509804, a: 1}
+    areas:
+    - name: MenuBar
+      area: 1
+      overrideFill: 1
+      fill: {r: 0.07058824, g: 0.07058824, b: 0.078431375, a: 1}
+      overrideBorder: 1
+      border: {r: 0.07058824, g: 0.07058824, b: 0.078431375, a: 1}
+      overrideText: 1
+      text: {r: 1, g: 1, b: 1, a: 1}
+    - name: StreamChat
+      area: 2
+      overrideFill: 1
+      fill: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideBorder: 1
+      border: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideText: 1
+      text: {r: 1, g: 1, b: 1, a: 1}
+    - name: WaitingViewer
+      area: 3
+      overrideFill: 1
+      fill: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideBorder: 1
+      border: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideText: 1
+      text: {r: 1, g: 1, b: 1, a: 1}
+    - name: CommunityBeats
+      area: 4
+      overrideFill: 1
+      fill: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideBorder: 1
+      border: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideText: 1
+      text: {r: 1, g: 1, b: 1, a: 1}
+    - name: Shop
+      area: 5
+      overrideFill: 1
+      fill: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideBorder: 1
+      border: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideText: 1
+      text: {r: 1, g: 1, b: 1, a: 1}
+    - name: ShopTiles
+      area: 6
+      overrideFill: 0
+      fill: {r: 1, g: 1, b: 1, a: 1}
+      overrideBorder: 0
+      border: {r: 0, g: 0, b: 0, a: 1}
+      overrideText: 0
+      text: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+    - name: SidePanel
+      area: 7
+      overrideFill: 1
+      fill: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideBorder: 1
+      border: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideText: 1
+      text: {r: 1, g: 1, b: 1, a: 1}
+    - name: PopUps
+      area: 8
+      overrideFill: 1
+      fill: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideBorder: 0
+      border: {r: 0, g: 0, b: 0, a: 1}
+      overrideText: 1
+      text: {r: 1, g: 1, b: 1, a: 1}
+    - name: Tooltips
+      area: 9
+      overrideFill: 1
+      fill: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+      overrideBorder: 0
+      border: {r: 0, g: 0, b: 0, a: 1}
+      overrideText: 1
+      text: {r: 1, g: 1, b: 1, a: 1}

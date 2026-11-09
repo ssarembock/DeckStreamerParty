@@ -28,14 +28,15 @@ namespace DeckParty.UI
             var color = m_Text.color;
             if (color != m_SeenColor)
             {
-                var readable = LightText.Readable(color);
+                // On a panel with a dark inside (UI Skin > Site Colours) pale colours are what reads, so they're kept.
+                var readable = LightText.ReadableOn(transform, color);
                 if (readable != color) m_Text.color = readable;
                 m_SeenColor = m_Text.color;
             }
             // Only re-check when a view wrote new text (reference compare first: cheap every frame).
             var text = m_Text.text;
             if (ReferenceEquals(text, m_Seen)) return;
-            var adapted = LightText.Adapt(text);
+            var adapted = LightText.AdaptOn(transform, text);
             if (!ReferenceEquals(adapted, text) && adapted != text) m_Text.text = adapted;
             m_Seen = m_Text.text;
         }

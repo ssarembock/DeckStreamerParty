@@ -20,12 +20,17 @@ namespace DeckParty.EditorTools
     /// </summary>
     internal static class GameSceneBuilder
     {
-        /// <summary>The site's menu bar (1080p pixels): a rounded panel of its own, floating just below the top of the screen.</summary>
+        /// <summary>
+        /// The site's menu bar (1080p pixels): a plain rectangle along the top edge of the screen, the full width of the screen,
+        /// with a border along its bottom edge.
+        /// </summary>
         const float HeaderHeight = 128f;
         /// <summary>How far the Audience and Menu buttons sit above the bar's middle (the risky-queue count goes under Audience).</summary>
         const float ButtonLift = 15f;
-        /// <summary>Space between the top of the screen and the menu bar.</summary>
-        const float BarTop = 14f;
+        /// <summary>Space between the top of the screen and the menu bar (none: the bar starts at the top edge).</summary>
+        const float BarTop = 0f;
+        /// <summary>Space between the screen's sides and the menu bar's outer items (the logo, the Menu button).</summary>
+        const float BarPadding = 24f;
         /// <summary>Space between the menu bar and the panels under it.</summary>
         const float BelowBar = 16f;
         /// <summary>Where the panels under the menu bar start, from the top of the screen.</summary>
@@ -39,15 +44,21 @@ namespace DeckParty.EditorTools
         /// <summary>Thickness of the grey dividers: horizontal ones (under titles) and vertical ones (menu bar sections, summary columns).</summary>
         const float HDivider = 4f;
         const float VDivider = 3f;
-        /// <summary>The Stream Chat window's title band.</summary>
+        /// <summary>The Stream Chat window's title band (it shows the Deplatform Risk pips).</summary>
         const float ChatHeaderHeight = 176f;
-        /// <summary>The Stream Chat title icon (it replaces the words).</summary>
-        const float ChatTitleIcon = 160f;
+        /// <summary>The Deplatform Risk pips in the chat's title band (they replaced the Stream Chat title icon and left the menu bar).</summary>
+        const float RiskPipSize = 92f;
+        const float RiskPipGap = 20f;
         /// <summary>The band along the bottom of the chat window for the footer picture (and the near-deplatform warning).</summary>
         const float FooterHeight = 224f;
-        /// <summary>The row under the chat window with the Add Viewer and End the Stream buttons.</summary>
-        const float ButtonsHeight = 96f;
-        const float MainButtonWidth = 320f;
+        /// <summary>
+        /// The band along the bottom of the Stream Chat window that holds the Add Viewer and End the Stream buttons. The window
+        /// reaches the bottom of the stream, level with the facecam, and the buttons sit inside its border (where the row under
+        /// the window used to be).
+        /// </summary>
+        const float ButtonsBand = 112f;
+        /// <summary>The two main buttons: 480 = the old 320 + 50%.</summary>
+        const float MainButtonWidth = 480f;
         const float MainButtonHeight = 88f;
         /// <summary>
         /// The channel column right of the chat: Community Beats on top, the facecam square at the bottom (the usual streamer
@@ -69,6 +80,8 @@ namespace DeckParty.EditorTools
 
         public static void Build()
         {
+            // Everything in the website look gets its colours from UI Skin > Site Colours (buttons keep their own).
+            using var siteColours = EditorUI.SiteColourScope();
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             // Opening a scene unloads unreferenced assets, so load art and prefabs only after it.
             EditorUI.LoadArt();
@@ -86,12 +99,17 @@ namespace DeckParty.EditorTools
             var root = EditorUI.Rect(canvas, "Root").Stretch();
             var frame = root.gameObject.AddComponent<ContentFrame>();
 
-            var hud = BuildHud(root, out var riskPill, out var riskLabel);
+            // The menu bar spans the whole screen (outside the 21:9 content frame), along the top edge.
+            var hud = BuildHud(canvas, out var riskPill, out var riskLabel);
 
             var mainArea = EditorUI.Rect(root, "MainArea").Box(Vector2.zero, Vector2.one, new Vector2(456, Gap), new Vector2(-Gap, -ContentTop));
             var partyRoot = EditorUI.Rect(mainArea, "Party").Stretch();
             var house = BuildStream(partyRoot, prefabs, riskPill, riskLabel, out var links, out var viewerEmojis, out var controls, out var beats, out var facecam,
-                out var streamOverlay, out var anxiety);
+                out var streamOverlay, out var anxiety, out var riskMeter, out var riskPips, out var riskTooltip);
+            // The Deplatform Risk pips live in the Stream Chat's title band now; the menu bar's view still lights them.
+            hud.troubleMeter = riskMeter;
+            hud.troublePips = riskPips;
+            hud.troubleTooltip = riskTooltip;
             var targeting = BuildTargetingBanner(partyRoot);
             var planning = BuildPlanning(mainArea, prefabs);
             var raid = BuildRaidBlame(mainArea, prefabs);
@@ -181,45 +199,49 @@ namespace DeckParty.EditorTools
         // ------------------------------------------------------------------ the menu bar (HUD)
 
         /// <summary>
-        /// The menu bar: a white rounded panel with a black border, floating just below the top of the screen. Every item
-        /// (logo, stream count, Clout, Cash, Sub Cap, risk, Plays, Audience, Menu) sits in its own section between short grey
-        /// separators. The risky-queue badge hangs under the Audience button during a stream.
+        /// The menu bar: a plain white rectangle along the top edge of the screen, the full width of the screen, with a black
+        /// border along its bottom edge (both from UI Skin > Site Colours > Menu bar). The platform logo and the stream count sit
+        /// on the left; Clout, Cash and Trophies (one icon and "in chat / needed to win") are centred on the screen; Audience
+        /// and Menu sit on the right, with the risky-queue count under Audience during a stream. Sections are split by short
+        /// grey lines. The Deplatform Risk pips are in the Stream Chat's title band (see <see cref="BuildStream"/>).
         /// </summary>
-        static HudView BuildHud(RectTransform root, out Image riskPill, out TextMeshProUGUI riskLabel)
+        static HudView BuildHud(RectTransform canvas, out Image riskPill, out TextMeshProUGUI riskLabel)
         {
-            var fill = EditorUI.SitePanel(root, "TopBar", SitePalette.Surface, SitePalette.Outline, PanelBorder);
-            ((RectTransform)fill.transform.parent).TopBand(BarTop, HeaderHeight, Gap, Gap);
+            var border = EditorUI.Image(canvas, "TopBar", SitePalette.Outline, null, null, true);
+            // Under the panels (as before, when it was the first thing inside Root).
+            border.rectTransform.SetSiblingIndex(0);
+            EditorUI.TagArea(border, SiteArea.MenuBar);
+            border.rectTransform.TopBand(BarTop, HeaderHeight, 0, 0);
+            var fill = EditorUI.Image(border.transform, "Fill", SitePalette.Surface, null);
+            // The border shows only along the bottom edge (the other three edges are the screen's).
+            fill.rectTransform.Stretch(0, 0, 0, PanelBorder);
+            EditorUI.TagSite(border, SiteColourRole.PanelBorder);
+            EditorUI.TagSite(fill, SiteColourRole.PanelFill);
             var bar = fill.rectTransform;
-            EditorUI.HLayout(bar, 22, new RectOffset(20, 20, 8, 8), TextAnchor.MiddleLeft, true, true, false, true);
 
-            // The animated platform logo (PlatformLogoView builds it from Game Database > Platforms).
-            var logo = EditorUI.Rect(bar, "PlatformLogo");
+            // Left: the animated platform logo (PlatformLogoView builds it from Game Database > Platforms) and the stream count.
+            var left = BarGroup(bar, "Left", 0f, BarPadding);
+            var logo = EditorUI.Rect(left, "PlatformLogo");
             EditorUI.Layout(logo, 196, -1, 0);
             logo.gameObject.AddComponent<PlatformLogoView>();
-            Separator(bar, "Sep1");
+            Separator(left, "Sep1");
+            var night = Stat(left, "Night", EditorUI.Night, SkinSlot.IconNight, SitePalette.Text, 160, out var nightIcon, out var nightTip);
 
-            var night = Stat(bar, "Night", EditorUI.Night, SkinSlot.IconNight, SitePalette.Text, 160, out var nightIcon, out var nightTip);
-            Separator(bar, "Sep2");
-            var pop = Stat(bar, "Pop", EditorUI.Sparkle, SkinSlot.IconPop, UIPalette.Gold, 160, out var popIcon, out _);
-            Separator(bar, "Sep3");
-            var cash = Stat(bar, "Cash", EditorUI.Coin, SkinSlot.IconCash, UIPalette.Green, 150, out var cashIcon, out _);
-            Separator(bar, "Sep4");
-            var capacity = Stat(bar, "House", EditorUI.Door, SkinSlot.IconDoor, SitePalette.Text, 160, out var capacityIcon, out _);
-            Separator(bar, "Sep5");
+            // Centre of the screen: Clout, Cash and Trophies (the Sub Cap count is gone: the chat's seats show it).
+            var centre = BarGroup(bar, "Centre", 0.5f, 0f);
+            var pop = Stat(centre, "Pop", EditorUI.Sparkle, SkinSlot.IconPop, UIPalette.Gold, 160, out var popIcon, out _);
+            Separator(centre, "Sep2");
+            var cash = Stat(centre, "Cash", EditorUI.Coin, SkinSlot.IconCash, UIPalette.Green, 150, out var cashIcon, out _);
+            Separator(centre, "Sep3");
+            var stars = Stat(centre, "Stars", EditorUI.Star, SkinSlot.IconStar, UIPalette.Gold, 170, out var starsIcon, out var starsTip);
 
-            var trouble = Meter(bar, "Trouble", EditorUI.Cross, SkinSlot.IconTrouble, GameRules.RaidTroubleThreshold, out var troublePips);
-            Separator(bar, "Sep6");
-            var stars = Meter(bar, "Stars", EditorUI.Star, SkinSlot.IconStar, GameRules.DiamondsToWin, out var starPips);
-
-            var spacer = EditorUI.Rect(bar, "Spacer");
-            EditorUI.Layout(spacer, -1, -1, 1);
-
-            // HudView writes their tooltips (Audience [R], Menu [Esc]) in the current language.
-            var rolodex = EditorUI.IconButton(bar, "Rolodex", EditorUI.Audience, SkinSlot.IconAudience, EditorUI.SiteButton.Light, new Vector2(72, 72), 46, out _);
-            var menu = EditorUI.IconButton(bar, "Menu", EditorUI.Menu, SkinSlot.IconMenu, EditorUI.SiteButton.Light, new Vector2(72, 72), 42, out _);
-            // Pinned, so the bar's layout group doesn't stretch them to its height.
+            // Right: HudView writes their tooltips (Audience [R], Menu [Esc]) in the current language.
+            var right = BarGroup(bar, "Right", 1f, -BarPadding);
+            var rolodex = EditorUI.IconButton(right, "Rolodex", EditorUI.Audience, SkinSlot.IconAudience, EditorUI.SiteButton.Light, new Vector2(72, 72), 46, out _);
+            var menu = EditorUI.IconButton(right, "Menu", EditorUI.Menu, SkinSlot.IconMenu, EditorUI.SiteButton.Light, new Vector2(72, 72), 42, out _);
+            // Pinned, so the group's layout doesn't stretch them to its height.
             var rolodexSlot = KeepSquare(rolodex);
-            Separator(bar, "Sep7").SetSiblingIndex(rolodexSlot.GetSiblingIndex() + 1);
+            Separator(right, "Sep4").SetSiblingIndex(rolodexSlot.GetSiblingIndex() + 1);
             KeepSquare(menu);
             // The two buttons sit a little above the bar's middle, leaving room for the risky-queue count under Audience.
             ((RectTransform)rolodex.transform).anchoredPosition = new Vector2(0, ButtonLift);
@@ -232,6 +254,7 @@ namespace DeckParty.EditorTools
             riskPill.color = new Color(0, 0, 0, 0);
             riskLabel.rectTransform.Stretch(0, 0, 0, 0);
             riskLabel.color = SitePalette.Text;
+            EditorUI.TagSite(riskLabel, SiteColourRole.Text);
             EditorUI.Readable(riskLabel);
             EditorUI.Tooltip(riskPill);
             riskPill.gameObject.SetActive(false);
@@ -241,23 +264,44 @@ namespace DeckParty.EditorTools
             view.nightLabel = night;
             view.nightTooltip = nightTip;
             view.nightIcon = nightIcon;
-            view.capacityIcon = capacityIcon;
+            view.capacityIcon = null;
             view.popLabel = pop;
             view.popIcon = popIcon;
             view.cashLabel = cash;
             view.cashIcon = cashIcon;
-            view.capacityLabel = capacity;
+            view.capacityLabel = null;
             view.troubleLabel = null;
-            view.troublePips = troublePips;
-            view.troubleMeter = trouble;
-            view.starsLabel = null;
-            view.starPips = starPips;
-            view.starsMeter = stars;
-            view.troubleTooltip = EditorUI.Tooltip(trouble);
-            view.starsTooltip = EditorUI.Tooltip(stars);
+            // The risk pips, their block and tooltip are set by Build (they're in the Stream Chat's title band).
+            view.troublePips = null;
+            view.troubleMeter = null;
+            view.troubleTooltip = null;
+            // Trophies: one icon and "in chat / needed to win" instead of a pip per Trophy.
+            view.starsLabel = stars;
+            view.starsIcon = starsIcon;
+            view.starPips = null;
+            view.starsMeter = (RectTransform)stars.transform.parent;
+            view.starsTooltip = starsTip;
             view.rolodexButton = rolodex;
             view.menuButton = menu;
             return view;
+        }
+
+        /// <summary>
+        /// A row of menu-bar sections that sizes itself to what's in it, pinned to the bar at <paramref name="anchorX"/> (0 left,
+        /// 0.5 centre, 1 right) and nudged by <paramref name="offsetX"/>, so the middle group is centred on the screen whatever
+        /// the side groups hold.
+        /// </summary>
+        static RectTransform BarGroup(RectTransform bar, string name, float anchorX, float offsetX)
+        {
+            var group = EditorUI.Rect(bar, name);
+            group.anchorMin = new Vector2(anchorX, 0f);
+            group.anchorMax = new Vector2(anchorX, 1f);
+            group.pivot = new Vector2(anchorX, 0.5f);
+            group.sizeDelta = new Vector2(0f, -16f);
+            group.anchoredPosition = new Vector2(offsetX, 0f);
+            EditorUI.HLayout(group, 22, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, false, true);
+            EditorUI.Fit(group, true, false);
+            return group;
         }
 
         /// <summary>Wraps a fixed-size button so a stretching layout group keeps it square and centred. Returns the holder.</summary>
@@ -305,14 +349,13 @@ namespace DeckParty.EditorTools
             return value;
         }
 
-        /// <summary>A row of pips (Deplatform Risk, Plays): lit ones show the count, the tooltip explains.</summary>
-        static RectTransform Meter(Transform parent, string name, Sprite icon, SkinSlot slot, int count, out Image[] pips)
+        /// <summary>A row of pips (the Deplatform Risk pips): lit ones show the count, the tooltip explains.</summary>
+        static RectTransform Meter(Transform parent, string name, Sprite icon, SkinSlot slot, int count, float pip, float gap, out Image[] pips)
         {
-            const float pip = 44f;
-            const float gap = 8f;
             var block = EditorUI.Rect(parent, name);
-            EditorUI.Layout(block, count * pip + (count - 1) * gap, -1, 0);
-            EditorUI.HLayout(block, gap, EditorUI.Pad(0), TextAnchor.MiddleLeft, false, false, false, false);
+            block.sizeDelta = new Vector2(count * pip + (count - 1) * gap, pip);
+            EditorUI.Layout(block, block.sizeDelta.x, -1, 0);
+            EditorUI.HLayout(block, gap, EditorUI.Pad(0), TextAnchor.MiddleCenter, false, false, false, false);
             var hit = block.gameObject.AddComponent<Image>();
             hit.color = new Color(0, 0, 0, 0);
             pips = new Image[count];
@@ -323,32 +366,33 @@ namespace DeckParty.EditorTools
         // ------------------------------------------------------------------ the stream
 
         /// <summary>
-        /// The stream: the Stream Chat window (left) and the channel column (right: facecam, then Community Beats).
-        /// The chat is a white, slightly rounded window with a black border: a centred "Stream Chat" title over a hairline, the
-        /// viewers as round avatars, and a footer band with your picture (and the near-deplatform warning over it). The Add
-        /// Viewer and End the Stream buttons sit in a row under the window.
+        /// The stream: the Stream Chat window (left) and the channel column (right: Community Beats, then the facecam).
+        /// The chat is a white, slightly rounded window with a black border reaching the bottom of the stream, level with the
+        /// facecam: the Deplatform Risk pips centred in its title band over a hairline, the viewers as round avatars, a footer
+        /// band with your picture (and the near-deplatform warning over it), and the Add Viewer and End the Stream buttons in a
+        /// band along its bottom, inside the border.
         /// </summary>
         static HouseView BuildStream(RectTransform partyRoot, UIPrefabs prefabs, Image riskPill, TextMeshProUGUI riskLabel, out LinkLinesView links,
             out ViewerEmojiView emojiView, out PartyControlsView controlsView, out CommunityBeatsView beatsView, out FacecamView facecam,
-            out StreamOverlayView overlay, out StreamerAnxietyView anxiety)
+            out StreamOverlayView overlay, out StreamerAnxietyView anxiety, out RectTransform riskMeter, out Image[] riskPips,
+            out TooltipTrigger riskTooltip)
         {
-            // The chat window stops above the button row.
-            var chatRoot = EditorUI.Rect(partyRoot, "StreamChat").Box(Vector2.zero, Vector2.one, new Vector2(0, ButtonsHeight + Gap), new Vector2(-(ChannelWidth + Gap), 0));
-            var inner = EditorUI.SitePanel(chatRoot, "Window", SitePalette.Surface, SitePalette.Outline, PanelBorder);
+            // The chat window runs down to the bottom of the stream (level with the facecam); the buttons are inside it.
+            var chatRoot = EditorUI.Rect(partyRoot, "StreamChat").Box(Vector2.zero, Vector2.one, Vector2.zero, new Vector2(-(ChannelWidth + Gap), 0));
+            var inner = EditorUI.SitePanel(chatRoot, "Window", SitePalette.Surface, SitePalette.Outline, PanelBorder, true, SiteArea.StreamChat);
             inner.transform.parent.GetComponent<RectTransform>().Stretch();
 
-            // The title is an icon (UI Skin > IconStreamChat); hovering it says "Stream Chat" in the current language.
-            var title = EditorUI.Icon(inner.transform, "Title", EditorUI.Chat, SitePalette.Text, SkinSlot.IconStreamChat, ChatTitleIcon);
-            title.rectTransform.Place(new Vector2(0.5f, 1), new Vector2(0, -ChatHeaderHeight * 0.5f), new Vector2(ChatTitleIcon, ChatTitleIcon), new Vector2(0.5f, 0.5f));
-            title.preserveAspect = true;
-            title.raycastTarget = true;
-            EditorUI.Tooltip(title).textKey = "chat.title";
+            // The title band shows the Deplatform Risk pips (they light up as risk builds; hover for the details). HudView
+            // colours them. They replaced the Stream Chat title icon and moved here from the menu bar.
+            riskMeter = Meter(inner.transform, "Risk", EditorUI.Cross, SkinSlot.IconTrouble, GameRules.RaidTroubleThreshold, RiskPipSize, RiskPipGap, out riskPips);
+            riskMeter.Place(new Vector2(0.5f, 1), new Vector2(0, -ChatHeaderHeight * 0.5f), riskMeter.sizeDelta, new Vector2(0.5f, 0.5f));
+            riskTooltip = EditorUI.Tooltip(riskMeter);
             var titleLine = EditorUI.Line(inner.transform, "TitleLine", SitePalette.Divider);
             // Inset from both sides of the window.
             titleLine.rectTransform.TopBand(ChatHeaderHeight, HDivider, DividerInset, DividerInset);
 
             // More room between the window's border and the avatars on both sides.
-            var area = EditorUI.Rect(inner.transform, "HouseArea").Box(Vector2.zero, Vector2.one, new Vector2(ChatSidePadding, FooterHeight + 8), new Vector2(-ChatSidePadding, -(ChatHeaderHeight + 14)));
+            var area = EditorUI.Rect(inner.transform, "HouseArea").Box(Vector2.zero, Vector2.one, new Vector2(ChatSidePadding, ButtonsBand + FooterHeight + 8), new Vector2(-ChatSidePadding, -(ChatHeaderHeight + 14)));
 
             // Link lines (pairs and chains of viewers) draw under the avatars.
             var linksRect = EditorUI.Rect(area, "LinkLines").Stretch();
@@ -381,9 +425,9 @@ namespace DeckParty.EditorTools
             scroll.viewport = viewport;
             scroll.content = gridRect;
 
-            // The footer band along the bottom of the window: your picture centred (Game Database > Stream Art > Chat Footer
-            // Image; nothing shows until you add one), and the near-deplatform warning on top of it, under the viewers.
-            var footer = EditorUI.Rect(inner.transform, "Footer").BottomBand(0, FooterHeight, 0, 0);
+            // The footer band above the buttons: your picture centred (Game Database > Stream Art > Chat Footer Image; nothing
+            // shows until you add one), and the near-deplatform warning on top of it, under the viewers.
+            var footer = EditorUI.Rect(inner.transform, "Footer").BottomBand(ButtonsBand, FooterHeight, 0, 0);
             var footerImage = EditorUI.Image(footer, "FooterImage", Color.white, null);
             footerImage.rectTransform.Stretch(24, 10, 24, 12);
             footerImage.preserveAspect = true;
@@ -393,7 +437,7 @@ namespace DeckParty.EditorTools
             var anxietyRect = EditorUI.Rect(footer, "AnxiousStreamer").Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1480, 210));
             anxiety = anxietyRect.gameObject.AddComponent<StreamerAnxietyView>();
 
-            controlsView = BuildChatButtons(partyRoot, inner.transform, prefabs, riskPill, riskLabel);
+            controlsView = BuildChatButtons(inner.transform, prefabs, riskPill, riskLabel);
 
             var view = partyRoot.gameObject.AddComponent<HouseView>();
             view.area = area;
@@ -417,14 +461,14 @@ namespace DeckParty.EditorTools
         }
 
         /// <summary>
-        /// The row under the Stream Chat window: Add Viewer (always green) and End the Stream (always red) as wide icon buttons
-        /// in the middle, and the faces of the next viewers at the left end when an effect reveals them. The waiting-viewer
-        /// panel floats over the bottom of the chat window. Every word is in a hover tooltip. The risky-queue badge (passed in)
-        /// sits in the menu bar under the Audience button.
+        /// The band along the bottom of the Stream Chat window, inside its border: Add Viewer (always green) and End the Stream
+        /// (always red) as wide icon buttons in the middle. The faces of the next viewers (when an effect reveals them) sit just
+        /// above it at the left, and the waiting-viewer panel floats above it in the middle. Every word is in a hover tooltip.
+        /// The risky-queue badge (passed in) sits in the menu bar under the Audience button.
         /// </summary>
-        static PartyControlsView BuildChatButtons(RectTransform partyRoot, Transform window, UIPrefabs prefabs, Image riskPill, TextMeshProUGUI risk)
+        static PartyControlsView BuildChatButtons(Transform window, UIPrefabs prefabs, Image riskPill, TextMeshProUGUI risk)
         {
-            var row = EditorUI.Rect(partyRoot, "ChatButtons").BottomBand(0, ButtonsHeight, 0, ChannelWidth + Gap);
+            var row = EditorUI.Rect(window, "ChatButtons").BottomBand(0, ButtonsBand, 0, 0);
             var input = row.gameObject.AddComponent<Image>();
             input.color = new Color(0, 0, 0, 0);
             input.raycastTarget = false;
@@ -439,11 +483,12 @@ namespace DeckParty.EditorTools
             var end = EditorUI.IconButton(row, "EndParty", EditorUI.EndStream, SkinSlot.IconEndStream, EditorUI.SiteButton.Stop, size, 44, out _);
             ((RectTransform)end.transform).Place(new Vector2(0.5f, 0.5f), new Vector2(buttonX, 0), size);
 
-            // Who's next, when an effect reveals it (X-Ray, Side Eye Chloe): their faces (names on hover), at the left end.
-            const float edge = 8f;
+            // Who's next, when an effect reveals it (X-Ray, Side Eye Chloe): their faces (names on hover), just above the buttons
+            // at the left (the wide buttons leave no room beside them).
             const int faces = 3;
             const float faceSize = 48f;
-            var queue = EditorUI.Rect(row, "NextUp").Place(new Vector2(0, 0.5f), new Vector2(edge, 0), new Vector2(faces * faceSize + (faces - 1) * 6, faceSize), new Vector2(0, 0.5f));
+            var queue = EditorUI.Rect(window, "NextUp").Place(new Vector2(0, 0), new Vector2(ChatSidePadding, ButtonsBand + 8),
+                new Vector2(faces * faceSize + (faces - 1) * 6, faceSize), new Vector2(0, 0));
             EditorUI.HLayout(queue, 6, EditorUI.Pad(0), TextAnchor.MiddleLeft, false, false, false, false);
             var backs = new Image[faces];
             var arts = new Image[faces];
@@ -459,10 +504,11 @@ namespace DeckParty.EditorTools
             }
             queue.gameObject.SetActive(false);
 
-            // Waiting-viewer panel: a white card over the bottom of the chat window with the viewer's avatar, Approve and Deny.
-            var peekFill = EditorUI.SitePanel(window, "Peek", SitePalette.Surface, SitePalette.Outline, PanelBorder);
+            // Waiting-viewer panel: a white card over the bottom of the chat (just above the buttons) with the viewer's avatar,
+            // Approve and Deny.
+            var peekFill = EditorUI.SitePanel(window, "Peek", SitePalette.Surface, SitePalette.Outline, PanelBorder, true, SiteArea.WaitingViewer);
             var peek = (RectTransform)peekFill.transform.parent;
-            peek.Place(new Vector2(0.5f, 0), new Vector2(0, 14), new Vector2(560, 250), new Vector2(0.5f, 0));
+            peek.Place(new Vector2(0.5f, 0), new Vector2(0, ButtonsBand + 14), new Vector2(560, 250), new Vector2(0.5f, 0));
             var cardGo = (GameObject)PrefabUtility.InstantiatePrefab(prefabs.ChatAvatar.gameObject, peekFill.transform);
             var peekCard = cardGo.GetComponent<GuestCardView>();
             ((RectTransform)cardGo.transform).Place(new Vector2(0, 0.5f), new Vector2(26, 0), prefabs.ChatAvatar.DesignSize, new Vector2(0, 0.5f));
@@ -504,7 +550,7 @@ namespace DeckParty.EditorTools
         static CommunityBeatsView BuildCommunityBeats(Transform column)
         {
             // Above the facecam (which takes the bottom ChannelWidth px of the column).
-            var fill = EditorUI.SitePanel(column, "CommunityPanel", SitePalette.Surface, SitePalette.Outline, PanelBorder);
+            var fill = EditorUI.SitePanel(column, "CommunityPanel", SitePalette.Surface, SitePalette.Outline, PanelBorder, true, SiteArea.CommunityBeats);
             ((RectTransform)fill.transform.parent).Box(Vector2.zero, Vector2.one, new Vector2(0, ChannelWidth + Gap), Vector2.zero);
 
             // Title band: the community icon and "Community Beats", then a light grey line across the panel.
@@ -623,9 +669,12 @@ namespace DeckParty.EditorTools
             var panel = EditorUI.Image(host, "Root", SitePalette.Outline, EditorUI.RoundedSmall, null, true);
             panel.type = Image.Type.Sliced;
             panel.rectTransform.Stretch();
+            EditorUI.TagArea(panel, SiteArea.PopUps);
             var panelFill = EditorUI.Image(panel.transform, "Fill", SitePalette.Surface, EditorUI.RoundedSmall);
             panelFill.type = Image.Type.Sliced;
             panelFill.rectTransform.Stretch(EditorUI.ModalBorder, EditorUI.ModalBorder, EditorUI.ModalBorder, EditorUI.ModalBorder);
+            EditorUI.TagSite(panel, SiteColourRole.PanelBorder);
+            EditorUI.TagSite(panelFill, SiteColourRole.PanelFill);
             var label = EditorUI.Readable(EditorUI.Text(panel.transform, "Label", "-", 24, SitePalette.Text, TextAlignmentOptions.MidlineLeft));
             label.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(24, 4), new Vector2(-(2 * 72 + 12 + 24), -4));
             label.enableAutoSizing = true;
@@ -660,7 +709,7 @@ namespace DeckParty.EditorTools
             const float buttonHeight = 96f;
             var root = EditorUI.Rect(mainArea, "Planning").Stretch();
 
-            var shop = EditorUI.SitePanel(root, "Shop", SitePalette.Surface, SitePalette.Outline, PanelBorder);
+            var shop = EditorUI.SitePanel(root, "Shop", SitePalette.Surface, SitePalette.Outline, PanelBorder, true, SiteArea.Shop);
             ((RectTransform)shop.transform.parent).Stretch();
             // PlanningView writes the title (it names the player when you are watching someone else's shop).
             var shopTitle = EditorUI.Text(shop.transform, "Header", "-", 36, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
@@ -745,6 +794,8 @@ namespace DeckParty.EditorTools
         /// <summary>A light button with an icon on the left and a short number label (the words in its tooltip).</summary>
         static Button WideIconButton(Transform parent, string name, Sprite icon, SkinSlot slot, float width, float height, out TextMeshProUGUI label)
         {
+            // A button: its label keeps the button's own colours whatever the shop's Site Colours are.
+            using var plain = EditorUI.PlainColourScope();
             var button = EditorUI.IconButton(parent, name, icon, slot, EditorUI.SiteButton.Light, new Vector2(width, height), 46, out var iconImage);
             EditorUI.Layout(button, width, height, 0);
             iconImage.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(46, 46), new Vector2(0, 0.5f));
@@ -757,7 +808,11 @@ namespace DeckParty.EditorTools
         static void LightScrollbar(ScrollRect scroll)
         {
             if (scroll.verticalScrollbar == null) return;
-            if (scroll.verticalScrollbar.TryGetComponent<Image>(out var track)) track.color = SitePalette.SurfaceAlt;
+            if (scroll.verticalScrollbar.TryGetComponent<Image>(out var track))
+            {
+                track.color = SitePalette.SurfaceAlt;
+                EditorUI.TagSite(track, SiteColourRole.SoftFill);
+            }
             if (scroll.verticalScrollbar.handleRect != null && scroll.verticalScrollbar.handleRect.TryGetComponent<Image>(out var handle)) handle.color = SitePalette.Border;
         }
 
@@ -770,7 +825,7 @@ namespace DeckParty.EditorTools
         {
             var host = EditorUI.Rect(shop, "ShopGate").Stretch();
             // A white card with a black border over the shop (black text; the 3-2-1 stays gold with a black outline).
-            var panelFill = EditorUI.SitePanel(host, "Root", SitePalette.Surface, SitePalette.Outline, EditorUI.ModalBorder, true);
+            var panelFill = EditorUI.SitePanel(host, "Root", SitePalette.Surface, SitePalette.Outline, EditorUI.ModalBorder, true, SiteArea.PopUps);
             var panel = (Image)panelFill.transform.parent.GetComponent<Image>();
             panel.rectTransform.Stretch(10, 10, 10, 10);
 
@@ -973,10 +1028,14 @@ namespace DeckParty.EditorTools
         {
             var border = EditorUI.Image(parent, name, SitePalette.Outline, EditorUI.RoundedSmall, null, true);
             border.type = Image.Type.Sliced;
+            // The side panel's cards (Players, emotes, shop recap) share the Side panel colours in UI Skin > Site Colours.
+            EditorUI.TagArea(border, SiteArea.SidePanel);
             var fill = EditorUI.Image(border.transform, "Fill", SitePalette.Surface, EditorUI.RoundedSmall);
             fill.type = Image.Type.Sliced;
             fill.rectTransform.Stretch(PanelBorder, PanelBorder, PanelBorder, PanelBorder);
             EditorUI.RoundPanel(border, fill, PanelBorder);
+            EditorUI.TagSite(border, SiteColourRole.PanelBorder);
+            EditorUI.TagSite(fill, SiteColourRole.PanelFill);
             return border;
         }
 
@@ -1107,6 +1166,7 @@ namespace DeckParty.EditorTools
 
             var frame = EditorUI.Rect(row, "Frame").Stretch();
             var border = EditorUI.Image(frame, "Border", SitePalette.Outline, EditorUI.RoundedSmall);
+            EditorUI.TagSite(border, SiteColourRole.PanelBorder);
             border.type = Image.Type.Sliced;
             border.rectTransform.Stretch();
             var screen = EditorUI.Image(frame, "Screen", UIPalette.Night, EditorUI.RoundedSmall);
@@ -1180,7 +1240,7 @@ namespace DeckParty.EditorTools
             var host = EditorUI.Rect(overlay, "Banner").Stretch();
             var group = host.gameObject.AddComponent<CanvasGroup>();
             // A white card with a black border; the callout's colour is the stripe along the top (and the title, darkened to read on white).
-            var fill = EditorUI.SitePanel(host, "Panel", SitePalette.Surface, SitePalette.Outline, EditorUI.ModalBorder, false);
+            var fill = EditorUI.SitePanel(host, "Panel", SitePalette.Surface, SitePalette.Outline, EditorUI.ModalBorder, false, SiteArea.PopUps);
             var panel = fill.transform.parent.GetComponent<Image>();
             panel.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(0, 80), new Vector2(1100, 200));
             var accent = EditorUI.Image(fill.transform, "Accent", UIPalette.Gold, null);

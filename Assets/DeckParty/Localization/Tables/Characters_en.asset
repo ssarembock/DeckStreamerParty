@@ -888,8 +888,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262512
-    m_Localized: 'Plenty of {icon:subs}, but expects to be paid: costs 1 {icon:cash}
-      when scored.'
+    m_Localized: 'Action: a viewer in chat permanently earns +1 {icon:cash} more
+      (up to 9 {icon:cash}). Costs 1 {icon:cash} when scored.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262513
@@ -1117,8 +1117,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008649
-    m_Localized: 'Action: score another viewer in chat right now, penalties included
-      (banked straight away). They still score again when the stream ends.'
+    m_Localized: 'To the Moon: all Crypto Enthusiasts in chat score {icon:cash} together,
+      0 / 1 / 4 / 9 / 16 in total for 1 / 2 / 3 / 4 / 5 of them.'
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008650
@@ -1132,6 +1132,19 @@ MonoBehaviour:
   - m_Id: 736681969008652
     m_Localized: A spam bot from a rival's stream. Takes up a space in chat and earns
       nothing. Gone after this stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838161933295616
+    m_Localized: Upsell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162012987392
+    m_Localized: Dancing Jen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162012987393
+    m_Localized: 'Dance Break: all Dancing Jens in chat score {icon:subs} together,
+      1 / 4 / 9 / 16 / 25 in total for 1 / 2 / 3 / 4 / 5 of them.'
     m_Metadata:
       m_Items: []
   references:

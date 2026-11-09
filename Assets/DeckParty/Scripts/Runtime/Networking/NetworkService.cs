@@ -53,8 +53,9 @@ namespace DeckParty.Networking
         /// deckparty-9: V5 communities and card logic (state format v7), five Party House-style character sets.
         /// deckparty-10: playtest updates: stream / shop timers, Remove a Viewer (state format v8), emote limits.
         /// deckparty-11: viewer card edits: Dancing Jen (GuestType 83), group scoring, Account Manager action, community caps.
+        /// deckparty-12: Crypto Enthusiast scores 0 / 1 / 4 / 9 / 16 Cash for 1 to 5 in chat.
         /// </summary>
-        public const string ProtocolVersion = "deckparty-11";
+        public const string ProtocolVersion = "deckparty-12";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

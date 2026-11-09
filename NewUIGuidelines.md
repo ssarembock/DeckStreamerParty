@@ -30,7 +30,7 @@ The stream and the shop now look like a simple streaming website: a light page, 
 
 **Chat avatars.** Go to Game Database > Viewers > **Avatar (head, chat circle)**. Use a head-only sprite, square, with a transparent or plain background; it fills the circle. You can also name the sprites `LoyalFan_Avatar`, `avatar_loyal_fan` or `LoyalFan_Head` and run **Deck Party > Art > Auto-Assign Sprites by Name**. A viewer without an avatar shows its portrait zoomed in on the head; adjust **Avatar Zoom** and **Avatar Offset** under "Animation...".
 
-**Icons (UI Skin).** Each button icon has its own slot:
+**Icons (UI Skin).** Each button icon has its own slot. Deck Party > Select UI Skin lists every slot by name (for example "Add Viewer button icon") with where it shows and a Find button:
 
 | Slot | Button |
 |---|---|

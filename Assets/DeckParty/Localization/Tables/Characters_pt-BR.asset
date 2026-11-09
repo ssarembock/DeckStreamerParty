@@ -896,8 +896,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262512
-    m_Localized: "Bastante {icon:subs}, mas quer ser pago: custa 1 {icon:cash} na
-      pontua\xE7\xE3o."
+    m_Localized: "A\xE7\xE3o: um espectador do chat ganha +1 {icon:cash} a mais pra
+      sempre (at\xE9 9 {icon:cash}). Custa 1 {icon:cash} na pontua\xE7\xE3o."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262513
@@ -1125,8 +1125,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008649
-    m_Localized: "A\xE7\xE3o: pontue agora mesmo outro espectador do chat, penalidades
-      inclu\xEDdas (entra na hora). Ele ainda pontua de novo quando a live acaba."
+    m_Localized: "Rumo \xE0 lua: todos os Entusiastas de cripto do chat pontuam {icon:cash}
+      juntos, 0 / 1 / 4 / 9 / 16 no total com 1 / 2 / 3 / 4 / 5 deles."
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008650
@@ -1140,6 +1140,19 @@ MonoBehaviour:
   - m_Id: 736681969008652
     m_Localized: "Um bot de spam da live de um rival. Ocupa um espa\xE7o no chat
       e n\xE3o ganha nada. Some depois desta live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838161933295616
+    m_Localized: Upsell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162012987392
+    m_Localized: "Jen Dan\xE7arina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2838162012987393
+    m_Localized: "Hora da dan\xE7a: todas as Jen Dan\xE7arina do chat pontuam {icon:subs}
+      juntas, 1 / 4 / 9 / 16 / 25 no total com 1 / 2 / 3 / 4 / 5 delas."
     m_Metadata:
       m_Items: []
   references:

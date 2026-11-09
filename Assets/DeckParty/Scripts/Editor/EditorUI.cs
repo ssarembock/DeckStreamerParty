@@ -164,8 +164,100 @@ namespace DeckParty.EditorTools
             image.raycastTarget = raycast;
             if (sprite != null && sprite.border != Vector4.zero) image.type = UnityEngine.UI.Image.Type.Sliced;
             if (slot.HasValue) rt.gameObject.AddComponent<SkinnedImage>().slot = slot.Value;
+            else TagByColour(image, color, false);
             return image;
         }
+
+        // ------------------------------------------------------------------ site colours (UI Skin > Site Colours)
+
+        static int s_SiteScopes;
+        static int s_PlainScopes;
+
+        /// <summary>Closes a colour scope (use it with <c>using</c>).</summary>
+        public sealed class ColourScope : System.IDisposable
+        {
+            readonly bool m_Site;
+            bool m_Closed;
+
+            internal ColourScope(bool site)
+            {
+                m_Site = site;
+                if (site) s_SiteScopes++;
+                else s_PlainScopes++;
+            }
+
+            public void Dispose()
+            {
+                if (m_Closed) return;
+                m_Closed = true;
+                if (m_Site) s_SiteScopes--;
+                else s_PlainScopes--;
+            }
+        }
+
+        /// <summary>
+        /// While open (the Game scene, the chat avatar and shop tile prefabs), the website look gets a SiteColour on each
+        /// graphic so UI Skin > Site Colours recolours it live: panels made with SitePanel / SharpPanel, lines and fills in the
+        /// Page, Divider and SurfaceAlt colours, and text in the Text, TextDim and TextFaint colours.
+        /// </summary>
+        public static ColourScope SiteColourScope() => new ColourScope(true);
+
+        /// <summary>Inside a site scope: builds without Site Colours (buttons and badges keep their own look).</summary>
+        public static ColourScope PlainColourScope() => new ColourScope(false);
+
+        static bool SiteTagging => s_SiteScopes > 0 && s_PlainScopes == 0;
+
+        /// <summary>Gives a graphic its Site Colours role (only inside a site scope) and its colour from the UI Skin.</summary>
+        public static void TagSite(Graphic graphic, SiteColourRole role, float alpha = 1f)
+        {
+            if (!SiteTagging || graphic == null) return;
+            if (!graphic.TryGetComponent<SiteColour>(out var tag)) tag = graphic.gameObject.AddComponent<SiteColour>();
+            tag.role = role;
+            tag.alpha = alpha;
+            tag.Refresh();
+        }
+
+        /// <summary>
+        /// Marks a named panel for Site Colours (only inside a site scope). Tag it before building what goes inside, so the
+        /// contents pick up the panel's colours straight away.
+        /// </summary>
+        public static void TagArea(Component panel, SiteArea area)
+        {
+            if (!SiteTagging || panel == null || area == SiteArea.None) return;
+            if (!panel.TryGetComponent<SiteAreaTag>(out var tag)) tag = panel.gameObject.AddComponent<SiteAreaTag>();
+            tag.area = area;
+        }
+
+        /// <summary>A bordered panel's two images: the inside and the border (or a divider-coloured border).</summary>
+        static void TagPanel(Graphic outer, Graphic inner, Color fill, Color border)
+        {
+            if (SameColour(fill, SitePalette.Surface)) TagSite(inner, SiteColourRole.PanelFill, fill.a);
+            else if (SameColour(fill, SitePalette.SurfaceAlt)) TagSite(inner, SiteColourRole.SoftFill, fill.a);
+            if (SameColour(border, SitePalette.Outline)) TagSite(outer, SiteColourRole.PanelBorder, border.a);
+            else if (SameColour(border, SitePalette.Divider)) TagSite(outer, SiteColourRole.Divider, border.a);
+        }
+
+        static void TagByColour(Graphic graphic, Color color, bool text)
+        {
+            if (!SiteTagging || graphic == null) return;
+            // Icons and accent graphics take their colours from their UI Skin entry and the site accent instead.
+            if (graphic.GetComponent<SkinnedImage>() != null || graphic.GetComponent<SiteAccent>() != null) return;
+            if (text)
+            {
+                if (SameColour(color, SitePalette.Text)) TagSite(graphic, SiteColourRole.Text, color.a);
+                else if (SameColour(color, SitePalette.TextDim)) TagSite(graphic, SiteColourRole.SecondaryText, color.a);
+                else if (SameColour(color, SitePalette.TextFaint)) TagSite(graphic, SiteColourRole.FaintText, color.a);
+                return;
+            }
+            // White and black also colour pictures, masks and shadows, so panel insides and borders are only tagged by the
+            // panel helpers (SitePanel, SharpPanel) and by hand.
+            if (SameColour(color, SitePalette.Page)) TagSite(graphic, SiteColourRole.Page, color.a);
+            else if (SameColour(color, SitePalette.Divider)) TagSite(graphic, SiteColourRole.Divider, color.a);
+            else if (SameColour(color, SitePalette.SurfaceAlt)) TagSite(graphic, SiteColourRole.SoftFill, color.a);
+        }
+
+        static bool SameColour(Color a, Color b) =>
+            Mathf.Abs(a.r - b.r) < 0.003f && Mathf.Abs(a.g - b.g) < 0.003f && Mathf.Abs(a.b - b.b) < 0.003f;
 
         public static Image Panel(Transform parent, string name, Color? color = null, SkinSlot slot = SkinSlot.Panel, bool raycast = true)
         {
@@ -184,6 +276,8 @@ namespace DeckParty.EditorTools
             {
                 skinned.tintPlaceholderOnly = true;
                 skinned.placeholderTint = color;
+                // Icons drawn in the site's text colour follow their panel's text colour (UI Skin > Site Colours).
+                if (SiteTagging && SameColour(color, SitePalette.Text)) skinned.siteText = true;
             }
             return image;
         }
@@ -214,6 +308,7 @@ namespace DeckParty.EditorTools
             t.fontSizeMax = size;
             t.fontSizeMin = Mathf.Max(11f, Mathf.Round(size * 0.6f));
             rt.gameObject.AddComponent<SkinnedText>().header = header;
+            TagByColour(t, color, true);
             return t;
         }
 
@@ -293,6 +388,8 @@ namespace DeckParty.EditorTools
         public static Button IconButton(Transform parent, string name, Sprite icon, SkinSlot iconSlot, SiteButton style, Vector2 size, float iconSize,
             out Image iconImage, string tooltip = null, bool round = false)
         {
+            // Buttons keep their own colours whatever the panels' Site Colours are.
+            using var plain = PlainColourScope();
             // Light buttons are white with a strong black border (the site's look); the border is the button's own Image.
             bool bordered = style == SiteButton.Light;
             var background = Image(parent, name, bordered ? SitePalette.Outline : SiteFill(style), round ? Circle : RoundedSmall, null, true);
@@ -346,12 +443,16 @@ namespace DeckParty.EditorTools
         /// A website card: a slightly rounded rectangle with a thin border. Returns the inner fill (put content under it); the
         /// border is its parent, named <paramref name="name"/>.
         /// </summary>
-        public static Image SitePanel(Transform parent, string name, Color fill, Color border, float borderWidth = 2f, bool raycast = true)
+        /// <param name="area">Which named panel this is in UI Skin > Site Colours (None: it uses the shared colours).</param>
+        public static Image SitePanel(Transform parent, string name, Color fill, Color border, float borderWidth = 2f, bool raycast = true,
+            SiteArea area = SiteArea.None)
         {
             var outer = Image(parent, name, border, PanelSprite, null, raycast);
+            TagArea(outer, area);
             var inner = Image(outer.transform, "Fill", fill, PanelSprite, null, false);
             inner.rectTransform.Stretch(borderWidth, borderWidth, borderWidth, borderWidth);
             RoundPanel(outer, inner, borderWidth);
+            TagPanel(outer, inner, fill, border);
             return inner;
         }
 
@@ -390,6 +491,7 @@ namespace DeckParty.EditorTools
             var outer = Image(parent, name, border, null, null, raycast);
             var inner = Image(outer.transform, "Fill", fill, null, null, false);
             inner.rectTransform.Stretch(borderWidth, borderWidth, borderWidth, borderWidth);
+            TagPanel(outer, inner, fill, border);
             return inner;
         }
 
@@ -407,6 +509,8 @@ namespace DeckParty.EditorTools
         /// </summary>
         public static Button SiteTextButton(Transform parent, string name, string label, SiteButton style, float fontSize, out TextMeshProUGUI labelText)
         {
+            // Buttons keep their own colours whatever the panels' Site Colours are.
+            using var plain = PlainColourScope();
             var background = Image(parent, name, style == SiteButton.Light ? SitePalette.Outline : SiteFill(style), RoundedSmall, null, true);
             background.type = UnityEngine.UI.Image.Type.Sliced;
             if (style == SiteButton.Accent) background.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Fill;
@@ -716,7 +820,7 @@ namespace DeckParty.EditorTools
             dim.rectTransform.Stretch();
             if (light)
             {
-                var fill = SitePanel(rootRect, "Panel", SitePalette.Surface, SitePalette.Outline, ModalBorder, true);
+                var fill = SitePanel(rootRect, "Panel", SitePalette.Surface, SitePalette.Outline, ModalBorder, true, SiteArea.PopUps);
                 panel = ((RectTransform)fill.transform.parent).Place(new Vector2(0.5f, 0.5f), Vector2.zero, panelSize);
                 return host;
             }
