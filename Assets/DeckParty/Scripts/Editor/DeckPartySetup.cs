@@ -77,6 +77,9 @@ namespace DeckParty.EditorTools
         [MenuItem("Deck Party/Open Minor UI Guide (black and white pop-ups, summaries)", priority = 65)]
         public static void OpenMinorUIGuide() => OpenDoc("MinorUIGuide.md");
 
+        [MenuItem("Deck Party/Open Steamworks Guidelines (online platforms)", priority = 66)]
+        public static void OpenSteamworksGuidelines() => OpenDoc("Streamworks_Guidelines.md");
+
         static void OpenDoc(string fileName)
         {
             var path = Path.GetFullPath(Path.Combine(Application.dataPath, "..", fileName));

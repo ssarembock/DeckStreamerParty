@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4840249710ec5e84ebcfc561d1e87e59, type: 3}
   m_Name: AudioLibrary
   m_EditorClassIdentifier: 
-  menuMusic: {fileID: 0}
-  partyMusic: {fileID: 0}
-  planningMusic: {fileID: 0}
+  menuMusic: {fileID: 8300000, guid: 92aec61d1ab633d4b85eb0f16c80258d, type: 3}
+  partyMusic: {fileID: 8300000, guid: a1af1dc84e394244aba6770ad4f3eaca, type: 3}
+  planningMusic: {fileID: 8300000, guid: c225d84b005e7904496392529e1d66de, type: 3}
   sounds:
   - name: Click
     sfx: 0

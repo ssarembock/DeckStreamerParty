@@ -391,6 +391,98 @@ MonoBehaviour:
     m_Localized: "\u6162\u4E00\u70B9\uFF01{seconds} \u79D2\u540E\u624D\u80FD\u518D\u53D1\u8868\u60C5\u3002"
     m_Metadata:
       m_Items: []
+  - m_Id: 3193499320672256
+    m_Localized: "\u6B64\u7248\u672C\u4E0D\u652F\u6301 {0}\uFF0C\u5728\u7EBF\u6E38\u620F\u5C06\u4F7F\u7528\u52A0\u5165\u4EE3\u7801\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615296
+    m_Localized: "{0} \u672A\u80FD\u542F\u52A8\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615297
+    m_Localized: "Steam \u76EE\u524D\u4E0D\u53EF\u7528\u3002\u8BF7\u786E\u8BA4 Steam
+      \u6B63\u5728\u8FD0\u884C\u4E14\u5DF2\u767B\u5F55\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615298
+    m_Localized: "\u65E0\u6CD5\u5F00\u59CB\u521B\u5EFA\u6E38\u620F\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615299
+    m_Localized: "\u8BF7\u8F93\u5165\u5927\u5385 ID\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615300
+    m_Localized: "\u8FD9\u4E0D\u662F\u6709\u6548\u7684\u5927\u5385 ID\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615301
+    m_Localized: "\u90A3\u4E2A\u5927\u5385\u6CA1\u6709\u623F\u4E3B\uFF0C\u53EF\u80FD\u521A\u521A\u5173\u95ED\u4E86\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615302
+    m_Localized: "\u65E0\u6CD5\u641C\u7D22\u6E38\u620F\u3002\u8BF7\u7A0D\u540E\u518D\u8BD5\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615303
+    m_Localized: "\u8BF7\u5148\u52A0\u5165\u5927\u5385\uFF08\u901A\u8FC7\u9080\u8BF7\u3001\u597D\u53CB\u5217\u8868\u6216\u5BFB\u627E\u6E38\u620F\uFF09\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615304
+    m_Localized: "\u8BE5\u8D26\u53F7\u5DF2\u5728\u672C\u573A\u6E38\u620F\u4E2D\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615305
+    m_Localized: "Steam \u7EC4\u4EF6\u7F3A\u5931\u6216\u4E0E\u6B64\u7248\u672C\u4E0D\u5339\u914D\u3002\u8BF7\u91CD\u65B0\u5B89\u88C5\u6E38\u620F\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615306
+    m_Localized: "\u6B63\u5728\u901A\u8FC7 Steam \u542F\u52A8\u2026\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615307
+    m_Localized: "Steam \u672A\u8FD0\u884C\u3002\u8BF7\u542F\u52A8 Steam \u5E76\u767B\u5F55\uFF0C\u624D\u80FD\u548C
+      Steam \u597D\u53CB\u4E00\u8D77\u73A9\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615308
+    m_Localized: "\u4F60\u7684 Steam \u5BA2\u6237\u7AEF\u7248\u672C\u8FC7\u65E7\u3002\u8BF7\u66F4\u65B0
+      Steam \u5E76\u91CD\u65B0\u542F\u52A8\u6E38\u620F\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615309
+    m_Localized: "Steam \u65E0\u6CD5\u542F\u52A8\uFF1A{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615310
+    m_Localized: "Steam \u5904\u4E8E\u79BB\u7EBF\u6A21\u5F0F\u3002\u8BF7\u5728 Steam
+      \u4E2D\u5207\u6362\u4E3A\u5728\u7EBF\u540E\u518D\u548C\u597D\u53CB\u4E00\u8D77\u73A9\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615311
+    m_Localized: "\u65E0\u6CD5\u8FDE\u63A5 Steam\u3002\u8BF7\u68C0\u67E5\u4F60\u7684\u7F51\u7EDC\u8FDE\u63A5\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809600
+    m_Localized: "Steam \u6B63\u5FD9\u3002\u8BF7\u7A0D\u7B49\u540E\u91CD\u8BD5\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809601
+    m_Localized: "\u4F60\u65E0\u6CD5\u52A0\u5165\u90A3\u4E2A\u5927\u5385\uFF08\u5B83\u53EF\u80FD\u4EC5\u9650\u9080\u8BF7\uFF09\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809602
+    m_Localized: "Steam \u5927\u5385\u9519\u8BEF\uFF1A{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809603
+    m_Localized: "\u90A3\u4E2A\u5927\u5385\u5DF2\u7ECF\u4E0D\u5B58\u5728\u4E86\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809604
+    m_Localized: "\u65E0\u6CD5\u52A0\u5165\uFF1A\u90A3\u4E2A\u5927\u5385\u91CC\u6709\u4EBA\u5C4F\u853D\u4E86\u4F60\uFF0C\u6216\u4F60\u5C4F\u853D\u4E86\u5BF9\u65B9\u3002"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

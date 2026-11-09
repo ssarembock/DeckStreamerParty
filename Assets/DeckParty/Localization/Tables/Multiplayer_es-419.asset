@@ -400,6 +400,102 @@ MonoBehaviour:
     m_Localized: "\xA1M\xE1s despacio! Podr\xE1s enviar otro emote en {seconds} s."
     m_Metadata:
       m_Items: []
+  - m_Id: 3193499320672256
+    m_Localized: "Esta versi\xF3n no es compatible con {0}, as\xED que el juego en
+      l\xEDnea usa c\xF3digos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615296
+    m_Localized: "{0} no se inici\xF3."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615297
+    m_Localized: "Steam no est\xE1 disponible ahora. Aseg\xFArate de que Steam est\xE9
+      abierto y de haber iniciado sesi\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615298
+    m_Localized: No se pudo empezar a hospedar la partida.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615299
+    m_Localized: Ingresa un ID de lobby.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615300
+    m_Localized: "Ese no es un ID de lobby v\xE1lido."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615301
+    m_Localized: Ese lobby no tiene host. Puede que acabe de cerrarse.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615302
+    m_Localized: "No se pudieron buscar partidas. Int\xE9ntalo de nuevo en un momento."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615303
+    m_Localized: "Primero \xFAnete al lobby (con una invitaci\xF3n, la lista de amigos
+      o Buscar partidas)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615304
+    m_Localized: "Esa cuenta ya est\xE1 en esta partida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615305
+    m_Localized: "Falta la biblioteca de Steam o no coincide con esta versi\xF3n.
+      Reinstala el juego."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615306
+    m_Localized: "Iniciando a trav\xE9s de Steam..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615307
+    m_Localized: "Steam no est\xE1 abierto. \xC1brelo e inicia sesi\xF3n para jugar
+      con tus amigos de Steam."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615308
+    m_Localized: "Tu cliente de Steam est\xE1 desactualizado. Actualiza Steam y reinicia
+      el juego."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615309
+    m_Localized: 'Steam no pudo iniciarse: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615310
+    m_Localized: "Steam est\xE1 en modo sin conexi\xF3n. Con\xE9ctate en Steam para
+      jugar con tus amigos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615311
+    m_Localized: "No se pudo conectar con Steam. Revisa tu conexi\xF3n a internet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809600
+    m_Localized: "Steam est\xE1 ocupado. Espera un momento e int\xE9ntalo de nuevo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809601
+    m_Localized: "No puedes unirte a ese lobby (puede que sea solo con invitaci\xF3n)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809602
+    m_Localized: 'Error del lobby de Steam: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809603
+    m_Localized: Ese lobby ya no existe.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809604
+    m_Localized: "No puedes unirte: alguien en ese lobby te bloque\xF3, o t\xFA lo
+      bloqueaste."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

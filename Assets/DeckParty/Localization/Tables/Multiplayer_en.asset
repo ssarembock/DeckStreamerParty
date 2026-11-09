@@ -387,6 +387,99 @@ MonoBehaviour:
     m_Localized: Slow down! You can send another emote in {seconds}s.
     m_Metadata:
       m_Items: []
+  - m_Id: 3193499320672256
+    m_Localized: This build has no {0} support, so online play uses join codes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615296
+    m_Localized: '{0} didn''t start.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615297
+    m_Localized: Steam isn't available right now. Make sure Steam is running and
+      you're signed in.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615298
+    m_Localized: Couldn't start hosting the game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615299
+    m_Localized: Enter a lobby ID.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615300
+    m_Localized: That isn't a valid lobby ID.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615301
+    m_Localized: That lobby has no host. It may have just closed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615302
+    m_Localized: Couldn't search for games. Try again in a moment.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615303
+    m_Localized: Join the lobby first (through an invite, the friends list or Find
+      Games).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615304
+    m_Localized: That account is already in this game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615305
+    m_Localized: Steam's library is missing or doesn't match this build. Reinstall
+      the game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615306
+    m_Localized: Starting through Steam...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615307
+    m_Localized: Steam isn't running. Start Steam and sign in to play with your Steam
+      friends.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615308
+    m_Localized: Your Steam client is out of date. Update Steam and restart the game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615309
+    m_Localized: 'Steam couldn''t start: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615310
+    m_Localized: Steam is in offline mode. Go online in Steam to play with friends.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615311
+    m_Localized: Couldn't reach Steam. Check your internet connection.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809600
+    m_Localized: Steam is busy. Wait a moment and try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809601
+    m_Localized: You can't join that lobby (it may be invite only).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809602
+    m_Localized: 'Steam lobby error: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809603
+    m_Localized: That lobby doesn't exist anymore.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809604
+    m_Localized: 'You can''t join: someone in that lobby has blocked you, or you''ve
+      blocked them.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1949,6 +1949,213 @@ MonoBehaviour:
     m_Localized: '- {viewer} (removed)'
     m_Metadata:
       m_Items: []
+  - m_Id: 3193502789361664
+    m_Localized: Play on {platform}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502831304704
+    m_Localized: Signed in as {name}. Host a lobby and invite friends, or find a
+      game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502831304705
+    m_Localized: Who can join
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502831304706
+    m_Localized: Friends only
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502831304707
+    m_Localized: Public
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887616
+    m_Localized: Invite only
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887617
+    m_Localized: Host a Lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887618
+    m_Localized: Quick Match
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887619
+    m_Localized: Find Games
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887620
+    m_Localized: Find a Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887621
+    m_Localized: Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887622
+    m_Localized: Players
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887623
+    m_Localized: Ping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887624
+    m_Localized: Lobby ID
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887625
+    m_Localized: Refresh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887626
+    m_Localized: Searching for games...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887627
+    m_Localized: No open games right now. Host one, or try Quick Match.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887628
+    m_Localized: 'Games found: {count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887629
+    m_Localized: '{host}''s game'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887630
+    m_Localized: Open game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887631
+    m_Localized: '{ms} ms'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887632
+    m_Localized: Invite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887633
+    m_Localized: '{platform} lobby: invite friends, or they can join from their friends
+      list.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887634
+    m_Localized: Invite Friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887635
+    m_Localized: Search friends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887636
+    m_Localized: Invite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887637
+    m_Localized: Invited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887638
+    m_Localized: In lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887639
+    m_Localized: Playing this game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887640
+    m_Localized: Online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887641
+    m_Localized: Away
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887642
+    m_Localized: Busy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887643
+    m_Localized: Offline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887644
+    m_Localized: Open {platform} Overlay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887645
+    m_Localized: None of your friends are online right now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887646
+    m_Localized: "{online} online \xB7 {offline} offline"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887647
+    m_Localized: Invite sent to {name}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887648
+    m_Localized: Couldn't invite {name}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887649
+    m_Localized: The {platform} overlay is off. Turn it on in {platform}'s settings,
+      or invite friends from the list.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887650
+    m_Localized: Opening a {platform} lobby...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887651
+    m_Localized: Looking for a game...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887652
+    m_Localized: Joining the lobby...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887653
+    m_Localized: Joined the lobby. Connecting to the host...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887654
+    m_Localized: Join your friend?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887655
+    m_Localized: You'll leave this game to join your friend's lobby.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887656
+    m_Localized: You'll leave this stream to join your friend's lobby.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887657
+    m_Localized: Join
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887658
+    m_Localized: In the menus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887659
+    m_Localized: Streaming solo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887660
+    m_Localized: In a lobby ({count}/{max})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887661
+    m_Localized: In a match ({count} players)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

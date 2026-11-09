@@ -21,6 +21,7 @@ namespace DeckParty
         const string KeyActivityLog = "dp.activityLog";
         const string KeyStreamer = "dp.streamer";
         const string KeyTurnTimer = "dp.turnTimer";
+        const string KeyLobbyVisibility = "dp.lobbyVisibility";
 
         public const string VenueAuto = "auto";
         public const string VenueEvolving = "evolving";
@@ -126,6 +127,13 @@ namespace DeckParty
         {
             get => PlayerPrefs.GetString(KeyJoinCode, string.Empty);
             set => PlayerPrefs.SetString(KeyJoinCode, value ?? string.Empty);
+        }
+
+        /// <summary>Who could join the last platform lobby this player hosted (a Platforms.LobbyVisibility; -1 = never hosted).</summary>
+        public static int LastLobbyVisibility
+        {
+            get => PlayerPrefs.GetInt(KeyLobbyVisibility, -1);
+            set => PlayerPrefs.SetInt(KeyLobbyVisibility, value);
         }
 
         public static string LastIp

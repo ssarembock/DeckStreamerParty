@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using DeckParty.Core;
 using DeckParty.Networking;
+using DeckParty.Platforms;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,11 +37,19 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text statusLabel;
         [SerializeField] internal ChatView chat;
 
+        [Header("Online platform (Steam)")]
+        [Tooltip("Opens Invite Friends (in place of Copy while the lobby is a Steam lobby).")]
+        [SerializeField] internal Button inviteButton;
+        [SerializeField] internal FriendsInviteView friendsPanel;
+
         static readonly int[] s_NightOptions = { 10, 15, 20, 25, 30 };
 
         MainMenuController m_Menu;
         DeckPartyNetSession m_Session;
         readonly List<PlayerRowView> m_Rows = new List<PlayerRowView>();
+        /// <summary>Each row's player's platform id (clicking a row opens their Steam profile).</summary>
+        readonly List<ulong> m_RowPlatformIds = new List<ulong>();
+        IOnlinePlatform m_AvatarPlatform;
         List<(string id, string label)> m_VenueChoices;
         bool m_Applying;
 
@@ -49,6 +58,7 @@ namespace DeckParty.UI
         void Awake()
         {
             copyCodeButton.onClick.AddListener(CopyCode);
+            if (inviteButton != null) inviteButton.onClick.AddListener(() => friendsPanel?.Open());
             readyButton.onClick.AddListener(ToggleReady);
             startButton.onClick.AddListener(StartMatch);
             leaveButton.onClick.AddListener(Leave);
@@ -82,7 +92,19 @@ namespace DeckParty.UI
             chat.Bind(m_Session);
             // Text chat is off: the box shows lobby news only (players talk with emotes in game).
             chat.SetTextInput(FxLibrary.Current.textChat);
+            m_AvatarPlatform = OnlinePlatforms.Current;
+            if (m_AvatarPlatform != null) m_AvatarPlatform.AvatarLoaded += OnAvatarLoaded;
             FillSelectors();
+        }
+
+        void OnAvatarLoaded(ulong userId) => Refresh();
+
+        /// <summary>Esc: closes Invite Friends. Returns true when it did.</summary>
+        public bool CloseOverlay()
+        {
+            if (friendsPanel == null || !friendsPanel.IsOpen) return false;
+            friendsPanel.Close();
+            return true;
         }
 
         void FillSelectors()
@@ -136,6 +158,9 @@ namespace DeckParty.UI
             DeckPartyNetSession.Despawned -= OnSessionDespawned;
             chat.Unbind();
             m_Session = null;
+            if (m_AvatarPlatform != null) m_AvatarPlatform.AvatarLoaded -= OnAvatarLoaded;
+            m_AvatarPlatform = null;
+            if (friendsPanel != null) friendsPanel.Close();
         }
 
         // Starting a season loads the Game scene while the lobby is showing; the session outlives this screen.
@@ -155,16 +180,38 @@ namespace DeckParty.UI
             var service = NetworkService.Instance;
 
             titleLabel.text = Loc.Get(isHost ? "lobby.title_host" : "lobby.title");
-            codeLabel.text = string.IsNullOrEmpty(service.JoinCode) ? "-" : service.JoinCode;
-            codeHintLabel.text = service.Mode == ConnectionMode.Relay
-                ? Loc.Get(isHost ? "lobby.code_hint_host" : "lobby.code_hint")
-                : Loc.Get(isHost ? "lobby.ip_hint_host" : "lobby.ip_hint");
+            var platform = service.IsPlatformSession ? OnlinePlatforms.Current : null;
+            if (platform != null)
+            {
+                // A Steam lobby: friends come in through invites and the friends list, so show who can join and the Invite button.
+                codeLabel.text = MultiplayerScreen.VisibilityLabel(service.PlatformVisibility);
+                codeHintLabel.text = Loc.Get("lobby.platform_hint", "platform", platform.DisplayName);
+                copyCodeButton.gameObject.SetActive(false);
+                if (inviteButton != null)
+                    inviteButton.gameObject.SetActive((platform.Features & (PlatformFeatures.Friends | PlatformFeatures.InviteOverlay)) != 0);
+            }
+            else
+            {
+                codeLabel.text = string.IsNullOrEmpty(service.JoinCode) ? "-" : service.JoinCode;
+                codeHintLabel.text = service.Mode == ConnectionMode.Relay
+                    ? Loc.Get(isHost ? "lobby.code_hint_host" : "lobby.code_hint")
+                    : Loc.Get(isHost ? "lobby.ip_hint_host" : "lobby.ip_hint");
+                copyCodeButton.gameObject.SetActive(true);
+                if (inviteButton != null) inviteButton.gameObject.SetActive(false);
+            }
 
             // Players
             var players = m_Session.PlayersSnapshot();
             for (int i = 0; i < players.Count; i++)
             {
-                if (i >= m_Rows.Count) m_Rows.Add(Instantiate(playerRowPrefab, playerList));
+                if (i >= m_Rows.Count)
+                {
+                    int index = i;
+                    var row = Instantiate(playerRowPrefab, playerList);
+                    m_Rows.Add(row);
+                    m_RowPlatformIds.Add(0);
+                    row.Clicked += () => OpenProfile(index);
+                }
                 var p = players[i];
                 bool host = m_Session.IsHostPlayer(p.ClientId);
                 bool ready = host || p.LobbyReady;
@@ -172,6 +219,11 @@ namespace DeckParty.UI
                 m_Rows[i].Set(p.DisplayName, host ? Loc.Get("lobby.host") : (p.LobbyReady ? $"<color=#6BE38B>{Loc.Get("players.ready")}</color>" : $"<color=#B9AED6>{Loc.Get("lobby.not_ready")}</color>"),
                     UIPalette.PlayerColor(p.ColorIndex), ready, host, 0, p.ClientId == m_Session.LocalClientId);
                 m_Rows[i].SetStreamer(p.Streamer == StreamerCatalog.RandomPick ? StreamerType.None : (StreamerType)p.Streamer);
+
+                // Steam: the player's avatar, and their profile on click.
+                m_RowPlatformIds[i] = platform != null ? p.PlatformUserId : 0;
+                m_Rows[i].SetPlatformAvatar(platform != null && p.PlatformUserId != 0 ? platform.GetAvatar(p.PlatformUserId) : null);
+                if (platform != null && p.PlatformUserId != 0 && (platform.Features & PlatformFeatures.Profiles) != 0) m_Rows[i].MakeClickable();
             }
             for (int i = players.Count; i < m_Rows.Count; i++) m_Rows[i].gameObject.SetActive(false);
             playerCountLabel.text = Loc.Get("lobby.players", "count", players.Count, "max", NetworkService.MaxPlayers);
@@ -307,6 +359,14 @@ namespace DeckParty.UI
                 return;
             }
             m_Session.ServerStartMatch();
+        }
+
+        void OpenProfile(int rowIndex)
+        {
+            var platform = OnlinePlatforms.Current;
+            if (platform == null || rowIndex < 0 || rowIndex >= m_RowPlatformIds.Count) return;
+            ulong id = m_RowPlatformIds[rowIndex];
+            if (id != 0) platform.OpenProfile(id);
         }
 
         void CopyCode()

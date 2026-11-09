@@ -1,4 +1,5 @@
 using DeckParty.Networking;
+using DeckParty.Platforms;
 using UnityEngine;
 
 namespace DeckParty.UI
@@ -40,11 +41,16 @@ namespace DeckParty.UI
 
             var message = SceneFlow.TakePendingMessage();
             if (!string.IsNullOrEmpty(message)) ModalDialog.Show(Loc.Get("menu.heads_up"), Loc.Error(message), null, Loc.Get("common.ok"), null);
+
+            // A Steam invite accepted before this menu opened (or the game was started from one).
+            OnlinePlatforms.PendingJoinChanged += TryJoinPendingInvite;
+            TryJoinPendingInvite();
         }
 
         void OnDestroy()
         {
             if (NetworkService.HasInstance) NetworkService.Instance.SessionEnded -= OnSessionEnded;
+            OnlinePlatforms.PendingJoinChanged -= TryJoinPendingInvite;
         }
 
         void Update()
@@ -53,7 +59,12 @@ namespace DeckParty.UI
             {
                 if (m_Current == settingsScreen || m_Current == howToPlayScreen) ShowMain();
                 else if (m_Current == singlePlayerScreen) ShowStreamerSelect(StreamerSelectMode.SinglePlayer);
-                else if (m_Current == multiplayerScreen) ShowStreamerSelect(StreamerSelectMode.Multiplayer);
+                else if (m_Current == multiplayerScreen)
+                {
+                    // Find Games closes first.
+                    if (!multiplayerScreen.CloseOverlay()) ShowStreamerSelect(StreamerSelectMode.Multiplayer);
+                }
+                else if (m_Current == lobbyScreen) lobbyScreen.CloseOverlay();
                 // The select screen handles its own Esc (back).
             }
         }
@@ -65,6 +76,28 @@ namespace DeckParty.UI
                 ShowMultiplayerConnect();
                 if (!string.IsNullOrEmpty(reason)) multiplayerScreen.SetStatus(Loc.Error(reason), true);
             }
+            // Left a game to accept an invite: join the friend's lobby once Netcode has finished closing the old one.
+            if (!string.IsNullOrEmpty(OnlinePlatforms.PendingJoin)) StartCoroutine(JoinPendingInviteNextFrame());
+        }
+
+        System.Collections.IEnumerator JoinPendingInviteNextFrame()
+        {
+            yield return null;
+            TryJoinPendingInvite();
+        }
+
+        /// <summary>
+        /// Joins the lobby of an accepted Steam invite (or Join Game) when nothing else is running. While a session runs,
+        /// <see cref="PlatformJoinRouter"/> asks first and leaves; this then runs again from <see cref="OnSessionEnded"/>.
+        /// </summary>
+        void TryJoinPendingInvite()
+        {
+            if (string.IsNullOrEmpty(OnlinePlatforms.PendingJoin) || !OnlinePlatforms.Active) return;
+            if (NetworkService.Instance.IsActive || NetworkService.Instance.IsBusy) return;
+
+            string lobby = OnlinePlatforms.TakePendingJoin();
+            ShowMultiplayerConnect();
+            multiplayerScreen.JoinPlatformLobby(lobby);
         }
 
         void Switch(UIScreen next)

@@ -1286,3 +1286,76 @@ Gameplay,log.removed_you,"Log; {viewer}, {cash}",You removed {viewer} from your 
 Gameplay,log.removed_other,"Log; {player}, {viewer}, {cash}",{player} removed {viewer} from their Audience for good (-{cash} {icon:cash}).,{player} 把 {viewer} 永久移出了观众群（-{cash} {icon:cash}）。,{player} навсегда убирает {viewer} из аудитории (-{cash} {icon:cash}).,{player} quitó a {viewer} de su audiencia para siempre (-{cash} {icon:cash}).,{player} removeu {viewer} da audiência de vez (-{cash} {icon:cash}).,draft
 UI,game.removed_you,Toast; {viewer},{viewer} left your Audience for good.,{viewer} 永久离开了你的观众群。,{viewer} навсегда покинул вашу аудиторию.,{viewer} dejó tu audiencia para siempre.,{viewer} saiu da sua audiência de vez.,draft
 UI,recap.removed,Shop summary line; {viewer},- {viewer} (removed),- {viewer}（已移除）,- {viewer} (убран),- {viewer} (quitado),- {viewer} (removido),draft
+UI,mp.platform_header,Platform card title; {platform} = Steam,Play on {platform},在 {platform} 上游玩,Играть через {platform},Juega en {platform},Jogue pela {platform},draft
+UI,mp.platform_note,Platform card note; {name} = Steam name,"Signed in as {name}. Host a lobby and invite friends, or find a game.",已登录为 {name}。创建大厅并邀请好友，或寻找一场游戏。,Вы вошли как {name}. Создайте лобби и пригласите друзей или найдите игру.,"Sesión iniciada como {name}. Crea un lobby e invita a tus amigos, o busca una partida.","Conectado como {name}. Crie um lobby e convide amigos, ou encontre uma partida.",draft
+UI,mp.visibility,Selector title (who can join a Steam lobby),Who can join,谁可以加入,Кто может войти,Quién puede unirse,Quem pode entrar,draft
+UI,platform.visibility_friends,Lobby visibility,Friends only,仅好友,Только друзья,Solo amigos,Só amigos,draft
+UI,platform.visibility_public,Lobby visibility,Public,公开,Открытое,Público,Público,draft
+UI,platform.visibility_invite,Lobby visibility,Invite only,仅限邀请,Только по приглашению,Solo con invitación,Só com convite,draft
+UI,mp.host_platform,Button,Host a Lobby,创建大厅,Создать лобби,Crear lobby,Criar lobby,draft
+UI,mp.quick_match,Button and lobby tag,Quick Match,快速匹配,Быстрая игра,Partida rápida,Partida rápida,draft
+UI,mp.find_games,Button,Find Games,寻找游戏,Найти игру,Buscar partidas,Procurar partidas,draft
+UI,platform.find_games_title,Panel title,Find a Game,寻找游戏,Найти игру,Buscar partida,Procurar partida,draft
+UI,platform.col_game,Column header,Game,游戏,Игра,Partida,Partida,draft
+UI,platform.col_players,Column header,Players,玩家,Игроки,Jugadores,Jogadores,draft
+UI,platform.col_ping,Column header,Ping,延迟,Пинг,Ping,Ping,draft
+UI,platform.lobby_id_placeholder,Field placeholder,Lobby ID,大厅 ID,ID лобби,ID del lobby,ID do lobby,draft
+UI,platform.refresh,Button,Refresh,刷新,Обновить,Actualizar,Atualizar,draft
+UI,platform.searching,Status,Searching for games...,正在寻找游戏……,Ищем игры...,Buscando partidas...,Procurando partidas...,draft
+UI,platform.no_games,Status,"No open games right now. Host one, or try Quick Match.",现在没有开放的游戏。创建一场，或试试快速匹配。,Сейчас нет открытых игр. Создайте свою или попробуйте быструю игру.,No hay partidas abiertas ahora. Crea una o prueba Partida rápida.,Nenhuma partida aberta agora. Crie uma ou tente a Partida rápida.,draft
+UI,platform.games_found,Status; {count},Games found: {count},找到的游戏：{count},Найдено игр: {count},Partidas encontradas: {count},Partidas encontradas: {count},draft
+UI,platform.lobby_of,Find Games row title; {host},{host}'s game,{host} 的游戏,Игра: {host},Partida de {host},Partida de {host},draft
+UI,platform.open_game,Find Games row title when the host's name is unknown,Open game,开放的游戏,Открытая игра,Partida abierta,Partida aberta,draft
+UI,platform.ping_ms,Ping; {ms} = milliseconds,{ms} ms,{ms} 毫秒,{ms} мс,{ms} ms,{ms} ms,draft
+UI,lobby.invite_friends,Lobby button (Steam lobbies),Invite,邀请,Пригласить,Invitar,Convidar,draft
+UI,lobby.platform_hint,Lobby hint; {platform},"{platform} lobby: invite friends, or they can join from their friends list.",{platform} 大厅：邀请好友，或让他们从好友列表加入。,"Лобби {platform}: пригласите друзей, или они войдут через список друзей.",Lobby de {platform}: invita a tus amigos o pueden unirse desde su lista de amigos.,Lobby {platform}: convide amigos ou eles podem entrar pela lista de amigos.,draft
+UI,platform.invite_title,Panel title,Invite Friends,邀请好友,Пригласить друзей,Invitar amigos,Convidar amigos,draft
+UI,platform.search_friends,Field placeholder,Search friends,搜索好友,Поиск друзей,Buscar amigos,Buscar amigos,draft
+UI,platform.invite,Button,Invite,邀请,Пригласить,Invitar,Convidar,draft
+UI,platform.invited,Button (after inviting),Invited,已邀请,Приглашён,Invitado,Convidado,draft
+UI,platform.in_lobby,Button (the friend is already in the lobby),In lobby,已在大厅,В лобби,En el lobby,No lobby,draft
+UI,platform.status_in_game,Friend status,Playing this game,正在玩本游戏,Играет в эту игру,Jugando a este juego,Jogando este jogo,draft
+UI,platform.status_online,Friend status,Online,在线,В сети,En línea,Online,draft
+UI,platform.status_away,Friend status,Away,离开,Отошёл,Ausente,Ausente,draft
+UI,platform.status_busy,Friend status,Busy,忙碌,Занят,Ocupado,Ocupado,draft
+UI,platform.status_offline,Friend status,Offline,离线,Не в сети,Desconectado,Offline,draft
+UI,platform.open_overlay,Button; {platform},Open {platform} Overlay,打开 {platform} 界面,Открыть оверлей {platform},Abrir el overlay de {platform},Abrir o overlay {platform},draft
+UI,platform.no_friends_online,Status,None of your friends are online right now.,你的好友现在都不在线。,Сейчас никого из друзей нет в сети.,Ninguno de tus amigos está en línea ahora.,Nenhum amigo seu está online agora.,draft
+UI,platform.friends_count,Status; {online} {offline},{online} online · {offline} offline,{online} 在线 · {offline} 离线,В сети: {online} · не в сети: {offline},{online} en línea · {offline} desconectados,{online} online · {offline} offline,draft
+UI,platform.invite_sent,Toast; {name},Invite sent to {name}.,已向 {name} 发送邀请。,Приглашение отправлено: {name}.,Invitación enviada a {name}.,Convite enviado para {name}.,draft
+UI,platform.invite_failed,Toast; {name},Couldn't invite {name}.,无法邀请 {name}。,Не удалось пригласить {name}.,No se pudo invitar a {name}.,Não deu pra convidar {name}.,draft
+UI,platform.overlay_off,Toast; {platform},"The {platform} overlay is off. Turn it on in {platform}'s settings, or invite friends from the list.",{platform} 游戏内界面已关闭。请在 {platform} 设置中开启，或从列表中邀请好友。,Оверлей {platform} выключен. Включите его в настройках {platform} или пригласите друзей из списка.,El overlay de {platform} está desactivado. Actívalo en la configuración de {platform} o invita a tus amigos desde la lista.,O overlay {platform} está desligado. Ative nas configurações {platform} ou convide amigos pela lista.,draft
+UI,platform.creating,Status; {platform},Opening a {platform} lobby...,正在创建 {platform} 大厅……,Создаём лобби {platform}...,Abriendo un lobby de {platform}...,Abrindo um lobby {platform}...,draft
+UI,platform.quick_matching,Status,Looking for a game...,正在寻找游戏……,Ищем игру...,Buscando una partida...,Procurando uma partida...,draft
+UI,platform.joining,Status,Joining the lobby...,正在加入大厅……,Входим в лобби...,Uniéndote al lobby...,Entrando no lobby...,draft
+UI,platform.connecting,Status,Joined the lobby. Connecting to the host...,已加入大厅。正在连接房主……,Вы в лобби. Подключаемся к хосту...,Te uniste al lobby. Conectando con el host...,Você entrou no lobby. Conectando ao host...,draft
+UI,platform.join_title,Dialog title (a Steam invite arrived during a game),Join your friend?,加入好友的游戏？,Присоединиться к другу?,¿Unirte a tu amigo?,Entrar na partida do amigo?,draft
+UI,platform.join_leave_match,Dialog body,You'll leave this game to join your friend's lobby.,你将离开当前游戏，加入好友的大厅。,Вы покинете эту игру и войдёте в лобби друга.,Saldrás de esta partida para unirte al lobby de tu amigo.,Você vai sair desta partida pra entrar no lobby do seu amigo.,draft
+UI,platform.join_leave_stream,Dialog body,You'll leave this stream to join your friend's lobby.,你将离开当前直播，加入好友的大厅。,Вы покинете этот стрим и войдёте в лобби друга.,Saldrás de este stream para unirte al lobby de tu amigo.,Você vai sair desta live pra entrar no lobby do seu amigo.,draft
+UI,platform.join_confirm,Dialog button,Join,加入,Присоединиться,Unirme,Entrar,draft
+UI,platform.presence_menu,Status shown to Steam friends,In the menus,在菜单中,В меню,En los menús,Nos menus,draft
+UI,platform.presence_solo,Status shown to Steam friends,Streaming solo,单人直播中,Стримит в одиночку,Haciendo stream en solitario,Fazendo live solo,draft
+UI,platform.presence_lobby,Status shown to Steam friends; {count} {max},In a lobby ({count}/{max}),在大厅中（{count}/{max}）,В лобби ({count}/{max}),En un lobby ({count}/{max}),Num lobby ({count}/{max}),draft
+UI,platform.presence_match,Status shown to Steam friends; {count},In a match ({count} players),对局中（{count} 名玩家）,В матче (игроков: {count}),En una partida ({count} jugadores),Numa partida ({count} jogadores),draft
+Multiplayer,platform.not_available,Error; {0} = platform,"This build has no {0} support, so online play uses join codes.",此版本不支持 {0}，在线游戏将使用加入代码。,"В этой сборке нет поддержки {0}, поэтому онлайн-игра идёт по кодам.","Esta versión no es compatible con {0}, así que el juego en línea usa códigos.","Esta versão não tem suporte a {0}, então o online usa códigos.",draft
+Multiplayer,platform.failed,Error; {0} = platform,{0} didn't start.,{0} 未能启动。,{0} не запустился.,{0} no se inició.,{0} não iniciou.,draft
+Multiplayer,platform.offline,Error,Steam isn't available right now. Make sure Steam is running and you're signed in.,Steam 目前不可用。请确认 Steam 正在运行且已登录。,"Steam сейчас недоступен. Убедитесь, что Steam запущен и вы вошли.",Steam no está disponible ahora. Asegúrate de que Steam esté abierto y de haber iniciado sesión.,A Steam não está disponível agora. Confira se a Steam está aberta e se você entrou na conta.,draft
+Multiplayer,platform.host_failed,Error,Couldn't start hosting the game.,无法开始创建游戏。,Не удалось запустить игру как хост.,No se pudo empezar a hospedar la partida.,Não deu pra começar a hospedar a partida.,draft
+Multiplayer,platform.enter_lobby,Error,Enter a lobby ID.,请输入大厅 ID。,Введите ID лобби.,Ingresa un ID de lobby.,Digite um ID de lobby.,draft
+Multiplayer,platform.bad_lobby_id,Error,That isn't a valid lobby ID.,这不是有效的大厅 ID。,Это неверный ID лобби.,Ese no es un ID de lobby válido.,Esse não é um ID de lobby válido.,draft
+Multiplayer,platform.no_host,Error,That lobby has no host. It may have just closed.,那个大厅没有房主，可能刚刚关闭了。,"У этого лобби нет хоста. Возможно, оно только что закрылось.",Ese lobby no tiene host. Puede que acabe de cerrarse.,Esse lobby não tem host. Pode ter acabado de fechar.,draft
+Multiplayer,platform.search_failed,Error,Couldn't search for games. Try again in a moment.,无法搜索游戏。请稍后再试。,Не удалось найти игры. Попробуйте через минуту.,No se pudieron buscar partidas. Inténtalo de nuevo en un momento.,Não deu pra procurar partidas. Tente de novo daqui a pouco.,draft
+Multiplayer,platform.not_in_lobby,Disconnect reason,"Join the lobby first (through an invite, the friends list or Find Games).",请先加入大厅（通过邀请、好友列表或寻找游戏）。,"Сначала войдите в лобби (по приглашению, через список друзей или поиск игр).","Primero únete al lobby (con una invitación, la lista de amigos o Buscar partidas).","Entre no lobby primeiro (por convite, pela lista de amigos ou em Procurar partidas).",draft
+Multiplayer,platform.already_connected,Disconnect reason,That account is already in this game.,该账号已在本场游戏中。,Этот аккаунт уже в игре.,Esa cuenta ya está en esta partida.,Essa conta já está nesta partida.,draft
+Multiplayer,steam.error_library,Error,Steam's library is missing or doesn't match this build. Reinstall the game.,Steam 组件缺失或与此版本不匹配。请重新安装游戏。,Библиотека Steam отсутствует или не подходит к этой сборке. Переустановите игру.,Falta la biblioteca de Steam o no coincide con esta versión. Reinstala el juego.,A biblioteca da Steam está faltando ou não bate com esta versão. Reinstale o jogo.,draft
+Multiplayer,steam.relaunching,Status,Starting through Steam...,正在通过 Steam 启动……,Запускаем через Steam...,Iniciando a través de Steam...,Iniciando pela Steam...,draft
+Multiplayer,steam.not_running,Error,Steam isn't running. Start Steam and sign in to play with your Steam friends.,Steam 未运行。请启动 Steam 并登录，才能和 Steam 好友一起玩。,"Steam не запущен. Запустите Steam и войдите, чтобы играть с друзьями.",Steam no está abierto. Ábrelo e inicia sesión para jugar con tus amigos de Steam.,A Steam não está aberta. Abra a Steam e entre na conta pra jogar com seus amigos.,draft
+Multiplayer,steam.outdated,Error,Your Steam client is out of date. Update Steam and restart the game.,你的 Steam 客户端版本过旧。请更新 Steam 并重新启动游戏。,Клиент Steam устарел. Обновите Steam и перезапустите игру.,Tu cliente de Steam está desactualizado. Actualiza Steam y reinicia el juego.,Seu cliente da Steam está desatualizado. Atualize a Steam e reinicie o jogo.,draft
+Multiplayer,steam.init_failed,Error; {0} = details,Steam couldn't start: {0},Steam 无法启动：{0},Steam не запустился: {0},Steam no pudo iniciarse: {0},A Steam não conseguiu iniciar: {0},draft
+Multiplayer,steam.offline,Error,Steam is in offline mode. Go online in Steam to play with friends.,Steam 处于离线模式。请在 Steam 中切换为在线后再和好友一起玩。,"Steam в автономном режиме. Перейдите в сеть, чтобы играть с друзьями.",Steam está en modo sin conexión. Conéctate en Steam para jugar con tus amigos.,A Steam está no modo offline. Fique online na Steam pra jogar com amigos.,draft
+Multiplayer,steam.no_connection,Error,Couldn't reach Steam. Check your internet connection.,无法连接 Steam。请检查你的网络连接。,Не удалось связаться со Steam. Проверьте подключение к интернету.,No se pudo conectar con Steam. Revisa tu conexión a internet.,Não deu pra falar com a Steam. Confira sua conexão com a internet.,draft
+Multiplayer,steam.too_many_lobbies,Error,Steam is busy. Wait a moment and try again.,Steam 正忙。请稍等后重试。,Steam занят. Подождите немного и попробуйте снова.,Steam está ocupado. Espera un momento e inténtalo de nuevo.,A Steam está ocupada. Espere um pouco e tente de novo.,draft
+Multiplayer,steam.not_allowed,Error,You can't join that lobby (it may be invite only).,你无法加入那个大厅（它可能仅限邀请）。,"Вы не можете войти в это лобби (возможно, оно только по приглашению).",No puedes unirte a ese lobby (puede que sea solo con invitación).,Você não pode entrar nesse lobby (talvez seja só com convite).,draft
+Multiplayer,steam.lobby_failed,Error; {0} = Steam result code,Steam lobby error: {0},Steam 大厅错误：{0},Ошибка лобби Steam: {0},Error del lobby de Steam: {0},Erro no lobby da Steam: {0},draft
+Multiplayer,steam.lobby_gone,Error,That lobby doesn't exist anymore.,那个大厅已经不存在了。,Этого лобби больше нет.,Ese lobby ya no existe.,Esse lobby não existe mais.,draft
+Multiplayer,steam.blocked,Error,"You can't join: someone in that lobby has blocked you, or you've blocked them.",无法加入：那个大厅里有人屏蔽了你，或你屏蔽了对方。,"Нельзя войти: кто-то в лобби заблокировал вас, или вы заблокировали его.","No puedes unirte: alguien en ese lobby te bloqueó, o tú lo bloqueaste.","Você não pode entrar: alguém nesse lobby te bloqueou, ou você bloqueou essa pessoa.",draft

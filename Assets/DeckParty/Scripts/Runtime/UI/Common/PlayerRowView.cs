@@ -25,6 +25,8 @@ namespace DeckParty.UI
         [Tooltip("The mute button's white fill; it turns red while the player is muted.")]
         [SerializeField] internal Image muteFill;
         [SerializeField] internal TooltipTrigger muteTooltip;
+        [Tooltip("Optional (lobby, online platforms): the player's Steam avatar, where the rank sits in the results.")]
+        [SerializeField] internal RawImage platformAvatar;
 
         public event Action Clicked;
         /// <summary>The mute button was pressed (the Players panel toggles that player's emotes).</summary>
@@ -83,6 +85,14 @@ namespace DeckParty.UI
                 if (streamerInitials != null) streamerInitials.text = show ? StreamerVisuals.Initials(streamer) : string.Empty;
             }
             RefreshName();
+        }
+
+        /// <summary>The player's platform avatar (Steam) in the lobby; null hides it (no platform, or still downloading).</summary>
+        public void SetPlatformAvatar(Texture texture)
+        {
+            if (platformAvatar == null) return;
+            platformAvatar.texture = texture;
+            platformAvatar.gameObject.SetActive(texture != null);
         }
 
         /// <summary>Multiplayer presence: what the player is doing right now, shown under their status. Null clears it.</summary>

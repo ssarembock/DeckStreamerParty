@@ -379,6 +379,94 @@ MonoBehaviour:
     m_Key: emote.slow_down
     m_Metadata:
       m_Items: []
+  - m_Id: 3193499320672256
+    m_Key: platform.not_available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615296
+    m_Key: platform.failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615297
+    m_Key: platform.offline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615298
+    m_Key: platform.host_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615299
+    m_Key: platform.enter_lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615300
+    m_Key: platform.bad_lobby_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615301
+    m_Key: platform.no_host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615302
+    m_Key: platform.search_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615303
+    m_Key: platform.not_in_lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615304
+    m_Key: platform.already_connected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615305
+    m_Key: steam.error_library
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615306
+    m_Key: steam.relaunching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615307
+    m_Key: steam.not_running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615308
+    m_Key: steam.outdated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615309
+    m_Key: steam.init_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615310
+    m_Key: steam.offline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499362615311
+    m_Key: steam.no_connection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809600
+    m_Key: steam.too_many_lobbies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809601
+    m_Key: steam.not_allowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809602
+    m_Key: steam.lobby_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809603
+    m_Key: steam.lobby_gone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193499366809604
+    m_Key: steam.blocked
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -269,9 +269,29 @@ namespace DeckParty.EditorTools
             var joinLan = EditorUI.Button(ipRow, "JoinLan", "mp.join_online", ButtonStyle.Secondary, 30);
             EditorUI.Layout(joinLan, 150, 76, 0);
 
+            // Online platform card (Steam): sits where the join-code card is and replaces it while a platform runs multiplayer.
+            var platform = EditorUI.Panel(screen, "PlatformCard");
+            platform.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(-410, -40), new Vector2(780, 540));
+            EditorUI.VLayout(platform, 16, EditorUI.Pad(36, 30), TextAnchor.UpperCenter, true, true, true, false);
+            var platformTitle = EditorUI.Text(platform.transform, "Title", "-", 38, UIPalette.Teal, TextAlignmentOptions.MidlineLeft, true, true, false);
+            EditorUI.Layout(platformTitle, -1, 52);
+            var platformNote = EditorUI.Text(platform.transform, "Note", "-", 22, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
+            EditorUI.Layout(platformNote, -1, 62);
+            var visibility = EditorUI.Selector(platform.transform, "Visibility", "mp.visibility");
+            EditorUI.Layout(visibility, -1, 96);
+            var hostPlatform = EditorUI.Button(platform.transform, "HostPlatform", "mp.host_platform", ButtonStyle.Primary, 32);
+            EditorUI.Layout(hostPlatform, -1, 88);
+            var findRow = EditorUI.Rect(platform.transform, "FindRow");
+            EditorUI.Layout(findRow, -1, 76);
+            EditorUI.HLayout(findRow, 12, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, true, true);
+            var quickMatch = EditorUI.Button(findRow, "QuickMatch", "mp.quick_match", ButtonStyle.Secondary, 28);
+            var findGames = EditorUI.Button(findRow, "FindGames", "mp.find_games", ButtonStyle.Normal, 28);
+            platform.gameObject.SetActive(false);
+
             var status = EditorUI.Text(screen, "Status", string.Empty, 26, UIPalette.Text, TextAlignmentOptions.Center);
             status.rectTransform.Place(new Vector2(0.5f, 0), new Vector2(0, 140), new Vector2(1500, 70), new Vector2(0.5f, 0));
             var back = SceneCommon.BackButton(screen);
+            var browser = BuildLobbyBrowser(screen);
 
             var view = screen.gameObject.AddComponent<MultiplayerScreen>();
             view.nameInput = nameInput;
@@ -286,6 +306,88 @@ namespace DeckParty.EditorTools
             view.lanNote = lanNote;
             view.statusLabel = status;
             view.backButton = back;
+            view.nameRow = nameRow.gameObject;
+            view.onlineCard = online.gameObject;
+            view.lanCard = lan.gameObject;
+            view.platformCard = platform.gameObject;
+            view.platformTitle = platformTitle;
+            view.platformNote = platformNote;
+            view.visibilitySelector = visibility;
+            view.hostPlatformButton = hostPlatform;
+            view.quickMatchButton = quickMatch;
+            view.findGamesButton = findGames;
+            view.lobbyBrowser = browser;
+            return view;
+        }
+
+        /// <summary>Find Games: a modal list of public platform lobbies (rows copied from an inactive template) and join by lobby id.</summary>
+        static LobbyBrowserView BuildLobbyBrowser(Transform screen)
+        {
+            var host = EditorUI.ModalShell(screen, "LobbyBrowser", new Vector2(1240, 800), out var root, out var panel);
+
+            var title = EditorUI.Text(panel, "Title", "platform.find_games_title", 40, UIPalette.Gold, TextAlignmentOptions.MidlineLeft, true, true, false);
+            title.rectTransform.TopBand(24, 56, 40, 40);
+            var status = EditorUI.Text(panel, "Status", "-", 22, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
+            status.rectTransform.TopBand(82, 34, 40, 40);
+
+            // Column captions over the list.
+            var columns = EditorUI.Rect(panel, "Columns").TopBand(122, 30, 48, 64);
+            var gameCaption = EditorUI.Text(columns, "Game", "platform.col_game", 19, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, true, false, false);
+            gameCaption.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(12, 0), new Vector2(-460, 0));
+            var playersCaption = EditorUI.Text(columns, "Players", "platform.col_players", 19, UIPalette.TextDim, TextAlignmentOptions.Center, true, false, false);
+            playersCaption.rectTransform.Place(new Vector2(1, 0.5f), new Vector2(-346, 0), new Vector2(120, 30), new Vector2(0.5f, 0.5f));
+            var pingCaption = EditorUI.Text(columns, "Ping", "platform.col_ping", 19, UIPalette.TextDim, TextAlignmentOptions.Center, true, false, false);
+            pingCaption.rectTransform.Place(new Vector2(1, 0.5f), new Vector2(-226, 0), new Vector2(110, 30), new Vector2(0.5f, 0.5f));
+
+            EditorUI.Scroll(panel, "List", out var list, 10, EditorUI.Pad(4)).GetComponent<RectTransform>()
+                .Box(Vector2.zero, Vector2.one, new Vector2(32, 132), new Vector2(-32, -160));
+
+            // Row template: host + set / mode on the left, players, ping, Join on the right.
+            var row = EditorUI.Image(list, "RowTemplate", UIPalette.PanelAlt, EditorUI.Rounded, SkinSlot.PanelAlt);
+            EditorUI.Layout(row, -1, 92);
+            var rowName = EditorUI.Text(row.transform, "Name", "-", 26, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
+            rowName.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(20, -46), new Vector2(-440, -8));
+            rowName.overflowMode = TextOverflowModes.Ellipsis;
+            var rowDetail = EditorUI.Text(row.transform, "Detail", "-", 19, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
+            rowDetail.rectTransform.Box(new Vector2(0, 0), new Vector2(1, 0), new Vector2(20, 8), new Vector2(-440, 42));
+            rowDetail.overflowMode = TextOverflowModes.Ellipsis;
+            var rowPlayers = EditorUI.Text(row.transform, "Players", "-", 26, UIPalette.Text, TextAlignmentOptions.Center, true, false, false);
+            rowPlayers.rectTransform.Place(new Vector2(1, 0.5f), new Vector2(-330, 0), new Vector2(120, 60), new Vector2(0.5f, 0.5f));
+            var rowPing = EditorUI.Text(row.transform, "Ping", "-", 22, UIPalette.Text, TextAlignmentOptions.Center, false, false, false);
+            rowPing.rectTransform.Place(new Vector2(1, 0.5f), new Vector2(-210, 0), new Vector2(110, 60), new Vector2(0.5f, 0.5f));
+            var rowJoin = EditorUI.Button(row.transform, "Join", "mp.join_online", ButtonStyle.Secondary, 26);
+            rowJoin.GetComponent<RectTransform>().Place(new Vector2(1, 0.5f), new Vector2(-16, 0), new Vector2(130, 64), new Vector2(1, 0.5f));
+            var rowView = row.gameObject.AddComponent<LobbyBrowserRowView>();
+            rowView.nameLabel = rowName;
+            rowView.detailLabel = rowDetail;
+            rowView.playersLabel = rowPlayers;
+            rowView.pingLabel = rowPing;
+            rowView.joinButton = rowJoin;
+            row.gameObject.SetActive(false);
+
+            // Bottom: join by lobby id, refresh, close.
+            var bottom = EditorUI.Rect(panel, "Bottom").BottomBand(30, 76, 32, 32);
+            EditorUI.HLayout(bottom, 12, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, false, true);
+            var idInput = EditorUI.Input(bottom, "LobbyIdInput", "platform.lobby_id_placeholder", 24, 24);
+            idInput.contentType = TMP_InputField.ContentType.IntegerNumber;
+            EditorUI.Layout(idInput, -1, 76, 1);
+            var joinId = EditorUI.Button(bottom, "JoinId", "mp.join_online", ButtonStyle.Secondary, 26);
+            EditorUI.Layout(joinId, 150, 76, 0);
+            var refresh = EditorUI.Button(bottom, "Refresh", "platform.refresh", ButtonStyle.Normal, 26);
+            EditorUI.Layout(refresh, 190, 76, 0);
+            var close = EditorUI.Button(bottom, "Close", "common.close", ButtonStyle.Ghost, 26);
+            EditorUI.Layout(close, 160, 76, 0);
+
+            var view = host.gameObject.AddComponent<LobbyBrowserView>();
+            view.root = root;
+            view.statusLabel = status;
+            view.list = list;
+            view.rowTemplate = rowView;
+            view.lobbyIdInput = idInput;
+            view.joinIdButton = joinId;
+            view.refreshButton = refresh;
+            view.closeButton = close;
+            root.SetActive(false);
             return view;
         }
 
@@ -307,6 +409,10 @@ namespace DeckParty.EditorTools
             code.fontSizeMax = 54;
             var copy = EditorUI.Button(codePanel.transform, "Copy", "lobby.copy", ButtonStyle.Normal, 26);
             copy.GetComponent<RectTransform>().Place(new Vector2(1, 0), new Vector2(-20, 22), new Vector2(150, 64), new Vector2(1, 0));
+            // Steam lobbies: Invite Friends in place of Copy.
+            var invite = EditorUI.Button(codePanel.transform, "Invite", "lobby.invite_friends", ButtonStyle.Primary, 24);
+            invite.GetComponent<RectTransform>().Place(new Vector2(1, 0), new Vector2(-20, 22), new Vector2(170, 64), new Vector2(1, 0));
+            invite.gameObject.SetActive(false);
 
             // Players
             var players = EditorUI.Panel(screen, "Players");
@@ -365,8 +471,11 @@ namespace DeckParty.EditorTools
             ready.GetComponent<RectTransform>().Place(new Vector2(1, 0), new Vector2(-60, 40), new Vector2(340, 88), new Vector2(1, 0));
             var start = EditorUI.Button(screen, "Start", "lobby.start", ButtonStyle.Primary, 32);
             start.GetComponent<RectTransform>().Place(new Vector2(1, 0), new Vector2(-60, 40), new Vector2(340, 88), new Vector2(1, 0));
+            var friends = BuildFriendsPanel(screen);
 
             var view = screen.gameObject.AddComponent<LobbyScreen>();
+            view.inviteButton = invite;
+            view.friendsPanel = friends;
             view.titleLabel = title;
             view.codeLabel = code;
             view.codeHintLabel = codeHint;
@@ -390,6 +499,67 @@ namespace DeckParty.EditorTools
             view.leaveButton = leave;
             view.statusLabel = status;
             view.chat = chat;
+            return view;
+        }
+
+        /// <summary>Invite Friends (Steam lobbies): online friends with Invite buttons, a name filter and the platform's own invite dialog.</summary>
+        static FriendsInviteView BuildFriendsPanel(Transform screen)
+        {
+            var host = EditorUI.ModalShell(screen, "InviteFriends", new Vector2(980, 860), out var root, out var panel);
+
+            var title = EditorUI.Text(panel, "Title", "platform.invite_title", 40, UIPalette.Gold, TextAlignmentOptions.MidlineLeft, true, true, false);
+            title.rectTransform.TopBand(24, 56, 40, 40);
+            var status = EditorUI.Text(panel, "Status", "-", 22, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
+            status.rectTransform.TopBand(82, 34, 40, 40);
+            var search = EditorUI.Input(panel, "Search", "platform.search_friends", 24, 32);
+            search.GetComponent<RectTransform>().TopBand(124, 64, 32, 32);
+
+            EditorUI.Scroll(panel, "List", out var list, 8, EditorUI.Pad(4)).GetComponent<RectTransform>()
+                .Box(Vector2.zero, Vector2.one, new Vector2(32, 132), new Vector2(-32, -204));
+
+            // Row template: avatar, name and status, Invite.
+            var row = EditorUI.Image(list, "RowTemplate", UIPalette.PanelAlt, EditorUI.Rounded, SkinSlot.PanelAlt);
+            EditorUI.Layout(row, -1, 84);
+            var avatarFrame = EditorUI.Rect(row.transform, "Avatar").Place(new Vector2(0, 0.5f), new Vector2(12, 0), new Vector2(64, 64), new Vector2(0, 0.5f));
+            var placeholder = EditorUI.Image(avatarFrame, "Placeholder", UIPalette.Purple, EditorUI.Rounded);
+            placeholder.rectTransform.Stretch();
+            var avatar = EditorUI.Rect(avatarFrame, "Image").Stretch().gameObject.AddComponent<RawImage>();
+            avatar.raycastTarget = false;
+            avatar.enabled = false;
+            var name = EditorUI.Text(row.transform, "Name", "-", 26, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
+            name.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(92, -44), new Vector2(-210, -6));
+            name.overflowMode = TextOverflowModes.Ellipsis;
+            var statusLine = EditorUI.Text(row.transform, "Status", "-", 19, UIPalette.TextDim, TextAlignmentOptions.MidlineLeft, false, false, false);
+            statusLine.rectTransform.Box(new Vector2(0, 0), new Vector2(1, 0), new Vector2(92, 6), new Vector2(-210, 38));
+            var inviteButton = EditorUI.Button(row.transform, "Invite", "platform.invite", ButtonStyle.Secondary, 24, out var inviteLabel);
+            inviteButton.GetComponent<RectTransform>().Place(new Vector2(1, 0.5f), new Vector2(-14, 0), new Vector2(180, 60), new Vector2(1, 0.5f));
+            var rowView = row.gameObject.AddComponent<FriendRowView>();
+            rowView.avatar = avatar;
+            rowView.avatarPlaceholder = placeholder;
+            rowView.nameLabel = name;
+            rowView.statusLabel = statusLine;
+            rowView.inviteButton = inviteButton;
+            rowView.inviteLabel = inviteLabel;
+            row.gameObject.SetActive(false);
+
+            // Bottom: the platform's own invite dialog (the Steam overlay), close.
+            var bottom = EditorUI.Rect(panel, "Bottom").BottomBand(30, 76, 32, 32);
+            EditorUI.HLayout(bottom, 12, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, false, true);
+            var overlay = EditorUI.Button(bottom, "Overlay", "-", ButtonStyle.Normal, 24, out var overlayLabel);
+            EditorUI.Layout(overlay, -1, 76, 1);
+            var close = EditorUI.Button(bottom, "Close", "common.close", ButtonStyle.Ghost, 26);
+            EditorUI.Layout(close, 200, 76, 0);
+
+            var view = host.gameObject.AddComponent<FriendsInviteView>();
+            view.root = root;
+            view.statusLabel = status;
+            view.searchInput = search;
+            view.list = list;
+            view.rowTemplate = rowView;
+            view.overlayButton = overlay;
+            view.overlayLabel = overlayLabel;
+            view.closeButton = close;
+            root.SetActive(false);
             return view;
         }
 

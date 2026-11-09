@@ -1,0 +1,7 @@
+<linker>
+    <!-- Steamworks.NET finds callback structs by reflection (CallbackIdentityAttribute); keep them through IL2CPP stripping.
+         ignoreIfMissing: builds without Steam (iOS, Android, or Steamworks.NET removed) don't have these assemblies. -->
+    <assembly fullname="com.rlabrecque.steamworks.net" preserve="all" ignoreIfMissing="1" />
+    <!-- Registered through [RuntimeInitializeOnLoadMethod] and nothing else references it. -->
+    <assembly fullname="DeckParty.Steam" preserve="all" ignoreIfMissing="1" />
+</linker>

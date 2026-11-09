@@ -1976,6 +1976,213 @@ MonoBehaviour:
     m_Localized: '- {viewer} (quitado)'
     m_Metadata:
       m_Items: []
+  - m_Id: 3193502789361664
+    m_Localized: Juega en {platform}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502831304704
+    m_Localized: "Sesi\xF3n iniciada como {name}. Crea un lobby e invita a tus amigos,
+      o busca una partida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502831304705
+    m_Localized: "Qui\xE9n puede unirse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502831304706
+    m_Localized: Solo amigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502831304707
+    m_Localized: "P\xFAblico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887616
+    m_Localized: "Solo con invitaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887617
+    m_Localized: Crear lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887618
+    m_Localized: "Partida r\xE1pida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887619
+    m_Localized: Buscar partidas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887620
+    m_Localized: Buscar partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887621
+    m_Localized: Partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887622
+    m_Localized: Jugadores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887623
+    m_Localized: Ping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887624
+    m_Localized: ID del lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887625
+    m_Localized: Actualizar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887626
+    m_Localized: Buscando partidas...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887627
+    m_Localized: "No hay partidas abiertas ahora. Crea una o prueba Partida r\xE1pida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887628
+    m_Localized: 'Partidas encontradas: {count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887629
+    m_Localized: Partida de {host}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887630
+    m_Localized: Partida abierta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887631
+    m_Localized: '{ms} ms'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887632
+    m_Localized: Invitar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887633
+    m_Localized: 'Lobby de {platform}: invita a tus amigos o pueden unirse desde
+      su lista de amigos.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887634
+    m_Localized: Invitar amigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887635
+    m_Localized: Buscar amigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887636
+    m_Localized: Invitar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887637
+    m_Localized: Invitado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887638
+    m_Localized: En el lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887639
+    m_Localized: Jugando a este juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887640
+    m_Localized: "En l\xEDnea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887641
+    m_Localized: Ausente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887642
+    m_Localized: Ocupado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887643
+    m_Localized: Desconectado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887644
+    m_Localized: Abrir el overlay de {platform}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887645
+    m_Localized: "Ninguno de tus amigos est\xE1 en l\xEDnea ahora."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887646
+    m_Localized: "{online} en l\xEDnea \xB7 {offline} desconectados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887647
+    m_Localized: "Invitaci\xF3n enviada a {name}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887648
+    m_Localized: No se pudo invitar a {name}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887649
+    m_Localized: "El overlay de {platform} est\xE1 desactivado. Act\xEDvalo en la
+      configuraci\xF3n de {platform} o invita a tus amigos desde la lista."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887650
+    m_Localized: Abriendo un lobby de {platform}...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887651
+    m_Localized: Buscando una partida...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887652
+    m_Localized: "Uni\xE9ndote al lobby..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887653
+    m_Localized: Te uniste al lobby. Conectando con el host...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887654
+    m_Localized: "\xBFUnirte a tu amigo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887655
+    m_Localized: "Saldr\xE1s de esta partida para unirte al lobby de tu amigo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887656
+    m_Localized: "Saldr\xE1s de este stream para unirte al lobby de tu amigo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887657
+    m_Localized: Unirme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887658
+    m_Localized: "En los men\xFAs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887659
+    m_Localized: Haciendo stream en solitario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887660
+    m_Localized: En un lobby ({count}/{max})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3193502843887661
+    m_Localized: En una partida ({count} jugadores)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

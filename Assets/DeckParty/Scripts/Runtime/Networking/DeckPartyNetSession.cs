@@ -433,7 +433,7 @@ namespace DeckParty.Networking
                     m_Players.RemoveAt(i);
                     continue;
                 }
-                m_Players[i] = NetPlayer.Create(p.ClientId, p.DisplayName, p.ColorIndex, p.Streamer);
+                m_Players[i] = NetPlayer.Create(p.ClientId, p.DisplayName, p.ColorIndex, p.Streamer, p.PlatformUserId);
             }
 
             m_Phase.Value = MatchPhase.Lobby;
@@ -705,10 +705,11 @@ namespace DeckParty.Networking
 
             string name = NetworkService.HasInstance ? NetworkService.Instance.TakePendingName(clientId) : null;
             byte streamer = NetworkService.HasInstance ? NetworkService.Instance.TakePendingStreamer(clientId) : (byte)0;
+            ulong platformUserId = NetworkService.HasInstance ? NetworkService.Instance.TakePendingPlatformId(clientId) : 0;
             if (string.IsNullOrEmpty(name)) name = "Player " + (m_Players.Count + 1);
             name = UniqueName(name);
 
-            m_Players.Add(NetPlayer.Create(clientId, name, NextColorIndex(), streamer));
+            m_Players.Add(NetPlayer.Create(clientId, name, NextColorIndex(), streamer, platformUserId));
             if (!IsHostPlayer(clientId)) ServerHeadline(Core.Err.Of("mp.joined", name));
             ServerEnforceModeForPlayerCount();
         }

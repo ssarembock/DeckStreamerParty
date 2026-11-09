@@ -1,0 +1,25 @@
+{
+    "name": "DeckParty.Steam",
+    "rootNamespace": "DeckParty.Platforms.Steam",
+    "references": [
+        "DeckParty.Core",
+        "DeckParty.Runtime",
+        "Unity.Netcode.Runtime",
+        "com.rlabrecque.steamworks.net"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.rlabrecque.steamworks.net",
+            "expression": "1.0.0",
+            "define": "DECKPARTY_STEAMWORKS"
+        }
+    ],
+    "noEngineReferences": false
+}

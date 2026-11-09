@@ -67,3 +67,6 @@ Desktop.ini
 .claude/sessions/*.jsonl
 # ...but the compile check's own project files are shared (Unity's generated *.csproj above stay ignored).
 !.claude/tools/compile/**/*.csproj
+
+# Steam: written from Project Settings > Deck Party > Online Platform (App ID); each PC regenerates it
+/steam_appid.txt

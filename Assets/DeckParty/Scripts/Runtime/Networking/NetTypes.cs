@@ -195,8 +195,10 @@ namespace DeckParty.Networking
         public byte LastOutcome;
         /// <summary>How many other players are looking at this player's stream right now.</summary>
         public byte Watchers;
+        /// <summary>The player's online platform id (their SteamID) for avatars and profiles; 0 off-platform.</summary>
+        public ulong PlatformUserId;
 
-        public static NetPlayer Create(ulong clientId, string name, byte colorIndex, byte streamer = 0)
+        public static NetPlayer Create(ulong clientId, string name, byte colorIndex, byte streamer = 0, ulong platformUserId = 0)
         {
             return new NetPlayer
             {
@@ -206,6 +208,7 @@ namespace DeckParty.Networking
                 Streamer = streamer,
                 Connected = true,
                 Capacity = GameRules.StartingCapacity,
+                PlatformUserId = platformUserId,
             };
         }
 
@@ -239,6 +242,7 @@ namespace DeckParty.Networking
             serializer.SerializeValue(ref Rank);
             serializer.SerializeValue(ref LastOutcome);
             serializer.SerializeValue(ref Watchers);
+            serializer.SerializeValue(ref PlatformUserId);
         }
 
         public bool Equals(NetPlayer o)
@@ -247,7 +251,8 @@ namespace DeckParty.Networking
                    Connected == o.Connected && ReadyNextNight == o.ReadyNextNight && ReadyForShop == o.ReadyForShop && Night == o.Night && Phase == o.Phase &&
                    Pop == o.Pop && Cash == o.Cash && Capacity == o.Capacity && Guests == o.Guests && DiamondsOwned == o.DiamondsOwned &&
                    DiamondsInHouse == o.DiamondsInHouse && BestDiamonds == o.BestDiamonds && Trouble == o.Trouble && TotalPop == o.TotalPop &&
-                   WinNight == o.WinNight && Rank == o.Rank && LastOutcome == o.LastOutcome && Watchers == o.Watchers;
+                   WinNight == o.WinNight && Rank == o.Rank && LastOutcome == o.LastOutcome && Watchers == o.Watchers &&
+                   PlatformUserId == o.PlatformUserId;
         }
 
         public override bool Equals(object obj) => obj is NetPlayer other && Equals(other);

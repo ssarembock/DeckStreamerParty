@@ -36,6 +36,7 @@ namespace DeckParty
         {
             if (!CanLoad(SceneNames.Game)) return;
             PendingLaunch = launch;
+            Platforms.OnlinePlatforms.SetPresence(Platforms.PresenceState.SinglePlayer);
             SceneManager.LoadScene(SceneNames.Game);
         }
 
@@ -54,6 +55,8 @@ namespace DeckParty
         {
             if (!string.IsNullOrEmpty(message)) PendingMessage = message;
             OpenMultiplayerOnMenu = openMultiplayer;
+            bool inSession = Networking.NetworkService.HasInstance && Networking.NetworkService.Instance.IsActive;
+            if (!inSession) Platforms.OnlinePlatforms.SetPresence(Platforms.PresenceState.Menu);
             SceneManager.LoadScene(SceneNames.MainMenu);
         }
 

@@ -896,6 +896,11 @@ namespace DeckParty.EditorTools
 
             var rank = EditorUI.Text(bg.transform, "Rank", "#1", 28, UIPalette.Gold, TextAlignmentOptions.Center, true, true, false);
             rank.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(6, 0), new Vector2(56, 56), new Vector2(0, 0.5f));
+            // Steam lobbies: the player's avatar, in the rank's spot (the lobby has no ranks).
+            var platformAvatar = EditorUI.Rect(bg.transform, "PlatformAvatar").Place(new Vector2(0, 0.5f), new Vector2(6, 0), new Vector2(56, 56), new Vector2(0, 0.5f))
+                .gameObject.AddComponent<UnityEngine.UI.RawImage>();
+            platformAvatar.raycastTarget = false;
+            platformAvatar.gameObject.SetActive(false);
             var swatch = EditorUI.Image(bg.transform, "Swatch", UIPalette.Pink, EditorUI.Circle, SkinSlot.Circle);
             swatch.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(66, 0), new Vector2(30, 30), new Vector2(0, 0.5f));
 
@@ -944,6 +949,7 @@ namespace DeckParty.EditorTools
             view.muteButton = mute;
             view.muteFill = muteFill;
             view.muteTooltip = mute.GetComponent<TooltipTrigger>();
+            view.platformAvatar = platformAvatar;
             return bg.gameObject;
         }
 
