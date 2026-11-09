@@ -87,35 +87,35 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconPop
     slot: 10
-    sprite: {fileID: -2145036898, guid: 49f1933b941fc874d8f4a413749f0ca3, type: 3}
+    sprite: {fileID: 5259797187536515068, guid: d4aba87b2c657604293402f249b3683e, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconCash
     slot: 11
-    sprite: {fileID: -6420582006838652269, guid: 49f1933b941fc874d8f4a413749f0ca3, type: 3}
+    sprite: {fileID: -5782373066700672596, guid: 5ef61ae07992c3e42a631f6f13366e7c, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconTrouble
     slot: 12
-    sprite: {fileID: -2091871221, guid: 49f1933b941fc874d8f4a413749f0ca3, type: 3}
+    sprite: {fileID: 3480350768097531997, guid: fdd7bae8046d9f745a5ac74ddef3e2b3, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconStar
     slot: 13
-    sprite: {fileID: 4803741439785087915, guid: 015c4e4a33a398a43bea3545cc892b87, type: 3}
+    sprite: {fileID: 9197050228399363396, guid: d3607d64acd3c5248a458347b5e06ea1, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconCancel
     slot: 14
-    sprite: {fileID: -1257932166371681089, guid: f96969a581cfc6b4bbf5e6a9669ca516, type: 3}
+    sprite: {fileID: 7878951576011287232, guid: 28b498b19b028d643aa5fcc60f9deb42, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconCheck
     slot: 17
-    sprite: {fileID: 21300000, guid: 2eb217c9ea014ce4687a855c80057d9f, type: 3}
+    sprite: {fileID: -6800405758771077582, guid: 0afa923c32813da49b066a3a51762974, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -192,28 +192,28 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconAddViewer
     slot: 25
-    sprite: {fileID: -1303867249, guid: 49f1933b941fc874d8f4a413749f0ca3, type: 3}
+    sprite: {fileID: -8029141102495950399, guid: 1af74b87fbe41a549828c36ff59c74e8, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconEndStream
     slot: 26
-    sprite: {fileID: 21300000, guid: 1365eade6cc0ef441bfa04103d9cef6c, type: 3}
+    sprite: {fileID: 1009792764172386501, guid: 9ad3ac922282474488ba6968b5d76af9, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconAudience
     slot: 27
-    sprite: {fileID: -6050495603430480006, guid: f96969a581cfc6b4bbf5e6a9669ca516, type: 3}
+    sprite: {fileID: 6829702515308742213, guid: bdd0aa33a58148d4891f47cdc858bf4b, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconMenu
     slot: 28
-    sprite: {fileID: 21300000, guid: aa9e17d49a944644d9aa7afa6646356c, type: 3}
+    sprite: {fileID: 6580071152575755341, guid: 560c39158e56a9f44bf3988f7cbe3064, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconNight
     slot: 32
-    sprite: {fileID: 21300000, guid: 21237ded836472e4184100b5f106d27b, type: 3}
+    sprite: {fileID: -229869408767437022, guid: 8a7b73db8e1cfee4cab593d8e961f087, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconCommunityBeats
     slot: 34
-    sprite: {fileID: 4310999393211808734, guid: 015c4e4a33a398a43bea3545cc892b87, type: 3}
+    sprite: {fileID: -5184937823557000394, guid: 5a6e3f9daeb0e0644a9903480bd2d925, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
