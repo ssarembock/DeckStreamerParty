@@ -37,7 +37,7 @@ namespace DeckParty.UI
         [SerializeField] internal TooltipTrigger tooltip;
         [Tooltip("Light (website) colours for the frame and labels.")]
         [SerializeField] internal bool siteStyle;
-        [Tooltip("Card backs peeking out behind the tile (up and to the left), nearest first: one shows for every copy left " +
+        [Tooltip("Card backs peeking out above the tile (straight up), nearest first: one shows for every copy left " +
                  "after the top one, so the pile shrinks as the shop runs out.")]
         [SerializeField] internal GameObject[] stack;
 

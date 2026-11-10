@@ -70,7 +70,7 @@ namespace DeckParty
         public static Color Tint(ResourceIcon icon)
         {
             var entry = GameDatabase.Instance.skin != null ? GameDatabase.Instance.skin.Get(SlotOf(icon)) : null;
-            if (entry != null && entry.sprite != null && entry.overrideColor) return entry.color;
+            if (entry != null && entry.overrideColor) return entry.color;
             return IsPlaceholder(Sprite(icon)) ? ResourceColor(icon) : Color.white;
         }
 
@@ -88,8 +88,10 @@ namespace DeckParty
         {
             var skin = GameDatabase.Instance.skin;
             var entry = skin != null ? skin.Get(slot) : null;
-            if (entry == null || entry.sprite == null) return placeholderTint;
+            if (entry == null) return placeholderTint;
+            // Override Colour wins, with or without art (an empty entry then tints the built-in placeholder).
             if (entry.overrideColor) return entry.color;
+            if (entry.sprite == null) return placeholderTint;
             return IsGeneratedShape(entry.sprite) ? placeholderTint : Color.white;
         }
 

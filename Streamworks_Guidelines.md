@@ -144,7 +144,7 @@ account, and the two accounts must be Steam friends.**
 - **Compare with Default**: run the same build with `-onlineplatform default`.
 
 **Lobbies from other developers:** many developers test with App ID 480, so Spacewar has lots of public lobbies from
-other games. Find Games and Quick Match only show lobbies with this game's protocol version (`deckparty-13`), so you
+other games. Find Games and Quick Match only show lobbies with this game's protocol version (`NetworkService.ProtocolVersion`), so you
 won't see theirs.
 
 ---

@@ -60,14 +60,18 @@ namespace DeckParty.EditorTools
         static readonly Dictionary<Area, (string title, string summary)> s_Areas = new Dictionary<Area, (string, string)>
         {
             { Area.Resources, ("Resources", "The resource icons: in the menu bar, on viewers and cards, and the small icons inside text.") },
-            { Area.MenuBar, ("Menu bar", "The bar along the top of the stream and the shop.") },
-            { Area.Stream, ("Stream", "The Stream Chat window (risk pips in its title band, the two main buttons along its bottom), the chat avatars and the waiting-viewer panel.") },
+            { Area.MenuBar, ("Menu bar", "The bar along the top of the stream and the shop: its icons and the rounded frames around them.") },
+            { Area.Stream, ("Stream", "The Stream Chat window (risk pips in its title band, the two main buttons and their bases along its bottom), the chat avatars and the waiting-viewer panel.") },
             { Area.Shop, ("Shop", "The shop's toolbar buttons.") },
             { Area.Players, ("Players", "Player rows in the lobby and in the Players panel (multiplayer).") },
             { Area.Cards, ("Viewer cards and placeholders", "The big viewer cards (Audience overview, viewer pickers, the Deplatformed screen) and the placeholder shown while a viewer has no art.") },
             { Area.Menus, ("Menus and dark pop-ups", "The dark menu look: main menu, character sets, multiplayer, lobby, settings, How to Play, streamer select, and in the game the pause menu and game over screen.") },
             { Area.NotShown, ("Not shown at the moment", "Nothing visible uses these right now. Changing them has no effect in the current UI.") },
         };
+
+        /// <summary>What every menu-bar frame entry says about its colour and art.</summary>
+        const string FrameNote =
+            "Override Colour sets its colour (without art it tints the built-in outline). Filled art works too: it's drawn behind what it frames. Art: a 9-slice sprite (the frames stretch to fit what they hold).";
 
         static readonly Info[] s_All =
         {
@@ -77,7 +81,7 @@ namespace DeckParty.EditorTools
             new Info(SkinSlot.IconCash, Area.Resources, "Cash icon", Kind.Icon,
                 "The Cash counter in the menu bar, and the small Cash icon inside text (card descriptions, tooltips, recaps and scores)."),
             new Info(SkinSlot.IconTrouble, Area.Resources, "Deplatform Risk icon", Kind.Icon,
-                "The three risk pips in the title band at the top of the Stream Chat window, the risky-queue count under the Audience button, the risk badge on chat avatars and viewer cards, and the small Risk icon inside text."),
+                "The three risk pips in the title band at the top of the Stream Chat window, the risk badge on chat avatars and viewer cards, and the small Risk icon inside text."),
             new Info(SkinSlot.IconStar, Area.Resources, "Trophy icon", Kind.Icon,
                 "The Trophies count in the middle of the menu bar (the icon and \"in chat / needed to win\"), the Trophy badge on chat avatars, viewer cards, viewer rows and shop tiles, the Trophies in the Players panel, and the small Trophy icon inside text."),
             new Info(SkinSlot.IconCancel, Area.Resources, "Cancels Risk badge", Kind.Icon,
@@ -94,6 +98,18 @@ namespace DeckParty.EditorTools
                 "The Menu button at the right end of the menu bar (it opens the pause menu)."),
             new Info(SkinSlot.IconTimer, Area.MenuBar, "Countdown timer icon", Kind.Icon,
                 "The hourglass beside the stream and shop countdowns. It only shows in matches that use timers."),
+            new Info(SkinSlot.FrameNight, Area.MenuBar, "Stream counter frame", Kind.Frame,
+                "The rounded frame around the stream counter (its icon and number), next to the platform logo at the left of the menu bar. Built-in: a thin black outline. " + FrameNote),
+            new Info(SkinSlot.FramePop, Area.MenuBar, "Clout frame", Kind.Frame,
+                "The rounded frame around the Clout counter (its icon and number) in the middle of the menu bar. " + FrameNote),
+            new Info(SkinSlot.FrameCash, Area.MenuBar, "Cash frame", Kind.Frame,
+                "The rounded frame around the Cash counter (its icon and number) in the middle of the menu bar. " + FrameNote),
+            new Info(SkinSlot.FrameStars, Area.MenuBar, "Trophies frame", Kind.Frame,
+                "The rounded frame around the Trophies count (its icon and \"in chat / needed\") in the middle of the menu bar. " + FrameNote),
+            new Info(SkinSlot.FrameAudience, Area.MenuBar, "Audience button frame", Kind.Frame,
+                "The border of the Audience button in the menu bar, around its icon and the number of viewers still in the queue (the button stays white inside it). " + FrameNote),
+            new Info(SkinSlot.FrameMenu, Area.MenuBar, "Menu button frame", Kind.Frame,
+                "The border of the Menu button at the right end of the menu bar (the button stays white inside it). " + FrameNote),
 
             // --- Stream ---
             new Info(SkinSlot.IconStreamChat, Area.NotShown, "Stream Chat title (not used)", Kind.Icon,
@@ -104,6 +120,12 @@ namespace DeckParty.EditorTools
                 "The icon on the green Add Viewer button at the bottom of the Stream Chat window. The button is always green; only the icon comes from here."),
             new Info(SkinSlot.IconEndStream, Area.Stream, "End the Stream button icon", Kind.Icon,
                 "The icon on the red End the Stream button at the bottom of the Stream Chat window. The button is always red; only the icon comes from here."),
+            new Info(SkinSlot.AddViewerBase, Area.Stream, "Add Viewer button base", Kind.Frame,
+                "The rounded rectangle under the green Add Viewer button at the bottom of the Stream Chat window, as wide as the button (the button overlaps its top). " +
+                "Built-in: a darker green. It fades with the button while the button can't be pressed. Its art and colour can also be set in the Game Database's UI Icons list."),
+            new Info(SkinSlot.EndStreamBase, Area.Stream, "End the Stream button base", Kind.Frame,
+                "The rounded rectangle under the red End the Stream button at the bottom of the Stream Chat window, as wide as the button (the button overlaps its top). " +
+                "Built-in: a darker red. It fades with the button while the button can't be pressed. Its art and colour can also be set in the Game Database's UI Icons list."),
             new Info(SkinSlot.AvatarRing, Area.Stream, "Avatar ring", Kind.Shape,
                 "The round border of every chat avatar (with its highlight ring and the empty-seat ring), including the waiting viewer, and the round frames of the streamer portrait in the shop and in the stream recap. The game colours it by state.",
                 gameColoured: true),

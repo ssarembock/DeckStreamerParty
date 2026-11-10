@@ -25,7 +25,7 @@ namespace DeckParty.EditorTools
         /// <summary>The stream art fields, drawn in their own section (and left out of the generic list at the bottom).</summary>
         static readonly string[] s_StreamArt =
         {
-            "viewerEmojis", "emotes", "deplatformImage", "serverDownImage", "chatFooterImage", "communityIcons",
+            "viewerEmojis", "emotes", "deplatformImage", "serverDownImage", "communityIcons",
         };
 
         /// <summary>Fields drawn elsewhere or no longer used (the V5 Stream Chat window replaced the chat bubble and its tail).</summary>
@@ -33,6 +33,8 @@ namespace DeckParty.EditorTools
         {
             "chatBubble", "chatBubbleTail", "chatBubbleTint", "platforms", "noStreamerPlatform",
             "mainMenuBackgrounds", "mainMenuBackgroundSeconds", "mainMenuBackgroundDim",
+            // The chat footer picture was removed (the footer band now only holds the near-deplatform warning).
+            "chatFooterImage",
         };
 
         string m_Search = string.Empty;
@@ -66,6 +68,19 @@ namespace DeckParty.EditorTools
             SkinSlot.IconRemoveViewer,
             SkinSlot.IconCrown,
             SkinSlot.IconMute,
+        };
+
+        /// <summary>The UI Skin's frames and bases of the stream (art and colour), drawn under the icons.</summary>
+        static readonly SkinSlot[] s_UiFrames =
+        {
+            SkinSlot.FrameNight,
+            SkinSlot.FramePop,
+            SkinSlot.FrameCash,
+            SkinSlot.FrameStars,
+            SkinSlot.FrameAudience,
+            SkinSlot.FrameMenu,
+            SkinSlot.AddViewerBase,
+            SkinSlot.EndStreamBase,
         };
         bool m_ShowPlatforms = true;
         bool m_ShowViewers = true;
@@ -173,17 +188,52 @@ namespace DeckParty.EditorTools
             {
                 foreach (var slot in s_UiIcons)
                 {
-                    for (int i = 0; i < entries.arraySize; i++)
+                    var entry = FindSkinEntry(entries, slot);
+                    if (entry == null) continue;
+                    var info = SkinSlotGuide.Get(slot);
+                    EditorGUILayout.PropertyField(entry.FindPropertyRelative("sprite"), new GUIContent(info.Name, info.Where));
+                }
+            }
+
+            EditorGUILayout.LabelField("Frames and button bases", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("The rounded frames around the menu bar's icons and the rounded rectangles under Add Viewer and " +
+                                       "End the Stream. Tick Colour to give one its own colour (it tints the built-in shape too).",
+                EditorStyles.wordWrappedMiniLabel);
+            using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
+            {
+                foreach (var slot in s_UiFrames)
+                {
+                    var entry = FindSkinEntry(entries, slot);
+                    if (entry == null) continue;
+                    var info = SkinSlotGuide.Get(slot);
+                    EditorGUILayout.PropertyField(entry.FindPropertyRelative("sprite"), new GUIContent(info.Name, info.Where));
+                    var overrideColour = entry.FindPropertyRelative("overrideColor");
+                    var colour = entry.FindPropertyRelative("color");
+                    using (new EditorGUI.IndentLevelScope())
+                    using (new EditorGUILayout.HorizontalScope())
                     {
-                        var entry = entries.GetArrayElementAtIndex(i);
-                        if (entry.FindPropertyRelative("slot").intValue != (int)slot) continue;
-                        var info = SkinSlotGuide.Get(slot);
-                        EditorGUILayout.PropertyField(entry.FindPropertyRelative("sprite"), new GUIContent(info.Name, info.Where));
-                        break;
+                        EditorGUILayout.PropertyField(overrideColour, new GUIContent("Colour", "Ticked: the colour beside it. Unticked: the built-in colour."));
+                        EditorGUI.BeginChangeCheck();
+                        var picked = EditorGUILayout.ColorField(GUIContent.none, colour.colorValue, true, true, false);
+                        if (EditorGUI.EndChangeCheck())
+                        {
+                            colour.colorValue = picked;
+                            overrideColour.boolValue = true;
+                        }
                     }
                 }
             }
-            skin.ApplyModifiedProperties();
+            if (skin.ApplyModifiedProperties()) db.skin.NotifyChanged();
+        }
+
+        static SerializedProperty FindSkinEntry(SerializedProperty entries, SkinSlot slot)
+        {
+            for (int i = 0; i < entries.arraySize; i++)
+            {
+                var entry = entries.GetArrayElementAtIndex(i);
+                if (entry.FindPropertyRelative("slot").intValue == (int)slot) return entry;
+            }
+            return null;
         }
 
         /// <summary>One icon slot per community in the game (retired communities keep their icons, hidden).</summary>

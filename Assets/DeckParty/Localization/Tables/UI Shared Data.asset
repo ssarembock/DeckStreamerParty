@@ -2091,6 +2091,10 @@ MonoBehaviour:
     m_Key: platform.presence_match
     m_Metadata:
       m_Items: []
+  - m_Id: 3533811192782848
+    m_Key: hud.audience_count
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

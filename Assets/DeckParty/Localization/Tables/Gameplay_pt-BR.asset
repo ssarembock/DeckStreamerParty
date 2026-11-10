@@ -1183,8 +1183,7 @@ MonoBehaviour:
       de {icon:risk} l\xEDquido tudo bem; com <b>3 a live \xE9 desplataformizada</b>:
       ela acaba sem pagamento e voc\xEA d\xE1 um <b>ban tempor\xE1rio</b> a um espectador
       (ele fica fora da pr\xF3xima live). O Normie, o F\xE3 raiz e a Estrela da internet
-      <b>anulam</b> 1 {icon:risk} cada enquanto est\xE3o no chat, e os {icon:Mods}
-      Mods podem anular mais 1 no come\xE7o da sua pr\xF3xima live. Alguns espectadores
+      <b>anulam</b> 1 {icon:risk} cada enquanto est\xE3o no chat. Alguns espectadores
       adicionam {icon:risk} com as a\xE7\xF5es; o \xC1rbitro do chat tira o risco."
     m_Metadata:
       m_Items: []
@@ -1194,7 +1193,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606638
     m_Localized: "Voc\xEA n\xE3o pode adicionar espectadores quando bate o limite,
-      mas quem <b>traz</b> outros (Gerente de marketing, Esc\xE2ndalo online, Estrela
+      mas quem <b>traz</b> outros (Gerente de marketing, Jornalista online, Estrela
       maior) pode estourar. Se acontecer, <b>o servidor cai</b> e a live acaba sem
       pagamento. Deixe espa\xE7o sobrando!"
     m_Metadata:
@@ -1454,14 +1453,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091268
-    m_Localized: "As pessoas pagas pela live. Cada ponto d\xE1 a cada espectador
-      da Equipe {per}% de chance de n\xE3o cobrar seu {icon:cash} a cada pontua\xE7\xE3o
-      ({top}% com {max} pontos)."
+    m_Localized: As pessoas pagas pela live. Cada ponto soma +{per} {icon:cash} quando
+      a live pontua ({top} {icon:cash} com {max} pontos).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091269
-    m_Localized: "Agora: {value}% de chance de cada pontua\xE7\xE3o da Equipe sair
-      de gra\xE7a."
+    m_Localized: 'Agora: +{value} {icon:cash} quando a live pontuar.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091270
@@ -1509,14 +1506,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091280
-    m_Localized: "Se a live for desplataformizada ({icon:risk} acima do limite),
-      cada ponto paga 1 {icon:subs} ou {icon:cash} aleat\xF3rio. N\xE3o vale se voc\xEA
-      encerrar a live ou se o servidor cair."
+    m_Localized: Eles amam o drama. Se a comunidade pontua, a live que pontua ganha
+      +{per} {icon:subs} por cada ponto de {icon:risk} nela ({icon:risk} anulado
+      conta).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091281
-    m_Localized: "Agora: +{value} {icon:subs}/{icon:cash} aleat\xF3rios se a live
-      for desplataformizada."
+    m_Localized: 'Agora: +{value} {icon:subs} se a live pontuar.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091282
@@ -1662,11 +1658,9 @@ MonoBehaviour:
       que sai leva o ponto junto. Cada ponto aumenta o b\xF4nus. Fique de olho no
       <b>Ritmo das comunidades</b> ao lado do chat e passe o mouse sobre qualquer
       \xEDcone de comunidade pra ver o que ela faz:\\n{icon:CoreFanbase} <b>Base
-      de f\xE3s</b>: 20% por ponto (at\xE9 80%) de um espectador da Base de f\xE3s
-      pontuar duas vezes.\\n{icon:Staff} <b>Equipe</b>: 30% por ponto (at\xE9 90%)
-      de n\xE3o cobrar o {icon:cash} de um espectador da Equipe.\\n{icon:Content}
-      <b>Conte\xFAdo</b>: 30% por ponto (at\xE9 90%) de um espectador fora da Base
-      de f\xE3s pontuar duas vezes.\\n{icon:Boomer} <b>Boomers</b>: na sua pr\xF3xima
+      de f\xE3s</b>: 10% por ponto (at\xE9 30%) de um espectador da Base de f\xE3s
+      pontuar duas vezes.\\n{icon:Staff} <b>Equipe</b>: +1 {icon:cash} por ponto
+      (at\xE9 3) quando a live pontua.\\n{icon:Boomer} <b>Boomers</b>: na sua pr\xF3xima
       loja aumentar o limite custa 1 {icon:cash} a menos por ponto; depois de uma
       live cada Boomer tem 10% de chance de deixar sua audi\xEAncia de vez.\\n{icon:Millennial}
       <b>Millennials</b>: quando um Boomer sai, um Millennial seu aleat\xF3rio ganha
@@ -1675,15 +1669,9 @@ MonoBehaviour:
       ou {icon:cash} pra sempre por ponto (at\xE9 2).\\n{icon:Gatekeepers} <b>Porteiros</b>:
       mais uma expuls\xE3o por ponto nesta live.\\n{icon:HypeMen} <b>Animadores</b>:
       10 / 20% de uma live com o servidor ca\xEDdo ainda pontuar.\\n{icon:Trolls}
-      <b>Ex\xE9rcito troll</b>: 1 {icon:subs} ou {icon:cash} aleat\xF3rio por ponto
-      se a live for desplataformizada.\\n{icon:Mods} <b>Mods</b>: 10% por ponto (at\xE9
-      20%) de a sua pr\xF3xima live come\xE7ar com 1 {icon:risk} anulado.\\n{icon:FullStream}
-      <b>Live lotada</b>: b\xF4nus de chat cheio permitem 1 espa\xE7o vazio por ponto.\\n{icon:Marketers}
-      <b>Marqueteiros</b>: mais um recrutamento por ponto nesta live (at\xE9 3).\\n{icon:Voyeurs}
-      <b>Bisbilhoteiros</b>: mais uma espiada por ponto nesta live (at\xE9 1).\\n{icon:ShopControl}
-      <b>Controle da loja</b>: seu primeiro recrutamento na pr\xF3xima loja custa
-      1 {icon:subs} a menos por ponto.\\n{icon:Saboteurs} <b>Sabotadores</b> (multijogador):
-      o pr\xF3ximo recrutamento de cada rival custa 1 {icon:subs} a mais por ponto."
+      <b>Ex\xE9rcito troll</b>: quando a live pontua, +2 {icon:subs} por cada ponto
+      de {icon:risk} nela ({icon:risk} anulado conta).\\n{icon:Voyeurs} <b>Bisbilhoteiros</b>:
+      mais uma espiada por ponto nesta live (at\xE9 1)."
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656

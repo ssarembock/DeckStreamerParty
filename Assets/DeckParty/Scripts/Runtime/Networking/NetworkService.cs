@@ -78,8 +78,10 @@ namespace DeckParty.Networking
         /// deckparty-11: viewer card edits: Dancing Jen (GuestType 83), group scoring, Account Manager action, community caps.
         /// deckparty-12: Crypto Enthusiast scores 0 / 1 / 4 / 9 / 16 Cash for 1 to 5 in chat.
         /// deckparty-13: online platforms (Steam): players carry a platform user id, the approval payload has a fourth part.
+        /// deckparty-14: card edits of 2026-11-10 (Fish / Whale, six communities retired, Staff and Troll Army rules, state format v9).
+        /// deckparty-15: Core Fanbase 10% a point up to 30% (2026-11-10).
         /// </summary>
-        public const string ProtocolVersion = "deckparty-13";
+        public const string ProtocolVersion = "deckparty-15";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383746
-    m_Localized: A basic starting viewer who pays for your first Sub Cap upgrades.
+    m_Localized: 'No frills: scores a lot of {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 500383747
@@ -240,8 +240,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578062
-    m_Localized: 'Doomscroll: +2 {icon:subs} per {icon:risk} in chat. At exactly
-      2 {icon:risk}, also +2 {icon:cash}.'
+    m_Localized: 'Doomscroll: +2 {icon:subs} per {icon:risk} in chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578063
@@ -259,7 +258,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578066
-    m_Localized: 'Table for One: +6 {icon:subs} if he''s the only viewer when the
+    m_Localized: 'Table for One: +10 {icon:subs} if he''s the only viewer when the
       stream ends. Otherwise +1 {icon:subs} per empty space.'
     m_Metadata:
       m_Items: []
@@ -1037,8 +1036,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456775
-    m_Localized: 'Action: a viewer in chat permanently earns +1 {icon:cash} more
-      (up to 9 {icon:cash}). Costs 1 {icon:cash} when scored.'
+    m_Localized: 'Checkout Code: when the stream is scored, a random viewer in chat
+      earns +1 {icon:cash} more for good (up to 9 {icon:cash}).'
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456776
@@ -1108,8 +1107,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008647
-    m_Localized: +5 {icon:subs}, but only if chat is full when scored. Always costs
-      1 {icon:cash}.
+    m_Localized: +3 {icon:cash} if chat is full when scored.
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008648
@@ -1145,6 +1143,23 @@ MonoBehaviour:
   - m_Id: 2838162012987393
     m_Localized: 'Dance Break: all Dancing Jens in chat score {icon:subs} together,
       1 / 4 / 9 / 16 / 25 in total for 1 / 2 / 3 / 4 / 5 of them.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868587864064
+    m_Localized: Fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868738859008
+    m_Localized: A basic starting viewer who pays for your first Sub Cap upgrades.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868751441920
+    m_Localized: Online Journalist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868751441921
+    m_Localized: 'Unwanted Guests: brings two random viewers along when joining.
+      Can push chat over the Sub Cap.'
     m_Metadata:
       m_Items: []
   references:

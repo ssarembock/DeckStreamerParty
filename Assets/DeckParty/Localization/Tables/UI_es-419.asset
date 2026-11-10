@@ -1235,7 +1235,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: 'Elenco: <color=#FFC94A>11 espectadores al azar + 3 Trofeos al azar</color>,
+    m_Localized: 'Elenco: <color=#FFC94A>12 espectadores al azar + 3 Trofeos al azar</color>,
       sorteados al empezar la temporada.'
     m_Metadata:
       m_Items: []
@@ -2181,6 +2181,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3193502843887661
     m_Localized: En una partida ({count} jugadores)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3533811192782848
+    m_Localized: '{count} {count:plural:espectador|espectadores} en tu Audiencia'
     m_Metadata:
       m_Items: []
   references:

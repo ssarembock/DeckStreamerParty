@@ -98,3 +98,29 @@ Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** to see it.
 | **Add Viewer / End the Stream** | Inside the chat window, in a 112 px band along its bottom (`ButtonsBand`), 480 px wide each (50% wider than before). They sit about 12 px higher than before, to clear the window's border. |
 | **Next viewers' faces** (X-Ray) | Just above the buttons at the left of the chat (the wider buttons cover their old spot). |
 | **Waiting-viewer panel, footer picture, near-deplatform warning** | Moved up with the buttons' band, so they stay where they were on screen. |
+
+## 8. Text colours, menu bar frames, button bases, shop piles, no footer picture (2026-11-10)
+
+Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** once. It lists every text in the UI Skin and builds the new
+frames and bases.
+
+| Area | Now |
+|---|---|
+| **Text colours** | UI Skin > **Text Colours (stream and shop)** lists every text of the Game scene and of the UI prefabs (chat avatars, shop tiles, viewer cards and rows, player rows, Activity log lines). It also lists the texts the game makes while playing: the near-deplatform warning, the countdown seconds, and the facecam's LIVE badge and time. They're grouped by where they are (Menu bar, Stream, Shop, Side panel, Pop-ups...). Each row shows a readable name, what the text said when it was built, a colour box, a hex box and **Find**. |
+| **Setting a text's colour** | Tick the text, or pick or type a colour (that ticks it too). Untick it to give it back the game's colour. You can also select a text in the scene: its **Skinned Text** inspector has the same tick and colour box, plus **Show in UI Skin**. Colours are saved in the UI Skin and kept when you rebuild. |
+| **How text colours behave** | Your colour beats every other colour on that text: Site Colours, the readability fix on white pop-ups, and the colours the game sets while playing (a red price you can't afford, a player's colour). Fades still work, because the text's see-through amount is kept. A prefab text changes every copy of that prefab, in the menus too (player rows and viewer rows show up there). |
+| **Menu bar frames** | The stream counter, Clout, Cash and Trophies each sit in one rounded frame, 72 px tall, that wraps the icon and its number (16 px of space inside at each end). The Audience and Menu buttons are 72 px square frames. Each one has its own UI Skin entry under Menu bar (**Stream counter frame**, **Clout frame**, **Cash frame**, **Trophies frame**, **Audience button frame**, **Menu button frame**). Built-in look: a thin black outline. **Override Colour** sets the frame's colour, even with no art. Use **Border Scale** to make the outline thicker or thinner. Filled art works too, because the frame is drawn behind the icon and number (use a 9-slice sprite: the frames stretch). The Audience and Menu buttons stay white inside; their frame is their border. Frame widths: stream counter 190, Clout 170, Cash 162, Trophies 158 px (the number shrinks if it ever runs out of room). |
+| **Button bases** | Add Viewer and End the Stream each sit on a rounded rectangle as wide as the button (40 px tall). The button overlaps its top 14 px. Their UI Skin entries are **Add Viewer button base** and **End the Stream button base**, under Stream. Built-in look: a darker green and a darker red. Set their art and colour in the UI Skin, or in the Game Database's **UI Icons** list (under **Frames and button bases**). A base fades along with its button while the button can't be pressed. The buttons' band is 128 px (it was 112). |
+| **Shop card piles** | The card backs behind a shop tile now stack straight up, with no shift to the left. The full 38 px gap between tiles shows as space, and the grid's left padding went from 30 to 20 px (the right went from 10 to 20). |
+| **Footer picture removed** | The picture along the bottom of the Stream Chat is gone (the Game Database no longer shows Chat Footer Image; a picture you set is kept, unused). The footer band went from 224 to 150 px and holds only the near-deplatform warning. That warning is now 1480 × 140 px, and its portrait fits the panel's height. The viewers' area is 58 px taller. |
+
+## 9. Audience button with the queue count, Core Fanbase 10-30% (2026-11-10)
+
+Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** to see the menu bar changes.
+
+| Area | Now |
+|---|---|
+| **Audience button** | 150 px wide (it was 72 px square), with its icon on the left and a number beside it. During a stream the number is how many viewers are still in the queue; between streams it's your whole Audience (they all queue up for the next stream). Hover it to see which. Its frame is still the **Audience button frame** UI Skin entry, and the number's colour is in Text Colours (Menu bar > Rolodex > Count). |
+| **Risky-queue count removed** | The risk icon and number under the Audience button are gone. |
+| **Lined up** | The Audience and Menu buttons no longer sit 15 px higher than the rest. Every frame in the menu bar is 72 px tall and centred on the bar, so their tops and bottoms line up. |
+| **Core Fanbase** | Each point now gives a **10%** chance to score twice, up to 3 points (**30%**). It was 20% a point, up to 80%. The rules page is updated in all five languages, and so is StreamersViewersCommunities.md. Multiplayer protocol is now deckparty-15, so older builds can't join newer ones. |

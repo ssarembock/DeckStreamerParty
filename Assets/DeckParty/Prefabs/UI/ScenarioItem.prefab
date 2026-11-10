@@ -92,6 +92,10 @@ MonoBehaviour:
   tintPlaceholderOnly: 1
   placeholderTint: {r: 0.41960785, g: 0.8901961, b: 0.54509807, a: 1}
   siteText: 0
+  restoreDefaults: 0
+  defaultSprite: {fileID: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultPixelsPerUnit: 1
 --- !u!1 &4181912879154676285
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +247,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   header: 0
+  colourId: 
+  builtColour: {r: 1, g: 1, b: 1, a: 1}
+  hasBuiltColour: 0
+  colourOnly: 0
 --- !u!1 &5845712786802752957
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +351,10 @@ MonoBehaviour:
   tintPlaceholderOnly: 0
   placeholderTint: {r: 1, g: 1, b: 1, a: 1}
   siteText: 0
+  restoreDefaults: 0
+  defaultSprite: {fileID: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultPixelsPerUnit: 1
 --- !u!114 &8272944681940553564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,3 +679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   header: 1
+  colourId: 
+  builtColour: {r: 1, g: 1, b: 1, a: 1}
+  hasBuiltColour: 0
+  colourOnly: 0

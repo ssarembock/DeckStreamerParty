@@ -14,7 +14,7 @@ namespace DeckParty.EditorTools
     /// objects using it. Names and descriptions come from <see cref="SkinSlotGuide"/>.
     /// </summary>
     [CustomEditor(typeof(UISkin))]
-    internal sealed class UISkinEditor : Editor
+    internal sealed partial class UISkinEditor : Editor
     {
         const string Intro =
             "Each entry is one piece of UI art, named after where it shows in the game. Drop a sprite on an entry to replace the " +
@@ -28,8 +28,9 @@ namespace DeckParty.EditorTools
 
         const string NotHereHelp =
             "The white website panels of the stream and shop (menu bar, Stream Chat window, Community Beats, shop, pop-ups) take " +
-            "their colours from Site Colours below, and their icons from the entries further down. The green Add Viewer and red " +
-            "End the Stream buttons always keep their colours.";
+            "their colours from Site Colours below, and their icons from the entries further down. Text Colours gives any single " +
+            "text its own colour. The green Add Viewer and red End the Stream buttons always keep their colours (their bases " +
+            "under them are entries in the Stream section).";
 
         /// <summary>The named panels in the Site Colours section: what each is called and where it shows.</summary>
         static readonly (SiteArea area, string name, string where)[] s_Areas =
@@ -86,6 +87,7 @@ namespace DeckParty.EditorTools
                 m_Open[area] = area != SkinSlotGuide.Area.NotShown;
             m_Only = s_Focus;
             s_Focus = null;
+            OnEnableTextColours();
         }
 
         public override void OnInspectorGUI()
@@ -121,6 +123,8 @@ namespace DeckParty.EditorTools
             bool coloursChanged = EditorGUI.EndChangeCheck();
             EditorGUILayout.Space(6);
             DrawFonts();
+            EditorGUILayout.Space(6);
+            DrawTextColours();
             EditorGUILayout.Space(6);
             if (coloursChanged)
             {

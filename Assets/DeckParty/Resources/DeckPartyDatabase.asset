@@ -27,8 +27,8 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Whale
-    key: Whale
+  - name: Fish
+    key: Fish
     type: 1
     portrait: {fileID: -1144078954, guid: be8983e799f3ca74eaea994305bffe85, type: 3}
     avatar: {fileID: 0}
@@ -63,7 +63,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 524290
+    communities: 2
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -91,7 +91,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 131073
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -105,7 +105,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 4
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -133,7 +133,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 131073
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -147,7 +147,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 524290
+    communities: 2
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -161,7 +161,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 4096
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -315,7 +315,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 516
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -343,7 +343,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 257
+    communities: 256
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -749,7 +749,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 4
+    communities: 65536
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -763,7 +763,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 4
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -777,7 +777,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 4
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -805,7 +805,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 4
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -833,7 +833,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 65537
+    communities: 65536
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -889,7 +889,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 262145
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -959,7 +959,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 4
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -973,7 +973,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 131074
+    communities: 2
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -1001,7 +1001,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 4
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -1049,15 +1049,15 @@ MonoBehaviour:
     framingZoom: 1
     framingOffset: {x: 0, y: 0}
     displayNameOverride: 
-  - name: Online Scandal
-    key: OnlineScandal
+  - name: Online Journalist
+    key: OnlineJournalist
     type: 74
     portrait: {fileID: 1533252833, guid: 24d5a92bc6c2af94fb4e8789ebb8b6cb, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 65540
+    communities: 65536
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -1113,7 +1113,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 16386
+    communities: 0
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -1184,6 +1184,20 @@ MonoBehaviour:
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 256
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Whale
+    key: Whale
+    type: 84
+    portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -1591,4 +1605,4 @@ MonoBehaviour:
     group: 7
     icon: {fileID: 0}
   communitiesSeeded: 1
-  communitiesRevision: 5
+  communitiesRevision: 6

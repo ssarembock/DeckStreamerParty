@@ -42,22 +42,23 @@ namespace DeckParty.Core
             { "Doge", GuestType.DegenDog },
             { "ComedianWithAPodcast", GuestType.PromoCodeUser },
             { "CryptoGuy", GuestType.CryptoEnthusiast },
+            // 2026-11-10 (StreamersViewersCommunities.md): the old Whale is Fish (a new Whale took the name), Online Scandal is Online Journalist.
+            { "Whale", GuestType.Fish },
+            { "OnlineScandal", GuestType.OnlineJournalist },
         };
 
         // ------------------------------------------------------------------ the roster
 
         /// <summary>
-        /// Viewer cards put aside in V4.2 (and Degen Dog in V5). They keep their code, rules, art and communities, but the
-        /// current build never uses them: no shop, preset, Random Mix or Open Lobby offers them and the Game Database's viewer
-        /// list hides them. Take a type out of this set to bring it back.
+        /// Viewer cards put aside in V4.2. They keep their code, rules, art and communities, but the current build never uses
+        /// them: no shop, preset, Random Mix or Open Lobby offers them and the Game Database's viewer list hides them. Take a
+        /// type out of this set to bring it back (2026-11-10: Degen Dog, Doomer and Forever Alone came back).
         /// </summary>
         static readonly HashSet<GuestType> s_PutAside = new HashSet<GuestType>
         {
-            // V5 (ViewerCardsAndCommunityLogic.xlsx): Degen Dog and its Memetics Division are out of the game for now.
-            GuestType.DegenDog,
             GuestType.Trollface, GuestType.Pepe, GuestType.Gigachad, GuestType.ThisIsFineDog, GuestType.Wojak, GuestType.GrumpyCat,
-            GuestType.NyanCat, GuestType.StonksGuy, GuestType.Cheems, GuestType.ChadVsVirgin, GuestType.Doomer, GuestType.NpcWojak,
-            GuestType.ForeverAlone, GuestType.MeGusta, GuestType.KeyboardCat, GuestType.BongoCat, GuestType.PopCat, GuestType.BigChungus,
+            GuestType.NyanCat, GuestType.StonksGuy, GuestType.Cheems, GuestType.ChadVsVirgin, GuestType.NpcWojak,
+            GuestType.MeGusta, GuestType.KeyboardCat, GuestType.BongoCat, GuestType.PopCat, GuestType.BigChungus,
             GuestType.UgandanKnuckles, GuestType.OverlyAttachedGirlfriend, GuestType.DisasterGirl, GuestType.HideThePainHarold,
             GuestType.SuccessKid, GuestType.BadLuckBrian, GuestType.TungTungTungSahur, GuestType.TralaleroTralala,
             GuestType.BombardiroCrocodilo, GuestType.BallerinaCappuccina, GuestType.SkibidiToilet, GuestType.SigmaMale, GuestType.Karen,
@@ -107,70 +108,60 @@ namespace DeckParty.Core
         const CommunityMask Zoomer = CommunityMask.Zoomer;
         const CommunityMask Armchair = CommunityMask.ArmchairActivists;
         const CommunityMask Clout = CommunityMask.Clout;
-        const CommunityMask Memetics = CommunityMask.MemeticsDivision;
         const CommunityMask Bots = CommunityMask.Bots;
         const CommunityMask GenZ = CommunityMask.GenZ;
         const CommunityMask Gatekeepers = CommunityMask.Gatekeepers;
         const CommunityMask HypeMen = CommunityMask.HypeMen;
-        const CommunityMask Mods = CommunityMask.Mods;
-        const CommunityMask FullStream = CommunityMask.FullStream;
-        const CommunityMask Marketers = CommunityMask.Marketers;
         const CommunityMask Voyeurs = CommunityMask.Voyeurs;
 
         /// <summary>
-        /// The communities each roster card starts with (V5: the Cards tab of ViewerCardsAndCommunityLogic.xlsx). The Game
-        /// Database copies these and you can change them there (Viewers > Communities); <see cref="SetCommunities"/> applies
-        /// your edits. Cards not listed have no community. The sheet's Memetics Division, Bots and Clout tags were dropped,
-        /// since those communities are out of the game. Nobody is a Saboteur or in Shop Control yet.
+        /// The communities each roster card starts with (2026-11-10: StreamersViewersCommunities.md; before that the V5 card
+        /// table). The Game Database copies these and you can change them there (Viewers > Communities);
+        /// <see cref="SetCommunities"/> applies your edits. Cards not listed have no community (Mildly / Highly Risky
+        /// Collaborator, Risky Orbiter, Affiliate, Precocious Youth, Internet Starpower, Mainstream Celebrity, Degen Dog and
+        /// Doomer). Content, Mods, Full Stream, Marketers, Shop Control and Saboteurs left the game, so nobody carries them.
         /// </summary>
         static readonly Dictionary<GuestType, CommunityMask> s_RosterCommunities = new Dictionary<GuestType, CommunityMask>
         {
             { GuestType.LoyalFan, Core },
+            { GuestType.Fish, Core },
             { GuestType.Whale, Core },
             { GuestType.IneffectiveTroll, Core | Trolls },
             { GuestType.InfluentialTroll, Trolls },
-            { GuestType.Producer, Staff | Marketers },
+            { GuestType.Producer, Staff },
             { GuestType.ChatAdmin, Staff | Gatekeepers },
-            { GuestType.Normie, Core | Mods },
+            { GuestType.Normie, Core },
             { GuestType.CybersecurityEngineer, Staff | Voyeurs },
             { GuestType.PaidSponsorship, Boomer },
             { GuestType.Gatekeeper, Core },
-            { GuestType.MildlyRiskyCollaborator, Content },
             { GuestType.JuniorPrManager, Staff | GenZ },
-            { GuestType.MarketingManager, Staff | Marketers },
-            { GuestType.PromoCodeUser, Core | FullStream },
+            { GuestType.MarketingManager, Staff },
+            { GuestType.PromoCodeUser, Core },
             { GuestType.AccountManager, Staff },
             { GuestType.CryptoEnthusiast, Millennial },
             { GuestType.GenerousDonator, HypeMen },
             { GuestType.BingeBunny, Core },
             { GuestType.HateWatcher, Trolls },
             { GuestType.PrManager, Staff | Gatekeepers },
-            { GuestType.HighlyRiskyCollaborator, Content },
-            { GuestType.DieHardFan, Core | Mods },
-            { GuestType.ChatArbitrator, Staff | Mods },
-            { GuestType.RiskyOrbiter, Content },
-            { GuestType.Affiliate, GenZ | Staff },
+            { GuestType.DieHardFan, Core },
+            { GuestType.ChatArbitrator, Staff },
             { GuestType.DistraughtCat, Gatekeepers },
             { GuestType.BotDetector, Gatekeepers },
             { GuestType.SocialMediaManager, Staff | Voyeurs },
             { GuestType.MasterOfCurrency, Boomer | Trolls },
             { GuestType.BillionaireBenefactor, Boomer },
             { GuestType.TechAdmin, Gatekeepers },
-            { GuestType.OnlineScandal, Content | HypeMen },
+            { GuestType.OnlineJournalist, HypeMen },
             { GuestType.ExecutivePr, Staff | Boomer },
             { GuestType.GenZWithJob, GenZ },
             { GuestType.BigBoomer, Boomer },
             { GuestType.ClippoTheClanker, Staff },
-            { GuestType.BiggerStar, Content },
-            { GuestType.PrecociousYouth, Content },
-            { GuestType.InternetStarpower, Content },
+            { GuestType.BiggerStar, HypeMen },
             { GuestType.PlatformOwner, Boomer | Gatekeepers },
-            { GuestType.MainstreamCelebrity, Content },
             { GuestType.SeniorMarketingManager, Staff | Millennial },
-            { GuestType.Evangelist, Core | HypeMen },
+            { GuestType.Evangelist, HypeMen },
             { GuestType.DancingJen, Millennial },
-            // Put aside in V5 (kept for when it comes back).
-            { GuestType.DegenDog, Memetics },
+            { GuestType.ForeverAlone, Millennial },
         };
 
         /// <summary>The communities the put-aside cards had when they left the roster, ready for when they come back.</summary>
@@ -234,6 +225,8 @@ namespace DeckParty.Core
         public static CommunityMask DefaultCommunitiesOf(GuestType type)
         {
             if (s_RosterCommunities.TryGetValue(type, out var roster)) return roster;
+            // Roster cards missing from the table have no community (the put-aside table only covers cards still put aside).
+            if (!IsPutAside(type)) return CommunityMask.None;
             return s_PutAsideCommunities.TryGetValue(type, out var old) ? old : CommunityMask.None;
         }
 
@@ -285,12 +278,12 @@ namespace DeckParty.Core
                 // --- The audience classics ---
                 new GuestInfo(GuestType.LoyalFan, "Loyal Fan", 2, Tbd,
                     "A basic starting viewer. Always shows up.", pop: 1),
-                new GuestInfo(GuestType.Whale, "Whale", 3, Tbd,
+                new GuestInfo(GuestType.Fish, "Fish", 3, Tbd,
                     "A basic starting viewer who pays for your first Sub Cap upgrades.", cash: 1),
                 new GuestInfo(GuestType.IneffectiveTroll, "Ineffective Troll", 0, Tbd,
                     "Starting viewer only. Lots of noise, a little risk.", pop: 2, trouble: true, purchasable: false),
                 new GuestInfo(GuestType.Producer, "Producer", 3, Tbd,
-                    "Action: choose any viewer in the queue to join chat, if there's room.", pop: 1, cash: -1, ability: AbilityKind.Fetch, abilityName: "Shoutout"),
+                    "Action: choose any viewer in the queue to join chat, if there's room.", pop: 2, cash: -1, ability: AbilityKind.Fetch, abilityName: "Shoutout"),
                 new GuestInfo(GuestType.ChatAdmin, "Chat Admin", 4, Tbd,
                     "Action: remove one viewer from chat for the rest of the stream (even the Chat Admin).", pop: 1, cash: -1, ability: AbilityKind.Boot, abilityName: "Remove From Chat"),
                 new GuestInfo(GuestType.Normie, "Normie", 4, Tbd,
@@ -336,11 +329,11 @@ namespace DeckParty.Core
                     "Action: compare printed Subs with another guest. If theirs is lower, they permanently give Chad 1. If higher, Chad permanently loses 1.",
                     pop: 2, ability: AbilityKind.Mog, abilityName: "Know Your Place"),
                 new GuestInfo(GuestType.Doomer, "Doomer", 7, Wojak,
-                    "Doomscroll: +2 Subs per Deplatform Risk at the party. At exactly 2 Deplatform Risk, also +2 $.", pop: 1),
+                    "Doomscroll: +2 Clout per Deplatform Risk in the stream.", pop: 1),
                 new GuestInfo(GuestType.NpcWojak, "NPC Wojak", 6, Wojak,
                     "Current Thing: on arrival, copies the printed Subs and $ of the guest who arrived just before him. Not their action, Deplatform Risk or Diamond."),
                 new GuestInfo(GuestType.ForeverAlone, "Forever Alone", 8, Rage,
-                    "Table for One: +6 Subs if he's the only guest when the party ends. Otherwise +1 Subs per empty space.", pop: 1),
+                    "Table for One: +10 Clout if he's the only viewer in chat when scored. Otherwise +1 Clout per empty seat.", pop: 1),
                 new GuestInfo(GuestType.MeGusta, "Me Gusta", 8, Rage,
                     "I Like That: gains +2 Subs whenever another guest adds Deplatform Risk, and +1 $ for each Deplatform Risk removed.", pop: 1),
                 new GuestInfo(GuestType.KeyboardCat, "Keyboard Cat", 7, Animal,
@@ -415,20 +408,20 @@ namespace DeckParty.Core
                 // --- Diamonds ---
                 new GuestInfo(GuestType.BigBoomer, "Big Boomer", 25, Tbd,
                     "DIAMOND. Opinion Express: adds 1 Deplatform Risk.", cash: 1, trouble: true, diamond: true),
-                new GuestInfo(GuestType.ClippoTheClanker, "Clippo The Clanker", 30, Tbd,
+                new GuestInfo(GuestType.ClippoTheClanker, "Clippo The Clanker", 25, Tbd,
                     "DIAMOND. Market Collapse: costs 1 $ and 2 Subs when scored.", pop: -2, cash: -1, diamond: true),
                 new GuestInfo(GuestType.BiggerStar, "Bigger Star", 35, Tbd,
                     "DIAMOND. Uplifting: brings one random viewer along when joining.", diamond: true, brings: 1),
-                new GuestInfo(GuestType.PrecociousYouth, "Precocious Youth", 40, Tbd,
+                new GuestInfo(GuestType.PrecociousYouth, "Precocious Youth", 35, Tbd,
                     "DIAMOND. No extra effect.", diamond: true),
                 new GuestInfo(GuestType.InternetStarpower, "Internet Starpower", 45, Tbd,
                     "DIAMOND. Can Do No Wrong: cancels 1 Deplatform Risk while in chat.", diamond: true, cancels: true),
                 new GuestInfo(GuestType.PlatformOwner, "Platform Owner", 45, Tbd,
                     "DIAMOND. Action: remove one viewer for the rest of the stream (even itself).", cash: 3, diamond: true, ability: AbilityKind.Boot, abilityName: "Free The Speech!"),
                 new GuestInfo(GuestType.MainstreamCelebrity, "Mainstream Celebrity", 50, Tbd,
-                    "DIAMOND. Mass Appeal.", pop: 3, diamond: true),
+                    "DIAMOND. Mass Appeal.", pop: 3, cash: 1, diamond: true),
                 new GuestInfo(GuestType.SeniorMarketingManager, "Senior Marketing Manager", 50, Tbd,
-                    "DIAMOND. Product Placement.", pop: 4, cash: -1, diamond: true),
+                    "DIAMOND. Product Placement.", pop: 5, cash: -1, diamond: true),
                 new GuestInfo(GuestType.Evangelist, "Evangelist", 55, Tbd,
                     "DIAMOND. Action: summon any viewer from the queue, even another Diamond.", diamond: true, ability: AbilityKind.Fetch, abilityName: "2-for-1!"),
 
@@ -441,7 +434,7 @@ namespace DeckParty.Core
                 new GuestInfo(GuestType.PaidSponsorship, "Paid Sponsorship", 4, Tbd,
                     "Pays well, but viewers skip the ad: -1 Subs when scored.", pop: -1, cash: 3),
                 new GuestInfo(GuestType.PromoCodeUser, "Promo Code User", 5, Tbd,
-                    "+5 Subs, but only if chat is full when scored. Always costs 1 $.", cash: -1),
+                    "+3 Cash, but only if chat is full when scored.", pop: 1),
                 new GuestInfo(GuestType.AccountManager, "Account Manager", 5, Tbd,
                     "Action: a viewer in chat permanently earns +1 $ more (up to 9 $). Costs 1 $ when scored.",
                     pop: 3, cash: -1, ability: AbilityKind.Style, abilityName: "Upsell"),
@@ -472,7 +465,7 @@ namespace DeckParty.Core
                 new GuestInfo(GuestType.TechAdmin, "Tech Admin", 9, Tbd,
                     "Action: remove one viewer for the rest of the stream (even the Tech Admin).",
                     pop: 2, ability: AbilityKind.Boot, abilityName: "Admin Rights"),
-                new GuestInfo(GuestType.OnlineScandal, "Online Scandal", 11, Tbd,
+                new GuestInfo(GuestType.OnlineJournalist, "Online Journalist", 11, Tbd,
                     "Unwanted Guests: brings two random viewers along when joining. Can push chat over the Sub Cap.", pop: 2, cash: 3, brings: 2),
                 new GuestInfo(GuestType.Gatekeeper, "Gatekeeper", 4, Tbd,
                     "You Shall Not Watch!: +1 Subs for every empty space in chat when scored.", pop: 1),
@@ -480,9 +473,8 @@ namespace DeckParty.Core
                     "Algorithmic Rabbit Hole: +1 Subs for every Loyal Fan in chat.", pop: 1),
                 new GuestInfo(GuestType.HateWatcher, "Hate-Watcher", 5, Tbd,
                     "Switches mood every time they join chat: hate-watching (+1 Deplatform Risk) on their first entrance, harmless on the next, and so on.", pop: 4),
-                new GuestInfo(GuestType.Affiliate, "Affiliate", 7, Tbd,
-                    "Action: a viewer in chat permanently earns +1 $ more (up to 9 $). Costs 1 $ when scored.",
-                    cash: -1, ability: AbilityKind.Style, abilityName: "Checkout Code"),
+                new GuestInfo(GuestType.Affiliate, "Affiliate", 8, Tbd,
+                    "Checkout Code: when the stream is scored, a random viewer in chat permanently earns +1 Cash more (up to 9 Cash).", pop: 1),
                 new GuestInfo(GuestType.MasterOfCurrency, "Master of Currency", 8, Tbd,
                     "Chaos Ladder: +2 $ for every viewer in chat who still has Deplatform Risk (cancelled risk still counts).", cash: 1),
                 new GuestInfo(GuestType.ExecutivePr, "Executive PR", 11, Tbd,
@@ -498,6 +490,10 @@ namespace DeckParty.Core
                 new GuestInfo(GuestType.DancingJen, "Dancing Jen", 7, Tbd,
                     "Dance Break: Dancing Jens score together, 1 / 4 / 9 / 16 / 25 Subs in total for 1 to 5 of them in chat.",
                     maxCopies: GameRules.GroupCardMaxCopies),
+
+                // --- Card edits (2026-11-10): the big Cash viewer (the starter that used to be called Whale is Fish) ---
+                new GuestInfo(GuestType.Whale, "Whale", 8, Tbd,
+                    "No frills: scores a lot of Cash.", cash: 4),
             };
 
             // Guard against an entry being out of order relative to the enum.

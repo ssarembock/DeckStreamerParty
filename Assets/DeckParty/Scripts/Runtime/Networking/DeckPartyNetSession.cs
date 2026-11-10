@@ -403,6 +403,8 @@ namespace DeckParty.Networking
                 m_Players[i] = p;
                 ServerUpdateSummary(p.ClientId);
             }
+            // The shared shop's stacks grow with the match: 2 copies per player (6 for three players, 8 for four...).
+            foreach (var game in m_Games.Values) game.MatchPlayers = m_Games.Count;
 
             m_Phase.Value = MatchPhase.InGame;
             foreach (var id in m_Games.Keys) ServerBroadcastState(id, null);

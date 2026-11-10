@@ -240,6 +240,21 @@ namespace DeckParty.EditorTools
                     case SkinSlot.IconTimer: Set(entry, EditorUI.Timer, Image.Type.Simple); break;
                     case SkinSlot.IconMute: Set(entry, EditorUI.Mute, Image.Type.Simple); break;
                     case SkinSlot.IconRemoveViewer: Set(entry, EditorUI.RemoveViewer, Image.Type.Simple); break;
+                    // The menu bar's icon frames: the hollow rounded outline, drawn thinner.
+                    case SkinSlot.FrameNight:
+                    case SkinSlot.FramePop:
+                    case SkinSlot.FrameCash:
+                    case SkinSlot.FrameStars:
+                    case SkinSlot.FrameAudience:
+                    case SkinSlot.FrameMenu:
+                        Set(entry, EditorUI.Frame, Image.Type.Sliced);
+                        entry.pixelsPerUnitMultiplier = EditorUI.MenuFramePixelsPerUnit;
+                        break;
+                    // The rounded rectangles under the two main stream buttons.
+                    case SkinSlot.AddViewerBase:
+                    case SkinSlot.EndStreamBase:
+                        Set(entry, EditorUI.RoundedSmall, Image.Type.Sliced);
+                        break;
                 }
             }
         }
@@ -305,13 +320,14 @@ namespace DeckParty.EditorTools
 
         public static void EnsureUIPrefabs(bool overwrite)
         {
-            Ensure<GuestCardView>(DeckPartyPaths.GuestCardPrefab, BuildGuestCard, overwrite);
-            Ensure<GuestCardView>(DeckPartyPaths.ChatAvatarPrefab, BuildChatAvatar, overwrite);
-            Ensure<GuestRowView>(DeckPartyPaths.GuestRowPrefab, BuildGuestRow, overwrite);
-            Ensure<ShopItemView>(DeckPartyPaths.ShopItemPrefab, BuildShopItem, overwrite);
+            // The group names are how UI Skin > Text Colours lists each prefab's texts (the scenario item is main menu only).
+            Ensure<GuestCardView>(DeckPartyPaths.GuestCardPrefab, BuildGuestCard, overwrite, "Viewer cards");
+            Ensure<GuestCardView>(DeckPartyPaths.ChatAvatarPrefab, BuildChatAvatar, overwrite, "Chat avatars");
+            Ensure<GuestRowView>(DeckPartyPaths.GuestRowPrefab, BuildGuestRow, overwrite, "Viewer rows");
+            Ensure<ShopItemView>(DeckPartyPaths.ShopItemPrefab, BuildShopItem, overwrite, "Shop tiles");
             Ensure<ScenarioItemView>(DeckPartyPaths.ScenarioItemPrefab, BuildScenarioItem, overwrite);
-            Ensure<PlayerRowView>(DeckPartyPaths.PlayerRowPrefab, BuildPlayerRow, overwrite);
-            Ensure<TextMeshProUGUI>(DeckPartyPaths.TextLinePrefab, BuildTextLine, overwrite);
+            Ensure<PlayerRowView>(DeckPartyPaths.PlayerRowPrefab, BuildPlayerRow, overwrite, "Player rows");
+            Ensure<TextMeshProUGUI>(DeckPartyPaths.TextLinePrefab, BuildTextLine, overwrite, "Activity log lines");
         }
 
         /// <summary>
@@ -341,13 +357,15 @@ namespace DeckParty.EditorTools
             return component;
         }
 
-        static void Ensure<T>(string path, System.Func<GameObject> build, bool overwrite) where T : Component
+        /// <param name="textGroup">When set, the prefab's texts are listed in UI Skin > Text Colours under this name.</param>
+        static void Ensure<T>(string path, System.Func<GameObject> build, bool overwrite, string textGroup = null) where T : Component
         {
             var existing = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             if (!overwrite && existing != null && existing.GetComponent<T>() != null) return;
             if (existing != null) BackupPrefab(path);
 
             var go = build();
+            if (textGroup != null) TextColourRegistry.TagPrefab(go, Path.GetFileNameWithoutExtension(path) + " prefab", textGroup);
             PrefabUtility.SaveAsPrefabAsset(go, path);
             Object.DestroyImmediate(go);
         }
@@ -752,8 +770,8 @@ namespace DeckParty.EditorTools
             EditorUI.TagArea(root, SiteArea.ShopTiles);
             root.sizeDelta = new Vector2(190, 266);
 
-            // The pile: card backs peeking out up and to the left, one per copy left after the top card (ShopItemView).
-            // Farthest first in the hierarchy so the nearest back draws over it, and the tile over them all.
+            // The pile: card backs peeking out straight above the tile (no sideways shift), one per copy left after the top card
+            // (ShopItemView). Farthest first in the hierarchy so the nearest back draws over it, and the tile over them all.
             const int backs = 3;
             const float step = 7f;
             var stack = new GameObject[backs];
@@ -763,7 +781,7 @@ namespace DeckParty.EditorTools
                 float offset = step * (i + 1);
                 var back = EditorUI.SharpPanel(pile, "Back" + (i + 1), SitePalette.Surface, SitePalette.Outline, 2.5f);
                 var backRect = (RectTransform)back.transform.parent;
-                backRect.Box(Vector2.zero, Vector2.one, new Vector2(-offset, offset), new Vector2(-offset, offset));
+                backRect.Box(Vector2.zero, Vector2.one, new Vector2(0, offset), new Vector2(0, offset));
                 // A faint inner line, like the printed border on the back of a playing card.
                 var inner = EditorUI.SharpPanel(back.transform, "Print", SitePalette.Surface, SitePalette.Divider, 2f);
                 ((RectTransform)inner.transform.parent).Stretch(8, 8, 8, 8);

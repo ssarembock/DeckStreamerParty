@@ -16,6 +16,12 @@ namespace DeckParty.UI
         [Tooltip("Icons on the website look's panels: the placeholder takes the text colour of the panel it sits in " +
                  "(UI Skin > Site Colours) instead of Placeholder Tint, so it stays visible on any panel colour.")]
         [SerializeField] internal bool siteText;
+        [Tooltip("Frames and bases: with no art in the UI Skin entry this image goes back to the built-in sprite below, and with " +
+                 "Override Colour unticked to the built-in colour (so clearing the entry undoes it without a rebuild).")]
+        [SerializeField] internal bool restoreDefaults;
+        [SerializeField] internal Sprite defaultSprite;
+        [SerializeField] internal Color defaultColor = Color.white;
+        [SerializeField] internal float defaultPixelsPerUnit = 1f;
 
         public SkinSlot Slot
         {
@@ -49,8 +55,18 @@ namespace DeckParty.UI
                 image.type = entry.imageType;
                 image.pixelsPerUnitMultiplier = Mathf.Max(0.01f, entry.pixelsPerUnitMultiplier);
             }
+            else if (restoreDefaults)
+            {
+                image.sprite = defaultSprite;
+                image.type = defaultSprite != null && defaultSprite.border != Vector4.zero ? Image.Type.Sliced : Image.Type.Simple;
+                image.pixelsPerUnitMultiplier = Mathf.Max(0.01f, defaultPixelsPerUnit);
+            }
+
+            bool ownColour = entry != null && entry.overrideColor;
             if (tintPlaceholderOnly) image.color = GameIcons.SlotTint(slot, PlaceholderTint);
-            else if (hasArt && entry.overrideColor) image.color = entry.color;
+            // The colour applies with or without art (an empty entry tints the built-in shape).
+            else if (ownColour) image.color = entry.color;
+            else if (restoreDefaults) image.color = defaultColor;
         }
 
         /// <summary>The colour for the built-in white placeholder shape.</summary>

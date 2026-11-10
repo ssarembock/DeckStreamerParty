@@ -31,8 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383746
-    m_Localized: "Espectador inicial b\xE1sico que banca os seus primeiros aumentos
-      de limite."
+    m_Localized: 'Sem firula: rende muito {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 500383747
@@ -243,8 +242,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578062
-    m_Localized: "Doomscroll: +2 {icon:subs} por {icon:risk} no chat. Com exatamente
-      2 {icon:risk}, tamb\xE9m +2 {icon:cash}."
+    m_Localized: 'Doomscroll: +2 {icon:subs} por {icon:risk} no chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578063
@@ -261,7 +259,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578066
-    m_Localized: "Mesa pra um: +6 {icon:subs} se ele for o \xFAnico espectador quando
+    m_Localized: "Mesa pra um: +10 {icon:subs} se ele for o \xFAnico espectador quando
       a live acabar. Sen\xE3o, +1 {icon:subs} por vaga vazia."
     m_Metadata:
       m_Items: []
@@ -1045,8 +1043,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456775
-    m_Localized: "A\xE7\xE3o: um espectador do chat ganha +1 {icon:cash} a mais pra
-      sempre (at\xE9 9 {icon:cash}). Custa 1 {icon:cash} na pontua\xE7\xE3o."
+    m_Localized: "Cupom: quando a live pontua, um espectador aleat\xF3rio do chat
+      ganha +1 {icon:cash} a mais pra sempre (at\xE9 9 {icon:cash})."
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456776
@@ -1116,8 +1114,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008647
-    m_Localized: "+5 {icon:subs}, mas s\xF3 se o chat estiver cheio na pontua\xE7\xE3o.
-      Sempre custa 1 {icon:cash}."
+    m_Localized: "+3 {icon:cash} se o chat estiver cheio na pontua\xE7\xE3o."
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008648
@@ -1153,6 +1150,24 @@ MonoBehaviour:
   - m_Id: 2838162012987393
     m_Localized: "Hora da dan\xE7a: todas as Jen Dan\xE7arina do chat pontuam {icon:subs}
       juntas, 1 / 4 / 9 / 16 / 25 no total com 1 / 2 / 3 / 4 / 5 delas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868587864064
+    m_Localized: Peixinho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868738859008
+    m_Localized: "Espectador inicial b\xE1sico que banca os seus primeiros aumentos
+      de limite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868751441920
+    m_Localized: Jornalista online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868751441921
+    m_Localized: "Convidados indesejados: ao entrar traz dois espectadores aleat\xF3rios
+      junto. Pode fazer o chat passar do limite."
     m_Metadata:
       m_Items: []
   references:

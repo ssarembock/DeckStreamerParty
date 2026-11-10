@@ -68,8 +68,8 @@ namespace DeckParty.Core
         /// <summary>Most copies one player may own (Trophies have no limit).</summary>
         public int MaxCopies => IsDiamond ? int.MaxValue : m_MaxCopies > 0 ? m_MaxCopies : GameRules.MaxCopiesPerGuest;
 
-        /// <summary>Copies of this card in a match's shared shop (at least the per-player limit).</summary>
-        public int ShopStock => IsDiamond ? int.MaxValue : System.Math.Max(GameRules.SharedStockPerGuest, MaxCopies);
+        /// <summary>Copies of this card in the shared shop of a match with this many players (at least the per-player limit).</summary>
+        public int ShopStockFor(int players) => IsDiamond ? int.MaxValue : System.Math.Max(GameRules.SharedStock(players), MaxCopies);
 
         public TargetMode Target => TargetFor(Ability);
 

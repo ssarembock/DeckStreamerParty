@@ -1221,7 +1221,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: 'Character set: <color=#FFC94A>11 random viewers + 3 random Trophies</color>,
+    m_Localized: 'Character set: <color=#FFC94A>12 random viewers + 3 random Trophies</color>,
       rolled when the season starts.'
     m_Metadata:
       m_Items: []
@@ -2154,6 +2154,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3193502843887661
     m_Localized: In a match ({count} players)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3533811192782848
+    m_Localized: '{count} {count:plural:viewer|viewers} in your Audience'
     m_Metadata:
       m_Items: []
   references:

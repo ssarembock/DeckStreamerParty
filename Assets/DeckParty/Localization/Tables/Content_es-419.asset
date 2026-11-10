@@ -55,8 +55,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274887
     m_Localized: "Fiebre cripto, c\xF3digos de descuento y giros de PR. Los {icon:HypeMen}
-      Animadores llenan el chat, los {icon:Mods} Mods mantienen la paz y arriba esperan
-      dos {icon:plays} muy distintos."
+      Animadores llenan el chat, un Perro Degen persigue cada comunidad y arriba
+      esperan dos {icon:plays} muy distintos."
     m_Metadata:
       m_Items: []
   - m_Id: 433274888
@@ -96,7 +96,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274896
-    m_Localized: Once espectadores al azar y tres Trofeos al azar. Gana cinco seguidas
+    m_Localized: Doce espectadores al azar y tres Trofeos al azar. Gana cinco seguidas
       para conseguir la Cereza.
     m_Metadata:
       m_Items: []

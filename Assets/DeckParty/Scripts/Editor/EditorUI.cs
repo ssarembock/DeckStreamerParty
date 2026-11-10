@@ -282,6 +282,29 @@ namespace DeckParty.EditorTools
             return image;
         }
 
+        /// <summary>Border scale of the menu bar's icon frames: the placeholder frame drawn about 4 px thick with ~15 px corners.</summary>
+        public const float MenuFramePixelsPerUnit = 1.75f;
+
+        /// <summary>
+        /// A frame or base that takes its art and colour from a UI Skin entry: <paramref name="sprite"/> and
+        /// <paramref name="color"/> are the built-in look, used while the entry has no art or doesn't override the colour (and
+        /// again as soon as you clear it, without a rebuild).
+        /// </summary>
+        public static Image SkinShape(Transform parent, string name, Sprite sprite, Color color, SkinSlot slot, float pixelsPerUnit = 1f,
+            bool raycast = false)
+        {
+            var image = Image(parent, name, color, sprite, slot, raycast);
+            image.pixelsPerUnitMultiplier = pixelsPerUnit;
+            var skinned = image.GetComponent<SkinnedImage>();
+            skinned.restoreDefaults = true;
+            skinned.defaultSprite = sprite;
+            skinned.defaultColor = color;
+            skinned.defaultPixelsPerUnit = pixelsPerUnit;
+            // Adding the component applied it before its slot was set: apply again with the real entry.
+            skinned.Apply();
+            return image;
+        }
+
         public static TextMeshProUGUI Text(Transform parent, string name, string text, float size, Color color,
             TextAlignmentOptions align = TextAlignmentOptions.Center, bool bold = false, bool header = false, bool wrap = true)
         {

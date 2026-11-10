@@ -14,9 +14,9 @@ namespace DeckParty.Core
         /// v2: meme roster, per-guest party modifiers, ordered waiting line. v3: streamers and their powers.
         /// v4: audience classics (permanent Cash, Hate-Watcher mood, Softball Interview) and the shared shop.
         /// v5: rival Doomsdayers. v6: Bots in flight. v7: V5 communities (extra action uses, shop perks, Mods shield, Saboteurs)
-        /// and each card's action use count. v8: Remove a Viewer purchases.
+        /// and each card's action use count. v8: Remove a Viewer purchases. v9: the match's player count (shared shop stack size).
         /// </summary>
-        const byte FormatVersion = 8;
+        const byte FormatVersion = 9;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -117,6 +117,9 @@ namespace DeckParty.Core
 
                 // v8: Remove a Viewer
                 w.Write((short)Math.Min(short.MaxValue, Math.Max(0, s.Removals)));
+
+                // v9: players in the match (sizes the shared shop's stacks)
+                w.Write((byte)Math.Min(255, Math.Max(1, s.MatchPlayers)));
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -261,6 +264,12 @@ namespace DeckParty.Core
                 if (version >= 8)
                 {
                     s.Removals = r.ReadInt16();
+                }
+
+                // v8 and older saves are single-player seasons: 1 player (the old fixed stack of 4).
+                if (version >= 9)
+                {
+                    s.MatchPlayers = Math.Max(1, (int)r.ReadByte());
                 }
 
                 int eventCount = ReadCount(r);

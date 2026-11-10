@@ -38,7 +38,7 @@ namespace DeckParty.Core
         /// <summary>Preset character sets (ids 0-4; 5 and 6 are Random Mix and Open Lobby).</summary>
         public const int PresetCount = 5;
 
-        const int RandomRegularGuests = 11;
+        const int RandomRegularGuests = 12;
         const int RandomDiamondGuests = 3;
 
         // V5: five preset sets, one per Party House scenario (Alien Invitation, High or Low, Best Wishes, Money Management,
@@ -55,7 +55,7 @@ namespace DeckParty.Core
                 {
                     GuestType.Producer, GuestType.ChatAdmin, GuestType.Normie, GuestType.CybersecurityEngineer, GuestType.PaidSponsorship,
                     GuestType.MildlyRiskyCollaborator, GuestType.MarketingManager, GuestType.PromoCodeUser, GuestType.DancingJen,
-                    GuestType.BillionaireBenefactor, GuestType.InfluentialTroll,
+                    GuestType.BillionaireBenefactor, GuestType.InfluentialTroll, GuestType.Whale,
                     GuestType.PrecociousYouth,
                 }),
             new ScenarioDefinition(1, "Clickbait Roulette", "Big risks, bigger numbers",
@@ -64,7 +64,7 @@ namespace DeckParty.Core
                 {
                     GuestType.RiskyOrbiter, GuestType.DieHardFan, GuestType.SocialMediaManager, GuestType.JuniorPrManager, GuestType.CybersecurityEngineer,
                     GuestType.MasterOfCurrency, GuestType.GenZWithJob, GuestType.TechAdmin, GuestType.HighlyRiskyCollaborator,
-                    GuestType.HateWatcher, GuestType.InfluentialTroll,
+                    GuestType.HateWatcher, GuestType.InfluentialTroll, GuestType.Doomer,
                     GuestType.MainstreamCelebrity, GuestType.BiggerStar,
                 }),
             new ScenarioDefinition(2, "Brand Deal Wishlist", "Be careful what you wish for",
@@ -72,8 +72,8 @@ namespace DeckParty.Core
                 "content_house", new[]
                 {
                     GuestType.MildlyRiskyCollaborator, GuestType.Affiliate, GuestType.ChatArbitrator, GuestType.PrManager, GuestType.CryptoEnthusiast,
-                    GuestType.BingeBunny, GuestType.OnlineScandal, GuestType.ExecutivePr, GuestType.Normie,
-                    GuestType.TechAdmin, GuestType.HateWatcher,
+                    GuestType.BingeBunny, GuestType.OnlineJournalist, GuestType.ExecutivePr, GuestType.Normie,
+                    GuestType.TechAdmin, GuestType.HateWatcher, GuestType.DegenDog,
                     GuestType.Evangelist, GuestType.BigBoomer,
                 }),
             new ScenarioDefinition(3, "Monetization Meeting", "Every cent accounted for",
@@ -82,20 +82,20 @@ namespace DeckParty.Core
                 {
                     GuestType.SocialMediaManager, GuestType.PrManager, GuestType.ChatAdmin, GuestType.Affiliate, GuestType.CryptoEnthusiast,
                     GuestType.CybersecurityEngineer, GuestType.DieHardFan, GuestType.AccountManager, GuestType.PaidSponsorship,
-                    GuestType.HighlyRiskyCollaborator, GuestType.RiskyOrbiter,
+                    GuestType.HighlyRiskyCollaborator, GuestType.RiskyOrbiter, GuestType.Whale,
                     GuestType.ClippoTheClanker, GuestType.SeniorMarketingManager,
                 }),
             new ScenarioDefinition(4, "Algorithm Magic", "One perfect stream",
                 "Gatekeepers everywhere: kick, kick again and let the Distraught Cat cash in. Generous Donators and Online Scandals keep the chat full for the Platform Owner and the Internet Starpower.",
                 "cursed_stream", new[]
                 {
-                    GuestType.BillionaireBenefactor, GuestType.OnlineScandal, GuestType.GenerousDonator, GuestType.BotDetector, GuestType.Gatekeeper,
+                    GuestType.BillionaireBenefactor, GuestType.OnlineJournalist, GuestType.GenerousDonator, GuestType.BotDetector, GuestType.Gatekeeper,
                     GuestType.GenZWithJob, GuestType.Normie, GuestType.DieHardFan, GuestType.ChatAdmin,
-                    GuestType.TechAdmin, GuestType.DistraughtCat,
+                    GuestType.TechAdmin, GuestType.DistraughtCat, GuestType.ForeverAlone,
                     GuestType.PlatformOwner, GuestType.InternetStarpower,
                 }),
             new ScenarioDefinition(RandomScenarioId, "Random Mix", "A fresh character set every time",
-                "Eleven random guests and three random Diamonds. Win five in a row to earn the Cherry.",
+                "Twelve random viewers and three random Trophy viewers. Win five in a row to earn the Cherry.",
                 "metaverse", null, isRandom: true),
             new ScenarioDefinition(SandboxScenarioId, "Open Lobby", "Everyone's invited (sandbox)",
                 "Every recruitable guest is in the shop. Great for experimenting; does not count toward progress.",

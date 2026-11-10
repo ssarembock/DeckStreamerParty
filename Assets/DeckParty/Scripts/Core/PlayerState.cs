@@ -161,6 +161,12 @@ namespace DeckParty.Core
         /// </summary>
         public readonly int[] RivalTaken = new int[GuestCatalog.Count];
 
+        /// <summary>
+        /// Players in the match (1 in single player). Sets the size of the shared shop's stacks (<see cref="GameRules.SharedStock"/>);
+        /// the host sets it when the match starts.
+        /// </summary>
+        public int MatchPlayers = 1;
+
         // Last party summary
         public PartyOutcome LastOutcome;
         public int LastPop;

@@ -39,6 +39,7 @@ namespace DeckParty.UI
             iconRect.sizeDelta = new Vector2(34f, 34f);
 
             m_Label = UiFactory.Text("Seconds", transform, 30f, SiteColours.Get(SiteColourRole.Text, transform), TextAlignmentOptions.Center, true);
+            SkinnedText.Attach(m_Label, TextColourIds.TimerSeconds);
             var labelRect = m_Label.rectTransform;
             labelRect.anchorMin = Vector2.zero;
             labelRect.anchorMax = Vector2.one;

@@ -288,6 +288,62 @@ MonoBehaviour:
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  - name: FrameNight
+    slot: 39
+    sprite: {fileID: 21300000, guid: ca4ebe5aa006e624eb01053f6af7faba, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1.75
+    overrideColor: 1
+    color: {r: 0.07058824, g: 0.07058824, b: 0.078431375, a: 1}
+  - name: FramePop
+    slot: 40
+    sprite: {fileID: 21300000, guid: ca4ebe5aa006e624eb01053f6af7faba, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1.75
+    overrideColor: 1
+    color: {r: 0.27450982, g: 0.6901961, b: 0.8862745, a: 1}
+  - name: FrameCash
+    slot: 41
+    sprite: {fileID: 21300000, guid: ca4ebe5aa006e624eb01053f6af7faba, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1.75
+    overrideColor: 1
+    color: {r: 0.38431373, g: 0.77254903, b: 0.27450982, a: 1}
+  - name: FrameStars
+    slot: 42
+    sprite: {fileID: 21300000, guid: ca4ebe5aa006e624eb01053f6af7faba, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1.75
+    overrideColor: 1
+    color: {r: 0.95686275, g: 0.74509805, b: 0.16470589, a: 1}
+  - name: FrameAudience
+    slot: 43
+    sprite: {fileID: 21300000, guid: dd6763b767afa49409b08032e299dc6e, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1.75
+    overrideColor: 1
+    color: {r: 0.1254902, g: 0.12156863, b: 0.14117648, a: 1}
+  - name: FrameMenu
+    slot: 44
+    sprite: {fileID: 21300000, guid: 2cc456fa3b67f864d84d257a1d411117, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1.75
+    overrideColor: 1
+    color: {r: 0.1254902, g: 0.12156863, b: 0.14117648, a: 1}
+  - name: AddViewerBase
+    slot: 45
+    sprite: {fileID: 21300000, guid: 2cc456fa3b67f864d84d257a1d411117, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: EndStreamBase
+    slot: 46
+    sprite: {fileID: 21300000, guid: 2cc456fa3b67f864d84d257a1d411117, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
   siteColours:
     page: {r: 0.09019608, g: 0.09019608, b: 0.101960786, a: 1}
     panelFill: {r: 1, g: 1, b: 1, a: 1}
@@ -370,3 +426,1220 @@ MonoBehaviour:
       border: {r: 0, g: 0, b: 0, a: 1}
       overrideText: 1
       text: {r: 1, g: 1, b: 1, a: 1}
+  textColours:
+  - id: GuestCard/Visual/Anim/Content/PortraitBg/Placeholder/Initials
+    label: Portrait Bg > Placeholder > Initials
+    group: Viewer cards
+    sample: Gu
+    source: GuestCard prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.08627451, g: 0.05882353, b: 0.16078432, a: 1}
+  - id: GuestCard/Visual/Anim/Content/BonusBadge/Label
+    label: Anim > Bonus Badge > Label
+    group: Viewer cards
+    sample: +1
+    source: GuestCard prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: GuestCard/Visual/Anim/Content/CountBadge/Label
+    label: Anim > Count Badge > Label
+    group: Viewer cards
+    sample: x2
+    source: GuestCard prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: GuestCard/Visual/Anim/Content/Stats
+    label: Visual > Anim > Stats
+    group: Viewer cards
+    sample: '-'
+    source: GuestCard prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: GuestCard/Visual/Anim/Content/Ability/Label
+    label: Anim > Ability > Label
+    group: Viewer cards
+    sample: '-'
+    source: GuestCard prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: GuestCard/Visual/Anim/Empty/Label
+    label: Anim > Empty > Label
+    group: Viewer cards
+    sample: 
+    source: GuestCard prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: Code/AnxiousStreamer/Title
+    label: 'Near-deplatform warning: title'
+    group: Stream
+    sample: ONE MORE AND WE'RE DEPLATFORMED!
+    source: Game code
+    missing: 0
+    overrideColor: 0
+    color: {r: 0, g: 0, b: 0, a: 1}
+  - id: Code/AnxiousStreamer/Subtitle
+    label: 'Near-deplatform warning: line under the title'
+    group: Stream
+    sample: '{streamer} is sweating...'
+    source: Game code
+    missing: 0
+    overrideColor: 0
+    color: {r: 0, g: 0, b: 0, a: 1}
+  - id: Code/TurnTimer/Seconds
+    label: 'Countdown timer: seconds'
+    group: Stream
+    sample: 30
+    source: Game code
+    missing: 0
+    overrideColor: 0
+    color: {r: 0, g: 0, b: 0, a: 1}
+  - id: Code/StreamOverlay/Live
+    label: 'Facecam: LIVE badge'
+    group: Stream
+    sample: LIVE
+    source: Game code
+    missing: 0
+    overrideColor: 0
+    color: {r: 0, g: 0, b: 0, a: 1}
+  - id: Code/StreamOverlay/Timer
+    label: 'Facecam: stream time beside LIVE'
+    group: Stream
+    sample: 00:42
+    source: Game code
+    missing: 0
+    overrideColor: 0
+    color: {r: 0, g: 0, b: 0, a: 1}
+  - id: ChatAvatar/Visual/Anim/Content/Face/Mask/Placeholder/Initials
+    label: Mask > Placeholder > Initials
+    group: Chat avatars
+    sample: Gu
+    source: ChatAvatar prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.08627451, g: 0.05882353, b: 0.16078432, a: 1}
+  - id: ChatAvatar/Visual/Anim/Content/BonusBadge/Label
+    label: Anim > Bonus Badge > Label
+    group: Chat avatars
+    sample: +1
+    source: ChatAvatar prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: ChatAvatar/Visual/Anim/Content/Stats/Label
+    label: Anim > Stats > Label
+    group: Chat avatars
+    sample: '-'
+    source: ChatAvatar prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: GuestRow/PortraitBg/Placeholder/Initials
+    label: Portrait Bg > Placeholder > Initials
+    group: Viewer rows
+    sample: Gu
+    source: GuestRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.08627451, g: 0.05882353, b: 0.16078432, a: 1}
+  - id: GuestRow/Name
+    label: Guest Row > Name
+    group: Viewer rows
+    sample: '-'
+    source: GuestRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: GuestRow/Stats
+    label: Guest Row > Stats
+    group: Viewer rows
+    sample: '-'
+    source: GuestRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: GuestRow/Description
+    label: Guest Row > Description
+    group: Viewer rows
+    sample: '-'
+    source: GuestRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: GuestRow/Cost
+    label: Guest Row > Cost
+    group: Viewer rows
+    sample: '-'
+    source: GuestRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
+  - id: GuestRow/Owned
+    label: Guest Row > Owned
+    group: Viewer rows
+    sample: '-'
+    source: GuestRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: GuestRow/Buy/Label
+    label: Guest Row > Buy > Label
+    group: Viewer rows
+    sample: '-'
+    source: GuestRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: ShopItem/Anim/PortraitBorder/PortraitBg/Placeholder/Initials
+    label: Portrait Bg > Placeholder > Initials
+    group: Shop tiles
+    sample: Gu
+    source: ShopItem prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.08627451, g: 0.05882353, b: 0.16078432, a: 1}
+  - id: ShopItem/Anim/Price
+    label: Shop Item > Anim > Price
+    group: Shop tiles
+    sample: '-'
+    source: ShopItem prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: ShopItem/Anim/Left
+    label: Shop Item > Anim > Left
+    group: Shop tiles
+    sample: '-'
+    source: ShopItem prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.3254902, g: 0.3254902, b: 0.37254903, a: 1}
+  - id: PlayerRow/Rank
+    label: Player Row > Rank
+    group: Player rows
+    sample: '#1'
+    source: PlayerRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
+  - id: PlayerRow/Streamer/Placeholder/Initials
+    label: Streamer > Placeholder > Initials
+    group: Player rows
+    sample: '?'
+    source: PlayerRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: PlayerRow/Name
+    label: Player Row > Name
+    group: Player rows
+    sample: '-'
+    source: PlayerRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: PlayerRow/Status
+    label: Player Row > Status
+    group: Player rows
+    sample: '-'
+    source: PlayerRow prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: TextLine
+    label: Text Line
+    group: Activity log lines
+    sample: Line
+    source: TextLine prefab
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/GameCanvas/TopBar/Fill/Left/Night/Value
+    label: Left > Night > Value
+    group: Menu bar
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/TopBar/Fill/Centre/Pop/Value
+    label: Centre > Pop > Value
+    group: Menu bar
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/TopBar/Fill/Centre/Cash/Value
+    label: Centre > Cash > Value
+    group: Menu bar
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/TopBar/Fill/Centre/Stars/Value
+    label: Centre > Stars > Value
+    group: Menu bar
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/TopBar/Fill/Right/RolodexSlot/Rolodex/Count
+    label: Rolodex Slot > Rolodex > Count
+    group: Menu bar
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Cursed/Label
+    label: Community Beats > Cursed > Label
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_CoreFanbase/Points
+    label: Community Beats > Beat_Core Fanbase > Points
+    group: Stream
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_CoreFanbase/Effect
+    label: Community Beats > Beat_Core Fanbase > Effect
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Staff/Points
+    label: Community Beats > Beat_Staff > Points
+    group: Stream
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Staff/Effect
+    label: Community Beats > Beat_Staff > Effect
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Boomer/Points
+    label: Community Beats > Beat_Boomer > Points
+    group: Stream
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Boomer/Effect
+    label: Community Beats > Beat_Boomer > Effect
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Millennial/Points
+    label: Community Beats > Beat_Millennial > Points
+    group: Stream
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Millennial/Effect
+    label: Community Beats > Beat_Millennial > Effect
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_GenZ/Points
+    label: Community Beats > Beat_Gen Z > Points
+    group: Stream
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_GenZ/Effect
+    label: Community Beats > Beat_Gen Z > Effect
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Gatekeepers/Points
+    label: Community Beats > Beat_Gatekeepers > Points
+    group: Stream
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Gatekeepers/Effect
+    label: Community Beats > Beat_Gatekeepers > Effect
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_HypeMen/Points
+    label: Community Beats > Beat_Hype Men > Points
+    group: Stream
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_HypeMen/Effect
+    label: Community Beats > Beat_Hype Men > Effect
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Trolls/Points
+    label: Community Beats > Beat_Trolls > Points
+    group: Stream
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Trolls/Effect
+    label: Community Beats > Beat_Trolls > Effect
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Voyeurs/Points
+    label: Community Beats > Beat_Voyeurs > Points
+    group: Stream
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Voyeurs/Effect
+    label: Community Beats > Beat_Voyeurs > Effect
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/Facecam/Frame/Screen/Mask/Content/PlaceholderArea/Placeholder/Initials
+    label: Placeholder Area > Placeholder > Initials
+    group: Stream
+    sample: '?'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Targeting/Root/Label
+    label: Targeting > Root > Label
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Header
+    label: Planning > Shop > Header
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Content/Portrait/Mask/Placeholder/Initials
+    label: Mask > Placeholder > Initials
+    group: Shop
+    sample: '?'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Content/Portrait/Cooldown/Label
+    label: Portrait > Cooldown > Label
+    group: Shop
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Content/Use/Label
+    label: Streamer Power > Use > Label
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Empty
+    label: Toolbar > Streamer Power > Empty
+    group: Shop
+    sample: No streamer power
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.5060784, g: 0.5060784, b: 0.5147059, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/Expand/Label
+    label: Toolbar > Expand > Label
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/RemoveViewer/Label
+    label: Toolbar > Remove Viewer > Label
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/Rolodex/Label
+    label: Toolbar > Rolodex > Label
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/Waiting
+    label: Shop > Toolbar > Waiting
+    group: Shop
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/ShopGate/Root/Title
+    label: Shop Gate > Root > Title
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/ShopGate/Root/Body
+    label: Shop Gate > Root > Body
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/ShopGate/Root/StreamSummary/ColumnTemplate/Avatar/Frame/Mask/Placeholder/Initials
+    label: Mask > Placeholder > Initials
+    group: Shop
+    sample: '?'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/ShopGate/Root/StreamSummary/ColumnTemplate/Name
+    label: Stream Summary > Column Template > Name
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/ShopGate/Root/StreamSummary/ColumnTemplate/Streamer
+    label: Stream Summary > Column Template > Streamer
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/ShopGate/Root/StreamSummary/ColumnTemplate/Headline
+    label: Stream Summary > Column Template > Headline
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/ShopGate/Root/StreamSummary/ColumnTemplate/Body
+    label: Stream Summary > Column Template > Body
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/ShopGate/Root/Countdown
+    label: Shop Gate > Root > Countdown
+    group: Shop
+    sample: 3
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/ShopGate/Root/Ready/Label
+    label: Root > Ready > Label
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/ShopGate/Root/Notice
+    label: Shop Gate > Root > Notice
+    group: Shop
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.9411765, g: 0.54901963, b: 0, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/RaidBlame/Title
+    label: Main Area > Raid Blame > Title
+    group: Deplatformed screen
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 0.3529412, b: 0.3529412, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/RaidBlame/Message
+    label: Main Area > Raid Blame > Message
+    group: Deplatformed screen
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/SidePanel/Players/Header
+    label: Side Panel > Players > Header
+    group: Side panel
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/SidePanel/Feed/Tabs/ActivityTab/Label
+    label: Tabs > Activity Tab > Label
+    group: Side panel
+    sample: Activity
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/SidePanel/Feed/Tabs/ChatTab/Label
+    label: Tabs > Chat Tab > Label
+    group: Side panel
+    sample: Chat
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/SidePanel/Feed/Chat/ChatView/InputRow/Input/Text Area/Placeholder
+    label: Input > Text Area > Placeholder
+    group: Side panel
+    sample: Say something...
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: Game/GameCanvas/Root/SidePanel/Feed/Chat/ChatView/InputRow/Input/Text Area/Text
+    label: Input > Text Area > Text
+    group: Side panel
+    sample: "\u200B"
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/SidePanel/Feed/Chat/ChatView/InputRow/Send/Label
+    label: Input Row > Send > Label
+    group: Side panel
+    sample: Send
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/SidePanel/ShopRecap/Title
+    label: Side Panel > Shop Recap > Title
+    group: Side panel
+    sample: Shop Recap
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/SidePanel/ShopRecap/Body
+    label: Side Panel > Shop Recap > Body
+    group: Side panel
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/Banner/Panel/Title
+    label: Banner > Panel > Title
+    group: 'Pop-ups: Banner'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/Banner/Panel/Subtitle
+    label: Banner > Panel > Subtitle
+    group: 'Pop-ups: Banner'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/StreamEnding/Root/Caption
+    label: Stream Ending > Root > Caption
+    group: 'Pop-ups: Stream Ending'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 0.3529412, b: 0.3529412, a: 1}
+  - id: Game/OverlayCanvas/GuestPicker/Root/Panel/Title
+    label: Root > Panel > Title
+    group: 'Pop-ups: Guest Picker'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/GuestPicker/Root/Panel/Hint
+    label: Root > Panel > Hint
+    group: 'Pop-ups: Guest Picker'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/OverlayCanvas/GuestPicker/Root/Panel/Cancel/Label
+    label: Panel > Cancel > Label
+    group: 'Pop-ups: Guest Picker'
+    sample: 'Cancel  [Esc]'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/OverlayCanvas/Rolodex/Root/Panel/Title
+    label: Root > Panel > Title
+    group: 'Pop-ups: Rolodex'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/Rolodex/Root/Panel/Summary
+    label: Root > Panel > Summary
+    group: 'Pop-ups: Rolodex'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/Rolodex/Root/Panel/CommunitiesTitle
+    label: Root > Panel > Communities Title
+    group: 'Pop-ups: Rolodex'
+    sample: Communities
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/Rolodex/Root/Panel/Communities/Viewport/Content/List
+    label: Panel > Communities > List
+    group: 'Pop-ups: Rolodex'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/Rolodex/Root/Panel/Close/Label
+    label: Panel > Close > Label
+    group: 'Pop-ups: Rolodex'
+    sample: 'Close  [R]'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/RoundSummary/Root/Panel/Title
+    label: Root > Panel > Title
+    group: 'Pop-ups: Round Summary'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/RoundSummary/Root/Panel/Lines/Viewport/Content/Body
+    label: Panel > Lines > Body
+    group: 'Pop-ups: Round Summary'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/RoundSummary/Root/Panel/Close/Label
+    label: Panel > Close > Label
+    group: 'Pop-ups: Round Summary'
+    sample: Close
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/StreamRecap/Root/Panel/Title
+    label: Root > Panel > Title
+    group: 'Pop-ups: Stream Recap'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/StreamRecap/Root/Panel/Subtitle
+    label: Root > Panel > Subtitle
+    group: 'Pop-ups: Stream Recap'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/OverlayCanvas/StreamRecap/Root/Panel/Columns/ColumnTemplate/Avatar/Frame/Mask/Placeholder/Initials
+    label: Mask > Placeholder > Initials
+    group: 'Pop-ups: Stream Recap'
+    sample: '?'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/StreamRecap/Root/Panel/Columns/ColumnTemplate/Name
+    label: Columns > Column Template > Name
+    group: 'Pop-ups: Stream Recap'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/StreamRecap/Root/Panel/Columns/ColumnTemplate/Streamer
+    label: Columns > Column Template > Streamer
+    group: 'Pop-ups: Stream Recap'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/OverlayCanvas/StreamRecap/Root/Panel/Columns/ColumnTemplate/Headline
+    label: Columns > Column Template > Headline
+    group: 'Pop-ups: Stream Recap'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/StreamRecap/Root/Panel/Columns/ColumnTemplate/Body
+    label: Columns > Column Template > Body
+    group: 'Pop-ups: Stream Recap'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/StreamRecap/Root/Panel/Continue/Label
+    label: Panel > Continue > Label
+    group: 'Pop-ups: Stream Recap'
+    sample: 'Continue  [Space]'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Title
+    label: Root > Panel > Title
+    group: 'Pop-ups: Pause Menu'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/Venue/Title
+    label: Settings > Venue > Title
+    group: 'Pop-ups: Pause Menu'
+    sample: Stream Setup
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/Venue/Row/Prev/Label
+    label: Row > Prev > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: <
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/Venue/Row/Value/Label
+    label: Row > Value > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/Venue/Row/Next/Label
+    label: Row > Next > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: '>'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/MasterRow/Label
+    label: Settings > Master Row > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: Master Volume
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/MusicRow/Label
+    label: Settings > Music Row > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: Music
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/SfxRow/Label
+    label: Settings > Sfx Row > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: Sound Effects
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/FastAnimations/Label
+    label: Settings > Fast Animations > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: Fast Animations
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/FastAnimations/Switch/Label
+    label: Fast Animations > Switch > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: OFF
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/Language/Title
+    label: Display > Language > Title
+    group: 'Pop-ups: Pause Menu'
+    sample: Language
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/Language/Row/Prev/Label
+    label: Row > Prev > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: <
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/Language/Row/Value/Label
+    label: Row > Value > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/Language/Row/Next/Label
+    label: Row > Next > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: '>'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/WindowMode/Title
+    label: Display > Window Mode > Title
+    group: 'Pop-ups: Pause Menu'
+    sample: Window Mode
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/WindowMode/Row/Prev/Label
+    label: Row > Prev > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: <
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/WindowMode/Row/Value/Label
+    label: Row > Value > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/WindowMode/Row/Next/Label
+    label: Row > Next > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: '>'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/ResolutionRow/Resolution/Title
+    label: Resolution Row > Resolution > Title
+    group: 'Pop-ups: Pause Menu'
+    sample: Resolution
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/ResolutionRow/Resolution/Row/Prev/Label
+    label: Row > Prev > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: <
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/ResolutionRow/Resolution/Row/Value/Label
+    label: Row > Value > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/ResolutionRow/Resolution/Row/Next/Label
+    label: Row > Next > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: '>'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/ResolutionRow/Apply/Label
+    label: Resolution Row > Apply > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: Apply
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/Hint
+    label: Display Column > Display > Hint
+    group: 'Pop-ups: Pause Menu'
+    sample: F11 or Alt+Enter toggles fullscreen.
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/ShakeRow/Label
+    label: Display > Shake Row > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: Screen Shake
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/ReduceFlashing/Label
+    label: Display > Reduce Flashing > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: Reduce Flashing
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/ReduceFlashing/Switch/Label
+    label: Reduce Flashing > Switch > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: OFF
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/ActivityLog/Label
+    label: Display > Activity Log > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: Show Activity Log
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/DisplayColumn/Display/ActivityLog/Switch/Label
+    label: Activity Log > Switch > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: OFF
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Rules/Header
+    label: Panel > Rules > Header
+    group: 'Pop-ups: Pause Menu'
+    sample: Quick Rules
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Rules/Text
+    label: Panel > Rules > Text
+    group: 'Pop-ups: Pause Menu'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Resume/Label
+    label: Panel > Resume > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: 'Resume  [Esc]'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Quit/Label
+    label: Panel > Quit > Label
+    group: 'Pop-ups: Pause Menu'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/GameOver/Root/Panel/Title
+    label: Root > Panel > Title
+    group: 'Pop-ups: Game Over'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
+  - id: Game/OverlayCanvas/GameOver/Root/Panel/Subtitle
+    label: Root > Panel > Subtitle
+    group: 'Pop-ups: Game Over'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/GameOver/Root/Panel/Stats
+    label: Root > Panel > Stats
+    group: 'Pop-ups: Game Over'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: Game/OverlayCanvas/GameOver/Root/Panel/Ranking/Header
+    label: Panel > Ranking > Header
+    group: 'Pop-ups: Game Over'
+    sample: Standings
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/GameOver/Root/Panel/Waiting
+    label: Root > Panel > Waiting
+    group: 'Pop-ups: Game Over'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  - id: Game/OverlayCanvas/GameOver/Root/Panel/Primary/Label
+    label: Panel > Primary > Label
+    group: 'Pop-ups: Game Over'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/GameOver/Root/Panel/Secondary/Label
+    label: Panel > Secondary > Label
+    group: 'Pop-ups: Game Over'
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  - id: Game/OverlayCanvas/ModalDialog/Root/Panel/Title
+    label: Root > Panel > Title
+    group: 'Pop-ups: Modal Dialog'
+    sample: Title
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/ModalDialog/Root/Panel/Message
+    label: Root > Panel > Message
+    group: 'Pop-ups: Modal Dialog'
+    sample: Message
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/ModalDialog/Root/Panel/Buttons/Cancel/Label
+    label: Buttons > Cancel > Label
+    group: 'Pop-ups: Modal Dialog'
+    sample: Cancel
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/OverlayCanvas/ModalDialog/Root/Panel/Buttons/Confirm/Label
+    label: Buttons > Confirm > Label
+    group: 'Pop-ups: Modal Dialog'
+    sample: OK
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/Toast/Label
+    label: Overlay Canvas > Toast > Label
+    group: 'Pop-ups: Toast'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/Tooltip/Panel/Label
+    label: Tooltip > Panel > Label
+    group: 'Pop-ups: Tooltip'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}

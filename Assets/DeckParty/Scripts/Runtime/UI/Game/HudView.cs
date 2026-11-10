@@ -28,6 +28,9 @@ namespace DeckParty.UI
         [SerializeField] internal TooltipTrigger troubleTooltip;
         [SerializeField] internal TooltipTrigger starsTooltip;
         [SerializeField] internal Button rolodexButton;
+        [Tooltip("The number on the Audience button: viewers still in the queue during a stream, your whole Audience between " +
+                 "streams. Optional.")]
+        [SerializeField] internal TMP_Text queueLabel;
         [SerializeField] internal Button menuButton;
 
         [Header("Website bar (optional)")]
@@ -95,6 +98,19 @@ namespace DeckParty.UI
             if (capacityIcon != null) capacityIcon.color = GameIcons.SlotTint(SkinSlot.IconDoor, SiteColours.Get(SiteColourRole.Text, capacityIcon.transform));
         }
 
+        /// <summary>
+        /// The Audience button's number and tooltip: during a stream the viewers still waiting in the queue, between streams
+        /// your whole Audience (they all queue up for the next stream).
+        /// </summary>
+        void RenderQueue(PlayerState s, bool party)
+        {
+            int count = party ? s.Pool.Count : s.Rolodex.Count;
+            if (queueLabel != null) queueLabel.text = count.ToString();
+            if (queueLabel == null || rolodexButton == null || !rolodexButton.TryGetComponent<TooltipTrigger>(out var trigger)) return;
+            string line = party ? Loc.Get("controls.queue_count", "count", count) : Loc.Get("hud.audience_count", "count", count);
+            trigger.Text = $"{Loc.Get("hud.audience_button")}\n{GuestVisuals.Colored(line, UIPalette.TextDim)}";
+        }
+
         static void SetButton(Button button, string text)
         {
             if (button == null) return;
@@ -146,6 +162,7 @@ namespace DeckParty.UI
             m_LastCash = s.Cash;
 
             bool party = s.Phase == GamePhase.Party;
+            RenderQueue(s, party);
             // Older scenes only: the menu bar no longer shows the Sub Cap (the chat's seats do).
             if (capacityLabel != null)
                 capacityLabel.text = party ? $"{s.Occupancy}<size=70%><color={faint}>/{s.Capacity}</color></size>" : s.Capacity.ToString();

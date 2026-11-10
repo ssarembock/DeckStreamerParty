@@ -28,8 +28,10 @@ namespace DeckParty.UI
             m_Dot = UiFactory.Image("Dot", badge.transform, Color.white, RuntimeSprites.Circle);
             UiFactory.Place(m_Dot.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(12f, -8f), new Vector2(28f, 8f));
             m_Live = UiFactory.Text("Live", badge.transform, 22f, Color.white, TextAlignmentOptions.MidlineLeft, true);
+            SkinnedText.Attach(m_Live, TextColourIds.FacecamLive);
             UiFactory.Place(m_Live.rectTransform, Vector2.zero, Vector2.one, new Vector2(34f, 0f), new Vector2(-6f, 0f));
             m_Timer = UiFactory.Text("Timer", transform, 20f, UIPalette.Text, TextAlignmentOptions.MidlineLeft);
+            SkinnedText.Attach(m_Timer, TextColourIds.FacecamTime);
             UiFactory.Place(m_Timer.rectTransform, Vector2.zero, Vector2.one, new Vector2(118f, 0f), Vector2.zero);
         }
 

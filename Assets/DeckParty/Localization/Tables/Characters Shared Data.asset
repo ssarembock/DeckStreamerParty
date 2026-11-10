@@ -1055,6 +1055,22 @@ MonoBehaviour:
     m_Key: char.DancingJen.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 3526868587864064
+    m_Key: char.Fish.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868738859008
+    m_Key: char.Fish.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868751441920
+    m_Key: char.OnlineJournalist.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868751441921
+    m_Key: char.OnlineJournalist.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

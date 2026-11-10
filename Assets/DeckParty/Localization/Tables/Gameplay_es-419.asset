@@ -1184,9 +1184,8 @@ MonoBehaviour:
       neto no pasa nada; con <b>3 te desplataforman</b>: el stream termina sin ganancias
       y le das a un espectador un <b>baneo temporal</b> (se pierde el pr\xF3ximo
       stream). El Normie, el Fan ac\xE9rrimo y la Estrella de internet <b>anulan</b>
-      1 {icon:risk} cada uno mientras est\xE1n en el chat, y los {icon:Mods} Mods
-      pueden anular 1 m\xE1s al empezar tu pr\xF3ximo stream. Algunos espectadores
-      suman {icon:risk} con sus acciones; el \xC1rbitro del chat quita el riesgo."
+      1 {icon:risk} cada uno mientras est\xE1n en el chat. Algunos espectadores suman
+      {icon:risk} con sus acciones; el \xC1rbitro del chat quita el riesgo."
     m_Metadata:
       m_Items: []
   - m_Id: 483606637
@@ -1195,7 +1194,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606638
     m_Localized: "No puedes sumar espectadores cuando llegas a tu cupo, pero los
-      que <b>traen</b> a otros (Gerente de marketing, Esc\xE1ndalo en l\xEDnea, Estrella
+      que <b>traen</b> a otros (Gerente de marketing, Periodista digital, Estrella
       m\xE1s grande) pueden hacerte pasar. Si pasa, <b>se cae el servidor</b> y el
       stream termina sin ganancias. \xA1Deja lugar libre!"
     m_Metadata:
@@ -1458,13 +1457,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091268
-    m_Localized: "La gente a la que paga el stream. Cada punto da a cada espectador
-      del Staff un {per}% de probabilidad de no cobrar su {icon:cash} cada vez que
-      punt\xFAa ({top}% con {max} puntos)."
+    m_Localized: "La gente a la que paga el stream. Cada punto suma +{per} {icon:cash}
+      cuando el stream punt\xFAa ({top} {icon:cash} con {max} puntos)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091269
-    m_Localized: "Ahora: {value}% de que cada puntuaci\xF3n del Staff sea gratis."
+    m_Localized: "Ahora: +{value} {icon:cash} cuando el stream punt\xFAe."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091270
@@ -1512,13 +1510,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091280
-    m_Localized: "Si te desplataforman ({icon:risk} por encima del l\xEDmite), cada
-      punto paga 1 {icon:subs} o {icon:cash} al azar. No cuenta si terminas el stream
-      t\xFA o si se cae el servidor."
+    m_Localized: "Aman el drama. Si la comunidad punt\xFAa, el stream que punt\xFAa
+      gana +{per} {icon:subs} por cada punto de {icon:risk} en \xE9l (el {icon:risk}
+      anulado cuenta)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091281
-    m_Localized: 'Ahora: +{value} {icon:subs}/{icon:cash} al azar si te desplataforman.'
+    m_Localized: "Ahora: +{value} {icon:subs} si el stream punt\xFAa."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091282
@@ -1665,29 +1663,20 @@ MonoBehaviour:
       que se va se lleva su punto. Cada punto agranda la bonificaci\xF3n. Mira el
       <b>Ritmo de comunidades</b> junto al chat y pasa el mouse sobre cualquier \xEDcono
       de comunidad para ver qu\xE9 hace:\\n{icon:CoreFanbase} <b>N\xFAcleo de fans</b>:
-      20% por punto (hasta 80%) de que un espectador del N\xFAcleo de fans punt\xFAe
-      dos veces.\\n{icon:Staff} <b>Staff</b>: 30% por punto (hasta 90%) de no cobrar
-      el {icon:cash} de un espectador del Staff.\\n{icon:Content} <b>Contenido</b>:
-      30% por punto (hasta 90%) de que un espectador fuera del N\xFAcleo de fans
-      punt\xFAe dos veces.\\n{icon:Boomer} <b>Boomers</b>: en tu pr\xF3xima tienda
-      subir el cupo cuesta 1 {icon:cash} menos por punto; tras un stream cada Boomer
-      tiene un 10% de probabilidad de dejar tu audiencia para siempre.\\n{icon:Millennial}
+      10% por punto (hasta 30%) de que un espectador del N\xFAcleo de fans punt\xFAe
+      dos veces.\\n{icon:Staff} <b>Staff</b>: +1 {icon:cash} por punto (hasta 3)
+      cuando el stream punt\xFAa.\\n{icon:Boomer} <b>Boomers</b>: en tu pr\xF3xima
+      tienda subir el cupo cuesta 1 {icon:cash} menos por punto; tras un stream cada
+      Boomer tiene un 10% de probabilidad de dejar tu audiencia para siempre.\\n{icon:Millennial}
       <b>Millennials</b>: cuando se va un Boomer, un Millennial tuyo al azar gana
       +1 {icon:cash} para siempre, una vez por punto.\\n{icon:GenZ} <b>Gen Z</b>:
       tras un stream, cada espectador Gen Z crece +1 {icon:subs} o {icon:cash} para
       siempre por punto (hasta 2).\\n{icon:Gatekeepers} <b>Guardianes</b>: una expulsi\xF3n
       m\xE1s por punto en este stream.\\n{icon:HypeMen} <b>Animadores</b>: 10 / 20%
       de que un stream con el servidor ca\xEDdo igual punt\xFAe.\\n{icon:Trolls}
-      <b>Ej\xE9rcito troll</b>: 1 {icon:subs} o {icon:cash} al azar por punto si
-      te desplataforman.\\n{icon:Mods} <b>Mods</b>: 10% por punto (hasta 20%) de
-      que tu pr\xF3ximo stream empiece con 1 {icon:risk} anulado.\\n{icon:FullStream}
-      <b>Stream lleno</b>: las bonificaciones de chat lleno permiten 1 lugar vac\xEDo
-      por punto.\\n{icon:Marketers} <b>Marketeros</b>: un reclutamiento m\xE1s por
-      punto en este stream (hasta 3).\\n{icon:Voyeurs} <b>Mirones</b>: un espionaje
-      m\xE1s por punto en este stream (hasta 1).\\n{icon:ShopControl} <b>Control
-      de tienda</b>: tu primer reclutamiento de la pr\xF3xima tienda cuesta 1 {icon:subs}
-      menos por punto.\\n{icon:Saboteurs} <b>Saboteadores</b> (multijugador): el
-      pr\xF3ximo reclutamiento de cada rival cuesta 1 {icon:subs} m\xE1s por punto."
+      <b>Ej\xE9rcito troll</b>: cuando el stream punt\xFAa, +2 {icon:subs} por cada
+      punto de {icon:risk} en \xE9l (el {icon:risk} anulado cuenta).\\n{icon:Voyeurs}
+      <b>Mirones</b>: un espionaje m\xE1s por punto en este stream (hasta 1)."
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656

@@ -576,7 +576,7 @@ namespace DeckParty.UI
                 RenderLinks(s);
                 if (party) m_LastLive = s.Clone();
             }
-            // The risky-queue badge lives in the menu bar: only during a stream.
+            // Older scenes: the risky-queue badge in the menu bar shows only during a stream.
             if (!party) partyControls.HideRisk();
             if (planningPhase) planning.Render(s, PlanningCtx());
             if (blame) raidBlame.Render(s, act ? null : Loc.Get("ban.watching", "player", ViewingOwn ? Loc.Get("common.you") : NameOf(m_ViewId)));

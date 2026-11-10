@@ -1,7 +1,7 @@
 namespace DeckParty.Core
 {
     /// <summary>
-    /// All 84 guest types: the viewer cards (44 in the current roster, the rest put aside; see
+    /// All 85 guest types: the viewer cards (48 in the current roster, the rest put aside; see
     /// <see cref="GuestCatalog.IsPutAside"/>) and the Bot token the Bots community sends. The numeric values are serialized
     /// (saves and network packets), so only ever append new entries at the end. Bump <see cref="StateSerializer"/>'s format
     /// version if you renumber. Identifiers follow the current English names; the Game Database migrates art stored under
@@ -11,7 +11,8 @@ namespace DeckParty.Core
     {
         // --- The audience classics (renamed in V3) ---
         LoyalFan = 0,
-        Whale = 1,
+        /// <summary>The small Cash starter, called Whale until 2026-11-10 (the new Whale is <see cref="Whale"/>).</summary>
+        Fish = 1,
         IneffectiveTroll = 2,
         Producer = 3,
         ChatAdmin = 4,
@@ -96,7 +97,7 @@ namespace DeckParty.Core
         SocialMediaManager = 71,
         BillionaireBenefactor = 72,
         TechAdmin = 73,
-        OnlineScandal = 74,
+        OnlineJournalist = 74,
         Gatekeeper = 75,
         BingeBunny = 76,
         HateWatcher = 77,
@@ -110,6 +111,9 @@ namespace DeckParty.Core
 
         // --- Viewer card edits (2026-11-08): the original game's Dancer, scored as a group (see GameRules.DancingJenClout). ---
         DancingJen = 83,
+
+        // --- Card edits (2026-11-10, StreamersViewersCommunities.md): the big Cash viewer (the old Whale is now Fish). ---
+        Whale = 84,
     }
 
     /// <summary>

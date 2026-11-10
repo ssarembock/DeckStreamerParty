@@ -31,8 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383746
-    m_Localized: "Espectador inicial b\xE1sico que paga tus primeras ampliaciones
-      de cupo."
+    m_Localized: 'Sin rodeos: da mucho {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 500383747
@@ -242,8 +241,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578062
-    m_Localized: "Doomscroll: +2 {icon:subs} por cada {icon:risk} en el chat. Con
-      exactamente 2 {icon:risk}, tambi\xE9n +2 {icon:cash}."
+    m_Localized: 'Doomscroll: +2 {icon:subs} por cada {icon:risk} en el chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578063
@@ -260,7 +258,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578066
-    m_Localized: "Mesa para uno: +6 {icon:subs} si es el \xFAnico espectador cuando
+    m_Localized: "Mesa para uno: +10 {icon:subs} si es el \xFAnico espectador cuando
       termina el stream. Si no, +1 {icon:subs} por lugar vac\xEDo."
     m_Metadata:
       m_Items: []
@@ -1044,8 +1042,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456775
-    m_Localized: "Acci\xF3n: un espectador del chat gana +1 {icon:cash} m\xE1s para
-      siempre (hasta 9 {icon:cash}). Cuesta 1 {icon:cash} al puntuar."
+    m_Localized: "C\xF3digo de descuento: cuando el stream punt\xFAa, un espectador
+      al azar del chat gana +1 {icon:cash} m\xE1s para siempre (hasta 9 {icon:cash})."
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456776
@@ -1115,8 +1113,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008647
-    m_Localized: "+5 {icon:subs}, pero solo si el chat est\xE1 lleno al puntuar.
-      Siempre cuesta 1 {icon:cash}."
+    m_Localized: "+3 {icon:cash} si el chat est\xE1 lleno al puntuar."
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008648
@@ -1152,6 +1149,24 @@ MonoBehaviour:
   - m_Id: 2838162012987393
     m_Localized: "Pausa de baile: todas las Jen la Bailarina del chat punt\xFAan
       {icon:subs} juntas, 1 / 4 / 9 / 16 / 25 en total con 1 / 2 / 3 / 4 / 5 de ellas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868587864064
+    m_Localized: Pececito
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868738859008
+    m_Localized: "Espectador inicial b\xE1sico que paga tus primeras ampliaciones
+      de cupo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868751441920
+    m_Localized: Periodista digital
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3526868751441921
+    m_Localized: 'Invitados no deseados: al entrar trae a dos espectadores al azar.
+      Puede hacer que el chat pase el cupo.'
     m_Metadata:
       m_Items: []
   references:

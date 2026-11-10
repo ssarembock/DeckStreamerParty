@@ -185,9 +185,9 @@ namespace DeckParty
         [Tooltip("Shown full-screen when chat goes over the Sub Cap and the stream ends.")]
         public Sprite serverDownImage;
 
-        [Header("Stream chat")]
-        [Tooltip("A picture centred along the bottom of the Stream Chat window, under the viewers. Leave empty for none. " +
-                 "The warning that the stream is one Deplatform Risk from being deplatformed appears on top of it.")]
+        [Tooltip("No longer used: the Stream Chat window has no footer picture (its footer band only holds the near-deplatform " +
+                 "warning). Kept so a picture you set isn't lost.")]
+        [HideInInspector]
         public Sprite chatFooterImage;
 
         [Header("Viewer communities")]
@@ -217,12 +217,14 @@ namespace DeckParty
         /// Memetics Division and Bots; every roster card takes the table's communities). 4: the V5 card table
         /// (ViewerCardsAndCommunityLogic.xlsx: Gen-Z, Gatekeepers, Hype Men, Mods, Full Stream, Marketers, Voyeurs...; every
         /// roster card takes the table's communities again). 5: the viewer card edits of 2026-11-08 (Crypto Enthusiast and
-        /// the new Dancing Jen join the Millennials; only those two cards change, so your other edits are kept).
+        /// the new Dancing Jen join the Millennials; only those two cards change, so your other edits are kept). 6: the card edits
+        /// of 2026-11-10 (StreamersViewersCommunities.md: six communities retired, several cards moved, Fish / Whale, Degen Dog,
+        /// Doomer and Forever Alone back); every roster card takes the new table once.
         /// </summary>
-        public const int CommunityDefaultsRevision = 5;
+        public const int CommunityDefaultsRevision = 6;
 
         /// <summary>Whether a revision's built-in communities replace a roster card's (instead of merging into them).</summary>
-        static bool IsRosterTableRevision(int revision) => revision == 3 || revision == 4;
+        static bool IsRosterTableRevision(int revision) => revision == 3 || revision == 4 || revision == 6;
 
         /// <summary>Whether a revision resets this one card to its built-in communities (a revision that edits a few cards).</summary>
         static bool ResetsCard(int revision, GuestType type) =>

@@ -8,7 +8,8 @@ namespace DeckParty.Core
     public static class GameRules
     {
         public const int DefaultNights = 25;
-        public const int StartingCapacity = 5;
+        /// <summary>Sub Cap every season starts with (6 since 2026-11-10, to speed the game up a little; it was 5).</summary>
+        public const int StartingCapacity = 6;
         public const int MaxCapacity = 34;
 
         public const int FirstExpansionCost = 2;
@@ -24,11 +25,21 @@ namespace DeckParty.Core
         public const int MaxCopiesPerGuest = 4;
 
         /// <summary>
-        /// Copies of each non-Diamond viewer the shop holds for the whole match, shared by every player: a copy one player
-        /// buys is gone for everyone. Starting viewers don't come from the shop. In single player this never limits more
-        /// than <see cref="MaxCopiesPerGuest"/> already does.
+        /// The smallest stack of each non-Diamond viewer the shop holds for the whole match, shared by every player: a copy
+        /// one player buys is gone for everyone. Starting viewers don't come from the shop. In single player this never
+        /// limits more than <see cref="MaxCopiesPerGuest"/> already does.
         /// </summary>
         public const int SharedStockPerGuest = 4;
+
+        /// <summary>
+        /// Bigger matches get bigger stacks (2026-11-10): <see cref="StockPerPlayer"/> copies per player, so 6 for three
+        /// players, 8 for four and so on (never below <see cref="SharedStockPerGuest"/>). The number of different viewers in
+        /// the shop doesn't change.
+        /// </summary>
+        public const int StockPerPlayer = 2;
+
+        /// <summary>Copies in each shared stack for a match of this many players.</summary>
+        public static int SharedStock(int players) => Math.Max(SharedStockPerGuest, StockPerPlayer * Math.Max(1, players));
 
         /// <summary>Highest printed Cash permanent bonuses can raise a viewer to (Affiliate's Checkout Code, Gen Z with Job).</summary>
         public const int PermanentCashCap = 9;
@@ -49,7 +60,7 @@ namespace DeckParty.Core
         public const int StonksInvestPop = 2;
         public const int StonksInvestCash = 1;
         public const int StonksMultiplier = 3;
-        public const int ForeverAloneSoloBonus = 6;
+        public const int ForeverAloneSoloBonus = 10;
         public const int BigChungusCapacityBase = 10;
         public const int BigChungusMaxBonus = 5;
         public const int HaroldMaxBonus = 5;
@@ -61,8 +72,8 @@ namespace DeckParty.Core
         public const int AttractionRevealCount = 3;
 
         // --- Audience classics tuning ---
-        /// <summary>Promo Code User: Subs when chat is full at scoring time.</summary>
-        public const int PromoCodeFullBonus = 5;
+        /// <summary>Promo Code User: Cash when chat is full at scoring time (2026-11-10; it was +5 Subs).</summary>
+        public const int PromoCodeFullCash = 3;
         /// <summary>Master of Currency ($) and Executive PR (Subs): bonus per viewer still carrying Deplatform Risk.</summary>
         public const int PerRiskyViewerBonus = 2;
         /// <summary>PR Manager's Damage Control: random viewers sent back to the queue.</summary>

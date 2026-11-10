@@ -301,6 +301,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   header: 0
+  colourId: PlayerRow/Name
+  builtColour: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
+  hasBuiltColour: 1
+  colourOnly: 0
 --- !u!1 &1405533323599775851
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,8 +449,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '#1'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7944fe5997cd29d49a5c3083e7245904, type: 2}
-  m_sharedMaterial: {fileID: 2252853311068360623, guid: 7944fe5997cd29d49a5c3083e7245904, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f4a3bfd53cd0b34c81bba2c874219f6, type: 2}
+  m_sharedMaterial: {fileID: 1920161351410656200, guid: 3f4a3bfd53cd0b34c81bba2c874219f6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -528,6 +532,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   header: 1
+  colourId: PlayerRow/Rank
+  builtColour: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
+  hasBuiltColour: 1
+  colourOnly: 0
 --- !u!1 &2251970405616477914
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,15 +595,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+  m_Color: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dd6763b767afa49409b08032e299dc6e, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 0f6616cb785646f4fa947a308056ef33, type: 3}
+  m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
@@ -620,6 +628,10 @@ MonoBehaviour:
   tintPlaceholderOnly: 1
   placeholderTint: {r: 1, g: 0.7882353, b: 0.2901961, a: 1}
   siteText: 0
+  restoreDefaults: 0
+  defaultSprite: {fileID: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultPixelsPerUnit: 1
 --- !u!1 &2257802051720392871
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,6 +724,10 @@ MonoBehaviour:
   tintPlaceholderOnly: 1
   placeholderTint: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
   siteText: 0
+  restoreDefaults: 0
+  defaultSprite: {fileID: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultPixelsPerUnit: 1
 --- !u!1 &4339131760296599064
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,15 +787,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.101960786, g: 0.101960786, b: 0.11764706, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dd6763b767afa49409b08032e299dc6e, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: -6800405758771077582, guid: 0afa923c32813da49b066a3a51762974, type: 3}
+  m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
@@ -804,6 +820,10 @@ MonoBehaviour:
   tintPlaceholderOnly: 1
   placeholderTint: {r: 0.41960785, g: 0.8901961, b: 0.54509807, a: 1}
   siteText: 0
+  restoreDefaults: 0
+  defaultSprite: {fileID: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultPixelsPerUnit: 1
 --- !u!1 &4376502934045447346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,6 +1167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   header: 0
+  colourId: PlayerRow/Status
+  builtColour: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
+  hasBuiltColour: 1
+  colourOnly: 0
 --- !u!1 &5181046740487025264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1250,6 +1274,10 @@ MonoBehaviour:
   tintPlaceholderOnly: 0
   placeholderTint: {r: 1, g: 1, b: 1, a: 1}
   siteText: 0
+  restoreDefaults: 0
+  defaultSprite: {fileID: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultPixelsPerUnit: 1
 --- !u!114 &9136424547435167530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1519,6 +1547,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   header: 1
+  colourId: PlayerRow/Streamer/Placeholder/Initials
+  builtColour: {r: 1, g: 1, b: 1, a: 1}
+  hasBuiltColour: 1
+  colourOnly: 0
 --- !u!1 &7944544874011387605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,8 +1617,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dd6763b767afa49409b08032e299dc6e, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: f8263e07f675e924caf942350b8ed5a6, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1611,3 +1643,7 @@ MonoBehaviour:
   tintPlaceholderOnly: 0
   placeholderTint: {r: 1, g: 1, b: 1, a: 1}
   siteText: 0
+  restoreDefaults: 0
+  defaultSprite: {fileID: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultPixelsPerUnit: 1

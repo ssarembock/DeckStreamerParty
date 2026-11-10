@@ -13,10 +13,15 @@ namespace DeckParty.UI
     public sealed class ReadableOnLight : MonoBehaviour
     {
         TMP_Text m_Text;
+        SkinnedText m_Skinned;
         string m_Seen;
         Color m_SeenColor;
 
-        void Awake() => m_Text = GetComponent<TMP_Text>();
+        void Awake()
+        {
+            m_Text = GetComponent<TMP_Text>();
+            m_Skinned = GetComponent<SkinnedText>();
+        }
 
         void OnEnable() => Apply();
 
@@ -26,7 +31,9 @@ namespace DeckParty.UI
         {
             if (m_Text == null) return;
             var color = m_Text.color;
-            if (color != m_SeenColor)
+            // A colour picked in UI Skin > Text Colours is kept as it is (the person chose it).
+            bool chosen = m_Skinned != null && m_Skinned.OverridesColour;
+            if (!chosen && color != m_SeenColor)
             {
                 // On a panel with a dark inside (UI Skin > Site Colours) pale colours are what reads, so they're kept.
                 var readable = LightText.ReadableOn(transform, color);

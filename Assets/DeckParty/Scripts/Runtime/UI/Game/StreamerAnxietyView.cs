@@ -33,6 +33,7 @@ namespace DeckParty.UI
         TMP_Text m_Sub;
         readonly List<RectTransform> m_Drops = new List<RectTransform>();
         bool m_Built;
+        float m_PortraitScale = 1f;
         bool m_Showing;
         float m_NextShake;
         StreamerType m_Streamer = (StreamerType)255;
@@ -52,10 +53,16 @@ namespace DeckParty.UI
             outline.effectDistance = new Vector2(3f, -3f);
 
             var frame = UiFactory.Rect("Portrait", m_Panel);
-            UiFactory.Place(frame, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(20f, -90f), new Vector2(200f, 90f));
+            // The portrait is a square as tall as the panel allows (the panel's height is set in the Game scene), with the
+            // words to its right.
+            float height = m_Root.rect.height > 1f ? m_Root.rect.height : m_Root.sizeDelta.y;
+            float size = Mathf.Clamp(height - 20f, 60f, 180f);
+            m_PortraitScale = size / 180f;
+            float textLeft = 20f + size + 28f;
+            UiFactory.Place(frame, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(20f, -size * 0.5f), new Vector2(20f + size, size * 0.5f));
             m_Placeholder = UiFactory.Image("Placeholder", frame, UIPalette.Red, RuntimeSprites.Circle);
             UiFactory.Stretch(m_Placeholder.rectTransform);
-            m_Initials = UiFactory.Text("Initials", m_Placeholder.transform, 64f, Color.white, TextAlignmentOptions.Center, true);
+            m_Initials = UiFactory.Text("Initials", m_Placeholder.transform, 64f * m_PortraitScale, Color.white, TextAlignmentOptions.Center, true);
             UiFactory.Stretch(m_Initials.rectTransform);
             var art = UiFactory.Image("Art", frame, Color.white);
             UiFactory.Stretch(art.rectTransform);
@@ -66,14 +73,16 @@ namespace DeckParty.UI
             for (int i = 0; i < 3; i++)
             {
                 var drop = UiFactory.Image("Sweat" + i, frame, new Color(0.55f, 0.85f, 1f, 0.9f), RuntimeSprites.Circle);
-                drop.rectTransform.sizeDelta = new Vector2(18f, 24f);
+                drop.rectTransform.sizeDelta = new Vector2(18f, 24f) * m_PortraitScale;
                 m_Drops.Add(drop.rectTransform);
             }
 
             m_Title = UiFactory.Text("Title", m_Panel, 50f, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true);
-            UiFactory.Place(m_Title.rectTransform, new Vector2(0f, 0.5f), new Vector2(1f, 1f), new Vector2(228f, 0f), new Vector2(-28f, -14f));
+            SkinnedText.Attach(m_Title, TextColourIds.AnxietyTitle);
+            UiFactory.Place(m_Title.rectTransform, new Vector2(0f, 0.5f), new Vector2(1f, 1f), new Vector2(textLeft, 0f), new Vector2(-28f, -10f));
             m_Sub = UiFactory.Text("Subtitle", m_Panel, 36f, new Color(1f, 0.8f, 0.8f), TextAlignmentOptions.MidlineLeft);
-            UiFactory.Place(m_Sub.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0.5f), new Vector2(228f, 14f), new Vector2(-28f, 0f));
+            SkinnedText.Attach(m_Sub, TextColourIds.AnxietySubtitle);
+            UiFactory.Place(m_Sub.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0.5f), new Vector2(textLeft, 10f), new Vector2(-28f, 0f));
 
             m_Root.gameObject.SetActive(true);
             m_Panel.gameObject.SetActive(false);
@@ -143,7 +152,7 @@ namespace DeckParty.UI
             {
                 float phase = Mathf.Repeat(t * 0.9f + i * 0.33f, 1f);
                 float side = i % 2 == 0 ? 1f : -1f;
-                m_Drops[i].anchoredPosition = new Vector2(side * (45f + i * 9f), 57f - phase * 105f);
+                m_Drops[i].anchoredPosition = new Vector2(side * (45f + i * 9f), 57f - phase * 105f) * m_PortraitScale;
                 var image = m_Drops[i].GetComponent<Image>();
                 image.color = image.color.WithAlpha(phase < 0.8f ? 0.9f : (1f - phase) * 4.5f);
             }

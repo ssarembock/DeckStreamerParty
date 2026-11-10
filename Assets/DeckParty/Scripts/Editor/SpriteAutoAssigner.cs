@@ -60,7 +60,7 @@ namespace DeckParty.EditorTools
             ("prmanager", GuestType.PrManager), ("highlyrisky", GuestType.HighlyRiskyCollaborator), ("arbitrator", GuestType.ChatArbitrator),
             ("botdetector", GuestType.BotDetector), ("orbiter", GuestType.RiskyOrbiter), ("smm", GuestType.SocialMediaManager),
             ("socialmedia", GuestType.SocialMediaManager), ("billionaire", GuestType.BillionaireBenefactor), ("techadmin", GuestType.TechAdmin),
-            ("scandal", GuestType.OnlineScandal), ("gatekeeper", GuestType.Gatekeeper), ("bunny", GuestType.BingeBunny),
+            ("journalist", GuestType.OnlineJournalist), ("scandal", GuestType.OnlineJournalist), ("gatekeeper", GuestType.Gatekeeper), ("bunny", GuestType.BingeBunny),
             ("rabbit", GuestType.BingeBunny), ("hatewatcher", GuestType.HateWatcher), ("affiliate", GuestType.Affiliate),
             ("currency", GuestType.MasterOfCurrency), ("executivepr", GuestType.ExecutivePr), ("genz", GuestType.GenZWithJob),
             ("jen", GuestType.DancingJen), ("dancer", GuestType.DancingJen),

@@ -469,11 +469,14 @@ namespace DeckParty.UI
                     else Fx.Play(FxCue.ScoreTick, card.AnimRoot, 0.6f);
                     if (card.Fx != null) card.Fx.Pulse(CardPulse.Shine, 0.7f);
                     // Each resource flies to its own icon in the menu bar: Clout to Clout, Cash to Cash, a Trophy to the Trophies.
-                    // Community bonuses this viewer rolled in this scoring (twice, free, Cash doubled...) ride along on the first chip.
-                    string tags = CommunityTags(events, e.GuestId, e.C == 2 ? 2 : 0);
+                    // Community bonuses this viewer rolled in this scoring (Cash doubled...) ride along on the first chip. A viewer
+                    // who scores twice (Core Fanbase) plays again for the second scoring, tagged as the encore.
+                    bool encore = e.C == PartyEngine.EncoreScoringTag || e.C == PartyEngine.EncoreRepeatScoringTag;
+                    int pass = e.C == 2 || e.C == PartyEngine.EncoreRepeatScoringTag ? 2 : 0;
+                    string tags = CommunityTags(events, e.GuestId, pass, encore);
                     var scorer = State != null ? View?.Find(e.GuestId) : null;
                     bool trophy = scorer != null ? scorer.Info.IsDiamond : GuestCatalog.Get(e.Guest).IsDiamond;
-                    FlyResources(card.AnimRoot.position, e.A, e.B, trophy && e.C != 2, tags.Length > 0 ? tags : null);
+                    FlyResources(card.AnimRoot.position, e.A, e.B, trophy && e.C == 1, tags.Length > 0 ? tags : null);
                     if (tags.Length > 0 && card.Fx != null) card.Fx.Pulse(CardPulse.Shine);
                 }
                 AudioService.PlayPitched(Sfx.Coin, 1f + i * 0.06f, 0.8f);
@@ -530,13 +533,17 @@ namespace DeckParty.UI
         /// The community bonus tags for one viewer's end-of-stream score ("[Content] x2", "[Staff] FREE", "[Clout] +1"...).
         /// <paramref name="pass"/>: 0 for the stream's scoring, 2 for the Memetics Division repeat.
         /// </summary>
-        static string CommunityTags(IReadOnlyList<GameEvent> events, int guestId, int pass)
+        /// <param name="encore">The second scoring of a viewer who scored twice: only the "scores twice" tag; the first scoring
+        /// carries the other tags.</param>
+        static string CommunityTags(IReadOnlyList<GameEvent> events, int guestId, int pass, bool encore)
         {
             var sb = new System.Text.StringBuilder();
             foreach (var e in events)
             {
                 if (e.Type != GameEventType.CommunityBonus || e.GuestId != guestId || e.C != pass) continue;
                 var community = (Community)e.A;
+                bool twice = community == Community.CoreFanbase || community == Community.Content;
+                if (twice != encore) continue;
                 string label;
                 switch (community)
                 {

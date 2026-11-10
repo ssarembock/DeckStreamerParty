@@ -16,8 +16,8 @@ namespace DeckParty.Core
         static readonly (GuestType type, int count)[] s_StartingAudience =
         {
             (GuestType.LoyalFan, 4),
-            (GuestType.Whale, 2),
-            (GuestType.IneffectiveTroll, 4),
+            (GuestType.Fish, 2),
+            (GuestType.IneffectiveTroll, 5),
         };
 
         // ================================================================== setup
@@ -418,8 +418,8 @@ namespace DeckParty.Core
                     else pop -= ctx.NetTrouble;
                     break;
                 case GuestType.Doomer:
+                    // Doomscroll (2026-11-10: no more +2 Cash at exactly 2 Risk).
                     pop += 2 * ctx.NetTrouble;
-                    if (ctx.NetTrouble == 2) cash += 2;
                     break;
                 case GuestType.ForeverAlone:
                     pop += ctx.Guests == 1 ? GameRules.ForeverAloneSoloBonus : ctx.Empty;
@@ -441,7 +441,7 @@ namespace DeckParty.Core
 
                 // --- Audience classics ---
                 case GuestType.PromoCodeUser:
-                    if (ctx.Full) pop += GameRules.PromoCodeFullBonus;
+                    if (ctx.Full) cash += GameRules.PromoCodeFullCash;
                     break;
                 case GuestType.Gatekeeper:
                     pop += ctx.Empty;
@@ -479,7 +479,8 @@ namespace DeckParty.Core
 
         /// <summary>
         /// Total Subs/Cash the party would bank if it ended successfully right now (before fee shortfalls), including the
-        /// fixed Boomer / Millennial rewards. Random community rolls aren't included.
+        /// fixed community rewards (Staff's Cash, Troll Army's Clout) and the Affiliates' Checkout Codes. Random community
+        /// rolls (Core Fanbase scoring twice) aren't included.
         /// </summary>
         public static void ProjectScore(PlayerState s, out int pop, out int cash)
         {
@@ -491,9 +492,31 @@ namespace DeckParty.Core
                 pop += pops[i];
                 cash += cashes[i];
             }
-            Communities.FixedRewards(CommunityScores(s), out int communitySubs, out int communityCash);
-            pop += communitySubs;
-            cash += communityCash;
+            var scores = CommunityScores(s);
+            Communities.FixedRewards(scores, out int communitySubs, out int communityCash);
+            pop += communitySubs + TrollArmyClout(s, scores);
+            cash += communityCash + Communities.StaffCash(scores[(int)Community.Staff]) + CheckoutCodesNow(s);
+        }
+
+        /// <summary>Troll Army's Clout if the stream were scored now: +2 per point of Risk, cancelled Risk included.</summary>
+        public static int TrollArmyClout(PlayerState s, int[] scores = null)
+        {
+            scores = scores ?? CommunityScores(s);
+            return Communities.TrollArmyClout(scores[(int)Community.Trolls], TroubleTotal(s));
+        }
+
+        /// <summary>Cash the Affiliates' Checkout Codes would add to this stream if it were scored now (+1 each, while anyone can still grow).</summary>
+        static int CheckoutCodesNow(PlayerState s)
+        {
+            int affiliates = s.CountInHouse(GuestType.Affiliate);
+            if (affiliates == 0) return 0;
+            int room = 0;
+            foreach (var id in s.House)
+            {
+                var g = s.Find(id);
+                if (g != null && !g.Temporary && !GuestCatalog.IsToken(g.Kind)) room += Math.Max(0, GameRules.PermanentCashCap - PrintedCash(g));
+            }
+            return Math.Min(affiliates, room);
         }
 
         /// <summary>Gifted Subs penalty that ending now would incur because fees can't be paid.</summary>
@@ -821,7 +844,7 @@ namespace DeckParty.Core
         {
             if (GuestCatalog.Get(type).IsDiamond) return int.MaxValue;
             int rivals = (int)type < s.RivalTaken.Length ? s.RivalTaken[(int)type] : 0;
-            return Math.Max(0, GuestCatalog.Get(type).ShopStock - TakenFromShop(s, type) - rivals);
+            return Math.Max(0, GuestCatalog.Get(type).ShopStockFor(s.MatchPlayers) - TakenFromShop(s, type) - rivals);
         }
 
         /// <summary>
@@ -1041,10 +1064,9 @@ namespace DeckParty.Core
         static void ScoreNow(PlayerState s, GuestInstance g, int sourceId, List<GameEvent> ev)
         {
             ScoreGuest(s, g, out int pop, out int cash);
-            // Staff and Finance Bros bonuses apply to every scoring, this one included.
+            // The (retired) Finance Bros bonus applies to every scoring, this one included.
             var scores = CommunityScores(s);
-            cash = RollCash(s, g, cash, Communities.StaffFreeChance(scores[(int)Community.Staff]),
-                Communities.FinanceDoubleChance(scores[(int)Community.FinanceBros]), ev);
+            cash = RollCash(s, g, cash, Communities.FinanceDoubleChance(scores[(int)Community.FinanceBros]), ev);
             Emit(ev, GameEventType.ScoredNow, g, pop, cash, sourceId);
             Bank(s, pop, cash, ev);
         }
@@ -1428,7 +1450,6 @@ namespace DeckParty.Core
 
             int trouble = NetTrouble(s);
             SoftLanding(s, ev);
-            PayTrolls(s, ev);
             s.Streak = 0;
             s.RaidSuspects.Clear();
             foreach (var id in s.House)
@@ -1445,27 +1466,6 @@ namespace DeckParty.Core
             else if (s.RaidSuspects.Count == 0) s.Phase = GamePhase.Planning;
             else s.Phase = GamePhase.RaidBlame;
             return true;
-        }
-
-        /// <summary>
-        /// Trolls love the drama: when the stream is deplatformed (Risk over the limit, not Server Down or ending it yourself)
-        /// each Trolls point pays 1 random Gifted Sub or Cash.
-        /// </summary>
-        static void PayTrolls(PlayerState s, List<GameEvent> ev)
-        {
-            int count = Communities.TrollsReward(CommunityScore(s, Community.Trolls));
-            if (count <= 0) return;
-            int subs = 0, cash = 0;
-            for (int i = 0; i < count; i++)
-            {
-                if (DeterministicRandom.Range(ref s.RngState, 2) == 0) subs++;
-                else cash++;
-            }
-            s.Pop += subs;
-            s.TotalPopEarned += subs;
-            s.Cash += cash;
-            s.TotalCashEarned += cash;
-            Emit(ev, GameEventType.TrollsPaid, null, subs, cash);
         }
 
         /// <summary>
@@ -1920,6 +1920,8 @@ namespace DeckParty.Core
         /// </summary>
         static void ScoreStream(PlayerState s, List<GameEvent> ev)
         {
+            // Affiliates' Checkout Codes first, so the +1 Cash already counts in this stream's score.
+            ApplyCheckoutCodes(s, ev);
             var scores = CommunityScores(s);
             ScoreChat(s, scores, false, out int pop, out int cash, ev);
 
@@ -2086,42 +2088,57 @@ namespace DeckParty.Core
             }
         }
 
+        /// <summary>GuestScored C for the second scoring of a viewer who scores twice (Core Fanbase), so it plays again.</summary>
+        public const int EncoreScoringTag = 3;
+        /// <summary>The same inside the (retired) Memetics Division's repeat scoring.</summary>
+        public const int EncoreRepeatScoringTag = 4;
+
         /// <summary>
         /// One scoring of the chat: every viewer in joining order (community bonuses rolled per viewer), then the stream-wide
-        /// community rewards. <paramref name="repeat"/> marks the Memetics Division's second scoring (GuestScored C = 2).
+        /// community rewards. Each viewer sends a GuestScored event (C = 1, or 2 in the Memetics Division's repeat); a viewer
+        /// who scores twice sends a second one (C = <see cref="EncoreScoringTag"/> / <see cref="EncoreRepeatScoringTag"/>),
+        /// so the scoring sequence plays both.
         /// </summary>
         static void ScoreChat(PlayerState s, int[] scores, bool repeat, out int pop, out int cash, List<GameEvent> ev)
         {
             ScoreHouse(s, out var pops, out var cashes);
-            RollCommunityBonuses(s, scores, pops, cashes, repeat ? 2 : 0, ev);
+            var encorePops = new int[pops.Length];
+            var encoreCashes = new int[pops.Length];
+            var encore = new bool[pops.Length];
+            RollCommunityBonuses(s, scores, pops, cashes, encorePops, encoreCashes, encore, repeat ? 2 : 0, ev);
             pop = 0;
             cash = 0;
             for (int i = 0; i < s.House.Count && i < pops.Length; i++)
             {
-                Emit(ev, GameEventType.GuestScored, s.Find(s.House[i]), pops[i], cashes[i], repeat ? 2 : 1);
+                var g = s.Find(s.House[i]);
+                Emit(ev, GameEventType.GuestScored, g, pops[i], cashes[i], repeat ? 2 : 1);
                 pop += pops[i];
                 cash += cashes[i];
+                if (!encore[i]) continue;
+                Emit(ev, GameEventType.GuestScored, g, encorePops[i], encoreCashes[i], repeat ? EncoreRepeatScoringTag : EncoreScoringTag);
+                pop += encorePops[i];
+                cash += encoreCashes[i];
             }
             ScoreCommunityRewards(s, scores, ref pop, ref cash, ev);
         }
 
         /// <summary>
-        /// End-of-stream community rolls, per viewer in joining order: rival Doomsdayers may stop a viewer scoring at all;
-        /// Content may make a viewer outside the Core Fanbase score twice; on each scoring, Clout may add a Gifted Sub to a
-        /// viewer outside the Core Fanbase, Staff may waive a Staff viewer's Cash cost and Finance Bros may double a Cash
-        /// reward. Changes <paramref name="pops"/> / <paramref name="cashes"/> in place. <paramref name="tag"/> goes in the
-        /// events' C (2 = the Memetics Division repeat).
+        /// End-of-stream community rolls, per viewer in joining order: Core Fanbase may make one of its viewers score twice
+        /// (the second scoring goes in <paramref name="encorePops"/> / <paramref name="encoreCashes"/>, flagged in
+        /// <paramref name="encore"/>). The retired communities' rolls are kept: rival Doomsdayers and Armchair Activists may
+        /// stop a viewer scoring, Content may make a viewer outside the Core Fanbase score twice, Clout may add a Gifted Sub
+        /// and Finance Bros may double a Cash reward. <paramref name="tag"/> goes in the events' C (2 = the Memetics repeat).
         /// </summary>
-        static void RollCommunityBonuses(PlayerState s, int[] scores, int[] pops, int[] cashes, int tag, List<GameEvent> ev)
+        static void RollCommunityBonuses(PlayerState s, int[] scores, int[] pops, int[] cashes, int[] encorePops, int[] encoreCashes,
+            bool[] encore, int tag, List<GameEvent> ev)
         {
             int doom = Communities.DoomChance(s.PartyDoom);
             int silence = Communities.ArmchairSilenceChance(scores[(int)Community.ArmchairActivists]);
-            int encore = Communities.ContentEncoreChance(scores[(int)Community.Content]);
+            int contentEncore = Communities.ContentEncoreChance(scores[(int)Community.Content]);
             int fanEncore = Communities.CoreFanbaseEncoreChance(scores[(int)Community.CoreFanbase]);
-            int staff = Communities.StaffFreeChance(scores[(int)Community.Staff]);
             int finance = Communities.FinanceDoubleChance(scores[(int)Community.FinanceBros]);
             int clout = Communities.CloutChance(scores[(int)Community.Clout]);
-            if (doom + silence + encore + fanEncore + staff + finance + clout == 0) return;
+            if (doom + silence + contentEncore + fanEncore + finance + clout == 0) return;
 
             for (int i = 0; i < s.House.Count && i < pops.Length; i++)
             {
@@ -2147,28 +2164,28 @@ namespace DeckParty.Core
                 }
 
                 bool fan = GuestCatalog.InCommunity(g.Kind, Community.CoreFanbase);
-                int times = 1;
-                // Core Fanbase: the regulars may score twice. Content: everyone else may.
-                if (fan ? Roll(s, fanEncore) : Roll(s, encore))
-                {
-                    times = 2;
-                    Emit(ev, GameEventType.CommunityBonus, g, (int)(fan ? Community.CoreFanbase : Community.Content), 0, tag);
-                }
+                // Core Fanbase: the regulars may score twice (the retired Content let everyone else).
+                bool twice = fan ? Roll(s, fanEncore) : Roll(s, contentEncore);
+                if (twice) Emit(ev, GameEventType.CommunityBonus, g, (int)(fan ? Community.CoreFanbase : Community.Content), 0, tag);
 
-                // Clout: the viewers outside the Core Fanbase may each bring one more Gifted Sub, every time they score.
-                // A Bot earns nothing, ever.
+                // Each scoring rolls on its own: Clout's extra Gifted Sub (outside the Core Fanbase; a Bot earns nothing)
+                // and Finance Bros' double Cash.
                 bool cloutable = !fan && !GuestCatalog.IsToken(g.Kind);
-                int pop = 0, cash = 0, extra = 0;
-                for (int t = 0; t < times; t++)
-                {
-                    pop += pops[i];
-                    if (cloutable && Roll(s, clout)) extra += Communities.CloutSubs;
-                    cash += RollCash(s, g, cashes[i], staff, finance, ev, tag);
-                }
-                if (extra > 0) Emit(ev, GameEventType.CommunityBonus, g, (int)Community.Clout, extra, tag);
-                pops[i] = pop + extra;
-                cashes[i] = cash;
+                int basePop = pops[i], baseCash = cashes[i];
+                ScoreOnce(s, g, basePop, baseCash, cloutable, clout, finance, tag, ev, out pops[i], out cashes[i]);
+                if (!twice) continue;
+                encore[i] = true;
+                ScoreOnce(s, g, basePop, baseCash, cloutable, clout, finance, tag, ev, out encorePops[i], out encoreCashes[i]);
             }
+        }
+
+        static void ScoreOnce(PlayerState s, GuestInstance g, int basePop, int baseCash, bool cloutable, int cloutChance, int financeChance,
+            int tag, List<GameEvent> ev, out int pop, out int cash)
+        {
+            int extra = cloutable && Roll(s, cloutChance) ? Communities.CloutSubs : 0;
+            if (extra > 0) Emit(ev, GameEventType.CommunityBonus, g, (int)Community.Clout, extra, tag);
+            pop = basePop + extra;
+            cash = RollCash(s, g, baseCash, financeChance, ev, tag);
         }
 
         /// <summary>
@@ -2190,13 +2207,27 @@ namespace DeckParty.Core
         }
 
         /// <summary>
-        /// The stream-wide community rewards when a stream is scored: Boomer and Millennial pay a fixed amount per point;
-        /// Zoomer rolls twice, separately (+6 Subs, and -3 Cash), each with 20% per point.
+        /// The stream-wide community rewards when a stream is scored (each flies from its Community Beats chip):
+        /// Staff pays a flat +1 Cash per point (2026-11-10, it used to waive Staff fees), Troll Army +2 Clout per point of
+        /// Risk in the stream, cancelled Risk included (2026-11-10, it used to pay out when deplatformed). The retired
+        /// Zoomer still rolls (+6 Subs and -3 Cash, separately), though nobody is a Zoomer any more.
         /// </summary>
         static void ScoreCommunityRewards(PlayerState s, int[] scores, ref int pop, ref int cash, List<GameEvent> ev)
         {
-            // V5: Boomers and Millennials no longer pay a fixed amount here (see CommunityAftermath / RetireBoomers).
-            // Only the retired Zoomer roll is left, and nobody is a Zoomer any more.
+            int staffCash = Communities.StaffCash(scores[(int)Community.Staff]);
+            if (staffCash > 0)
+            {
+                cash += staffCash;
+                Emit(ev, GameEventType.CommunityReward, null, (int)Community.Staff, 0, staffCash);
+            }
+
+            int trollClout = TrollArmyClout(s, scores);
+            if (trollClout > 0)
+            {
+                pop += trollClout;
+                Emit(ev, GameEventType.CommunityReward, null, (int)Community.Trolls, trollClout, 0);
+            }
+
             int chance = Communities.ZoomerChance(scores[(int)Community.Zoomer]);
             if (chance <= 0) return;
             int zoomerSubs = Roll(s, chance) ? Communities.ZoomerSubs : 0;
@@ -2207,14 +2238,32 @@ namespace DeckParty.Core
             Emit(ev, GameEventType.CommunityReward, null, (int)Community.Zoomer, zoomerSubs, zoomerCash);
         }
 
-        /// <summary>One scoring of a viewer's Cash: Staff may waive a Staff viewer's cost, Finance Bros may double a reward.</summary>
-        static int RollCash(PlayerState s, GuestInstance g, int cash, int staffChance, int financeChance, List<GameEvent> ev, int tag = 0)
+        /// <summary>
+        /// Affiliates' Checkout Code (2026-11-10, no longer an action): when the stream is scored, each Affiliate in chat gives
+        /// a random viewer in chat +1 Cash for good, up to <see cref="GameRules.PermanentCashCap"/>. It happens before the
+        /// viewers score, so it already counts this stream.
+        /// </summary>
+        static void ApplyCheckoutCodes(PlayerState s, List<GameEvent> ev)
         {
-            if (cash < 0 && GuestCatalog.InCommunity(g.Kind, Community.Staff) && Roll(s, staffChance))
+            int affiliates = s.CountInHouse(GuestType.Affiliate);
+            for (int k = 0; k < affiliates; k++)
             {
-                Emit(ev, GameEventType.CommunityBonus, g, (int)Community.Staff, -cash, tag);
-                return 0;
+                var candidates = new List<GuestInstance>();
+                foreach (var id in s.House)
+                {
+                    var g = s.Find(id);
+                    if (g != null && !g.Temporary && !GuestCatalog.IsToken(g.Kind) && PrintedCash(g) < GameRules.PermanentCashCap) candidates.Add(g);
+                }
+                if (candidates.Count == 0) return;
+                var target = candidates[DeterministicRandom.Range(ref s.RngState, candidates.Count)];
+                target.BonusCash++;
+                Emit(ev, GameEventType.CashBoosted, target, 1, target.BonusCash);
             }
+        }
+
+        /// <summary>One scoring of a viewer's Cash: the retired Finance Bros may double a reward.</summary>
+        static int RollCash(PlayerState s, GuestInstance g, int cash, int financeChance, List<GameEvent> ev, int tag = 0)
+        {
             if (cash > 0 && Roll(s, financeChance))
             {
                 Emit(ev, GameEventType.CommunityBonus, g, (int)Community.FinanceBros, cash, tag);

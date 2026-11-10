@@ -1233,7 +1233,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: "Elenco: <color=#FFC94A>11 espectadores aleat\xF3rios + 3 Trof\xE9us
+    m_Localized: "Elenco: <color=#FFC94A>12 espectadores aleat\xF3rios + 3 Trof\xE9us
       aleat\xF3rios</color>, sorteados quando a temporada come\xE7a."
     m_Metadata:
       m_Items: []
@@ -2176,6 +2176,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3193502843887661
     m_Localized: Numa partida ({count} jogadores)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3533811192782848
+    m_Localized: "{count} {count:plural:espectador|espectadores} na sua Audi\xEAncia"
     m_Metadata:
       m_Items: []
   references:

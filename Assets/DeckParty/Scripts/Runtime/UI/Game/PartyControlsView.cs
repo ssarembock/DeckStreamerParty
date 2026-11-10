@@ -26,8 +26,13 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text endSubLabel;
         [Tooltip("Risky viewers still in the queue (an icon and a number).")]
         [SerializeField] internal TMP_Text riskLabel;
-        [Tooltip("Optional pill behind the risky-queue count (hidden when there are none).")]
+        [Tooltip("Optional pill behind the risky-queue count (hidden when there are none). Scenes built since 2026-11-10 have none.")]
         [SerializeField] internal GameObject riskBadge;
+
+        [Tooltip("The rounded rectangles under the two main buttons (UI Skin: Add Viewer base, End the Stream base). They fade " +
+                 "with their button while it can't be pressed. Optional.")]
+        [SerializeField] internal CanvasGroup doorBase;
+        [SerializeField] internal CanvasGroup endBase;
 
         [Header("Who's next (X-Ray, Side Eye Chloe)")]
         [SerializeField] internal GameObject queueRoot;
@@ -48,6 +53,9 @@ namespace DeckParty.UI
         public event Action RejectClicked;
 
         static readonly List<int> s_Next = new List<int>();
+
+        /// <summary>How see-through a button's base gets while the button can't be pressed (like the button itself).</summary>
+        const float DisabledBaseAlpha = 0.45f;
 
         Color m_EndBaseColor;
         bool m_WinReady;
@@ -147,6 +155,8 @@ namespace DeckParty.UI
                 m_EndTooltip.Text = tip;
             }
             if (!m_WinReady && endButtonImage != null) endButtonImage.color = m_EndBaseColor;
+            if (doorBase != null) doorBase.alpha = doorButton.interactable ? 1f : DisabledBaseAlpha;
+            if (endBase != null) endBase.alpha = endButton.interactable ? 1f : DisabledBaseAlpha;
 
             RenderRisk(s);
 

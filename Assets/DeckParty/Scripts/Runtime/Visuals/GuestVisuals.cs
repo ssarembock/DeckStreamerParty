@@ -127,7 +127,9 @@ namespace DeckParty
                     sb.Append(Colored(Loc.Get("card.grows"), UIPalette.Gold));
                     break;
                 case GuestType.PromoCodeUser:
-                    sb.Append(Colored(Loc.Get("card.if_full", "value", PopText(GameRules.PromoCodeFullBonus)), UIPalette.Gold));
+                    // +1 Clout, and +3 Cash only if chat is full (2026-11-10).
+                    if (info.Pop != 0) sb.Append(PopText(info.Pop)).Append("  ");
+                    sb.Append(Colored(Loc.Get("card.if_full", "value", CashText(GameRules.PromoCodeFullCash)), UIPalette.Green));
                     break;
                 case GuestType.ExecutivePr:
                     sb.Append(Colored(Loc.Get("card.per_risky", "value", PopText(GameRules.PerRiskyViewerBonus)), UIPalette.Gold));

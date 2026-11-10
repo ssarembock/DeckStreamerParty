@@ -15,7 +15,7 @@ namespace DeckParty.Core
     {
         CoreFanbase = 0,
         Staff = 1,
-        Content = 2,
+        Content = 2,            // retired 2026-11-10
         Techspertise = 3,       // retired in V5
         FinanceBros = 4,        // retired in V5
         Trolls = 5,             // "Troll Army" since V5
@@ -32,11 +32,11 @@ namespace DeckParty.Core
         GenZ = 14,
         Gatekeepers = 15,
         HypeMen = 16,
-        Mods = 17,
-        FullStream = 18,
-        Marketers = 19,
-        Saboteurs = 20,
-        ShopControl = 21,
+        Mods = 17,              // retired 2026-11-10
+        FullStream = 18,        // retired 2026-11-10
+        Marketers = 19,         // retired 2026-11-10
+        Saboteurs = 20,         // retired 2026-11-10
+        ShopControl = 21,       // retired 2026-11-10
         Voyeurs = 22,
     }
 
@@ -72,27 +72,23 @@ namespace DeckParty.Core
 
     /// <summary>
     /// Community rules and tuning. Chances are whole percentages, rolled with the season's deterministic RNG, so the host
-    /// and every client agree. The communities in the game (V5):
+    /// and every client agree. The communities in the game (2026-11-10, StreamersViewersCommunities.md):
     /// <list type="bullet">
-    /// <item>Core Fanbase: 20% per point (max 4 points, 80%) that each Core Fanbase viewer scores twice.</item>
-    /// <item>Staff: 30% per point (max 3 points, 90%) that each Staff viewer's Cash cost is waived when they're scored.</item>
+    /// <item>Core Fanbase: 10% per point (max 3 points, 30%) that each Core Fanbase viewer scores twice (the scoring plays twice).</item>
+    /// <item>Staff: a flat +1 Cash per point (max 3) when the stream is scored.</item>
     /// <item>Boomers: each point makes Sub Cap upgrades 1 Cash cheaper in your next shop. After a scored stream each Boomer
     /// in chat has a 10% chance to leave your Audience for good (and a Millennial inherits).</item>
+    /// <item>Millennials: each time a Boomer leaves your Audience, a random Millennial you own permanently earns +1 Cash,
+    /// once per point (at least once).</item>
     /// <item>Gen-Z: after a scored stream, each Gen-Z viewer in chat permanently gains +1 Clout or +1 Cash (random) per point.</item>
     /// <item>Gatekeepers: each point gives one more use of a Gatekeeper's eviction action this stream.</item>
     /// <item>Hype Men: 10% per point (max 2 points, 20%) that a Server Down stream still scores.</item>
-    /// <item>Troll Army (Trolls): 1 random Clout or Cash per point when the stream is deplatformed.</item>
-    /// <item>Mods: 10% per point (max 2 points, 20%), rolled when the stream is scored, that your next stream starts with 1 Risk cancelled.</item>
-    /// <item>Millennials: each time a Boomer leaves your Audience, a random Millennial you own permanently earns +1 Cash,
-    /// once per point (at least once).</item>
-    /// <item>Full Stream: "chat is full" bonuses count chat as full with up to 1 empty space per point.</item>
-    /// <item>Marketers: each point (max 3) gives one more use of a Marketer's recruit action this stream.</item>
-    /// <item>Saboteurs (multiplayer): each point makes every rival's first recruit in their next shop cost 1 Clout more.</item>
-    /// <item>Shop Control: each point makes your first recruit in the next shop cost 1 Clout less.</item>
+    /// <item>Troll Army (Trolls): +2 Clout per point of Risk in the stream when it's scored, cancelled Risk included.</item>
     /// <item>Voyeurs: each point (max 1) gives one more use of a Voyeur's peek action this stream.</item>
-    /// <item>Content: 30% per point (max 3 points, 90%) that each viewer outside the Core Fanbase scores twice.</item>
     /// </list>
-    /// The retired communities' numbers are kept below for when they come back.
+    /// Retired 2026-11-10 (still in the code, nobody belongs): Content, Mods, Full Stream, Marketers, Shop Control and
+    /// Saboteurs; retired in V5: Techspertise, Finance Bros, Doomsdayers, Zoomer, Armchair Activists, Clout, Memetics
+    /// Division and Bots. Their numbers are kept below for when they come back.
     /// </summary>
     public static class Communities
     {
@@ -107,9 +103,11 @@ namespace DeckParty.Core
 
         // --- V5 communities ---
         // Viewer card edits (2026-11-08, Communities.csv): Core Fanbase 20% a point up to 4, Staff and Content 30% up to 3.
-        public const int CoreFanbasePercentPerPoint = 20;
-        public const int CoreFanbaseMaxPoints = 4;
-        public const int StaffPercentPerPoint = 30;
+        // 2026-11-10 (user request): Core Fanbase 10% a point up to 30% (was 20% up to 80%).
+        public const int CoreFanbasePercentPerPoint = 10;
+        public const int CoreFanbaseMaxPoints = 3;
+        /// <summary>Staff (2026-11-10): Cash the stream earns per point when scored (it used to be a chance to waive fees).</summary>
+        public const int StaffCashPerPoint = 1;
         public const int StaffMaxPoints = 3;
         public const int ContentPercentPerPoint = 30;
         public const int ContentMaxPoints = 3;
@@ -122,7 +120,8 @@ namespace DeckParty.Core
         public const int GenZMaxPoints = 2;
         public const int HypeMenPercentPerPoint = 10;
         public const int HypeMenMaxPoints = 2;
-        public const int TrollsRewardPerPoint = 1;
+        /// <summary>Troll Army (2026-11-10): Clout per point of Risk in the stream when scored, cancelled Risk included.</summary>
+        public const int TrollArmyCloutPerRisk = 2;
         public const int ModsPercentPerPoint = 10;
         public const int ModsMaxPoints = 2;
         public const int FullStreamMaxPoints = 3;
@@ -163,9 +162,8 @@ namespace DeckParty.Core
         /// <summary>The communities in the game, in display order (Community Beats, tooltips, the Game Database).</summary>
         public static readonly Community[] All =
         {
-            Community.CoreFanbase, Community.Staff, Community.Content, Community.Boomer, Community.Millennial,
-            Community.GenZ, Community.Gatekeepers, Community.HypeMen, Community.Trolls, Community.Mods,
-            Community.FullStream, Community.Marketers, Community.Voyeurs, Community.ShopControl, Community.Saboteurs,
+            Community.CoreFanbase, Community.Staff, Community.Boomer, Community.Millennial, Community.GenZ,
+            Community.Gatekeepers, Community.HypeMen, Community.Trolls, Community.Voyeurs,
         };
 
         /// <summary>Every community value, retired ones included (art slots, saved masks).</summary>
@@ -240,7 +238,8 @@ namespace DeckParty.Core
 
         public static int CoreFanbaseEncoreChance(int points) => Clamp(points, CoreFanbaseMaxPoints) * CoreFanbasePercentPerPoint;
 
-        public static int StaffFreeChance(int points) => Clamp(points, StaffMaxPoints) * StaffPercentPerPoint;
+        /// <summary>Staff: the flat Cash a scored stream earns (+1 per point, up to the cap).</summary>
+        public static int StaffCash(int points) => Clamp(points, StaffMaxPoints) * StaffCashPerPoint;
 
         public static int ContentEncoreChance(int points) => Clamp(points, ContentMaxPoints) * ContentPercentPerPoint;
 
@@ -256,7 +255,8 @@ namespace DeckParty.Core
 
         public static int HypeMenChance(int points) => Clamp(points, HypeMenMaxPoints) * HypeMenPercentPerPoint;
 
-        public static int TrollsReward(int points) => Math.Max(0, points) * TrollsRewardPerPoint;
+        /// <summary>Troll Army: Clout a scored stream earns with this much Risk in it (cancelled Risk counts), once the community scores.</summary>
+        public static int TrollArmyClout(int points, int risk) => points > 0 ? TrollArmyCloutPerRisk * Math.Max(0, risk) : 0;
 
         public static int ModsChance(int points) => Clamp(points, ModsMaxPoints) * ModsPercentPerPoint;
 
@@ -306,7 +306,7 @@ namespace DeckParty.Core
             switch (community)
             {
                 case Community.CoreFanbase: return CoreFanbaseEncoreChance(points);
-                case Community.Staff: return StaffFreeChance(points);
+                case Community.Staff: return StaffCash(points);
                 case Community.Content: return ContentEncoreChance(points);
                 case Community.Boomer: return BoomerDiscount(points);
                 case Community.Millennial: return points > 0 ? Inheritances(points) : 0;
@@ -315,7 +315,7 @@ namespace DeckParty.Core
                 case Community.Marketers:
                 case Community.Voyeurs: return ExtraUses(community, points);
                 case Community.HypeMen: return HypeMenChance(points);
-                case Community.Trolls: return TrollsReward(points);
+                case Community.Trolls: return points > 0 ? TrollArmyCloutPerRisk : 0;
                 case Community.Mods: return ModsChance(points);
                 case Community.FullStream: return FullStreamSlack(points);
                 case Community.Saboteurs: return SabotageAmount(points);
@@ -339,7 +339,6 @@ namespace DeckParty.Core
             switch (community)
             {
                 case Community.CoreFanbase:
-                case Community.Staff:
                 case Community.Content:
                 case Community.HypeMen:
                 case Community.Mods:

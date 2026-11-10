@@ -23,7 +23,8 @@ namespace DeckParty
             switch (community)
             {
                 case Community.CoreFanbase: per = Communities.CoreFanbasePercentPerPoint; break;
-                case Community.Staff: per = Communities.StaffPercentPerPoint; break;
+                case Community.Staff: per = Communities.StaffCashPerPoint; break;
+                case Community.Trolls: per = Communities.TrollArmyCloutPerRisk; break;
                 case Community.Content: per = Communities.ContentPercentPerPoint; break;
                 case Community.HypeMen: per = Communities.HypeMenPercentPerPoint; break;
                 case Community.Mods: per = Communities.ModsPercentPerPoint; break;
@@ -71,6 +72,9 @@ namespace DeckParty
                     // Extra action uses: how many are left right now.
                     if (community == Community.Gatekeepers || community == Community.Marketers || community == Community.Voyeurs)
                         value = PartyEngine.ExtraUsesLeft(state, community);
+                    // Troll Army: the Clout this stream's Risk would bring right now.
+                    else if (community == Community.Trolls)
+                        value = PartyEngine.TrollArmyClout(state);
                     sb.Append("\n").Append(GuestVisuals.Colored(Loc.Get($"community.{community}.now", ("value", value)), UIPalette.Gold));
                 }
             }
@@ -95,6 +99,9 @@ namespace DeckParty
             {
                 // Per point while nobody's here, the stream's total once there are points.
                 case Community.Boomer: return $"-{Communities.BoomerDiscount(Mathf.Max(1, points))}{cash}";
+                case Community.Staff: return $"+{Communities.StaffCash(Mathf.Max(1, points))}{cash}";
+                // Clout per point of Risk.
+                case Community.Trolls: return $"+{Communities.TrollArmyCloutPerRisk}{subs}/{GameIcons.Tag(ResourceIcon.Risk)}";
                 case Community.ShopControl: return $"-{Communities.ShopControlDiscount(Mathf.Max(1, points))}{subs}";
                 case Community.Saboteurs: return $"+{Communities.SabotageAmount(Mathf.Max(1, points))}{subs}";
                 case Community.Millennial: return $"x{Communities.Inheritances(points)}";

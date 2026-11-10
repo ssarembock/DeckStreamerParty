@@ -25,8 +25,8 @@ namespace DeckParty.EditorTools
         /// with a border along its bottom edge.
         /// </summary>
         const float HeaderHeight = 128f;
-        /// <summary>How far the Audience and Menu buttons sit above the bar's middle (the risky-queue count goes under Audience).</summary>
-        const float ButtonLift = 15f;
+        /// <summary>The Audience button: as wide as a counter (its icon and the number of viewers still in the queue).</summary>
+        const float AudienceButtonWidth = 150f;
         /// <summary>Space between the top of the screen and the menu bar (none: the bar starts at the top edge).</summary>
         const float BarTop = 0f;
         /// <summary>Space between the screen's sides and the menu bar's outer items (the logo, the Menu button).</summary>
@@ -49,17 +49,29 @@ namespace DeckParty.EditorTools
         /// <summary>The Deplatform Risk pips in the chat's title band (they replaced the Stream Chat title icon and left the menu bar).</summary>
         const float RiskPipSize = 92f;
         const float RiskPipGap = 20f;
-        /// <summary>The band along the bottom of the chat window for the footer picture (and the near-deplatform warning).</summary>
-        const float FooterHeight = 224f;
         /// <summary>
-        /// The band along the bottom of the Stream Chat window that holds the Add Viewer and End the Stream buttons. The window
-        /// reaches the bottom of the stream, level with the facecam, and the buttons sit inside its border (where the row under
-        /// the window used to be).
+        /// The band above the buttons kept for the near-deplatform warning (no picture any more). It was 224 px with the footer
+        /// picture; of the 74 px it gave up, 16 went to the button bases (ButtonsBand) and 58 to the viewers.
         /// </summary>
-        const float ButtonsBand = 112f;
+        const float FooterHeight = 150f;
+        /// <summary>The near-deplatform warning's panel (StreamerAnxietyView caps its width to the chat window).</summary>
+        static readonly Vector2 AnxietySize = new Vector2(1480f, 140f);
+        /// <summary>
+        /// The band along the bottom of the Stream Chat window that holds the Add Viewer and End the Stream buttons and the
+        /// rounded bases under them. The window reaches the bottom of the stream, level with the facecam, and the buttons sit
+        /// inside its border (where the row under the window used to be).
+        /// </summary>
+        const float ButtonsBand = 128f;
         /// <summary>The two main buttons: 480 = the old 320 + 50%.</summary>
         const float MainButtonWidth = 480f;
         const float MainButtonHeight = 88f;
+        /// <summary>
+        /// The rounded rectangle under each main button (UI Skin: Add Viewer base, End the Stream base): as wide as the button,
+        /// <see cref="ButtonBaseOverlap"/> px of it under the button's bottom edge and the rest showing below.
+        /// </summary>
+        const float ButtonBaseHeight = 40f;
+        const float ButtonBaseBottom = 10f;
+        const float ButtonBaseOverlap = 14f;
         /// <summary>
         /// The channel column right of the chat: Community Beats on top, the facecam square at the bottom (the usual streamer
         /// layout: the camera sits in the bottom-right corner). 370 = the old 336 px facecam + 10%.
@@ -100,11 +112,11 @@ namespace DeckParty.EditorTools
             var frame = root.gameObject.AddComponent<ContentFrame>();
 
             // The menu bar spans the whole screen (outside the 21:9 content frame), along the top edge.
-            var hud = BuildHud(canvas, out var riskPill, out var riskLabel);
+            var hud = BuildHud(canvas);
 
             var mainArea = EditorUI.Rect(root, "MainArea").Box(Vector2.zero, Vector2.one, new Vector2(456, Gap), new Vector2(-Gap, -ContentTop));
             var partyRoot = EditorUI.Rect(mainArea, "Party").Stretch();
-            var house = BuildStream(partyRoot, prefabs, riskPill, riskLabel, out var links, out var viewerEmojis, out var controls, out var beats, out var facecam,
+            var house = BuildStream(partyRoot, prefabs, out var links, out var viewerEmojis, out var controls, out var beats, out var facecam,
                 out var streamOverlay, out var anxiety, out var riskMeter, out var riskPips, out var riskTooltip);
             // The Deplatform Risk pips live in the Stream Chat's title band now; the menu bar's view still lights them.
             hud.troubleMeter = riskMeter;
@@ -181,6 +193,8 @@ namespace DeckParty.EditorTools
             controller.turnTimer = turnTimer;
             controller.links = links;
 
+            // Every text gets an id and an entry in UI Skin > Text Colours (colours you set there are kept).
+            TextColourRegistry.TagScene(scene);
             EditorSceneManager.SaveScene(scene, DeckPartyPaths.GameScene);
         }
 
@@ -202,10 +216,11 @@ namespace DeckParty.EditorTools
         /// The menu bar: a plain white rectangle along the top edge of the screen, the full width of the screen, with a black
         /// border along its bottom edge (both from UI Skin > Site Colours > Menu bar). The platform logo and the stream count sit
         /// on the left; Clout, Cash and Trophies (one icon and "in chat / needed to win") are centred on the screen; Audience
-        /// and Menu sit on the right, with the risky-queue count under Audience during a stream. Sections are split by short
-        /// grey lines. The Deplatform Risk pips are in the Stream Chat's title band (see <see cref="BuildStream"/>).
+        /// (with the number of viewers still in the queue) and Menu sit on the right. Every item sits in a rounded frame of the same
+        /// height, centred on the bar. Sections are split by short grey lines. The Deplatform Risk pips are in the Stream Chat's
+        /// title band (see <see cref="BuildStream"/>).
         /// </summary>
-        static HudView BuildHud(RectTransform canvas, out Image riskPill, out TextMeshProUGUI riskLabel)
+        static HudView BuildHud(RectTransform canvas)
         {
             var border = EditorUI.Image(canvas, "TopBar", SitePalette.Outline, null, null, true);
             // Under the panels (as before, when it was the first thing inside Root).
@@ -225,39 +240,30 @@ namespace DeckParty.EditorTools
             EditorUI.Layout(logo, 196, -1, 0);
             logo.gameObject.AddComponent<PlatformLogoView>();
             Separator(left, "Sep1");
-            var night = Stat(left, "Night", EditorUI.Night, SkinSlot.IconNight, SitePalette.Text, 160, out var nightIcon, out var nightTip);
+            var night = Stat(left, "Night", EditorUI.Night, SkinSlot.IconNight, SkinSlot.FrameNight, SitePalette.Text, 190, out var nightIcon, out var nightTip);
 
             // Centre of the screen: Clout, Cash and Trophies (the Sub Cap count is gone: the chat's seats show it).
             var centre = BarGroup(bar, "Centre", 0.5f, 0f);
-            var pop = Stat(centre, "Pop", EditorUI.Sparkle, SkinSlot.IconPop, UIPalette.Gold, 160, out var popIcon, out _);
+            var pop = Stat(centre, "Pop", EditorUI.Sparkle, SkinSlot.IconPop, SkinSlot.FramePop, UIPalette.Gold, 170, out var popIcon, out _);
             Separator(centre, "Sep2");
-            var cash = Stat(centre, "Cash", EditorUI.Coin, SkinSlot.IconCash, UIPalette.Green, 150, out var cashIcon, out _);
+            var cash = Stat(centre, "Cash", EditorUI.Coin, SkinSlot.IconCash, SkinSlot.FrameCash, UIPalette.Green, 162, out var cashIcon, out _);
             Separator(centre, "Sep3");
-            var stars = Stat(centre, "Stars", EditorUI.Star, SkinSlot.IconStar, UIPalette.Gold, 170, out var starsIcon, out var starsTip);
+            var stars = Stat(centre, "Stars", EditorUI.Star, SkinSlot.IconStar, SkinSlot.FrameStars, UIPalette.Gold, 158, out var starsIcon, out var starsTip);
 
             // Right: HudView writes their tooltips (Audience [R], Menu [Esc]) in the current language.
             var right = BarGroup(bar, "Right", 1f, -BarPadding);
-            var rolodex = EditorUI.IconButton(right, "Rolodex", EditorUI.Audience, SkinSlot.IconAudience, EditorUI.SiteButton.Light, new Vector2(72, 72), 46, out _);
-            var menu = EditorUI.IconButton(right, "Menu", EditorUI.Menu, SkinSlot.IconMenu, EditorUI.SiteButton.Light, new Vector2(72, 72), 42, out _);
-            // Pinned, so the group's layout doesn't stretch them to its height.
+            // Audience is wide, like the counters: its icon and the number of viewers still in the queue (HudView writes it).
+            var rolodex = FramedBarButton(right, "Rolodex", EditorUI.Audience, SkinSlot.IconAudience, SkinSlot.FrameAudience, BarIconSize,
+                AudienceButtonWidth, out var rolodexIcon);
+            rolodexIcon.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(BarFramePadding, 0), new Vector2(BarIconSize, BarIconSize), new Vector2(0, 0.5f));
+            var queue = EditorUI.Text(rolodex.transform, "Count", "0", 38, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
+            queue.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(BarFramePadding + BarIconSize + 10, 6), new Vector2(-BarFramePadding, -6));
+            var menu = FramedBarButton(right, "Menu", EditorUI.Menu, SkinSlot.IconMenu, SkinSlot.FrameMenu, 42, BarFrameSize, out _);
+            // Pinned, so the group's layout doesn't stretch them to its height. Centred on the bar like the counters' frames, so
+            // all the frames line up top and bottom (the risky-queue count that sat under Audience is gone).
             var rolodexSlot = KeepSquare(rolodex);
             Separator(right, "Sep4").SetSiblingIndex(rolodexSlot.GetSiblingIndex() + 1);
             KeepSquare(menu);
-            // The two buttons sit a little above the bar's middle, leaving room for the risky-queue count under Audience.
-            ((RectTransform)rolodex.transform).anchoredPosition = new Vector2(0, ButtonLift);
-            ((RectTransform)menu.transform).anchoredPosition = new Vector2(0, ButtonLift);
-
-            // Risky viewers still in the queue: just the risk icon and the number (no background or border), under the
-            // Audience button, inside the bar. PartyControlsView shows it during a stream. The invisible pill keeps the tooltip.
-            riskLabel = EditorUI.Pill(rolodexSlot, "RiskyQueue", 24, out riskPill);
-            riskPill.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(0, ButtonLift - 36 - 2), new Vector2(96, 28), new Vector2(0.5f, 1));
-            riskPill.color = new Color(0, 0, 0, 0);
-            riskLabel.rectTransform.Stretch(0, 0, 0, 0);
-            riskLabel.color = SitePalette.Text;
-            EditorUI.TagSite(riskLabel, SiteColourRole.Text);
-            EditorUI.Readable(riskLabel);
-            EditorUI.Tooltip(riskPill);
-            riskPill.gameObject.SetActive(false);
 
             var view = bar.gameObject.AddComponent<HudView>();
             view.scenarioLabel = null;
@@ -282,6 +288,7 @@ namespace DeckParty.EditorTools
             view.starsMeter = (RectTransform)stars.transform.parent;
             view.starsTooltip = starsTip;
             view.rolodexButton = rolodex;
+            view.queueLabel = queue;
             view.menuButton = menu;
             return view;
         }
@@ -330,23 +337,74 @@ namespace DeckParty.EditorTools
             return slot;
         }
 
-        /// <summary>A menu-bar stat: an icon and a number (no caption); hovering it says what it is.</summary>
-        static TextMeshProUGUI Stat(Transform parent, string name, Sprite icon, SkinSlot slot, Color color, float width, out Image iconImage, out TooltipTrigger tooltip)
+        /// <summary>
+        /// The height of the rounded frames in the menu bar: each stat's frame wraps its icon and number, and the Audience and
+        /// Menu buttons are this size square.
+        /// </summary>
+        const float BarFrameSize = 72f;
+        const float BarIconSize = 52f;
+        /// <summary>Space between a stat's frame and its icon (left) and number (right).</summary>
+        const float BarFramePadding = 16f;
+
+        /// <summary>
+        /// A menu-bar stat: an icon and a number (no caption) inside one rounded frame; hovering it says what it is. The frame's
+        /// art and colour come from its own UI Skin entry (<paramref name="frameSlot"/>). <paramref name="width"/> is the frame's
+        /// width (the number shrinks to fit if it ever runs out of room).
+        /// </summary>
+        static TextMeshProUGUI Stat(Transform parent, string name, Sprite icon, SkinSlot slot, SkinSlot frameSlot, Color color, float width,
+            out Image iconImage, out TooltipTrigger tooltip)
         {
             var block = EditorUI.Rect(parent, name);
             EditorUI.Layout(block, width, -1, 0);
-            EditorUI.HLayout(block, 10, EditorUI.Pad(0), TextAnchor.MiddleLeft, true, true, false, false);
+            EditorUI.HLayout(block, 10, new RectOffset((int)BarFramePadding, (int)BarFramePadding, 0, 0), TextAnchor.MiddleLeft, true, true, false, false);
 
-            iconImage = EditorUI.Icon(block, "Icon", icon, color, slot, 52);
-            EditorUI.Layout(iconImage, 52, 52, 0);
+            // The frame spans the whole stat, centred on the bar at the buttons' height; drawn first, so it's behind the icon
+            // and the number. It stays out of the row's layout.
+            var frame = BarFrame(block, frameSlot);
+            frame.rectTransform.Box(new Vector2(0, 0.5f), new Vector2(1, 0.5f), new Vector2(0, -BarFrameSize * 0.5f), new Vector2(0, BarFrameSize * 0.5f));
+            EditorUI.Layout(frame, -1, -1, -1, -1).ignoreLayout = true;
+
+            iconImage = EditorUI.Icon(block, "Icon", icon, color, slot, BarIconSize);
+            EditorUI.Layout(iconImage, BarIconSize, BarIconSize, 0);
 
             var value = EditorUI.Text(block, "Value", "0", 38, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
-            EditorUI.Layout(value, -1, 52, 1);
+            EditorUI.Layout(value, -1, BarIconSize, 1);
             // HudView fills the tooltip text in the current language.
             tooltip = EditorUI.Tooltip(block);
             var hit = block.gameObject.AddComponent<Image>();
             hit.color = new Color(0, 0, 0, 0);
             return value;
+        }
+
+        /// <summary>
+        /// The rounded rectangle around a menu-bar stat (its icon and number) or button: by default the hollow placeholder outline
+        /// in the panel border colour; your own art and colour go in its UI Skin entry. Drawn behind what it frames, so filled
+        /// art works too.
+        /// </summary>
+        static Image BarFrame(Transform parent, SkinSlot slot)
+        {
+            var frame = EditorUI.SkinShape(parent, "Frame", EditorUI.Frame, SitePalette.Outline, slot, EditorUI.MenuFramePixelsPerUnit);
+            frame.rectTransform.sizeDelta = new Vector2(BarFrameSize, BarFrameSize);
+            return frame;
+        }
+
+        /// <summary>
+        /// The Audience and Menu buttons: white, with their border drawn by a frame entry in the UI Skin (like the frames round
+        /// the other menu-bar icons) instead of the button's own black edge.
+        /// </summary>
+        static Button FramedBarButton(Transform parent, string name, Sprite icon, SkinSlot iconSlot, SkinSlot frameSlot, float iconSize,
+            float width, out Image iconImage)
+        {
+            var size = new Vector2(width, BarFrameSize);
+            var button = EditorUI.IconButton(parent, name, icon, iconSlot, EditorUI.SiteButton.Light, size, iconSize, out iconImage);
+            // The button's own image was its black border: it stays as the (invisible) click area, the white fill inside it
+            // stays, and the frame goes between the fill and the icon.
+            var edge = button.GetComponent<Image>();
+            edge.color = new Color(0, 0, 0, 0);
+            var frame = EditorUI.SkinShape(button.transform, "Frame", EditorUI.Frame, SitePalette.Outline, frameSlot, EditorUI.MenuFramePixelsPerUnit);
+            frame.rectTransform.Stretch();
+            frame.transform.SetSiblingIndex(iconImage.transform.GetSiblingIndex());
+            return button;
         }
 
         /// <summary>A row of pips (the Deplatform Risk pips): lit ones show the count, the tooltip explains.</summary>
@@ -369,10 +427,10 @@ namespace DeckParty.EditorTools
         /// The stream: the Stream Chat window (left) and the channel column (right: Community Beats, then the facecam).
         /// The chat is a white, slightly rounded window with a black border reaching the bottom of the stream, level with the
         /// facecam: the Deplatform Risk pips centred in its title band over a hairline, the viewers as round avatars, a footer
-        /// band with your picture (and the near-deplatform warning over it), and the Add Viewer and End the Stream buttons in a
+        /// band for the near-deplatform warning, and the Add Viewer and End the Stream buttons (on their rounded bases) in a
         /// band along its bottom, inside the border.
         /// </summary>
-        static HouseView BuildStream(RectTransform partyRoot, UIPrefabs prefabs, Image riskPill, TextMeshProUGUI riskLabel, out LinkLinesView links,
+        static HouseView BuildStream(RectTransform partyRoot, UIPrefabs prefabs, out LinkLinesView links,
             out ViewerEmojiView emojiView, out PartyControlsView controlsView, out CommunityBeatsView beatsView, out FacecamView facecam,
             out StreamOverlayView overlay, out StreamerAnxietyView anxiety, out RectTransform riskMeter, out Image[] riskPips,
             out TooltipTrigger riskTooltip)
@@ -425,19 +483,14 @@ namespace DeckParty.EditorTools
             scroll.viewport = viewport;
             scroll.content = gridRect;
 
-            // The footer band above the buttons: your picture centred (Game Database > Stream Art > Chat Footer Image; nothing
-            // shows until you add one), and the near-deplatform warning on top of it, under the viewers.
+            // The footer band above the buttons, under the viewers: it holds the near-deplatform warning (the footer picture is
+            // gone, and the band is lower so the viewers get more room).
             var footer = EditorUI.Rect(inner.transform, "Footer").BottomBand(ButtonsBand, FooterHeight, 0, 0);
-            var footerImage = EditorUI.Image(footer, "FooterImage", Color.white, null);
-            footerImage.rectTransform.Stretch(24, 10, 24, 12);
-            footerImage.preserveAspect = true;
-            footerImage.enabled = false;
-            footer.gameObject.AddComponent<ChatFooterView>().image = footerImage;
-            // Twice the old 740 px width (capped to the chat window by StreamerAnxietyView) and 50% taller.
-            var anxietyRect = EditorUI.Rect(footer, "AnxiousStreamer").Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1480, 210));
+            // Twice the old 740 px width (capped to the chat window by StreamerAnxietyView); its portrait fits its height.
+            var anxietyRect = EditorUI.Rect(footer, "AnxiousStreamer").Place(new Vector2(0.5f, 0.5f), Vector2.zero, AnxietySize);
             anxiety = anxietyRect.gameObject.AddComponent<StreamerAnxietyView>();
 
-            controlsView = BuildChatButtons(inner.transform, prefabs, riskPill, riskLabel);
+            controlsView = BuildChatButtons(inner.transform, prefabs);
 
             var view = partyRoot.gameObject.AddComponent<HouseView>();
             view.area = area;
@@ -464,9 +517,9 @@ namespace DeckParty.EditorTools
         /// The band along the bottom of the Stream Chat window, inside its border: Add Viewer (always green) and End the Stream
         /// (always red) as wide icon buttons in the middle. The faces of the next viewers (when an effect reveals them) sit just
         /// above it at the left, and the waiting-viewer panel floats above it in the middle. Every word is in a hover tooltip.
-        /// The risky-queue badge (passed in) sits in the menu bar under the Audience button.
+        /// (The risky-queue count that sat under the menu bar's Audience button was removed.)
         /// </summary>
-        static PartyControlsView BuildChatButtons(Transform window, UIPrefabs prefabs, Image riskPill, TextMeshProUGUI risk)
+        static PartyControlsView BuildChatButtons(Transform window, UIPrefabs prefabs)
         {
             var row = EditorUI.Rect(window, "ChatButtons").BottomBand(0, ButtonsBand, 0, 0);
             var input = row.gameObject.AddComponent<Image>();
@@ -478,10 +531,15 @@ namespace DeckParty.EditorTools
             const float buttonGap = 40f;
             const float buttonX = MainButtonWidth * 0.5f + buttonGap * 0.5f;
             var size = new Vector2(MainButtonWidth, MainButtonHeight);
+            // Each button sits on a rounded base as wide as it (UI Skin: Add Viewer base / End the Stream base), overlapping
+            // the base's top edge. The bases come first so the buttons draw over them.
+            const float buttonBottom = ButtonBaseBottom + ButtonBaseHeight - ButtonBaseOverlap;
+            var doorBase = ButtonBase(row, "DoorBase", SkinSlot.AddViewerBase, Shade(SitePalette.Go), -buttonX);
+            var endBase = ButtonBase(row, "EndPartyBase", SkinSlot.EndStreamBase, Shade(SitePalette.Stop), buttonX);
             var door = EditorUI.IconButton(row, "Door", EditorUI.AddViewer, SkinSlot.IconAddViewer, EditorUI.SiteButton.Go, size, 52, out _);
-            ((RectTransform)door.transform).Place(new Vector2(0.5f, 0.5f), new Vector2(-buttonX, 0), size);
+            ((RectTransform)door.transform).Place(new Vector2(0.5f, 0), new Vector2(-buttonX, buttonBottom), size, new Vector2(0.5f, 0));
             var end = EditorUI.IconButton(row, "EndParty", EditorUI.EndStream, SkinSlot.IconEndStream, EditorUI.SiteButton.Stop, size, 44, out _);
-            ((RectTransform)end.transform).Place(new Vector2(0.5f, 0.5f), new Vector2(buttonX, 0), size);
+            ((RectTransform)end.transform).Place(new Vector2(0.5f, 0), new Vector2(buttonX, buttonBottom), size, new Vector2(0.5f, 0));
 
             // Who's next, when an effect reveals it (X-Ray, Side Eye Chloe): their faces (names on hover), just above the buttons
             // at the left (the wide buttons leave no room beside them).
@@ -529,8 +587,11 @@ namespace DeckParty.EditorTools
             view.endLabel = null;
             // No projected-take pill any more: ending's take is in the End the Stream tooltip.
             view.endSubLabel = null;
-            view.riskLabel = risk;
-            view.riskBadge = riskPill.gameObject;
+            // The risky-queue count under the Audience button was removed (2026-11-10).
+            view.riskLabel = null;
+            view.riskBadge = null;
+            view.doorBase = doorBase;
+            view.endBase = endBase;
             view.queueRoot = queue.gameObject;
             view.queueBacks = backs;
             view.queueFaces = arts;
@@ -542,6 +603,25 @@ namespace DeckParty.EditorTools
             view.rejectButton = reject;
             return view;
         }
+
+        /// <summary>
+        /// The rounded rectangle under a main button, as wide as the button and centred under it at <paramref name="x"/>. Its art
+        /// and colour come from its UI Skin entry (built-in: the small rounded rectangle in a darker shade of the button). It fades
+        /// with its button while the button can't be pressed (PartyControlsView).
+        /// </summary>
+        static CanvasGroup ButtonBase(Transform row, string name, SkinSlot slot, Color color, float x)
+        {
+            var image = EditorUI.SkinShape(row, name, EditorUI.RoundedSmall, color, slot);
+            image.rectTransform.Place(new Vector2(0.5f, 0), new Vector2(x, ButtonBaseBottom), new Vector2(MainButtonWidth, ButtonBaseHeight),
+                new Vector2(0.5f, 0));
+            var group = image.gameObject.AddComponent<CanvasGroup>();
+            group.interactable = false;
+            group.blocksRaycasts = false;
+            return group;
+        }
+
+        /// <summary>A darker shade of a button colour (the built-in colour of the bases under the main buttons).</summary>
+        static Color Shade(Color color) => Color.Lerp(color, Color.black, 0.35f);
 
         /// <summary>
         /// Community Beats: a white panel under the facecam with a chip per community (icon, live score, current bonus; hover
@@ -747,9 +827,10 @@ namespace DeckParty.EditorTools
             scroll.GetComponent<RectTransform>().Box(Vector2.zero, Vector2.one, new Vector2(16, 16), new Vector2(-16, -(toolbarTop + toolbarHeight + 22)));
             var grid = shopContent.GetComponent<GridLayoutGroup>();
             grid.childAlignment = TextAnchor.UpperLeft;
-            // Roomier gaps between the tiles: each tile has a pile of card backs peeking out up and to the left (up to 21 px).
+            // Each tile has a pile of card backs peeking out straight above it (up to 21 px). They no longer stick out to the
+            // left, so the full 38 px between tiles shows as space and the grid needs no extra room on its left.
             grid.spacing = new Vector2(38, 36);
-            grid.padding = new RectOffset(30, 10, 30, 12);
+            grid.padding = new RectOffset(20, 20, 30, 12);
             LightScrollbar(scroll);
             var gate = BuildShopGate(shop.transform);
 
