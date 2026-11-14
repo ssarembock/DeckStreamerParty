@@ -23,6 +23,8 @@ namespace DeckParty.UI
         [SerializeField] internal Button useButton;
         [SerializeField] internal TMP_Text useLabel;
         [SerializeField] internal TooltipTrigger useTooltip;
+        [Tooltip("The price above the Use button (scenes built since 2026-11-11; older scenes show it on the button).")]
+        [SerializeField] internal TMP_Text useCost;
         [SerializeField] internal GameObject emptyState;
         [SerializeField] internal GameObject content;
 
@@ -130,7 +132,19 @@ namespace DeckParty.UI
             useButton.gameObject.SetActive(true);
             string useWords = Loc.Get("power.use", "cost", StreamerVisuals.CostText(StreamerCatalog.Cost(s)));
             // Icon button: just the price next to the icon; the words are in the tooltip.
-            if (useLabel != null) useLabel.text = infoTooltip != null ? StreamerVisuals.CostText(StreamerCatalog.Cost(s)) : useWords;
+            int cost = StreamerCatalog.Cost(s);
+            if (useButton.TryGetComponent<ShopButtonSkin>(out var useSkin))
+            {
+                // The button's text comes from UI Skin > Shop ("Use" by default); the price sits above the button.
+                useSkin.SetCaption(string.Empty);
+                if (useCost != null)
+                {
+                    useCost.text = StreamerVisuals.CostText(cost);
+                    useCost.color = ShopLook.CostColour(s.Cash >= cost, SiteColours.Get(SiteColourRole.Text, useCost.transform));
+                }
+            }
+            // Older scenes: just the price next to the icon; the words are in the tooltip.
+            else if (useLabel != null) useLabel.text = infoTooltip != null ? StreamerVisuals.CostText(cost) : useWords;
             useButton.interactable = blocker == null && lockReason == null;
             if (useTooltip != null)
             {

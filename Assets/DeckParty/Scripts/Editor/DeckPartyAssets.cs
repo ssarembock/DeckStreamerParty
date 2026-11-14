@@ -865,6 +865,8 @@ namespace DeckParty.EditorTools
             view.siteStyle = true;
             view.tooltip = tooltip;
             view.stack = stack;
+            // UI Skin > Shop's card shape, border and pile step apply to this built-in card.
+            view.builtInCard = true;
             return root.gameObject;
         }
 

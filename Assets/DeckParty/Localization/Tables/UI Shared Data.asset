@@ -2095,6 +2095,26 @@ MonoBehaviour:
     m_Key: hud.audience_count
     m_Metadata:
       m_Items: []
+  - m_Id: 3987740020006912
+    m_Key: shopbtn.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3987740091310080
+    m_Key: shopbtn.raise_cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3987740103892992
+    m_Key: shopbtn.remove
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3987740103892993
+    m_Key: shopbtn.audience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3987740103892994
+    m_Key: shopbtn.go_live
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

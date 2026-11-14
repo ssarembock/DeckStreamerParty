@@ -785,8 +785,10 @@ namespace DeckParty.EditorTools
         static PlanningView BuildPlanning(RectTransform mainArea, UIPrefabs prefabs)
         {
             const float toolbarTop = 84f;
-            const float toolbarHeight = 124f;
             const float buttonHeight = 96f;
+            // The prices sit just above their buttons, in a band along the top of the toolbar.
+            const float costBand = 52f;
+            const float toolbarHeight = costBand + buttonHeight + 8f;
             var root = EditorUI.Rect(mainArea, "Planning").Stretch();
 
             var shop = EditorUI.SitePanel(root, "Shop", SitePalette.Surface, SitePalette.Outline, PanelBorder, true, SiteArea.Shop);
@@ -795,17 +797,21 @@ namespace DeckParty.EditorTools
             var shopTitle = EditorUI.Text(shop.transform, "Header", "-", 36, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
             shopTitle.rectTransform.TopBand(16, 52, 28, 28);
 
-            // Everything that costs something (and the Ready button) in one row under the title.
+            // Everything that costs something (and the Ready button) in one row under the title, the prices above the buttons.
+            // Each button's icon, text and shape can be changed in UI Skin > Shop (ShopButtonSkin).
             var toolbar = EditorUI.Rect(shop.transform, "Toolbar").TopBand(toolbarTop, toolbarHeight, 24, 24);
-            EditorUI.HLayout(toolbar, 18, EditorUI.Pad(0), TextAnchor.MiddleLeft, true, false, false, false);
+            EditorUI.HLayout(toolbar, 18, new RectOffset(0, 0, (int)costBand, 8), TextAnchor.MiddleLeft, true, false, false, false);
 
-            var power = BuildStreamerPower(toolbar);
+            var power = BuildStreamerPower(toolbar, buttonHeight);
             ToolbarSeparator(toolbar, buttonHeight);
-            var expand = WideIconButton(toolbar, "Expand", EditorUI.Door, SkinSlot.IconDoor, 210, buttonHeight, out var expandLabel);
+            var expand = WideIconButton(toolbar, "Expand", EditorUI.Door, SkinSlot.IconDoor, ShopButton.RaiseSubCap, 210, buttonHeight, "+1", true,
+                out var expandLabel, out var expandCost);
             var expandTip = expand.GetComponent<TooltipTrigger>();
-            var remove = WideIconButton(toolbar, "RemoveViewer", EditorUI.RemoveViewer, SkinSlot.IconRemoveViewer, 210, buttonHeight, out var removeLabel);
+            var remove = WideIconButton(toolbar, "RemoveViewer", EditorUI.RemoveViewer, SkinSlot.IconRemoveViewer, ShopButton.RemoveViewer, 210, buttonHeight,
+                "-1", true, out var removeLabel, out var removeCost);
             var removeTip = remove.GetComponent<TooltipTrigger>();
-            var rolodex = WideIconButton(toolbar, "Rolodex", EditorUI.Audience, SkinSlot.IconAudience, 170, buttonHeight, out var rolodexLabel);
+            var rolodex = WideIconButton(toolbar, "Rolodex", EditorUI.Audience, SkinSlot.IconAudience, ShopButton.Audience, 170, buttonHeight, "12", false,
+                out var rolodexLabel, out _);
             var rolodexTip = rolodex.GetComponent<TooltipTrigger>();
 
             var spacer = EditorUI.Rect(toolbar, "Spacer");
@@ -820,6 +826,13 @@ namespace DeckParty.EditorTools
             readyIcon.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(58, 58));
             readyIcon.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Content;
             readyIcon.gameObject.SetActive(false);
+            // Go Live shows only its icon unless UI Skin > Shop gives it text.
+            TextMeshProUGUI goLiveLabel;
+            using (EditorUI.PlainColourScope())
+                goLiveLabel = EditorUI.Text(next.transform, "Label", string.Empty, 30, Color.white, TextAlignmentOptions.MidlineLeft, true, false, false);
+            goLiveLabel.rectTransform.Stretch(12, 4, 12, 4);
+            goLiveLabel.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Content;
+            SkinShopButton(next, ShopButton.GoLive, goLiveIcon, goLiveLabel, null, 24f, ShopButtonText.BuiltIn, string.Empty);
 
             var titleLine = EditorUI.Line(shop.transform, "TitleLine", SitePalette.Divider);
             titleLine.rectTransform.TopBand(toolbarTop + toolbarHeight + 10, HDivider, DividerInset, DividerInset);
@@ -839,9 +852,11 @@ namespace DeckParty.EditorTools
             view.expandButton = expand;
             view.expandLabel = expandLabel;
             view.expandTooltip = expandTip;
+            view.expandCost = expandCost;
             view.removeButton = remove;
             view.removeLabel = removeLabel;
             view.removeTooltip = removeTip;
+            view.removeCost = removeCost;
             view.rolodexButton = rolodex;
             view.rolodexLabel = rolodexLabel;
             view.rolodexTooltip = rolodexTip;
@@ -872,17 +887,92 @@ namespace DeckParty.EditorTools
             EditorUI.Layout(line, VDivider, height * 0.7f, 0);
         }
 
-        /// <summary>A light button with an icon on the left and a short number label (the words in its tooltip).</summary>
-        static Button WideIconButton(Transform parent, string name, Sprite icon, SkinSlot slot, float width, float height, out TextMeshProUGUI label)
+        /// <summary>
+        /// A light shop button: an icon on the left and a short label (the words are in its tooltip), with the price just above
+        /// it when <paramref name="withCost"/>. UI Skin > Shop sets its icon, text and shape (see <see cref="SkinShopButton"/>).
+        /// </summary>
+        /// <param name="preview">What the label shows in the editor (the game writes the real caption).</param>
+        static Button WideIconButton(Transform parent, string name, Sprite icon, SkinSlot slot, ShopButton which, float width, float height,
+            string preview, bool withCost, out TextMeshProUGUI label, out TextMeshProUGUI cost)
         {
+            Button button;
+            Image iconImage;
             // A button: its label keeps the button's own colours whatever the shop's Site Colours are.
-            using var plain = EditorUI.PlainColourScope();
-            var button = EditorUI.IconButton(parent, name, icon, slot, EditorUI.SiteButton.Light, new Vector2(width, height), 46, out var iconImage);
-            EditorUI.Layout(button, width, height, 0);
-            iconImage.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(46, 46), new Vector2(0, 0.5f));
-            label = EditorUI.Text(button.transform, "Label", "-", 28, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
-            label.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(78, 4), new Vector2(-12, -4));
+            using (EditorUI.PlainColourScope())
+            {
+                button = EditorUI.IconButton(parent, name, icon, slot, EditorUI.SiteButton.Light, new Vector2(width, height), 46, out iconImage);
+                EditorUI.Layout(button, width, height, 0);
+                iconImage.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(20, 0), new Vector2(46, 46), new Vector2(0, 0.5f));
+                label = EditorUI.Text(button.transform, "Label", preview, 28, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
+                label.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(78, 4), new Vector2(-12, -4));
+            }
+            cost = withCost ? CostLabel(button) : null;
+            SkinShopButton(button, which, iconImage, label, cost, 20f, ShopButtonText.BuiltIn, preview);
             return button;
+        }
+
+        /// <summary>
+        /// The price just above a shop button (the Cash icon and the amount; PlanningView writes it and turns it red when you
+        /// can't afford it, in the shop's text colour otherwise).
+        /// </summary>
+        static TextMeshProUGUI CostLabel(Button button)
+        {
+            // Not tagged for Site Colours: PlanningView colours it (the shop's text colour, or red) every time it draws.
+            TextMeshProUGUI cost;
+            using (EditorUI.PlainColourScope())
+                cost = EditorUI.Text(button.transform, "Cost", "3", 26, SitePalette.Text, TextAlignmentOptions.Center, true, false, false);
+            cost.rectTransform.Box(new Vector2(0, 1), new Vector2(1, 1), new Vector2(0, 6), new Vector2(0, 40));
+            cost.rectTransform.pivot = new Vector2(0.5f, 0);
+            return cost;
+        }
+
+        /// <summary>
+        /// Lets UI Skin > Shop restyle a shop button: stores its built-in look (shape, colours, size, icon, text) on a
+        /// <see cref="ShopButtonSkin"/>, which applies the skin's settings over it and brings the built-in look back when they're
+        /// cleared.
+        /// </summary>
+        static void SkinShopButton(Button button, ShopButton which, Image icon, TMP_Text label, TMP_Text cost, float iconInset,
+            ShopButtonText defaultText, string preview)
+        {
+            // Read the built-in look before the component exists (it applies itself as soon as it's added).
+            var background = button.GetComponent<Image>();
+            var fillTransform = button.transform.Find("Fill");
+            var fill = fillTransform != null ? fillTransform.GetComponent<Image>() : null;
+            bool bordered = fill != null;
+            var size = ((RectTransform)button.transform).sizeDelta;
+            var shape = background.sprite;
+            var fillColour = bordered ? fill.color : background.color;
+            var borderColour = background.color;
+            float iconSize = icon.rectTransform.sizeDelta.x;
+            var iconSprite = icon.sprite;
+            var iconColour = icon.color;
+            float textSize = label != null ? label.fontSize : 28f;
+            var textColour = label != null ? label.color : SitePalette.Text;
+            float costSize = cost != null ? cost.fontSize : 26f;
+
+            var skin = button.gameObject.AddComponent<ShopButtonSkin>();
+            skin.button = which;
+            skin.border = bordered ? background : null;
+            skin.fill = bordered ? fill : background;
+            skin.icon = icon;
+            skin.label = label;
+            skin.cost = cost;
+            skin.defaultShape = shape;
+            skin.defaultFill = fillColour;
+            skin.defaultBorder = borderColour;
+            skin.defaultBorderWidth = bordered ? 2.5f : 0f;
+            skin.defaultSize = size;
+            skin.defaultIconSize = iconSize;
+            skin.iconInset = iconInset;
+            skin.defaultIcon = iconSprite;
+            skin.defaultIconColour = iconColour;
+            skin.defaultTextSize = textSize;
+            skin.defaultTextColour = textColour;
+            skin.defaultText = defaultText;
+            skin.previewCaption = preview;
+            skin.defaultCostSize = costSize;
+            skin.defaultCostGap = 6f;
+            skin.Apply();
         }
 
         /// <summary>The shop grid's scrollbar in light greys.</summary>
@@ -1011,7 +1101,8 @@ namespace DeckParty.EditorTools
         /// The streamer in the shop's toolbar: their portrait in a ring (hover for name, power, what it does and its status),
         /// the active as an icon button with its price beside it, a small badge with the cooldown and a tick while it's armed.
         /// </summary>
-        static StreamerPowerView BuildStreamerPower(Transform parent)
+        /// <param name="buttonHeight">The shop buttons' height: the Use button matches them, so the prices above line up.</param>
+        static StreamerPowerView BuildStreamerPower(Transform parent, float buttonHeight)
         {
             const float portraitSize = 108f;
             var panel = EditorUI.Rect(parent, "StreamerPower");
@@ -1046,14 +1137,21 @@ namespace DeckParty.EditorTools
             armedTick.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(24, 24));
             armed.gameObject.SetActive(false);
 
-            var use = EditorUI.IconButton(content, "Use", EditorUI.Action, SkinSlot.IconAction, EditorUI.SiteButton.Accent, new Vector2(196, 76), 34, out var useIcon);
-            ((RectTransform)use.transform).Place(new Vector2(1, 0.5f), new Vector2(-2, 0), new Vector2(196, 76), new Vector2(1, 0.5f));
-            useIcon.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(18, 0), new Vector2(34, 34), new Vector2(0, 0.5f));
-            var useLabel = EditorUI.Text(use.transform, "Label", "-", 26, Color.white, TextAlignmentOptions.Center, true, false, false);
-            useLabel.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(58, 4), new Vector2(-10, -4));
+            // As tall as the other shop buttons, so its price lines up with theirs above the row.
+            var useSize = new Vector2(196, buttonHeight);
+            var use = EditorUI.IconButton(content, "Use", EditorUI.Action, SkinSlot.IconAction, EditorUI.SiteButton.Accent, useSize, 40, out var useIcon);
+            ((RectTransform)use.transform).Place(new Vector2(1, 0.5f), new Vector2(-2, 0), useSize, new Vector2(1, 0.5f));
+            useIcon.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(18, 0), new Vector2(40, 40), new Vector2(0, 0.5f));
+            TextMeshProUGUI useLabel;
+            using (EditorUI.PlainColourScope())
+                useLabel = EditorUI.Text(use.transform, "Label", "Use", 28, Color.white, TextAlignmentOptions.MidlineLeft, true, false, false);
+            useLabel.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(70, 4), new Vector2(-12, -4));
             useLabel.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Content;
             // Over the streamer's own tooltip: it comes back when the pointer leaves the button.
             use.GetComponent<TooltipTrigger>().overlay = true;
+            var useCost = CostLabel(use);
+            // "Use" in the player's language by default (UI Skin > Shop > Use can change it).
+            SkinShopButton(use, ShopButton.Power, useIcon, useLabel, useCost, 18f, ShopButtonText.Words, string.Empty);
 
             var empty = EditorUI.Text(panel, "Empty", "power.none", 20, SitePalette.TextFaint, TextAlignmentOptions.Center, false, false, false);
             empty.rectTransform.Stretch(portraitSize + 12, 10, 6, 10);
@@ -1069,6 +1167,7 @@ namespace DeckParty.EditorTools
             view.statusLabel = null;
             view.useButton = use;
             view.useLabel = useLabel;
+            view.useCost = useCost;
             view.useTooltip = use.GetComponent<TooltipTrigger>();
             view.emptyState = empty.gameObject;
             view.content = content.gameObject;

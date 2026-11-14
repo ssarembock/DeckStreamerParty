@@ -87,7 +87,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconPop
     slot: 10
-    sprite: {fileID: 5259797187536515068, guid: d4aba87b2c657604293402f249b3683e, type: 3}
+    sprite: {fileID: 21300000, guid: 3e3a23a9b1cfb184786c32e531bb1644, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconTrouble
     slot: 12
-    sprite: {fileID: 3480350768097531997, guid: fdd7bae8046d9f745a5ac74ddef3e2b3, type: 3}
+    sprite: {fileID: 3480350768097531997, guid: 89c5e8e60b74f1e489198750850a232f, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -115,14 +115,14 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconCancel
     slot: 14
-    sprite: {fileID: 7878951576011287232, guid: 28b498b19b028d643aa5fcc60f9deb42, type: 3}
+    sprite: {fileID: 7878951576011287232, guid: 27b7e77ce949e7540abb40f98dab63be, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconDoor
     slot: 15
-    sprite: {fileID: -1303867249, guid: 49f1933b941fc874d8f4a413749f0ca3, type: 3}
+    sprite: {fileID: 0}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -192,28 +192,28 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconAddViewer
     slot: 25
-    sprite: {fileID: -8029141102495950399, guid: 1af74b87fbe41a549828c36ff59c74e8, type: 3}
+    sprite: {fileID: -1770117687462734149, guid: 19bfd8f95cda1424b8608f6147b38b95, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconEndStream
     slot: 26
-    sprite: {fileID: 1009792764172386501, guid: 9ad3ac922282474488ba6968b5d76af9, type: 3}
+    sprite: {fileID: 1009792764172386501, guid: 3e0216dfe96d5144b9355c6683feed90, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconAudience
     slot: 27
-    sprite: {fileID: 6829702515308742213, guid: bdd0aa33a58148d4891f47cdc858bf4b, type: 3}
+    sprite: {fileID: 6829702515308742213, guid: 813d5d9850ed6924d90b6641628a7562, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconMenu
     slot: 28
-    sprite: {fileID: 6580071152575755341, guid: 560c39158e56a9f44bf3988f7cbe3064, type: 3}
+    sprite: {fileID: 6580071152575755341, guid: 1a060ef3232d4b047908013b6bdd7cff, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconNight
     slot: 32
-    sprite: {fileID: -229869408767437022, guid: 8a7b73db8e1cfee4cab593d8e961f087, type: 3}
+    sprite: {fileID: 21300000, guid: 1dbd0d328faf5ff4fbef7e73d6012f6f, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -346,8 +346,8 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   siteColours:
     page: {r: 0.09019608, g: 0.09019608, b: 0.101960786, a: 1}
-    panelFill: {r: 1, g: 1, b: 1, a: 1}
-    panelBorder: {r: 0, g: 0, b: 0, a: 1}
+    panelFill: {r: 0.09019608, g: 0.09019608, b: 0.101960786, a: 1}
+    panelBorder: {r: 0.09019608, g: 0.09019608, b: 0.101960786, a: 1}
     divider: {r: 0.8901961, g: 0.8901961, b: 0.9098039, a: 1}
     softFill: {r: 0.9372549, g: 0.9372549, b: 0.94509804, a: 1}
     text: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
@@ -673,24 +673,24 @@ MonoBehaviour:
     sample: 0
     source: Game scene
     missing: 0
-    overrideColor: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
+    overrideColor: 1
+    color: {r: 0.21960784, g: 0.61960787, b: 0.827451, a: 1}
   - id: Game/GameCanvas/TopBar/Fill/Centre/Cash/Value
     label: Centre > Cash > Value
     group: Menu bar
     sample: 0
     source: Game scene
     missing: 0
-    overrideColor: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
+    overrideColor: 1
+    color: {r: 0.3529412, g: 0.80784315, b: 0.23529412, a: 1}
   - id: Game/GameCanvas/TopBar/Fill/Centre/Stars/Value
     label: Centre > Stars > Value
     group: Menu bar
     sample: 0
     source: Game scene
     missing: 0
-    overrideColor: 0
-    color: {r: 1, g: 1, b: 1, a: 1}
+    overrideColor: 1
+    color: {r: 0.99607843, g: 0.7372549, b: 0.08235294, a: 1}
   - id: Game/GameCanvas/TopBar/Fill/Right/RolodexSlot/Rolodex/Count
     label: Rolodex Slot > Rolodex > Count
     group: Menu bar
@@ -894,11 +894,19 @@ MonoBehaviour:
   - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Content/Use/Label
     label: Streamer Power > Use > Label
     group: Shop
-    sample: '-'
+    sample: Use
     source: Game scene
     missing: 0
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Content/Use/Cost
+    label: Streamer Power > Use > Cost
+    group: Shop
+    sample: 3
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
   - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Empty
     label: Toolbar > Streamer Power > Empty
     group: Shop
@@ -910,7 +918,15 @@ MonoBehaviour:
   - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/Expand/Label
     label: Toolbar > Expand > Label
     group: Shop
-    sample: '-'
+    sample: +1
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/Expand/Cost
+    label: Toolbar > Expand > Cost
+    group: Shop
+    sample: 3
     source: Game scene
     missing: 0
     overrideColor: 0
@@ -918,7 +934,15 @@ MonoBehaviour:
   - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/RemoveViewer/Label
     label: Toolbar > Remove Viewer > Label
     group: Shop
-    sample: '-'
+    sample: -1
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/RemoveViewer/Cost
+    label: Toolbar > Remove Viewer > Cost
+    group: Shop
+    sample: 3
     source: Game scene
     missing: 0
     overrideColor: 0
@@ -926,13 +950,21 @@ MonoBehaviour:
   - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/Rolodex/Label
     label: Toolbar > Rolodex > Label
     group: Shop
-    sample: '-'
+    sample: 12
     source: Game scene
     missing: 0
     overrideColor: 0
     color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
   - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/Waiting
     label: Shop > Toolbar > Waiting
+    group: Shop
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/NextNight/Label
+    label: Toolbar > Next Night > Label
     group: Shop
     sample: 
     source: Game scene
@@ -1643,3 +1675,159 @@ MonoBehaviour:
     missing: 0
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  shop:
+    buttons:
+    - name: Power
+      button: 0
+      icon: {fileID: 0}
+      iconColour:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      iconSize: 0
+      shape: {fileID: 0}
+      shapeScale: 1
+      fill:
+        use: 1
+        colour: {r: 0.8392157, g: 0, b: 0.68235296, a: 1}
+      border:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      borderWidth: -1
+      size: {x: 0, y: 0}
+      text: 1
+      customText: 
+      textColour:
+        use: 1
+        colour: {r: 1, g: 1, b: 1, a: 1}
+      textSize: 0
+    - name: RaiseSubCap
+      button: 1
+      icon: {fileID: -1770117687462734149, guid: 19bfd8f95cda1424b8608f6147b38b95, type: 3}
+      iconColour:
+        use: 1
+        colour: {r: 1, g: 1, b: 1, a: 1}
+      iconSize: 0
+      shape: {fileID: 0}
+      shapeScale: 1
+      fill:
+        use: 1
+        colour: {r: 0.3019608, g: 0.3372549, b: 1, a: 1}
+      border:
+        use: 1
+        colour: {r: 0.3019608, g: 0.3372549, b: 1, a: 1}
+      borderWidth: -1
+      size: {x: 0, y: 0}
+      text: 0
+      customText: 
+      textColour:
+        use: 1
+        colour: {r: 1, g: 1, b: 1, a: 1}
+      textSize: 36
+    - name: RemoveViewer
+      button: 2
+      icon: {fileID: -6106086786318128695, guid: a5591b91a4b7e754fb9d91c14b967801, type: 3}
+      iconColour:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      iconSize: 0
+      shape: {fileID: 0}
+      shapeScale: 1
+      fill:
+        use: 1
+        colour: {r: 0.91764706, g: 0, b: 0.09411765, a: 1}
+      border:
+        use: 1
+        colour: {r: 0.91764706, g: 0, b: 0.09411765, a: 1}
+      borderWidth: -1
+      size: {x: 0, y: 0}
+      text: 0
+      customText: 
+      textColour:
+        use: 1
+        colour: {r: 1, g: 1, b: 1, a: 1}
+      textSize: 36
+    - name: Audience
+      button: 3
+      icon: {fileID: 0}
+      iconColour:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      iconSize: 0
+      shape: {fileID: 0}
+      shapeScale: 1
+      fill:
+        use: 0
+        colour: {r: 1, g: 1, b: 1, a: 1}
+      border:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      borderWidth: -1
+      size: {x: 0, y: 0}
+      text: 0
+      customText: 
+      textColour:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      textSize: 0
+    - name: GoLive
+      button: 4
+      icon: {fileID: 21300000, guid: 5954b06d154cfd64b9adacb73c1b2ab8, type: 3}
+      iconColour:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      iconSize: 0
+      shape: {fileID: 0}
+      shapeScale: 1
+      fill:
+        use: 1
+        colour: {r: 0.09803922, g: 0.5568628, b: 0.07450981, a: 1}
+      border:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      borderWidth: -1
+      size: {x: 0, y: 0}
+      text: 0
+      customText: 
+      textColour:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      textSize: 0
+    costSize: 0
+    costGap: -2
+    costColour:
+      use: 1
+      colour: {r: 0.25490198, g: 0.69803923, b: 0.9019608, a: 1}
+    costTooExpensive:
+      use: 1
+      colour: {r: 0.25490198, g: 0.69803923, b: 0.9019608, a: 1}
+    cardPrefab: {fileID: 4847198429862849321, guid: 4e59c42f075e31545893732f31688411, type: 3}
+    minCardWidth: 0
+    maxCardWidth: 0
+    cardAspect: 0
+    cardSpacing: {x: 0, y: 0}
+    hoverScale: 0
+    cardShape: {fileID: 0}
+    cardBorderWidth: -1
+    hidePiles: 0
+    pileStep: 0
+    trophyBorder:
+      use: 0
+      colour: {r: 0.85, g: 0.65, b: 0.13, a: 1}
+    price:
+      use: 0
+      colour: {r: 0, g: 0, b: 0, a: 1}
+    priceTooExpensive:
+      use: 0
+      colour: {r: 0.86, g: 0.2, b: 0.24, a: 1}
+    copiesLeft:
+      use: 0
+      colour: {r: 0.4, g: 0.4, b: 0.45, a: 1}
+    lastCopy:
+      use: 0
+      colour: {r: 0.9, g: 0.55, b: 0.1, a: 1}
+    soldOut:
+      use: 0
+      colour: {r: 0.86, g: 0.2, b: 0.24, a: 1}
+    cantBuyVeil:
+      use: 0
+      colour: {r: 1, g: 1, b: 1, a: 0.62}

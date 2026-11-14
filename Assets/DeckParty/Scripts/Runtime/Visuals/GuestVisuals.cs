@@ -113,6 +113,19 @@ namespace DeckParty
                    Item(ResourceIcon.Risk, risk, risk == "0", info.CancelsTrouble ? UIPalette.Teal : UIPalette.Red);
         }
 
+        /// <summary>
+        /// The Clout a viewer scores, as a plain number for a card ("+2", "0"). Dancing Jen shows the group's steps by how
+        /// many are in chat (1/4/9/16/25).
+        /// </summary>
+        public static string CloutValue(GuestInfo info) =>
+            info.Type == GuestType.DancingJen ? GameRules.DancingJenSteps : PlainSigned(info.Pop);
+
+        /// <summary>The Cash a viewer scores, as a plain number for a card. Crypto Enthusiast shows the group's steps.</summary>
+        public static string CashValue(GuestInfo info) =>
+            info.Type == GuestType.CryptoEnthusiast ? GameRules.CryptoEnthusiastSteps : PlainSigned(info.Cash);
+
+        static string PlainSigned(int value) => (value > 0 ? "+" : string.Empty) + value;
+
         /// <summary>The always-true summary of what a viewer scores, ignoring live conditions.</summary>
         public static string BaseStats(GuestInfo info)
         {

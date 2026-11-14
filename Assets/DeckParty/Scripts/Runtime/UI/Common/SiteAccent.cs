@@ -67,7 +67,7 @@ namespace DeckParty.UI
         {
             var skin = GameDatabase.Instance.skin;
             var entry = skin != null ? skin.Get(slot) : null;
-            return entry != null && entry.sprite != null && entry.overrideColor;
+            return entry != null && entry.overrideColor;
         }
     }
 }

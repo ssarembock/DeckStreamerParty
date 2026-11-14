@@ -140,6 +140,10 @@ namespace DeckParty
                  "to give that text its own colour.")]
         public List<TextColourEntry> textColours = new List<TextColourEntry>();
 
+        [Tooltip("The shop: its toolbar buttons (icon, text, shape), the prices above them and the viewer cards (your own card " +
+                 "prefab, sizes, piles, colours). Empty or zero values keep the built-in look.")]
+        public ShopLook shop = new ShopLook();
+
         [NonSerialized] Dictionary<SkinSlot, SkinEntry> m_Lookup;
         [NonSerialized] Dictionary<string, TextColourEntry> m_TextLookup;
 
@@ -200,6 +204,8 @@ namespace DeckParty
             if (siteColours == null) siteColours = new SiteColourSet();
             siteColours.EnsureAllAreas();
             if (textColours == null) textColours = new List<TextColourEntry>();
+            if (shop == null) shop = new ShopLook();
+            shop.EnsureAll();
             m_Lookup = null;
             m_TextLookup = null;
         }

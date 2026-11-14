@@ -96,6 +96,11 @@ UI,gate.stream_over_title,Shop gate title,Stream over!,直播结束！,Стри�
 UI,gate.ready_body,Shop gate body,Head to the shop when you're ready. It opens when everyone is there.,准备好就去商店吧。所有人到齐后开张。,"Идите в магазин, когда будете готовы. Он откроется, когда соберутся все.",Ve a la tienda cuando estés listo. Abre cuando estén todos.,Vá pra loja quando estiver pronto. Ela abre quando todo mundo estiver lá.,draft
 UI,gate.go_to_shop,Button,Go to the Shop,去商店,В магазин,Ir a la tienda,Ir pra loja,draft
 UI,shop.start_night,Button; {night},Start Stream {night},开始第 {night} 场直播,Начать стрим {night},Empezar el stream {night},Começar a live {night},draft
+UI,shopbtn.power,Shop toolbar button caption when UI Skin > Shop sets its Text to Words (streamer active),Use,使用,Применить,Usar,Usar,draft
+UI,shopbtn.raise_cap,Shop toolbar button caption when UI Skin > Shop sets its Text to Words,Sub Cap +1,上限 +1,Лимит +1,Cupo +1,Limite +1,draft
+UI,shopbtn.remove,Shop toolbar button caption when UI Skin > Shop sets its Text to Words (Remove a Viewer),Remove,移除,Убрать,Quitar,Remover,draft
+UI,shopbtn.audience,Shop toolbar button caption when UI Skin > Shop sets its Text to Words,Audience,粉丝团,Аудитория,Audiencia,Audiência,draft
+UI,shopbtn.go_live,Shop toolbar button caption when UI Skin > Shop sets its Text to Words (start the next stream),Go Live,开播,В эфир,Empezar stream,Começar live,draft
 UI,result.success,Result title,Great stream!,精彩的直播！,Отличный стрим!,¡Gran stream!,Que live!,draft
 UI,common.cancel_esc,Button with hotkey,Cancel  [Esc],取消  [Esc],Отмена  [Esc],Cancelar  [Esc],Cancelar  [Esc],draft
 UI,common.confirm,Button,Confirm,确认,Подтвердить,Confirmar,Confirmar,draft

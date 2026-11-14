@@ -124,3 +124,14 @@ Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** to see the menu bar c
 | **Risky-queue count removed** | The risk icon and number under the Audience button are gone. |
 | **Lined up** | The Audience and Menu buttons no longer sit 15 px higher than the rest. Every frame in the menu bar is 72 px tall and centred on the bar, so their tops and bottoms line up. |
 | **Core Fanbase** | Each point now gives a **10%** chance to score twice, up to 3 points (**30%**). It was 20% a point, up to 80%. The rules page is updated in all five languages, and so is StreamersViewersCommunities.md. Multiplayer protocol is now deckparty-15, so older builds can't join newer ones. |
+
+## 10. Shop look in the UI Skin, prices above the buttons, your own card prefab (2026-11-11)
+
+Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** once. Full details: **ShopCardPrefab_Guidelines.md**.
+
+| Area | Now |
+|---|---|
+| **Prices** | The Cash price of Use, Raise Sub Cap and Remove a Viewer sits just above each button (red when you can't afford it). The buttons keep their short text: +1, -1, the Audience count, and "Use". The toolbar is 32 px taller to fit the prices, and Use is as tall as the other buttons. |
+| **UI Skin > Shop > Toolbar buttons** | Each button's icon (art, colour, size), text (built-in numbers, translated words, your own text, or none) and shape (background art, inside and border colours, border width, size). |
+| **UI Skin > Shop > Prices** | Font size, gap and colours of the prices. |
+| **UI Skin > Shop > Viewer cards** | Your own card prefab (with a template maker and a parts check), card sizes, proportions, spacing and hover growth, the built-in card's shape, border and piles, and card colours (Trophy border, price, copies left, veil). |

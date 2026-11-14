@@ -2182,6 +2182,26 @@ MonoBehaviour:
     m_Localized: "{count} {count:plural:espectador|espectadores} na sua Audi\xEAncia"
     m_Metadata:
       m_Items: []
+  - m_Id: 3987740020006912
+    m_Localized: Usar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3987740091310080
+    m_Localized: Limite +1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3987740103892992
+    m_Localized: Remover
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3987740103892993
+    m_Localized: "Audi\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3987740103892994
+    m_Localized: "Come\xE7ar live"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

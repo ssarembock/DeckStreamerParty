@@ -58,10 +58,14 @@ namespace DeckParty.UI
         [SerializeField] internal Button expandButton;
         [SerializeField] internal TMP_Text expandLabel;
         [SerializeField] internal TooltipTrigger expandTooltip;
+        [Tooltip("The price above Raise Sub Cap (scenes built since 2026-11-11; older scenes show it on the button).")]
+        [SerializeField] internal TMP_Text expandCost;
         [Tooltip("Remove a Viewer: pay Cash to take one card out of your Audience for good (the price rises with each use).")]
         [SerializeField] internal Button removeButton;
         [SerializeField] internal TMP_Text removeLabel;
         [SerializeField] internal TooltipTrigger removeTooltip;
+        [Tooltip("The price above Remove a Viewer.")]
+        [SerializeField] internal TMP_Text removeCost;
         [SerializeField] internal Button rolodexButton;
         [SerializeField] internal TMP_Text rolodexLabel;
         [SerializeField] internal Button nextNightButton;
@@ -106,6 +110,11 @@ namespace DeckParty.UI
         PlayerState m_State;
         PlanningContext m_Context;
         float m_LastWidth = -1f;
+        /// <summary>What the current tiles were made from (the built-in prefab or your own from UI Skin > Shop).</summary>
+        GameObject m_ItemSource;
+        /// <summary>The grid's children: the tile itself, or the holder around one of your own cards.</summary>
+        readonly List<GameObject> m_Holders = new List<GameObject>();
+        Vector2 m_DefaultSpacing = new Vector2(38f, 36f);
 
         public RectTransform ExpandButtonRect => (RectTransform)expandButton.transform;
         public RectTransform NextNightButtonRect => (RectTransform)nextNightButton.transform;
@@ -120,10 +129,22 @@ namespace DeckParty.UI
             nextNightButton.onClick.AddListener(() => NextNightClicked?.Invoke());
             if (power != null) power.UseClicked += () => PowerClicked?.Invoke();
             if (gate != null) gate.ReadyClicked += () => ShopReadyClicked?.Invoke();
+            if (shopGrid != null) m_DefaultSpacing = shopGrid.spacing;
+            UISkin.SkinChanged += OnSkinChanged;
             Loc.Changed += OnLanguageChanged;
         }
 
-        void OnDestroy() => Loc.Changed -= OnLanguageChanged;
+        void OnDestroy()
+        {
+            Loc.Changed -= OnLanguageChanged;
+            UISkin.SkinChanged -= OnSkinChanged;
+        }
+
+        /// <summary>UI Skin > Shop changed (while playing): draw the shop again with the new cards and sizes.</summary>
+        void OnSkinChanged()
+        {
+            if (this != null && m_State != null && isActiveAndEnabled) Render(m_State, m_Context);
+        }
 
         void OnLanguageChanged()
         {
@@ -138,8 +159,8 @@ namespace DeckParty.UI
         /// <summary>The tile selling this viewer (for the purchase flourish and presence highlights), or null.</summary>
         public ShopItemView FindItem(GuestType type)
         {
-            foreach (var item in m_Items)
-                if (item.gameObject.activeSelf && item.Type == type) return item;
+            for (int i = 0; i < m_Items.Count && i < m_Holders.Count; i++)
+                if (m_Holders[i] != null && m_Holders[i].activeSelf && m_Items[i].Type == type) return m_Items[i];
             return null;
         }
 
@@ -175,9 +196,16 @@ namespace DeckParty.UI
             // Boomers made upgrades cheaper for this shop.
             if (!maxed && s.ExpansionDiscount > 0)
                 expandWords += "\n" + GameIcons.Tag(Community.Boomer) + " " + Loc.Get("log.perk_boomer", "value", s.ExpansionDiscount);
-            if (expandLabel != null)
+            if (expandButton.TryGetComponent<ShopButtonSkin>(out var expandSkin))
             {
-                // Icon buttons carry numbers only (Sub Cap now -> next, and the price); the words are in the tooltip.
+                // The button says +1 (or the maxed Sub Cap) unless UI Skin > Shop says otherwise; the price sits above it.
+                expandSkin.SetCaption(maxed ? s.Capacity.ToString() : "+1");
+                int cost = PartyEngine.ExpansionCost(s);
+                SetCost(expandCost, maxed ? string.Empty : GameIcons.Amount(ResourceIcon.Cash, cost), s.Cash >= cost);
+            }
+            else if (expandLabel != null)
+            {
+                // Older scenes: icon buttons carry numbers only (Sub Cap now -> next, and the price); the words are in the tooltip.
                 expandLabel.text = rolodexTooltip != null
                     ? (maxed ? s.Capacity.ToString() : $"+1   {GameIcons.Amount(ResourceIcon.Cash, PartyEngine.ExpansionCost(s))}")
                     : expandWords;
@@ -197,7 +225,8 @@ namespace DeckParty.UI
                 : Loc.Get("shop.view_audience", "count", s.PermanentCount);
             if (rolodexTooltip != null)
             {
-                if (rolodexLabel != null) rolodexLabel.text = s.PermanentCount.ToString();
+                if (rolodexButton.TryGetComponent<ShopButtonSkin>(out var rolodexSkin)) rolodexSkin.SetCaption(s.PermanentCount.ToString());
+                else if (rolodexLabel != null) rolodexLabel.text = s.PermanentCount.ToString();
                 rolodexTooltip.Text = audienceWords + "  <color=#B9AED6>[R]</color>";
             }
             else if (rolodexLabel != null) rolodexLabel.text = audienceWords + "  <color=#B9AED6>[R]</color>";
@@ -206,23 +235,69 @@ namespace DeckParty.UI
 
             RenderNextButton(s, ctx, watching);
 
+            // Your own card prefab (UI Skin > Shop) replaces the built-in tiles; changing it while playing rebuilds them.
+            var source = CardSource();
+            if (source != m_ItemSource) ClearItems(source);
             for (int i = 0; i < s.Shop.Count; i++)
             {
-                if (i >= m_Items.Count)
-                {
-                    var item = Instantiate(shopItemPrefab, shopGrid.transform);
-                    item.BuyClicked += type => BuyClicked?.Invoke(type);
-                    item.Hovered += (view, on) => ShopHovered?.Invoke(on ? view.Type : (GuestType?)null);
-                    m_Items.Add(item);
-                }
+                if (i >= m_Items.Count) AddItem(source);
                 var tile = m_Items[i];
-                tile.gameObject.SetActive(true);
+                m_Holders[i].SetActive(true);
                 var type = s.Shop[i];
                 var blocker = PartyEngine.GetBuyBlocker(s, type);
                 tile.Bind(type, s, locked ? lockReason : blocker != null ? Loc.Error(blocker) : null);
             }
-            for (int i = s.Shop.Count; i < m_Items.Count; i++) m_Items[i].gameObject.SetActive(false);
+            for (int i = s.Shop.Count; i < m_Holders.Count; i++) m_Holders[i].SetActive(false);
             LayoutGrid();
+        }
+
+        /// <summary>The price above a shop button: the Cash icon and amount, red when you can't afford it.</summary>
+        static void SetCost(TMP_Text label, string text, bool affordable)
+        {
+            if (label == null) return;
+            label.text = text;
+            label.color = ShopLook.CostColour(affordable, SiteColours.Get(SiteColourRole.Text, label.transform));
+        }
+
+        /// <summary>The card prefab in use: yours from UI Skin > Shop, or the built-in tile.</summary>
+        GameObject CardSource()
+        {
+            var look = ShopLook.Current;
+            var custom = look != null ? look.cardPrefab : null;
+            return custom != null ? custom : shopItemPrefab != null ? shopItemPrefab.gameObject : null;
+        }
+
+        bool UsingOwnCards => m_ItemSource != null && shopItemPrefab != null && m_ItemSource != shopItemPrefab.gameObject;
+
+        void ClearItems(GameObject source)
+        {
+            foreach (var holder in m_Holders)
+                if (holder != null) Destroy(holder);
+            m_Holders.Clear();
+            m_Items.Clear();
+            m_ItemSource = source;
+        }
+
+        void AddItem(GameObject source)
+        {
+            ShopItemView item;
+            GameObject holder;
+            if (shopItemPrefab != null && source == shopItemPrefab.gameObject)
+            {
+                item = Instantiate(shopItemPrefab, shopGrid.transform);
+                holder = item.gameObject;
+            }
+            else
+            {
+                // Your own card: kept at the size you designed it at, scaled to fit the grid's cell.
+                holder = new GameObject(source.name, typeof(RectTransform));
+                holder.transform.SetParent(shopGrid.transform, false);
+                item = holder.AddComponent<ShopCardFit>().Spawn(source);
+            }
+            item.BuyClicked += type => BuyClicked?.Invoke(type);
+            item.Hovered += (view, on) => ShopHovered?.Invoke(on ? view.Type : (GuestType?)null);
+            m_Items.Add(item);
+            m_Holders.Add(holder);
         }
 
         /// <summary>Remove a Viewer: the price on the button (a minus and the Cash), the words and any reason in its tooltip.</summary>
@@ -232,7 +307,12 @@ namespace DeckParty.UI
             var blocker = PartyEngine.GetRemoveBlocker(s);
             removeButton.interactable = blocker == null && !locked;
             string price = GameIcons.Amount(ResourceIcon.Cash, PartyEngine.RemovalCost(s));
-            if (removeLabel != null) removeLabel.text = "-1   " + price;
+            if (removeButton.TryGetComponent<ShopButtonSkin>(out var removeSkin))
+            {
+                removeSkin.SetCaption("-1");
+                SetCost(removeCost, price, s.Cash >= PartyEngine.RemovalCost(s));
+            }
+            else if (removeLabel != null) removeLabel.text = "-1   " + price;
             if (removeTooltip != null)
             {
                 string why = lockReason ?? (blocker != null ? Loc.Error(blocker) : null);
@@ -326,6 +406,7 @@ namespace DeckParty.UI
 
             // Icon button: the words go to the tooltip, the icon shows Go Live (or a tick while you're ready).
             if (nextNightTooltip != null) nextNightTooltip.Text = words;
+            if (nextNightButton.TryGetComponent<ShopButtonSkin>(out var goLiveSkin)) goLiveSkin.SetCaption(string.Empty);
             if (nextNightLabel != null) nextNightLabel.text = nextNightTooltip != null ? (s.Night + 1).ToString() : words;
             if (nextNightIcon != null) nextNightIcon.SetActive(!ready);
             if (nextReadyIcon != null) nextReadyIcon.SetActive(ready);
@@ -338,15 +419,32 @@ namespace DeckParty.UI
         void LayoutGrid()
         {
             if (shopGrid == null || shopViewport == null) return;
+            // UI Skin > Shop can change the card sizes, proportions and spacing (zero keeps the built-in values).
+            var look = ShopLook.Current;
+            var spacingXY = m_DefaultSpacing;
+            if (look != null && look.cardSpacing.x > 0f) spacingXY.x = look.cardSpacing.x;
+            if (look != null && look.cardSpacing.y > 0f) spacingXY.y = look.cardSpacing.y;
+            if (shopGrid.spacing != spacingXY) shopGrid.spacing = spacingXY;
+            float minWidth = look != null && look.minCardWidth > 0f ? look.minCardWidth : minTileWidth;
+            float maxWidth = Mathf.Max(minWidth, look != null && look.maxCardWidth > 0f ? look.maxCardWidth : maxTileWidth);
+            float aspect = tileAspect;
+            if (look != null && look.cardAspect > 0f) aspect = look.cardAspect;
+            else if (UsingOwnCards)
+            {
+                // Your own cards keep the proportions you designed them at.
+                var design = ShopCardFit.DesignSize(m_ItemSource);
+                aspect = design.y / design.x;
+            }
+
             m_LastWidth = shopViewport.rect.width;
             float width = m_LastWidth - shopGrid.padding.horizontal;
             if (width <= 1f) return;
             float spacing = shopGrid.spacing.x;
-            int columns = Mathf.Max(1, Mathf.FloorToInt((width + spacing) / (minTileWidth + spacing)));
-            float tileWidth = Mathf.Min(maxTileWidth, (width - spacing * (columns - 1)) / columns);
+            int columns = Mathf.Max(1, Mathf.FloorToInt((width + spacing) / (minWidth + spacing)));
+            float tileWidth = Mathf.Min(maxWidth, (width - spacing * (columns - 1)) / columns);
             shopGrid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             shopGrid.constraintCount = columns;
-            shopGrid.cellSize = new Vector2(tileWidth, tileWidth * tileAspect);
+            shopGrid.cellSize = new Vector2(tileWidth, tileWidth * aspect);
         }
     }
 }
