@@ -10,7 +10,7 @@ namespace DeckParty.Core
     /// </summary>
     public static class PartyEngine
     {
-        const int InfectionPop = 2;
+        const int InfectionCash = 2;
 
         /// <summary>The Audience every season starts with. These copies don't come out of the shared shop.</summary>
         static readonly (GuestType type, int count)[] s_StartingAudience =
@@ -196,16 +196,16 @@ namespace DeckParty.Core
 
         // ================================================================== queries: scoring
 
-        /// <summary>The guest's printed Subs tonight (after Ballerina swaps, NPC copies and permanent changes).</summary>
-        public static int PrintedPop(GuestInstance g)
+        /// <summary>The guest's printed Cash tonight (after Ballerina swaps, NPC copies and permanent changes).</summary>
+        public static int PrintedCash(GuestInstance g)
         {
             if (g.HasOverride) return g.PrintedOverride;
-            int basePop = g.HasCopy ? g.CopyPop : g.Info.Pop;
-            return basePop + g.BonusPop;
+            int baseCash = g.HasCopy ? g.CopyCash : g.Info.Cash;
+            return baseCash + g.BonusCash;
         }
 
-        /// <summary>The guest's printed Cash tonight (after NPC copies and permanent changes such as Checkout Code).</summary>
-        public static int PrintedCash(GuestInstance g) => (g.HasCopy ? g.CopyCash : g.Info.Cash) + g.BonusCash;
+        /// <summary>The guest's printed Influence tonight (after NPC copies and permanent changes such as Checkout Code).</summary>
+        public static int PrintedInfluence(GuestInstance g) => (g.HasCopy ? g.CopyInfluence : g.Info.Influence) + g.BonusInfluence;
 
         /// <summary>Overly Attached Girlfriend attached to this guest makes them impossible to remove.</summary>
         public static bool IsProtected(PlayerState s, GuestInstance g)
@@ -245,26 +245,26 @@ namespace DeckParty.Core
         }
 
         /// <summary>What this guest would score if scored right now.</summary>
-        public static void ScoreGuest(PlayerState s, GuestInstance g, out int pop, out int cash)
+        public static void ScoreGuest(PlayerState s, GuestInstance g, out int cash, out int influence)
         {
             int index = s.House.IndexOf(g.Id);
             if (index < 0)
             {
-                pop = PrintedPop(g);
                 cash = PrintedCash(g);
+                influence = PrintedInfluence(g);
                 return;
             }
-            ScoreHouse(s, out var pops, out var cashes);
-            pop = pops[index];
+            ScoreHouse(s, out var cashes, out var influences);
             cash = cashes[index];
+            influence = influences[index];
         }
 
         /// <summary>Scores everyone at the party in one pass (several guests depend on the others).</summary>
-        public static void ScoreHouse(PlayerState s, out int[] pops, out int[] cashes)
+        public static void ScoreHouse(PlayerState s, out int[] cashes, out int[] influences)
         {
             int n = s.House.Count;
-            pops = new int[n];
             cashes = new int[n];
+            influences = new int[n];
             var guests = new GuestInstance[n];
             for (int i = 0; i < n; i++) guests[i] = s.Find(s.House[i]);
 
@@ -277,48 +277,48 @@ namespace DeckParty.Core
                 var g = guests[i];
                 if (g == null) continue;
 
-                int basePop = PrintedPop(g);
                 int baseCash = PrintedCash(g);
-                printed[i] = basePop;
-                int pop = basePop;
+                int baseInfluence = PrintedInfluence(g);
+                printed[i] = baseCash;
                 int cash = baseCash;
+                int influence = baseInfluence;
 
-                ApplyPassive(g, i, ctx, ref pop, ref cash);
-                pop += s.PartyViewerBonus;
+                ApplyPassive(g, i, ctx, ref cash, ref influence);
+                cash += s.PartyViewerBonus;
                 // Bark at Chat (IRunFast, armed for this stream): viewers carrying Risk earn extra.
-                if (s.PartyBark > 0 && GuestTrouble(s, g) > 0) pop += s.PartyBark;
-                pop += g.PartyPop;
+                if (s.PartyBark > 0 && GuestTrouble(s, g) > 0) cash += s.PartyBark;
                 cash += g.PartyCash;
-                if (g.Infected) pop += InfectionPop;
+                influence += g.PartyInfluence;
+                if (g.Infected) cash += InfectionCash;
 
                 if (g.Zeroed)
                 {
-                    pop = 0;
                     cash = 0;
+                    influence = 0;
                 }
-                if (g.DoubleMode == 1) pop += basePop;
-                else if (g.DoubleMode == 2) cash += baseCash;
+                if (g.DoubleMode == 1) cash += baseCash;
+                else if (g.DoubleMode == 2) influence += baseInfluence;
 
-                if (pop > 0 && IsProtected(s, g)) pop *= 2;
+                if (cash > 0 && IsProtected(s, g)) cash *= 2;
 
-                if (ctx.Harolds > 0 && !g.Immune && pop < basePop)
+                if (ctx.Harolds > 0 && !g.Immune && cash < baseCash)
                 {
-                    pop = basePop;
+                    cash = baseCash;
                     prevented++;
                 }
 
-                // Softball Interview: everyone who was here earns no Subs tonight.
-                if (g.SubsMuted) pop = 0;
+                // Softball Interview: everyone who was here earns no Cash tonight.
+                if (g.CashMuted) cash = 0;
 
-                pops[i] = pop;
                 cashes[i] = cash;
+                influences[i] = influence;
             }
 
             if (ctx.Harolds > 0)
             {
                 int bonus = Math.Min(GameRules.HaroldMaxBonus, prevented);
                 for (int i = 0; i < n; i++)
-                    if (guests[i] != null && guests[i].Kind == GuestType.HideThePainHarold) pops[i] += bonus;
+                    if (guests[i] != null && guests[i].Kind == GuestType.HideThePainHarold) cashes[i] += bonus;
             }
 
             // Confused Math Lady conversions happen last so they convert the guest's whole take.
@@ -326,15 +326,15 @@ namespace DeckParty.Core
             {
                 var g = guests[i];
                 if (g == null) continue;
-                if (g.ConvertMode == 1 && pops[i] > 0)
+                if (g.ConvertMode == 1 && cashes[i] > 0)
                 {
-                    cashes[i] += pops[i] / 2;
-                    pops[i] = 0;
-                }
-                else if (g.ConvertMode == 2 && cashes[i] > 0)
-                {
-                    pops[i] += cashes[i] * 2;
+                    influences[i] += cashes[i] / 2;
                     cashes[i] = 0;
+                }
+                else if (g.ConvertMode == 2 && influences[i] > 0)
+                {
+                    cashes[i] += influences[i] * 2;
+                    influences[i] = 0;
                 }
             }
         }
@@ -368,7 +368,7 @@ namespace DeckParty.Core
                 }
                 // Doge's Such Synergy counts communities (the old character families are no longer used).
                 if (g.Kind != GuestType.DegenDog) communities |= GuestCatalog.CommunitiesOf(g.Kind);
-                if (PrintedPop(g) >= 5) ctx.BigPrinted++;
+                if (PrintedCash(g) >= 5) ctx.BigPrinted++;
             }
             ctx.CommunityCount = Communities.CountIn(communities);
 
@@ -387,80 +387,80 @@ namespace DeckParty.Core
                 bool penalised = (g.Kind == GuestType.Gigachad && ctx.Gigachads > 1) ||
                                  (g.Kind == GuestType.SigmaMale && ctx.Sigmas > 1) ||
                                  (g.Kind == GuestType.Cheems && ctx.Doges == 0 && ctx.NetTrouble > 0);
-                bool suffering = PrintedPop(g) < 0 || PrintedCash(g) < 0 || GuestTrouble(s, g) > 0 || g.Infected || g.Zeroed || penalised;
+                bool suffering = PrintedCash(g) < 0 || PrintedInfluence(g) < 0 || GuestTrouble(s, g) > 0 || g.Infected || g.Zeroed || penalised;
                 ctx.Suffering[i] = suffering;
                 if (suffering) ctx.Sufferers++;
             }
             return ctx;
         }
 
-        static void ApplyPassive(GuestInstance g, int index, ScoreContext ctx, ref int pop, ref int cash)
+        static void ApplyPassive(GuestInstance g, int index, ScoreContext ctx, ref int cash, ref int influence)
         {
             switch (g.Kind)
             {
                 case GuestType.DegenDog:
-                    pop += Math.Min(GameRules.DogeMaxBonus, ctx.CommunityCount);
-                    if (ctx.Cheems > 0 && !g.Immune) pop += 2;
+                    cash += Math.Min(GameRules.DogeMaxBonus, ctx.CommunityCount);
+                    if (ctx.Cheems > 0 && !g.Immune) cash += 2;
                     break;
                 case GuestType.Gigachad:
-                    if (ctx.BigPrinted == 1 && PrintedPop(g) >= 5) pop += GameRules.GigachadSoloBonus;
-                    pop -= GameRules.GigachadCrowdPenalty * (ctx.Gigachads - 1);
+                    if (ctx.BigPrinted == 1 && PrintedCash(g) >= 5) cash += GameRules.GigachadSoloBonus;
+                    cash -= GameRules.GigachadCrowdPenalty * (ctx.Gigachads - 1);
                     break;
                 case GuestType.Wojak:
                 {
                     int others = ctx.Sufferers - (ctx.Suffering[index] ? 1 : 0);
-                    pop += Math.Min(GameRules.WojakMaxBonus, GameRules.WojakPerSufferer * others);
+                    cash += Math.Min(GameRules.WojakMaxBonus, GameRules.WojakPerSufferer * others);
                     break;
                 }
                 case GuestType.Cheems:
-                    if (ctx.Doges > 0) pop += 2;
-                    else pop -= ctx.NetTrouble;
+                    if (ctx.Doges > 0) cash += 2;
+                    else cash -= ctx.NetTrouble;
                     break;
                 case GuestType.Doomer:
-                    // Doomscroll (2026-11-10: no more +2 Cash at exactly 2 Risk).
-                    pop += 2 * ctx.NetTrouble;
+                    // Doomscroll (2026-11-10: no more +2 Influence at exactly 2 Risk).
+                    cash += 2 * ctx.NetTrouble;
                     break;
                 case GuestType.ForeverAlone:
-                    pop += ctx.Guests == 1 ? GameRules.ForeverAloneSoloBonus : ctx.Empty;
+                    cash += ctx.Guests == 1 ? GameRules.ForeverAloneSoloBonus : ctx.Empty;
                     break;
                 case GuestType.UgandanKnuckles:
-                    pop += ctx.Knuckles - 1;
+                    cash += ctx.Knuckles - 1;
                     break;
                 case GuestType.BigChungus:
-                    pop += ctx.ChungusBonus;
+                    cash += ctx.ChungusBonus;
                     break;
                 case GuestType.SigmaMale:
-                    pop += Math.Min(GameRules.SigmaMaxBonus, ctx.Empty) - (ctx.Sigmas - 1);
+                    cash += Math.Min(GameRules.SigmaMaxBonus, ctx.Empty) - (ctx.Sigmas - 1);
                     break;
                 case GuestType.Pepe:
-                    if (g.Mood == PepeMood.Happy) pop += 3;
-                    else if (g.Mood == PepeMood.Sad) cash += 3;
-                    else if (g.Mood == PepeMood.Angry) pop += 6;
+                    if (g.Mood == PepeMood.Happy) cash += 3;
+                    else if (g.Mood == PepeMood.Sad) influence += 3;
+                    else if (g.Mood == PepeMood.Angry) cash += 6;
                     break;
 
                 // --- Audience classics ---
                 case GuestType.PromoCodeUser:
-                    if (ctx.Full) cash += GameRules.PromoCodeFullCash;
+                    if (ctx.Full) influence += GameRules.PromoCodeFullInfluence;
                     break;
                 case GuestType.Gatekeeper:
-                    pop += ctx.Empty;
+                    cash += ctx.Empty;
                     break;
                 case GuestType.BingeBunny:
-                    pop += ctx.LoyalFans;
+                    cash += ctx.LoyalFans;
                     break;
                 case GuestType.MasterOfCurrency:
-                    cash += GameRules.PerRiskyViewerBonus * ctx.Troublemakers;
+                    influence += GameRules.PerRiskyViewerBonus * ctx.Troublemakers;
                     break;
                 case GuestType.ExecutivePr:
-                    pop += GameRules.PerRiskyViewerBonus * ctx.Troublemakers;
+                    cash += GameRules.PerRiskyViewerBonus * ctx.Troublemakers;
                     break;
 
                 // --- Group-scoring cards: the copies in chat share one total from the table ---
                 case GuestType.DancingJen:
-                    pop += GroupShare(GameRules.DancingJenClout(ctx.Jens), ctx.Jens, index == ctx.JenLead);
+                    cash += GroupShare(GameRules.DancingJenCash(ctx.Jens), ctx.Jens, index == ctx.JenLead);
                     break;
                 case GuestType.CryptoEnthusiast:
-                    cash += GroupShare(GameRules.CryptoEnthusiastCash(ctx.Cryptos), ctx.Cryptos, index == ctx.CryptoLead);
+                    influence += GroupShare(GameRules.CryptoEnthusiastInfluence(ctx.Cryptos), ctx.Cryptos, index == ctx.CryptoLead);
                     break;
             }
         }
@@ -477,34 +477,34 @@ namespace DeckParty.Core
         }
 
         /// <summary>
-        /// Total Subs/Cash the party would bank if it ended successfully right now (before fee shortfalls), including the
-        /// fixed community rewards (Staff's Cash, Troll Army's Clout) and the Affiliates' Checkout Codes. Random community
+        /// Total Cash/Influence the party would bank if it ended successfully right now (before fee shortfalls), including the
+        /// fixed community rewards (Staff's Influence, Troll Army's Cash) and the Affiliates' Checkout Codes. Random community
         /// rolls (Core Fanbase scoring twice) aren't included.
         /// </summary>
-        public static void ProjectScore(PlayerState s, out int pop, out int cash)
+        public static void ProjectScore(PlayerState s, out int cash, out int influence)
         {
-            pop = s.PartyPop + s.InvestPop * GameRules.StonksMultiplier;
             cash = s.PartyCash + s.InvestCash * GameRules.StonksMultiplier;
-            ScoreHouse(s, out var pops, out var cashes);
-            for (int i = 0; i < pops.Length; i++)
+            influence = s.PartyInfluence + s.InvestInfluence * GameRules.StonksMultiplier;
+            ScoreHouse(s, out var cashes, out var influences);
+            for (int i = 0; i < cashes.Length; i++)
             {
-                pop += pops[i];
                 cash += cashes[i];
+                influence += influences[i];
             }
             var scores = CommunityScores(s);
-            Communities.FixedRewards(scores, out int communitySubs, out int communityCash);
-            pop += communitySubs + TrollArmyClout(s, scores);
-            cash += communityCash + Communities.StaffCash(scores[(int)Community.Staff]) + CheckoutCodesNow(s);
+            Communities.FixedRewards(scores, out int communityCash, out int communityInfluence);
+            cash += communityCash + TrollArmyCash(s, scores);
+            influence += communityInfluence + Communities.StaffInfluence(scores[(int)Community.Staff]) + CheckoutCodesNow(s);
         }
 
-        /// <summary>Troll Army's Clout if the stream were scored now: +2 per point of Risk, cancelled Risk included.</summary>
-        public static int TrollArmyClout(PlayerState s, int[] scores = null)
+        /// <summary>Troll Army's Cash if the stream were scored now: +2 per point of Risk, cancelled Risk included.</summary>
+        public static int TrollArmyCash(PlayerState s, int[] scores = null)
         {
             scores = scores ?? CommunityScores(s);
-            return Communities.TrollArmyClout(scores[(int)Community.Trolls], TroubleTotal(s));
+            return Communities.TrollArmyCash(scores[(int)Community.Trolls], TroubleTotal(s));
         }
 
-        /// <summary>Cash the Affiliates' Checkout Codes would add to this stream if it were scored now (+1 each, while anyone can still grow).</summary>
+        /// <summary>Influence the Affiliates' Checkout Codes would add to this stream if it were scored now (+1 each, while anyone can still grow).</summary>
         static int CheckoutCodesNow(PlayerState s)
         {
             int affiliates = s.CountInHouse(GuestType.Affiliate);
@@ -513,16 +513,16 @@ namespace DeckParty.Core
             foreach (var id in s.House)
             {
                 var g = s.Find(id);
-                if (g != null && !g.Temporary && !GuestCatalog.IsToken(g.Kind)) room += Math.Max(0, GameRules.PermanentCashCap - PrintedCash(g));
+                if (g != null && !g.Temporary && !GuestCatalog.IsToken(g.Kind)) room += Math.Max(0, GameRules.PermanentInfluenceCap - PrintedInfluence(g));
             }
             return Math.Min(affiliates, room);
         }
 
-        /// <summary>Gifted Subs penalty that ending now would incur because fees can't be paid.</summary>
-        public static int ProjectPenalty(PlayerState s, int partyCash)
+        /// <summary>Cash penalty that ending now would incur because fees can't be paid.</summary>
+        public static int ProjectPenalty(PlayerState s, int partyInfluence)
         {
-            int available = partyCash + (GameRules.FeesDrawFromBank ? s.Cash : 0);
-            return available < 0 ? -available * GameRules.CashShortfallPopPenalty : 0;
+            int available = partyInfluence + (GameRules.FeesDrawFromBank ? s.Influence : 0);
+            return available < 0 ? -available * GameRules.InfluenceShortfallCashPenalty : 0;
         }
 
         /// <summary>The next Sub Cap upgrade's price, after Boomers' discount for this shop.</summary>
@@ -613,7 +613,7 @@ namespace DeckParty.Core
                     if (s.Pool.Count < 2) return Err.Of("err.needs_two_queued");
                     break;
                 case AbilityKind.Invest:
-                    if (s.Pop < GameRules.StonksInvestPop && s.Cash < GameRules.StonksInvestCash) return Err.Of("err.nothing_to_invest");
+                    if (s.Cash < GameRules.StonksInvestCash && s.Influence < GameRules.StonksInvestInfluence) return Err.Of("err.nothing_to_invest");
                     break;
                 case AbilityKind.Reroll:
                     if (!CanReroll(s) && s.Pool.Count == 0) return Err.Of("err.nothing_to_reroll");
@@ -699,7 +699,7 @@ namespace DeckParty.Core
                 case AbilityKind.Photograph:
                     return !self;
                 case AbilityKind.Style:
-                    return PrintedCash(target) < GameRules.PermanentCashCap;
+                    return PrintedInfluence(target) < GameRules.PermanentInfluenceCap;
                 case AbilityKind.BootPair:
                 {
                     if (IsProtected(s, target)) return false;
@@ -746,8 +746,8 @@ namespace DeckParty.Core
             switch (kind)
             {
                 case AbilityKind.Invest:
-                    if (cmd.Option == 0 && s.Pop < GameRules.StonksInvestPop) return Err.Of("err.needs_gifted_subs", GameRules.StonksInvestPop);
-                    if (cmd.Option == 1 && s.Cash < GameRules.StonksInvestCash) return Err.Of("err.needs_cash", GameRules.StonksInvestCash);
+                    if (cmd.Option == 0 && s.Cash < GameRules.StonksInvestCash) return Err.Of("err.needs_cash_banked", GameRules.StonksInvestCash);
+                    if (cmd.Option == 1 && s.Influence < GameRules.StonksInvestInfluence) return Err.Of("err.needs_influence", GameRules.StonksInvestInfluence);
                     return null;
                 case AbilityKind.Reroll:
                     if (cmd.Option == 0 && !CanReroll(s)) return Err.Of("err.no_reroll");
@@ -826,7 +826,7 @@ namespace DeckParty.Core
             if (s.CountOwned(type) >= info.MaxCopies) return Err.Of("err.max_copies", info.MaxCopies, Err.Guest(type));
             if (SharedLeft(s, type) <= 0) return Err.Of("err.sold_out", Err.Guest(type));
             int cost = RecruitCost(s, type);
-            if (s.Pop < cost) return Err.Of("err.needs_gifted_subs", cost);
+            if (s.Cash < cost) return Err.Of("err.needs_cash_banked", cost);
             return null;
         }
 
@@ -858,7 +858,7 @@ namespace DeckParty.Core
             return Math.Max(0, Math.Min(info.MaxCopies - s.CountOwned(type), SharedLeft(s, type)));
         }
 
-        /// <summary>What Remove a Viewer costs right now (Cash): 2 for the first, 1 more for each one since.</summary>
+        /// <summary>What Remove a Viewer costs right now (Influence): 2 for the first, 1 more for each one since.</summary>
         public static int RemovalCost(PlayerState s) => GameRules.RemovalCost(s.Removals);
 
         /// <summary>Why Remove a Viewer can't be bought right now (null when it can). Doesn't check which viewer.</summary>
@@ -867,11 +867,11 @@ namespace DeckParty.Core
             if (s.Phase != GamePhase.Planning) return Err.Of("err.remove_between");
             if (s.PermanentCount <= GameRules.MinAudience) return Err.Of("err.min_audience", GameRules.MinAudience);
             int cost = RemovalCost(s);
-            if (s.Cash < cost) return Err.Of("err.needs_cash", cost);
+            if (s.Influence < cost) return Err.Of("err.needs_influence", cost);
             return null;
         }
 
-        /// <summary>Remove a Viewer: pays the Cash and takes one card out of the Audience for good (it goes back to the shop's stock).</summary>
+        /// <summary>Remove a Viewer: pays the Influence and takes one card out of the Audience for good (it goes back to the shop's stock).</summary>
         static CommandResult Dismiss(PlayerState s, int guestId, List<GameEvent> ev)
         {
             var blocker = GetRemoveBlocker(s);
@@ -880,7 +880,7 @@ namespace DeckParty.Core
             if (g == null || g.Temporary) return CommandResult.Fail(Err.Of("err.unknown_viewer"));
 
             int cost = RemovalCost(s);
-            s.Cash -= cost;
+            s.Influence -= cost;
             s.Removals++;
             s.Rolodex.Remove(g);
             if (s.BannedNextParty == guestId) s.BannedNextParty = -1;
@@ -893,7 +893,7 @@ namespace DeckParty.Core
             if (s.Phase != GamePhase.Planning) return Err.Of("err.upgrade_between");
             if (s.Capacity >= GameRules.MaxCapacity) return Err.Of("err.sub_cap_maxed");
             int cost = ExpansionCost(s);
-            if (s.Cash < cost) return Err.Of("err.needs_cash", cost);
+            if (s.Influence < cost) return Err.Of("err.needs_influence", cost);
             return null;
         }
 
@@ -942,10 +942,10 @@ namespace DeckParty.Core
             s.Excluded.Clear();
             s.UsedAbilities.Clear();
             s.PeekedId = -1;
-            s.PartyPop = 0;
             s.PartyCash = 0;
-            s.InvestPop = 0;
+            s.PartyInfluence = 0;
             s.InvestCash = 0;
+            s.InvestInfluence = 0;
             s.LastActionCategory = ActionCategory.None;
             s.LastRandomArrival = -1;
             s.AttractionActor = -1;
@@ -1063,31 +1063,31 @@ namespace DeckParty.Core
 
         /// <summary>
         /// Scores a guest mid-stream (Crypto Guy, Generous Donator) and banks it immediately, so it's kept even if the
-        /// stream ends badly. Fees the bank can't cover cost Gifted Subs, as at the end of a stream.
+        /// stream ends badly. Fees the bank can't cover cost Cash, as at the end of a stream.
         /// </summary>
         static void ScoreNow(PlayerState s, GuestInstance g, int sourceId, List<GameEvent> ev)
         {
-            ScoreGuest(s, g, out int pop, out int cash);
+            ScoreGuest(s, g, out int cash, out int influence);
             // The (retired) Finance Bros bonus applies to every scoring, this one included.
             var scores = CommunityScores(s);
-            cash = RollCash(s, g, cash, Communities.FinanceDoubleChance(scores[(int)Community.FinanceBros]), ev);
-            Emit(ev, GameEventType.ScoredNow, g, pop, cash, sourceId);
-            Bank(s, pop, cash, ev);
+            influence = RollInfluence(s, g, influence, Communities.FinanceDoubleChance(scores[(int)Community.FinanceBros]), ev);
+            Emit(ev, GameEventType.ScoredNow, g, cash, influence, sourceId);
+            Bank(s, cash, influence, ev);
         }
 
-        /// <summary>Adds Subs and Cash straight to the wallet. A Cash debt the bank can't pay becomes a Gifted Subs penalty.</summary>
-        static void Bank(PlayerState s, int pop, int cash, List<GameEvent> ev)
+        /// <summary>Adds Cash and Influence straight to the wallet. A Influence debt the bank can't pay becomes a Cash penalty.</summary>
+        static void Bank(PlayerState s, int cash, int influence, List<GameEvent> ev)
         {
-            s.Pop = Math.Max(0, s.Pop + pop);
-            s.TotalPopEarned += Math.Max(0, pop);
-            s.Cash += cash;
+            s.Cash = Math.Max(0, s.Cash + cash);
             s.TotalCashEarned += Math.Max(0, cash);
-            if (s.Cash >= 0) return;
-            int unpaid = -s.Cash;
-            int penalty = unpaid * GameRules.CashShortfallPopPenalty;
-            s.Cash = 0;
-            s.Pop = Math.Max(0, s.Pop - penalty);
-            Emit(ev, GameEventType.CashShortfall, null, unpaid, penalty);
+            s.Influence += influence;
+            s.TotalInfluenceEarned += Math.Max(0, influence);
+            if (s.Influence >= 0) return;
+            int unpaid = -s.Influence;
+            int penalty = unpaid * GameRules.InfluenceShortfallCashPenalty;
+            s.Influence = 0;
+            s.Cash = Math.Max(0, s.Cash - penalty);
+            Emit(ev, GameEventType.InfluenceShortfall, null, unpaid, penalty);
         }
 
         /// <summary>The newcomer's own entrance effect.</summary>
@@ -1106,7 +1106,7 @@ namespace DeckParty.Core
                     {
                         var other = s.Find(s.House[i]);
                         if (!CanBeAttached(s, other, g)) continue;
-                        if (best == null || PrintedPop(other) > PrintedPop(best)) best = other;
+                        if (best == null || PrintedCash(other) > PrintedCash(best)) best = other;
                     }
                     if (best != null) Attach(s, g, best, ev);
                     else g.AttachedTo = GuestInstance.AttachPending;
@@ -1137,11 +1137,11 @@ namespace DeckParty.Core
                     break;
 
                 case GuestType.GenZWithJob:
-                    // Secure The Bag: +1 Cash for good on every entrance, up to the cap, even if the stream fails later.
-                    if (PrintedCash(g) < GameRules.PermanentCashCap)
+                    // Secure The Bag: +1 Influence for good on every entrance, up to the cap, even if the stream fails later.
+                    if (PrintedInfluence(g) < GameRules.PermanentInfluenceCap)
                     {
-                        g.BonusCash++;
-                        Emit(ev, GameEventType.CashBoosted, g, 1, g.BonusCash);
+                        g.BonusInfluence++;
+                        Emit(ev, GameEventType.InfluenceBoosted, g, 1, g.BonusInfluence);
                     }
                     break;
             }
@@ -1214,9 +1214,9 @@ namespace DeckParty.Core
                 return;
             }
             npc.HasCopy = true;
-            npc.CopyPop = PrintedPop(previous);
             npc.CopyCash = PrintedCash(previous);
-            Emit(ev, GameEventType.StatsCopied, npc, previous.Id, npc.CopyPop, npc.CopyCash);
+            npc.CopyInfluence = PrintedInfluence(previous);
+            Emit(ev, GameEventType.StatsCopied, npc, previous.Id, npc.CopyCash, npc.CopyInfluence);
         }
 
         static void InfectRandom(PlayerState s, int sourceId, List<GameEvent> ev)
@@ -1338,7 +1338,7 @@ namespace DeckParty.Core
                 for (int i = 0; i < s.House.Count; i++)
                 {
                     var cat = s.Find(s.House[i]);
-                    // Everyone Leaves Me: +1 Subs or +1 Cash, at random.
+                    // Everyone Leaves Me: +1 Cash or +1 Influence, at random.
                     if (cat == null || cat.Kind != GuestType.DistraughtCat) continue;
                     if (DeterministicRandom.Range(ref s.RngState, 2) == 0) Gain(s, cat, 1, 0, ev);
                     else Gain(s, cat, 0, 1, ev);
@@ -1363,8 +1363,8 @@ namespace DeckParty.Core
         {
             if (g.Kind != GuestType.BadLuckBrian || g.ShieldUsed) return false;
             g.ShieldUsed = true;
-            g.BonusPop++;
-            Emit(ev, GameEventType.ShieldBlocked, g, g.BonusPop);
+            g.BonusCash++;
+            Emit(ev, GameEventType.ShieldBlocked, g, g.BonusCash);
             return true;
         }
 
@@ -1406,20 +1406,20 @@ namespace DeckParty.Core
             }
         }
 
-        static void Gain(PlayerState s, GuestInstance g, int pop, int cash, List<GameEvent> ev)
+        static void Gain(PlayerState s, GuestInstance g, int cash, int influence, List<GameEvent> ev)
         {
-            if (pop == 0 && cash == 0) return;
-            g.PartyPop += pop;
+            if (cash == 0 && influence == 0) return;
             g.PartyCash += cash;
-            Emit(ev, GameEventType.GuestGained, g, pop, cash);
+            g.PartyInfluence += influence;
+            Emit(ev, GameEventType.GuestGained, g, cash, influence);
         }
 
-        static void PotGain(PlayerState s, GuestInstance source, int pop, int cash, List<GameEvent> ev)
+        static void PotGain(PlayerState s, GuestInstance source, int cash, int influence, List<GameEvent> ev)
         {
-            if (pop == 0 && cash == 0) return;
-            s.PartyPop += pop;
+            if (cash == 0 && influence == 0) return;
             s.PartyCash += cash;
-            Emit(ev, GameEventType.PartyPotGained, source, pop, cash);
+            s.PartyInfluence += influence;
+            Emit(ev, GameEventType.PartyPotGained, source, cash, influence);
         }
 
         // ================================================================== shutdowns
@@ -1577,15 +1577,15 @@ namespace DeckParty.Core
                 case AbilityKind.Invest:
                     if (cmd.Option == 0)
                     {
-                        s.Pop -= GameRules.StonksInvestPop;
-                        s.InvestPop += GameRules.StonksInvestPop;
-                    }
-                    else
-                    {
                         s.Cash -= GameRules.StonksInvestCash;
                         s.InvestCash += GameRules.StonksInvestCash;
                     }
-                    Emit(ev, GameEventType.Invested, actor, s.InvestPop, s.InvestCash);
+                    else
+                    {
+                        s.Influence -= GameRules.StonksInvestInfluence;
+                        s.InvestInfluence += GameRules.StonksInvestInfluence;
+                    }
+                    Emit(ev, GameEventType.Invested, actor, s.InvestCash, s.InvestInfluence);
                     break;
 
                 case AbilityKind.PlayOff:
@@ -1601,23 +1601,23 @@ namespace DeckParty.Core
                 case AbilityKind.Mog:
                 {
                     var target = s.Find(a);
-                    int theirs = PrintedPop(target);
-                    int chads = PrintedPop(actor);
+                    int theirs = PrintedCash(target);
+                    int chads = PrintedCash(actor);
                     if (theirs < chads)
                     {
-                        target.BonusPop--;
-                        actor.BonusPop++;
-                        Emit(ev, GameEventType.PermanentChange, target, -1, target.BonusPop);
-                        Emit(ev, GameEventType.PermanentChange, actor, 1, actor.BonusPop);
+                        target.BonusCash--;
+                        actor.BonusCash++;
+                        Emit(ev, GameEventType.PermanentChange, target, -1, target.BonusCash);
+                        Emit(ev, GameEventType.PermanentChange, actor, 1, actor.BonusCash);
                     }
                     else if (theirs > chads)
                     {
-                        actor.BonusPop--;
-                        Emit(ev, GameEventType.PermanentChange, actor, -1, actor.BonusPop);
+                        actor.BonusCash--;
+                        Emit(ev, GameEventType.PermanentChange, actor, -1, actor.BonusCash);
                     }
                     else
                     {
-                        Emit(ev, GameEventType.PermanentChange, actor, 0, actor.BonusPop);
+                        Emit(ev, GameEventType.PermanentChange, actor, 0, actor.BonusCash);
                     }
                     break;
                 }
@@ -1676,8 +1676,8 @@ namespace DeckParty.Core
                         target.StrikeCount = 0;
                         if (RemoveFromParty(s, a, LeaveReason.Evicted, actorId, true, ev))
                         {
-                            actor.BonusPop++;
-                            Emit(ev, GameEventType.PermanentChange, actor, 1, actor.BonusPop);
+                            actor.BonusCash++;
+                            Emit(ev, GameEventType.PermanentChange, actor, 1, actor.BonusCash);
                         }
                         CheckRaid(s, ev);
                     }
@@ -1720,8 +1720,8 @@ namespace DeckParty.Core
                 {
                     var first = s.Find(a);
                     var second = s.Find(b);
-                    int firstPrinted = PrintedPop(first);
-                    int secondPrinted = PrintedPop(second);
+                    int firstPrinted = PrintedCash(first);
+                    int secondPrinted = PrintedCash(second);
                     first.HasOverride = true;
                     first.PrintedOverride = secondPrinted;
                     second.HasOverride = true;
@@ -1827,11 +1827,11 @@ namespace DeckParty.Core
                     {
                         var g = s.Find(id);
                         if (g == null || g.Immune) continue;
-                        g.SubsMuted = true;
+                        g.CashMuted = true;
                         muted++;
                     }
-                    // The stream's Subs pot drops to 0 as well.
-                    s.PartyPop = 0;
+                    // The stream's Cash pot drops to 0 as well.
+                    s.PartyCash = 0;
                     int billionaires = s.CountInHouse(GuestType.BillionaireBenefactor);
                     Emit(ev, GameEventType.InterviewGiven, actor, billionaires, muted);
                     Bank(s, 0, billionaires, ev);
@@ -1841,8 +1841,8 @@ namespace DeckParty.Core
                 case AbilityKind.Style:
                 {
                     var target = s.Find(a);
-                    target.BonusCash++;
-                    Emit(ev, GameEventType.CashBoosted, target, 1, target.BonusCash);
+                    target.BonusInfluence++;
+                    Emit(ev, GameEventType.InfluenceBoosted, target, 1, target.BonusInfluence);
                     break;
                 }
 
@@ -1924,25 +1924,25 @@ namespace DeckParty.Core
         /// </summary>
         static void ScoreStream(PlayerState s, List<GameEvent> ev)
         {
-            // Affiliates' Checkout Codes first, so the +1 Cash already counts in this stream's score.
+            // Affiliates' Checkout Codes first, so the +1 Influence already counts in this stream's score.
             ApplyCheckoutCodes(s, ev);
             var scores = CommunityScores(s);
-            ScoreChat(s, scores, false, out int pop, out int cash, ev);
+            ScoreChat(s, scores, false, out int cash, out int influence, ev);
 
             // Memetics Division: the whole chat scores again, every roll made afresh.
             int repeat = Communities.MemeticsRepeatChance(scores[(int)Community.MemeticsDivision]);
             if (Roll(s, repeat))
             {
                 Emit(ev, GameEventType.MemeticsRepeat, null, repeat);
-                ScoreChat(s, scores, true, out int againPop, out int againCash, ev);
-                pop += againPop;
+                ScoreChat(s, scores, true, out int againCash, out int againInfluence, ev);
                 cash += againCash;
+                influence += againInfluence;
             }
 
-            if (s.InvestPop > 0 || s.InvestCash > 0)
-                Emit(ev, GameEventType.InvestmentPaid, null, s.InvestPop * GameRules.StonksMultiplier, s.InvestCash * GameRules.StonksMultiplier);
-            pop += s.PartyPop + s.InvestPop * GameRules.StonksMultiplier;
+            if (s.InvestCash > 0 || s.InvestInfluence > 0)
+                Emit(ev, GameEventType.InvestmentPaid, null, s.InvestCash * GameRules.StonksMultiplier, s.InvestInfluence * GameRules.StonksMultiplier);
             cash += s.PartyCash + s.InvestCash * GameRules.StonksMultiplier;
+            influence += s.PartyInfluence + s.InvestInfluence * GameRules.StonksMultiplier;
 
             int diamonds = DiamondsPresent(s);
             int doom = Math.Min(Communities.DoomMaxPoints, scores[(int)Community.Doomsdayers]);
@@ -1956,35 +1956,35 @@ namespace DeckParty.Core
                 if (g != null && !g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Boomer)) boomers.Add(id);
             }
 
-            // Great streams in a row: Manim Maketh Man's Beautiful Sequence cashes it in from the shop.
+            // Great streams in a row: Manim Maketh Man's Beautiful Sequence influences it in from the shop.
             s.Streak++;
 
             int unpaid;
             if (GameRules.FeesDrawFromBank)
             {
-                s.Cash += cash;
-                unpaid = s.Cash < 0 ? -s.Cash : 0;
-                if (unpaid > 0) s.Cash = 0;
+                s.Influence += influence;
+                unpaid = s.Influence < 0 ? -s.Influence : 0;
+                if (unpaid > 0) s.Influence = 0;
             }
             else
             {
-                unpaid = cash < 0 ? -cash : 0;
-                if (cash > 0) s.Cash += cash;
+                unpaid = influence < 0 ? -influence : 0;
+                if (influence > 0) s.Influence += influence;
             }
 
             if (unpaid > 0)
             {
-                penalty = unpaid * GameRules.CashShortfallPopPenalty;
-                Emit(ev, GameEventType.CashShortfall, null, unpaid, penalty);
+                penalty = unpaid * GameRules.InfluenceShortfallCashPenalty;
+                Emit(ev, GameEventType.InfluenceShortfall, null, unpaid, penalty);
             }
 
-            s.Pop = Math.Max(0, s.Pop + pop - penalty);
-            s.TotalPopEarned += Math.Max(0, pop);
+            s.Cash = Math.Max(0, s.Cash + cash - penalty);
             s.TotalCashEarned += Math.Max(0, cash);
+            s.TotalInfluenceEarned += Math.Max(0, influence);
             s.SuccessfulParties++;
             s.BestDiamonds = Math.Max(s.BestDiamonds, diamonds);
-            RecordOutcome(s, PartyOutcome.Success, pop, cash, diamonds, penalty);
-            Emit(ev, GameEventType.PartyEnded, null, pop, cash, diamonds);
+            RecordOutcome(s, PartyOutcome.Success, cash, influence, diamonds, penalty);
+            Emit(ev, GameEventType.PartyEnded, null, cash, influence, diamonds);
 
             int temporary = 0;
             foreach (var g in s.Rolodex) if (g.Temporary && !GuestCatalog.IsToken(g.Type)) temporary++;
@@ -2019,26 +2019,26 @@ namespace DeckParty.Core
                 {
                     var g = s.Find(id);
                     if (g == null || g.Temporary || !GuestCatalog.InCommunity(g.Type, Community.GenZ)) continue;
-                    int subs = 0, cash = 0;
+                    int cash = 0, influence = 0;
                     for (int k = 0; k < growth; k++)
                     {
-                        bool canSubs = g.BaseInfo.Pop + g.BonusPop < GameRules.PermanentCashCap;
-                        bool canCash = g.BaseInfo.Cash + g.BonusCash < GameRules.PermanentCashCap;
-                        if (!canSubs && !canCash) break;
-                        bool pickSubs = DeterministicRandom.Range(ref s.RngState, 2) == 0;
-                        if (pickSubs ? !canSubs : !canCash) pickSubs = !pickSubs;
-                        if (pickSubs)
-                        {
-                            g.BonusPop++;
-                            subs++;
-                        }
-                        else
+                        bool canCash = g.BaseInfo.Cash + g.BonusCash < GameRules.PermanentInfluenceCap;
+                        bool canInfluence = g.BaseInfo.Influence + g.BonusInfluence < GameRules.PermanentInfluenceCap;
+                        if (!canCash && !canInfluence) break;
+                        bool pickCash = DeterministicRandom.Range(ref s.RngState, 2) == 0;
+                        if (pickCash ? !canCash : !canInfluence) pickCash = !pickCash;
+                        if (pickCash)
                         {
                             g.BonusCash++;
                             cash++;
                         }
+                        else
+                        {
+                            g.BonusInfluence++;
+                            influence++;
+                        }
                     }
-                    if (subs + cash > 0) Emit(ev, GameEventType.GenZGrowth, g, subs, cash);
+                    if (cash + influence > 0) Emit(ev, GameEventType.GenZGrowth, g, cash, influence);
                 }
             }
 
@@ -2059,7 +2059,7 @@ namespace DeckParty.Core
 
         /// <summary>
         /// Boomers: each one who was in the scored stream has a chance to leave your Audience for good. Every time one does,
-        /// a random Millennial you own inherits +1 Cash for good, once per Millennials point (at least once). Without a
+        /// a random Millennial you own inherits +1 Influence for good, once per Millennials point (at least once). Without a
         /// Millennial nothing is inherited.
         /// </summary>
         static void RetireBoomers(PlayerState s, List<int> boomers, int millennialPoints, List<GameEvent> ev)
@@ -2077,12 +2077,12 @@ namespace DeckParty.Core
                 {
                     var heirs = new List<GuestInstance>();
                     foreach (var g in s.Rolodex)
-                        if (!g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Millennial) && g.BaseInfo.Cash + g.BonusCash < GameRules.PermanentCashCap)
+                        if (!g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Millennial) && g.BaseInfo.Influence + g.BonusInfluence < GameRules.PermanentInfluenceCap)
                             heirs.Add(g);
                     if (heirs.Count == 0) break;
                     var heir = heirs[DeterministicRandom.Range(ref s.RngState, heirs.Count)];
-                    heir.BonusCash += Communities.InheritanceCash;
-                    Emit(ev, GameEventType.Inheritance, heir, Communities.InheritanceCash, heir.BonusCash);
+                    heir.BonusInfluence += Communities.InheritanceInfluence;
+                    Emit(ev, GameEventType.Inheritance, heir, Communities.InheritanceInfluence, heir.BonusInfluence);
                 }
             }
         }
@@ -2098,37 +2098,37 @@ namespace DeckParty.Core
         /// who scores twice sends a second one (C = <see cref="EncoreScoringTag"/> / <see cref="EncoreRepeatScoringTag"/>),
         /// so the scoring sequence plays both.
         /// </summary>
-        static void ScoreChat(PlayerState s, int[] scores, bool repeat, out int pop, out int cash, List<GameEvent> ev)
+        static void ScoreChat(PlayerState s, int[] scores, bool repeat, out int cash, out int influence, List<GameEvent> ev)
         {
-            ScoreHouse(s, out var pops, out var cashes);
-            var encorePops = new int[pops.Length];
-            var encoreCashes = new int[pops.Length];
-            var encore = new bool[pops.Length];
-            RollCommunityBonuses(s, scores, pops, cashes, encorePops, encoreCashes, encore, repeat ? 2 : 0, ev);
-            pop = 0;
+            ScoreHouse(s, out var cashes, out var influences);
+            var encoreCashes = new int[cashes.Length];
+            var encoreInfluences = new int[cashes.Length];
+            var encore = new bool[cashes.Length];
+            RollCommunityBonuses(s, scores, cashes, influences, encoreCashes, encoreInfluences, encore, repeat ? 2 : 0, ev);
             cash = 0;
-            for (int i = 0; i < s.House.Count && i < pops.Length; i++)
+            influence = 0;
+            for (int i = 0; i < s.House.Count && i < cashes.Length; i++)
             {
                 var g = s.Find(s.House[i]);
-                Emit(ev, GameEventType.GuestScored, g, pops[i], cashes[i], repeat ? 2 : 1);
-                pop += pops[i];
+                Emit(ev, GameEventType.GuestScored, g, cashes[i], influences[i], repeat ? 2 : 1);
                 cash += cashes[i];
+                influence += influences[i];
                 if (!encore[i]) continue;
-                Emit(ev, GameEventType.GuestScored, g, encorePops[i], encoreCashes[i], repeat ? EncoreRepeatScoringTag : EncoreScoringTag);
-                pop += encorePops[i];
+                Emit(ev, GameEventType.GuestScored, g, encoreCashes[i], encoreInfluences[i], repeat ? EncoreRepeatScoringTag : EncoreScoringTag);
                 cash += encoreCashes[i];
+                influence += encoreInfluences[i];
             }
-            ScoreCommunityRewards(s, scores, ref pop, ref cash, ev);
+            ScoreCommunityRewards(s, scores, ref cash, ref influence, ev);
         }
 
         /// <summary>
         /// End-of-stream community rolls, per viewer in joining order: Core Fanbase may make one of its viewers score twice
-        /// (the second scoring goes in <paramref name="encorePops"/> / <paramref name="encoreCashes"/>, flagged in
+        /// (the second scoring goes in <paramref name="encoreCashes"/> / <paramref name="encoreInfluences"/>, flagged in
         /// <paramref name="encore"/>). The retired communities' rolls are kept: rival Doomsdayers and Armchair Activists may
-        /// stop a viewer scoring, Content may make a viewer outside the Core Fanbase score twice, Clout may add a Gifted Sub
-        /// and Finance Bros may double a Cash reward. <paramref name="tag"/> goes in the events' C (2 = the Memetics repeat).
+        /// stop a viewer scoring, Content may make a viewer outside the Core Fanbase score twice, Cash may add a Gifted Sub
+        /// and Finance Bros may double a Influence reward. <paramref name="tag"/> goes in the events' C (2 = the Memetics repeat).
         /// </summary>
-        static void RollCommunityBonuses(PlayerState s, int[] scores, int[] pops, int[] cashes, int[] encorePops, int[] encoreCashes,
+        static void RollCommunityBonuses(PlayerState s, int[] scores, int[] cashes, int[] influences, int[] encoreCashes, int[] encoreInfluences,
             bool[] encore, int tag, List<GameEvent> ev)
         {
             int doom = Communities.DoomChance(s.PartyDoom);
@@ -2139,7 +2139,7 @@ namespace DeckParty.Core
             int clout = Communities.CloutChance(scores[(int)Community.Clout]);
             if (doom + silence + contentEncore + fanEncore + finance + clout == 0) return;
 
-            for (int i = 0; i < s.House.Count && i < pops.Length; i++)
+            for (int i = 0; i < s.House.Count && i < cashes.Length; i++)
             {
                 var g = s.Find(s.House[i]);
                 if (g == null) continue;
@@ -2147,8 +2147,8 @@ namespace DeckParty.Core
                 if (Roll(s, doom))
                 {
                     // None of this viewer's benefits, or downsides.
-                    pops[i] = 0;
                     cashes[i] = 0;
+                    influences[i] = 0;
                     Emit(ev, GameEventType.CommunityBonus, g, (int)Community.Doomsdayers, 0, tag);
                     continue;
                 }
@@ -2156,8 +2156,8 @@ namespace DeckParty.Core
                 // Armchair Activists: all talk. Each one rolls on its own and may score nothing.
                 if (GuestCatalog.InCommunity(g.Kind, Community.ArmchairActivists) && Roll(s, silence))
                 {
-                    pops[i] = 0;
                     cashes[i] = 0;
+                    influences[i] = 0;
                     Emit(ev, GameEventType.CommunityBonus, g, (int)Community.ArmchairActivists, 0, tag);
                     continue;
                 }
@@ -2167,24 +2167,24 @@ namespace DeckParty.Core
                 bool twice = fan ? Roll(s, fanEncore) : Roll(s, contentEncore);
                 if (twice) Emit(ev, GameEventType.CommunityBonus, g, (int)(fan ? Community.CoreFanbase : Community.Content), 0, tag);
 
-                // Each scoring rolls on its own: Clout's extra Gifted Sub (outside the Core Fanbase; a Bot earns nothing)
-                // and Finance Bros' double Cash.
+                // Each scoring rolls on its own: Cash's extra Gifted Sub (outside the Core Fanbase; a Bot earns nothing)
+                // and Finance Bros' double Influence.
                 bool cloutable = !fan && !GuestCatalog.IsToken(g.Kind);
-                int basePop = pops[i], baseCash = cashes[i];
-                ScoreOnce(s, g, basePop, baseCash, cloutable, clout, finance, tag, ev, out pops[i], out cashes[i]);
+                int baseCash = cashes[i], baseInfluence = influences[i];
+                ScoreOnce(s, g, baseCash, baseInfluence, cloutable, clout, finance, tag, ev, out cashes[i], out influences[i]);
                 if (!twice) continue;
                 encore[i] = true;
-                ScoreOnce(s, g, basePop, baseCash, cloutable, clout, finance, tag, ev, out encorePops[i], out encoreCashes[i]);
+                ScoreOnce(s, g, baseCash, baseInfluence, cloutable, clout, finance, tag, ev, out encoreCashes[i], out encoreInfluences[i]);
             }
         }
 
-        static void ScoreOnce(PlayerState s, GuestInstance g, int basePop, int baseCash, bool cloutable, int cloutChance, int financeChance,
-            int tag, List<GameEvent> ev, out int pop, out int cash)
+        static void ScoreOnce(PlayerState s, GuestInstance g, int baseCash, int baseInfluence, bool cloutable, int cloutChance, int financeChance,
+            int tag, List<GameEvent> ev, out int cash, out int influence)
         {
-            int extra = cloutable && Roll(s, cloutChance) ? Communities.CloutSubs : 0;
+            int extra = cloutable && Roll(s, cloutChance) ? Communities.CloutCash : 0;
             if (extra > 0) Emit(ev, GameEventType.CommunityBonus, g, (int)Community.Clout, extra, tag);
-            pop = basePop + extra;
-            cash = RollCash(s, g, baseCash, financeChance, ev, tag);
+            cash = baseCash + extra;
+            influence = RollInfluence(s, g, baseInfluence, financeChance, ev, tag);
         }
 
         /// <summary>
@@ -2207,39 +2207,39 @@ namespace DeckParty.Core
 
         /// <summary>
         /// The stream-wide community rewards when a stream is scored (each flies from its Community Beats chip):
-        /// Staff pays a flat +1 Cash per point (2026-11-10, it used to waive Staff fees), Troll Army +2 Clout per point of
+        /// Staff pays a flat +1 Influence per point (2026-11-10, it used to waive Staff fees), Troll Army +2 Cash per point of
         /// Risk in the stream, cancelled Risk included (2026-11-10, it used to pay out when deplatformed). The retired
-        /// Zoomer still rolls (+6 Subs and -3 Cash, separately), though nobody is a Zoomer any more.
+        /// Zoomer still rolls (+6 Cash and -3 Influence, separately), though nobody is a Zoomer any more.
         /// </summary>
-        static void ScoreCommunityRewards(PlayerState s, int[] scores, ref int pop, ref int cash, List<GameEvent> ev)
+        static void ScoreCommunityRewards(PlayerState s, int[] scores, ref int cash, ref int influence, List<GameEvent> ev)
         {
-            int staffCash = Communities.StaffCash(scores[(int)Community.Staff]);
-            if (staffCash > 0)
+            int staffInfluence = Communities.StaffInfluence(scores[(int)Community.Staff]);
+            if (staffInfluence > 0)
             {
-                cash += staffCash;
-                Emit(ev, GameEventType.CommunityReward, null, (int)Community.Staff, 0, staffCash);
+                influence += staffInfluence;
+                Emit(ev, GameEventType.CommunityReward, null, (int)Community.Staff, 0, staffInfluence);
             }
 
-            int trollClout = TrollArmyClout(s, scores);
-            if (trollClout > 0)
+            int trollCash = TrollArmyCash(s, scores);
+            if (trollCash > 0)
             {
-                pop += trollClout;
-                Emit(ev, GameEventType.CommunityReward, null, (int)Community.Trolls, trollClout, 0);
+                cash += trollCash;
+                Emit(ev, GameEventType.CommunityReward, null, (int)Community.Trolls, trollCash, 0);
             }
 
             int chance = Communities.ZoomerChance(scores[(int)Community.Zoomer]);
             if (chance <= 0) return;
-            int zoomerSubs = Roll(s, chance) ? Communities.ZoomerSubs : 0;
-            int zoomerCash = Roll(s, chance) ? -Communities.ZoomerCashCost : 0;
-            if (zoomerSubs == 0 && zoomerCash == 0) return;
-            pop += zoomerSubs;
+            int zoomerCash = Roll(s, chance) ? Communities.ZoomerCash : 0;
+            int zoomerInfluence = Roll(s, chance) ? -Communities.ZoomerInfluenceCost : 0;
+            if (zoomerCash == 0 && zoomerInfluence == 0) return;
             cash += zoomerCash;
-            Emit(ev, GameEventType.CommunityReward, null, (int)Community.Zoomer, zoomerSubs, zoomerCash);
+            influence += zoomerInfluence;
+            Emit(ev, GameEventType.CommunityReward, null, (int)Community.Zoomer, zoomerCash, zoomerInfluence);
         }
 
         /// <summary>
         /// Affiliates' Checkout Code (2026-11-10, no longer an action): when the stream is scored, each Affiliate in chat gives
-        /// a random viewer in chat +1 Cash for good, up to <see cref="GameRules.PermanentCashCap"/>. It happens before the
+        /// a random viewer in chat +1 Influence for good, up to <see cref="GameRules.PermanentInfluenceCap"/>. It happens before the
         /// viewers score, so it already counts this stream.
         /// </summary>
         static void ApplyCheckoutCodes(PlayerState s, List<GameEvent> ev)
@@ -2251,24 +2251,24 @@ namespace DeckParty.Core
                 foreach (var id in s.House)
                 {
                     var g = s.Find(id);
-                    if (g != null && !g.Temporary && !GuestCatalog.IsToken(g.Kind) && PrintedCash(g) < GameRules.PermanentCashCap) candidates.Add(g);
+                    if (g != null && !g.Temporary && !GuestCatalog.IsToken(g.Kind) && PrintedInfluence(g) < GameRules.PermanentInfluenceCap) candidates.Add(g);
                 }
                 if (candidates.Count == 0) return;
                 var target = candidates[DeterministicRandom.Range(ref s.RngState, candidates.Count)];
-                target.BonusCash++;
-                Emit(ev, GameEventType.CashBoosted, target, 1, target.BonusCash);
+                target.BonusInfluence++;
+                Emit(ev, GameEventType.InfluenceBoosted, target, 1, target.BonusInfluence);
             }
         }
 
-        /// <summary>One scoring of a viewer's Cash: the retired Finance Bros may double a reward.</summary>
-        static int RollCash(PlayerState s, GuestInstance g, int cash, int financeChance, List<GameEvent> ev, int tag = 0)
+        /// <summary>One scoring of a viewer's Influence: the retired Finance Bros may double a reward.</summary>
+        static int RollInfluence(PlayerState s, GuestInstance g, int influence, int financeChance, List<GameEvent> ev, int tag = 0)
         {
-            if (cash > 0 && Roll(s, financeChance))
+            if (influence > 0 && Roll(s, financeChance))
             {
-                Emit(ev, GameEventType.CommunityBonus, g, (int)Community.FinanceBros, cash, tag);
-                return cash * 2;
+                Emit(ev, GameEventType.CommunityBonus, g, (int)Community.FinanceBros, influence, tag);
+                return influence * 2;
             }
-            return cash;
+            return influence;
         }
 
         /// <summary>A percentage roll on the season's deterministic RNG (no roll at all for 0%).</summary>
@@ -2279,11 +2279,11 @@ namespace DeckParty.Core
             return DeterministicRandom.Range(ref s.RngState, 100) < percent;
         }
 
-        static void RecordOutcome(PlayerState s, PartyOutcome outcome, int pop, int cash, int diamonds, int penalty)
+        static void RecordOutcome(PlayerState s, PartyOutcome outcome, int cash, int influence, int diamonds, int penalty)
         {
             s.LastOutcome = outcome;
-            s.LastPop = pop;
             s.LastCash = cash;
+            s.LastInfluence = influence;
             s.LastDiamonds = diamonds;
             s.LastPenalty = penalty;
             s.LastBlamedId = -1;
@@ -2324,7 +2324,7 @@ namespace DeckParty.Core
 
             // Shop Control's discount and rival Saboteurs' surcharge only touch this one recruit.
             int cost = RecruitCost(s, type);
-            s.Pop -= cost;
+            s.Cash -= cost;
             s.RecruitDiscount = 0;
             s.IncomingSabotage = 0;
             var g = AddGuest(s, type);
@@ -2338,7 +2338,7 @@ namespace DeckParty.Core
             if (blocker != null) return CommandResult.Fail(blocker);
 
             int cost = ExpansionCost(s);
-            s.Cash -= cost;
+            s.Influence -= cost;
             s.Capacity++;
             s.Expansions++;
             Emit(ev, GameEventType.HouseExpanded, null, s.Capacity, cost);
@@ -2378,7 +2378,7 @@ namespace DeckParty.Core
             if (s.Streamer == StreamerType.ManimMakethMan && s.Streak <= 0) return Err.Of("err.power_no_streak");
 
             int cost = StreamerCatalog.Cost(s);
-            if (s.Cash < cost) return Err.Of("err.needs_cash", cost);
+            if (s.Influence < cost) return Err.Of("err.needs_influence", cost);
             return null;
         }
 
@@ -2386,7 +2386,7 @@ namespace DeckParty.Core
         public static string GetRivalTargetBlocker(PlayerState actor, PlayerState target)
         {
             if (target == null || target == actor || target.IsGameOver) return Err.Of("err.power_no_rival");
-            if (actor.Streamer == StreamerType.EthicalFboi && target.Cash <= 0) return Err.Of("err.power_rival_broke");
+            if (actor.Streamer == StreamerType.EthicalFboi && target.Influence <= 0) return Err.Of("err.power_rival_broke");
             return null;
         }
 
@@ -2424,10 +2424,10 @@ namespace DeckParty.Core
             }
             else if (s.Streamer == StreamerType.ManimMakethMan)
             {
-                // Beautiful Sequence: +1 Subs for each great stream in a row (the streak itself carries on).
+                // Beautiful Sequence: +1 Cash for each great stream in a row (the streak itself carries on).
                 int bonus = Math.Min(StreamerCatalog.StreakMaxBonus, s.Streak);
-                s.Pop += bonus;
-                s.TotalPopEarned += bonus;
+                s.Cash += bonus;
+                s.TotalCashEarned += bonus;
                 Emit(ev, GameEventType.StreakBonus, null, bonus, s.Streak);
             }
             return CommandResult.Success;
@@ -2453,9 +2453,9 @@ namespace DeckParty.Core
                     break;
                 case StreamerType.EthicalFboi:
                 {
-                    int amount = Math.Min(StreamerCatalog.WealthTaxAmount, target.Cash);
-                    target.Cash -= amount;
-                    actor.Cash += amount;
+                    int amount = Math.Min(StreamerCatalog.WealthTaxAmount, target.Influence);
+                    target.Influence -= amount;
+                    actor.Influence += amount;
                     Emit(targetEvents, GameEventType.TaxPaid, null, amount, actorIndex);
                     Emit(actorEvents, GameEventType.TaxReceived, null, amount, targetIndex);
                     break;
@@ -2464,11 +2464,11 @@ namespace DeckParty.Core
             return CommandResult.Success;
         }
 
-        /// <summary>Actives are paid in Cash; every use makes the next one cost more (see <see cref="StreamerCatalog.Cost"/>).</summary>
+        /// <summary>Actives are paid in Influence; every use makes the next one cost more (see <see cref="StreamerCatalog.Cost"/>).</summary>
         static void PayForPower(PlayerState s, List<GameEvent> ev)
         {
             int cost = StreamerCatalog.Cost(s);
-            s.Cash -= cost;
+            s.Influence -= cost;
             s.PowerUses++;
             int cooldown = s.StreamerInfo.Cooldown;
             // Stored one higher: it counts down as the next stream starts, so "2" means two turns without it.
@@ -2541,15 +2541,15 @@ namespace DeckParty.Core
             Emit(ev, GameEventType.FreeActionUsed, s.Find(actorId));
         }
 
-        /// <summary>Soft Hard Body Man's Soft Landing (armed for this stream): a deplatformed stream still banks half its Subs.</summary>
+        /// <summary>Soft Hard Body Man's Soft Landing (armed for this stream): a deplatformed stream still banks half its Cash.</summary>
         static void SoftLanding(PlayerState s, List<GameEvent> ev)
         {
             if (!s.PartySoftLanding) return;
-            ProjectScore(s, out int pop, out _);
-            int banked = Math.Max(0, pop) / 2;
+            ProjectScore(s, out int cash, out _);
+            int banked = Math.Max(0, cash) / 2;
             if (banked <= 0) return;
-            s.Pop += banked;
-            s.TotalPopEarned += banked;
+            s.Cash += banked;
+            s.TotalCashEarned += banked;
             Emit(ev, GameEventType.SoftLanding, null, banked);
         }
 

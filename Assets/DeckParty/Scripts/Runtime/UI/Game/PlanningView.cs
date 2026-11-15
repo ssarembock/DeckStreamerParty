@@ -60,7 +60,7 @@ namespace DeckParty.UI
         [SerializeField] internal TooltipTrigger expandTooltip;
         [Tooltip("The price above Raise Sub Cap (scenes built since 2026-11-11; older scenes show it on the button).")]
         [SerializeField] internal TMP_Text expandCost;
-        [Tooltip("Remove a Viewer: pay Cash to take one card out of your Audience for good (the price rises with each use).")]
+        [Tooltip("Remove a Viewer: pay Influence to take one card out of your Audience for good (the price rises with each use).")]
         [SerializeField] internal Button removeButton;
         [SerializeField] internal TMP_Text removeLabel;
         [SerializeField] internal TooltipTrigger removeTooltip;
@@ -199,7 +199,7 @@ namespace DeckParty.UI
             expandButton.interactable = expandBlocker == null && !locked;
             bool maxed = s.Capacity >= GameRules.MaxCapacity;
             string expandWords = maxed ? Loc.Get("shop.cap_maxed")
-                : Loc.Get("shop.raise_cap", ("from", s.Capacity), ("to", s.Capacity + 1), ("cost", GameIcons.Amount(ResourceIcon.Cash, PartyEngine.ExpansionCost(s))));
+                : Loc.Get("shop.raise_cap", ("from", s.Capacity), ("to", s.Capacity + 1), ("cost", GameIcons.Amount(ResourceIcon.Influence, PartyEngine.ExpansionCost(s))));
             // Boomers made upgrades cheaper for this shop.
             if (!maxed && s.ExpansionDiscount > 0)
                 expandWords += "\n" + GameIcons.Tag(Community.Boomer) + " " + Loc.Get("log.perk_boomer", "value", s.ExpansionDiscount);
@@ -211,13 +211,13 @@ namespace DeckParty.UI
                 // The button says +1 (or the maxed Sub Cap) unless UI Skin > Shop says otherwise; the price sits above it.
                 expandSkin.SetCaption(maxed ? s.Capacity.ToString() : "+1");
                 int cost = PartyEngine.ExpansionCost(s);
-                SetCost(expandCost, maxed ? string.Empty : GameIcons.Amount(ResourceIcon.Cash, cost), s.Cash >= cost);
+                SetCost(expandCost, maxed ? string.Empty : GameIcons.Amount(ResourceIcon.Influence, cost), s.Influence >= cost);
             }
             else if (expandLabel != null)
             {
                 // Older scenes: icon buttons carry numbers only (Sub Cap now -> next, and the price); the words are in the tooltip.
                 expandLabel.text = iconLook
-                    ? (maxed ? s.Capacity.ToString() : $"+1   {GameIcons.Amount(ResourceIcon.Cash, PartyEngine.ExpansionCost(s))}")
+                    ? (maxed ? s.Capacity.ToString() : $"+1   {GameIcons.Amount(ResourceIcon.Influence, PartyEngine.ExpansionCost(s))}")
                     : expandWords;
             }
             if (expandTooltip != null)
@@ -265,7 +265,7 @@ namespace DeckParty.UI
             LayoutGrid();
         }
 
-        /// <summary>The price above a shop button: the Cash icon and amount, red when you can't afford it.</summary>
+        /// <summary>The price above a shop button: the Influence icon and amount, red when you can't afford it.</summary>
         static void SetCost(TMP_Text label, string text, bool affordable)
         {
             if (label == null) return;
@@ -314,17 +314,17 @@ namespace DeckParty.UI
             m_Holders.Add(holder);
         }
 
-        /// <summary>Remove a Viewer: the price on the button (a minus and the Cash), the words and any reason in its tooltip.</summary>
+        /// <summary>Remove a Viewer: the price on the button (a minus and the Influence), the words and any reason in its tooltip.</summary>
         void RenderRemove(PlayerState s, bool locked, string lockReason)
         {
             if (removeButton == null) return;
             var blocker = PartyEngine.GetRemoveBlocker(s);
             removeButton.interactable = blocker == null && !locked;
-            string price = GameIcons.Amount(ResourceIcon.Cash, PartyEngine.RemovalCost(s));
+            string price = GameIcons.Amount(ResourceIcon.Influence, PartyEngine.RemovalCost(s));
             if (removeButton.TryGetComponent<ShopButtonSkin>(out var removeSkin))
             {
                 removeSkin.SetCaption("-1");
-                SetCost(removeCost, price, s.Cash >= PartyEngine.RemovalCost(s));
+                SetCost(removeCost, price, s.Influence >= PartyEngine.RemovalCost(s));
             }
             else if (removeLabel != null) removeLabel.text = "-1   " + price;
             if (removeTooltip != null)

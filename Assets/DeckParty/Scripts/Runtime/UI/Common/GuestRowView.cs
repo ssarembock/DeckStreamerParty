@@ -75,7 +75,7 @@ namespace DeckParty.UI
             statsLabel.text = GuestVisuals.BaseStats(info);
             costLabel.enableAutoSizing = true;
             costLabel.fontSizeMin = 14;
-            costLabel.text = info.Purchasable ? GameIcons.Amount(ResourceIcon.Subs, info.Cost) : Loc.Get("shop.starter");
+            costLabel.text = info.Purchasable ? GameIcons.Amount(ResourceIcon.Cash, info.Cost) : Loc.Get("shop.starter");
             if (starTag != null) starTag.SetActive(info.IsDiamond);
 
             buyButton.gameObject.SetActive(shopMode);

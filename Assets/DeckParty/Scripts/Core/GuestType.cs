@@ -11,7 +11,7 @@ namespace DeckParty.Core
     {
         // --- The audience classics (renamed in V3) ---
         LoyalFan = 0,
-        /// <summary>The small Cash starter, called Whale until 2026-11-10 (the new Whale is <see cref="Whale"/>).</summary>
+        /// <summary>The small Influence starter, called Whale until 2026-11-10 (the new Whale is <see cref="Whale"/>).</summary>
         Fish = 1,
         IneffectiveTroll = 2,
         Producer = 3,
@@ -109,10 +109,10 @@ namespace DeckParty.Core
         // --- V4.2: not a viewer card. Rival Bots communities send these into your next stream (takes a space, earns nothing). ---
         Bot = 82,
 
-        // --- Viewer card edits (2026-11-08): the original game's Dancer, scored as a group (see GameRules.DancingJenClout). ---
+        // --- Viewer card edits (2026-11-08): the original game's Dancer, scored as a group (see GameRules.DancingJenCash). ---
         DancingJen = 83,
 
-        // --- Card edits (2026-11-10, StreamersViewersCommunities.md): the big Cash viewer (the old Whale is now Fish). ---
+        // --- Card edits (2026-11-10, StreamersViewersCommunities.md): the big Influence viewer (the old Whale is now Fish). ---
         Whale = 84,
     }
 
@@ -142,27 +142,27 @@ namespace DeckParty.Core
         Troll,      // Trollface: send a guest back outside; bonus for repeat victims.
         Mood,       // Pepe: pick Happy, Sad or Angry.
         Inspect,    // Grumpy Cat: look at the next 3, reject one, order the rest.
-        Invest,     // Stonks Guy: stake Gifted Subs or Cash on the party succeeding.
-        PlayOff,    // Keyboard Cat: evict a guest for Subs or Cash.
-        Mog,        // Chad vs Virgin: compare printed Subs and transfer 1 permanently.
-        Arson,      // Disaster Girl: +1 Deplatform Risk and +3 Subs to another guest.
+        Invest,     // Stonks Guy: stake Cash or Influence on the party succeeding.
+        PlayOff,    // Keyboard Cat: evict a guest for Cash or Influence.
+        Mog,        // Chad vs Virgin: compare printed Cash and transfer 1 permanently.
+        Arson,      // Disaster Girl: +1 Deplatform Risk and +3 Cash to another guest.
         Reroll,     // Success Kid: reroll the last random arrival, or peek at the next guest.
         Strike,     // Tung Tung Tung Sahur: three strikes and you're out.
         SwapOrder,  // Tralalero Tralala: swap two guests' places in the arrival order.
         Bombard,    // Bombardiro Crocodilo: replace up to 3 guests with random waiting ones.
-        Pirouette,  // Ballerina Cappuccina: two guests exchange printed Subs.
-        Refund,     // Karen: remove a guest and get half their cost as Subs.
+        Pirouette,  // Ballerina Cappuccina: two guests exchange printed Cash.
+        Refund,     // Karen: remove a guest and get half their cost as Cash.
         Rickroll,   // Rickroll: a guest temporarily becomes another character.
         Drake,      // Drakeposting: zero one guest, double another.
-        Convert,    // Confused Math Lady: convert a guest's Subs to Cash or back.
+        Convert,    // Confused Math Lady: convert a guest's Cash to Influence or back.
         SideEye,    // Side Eye Chloe: move the next guest to the back of the line.
         Immunity,   // Roll Safe: a guest ignores further ability effects tonight.
         Peek,       // Cybersecurity Engineer / Social Media Manager: look at the next guest, then let them in or deny them.
         Photograph, // Crypto Enthusiast: score another guest right now (banked immediately).
         Calm,       // Chat Arbitrator: clear Deplatform Risk from every risky guest for the rest of the party.
         BootPair,   // Bot Detector: remove two guests sitting next to each other.
-        Interview,  // Billionaire Benefactor: everyone's Subs drop to 0; bank 1 Cash per Billionaire Benefactor.
-        Style,      // Affiliate: a guest permanently earns +1 Cash.
+        Interview,  // Billionaire Benefactor: everyone's Cash drop to 0; bank 1 Influence per Billionaire Benefactor.
+        Style,      // Affiliate: a guest permanently earns +1 Influence.
         SendBack,   // Junior PR Manager (1, 2, 3... random viewers, growing per use) / PR Manager (5): random viewers back to the queue.
     }
 

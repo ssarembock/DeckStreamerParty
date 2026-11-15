@@ -114,19 +114,19 @@ namespace DeckParty
             }
         }
 
-        /// <summary>The first-use cost and how it grows, e.g. "1 $ (+1 $ per use) - 2-turn cooldown". Actives are always paid in Cash.</summary>
+        /// <summary>The first-use cost and how it grows, e.g. "1 $ (+1 $ per use) - 2-turn cooldown". Actives are always paid in Influence.</summary>
         public static string CostRules(StreamerType type)
         {
             var info = StreamerCatalog.Get(type);
             if (!info.IsActive) return string.Empty;
-            string cost = CostText(info.CashCost);
-            string step = CostText(info.CashStep);
+            string cost = CostText(info.InfluenceCost);
+            string step = CostText(info.InfluenceStep);
             string text = step.Length > 0 ? Loc.Get("streamer.cost_growing", "cost", cost, "step", step) : Loc.Get("streamer.cost_flat", "cost", cost);
             text += "   " + (info.Cooldown > 0 ? Loc.Get("streamer.cooldown", "count", info.Cooldown) : Loc.Get("streamer.once_per_turn"));
             return text;
         }
 
-        public static string CostText(int cash) => cash > 0 ? GameIcons.Amount(ResourceIcon.Cash, cash) : string.Empty;
+        public static string CostText(int influence) => influence > 0 ? GameIcons.Amount(ResourceIcon.Influence, influence) : string.Empty;
 
         /// <summary>The background (stream setup) used while this streamer is live, or null for the player's own choice.</summary>
         public static VenueDefinition Venue(StreamerType type) => GameDatabase.Instance.GetStreamerArt(type)?.venue;

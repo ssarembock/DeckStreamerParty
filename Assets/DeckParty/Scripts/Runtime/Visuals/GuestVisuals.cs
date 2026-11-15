@@ -85,18 +85,18 @@ namespace DeckParty
         static string Signed(int value) => (value >= 0 ? "+" : "") + value;
 
         // Resources are always icons, never words (the icons name themselves on hover).
-        public static string PopText(int value) => Colored(Loc.Get("fmt.subs", "value", Signed(value), "n", value), UIPalette.Gold);
+        public static string CashText(int value) => Colored(Loc.Get("fmt.cash", "value", Signed(value), "n", value), UIPalette.Gold);
 
-        public static string CashText(int value) => Colored(Loc.Get("fmt.cash", "value", Signed(value), "n", value), UIPalette.Green);
+        public static string InfluenceText(int value) => Colored(Loc.Get("fmt.influence", "value", Signed(value), "n", value), UIPalette.Green);
 
         public static string RiskText(int value) => Colored(Loc.Get("fmt.risk", "value", Signed(value), "n", value), UIPalette.Red);
 
-        /// <summary>A Gifted Subs amount (wallets, prices): the icon, then the number.</summary>
-        public static string GiftedSubsText(int value) => Colored(Loc.Get("fmt.gifted_subs", "value", value, "n", value), UIPalette.Gold);
+        /// <summary>A Cash amount (wallets, prices): the icon, then the number.</summary>
+        public static string CashBankedText(int value) => Colored(Loc.Get("fmt.cash_banked", "value", value, "n", value), UIPalette.Gold);
 
         /// <summary>
         /// The key section of the shop tooltip: what the viewer changes when scored, as the three resource icons with their
-        /// printed values (Gifted Subs, Cash, Deplatform Risk). Conditional bonuses are in the description.
+        /// printed values (Cash, Influence, Deplatform Risk). Conditional bonuses are in the description.
         /// </summary>
         public static string ScoringIcons(GuestInfo info)
         {
@@ -106,23 +106,23 @@ namespace DeckParty
             string risk = info.Trouble ? "+1" : info.CancelsTrouble ? "-1" : info.Type == GuestType.HateWatcher ? "0/+1" : "0";
             // Group-scoring cards: the group's total by how many are in chat (1 to 5).
             bool jen = info.Type == GuestType.DancingJen, crypto = info.Type == GuestType.CryptoEnthusiast;
-            string subs = jen ? GameRules.DancingJenSteps : Signed(info.Pop);
-            string cash = crypto ? GameRules.CryptoEnthusiastSteps : Signed(info.Cash);
-            return Item(ResourceIcon.Subs, subs, info.Pop == 0 && !jen, UIPalette.Gold) + "     " +
-                   Item(ResourceIcon.Cash, cash, info.Cash == 0 && !crypto, UIPalette.Green) + "     " +
+            string cash = jen ? GameRules.DancingJenSteps : Signed(info.Cash);
+            string influence = crypto ? GameRules.CryptoEnthusiastSteps : Signed(info.Influence);
+            return Item(ResourceIcon.Cash, cash, info.Cash == 0 && !jen, UIPalette.Gold) + "     " +
+                   Item(ResourceIcon.Influence, influence, info.Influence == 0 && !crypto, UIPalette.Green) + "     " +
                    Item(ResourceIcon.Risk, risk, risk == "0", info.CancelsTrouble ? UIPalette.Teal : UIPalette.Red);
         }
 
         /// <summary>
-        /// The Clout a viewer scores, as a plain number for a card ("+2", "0"). Dancing Jen shows the group's steps by how
+        /// The Cash a viewer scores, as a plain number for a card ("+2", "0"). Dancing Jen shows the group's steps by how
         /// many are in chat (1/4/9/16/25).
         /// </summary>
-        public static string CloutValue(GuestInfo info) =>
-            info.Type == GuestType.DancingJen ? GameRules.DancingJenSteps : PlainSigned(info.Pop);
-
-        /// <summary>The Cash a viewer scores, as a plain number for a card. Crypto Enthusiast shows the group's steps.</summary>
         public static string CashValue(GuestInfo info) =>
-            info.Type == GuestType.CryptoEnthusiast ? GameRules.CryptoEnthusiastSteps : PlainSigned(info.Cash);
+            info.Type == GuestType.DancingJen ? GameRules.DancingJenSteps : PlainSigned(info.Cash);
+
+        /// <summary>The Influence a viewer scores, as a plain number for a card. Crypto Enthusiast shows the group's steps.</summary>
+        public static string InfluenceValue(GuestInfo info) =>
+            info.Type == GuestType.CryptoEnthusiast ? GameRules.CryptoEnthusiastSteps : PlainSigned(info.Influence);
 
         static string PlainSigned(int value) => (value > 0 ? "+" : string.Empty) + value;
 
@@ -140,34 +140,34 @@ namespace DeckParty
                     sb.Append(Colored(Loc.Get("card.grows"), UIPalette.Gold));
                     break;
                 case GuestType.PromoCodeUser:
-                    // +1 Clout, and +3 Cash only if chat is full (2026-11-10).
-                    if (info.Pop != 0) sb.Append(PopText(info.Pop)).Append("  ");
-                    sb.Append(Colored(Loc.Get("card.if_full", "value", CashText(GameRules.PromoCodeFullCash)), UIPalette.Green));
+                    // +1 Cash, and +3 Influence only if chat is full (2026-11-10).
+                    if (info.Cash != 0) sb.Append(CashText(info.Cash)).Append("  ");
+                    sb.Append(Colored(Loc.Get("card.if_full", "value", InfluenceText(GameRules.PromoCodeFullInfluence)), UIPalette.Green));
                     break;
                 case GuestType.ExecutivePr:
-                    sb.Append(Colored(Loc.Get("card.per_risky", "value", PopText(GameRules.PerRiskyViewerBonus)), UIPalette.Gold));
+                    sb.Append(Colored(Loc.Get("card.per_risky", "value", CashText(GameRules.PerRiskyViewerBonus)), UIPalette.Gold));
                     break;
                 case GuestType.GenZWithJob:
-                    sb.Append(Colored(Loc.Get("card.grows_cash"), UIPalette.Green));
+                    sb.Append(Colored(Loc.Get("card.grows_influence"), UIPalette.Green));
                     break;
                 // Group-scoring cards: one total for all the copies in chat (1 to 5 of them).
                 case GuestType.DancingJen:
                     sb.Append(Colored(Loc.Get("card.together", "value",
-                        Loc.Get("fmt.subs", "value", GameRules.DancingJenSteps, "n", 25)), UIPalette.Gold));
+                        Loc.Get("fmt.cash", "value", GameRules.DancingJenSteps, "n", 25)), UIPalette.Gold));
                     break;
                 case GuestType.CryptoEnthusiast:
                     sb.Append(Colored(Loc.Get("card.together", "value",
-                        Loc.Get("fmt.cash", "value", GameRules.CryptoEnthusiastSteps, "n", 25)), UIPalette.Green));
+                        Loc.Get("fmt.influence", "value", GameRules.CryptoEnthusiastSteps, "n", 25)), UIPalette.Green));
                     break;
                 default:
-                    if (info.Pop != 0) sb.Append(PopText(info.Pop));
+                    if (info.Cash != 0) sb.Append(CashText(info.Cash));
                     break;
             }
 
-            if (info.Cash != 0)
+            if (info.Influence != 0)
             {
                 if (sb.Length > 0) sb.Append("  ");
-                sb.Append(CashText(info.Cash));
+                sb.Append(InfluenceText(info.Influence));
             }
 
             if (sb.Length == 0) sb.Append(Colored(Loc.Get(info.HasAbility ? "card.action_viewer" : "card.no_base"), UIPalette.TextDim));
@@ -177,13 +177,13 @@ namespace DeckParty
         /// <summary>What this exact viewer would score right now in this stream.</summary>
         public static string LiveStats(PlayerState state, GuestInstance g)
         {
-            PartyEngine.ScoreGuest(state, g, out int pop, out int cash);
+            PartyEngine.ScoreGuest(state, g, out int cash, out int influence);
             var sb = new StringBuilder();
-            if (pop != 0 || cash == 0) sb.Append(PopText(pop));
-            if (cash != 0)
+            if (cash != 0 || influence == 0) sb.Append(CashText(cash));
+            if (influence != 0)
             {
                 if (sb.Length > 0) sb.Append("  ");
-                sb.Append(CashText(cash));
+                sb.Append(InfluenceText(influence));
             }
             return sb.ToString();
         }
@@ -208,7 +208,7 @@ namespace DeckParty
             var info = GuestCatalog.Get(type);
             var sb = new StringBuilder();
             sb.Append("<b><size=120%>").Append(DisplayName(type)).Append("</size></b>");
-            if (info.Purchasable) sb.Append("   ").Append(Colored(GameIcons.Amount(ResourceIcon.Subs, info.Cost), UIPalette.TextDim));
+            if (info.Purchasable) sb.Append("   ").Append(Colored(GameIcons.Amount(ResourceIcon.Cash, info.Cost), UIPalette.TextDim));
             sb.Append('\n');
             var tags = Tags(info);
             if (tags.Length > 0) sb.Append("<size=85%>").Append(tags).Append("</size>\n");
@@ -234,10 +234,10 @@ namespace DeckParty
             {
                 if (instance.IsDisguised)
                     sb.Append('\n').Append(Colored(Loc.Get("card.rickrolled", "viewer", DisplayName(instance.Type)), UIPalette.Pink));
-                if (instance.BonusPop != 0)
-                    sb.Append('\n').Append(Colored(Loc.Get("card.permanent", "value", PopText(instance.BonusPop)), UIPalette.Pink));
                 if (instance.BonusCash != 0)
-                    sb.Append('\n').Append(Colored(Loc.Get("card.permanent", "value", CashText(instance.BonusCash)), UIPalette.Green));
+                    sb.Append('\n').Append(Colored(Loc.Get("card.permanent", "value", CashText(instance.BonusCash)), UIPalette.Pink));
+                if (instance.BonusInfluence != 0)
+                    sb.Append('\n').Append(Colored(Loc.Get("card.permanent", "value", InfluenceText(instance.BonusInfluence)), UIPalette.Green));
                 if (instance.Type == GuestType.HateWatcher)
                     sb.Append('\n').Append(Colored(Loc.Get(instance.Wolf ? "card.hate_watching" : "card.next_hate_watch"), UIPalette.Red));
                 if (instance.StrikeCount > 0)
@@ -274,13 +274,13 @@ namespace DeckParty
             if (g.Infected) Add(Loc.Get("status.infected"), UIPalette.Green);
             if (g.Immune) Add(Loc.Get("status.immune"), UIPalette.Teal);
             if (g.Zeroed) Add(Loc.Get("status.zeroed"), UIPalette.Red);
-            if (g.SubsMuted) Add(Loc.Get("status.no_subs"), UIPalette.Red);
-            if (g.DoubleMode == 1) Add(Loc.Get("status.double_subs"), UIPalette.Gold);
-            if (g.DoubleMode == 2) Add(Loc.Get("status.double_cash"), UIPalette.Green);
-            if (g.ConvertMode == 1) Add(Loc.Get("status.subs_to_cash"), UIPalette.Green);
-            if (g.ConvertMode == 2) Add(Loc.Get("status.cash_to_subs"), UIPalette.Gold);
+            if (g.CashMuted) Add(Loc.Get("status.no_cash"), UIPalette.Red);
+            if (g.DoubleMode == 1) Add(Loc.Get("status.double_cash"), UIPalette.Gold);
+            if (g.DoubleMode == 2) Add(Loc.Get("status.double_influence"), UIPalette.Green);
+            if (g.ConvertMode == 1) Add(Loc.Get("status.cash_to_influence"), UIPalette.Green);
+            if (g.ConvertMode == 2) Add(Loc.Get("status.influence_to_cash"), UIPalette.Gold);
             if (g.HasOverride) Add(Loc.Get("status.printed", "value", g.PrintedOverride), UIPalette.Pink);
-            if (g.HasCopy) Add(Loc.Get("status.copied", "subs", g.CopyPop, "cash", g.CopyCash), UIPalette.Teal);
+            if (g.HasCopy) Add(Loc.Get("status.copied", "cash", g.CopyCash, "influence", g.CopyInfluence), UIPalette.Teal);
             if (g.TroubleCleared) Add(Loc.Get("status.risk_cleared"), UIPalette.Teal);
             if (g.Mood != PepeMood.None) Add(MoodName(g.Mood), UIPalette.Purple);
             if (g.ShieldUsed) Add(Loc.Get("status.bad_luck_used"), UIPalette.TextDim);

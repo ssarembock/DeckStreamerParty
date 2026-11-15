@@ -27,25 +27,25 @@ This update applies the spreadsheet's two tabs (Synergies and Cards) and replace
 | Community | Rule (per point) | Max |
 |---|---|---|
 | Core Fanbase | 10% that each Core Fanbase viewer scores twice | 9 |
-| Staff | 10% that a Staff viewer's Cash cost is waived (unchanged) | 9 |
+| Staff | 10% that a Staff viewer's Influence cost is waived (unchanged) | 9 |
 | Content | 10% that each viewer outside the Core Fanbase scores twice (unchanged) | 9 |
-| Boomers | Sub Cap upgrades cost 1 Cash less in your next shop. After a scored stream, each Boomer in chat has a 10% chance to leave your Audience for good (a toast, a flash and a summary line show it). | none |
-| Millennials | When a Boomer leaves, a random Millennial you own gains +1 Cash for good. This happens once per point, and at least once. With no Millennials, nothing happens. | none |
-| Gen-Z | After a scored stream, each Gen-Z viewer in chat gains +1 Clout or +1 Cash for good (random), once per point. Each stat is capped at 9. | 3 |
+| Boomers | Sub Cap upgrades cost 1 Influence less in your next shop. After a scored stream, each Boomer in chat has a 10% chance to leave your Audience for good (a toast, a flash and a summary line show it). | none |
+| Millennials | When a Boomer leaves, a random Millennial you own gains +1 Influence for good. This happens once per point, and at least once. With no Millennials, nothing happens. | none |
+| Gen-Z | After a scored stream, each Gen-Z viewer in chat gains +1 Cash or +1 Influence for good (random), once per point. Each stat is capped at 9. | 3 |
 | Gatekeepers | One more use of a Gatekeeper's removal action this stream. The extra uses are shared, and the action lights up again with "AGAIN!". | none |
 | Hype Men | 10 / 20 / 30% that a Server Down stream still scores | 3 |
-| Troll Army | Same as the old Trolls: 1 random Clout or Cash when deplatformed | none |
+| Troll Army | Same as the old Trolls: 1 random Cash or Influence when deplatformed | none |
 | Mods | 10% (rolled when the stream is scored) that your next stream starts with 1 Risk cancelled | 3 |
 | Full Stream | "Chat is full" bonuses (Promo Code User) allow 1 empty space | 3 |
 | Marketers | One more use of a Marketer's recruit action this stream (shared) | none |
 | Voyeurs | One more use of a Voyeur's peek action this stream (shared) | 2 |
-| Shop Control | Your first recruit in the next shop costs 1 Clout less. The shop tile shows the old price struck through. | 5 |
-| Saboteurs | Multiplayer: each rival's next recruit costs 1 Clout more | 5 |
+| Shop Control | Your first recruit in the next shop costs 1 Cash less. The shop tile shows the old price struck through. | 5 |
+| Saboteurs | Multiplayer: each rival's next recruit costs 1 Cash more | 5 |
 
 ## 4. Card changes
 
 - **Stat changes:**
-  - Producer: 1 Clout / −1 Cash
+  - Producer: 1 Cash / −1 Influence
   - Chat Admin: 1 / −1
   - Junior PR Manager: 2 / −1
   - Paid Sponsorship: −1 / 3
@@ -58,10 +58,10 @@ This update applies the spreadsheet's two tabs (Synergies and Cards) and replace
   - Social Media Manager: 3 / −1
   - Senior Marketing Manager: 4 / −1
   - Clippo The Clanker: −2 / −1
-  - Plus 1 Cash: Generous Donator 1 / 1, Die Hard Fan 2 / 1, Big Boomer 0 / 1
+  - Plus 1 Influence: Generous Donator 1 / 1, Die Hard Fan 2 / 1, Big Boomer 0 / 1
 - **Junior PR Manager:** sends 1 random viewer back to the queue, and each use sends one more (2, 3…). This is counted per card and kept for good.
 - **PR Manager:** sends 5 random viewers back to the queue.
-- **Distraught Cat:** gains +1 Clout or +1 Cash (random) each time someone leaves.
+- **Distraught Cat:** gains +1 Cash or +1 Influence (random) each time someone leaves.
 
 ## 5. Character sets
 
@@ -94,5 +94,5 @@ The sets are in `ScenarioCatalog.cs`, and their text is under `scenario.0-4.*` i
 5. **Mods, Shop Control and Boomers:** these roll or apply only when a stream is actually scored.
 6. **Saboteurs:** the surcharge stays until the rival's next recruit, even if they skip a shop.
 7. **No cards yet:** Shop Control and Saboteurs have no member cards. Tick them on cards in the Game Database to use them.
-8. **Staff Cash costs:** every Staff card now earns −1 Cash. Cards whose Cash went down gained that much Clout. Clippo The Clanker went the other way (−3 to −1 Cash), so it lost 2 Clout to keep its value. To keep the economy level, Generous Donator, Die Hard Fan and Big Boomer each earn +1 Cash.
+8. **Staff Influence costs:** every Staff card now earns −1 Influence. Cards whose Influence went down gained that much Cash. Clippo The Clanker went the other way (−3 to −1 Influence), so it lost 2 Cash to keep its value. To keep the economy level, Generous Donator, Die Hard Fan and Big Boomer each earn +1 Influence.
 9. **Not updated:** `GameReference.md` and its CSVs still describe the previous rules.

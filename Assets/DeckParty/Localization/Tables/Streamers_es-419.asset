@@ -137,7 +137,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 496189467
     m_Localized: "En tu pr\xF3ximo stream, los espectadores con {icon:risk} ganan
-      +2 {icon:subs}."
+      +2 {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -157,7 +157,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189472
-    m_Localized: "En tu pr\xF3ximo stream, cada espectador gana +1 {icon:subs}."
+    m_Localized: "En tu pr\xF3ximo stream, cada espectador gana +1 {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189473
@@ -177,7 +177,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189477
-    m_Localized: "El rival m\xE1s rico te paga hasta 2 {icon:cash}."
+    m_Localized: "El rival m\xE1s influyente te paga hasta 2 {icon:influence}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189478
@@ -198,7 +198,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 496189482
     m_Localized: "Si te desplataforman en tu pr\xF3ximo stream, igual te quedas con
-      la mitad de sus {icon:subs}."
+      la mitad de sus {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189483
@@ -260,7 +260,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189497
-    m_Localized: "Gana +1 {icon:subs} por cada gran stream seguido (m\xE1x. +5).
+    m_Localized: "Gana +1 {icon:cash} por cada gran stream seguido (m\xE1x. +5).
       Un stream fallido reinicia la racha."
     m_Metadata:
       m_Items: []
@@ -439,7 +439,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189541
-    m_Localized: '{player} ({cash} {icon:cash})'
+    m_Localized: '{player} ({influence} {icon:influence})'
     m_Metadata:
       m_Items: []
   - m_Id: 496189542

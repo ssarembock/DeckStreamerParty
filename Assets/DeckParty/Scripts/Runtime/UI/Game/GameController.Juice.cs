@@ -82,14 +82,14 @@ namespace DeckParty.UI
                         {
                             FlyResources(card.AnimRoot.position, e.A, e.B, false, null);
                         }
-                        Fx.Play(FxCue.CounterPunch, hud.popLabel.transform, 1.2f);
+                        Fx.Play(FxCue.CounterPunch, hud.cashLabel.transform, 1.2f);
                         Consider(Sfx.Coin, 4);
                         break;
                     }
                     case GameEventType.InterviewGiven:
-                    case GameEventType.CashBoosted:
+                    case GameEventType.InfluenceBoosted:
                         m_Pulses.Add(e.GuestId);
-                        if (e.Type == GameEventType.InterviewGiven) Fx.Play(FxCue.CounterPunch, hud.cashLabel.transform, 1.2f);
+                        if (e.Type == GameEventType.InterviewGiven) Fx.Play(FxCue.CounterPunch, hud.influenceLabel.transform, 1.2f);
                         Consider(Sfx.Coin, 3);
                         break;
                     case GameEventType.MoodFlipped:
@@ -166,7 +166,7 @@ namespace DeckParty.UI
                         break;
                     case GameEventType.TrollsPaid:
                         effects.FloatText(GuestVisuals.Colored(Loc.Get("game.trolls_paid"), UIPalette.Orange) + "  " + EventText.Amounts(e.A, e.B), new Vector2(0f, -40f));
-                        Fx.Play(FxCue.CounterPunch, hud.popLabel.transform, 1.2f);
+                        Fx.Play(FxCue.CounterPunch, hud.cashLabel.transform, 1.2f);
                         Consider(Sfx.Coin, 7);
                         break;
                     case GameEventType.DoomApplied:
@@ -225,20 +225,20 @@ namespace DeckParty.UI
                     case GameEventType.Inheritance:
                         if (who == null)
                         {
-                            ToastView.Show(GameIcons.Tag(Community.Millennial) + " " + Loc.Get("game.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "cash", GuestVisuals.CashText(e.A)), ToastKind.Success);
-                            effects.FloatText(GameIcons.Tag(Community.Millennial) + " " + GuestVisuals.CashText(e.A), new Vector2(0f, -40f), 40f);
+                            ToastView.Show(GameIcons.Tag(Community.Millennial) + " " + Loc.Get("game.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "influence", GuestVisuals.InfluenceText(e.A)), ToastKind.Success);
+                            effects.FloatText(GameIcons.Tag(Community.Millennial) + " " + GuestVisuals.InfluenceText(e.A), new Vector2(0f, -40f), 40f);
                         }
                         Consider(Sfx.Coin, 6);
                         break;
 
                     case GameEventType.PartyEnded:
-                        effects.FloatText($"{GuestVisuals.PopText(e.A)}   {GuestVisuals.CashText(e.B)}", new Vector2(0f, 60f));
+                        effects.FloatText($"{GuestVisuals.CashText(e.A)}   {GuestVisuals.InfluenceText(e.B)}", new Vector2(0f, 60f));
                         if (facecam != null) facecam.React(CharacterState.Celebrate);
                         Consider(Sfx.PartySuccess, 7);
                         break;
-                    case GameEventType.CashShortfall:
-                        if (who == null) ToastView.Show(Loc.Get("game.shortfall_you", "cash", e.A, "penalty", e.B), ToastKind.Error);
-                        else ToastView.Show(Loc.Get("game.shortfall_other", ("player", who), ("cash", e.A), ("penalty", e.B)), ToastKind.Info);
+                    case GameEventType.InfluenceShortfall:
+                        if (who == null) ToastView.Show(Loc.Get("game.shortfall_you", "influence", e.A, "penalty", e.B), ToastKind.Error);
+                        else ToastView.Show(Loc.Get("game.shortfall_other", ("player", who), ("influence", e.A), ("penalty", e.B)), ToastKind.Info);
                         break;
                     case GameEventType.GuestPurchased:
                         Consider(Sfx.Purchase, 4);
@@ -283,7 +283,7 @@ namespace DeckParty.UI
                         break;
                     case GameEventType.SoftLanding:
                     case GameEventType.StreakBonus:
-                        Fx.Play(FxCue.CounterPunch, hud.popLabel.transform, 1.3f);
+                        Fx.Play(FxCue.CounterPunch, hud.cashLabel.transform, 1.3f);
                         Consider(Sfx.Coin, 6);
                         break;
                     case GameEventType.Victory:
@@ -480,8 +480,8 @@ namespace DeckParty.UI
                     if (card.Portrait == null || !card.Portrait.Play(CharacterState.Score)) Fx.Play(FxCue.ScoreTick, card.AnimRoot);
                     else Fx.Play(FxCue.ScoreTick, card.AnimRoot, 0.6f);
                     if (card.Fx != null) card.Fx.Pulse(CardPulse.Shine, 0.7f);
-                    // Each resource flies to its own icon in the menu bar: Clout to Clout, Cash to Cash, a Trophy to the Trophies.
-                    // Community bonuses this viewer rolled in this scoring (Cash doubled...) ride along on the first chip. A viewer
+                    // Each resource flies to its own icon in the menu bar: Cash to Cash, Influence to Influence, a Trophy to the Trophies.
+                    // Community bonuses this viewer rolled in this scoring (Influence doubled...) ride along on the first chip. A viewer
                     // who scores twice (Core Fanbase) plays again for the second scoring, tagged as the encore.
                     bool encore = e.C == PartyEngine.EncoreScoringTag || e.C == PartyEngine.EncoreRepeatScoringTag;
                     int pass = e.C == 2 || e.C == PartyEngine.EncoreRepeatScoringTag ? 2 : 0;
@@ -506,34 +506,34 @@ namespace DeckParty.UI
             // When the stream summary is about to open it says this (with the numbers), so the banner would only repeat it.
             if (!StreamRecapPending)
             {
-                banner.Show(Loc.Get("result.success"), Loc.Get("game.scored_total", "subs", GuestVisuals.PopText(after.LastPop), "cash", GuestVisuals.CashText(after.LastCash)), UIPalette.Gold, 1.4f);
+                banner.Show(Loc.Get("result.success"), Loc.Get("game.scored_total", "cash", GuestVisuals.CashText(after.LastCash), "influence", GuestVisuals.InfluenceText(after.LastInfluence)), UIPalette.Gold, 1.4f);
                 Fx.Play(FxCue.BannerSlam, banner.transform);
             }
             RenderAll();
         }
 
         /// <summary>
-        /// Sends a take up to the menu bar, each resource to its own icon: Clout to the Clout icon, Cash to the Cash icon and a
+        /// Sends a take up to the menu bar, each resource to its own icon: Cash to the Cash icon, Influence to the Influence icon and a
         /// Trophy (a Trophy viewer scoring) to the Trophies count. <paramref name="prefix"/> (community tags or icon) rides on the
-        /// first chip. Zero amounts don't fly; with nothing at all, a "+0" goes to Clout so the viewer still visibly scores.
+        /// first chip. Zero amounts don't fly; with nothing at all, a "+0" goes to Cash so the viewer still visibly scores.
         /// </summary>
-        void FlyResources(Vector3 from, int clout, int cash, bool trophy, string prefix)
+        void FlyResources(Vector3 from, int cash, int influence, bool trophy, string prefix)
         {
-            var cloutTarget = hud.popIcon != null ? hud.popIcon.transform.position : hud.popLabel.transform.position;
             var cashTarget = hud.cashIcon != null ? hud.cashIcon.transform.position : hud.cashLabel.transform.position;
-            var trophyTarget = hud.starsMeter != null ? hud.starsMeter.position : cloutTarget;
+            var influenceTarget = hud.influenceIcon != null ? hud.influenceIcon.transform.position : hud.influenceLabel.transform.position;
+            var trophyTarget = hud.starsMeter != null ? hud.starsMeter.position : cashTarget;
             string lead = string.IsNullOrEmpty(prefix) ? string.Empty : prefix + "  ";
             bool any = false;
             // Fanned slightly so chips from the same viewer don't stack on top of each other.
-            if (clout != 0 || (cash == 0 && !trophy))
+            if (cash != 0 || (influence == 0 && !trophy))
             {
-                effects.FlyChip(lead + GuestVisuals.PopText(clout), from, cloutTarget);
+                effects.FlyChip(lead + GuestVisuals.CashText(cash), from, cashTarget);
                 lead = string.Empty;
                 any = true;
             }
-            if (cash != 0)
+            if (influence != 0)
             {
-                effects.FlyChip(lead + GuestVisuals.CashText(cash), from + new Vector3(0f, any ? -34f : 0f, 0f), cashTarget, any ? 0.06f : 0f);
+                effects.FlyChip(lead + GuestVisuals.InfluenceText(influence), from + new Vector3(0f, any ? -34f : 0f, 0f), influenceTarget, any ? 0.06f : 0f);
                 lead = string.Empty;
                 any = true;
             }
@@ -562,7 +562,7 @@ namespace DeckParty.UI
                     case Community.CoreFanbase:
                     case Community.Content: label = Loc.Get("score.tag.encore"); break;
                     case Community.Staff: label = Loc.Get("score.tag.free"); break;
-                    case Community.FinanceBros: label = Loc.Get("score.tag.cash_double"); break;
+                    case Community.FinanceBros: label = Loc.Get("score.tag.influence_double"); break;
                     case Community.Doomsdayers: label = Loc.Get("score.tag.doomed"); break;
                     case Community.ArmchairActivists: label = Loc.Get("score.tag.all_talk"); break;
                     case Community.Clout: label = "+" + e.B; break;

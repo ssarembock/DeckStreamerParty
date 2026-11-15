@@ -12,12 +12,12 @@ The stream and the shop now look like a simple streaming website: a light page, 
 | Area | Now |
 |---|---|
 | **Page** | Light page and white surfaces (`SitePalette`). The stream setup background no longer shows in the stream or shop. The pause-menu setup choice now only changes the music. |
-| **Menu bar** (top) | The animated platform logo, then night, Clout, Cash, Sub Cap, the risk pips and the Plays pips. These are icons and numbers only, with a tooltip on each. Audience and Menu are icon buttons on the right. |
+| **Menu bar** (top) | The animated platform logo, then night, Cash, Influence, Sub Cap, the risk pips and the Plays pips. These are icons and numbers only, with a tooltip on each. Audience and Menu are icon buttons on the right. |
 | **Stream Chat** | A white, slightly rounded window with a black border. A centred "Stream Chat" title sits over a thin line. Viewers are round avatars. A grey typing area at the bottom holds two icon buttons: **Add Viewer** (platform colour) and **End the Stream** (black). It also shows the projected take (dark pill), the number of risky viewers left in the queue, and the faces of the next viewers when X-Ray reveals them. The chat bubble and its tail are gone. |
 | **Channel column** (right) | The facecam with LIVE and the timer (hover it for the streamer's name), and the Community Beats chips below it. |
 | **Avatars** | Circles that show only the head. The ring colour shows state: grey normally, gold for Plays, green when infected, teal when immune. **While a viewer's action is unused, the ring pulses in the site accent (the same on every platform), the circle wiggles every few seconds, and a bolt button sits at its bottom-right.** Names and details are in the hover tooltip. |
 | **Shop** | Two white cards. The left card holds the streamer portrait (hover for the power), the active as a bolt button with its price, **+1 Sub Cap** with its price, the Audience with your count, and a big **Go Live** (play) button. The right card holds the "Recruit Viewers" title (kept) and the tiles. Tiles show the picture, the community icons, the price and how many are left ("×3"). There's no name, and a red X means none are left. |
-| **Names** | Gifted Subs is now **Clout**, and Diamonds are now **Plays**, in all 5 languages. The quick rules and the Plays viewers' descriptions show the Plays icon (`{icon:plays}`, usable in any string). Code names are unchanged (Pop, Diamond). |
+| **Names** | Gifted Subs is now **Clout** (renamed **Cash** on 15 November), and Diamonds are now **Plays**, in all 5 languages. The quick rules and the Plays viewers' descriptions show the Plays icon (`{icon:plays}`, usable in any string). Code names are unchanged (Pop, Diamond). |
 | **Buttons** | Every stream and shop button is an icon. Its name, hotkey and why it's disabled are in its tooltip. |
 
 ## 3. Where to set things
@@ -44,7 +44,7 @@ The stream and the shop now look like a simple streaming website: a light page, 
 | IconNight | The night counter |
 | IconCheck | Approve, confirm, ready |
 | IconStar | **Plays** |
-| IconPop | **Clout** |
+| IconCash | **Cash** |
 | AvatarRing | The ring around the avatars |
 
 Draw button icons and the ring in **white**: the game tints them (dark on grey buttons, white or black on platform-coloured buttons, the state colour on rings). For coloured art, tick **Override Color** on that slot and leave the colour white.
@@ -93,7 +93,7 @@ Draw button icons and the ring in **white**: the game tints them (dark on grey b
 
 ## 5. Things to know
 
-- **"Clout" is now two things.** It's the resource, and it's also the community "Clout" (which gives +1 Clout). The two have different icons, but you may want to rename the community in phase 2.
+- **"Cash" is now two things.** It's the resource, and it's also the community "Cash" (which gives +1 Cash). The two have different icons, but you may want to rename the community in phase 2.
 - **Unchanged for now:**
   - Pop-up dialogs, the Audience and picker windows, banners and the main menus keep the dark style. Cards in those windows no longer show names.
   - The Activity log panel stays dark (it's off by default).

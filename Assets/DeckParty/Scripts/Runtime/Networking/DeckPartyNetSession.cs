@@ -852,7 +852,7 @@ namespace DeckParty.Networking
         }
 
         /// <summary>
-        /// Saboteurs: a scored stream's Saboteurs points make every rival's next recruit cost that much more Clout. Several
+        /// Saboteurs: a scored stream's Saboteurs points make every rival's next recruit cost that much more Cash. Several
         /// don't add up: a rival keeps the biggest surcharge until their next recruit.
         /// </summary>
         void ServerSendSabotage(ulong sender, PlayerState state)
@@ -946,9 +946,9 @@ namespace DeckParty.Networking
                 var p = m_Players[i];
                 if (p.ClientId == sender || !p.Connected || !m_Games.TryGetValue(p.ClientId, out var s) || s.IsGameOver) continue;
                 int score;
-                if (state.Streamer == StreamerType.EthicalFboi) score = s.Cash * 1000 - i;
+                if (state.Streamer == StreamerType.EthicalFboi) score = s.Influence * 1000 - i;
                 else if (TakingTurns) score = -((i - senderIndex + m_Players.Count) % m_Players.Count);
-                else score = s.BestDiamonds * 1000 + s.TotalPopEarned;
+                else score = s.BestDiamonds * 1000 + s.TotalCashEarned;
                 if (score > bestScore)
                 {
                     bestScore = score;
@@ -983,15 +983,15 @@ namespace DeckParty.Networking
             {
                 p.Night = (byte)Mathf.Clamp(s.Night, 0, 255);
                 p.Phase = (byte)s.Phase;
-                p.Pop = s.Pop;
                 p.Cash = s.Cash;
+                p.Influence = s.Influence;
                 p.Capacity = (byte)Mathf.Clamp(s.Capacity, 0, 255);
                 p.Guests = (byte)Mathf.Clamp(s.House.Count, 0, 255);
                 p.DiamondsOwned = (byte)Mathf.Clamp(s.DiamondsOwned(), 0, 255);
                 p.DiamondsInHouse = (byte)Mathf.Clamp(PartyEngine.DiamondsPresent(s), 0, 255);
                 p.BestDiamonds = (byte)Mathf.Clamp(s.BestDiamonds, 0, 255);
                 p.Trouble = (byte)Mathf.Clamp(PartyEngine.NetTrouble(s), 0, 255);
-                p.TotalPop = s.TotalPopEarned;
+                p.TotalCash = s.TotalCashEarned;
                 p.WinNight = (byte)Mathf.Clamp(s.WinNight, 0, 255);
                 p.LastOutcome = (byte)s.LastOutcome;
             }
@@ -1386,7 +1386,7 @@ namespace DeckParty.Networking
             if (a.Won != b.Won) return a.Won ? -1 : 1;
             if (a.Won && a.WinNight != b.WinNight) return a.WinNight.CompareTo(b.WinNight);
             if (a.BestDiamonds != b.BestDiamonds) return b.BestDiamonds.CompareTo(a.BestDiamonds);
-            if (a.TotalPop != b.TotalPop) return b.TotalPop.CompareTo(a.TotalPop);
+            if (a.TotalCash != b.TotalCash) return b.TotalCash.CompareTo(a.TotalCash);
             return a.ClientId.CompareTo(b.ClientId);
         }
     }

@@ -136,7 +136,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189467
-    m_Localized: In your next stream, viewers carrying {icon:risk} earn +2 {icon:subs}.
+    m_Localized: In your next stream, viewers carrying {icon:risk} earn +2 {icon:cash}.
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -156,7 +156,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189472
-    m_Localized: In your next stream, every viewer earns +1 {icon:subs}.
+    m_Localized: In your next stream, every viewer earns +1 {icon:cash}.
     m_Metadata:
       m_Items: []
   - m_Id: 496189473
@@ -176,7 +176,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189477
-    m_Localized: The richest rival pays you up to 2 {icon:cash}.
+    m_Localized: The most influential rival pays you up to 2 {icon:influence}.
     m_Metadata:
       m_Items: []
   - m_Id: 496189478
@@ -196,7 +196,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189482
-    m_Localized: If your next stream gets deplatformed, you still bank half its {icon:subs}.
+    m_Localized: If your next stream gets deplatformed, you still bank half its {icon:cash}.
     m_Metadata:
       m_Items: []
   - m_Id: 496189483
@@ -258,7 +258,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189497
-    m_Localized: Gain +1 {icon:subs} for each great stream in a row (max +5). A failed
+    m_Localized: Gain +1 {icon:cash} for each great stream in a row (max +5). A failed
       stream resets the streak.
     m_Metadata:
       m_Items: []
@@ -436,7 +436,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189541
-    m_Localized: '{player} ({cash} {icon:cash})'
+    m_Localized: '{player} ({influence} {icon:influence})'
     m_Metadata:
       m_Items: []
   - m_Id: 496189542

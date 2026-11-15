@@ -49,8 +49,8 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text descriptionLabel;
         [Tooltip("What the viewer scores, as icons and numbers.")]
         [SerializeField] internal TMP_Text statsLabel;
-        [SerializeField] internal TMP_Text cloutLabel;
         [SerializeField] internal TMP_Text cashLabel;
+        [SerializeField] internal TMP_Text influenceLabel;
         [Tooltip("The name of the viewer's action (empty when it has none).")]
         [SerializeField] internal TMP_Text actionLabel;
         [SerializeField] internal GameObject riskBadge;
@@ -179,8 +179,8 @@ namespace DeckParty.UI
             if (nameLabel != null) nameLabel.text = GuestVisuals.DisplayName(type);
             if (descriptionLabel != null) descriptionLabel.text = GuestVisuals.Description(type);
             if (statsLabel != null) statsLabel.text = GuestVisuals.ScoringIcons(info);
-            if (cloutLabel != null) cloutLabel.text = GuestVisuals.CloutValue(info);
             if (cashLabel != null) cashLabel.text = GuestVisuals.CashValue(info);
+            if (influenceLabel != null) influenceLabel.text = GuestVisuals.InfluenceValue(info);
             if (actionLabel != null) actionLabel.text = info.HasAbility ? GuestVisuals.ActionName(type) : string.Empty;
             if (riskBadge != null) riskBadge.SetActive(info.Trouble);
             if (cancelsRiskBadge != null) cancelsRiskBadge.SetActive(info.CancelsTrouble);
@@ -198,12 +198,12 @@ namespace DeckParty.UI
 
             // Shop Control's discount / rival Saboteurs' surcharge on the next recruit: the old price struck through.
             int cost = PartyEngine.RecruitCost(state, type);
-            bool affordable = state.Pop >= cost;
+            bool affordable = state.Cash >= cost;
             if (priceLabel != null)
             {
                 // The icon and the number only: hovering the icon names the resource.
                 string was = cost != info.Cost ? $"<s><size=80%>{info.Cost}</size></s> " : string.Empty;
-                priceLabel.text = $"<size=125%>{GameIcons.Tag(ResourceIcon.Subs)}</size> {was}{cost}";
+                priceLabel.text = $"<size=125%>{GameIcons.Tag(ResourceIcon.Cash)}</size> {was}{cost}";
                 var canColour = siteStyle ? SiteColours.Get(SiteColourRole.Text, transform) : UIPalette.Gold;
                 var cannotColour = siteStyle ? SitePalette.Danger : UIPalette.Red;
                 priceLabel.color = affordable
@@ -318,8 +318,8 @@ namespace DeckParty.UI
             if (nameLabel == null) nameLabel = Find<TMP_Text>(parts, all, ShopCardPart.Part.Name);
             if (descriptionLabel == null) descriptionLabel = Find<TMP_Text>(parts, all, ShopCardPart.Part.Description);
             if (statsLabel == null) statsLabel = Find<TMP_Text>(parts, all, ShopCardPart.Part.Stats);
-            if (cloutLabel == null) cloutLabel = Find<TMP_Text>(parts, all, ShopCardPart.Part.Clout);
             if (cashLabel == null) cashLabel = Find<TMP_Text>(parts, all, ShopCardPart.Part.Cash);
+            if (influenceLabel == null) influenceLabel = Find<TMP_Text>(parts, all, ShopCardPart.Part.Influence);
             if (actionLabel == null) actionLabel = Find<TMP_Text>(parts, all, ShopCardPart.Part.Action);
             if (priceLabel == null) priceLabel = Find<TMP_Text>(parts, all, ShopCardPart.Part.Price);
             if (leftLabel == null) leftLabel = Find<TMP_Text>(parts, all, ShopCardPart.Part.CopiesLeft);
@@ -388,6 +388,8 @@ namespace DeckParty.UI
             { ShopCardPart.Part.CantBuyVeil, new[] { "Veil", "Dim" } },
             { ShopCardPart.Part.Portrait, new[] { "Art" } },
             { ShopCardPart.Part.Name, new[] { "ViewerName" } },
+            // Parts renamed on 2026-11-15: objects still named after the old resource names count.
+            { ShopCardPart.Part.Cash, new[] { "Clout" } },
         };
 
         static bool NameMatches(string objectName, ShopCardPart.Part part)
@@ -408,8 +410,8 @@ namespace DeckParty.UI
                 case ShopCardPart.Part.Name:
                 case ShopCardPart.Part.Description:
                 case ShopCardPart.Part.Stats:
-                case ShopCardPart.Part.Clout:
                 case ShopCardPart.Part.Cash:
+                case ShopCardPart.Part.Influence:
                 case ShopCardPart.Part.Action:
                 case ShopCardPart.Part.Price:
                 case ShopCardPart.Part.CopiesLeft:

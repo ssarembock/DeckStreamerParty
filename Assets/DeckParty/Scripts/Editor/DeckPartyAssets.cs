@@ -218,8 +218,8 @@ namespace DeckParty.EditorTools
                         break;
                     case SkinSlot.Circle: Set(entry, EditorUI.Circle, Image.Type.Simple); break;
                     case SkinSlot.Glow: Set(entry, EditorUI.Glow, Image.Type.Simple); break;
-                    case SkinSlot.IconPop: Set(entry, EditorUI.Sparkle, Image.Type.Simple); break;
-                    case SkinSlot.IconCash: Set(entry, EditorUI.Coin, Image.Type.Simple); break;
+                    case SkinSlot.IconCash: Set(entry, EditorUI.Sparkle, Image.Type.Simple); break;
+                    case SkinSlot.IconInfluence: Set(entry, EditorUI.Coin, Image.Type.Simple); break;
                     case SkinSlot.IconTrouble: Set(entry, EditorUI.Cross, Image.Type.Simple); break;
                     case SkinSlot.IconStar: Set(entry, EditorUI.Star, Image.Type.Simple); break;
                     case SkinSlot.IconCancel: Set(entry, EditorUI.Shield, Image.Type.Simple); break;
@@ -242,8 +242,8 @@ namespace DeckParty.EditorTools
                     case SkinSlot.IconRemoveViewer: Set(entry, EditorUI.RemoveViewer, Image.Type.Simple); break;
                     // The menu bar's icon frames: the hollow rounded outline, drawn thinner.
                     case SkinSlot.FrameNight:
-                    case SkinSlot.FramePop:
                     case SkinSlot.FrameCash:
+                    case SkinSlot.FrameInfluence:
                     case SkinSlot.FrameStars:
                     case SkinSlot.FrameAudience:
                     case SkinSlot.FrameMenu:
@@ -822,7 +822,7 @@ namespace DeckParty.EditorTools
             var star = EditorUI.Icon(anim, "DiamondBadge", EditorUI.Star, UIPalette.Gold, SkinSlot.IconStar, 36);
             star.rectTransform.Place(new Vector2(1, 1), new Vector2(-10, -10), new Vector2(36, 36), new Vector2(1, 1));
 
-            // The price is the Clout icon and the number; "x3" is how many are left (ShopItemView writes both).
+            // The price is the Cash icon and the number; "x3" is how many are left (ShopItemView writes both).
             var price = EditorUI.Text(anim, "Price", "-", 28, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
             price.rectTransform.Box(new Vector2(0.06f, 0.02f), new Vector2(0.66f, 0.18f), Vector2.zero, Vector2.zero);
             price.fontSizeMin = 14;

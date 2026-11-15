@@ -18,26 +18,26 @@ namespace DeckParty.Core
         GuestRemoved = 2,      // Guest, A = actor id (-1 = none), B = LeaveReason
         GuestRejected = 3,     // Guest
         GuestPeeked = 4,       // Guest, A = actor id
-        GuestScored = 5,       // Guest, A = pop, B = cash, C = 1 for end-of-party scoring
+        GuestScored = 5,       // Guest, A = cash, B = influence, C = 1 for end-of-party scoring
         AbilityUsed = 6,       // Guest = actor, A = target A, B = target B, C = option
         EveryoneOutside = 7,   // Guest = actor, A = count
         PoliceRaid = 8,        // Deplatformed. A = net Deplatform Risk
         FireMarshal = 9,       // Server Down. A = occupancy, B = capacity
-        PartyEnded = 10,       // A = pop, B = cash, C = diamonds
-        CashShortfall = 11,    // A = unpaid cash, B = penalty
+        PartyEnded = 10,       // A = cash, B = influence, C = diamonds
+        InfluenceShortfall = 11,    // A = unpaid influence, B = penalty
         GuestBlamed = 12,      // Guest (temporary ban)
         GuestPurchased = 13,   // Guest, A = cost
         HouseExpanded = 14,    // A = new capacity, B = cost
         Victory = 15,          // A = night
         Defeat = 16,
-        GuestGained = 17,      // Guest, A = pop, B = cash (tonight's card bonus)
-        PartyPotGained = 18,   // Guest = source, A = pop, B = cash (paid straight into tonight's take)
+        GuestGained = 17,      // Guest, A = cash, B = influence (tonight's card bonus)
+        PartyPotGained = 18,   // Guest = source, A = cash, B = influence (paid straight into tonight's take)
         TroubleAdded = 19,     // Guest, A = amount
         TroubleRemoved = 20,   // Guest, A = amount
         ThisIsFine = 21,       // Guest = dog, A = Deplatform Risk cleared
         Infected = 22,         // Guest = infected, A = source id
         Attached = 23,         // Guest = Overly Attached Girlfriend, A = partner id
-        StatsCopied = 24,      // Guest = NPC Wojak, A = source id, B = pop, C = cash
+        StatsCopied = 24,      // Guest = NPC Wojak, A = source id, B = cash, C = influence
         TemporaryCopy = 25,    // Guest = new copy
         ShieldBlocked = 26,    // Guest = Bad Luck Brian, A = new permanent bonus
         PermanentChange = 27,  // Guest, A = delta, B = new permanent bonus
@@ -46,8 +46,8 @@ namespace DeckParty.Core
         PositionsSwapped = 30, // A = id, B = id
         PrintedExchanged = 31, // A = id, B = id
         MoodChosen = 32,       // Guest = Pepe, A = mood
-        Invested = 33,         // A = pop, B = cash
-        InvestmentPaid = 34,   // A = pop, B = cash
+        Invested = 33,         // A = cash, B = influence
+        InvestmentPaid = 34,   // A = cash, B = influence
         MovedToBack = 35,      // Guest
         ImmunityGranted = 36,  // Guest
         Converted = 37,        // Guest, A = mode
@@ -58,35 +58,35 @@ namespace DeckParty.Core
         TemporaryCopiesLeft = 42,// A = count
 
         // Streamer powers
-        PowerUsed = 43,        // A = streamer, B = Cash paid
+        PowerUsed = 43,        // A = streamer, B = Influence paid
         HeatApplied = 44,      // A = Deplatform Risk from rivals' raids at the start of this stream
         ShieldApplied = 45,    // A = Deplatform Risk ignored this stream (Smoke Bomb)
-        GiveawayActive = 46,   // A = extra Subs per viewer this stream
+        GiveawayActive = 46,   // A = extra Cash per viewer this stream
         PalCaught = 47,        // Guest = the viewer caught from the shop
-        SoftLanding = 48,      // A = Gifted Subs banked despite being deplatformed (Soft Landing, armed for the stream)
-        StreakBonus = 49,      // A = bonus Subs, B = streak length (Beautiful Sequence, used in the shop)
+        SoftLanding = 48,      // A = Cash banked despite being deplatformed (Soft Landing, armed for the stream)
+        StreakBonus = 49,      // A = bonus Cash, B = streak length (Beautiful Sequence, used in the shop)
         FreeActionUsed = 50,   // Guest = the viewer whose action refreshed (Double Move)
         XRayActive = 51,       // A = how many queued viewers are visible
         RaidReceived = 52,     // A = Deplatform Risk added to your next stream, B = raider's player index
-        TaxPaid = 53,          // A = Cash paid, B = taxer's player index
-        TaxReceived = 54,      // A = Cash received, B = payer's player index
+        TaxPaid = 53,          // A = Influence paid, B = taxer's player index
+        TaxReceived = 54,      // A = Influence received, B = payer's player index
         DoubleMoveActive = 55, // A = free action refreshes this stream
 
         // V3 audience classics
-        InterviewGiven = 56,   // Guest = Billionaire Benefactor, A = Cash banked, B = viewers whose Subs dropped to 0
-        CashBoosted = 57,      // Guest, A = delta, B = new permanent Cash bonus
-        ScoredNow = 58,        // Guest = viewer scored mid-stream (banked), A = Subs, B = Cash, C = source viewer id
+        InterviewGiven = 56,   // Guest = Billionaire Benefactor, A = Influence banked, B = viewers whose Cash dropped to 0
+        InfluenceBoosted = 57,      // Guest, A = delta, B = new permanent Influence bonus
+        ScoredNow = 58,        // Guest = viewer scored mid-stream (banked), A = Cash, B = Influence, C = source viewer id
         MoodFlipped = 59,      // Guest = Hate-Watcher, A = 1 now hate-watching (risky), 0 now harmless
 
         // V4 communities
-        CommunityBonus = 60,   // Guest, A = Community, B = amount. Staff: Cash cost waived (B). Content: scores twice.
-                               // Finance Bros: Cash reward doubled (B = extra Cash). Doomsdayers: a rival's curse, scores nothing.
+        CommunityBonus = 60,   // Guest, A = Community, B = amount. Staff: Influence cost waived (B). Content: scores twice.
+                               // Finance Bros: Influence reward doubled (B = extra Influence). Doomsdayers: a rival's curse, scores nothing.
         ServerRestored = 61,   // Techspertise brought the server back, the stream still scores. A = chance %, B = occupancy, C = capacity
-        TrollsPaid = 62,       // Deplatformed, but the Trolls pay out. A = Gifted Subs, B = Cash
+        TrollsPaid = 62,       // Deplatformed, but the Trolls pay out. A = Cash, B = Influence
         DoomApplied = 63,      // A = rival Doomsdayers points on this stream, B = chance per viewer (%)
-        CommunityReward = 64,  // Stream-wide community reward when scored (Boomer, Millennial, Zoomer). A = Community, B = Subs, C = Cash
+        CommunityReward = 64,  // Stream-wide community reward when scored (Boomer, Millennial, Zoomer). A = Community, B = Cash, C = Influence
                                // (CommunityBonus with A = ArmchairActivists: that Armchair Activist scored nothing;
-                               // A = Clout: B = extra Gifted Subs. C = 2 on anything rolled in the Memetics Division repeat)
+                               // A = Cash: B = extra Cash. C = 2 on anything rolled in the Memetics Division repeat)
 
         // V4.2 communities
         MemeticsRepeat = 65,   // Memetics Division: the whole stream scores a second time. A = chance %
@@ -96,15 +96,15 @@ namespace DeckParty.Core
         // V5 communities
         ActionRefreshed = 68,  // Gatekeepers / Marketers / Voyeurs: the action can be used again. Guest = actor, A = Community, B = extra uses left
         BoomerRetired = 69,    // A Boomer left your Audience for good after the stream. Guest = the Boomer (no longer owned)
-        Inheritance = 70,      // Millennials: a Millennial inherited from a Boomer. Guest = Millennial, A = Cash gained, B = new permanent Cash bonus
-        GenZGrowth = 71,       // Gen-Z: a viewer grew for good. Guest, A = Subs gained, B = Cash gained
+        Inheritance = 70,      // Millennials: a Millennial inherited from a Boomer. Guest = Millennial, A = Influence gained, B = new permanent Influence bonus
+        GenZGrowth = 71,       // Gen-Z: a viewer grew for good. Guest, A = Cash gained, B = Influence gained
         ModsShield = 72,       // Mods: A = 1: your next stream will start with 1 Risk cancelled (B = chance %); A = 2: applied as this stream starts
         ShopPerk = 73,         // A stream earned a shop effect. A = Community (Boomer, ShopControl, Saboteurs), B = amount
         SentBack = 74,         // Junior PR Manager / PR Manager sent random viewers back to the queue. Guest = actor, A = count sent
-        GuestDismissed = 75,   // Shop: Remove a Viewer took this viewer out of your Audience for good. Guest = the viewer (no longer owned), A = Cash paid
+        GuestDismissed = 75,   // Shop: Remove a Viewer took this viewer out of your Audience for good. Guest = the viewer (no longer owned), A = Influence paid
         ExtraSeatActive = 76,  // Three-Hour Episode: A = extra Sub Cap this stream
-        BarkActive = 77,       // Bark at Chat: A = extra Subs for each viewer carrying Risk this stream
-        SoftLandingReady = 78, // Soft Landing is on for this stream (if it gets deplatformed, half its Subs are banked)
+        BarkActive = 77,       // Bark at Chat: A = extra Cash for each viewer carrying Risk this stream
+        SoftLandingReady = 78, // Soft Landing is on for this stream (if it gets deplatformed, half its Cash are banked)
     }
 
     public struct GameEvent

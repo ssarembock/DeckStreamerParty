@@ -251,6 +251,13 @@ namespace DeckParty.EditorTools
 
         // ------------------------------------------------------------------ matching
 
+        /// <summary>UI Skin slots that were renamed: art named for the old name ("icon_pop") still goes to the slot. On 2026-11-15 IconPop / FramePop became IconCash / FrameCash (Clout was renamed Cash) and the old IconCash / FrameCash became IconInfluence / FrameInfluence.</summary>
+        static readonly Dictionary<SkinSlot, string> s_FormerSlotNames = new Dictionary<SkinSlot, string>
+        {
+            { SkinSlot.IconCash, "IconPop" },
+            { SkinSlot.FrameCash, "FramePop" },
+        };
+
         static bool TryAssignSkin(GameDatabase db, string key, Sprite sprite)
         {
             if (db.skin == null) return false;
@@ -258,6 +265,9 @@ namespace DeckParty.EditorTools
             foreach (SkinSlot slot in Enum.GetValues(typeof(SkinSlot)))
             {
                 string slotKey = Normalize(slot.ToString());
+                // Files named for a slot's old name still match (see s_FormerSlotNames).
+                if (s_FormerSlotNames.TryGetValue(slot, out var former) && (stripped == Normalize(former) || key == Normalize(former)))
+                    slotKey = Normalize(former);
                 if (stripped != slotKey && key != slotKey) continue;
                 // Only treat it as a skin sprite when it was clearly named for the UI.
                 if (stripped == key && !slotKey.StartsWith("icon")) continue;

@@ -93,7 +93,7 @@ namespace DeckParty.EditorTools
             var name = Text(body, "Name", "Viewer Name", 22, SitePalette.Text, TextAlignmentOptions.Center, true);
             name.rectTransform.Box(new Vector2(0.05f, 0.24f), new Vector2(0.95f, 0.35f), Vector2.zero, Vector2.zero);
             Mark(name, ShopCardPart.Part.Name);
-            // What the viewer scores: a plain group holding the Clout number (left) and the Cash number (right), no icons.
+            // What the viewer scores: a plain group holding the Cash number (left) and the Influence number (right), no icons.
             // Risk isn't here: the Risk Badge shows it.
             var stats = EditorUI.Rect(body, "Stats");
             stats.Box(new Vector2(0.05f, 0.15f), new Vector2(0.95f, 0.24f), Vector2.zero, Vector2.zero);
@@ -129,17 +129,17 @@ namespace DeckParty.EditorTools
         }
 
         /// <summary>
-        /// Fills a Stats group with its two halves: "Clout" on the left and "Cash" on the right, each marked with its Shop
+        /// Fills a Stats group with its two halves: "Cash" on the left and "Influence" on the right, each marked with its Shop
         /// Card Part and holding a placeholder number. Font and material, when given, are copied from an old Stats text.
         /// </summary>
         static void AddScoreTexts(RectTransform group, Color color, float size, bool bold, TMP_FontAsset font, Material material, bool undo)
         {
-            var halves = new[] { ("Clout", "+2", ShopCardPart.Part.Clout, 0f), ("Cash", "+1", ShopCardPart.Part.Cash, 0.5f) };
+            var halves = new[] { ("Cash", "+2", ShopCardPart.Part.Cash, 0f), ("Influence", "+1", ShopCardPart.Part.Influence, 0.5f) };
             foreach (var (name, placeholder, part, from) in halves)
             {
                 var label = Text(group, name, placeholder, size, color, TextAlignmentOptions.Center, bold);
                 label.rectTransform.Box(new Vector2(from, 0f), new Vector2(from + 0.5f, 1f), Vector2.zero, Vector2.zero);
-                // Group cards print their steps (Dancing Jen's Clout "1/4/9/16/25"): let the number shrink to fit.
+                // Group cards print their steps (Dancing Jen's Cash "1/4/9/16/25"): let the number shrink to fit.
                 label.overflowMode = TextOverflowModes.Overflow;
                 label.textWrappingMode = TextWrappingModes.NoWrap;
                 label.enableAutoSizing = true;
@@ -148,15 +148,15 @@ namespace DeckParty.EditorTools
                 if (font != null) label.font = font;
                 if (material != null) label.fontSharedMaterial = material;
                 Mark(label, part);
-                if (undo) Undo.RegisterCreatedObjectUndo(label.gameObject, "Split Stats into Clout and Cash");
+                if (undo) Undo.RegisterCreatedObjectUndo(label.gameObject, "Split Stats into Cash and Influence");
             }
         }
 
         // ------------------------------------------------------------------ cards made from an older template
 
-        const string SplitMenu = "Deck Party/Shop/Split Stats into Clout and Cash";
+        const string SplitMenu = "Deck Party/Shop/Split Stats into Cash and Influence";
 
-        /// <summary>The card's Stats text (icons for Clout, Cash and Risk on one line), if it has one.</summary>
+        /// <summary>The card's Stats text (icons for Cash, Influence and Risk on one line), if it has one.</summary>
         public static TMP_Text StatsText(GameObject card) => ShopItemView.FindPart<TMP_Text>(card, ShopCardPart.Part.Stats);
 
         [MenuItem(SplitMenu, priority = 41)]
@@ -166,7 +166,7 @@ namespace DeckParty.EditorTools
             foreach (var go in Selection.gameObjects)
                 if (SplitStats(go)) done++;
             if (done == 0)
-                EditorUtility.DisplayDialog("Split Stats", "Select a shop card prefab whose Stats is one text (icons for Clout, Cash " +
+                EditorUtility.DisplayDialog("Split Stats", "Select a shop card prefab whose Stats is one text (icons for Cash, Influence " +
                                                            "and Risk) in the Project window, then try again.", "OK");
         }
 
@@ -180,7 +180,7 @@ namespace DeckParty.EditorTools
 
         /// <summary>
         /// Turns a card prefab's Stats text into the template's layout: Stats becomes a plain group (same place and size)
-        /// holding a "Clout" and a "Cash" text, styled like the old one, with no icons and no Risk. If the prefab is open in
+        /// holding a "Cash" and an "Influence" text, styled like the old one, with no icons and no Risk. If the prefab is open in
         /// Prefab Mode, the change is made there (undoable; save the prefab); otherwise the prefab asset is saved.
         /// </summary>
         public static bool SplitStats(GameObject card)
@@ -238,7 +238,7 @@ namespace DeckParty.EditorTools
             if (go.GetComponent<Graphic>() == null && go.TryGetComponent<CanvasRenderer>(out var canvasRenderer)) Remove(canvasRenderer, undo);
             if (go.name != "Stats")
             {
-                if (undo) Undo.RecordObject(go, "Split Stats into Clout and Cash");
+                if (undo) Undo.RecordObject(go, "Split Stats into Cash and Influence");
                 go.name = "Stats";
             }
 

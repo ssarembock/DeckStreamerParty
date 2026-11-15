@@ -103,7 +103,7 @@ namespace DeckParty
         [Tooltip("Space between a price and the top of its button, in pixels. -1: the built-in gap.")]
         public float costGap = -1f;
         public OptionalColour costColour = new OptionalColour(Color.black);
-        [Tooltip("The price's colour when you don't have enough Cash. Unticked: red.")]
+        [Tooltip("The price's colour when you don't have enough Influence. Unticked: red.")]
         public OptionalColour costTooExpensive = new OptionalColour(new Color(0.86f, 0.2f, 0.24f));
 
         [Header("Viewer cards")]

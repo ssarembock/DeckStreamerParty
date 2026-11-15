@@ -194,7 +194,7 @@ All menus, the HUD, cards and buttons draw from `Assets/DeckParty/Data/UISkin.as
 | ScrollHandle | Scrollbar handle | `ui_scrollhandle` | 9-slice |
 | Glow | Light glow | `ui_glow` | soft radial |
 | Logo | Main-menu logo (replaces the "AUDIENCE CAPTURE" text) | `ui_logo` | |
-| IconPop / IconCash / IconDoor | HUD stat icons (Gifted Subs, Cash, Sub Cap); IconPop and IconCash are also the resource icons inside text | `icon_pop`, `icon_cash`, `icon_door` | |
+| IconCash / IconInfluence / IconDoor | HUD stat icons (Cash, Influence, Sub Cap); IconCash and IconInfluence are also the resource icons inside text | `icon_cash`, `icon_influence`, `icon_door` | |
 | IconTrouble / IconStar | Deplatform Risk and Diamond pips, card badges; IconTrouble is also the risk icon inside text | `icon_trouble`, `icon_star` | |
 | IconCancel | "Cancels risk" badge (AutoMod, VIPS, Wholesome Icon, Cheems with a Doge) | `icon_cancel` | |
 | IconCrown / IconCheck | Host and ready markers | `icon_crown`, `icon_check` | |
@@ -270,23 +270,23 @@ Running **Build Everything** again never touches existing scenes. Only **Rebuild
 - **Stream:** **Add Viewer to Chat** (Space) lets the next viewer in the queue join.
   - Purple buttons on cards are once-per-stream actions. Some open a choice popup first.
   - Actions that take several viewers show a **Confirm** button (or press Space).
-  - **End the Stream** (E) banks everyone's Subs as Gifted Subs, plus Cash.
+  - **End the Stream** (E) banks everyone's Cash, plus Influence.
   - A skippable scoring sequence counts each viewer up.
 - **Deplatform Risk:** 3 net Deplatform Risk and the stream gets **deplatformed**. You get no payout, and one viewer gets a Temporary Ban for the next stream.
   - The HUD shows the meter. Under the buttons you see how many viewers with Deplatform Risk are still in the queue, but never the odds: working them out is part of the game.
-- **Communities:** every viewer belongs to none, one or several communities. Each **different** viewer in chat gives their community a point (live), and points give bonuses (Core Fanbase cancels risk, Staff waives costs, Content scores twice, Techspertise saves Server Downs, Finance Bros double Cash, Trolls pay out when deplatformed, Doomsdayers curse rivals). Rules: `Core/Community.cs`; who belongs where: Game Database > Viewers > Communities.
+- **Communities:** every viewer belongs to none, one or several communities. Each **different** viewer in chat gives their community a point (live), and points give bonuses (Core Fanbase cancels risk, Staff waives costs, Content scores twice, Techspertise saves Server Downs, Finance Bros double Influence, Trolls pay out when deplatformed, Doomsdayers curse rivals). Rules: `Core/Community.cs`; who belongs where: Game Database > Viewers > Communities.
 - **Server Down:** going over the Sub Cap (viewers who bring others) ends the stream with no payout.
   - At one risk from the police, your streamer appears at the top of the screen looking anxious, and the facecam (bottom right) pulses red.
-- **Shop:** spend Gifted Subs recruiting viewers and Cash raising your Sub Cap, use your streamer power, then start the next night (Space).
+- **Shop:** spend Cash recruiting viewers and Influence raising your Sub Cap, use your streamer power, then start the next night (Space).
 - **Audience** (R) shows all your viewers and permanent changes.
 - **Esc** cancels targeting or opens the menu. **F11** or **Alt+Enter** toggles fullscreen. Hover anything for details.
-- **F9** (editor and development builds, single player): +50 Gifted Subs and +10 $ for testing.
+- **F9** (editor and development builds, single player): +50 Cash and +10 Influence for testing.
 - Single-player seasons autosave after every action. **Continue** appears on the main menu.
 
 The full rules and the viewer glossary are also in-game under **How to Play**. The meme viewers' rule interpretations are listed in `V1Instructions.md` section 5.
 
 **Implementation decisions where the rules doc was ambiguous** (all adjustable in `Scripts/Core/GameRules.cs`):
-- Viewer fees are paid from your Cash bank first. Only the unpaid remainder costs 7 Gifted Subs per Cash (`FeesDrawFromBank`).
+- Viewer fees are paid from your Influence bank first. Only the unpaid remainder costs 7 Cash per Influence (`FeesDrawFromBank`).
 - Being deplatformed on the final night ends the season without a Temporary Ban.
 - Going over the Sub Cap doesn't ban anyone.
 
@@ -317,9 +317,9 @@ The full rules and the viewer glossary are also in-game under **How to Play**. T
   - **End Turn** (after the stream and shopping) passes to the next player.
   - The host can set a **turn timer**: Off, Hard 30 s, Medium 60 s, Easy 120 s, or Custom 10 to 600 s. It covers the whole turn. When it runs out, the stream ends (scored normally) and the turn passes.
   - The season ends after the first night someone ends a 4-Diamond stream, once everyone has played that night.
-- **Free For All** (was Synchronized Nights; the only mode with 3+ players): everyone streams the same night at once without seeing each other, the shop opens for everyone together after a 3-2-1 once all have clicked *Go to the Shop* (first come, first served), and the next night starts when every player presses *Ready* (see V4Instructions.md, section 7). The first night anyone ends a 4-Diamond stream, the season ends once everyone has finished that night. Ties go to the earlier win, then to more total Gifted Subs earned.
+- **Free For All** (was Synchronized Nights; the only mode with 3+ players): everyone streams the same night at once without seeing each other, the shop opens for everyone together after a 3-2-1 once all have clicked *Go to the Shop* (first come, first served), and the next night starts when every player presses *Ready* (see V4Instructions.md, section 7). The first night anyone ends a 4-Diamond stream, the season ends once everyone has finished that night. Ties go to the earlier win, then to more total Cash earned.
 - **Race:** everyone plays at their own pace, and the first 4-Diamond stream wins instantly.
-- **No winner:** if nobody wins, the best Diamond count in a successful stream wins, then total Gifted Subs earned.
+- **No winner:** if nobody wins, the best Diamond count in a successful stream wins, then total Cash earned.
 
 **Lobby and season:**
 - The host picks the character set, mode, season length (10 to 30 nights) and turn timer in the lobby. Everyone else presses **Ready**, then the host presses **Start Season**. The host can start solo for testing.

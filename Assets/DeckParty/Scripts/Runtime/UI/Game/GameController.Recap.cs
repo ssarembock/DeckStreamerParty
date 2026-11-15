@@ -28,15 +28,15 @@ namespace DeckParty.UI
         {
             public GamePhase Phase;
             public int Night;
-            public int Pop;
             public int Cash;
+            public int Influence;
             public int Capacity;
             public int PowerUses;
             public StreamerType Streamer;
 
             public static RecapSnap Of(PlayerState s) => new RecapSnap
             {
-                Phase = s.Phase, Night = s.Night, Pop = s.Pop, Cash = s.Cash, Capacity = s.Capacity, PowerUses = s.PowerUses, Streamer = s.Streamer,
+                Phase = s.Phase, Night = s.Night, Cash = s.Cash, Influence = s.Influence, Capacity = s.Capacity, PowerUses = s.PowerUses, Streamer = s.Streamer,
             };
         }
 
@@ -390,8 +390,8 @@ namespace DeckParty.UI
             entry.headline = GuestVisuals.Colored(entry.headline, color);
 
             var sb = new StringBuilder();
-            Line(sb, GameIcons.Tag(ResourceIcon.Subs), Signed(stream.End.Pop - stream.Start.Pop), Loc.Get("term.gifted_subs"));
-            Line(sb, GameIcons.Tag(ResourceIcon.Cash), Signed(stream.End.Cash - stream.Start.Cash), Loc.Get("term.cash"));
+            Line(sb, GameIcons.Tag(ResourceIcon.Cash), Signed(stream.End.Cash - stream.Start.Cash), Loc.Get("term.cash_banked"));
+            Line(sb, GameIcons.Tag(ResourceIcon.Influence), Signed(stream.End.Influence - stream.Start.Influence), Loc.Get("term.influence"));
             if (stream.Outcome == PartyOutcome.Success || stream.Plays > 0)
                 Line(sb, GameIcons.Tag(ResourceIcon.Plays), stream.Plays.ToString(), Loc.Get("term.diamonds"));
             if (stream.StreakBonus > 0) sb.Append(Loc.Get("recap.streak", "count", stream.StreakBonus)).Append('\n');
@@ -447,8 +447,8 @@ namespace DeckParty.UI
             if (powers > 0 && shop.End.Streamer != StreamerType.None)
                 sb.Append(Loc.Get("recap.active_used", "power", StreamerVisuals.PowerName(shop.End.Streamer), "count", powers)).Append('\n');
 
-            Line(sb, GameIcons.Tag(ResourceIcon.Subs), Signed(shop.End.Pop - shop.Start.Pop), Loc.Get("term.gifted_subs"));
-            Line(sb, GameIcons.Tag(ResourceIcon.Cash), Signed(shop.End.Cash - shop.Start.Cash), Loc.Get("term.cash"));
+            Line(sb, GameIcons.Tag(ResourceIcon.Cash), Signed(shop.End.Cash - shop.Start.Cash), Loc.Get("term.cash_banked"));
+            Line(sb, GameIcons.Tag(ResourceIcon.Influence), Signed(shop.End.Influence - shop.Start.Influence), Loc.Get("term.influence"));
             entry.body = sb.ToString().TrimEnd('\n');
             return entry;
         }

@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383746
-    m_Localized: 'No frills: scores a lot of {icon:cash}.'
+    m_Localized: 'No frills: scores a lot of {icon:influence}.'
     m_Metadata:
       m_Items: []
   - m_Id: 500383747
@@ -127,7 +127,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 500383769
     m_Localized: 'Action: send another viewer back to the queue (they can join again
-      tonight). Gains +2 {icon:subs} for every time that viewer has been trolled,
+      tonight). Gains +2 {icon:cash} for every time that viewer has been trolled,
       including this one.'
     m_Metadata:
       m_Items: []
@@ -140,8 +140,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383772
-    m_Localized: 'Action: choose Happy (+3 {icon:subs}), Sad (+3 {icon:cash}) or
-      Angry (+6 {icon:subs} and +1 {icon:risk}) until the stream ends.'
+    m_Localized: 'Action: choose Happy (+3 {icon:cash}), Sad (+3 {icon:influence})
+      or Angry (+6 {icon:cash} and +1 {icon:risk}) until the stream ends.'
     m_Metadata:
       m_Items: []
   - m_Id: 500383773
@@ -153,8 +153,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383775
-    m_Localized: 'Alpha Energy: +3 {icon:subs} if he''s the only viewer with 5+ printed
-      {icon:subs}. Each extra Gigachad gives every Gigachad -2 {icon:subs}.'
+    m_Localized: 'Alpha Energy: +3 {icon:cash} if he''s the only viewer with 5+ printed
+      {icon:cash}. Each extra Gigachad gives every Gigachad -2 {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 500383776
@@ -172,7 +172,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383779
-    m_Localized: 'Shared Suffering: +2 {icon:subs} for every other viewer who is
+    m_Localized: 'Shared Suffering: +2 {icon:cash} for every other viewer who is
       suffering ({icon:risk}, negative stats, infected, zeroed or penalised), max
       +6.'
     m_Metadata:
@@ -196,7 +196,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578052
     m_Localized: 'Rainbow Trail: every viewer without {icon:risk} who joins after
-      her in an unbroken row earns +1, +2, +3... {icon:subs} (max +6 each). A {icon:risk}
+      her in an unbroken row earns +1, +2, +3... {icon:cash} (max +6 each). A {icon:risk}
       arrival breaks the chain.'
     m_Metadata:
       m_Items: []
@@ -205,8 +205,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578054
-    m_Localized: 'Action: invest 2 {icon:subs} or 1 {icon:cash}. If the stream succeeds
-      you get triple back; if it fails, it''s gone.'
+    m_Localized: 'Action: invest 2 {icon:cash} or 1 {icon:influence}. If the stream
+      succeeds you get triple back; if it fails, it''s gone.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578055
@@ -219,7 +219,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578057
     m_Localized: 'Don''t Bonk Me: with a Doge in chat, cancels 1 {icon:risk} and
-      both Doge and Cheems get +2 {icon:subs}. Without one, -1 {icon:subs} per {icon:risk}.'
+      both Doge and Cheems get +2 {icon:cash}. Without one, -1 {icon:cash} per {icon:risk}.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578058
@@ -227,7 +227,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578059
-    m_Localized: 'Action: compare printed {icon:subs} with another viewer. If theirs
+    m_Localized: 'Action: compare printed {icon:cash} with another viewer. If theirs
       is lower, they permanently give Chad 1. If higher, Chad permanently loses 1.'
     m_Metadata:
       m_Items: []
@@ -240,7 +240,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578062
-    m_Localized: 'Doomscroll: +2 {icon:subs} per {icon:risk} in chat.'
+    m_Localized: 'Doomscroll: +2 {icon:cash} per {icon:risk} in chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578063
@@ -248,7 +248,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578064
-    m_Localized: 'Current Thing: on joining, copies the printed {icon:subs} and {icon:cash}
+    m_Localized: 'Current Thing: on joining, copies the printed {icon:cash} and {icon:influence}
       of the viewer who joined just before him. Not their action, {icon:risk} or
       Trophy.'
     m_Metadata:
@@ -258,8 +258,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578066
-    m_Localized: 'Table for One: +10 {icon:subs} if he''s the only viewer when the
-      stream ends. Otherwise +1 {icon:subs} per empty space.'
+    m_Localized: 'Table for One: +10 {icon:cash} if he''s the only viewer when the
+      stream ends. Otherwise +1 {icon:cash} per empty space.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578067
@@ -267,8 +267,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578068
-    m_Localized: 'I Like That: gains +2 {icon:subs} whenever another viewer adds
-      {icon:risk}, and +1 {icon:cash} for each {icon:risk} removed.'
+    m_Localized: 'I Like That: gains +2 {icon:cash} whenever another viewer adds
+      {icon:risk}, and +1 {icon:influence} for each {icon:risk} removed.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578069
@@ -276,8 +276,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578070
-    m_Localized: 'Action: kick another viewer. Gains +2 {icon:subs} if they had {icon:risk},
-      otherwise +1 {icon:cash}. Their exit effects still happen.'
+    m_Localized: 'Action: kick another viewer. Gains +2 {icon:cash} if they had {icon:risk},
+      otherwise +1 {icon:influence}. Their exit effects still happen.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578071
@@ -290,7 +290,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578073
     m_Localized: 'The Beat Goes On: every third viewer to join after Bongo Cat gives
-      Bongo Cat and every viewer sharing one of its communities +2 {icon:subs} for
+      Bongo Cat and every viewer sharing one of its communities +2 {icon:cash} for
       the night.'
     m_Metadata:
       m_Items: []
@@ -299,8 +299,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578075
-    m_Localized: 'Pop Pop Pop: gains +1 {icon:subs} whenever any viewer uses an action.
-      Every third action also earns +1 {icon:cash}.'
+    m_Localized: 'Pop Pop Pop: gains +1 {icon:cash} whenever any viewer uses an action.
+      Every third action also earns +1 {icon:influence}.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578076
@@ -308,7 +308,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578077
-    m_Localized: 'Absolute Chungus: takes up 3 spaces. +1 {icon:subs} for each point
+    m_Localized: 'Absolute Chungus: takes up 3 spaces. +1 {icon:cash} for each point
       of Sub Cap above 10 (max +5).'
     m_Metadata:
       m_Items: []
@@ -318,7 +318,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578079
     m_Localized: 'Follow Me: on joining, adds a temporary copy of himself to tonight''s
-      queue (copies don''t make more copies). +1 {icon:subs} per other Knuckles in
+      queue (copies don''t make more copies). +1 {icon:cash} per other Knuckles in
       chat.'
     m_Metadata:
       m_Items: []
@@ -328,7 +328,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578081
     m_Localized: 'Forever Yours: on joining, attaches to the best other viewer. Their
-      {icon:subs} are doubled and they can''t be kicked while she''s here. If they''re
+      {icon:cash} are doubled and they can''t be kicked while she''s here. If they''re
       forced out, she leaves too.'
     m_Metadata:
       m_Items: []
@@ -337,8 +337,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578083
-    m_Localized: 'Action: another viewer gets +1 {icon:risk} and +3 {icon:subs},
-      and she gets +2 {icon:subs}. Can''t be used if it would get the stream deplatformed.'
+    m_Localized: 'Action: another viewer gets +1 {icon:risk} and +3 {icon:cash},
+      and she gets +2 {icon:cash}. Can''t be used if it would get the stream deplatformed.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578084
@@ -351,7 +351,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578086
     m_Localized: 'Smile Through It: viewers in chat can''t drop below their printed
-      {icon:subs}. Gains +1 {icon:subs} for each drop he prevents (max +5).'
+      {icon:cash}. Gains +1 {icon:cash} for each drop he prevents (max +5).'
     m_Metadata:
       m_Items: []
   - m_Id: 504578087
@@ -374,7 +374,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578091
     m_Localized: 'What Could Go Wrong?: once per stream, the first attempt to kick
-      him or clear his {icon:risk} fails, and he permanently gains +1 {icon:subs}.'
+      him or clear his {icon:risk} fails, and he permanently gains +1 {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578092
@@ -382,9 +382,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578093
-    m_Localized: 'Action: strike another viewer. 1st strike: +2 {icon:subs}. 2nd:
+    m_Localized: 'Action: strike another viewer. 1st strike: +2 {icon:cash}. 2nd:
       clears their {icon:risk}. 3rd: kicks them and Tung Tung permanently gains +1
-      {icon:subs}. Strikes are remembered between streams.'
+      {icon:cash}. Strikes are remembered between streams.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578094
@@ -422,7 +422,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578102
-    m_Localized: 'Action: two viewers swap their printed {icon:subs} for the rest
+    m_Localized: 'Action: two viewers swap their printed {icon:cash} for the rest
       of the night.'
     m_Metadata:
       m_Items: []
@@ -435,7 +435,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578105
-    m_Localized: 'Skibidi Invasion: on joining, infects another viewer (+2 {icon:subs},
+    m_Localized: 'Skibidi Invasion: on joining, infects another viewer (+2 {icon:cash},
       +1 {icon:risk}). Every time another viewer joins, the infection spreads to
       one more. Ends after the stream.'
     m_Metadata:
@@ -445,7 +445,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578107
-    m_Localized: 'The Grindset: +1 {icon:subs} per empty space (max +8). -1 {icon:subs}
+    m_Localized: 'The Grindset: +1 {icon:cash} per empty space (max +8). -1 {icon:cash}
       for every other Sigma Male in chat.'
     m_Metadata:
       m_Items: []
@@ -455,7 +455,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578109
     m_Localized: 'Action: kick another viewer for the night and earn half their cost
-      as {icon:subs} (max 8).'
+      as {icon:cash} (max 8).'
     m_Metadata:
       m_Items: []
   - m_Id: 504578110
@@ -491,7 +491,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578117
     m_Localized: 'Action: pick two viewers. The first earns nothing tonight; the
-      second doubles their printed {icon:subs} or {icon:cash}.'
+      second doubles their printed {icon:cash} or {icon:influence}.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578118
@@ -503,9 +503,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578120
-    m_Localized: 'Action: for tonight, convert a viewer''s {icon:subs} into {icon:cash}
-      (2 {icon:subs} = 1 {icon:cash}) or their {icon:cash} into {icon:subs} (1 {icon:cash}
-      = 2 {icon:subs}).'
+    m_Localized: 'Action: for tonight, convert a viewer''s {icon:cash} into {icon:influence}
+      (2 {icon:cash} = 1 {icon:influence}) or their {icon:influence} into {icon:cash}
+      (1 {icon:influence} = 2 {icon:cash}).'
     m_Metadata:
       m_Items: []
   - m_Id: 504578121
@@ -553,7 +553,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578131
     m_Localized: 'Looping Animation: whenever two actions in a row are the same type,
-      gains +3 {icon:subs} (max +9 per stream).'
+      gains +3 {icon:cash} (max +9 per stream).'
     m_Metadata:
       m_Items: []
   - m_Id: 504578132
@@ -650,11 +650,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578155
-    m_Localized: Invest 2 {icon:subs}
+    m_Localized: Invest 2 {icon:cash}
     m_Metadata:
       m_Items: []
   - m_Id: 504578156
-    m_Localized: Invest 1 {icon:cash}
+    m_Localized: Invest 1 {icon:influence}
     m_Metadata:
       m_Items: []
   - m_Id: 504578157
@@ -666,19 +666,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578159
-    m_Localized: Double {icon:subs}
-    m_Metadata:
-      m_Items: []
-  - m_Id: 504578160
     m_Localized: Double {icon:cash}
     m_Metadata:
       m_Items: []
+  - m_Id: 504578160
+    m_Localized: Double {icon:influence}
+    m_Metadata:
+      m_Items: []
   - m_Id: 504578161
-    m_Localized: '{icon:subs} to {icon:cash}'
+    m_Localized: '{icon:cash} to {icon:influence}'
     m_Metadata:
       m_Items: []
   - m_Id: 508772352
-    m_Localized: '{icon:cash} to {icon:subs}'
+    m_Localized: '{icon:influence} to {icon:cash}'
     m_Metadata:
       m_Items: []
   - m_Id: 416591515959296
@@ -774,7 +774,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262485
-    m_Localized: '{icon:plays} Market Collapse: costs 1 {icon:cash} and 2 {icon:subs}
+    m_Localized: '{icon:plays} Market Collapse: costs 1 {icon:influence} and 2 {icon:cash}
       when scored.'
     m_Metadata:
       m_Items: []
@@ -849,7 +849,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262503
-    m_Localized: Lots of {icon:subs}, but trouble follows.
+    m_Localized: Lots of {icon:cash}, but trouble follows.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262504
@@ -870,7 +870,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262508
-    m_Localized: 'Pays well, but viewers skip the ad: -1 {icon:subs} when scored.'
+    m_Localized: 'Pays well, but viewers skip the ad: -1 {icon:cash} when scored.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262509
@@ -887,8 +887,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262512
-    m_Localized: 'Action: a viewer in chat permanently earns +1 {icon:cash} more
-      (up to 9 {icon:cash}). Costs 1 {icon:cash} when scored.'
+    m_Localized: 'Action: a viewer in chat permanently earns +1 {icon:influence}
+      more (up to 9 {icon:influence}). Costs 1 {icon:influence} when scored.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262513
@@ -931,7 +931,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262522
-    m_Localized: '#NotHimToo?: big money, big {icon:risk}.'
+    m_Localized: '#NotHimToo?: big {icon:influence}, big {icon:risk}.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262523
@@ -965,7 +965,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262530
-    m_Localized: Brings {icon:subs} and money, and a little {icon:risk}.
+    m_Localized: Brings {icon:cash} and {icon:influence}, and a little {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262531
@@ -974,8 +974,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591587262532
     m_Localized: 'Action (once per stream for all of them): every viewer in chat
-      drops to 0 {icon:subs} tonight, and you bank 1 {icon:cash} right now for each
-      Billionaire Benefactor in chat.'
+      drops to 0 {icon:cash} tonight, and you bank 1 {icon:influence} right now for
+      each Billionaire Benefactor in chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262533
@@ -1009,7 +1009,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456769
-    m_Localized: 'You Shall Not Watch!: +1 {icon:subs} for every empty space in chat
+    m_Localized: 'You Shall Not Watch!: +1 {icon:cash} for every empty space in chat
       when scored.'
     m_Metadata:
       m_Items: []
@@ -1018,7 +1018,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456771
-    m_Localized: 'Algorithmic Rabbit Hole: +1 {icon:subs} for every Loyal Fan in
+    m_Localized: 'Algorithmic Rabbit Hole: +1 {icon:cash} for every Loyal Fan in
       chat.'
     m_Metadata:
       m_Items: []
@@ -1037,7 +1037,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591591456775
     m_Localized: 'Checkout Code: when the stream is scored, a random viewer in chat
-      earns +1 {icon:cash} more for good (up to 9 {icon:cash}).'
+      earns +1 {icon:influence} more for good (up to 9 {icon:influence}).'
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456776
@@ -1049,8 +1049,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456778
-    m_Localized: 'Chaos Ladder: +2 {icon:cash} for every viewer in chat who still
-      has {icon:risk} (cancelled {icon:risk} still counts).'
+    m_Localized: 'Chaos Ladder: +2 {icon:influence} for every viewer in chat who
+      still has {icon:risk} (cancelled {icon:risk} still counts).'
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456779
@@ -1058,7 +1058,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456780
-    m_Localized: 'No Bad Press: +2 {icon:subs} for every viewer in chat who still
+    m_Localized: 'No Bad Press: +2 {icon:cash} for every viewer in chat who still
       has {icon:risk} (cancelled {icon:risk} still counts).'
     m_Metadata:
       m_Items: []
@@ -1067,8 +1067,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456782
-    m_Localized: 'Secure The Bag: permanently gains +1 {icon:cash} every time they
-      join chat (up to 9 {icon:cash}), even if the stream ends badly.'
+    m_Localized: 'Secure The Bag: permanently gains +1 {icon:influence} every time
+      they join chat (up to 9 {icon:influence}), even if the stream ends badly.'
     m_Metadata:
       m_Items: []
   - m_Id: 736681897705472
@@ -1076,7 +1076,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008640
-    m_Localized: 'Such Synergy: +1 {icon:subs} for each different community in chat
+    m_Localized: 'Such Synergy: +1 {icon:cash} for each different community in chat
       (max +5). Other Degen Dogs don''t count.'
     m_Metadata:
       m_Items: []
@@ -1085,8 +1085,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008642
-    m_Localized: 'Everyone Leaves Me: gains +1 {icon:subs} or +1 {icon:cash} (at
-      random) whenever another viewer leaves or is kicked.'
+    m_Localized: 'Everyone Leaves Me: gains +1 {icon:cash} or +1 {icon:influence}
+      (at random) whenever another viewer leaves or is kicked.'
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008643
@@ -1107,7 +1107,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008647
-    m_Localized: +3 {icon:cash} if chat is full when scored.
+    m_Localized: +3 {icon:influence} if chat is full when scored.
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008648
@@ -1115,8 +1115,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008649
-    m_Localized: 'To the Moon: all Crypto Enthusiasts in chat score {icon:cash} together,
-      0 / 1 / 4 / 9 / 16 in total for 1 / 2 / 3 / 4 / 5 of them.'
+    m_Localized: 'To the Moon: all Crypto Enthusiasts in chat score {icon:influence}
+      together, 0 / 1 / 4 / 9 / 16 in total for 1 / 2 / 3 / 4 / 5 of them.'
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008650
@@ -1141,7 +1141,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2838162012987393
-    m_Localized: 'Dance Break: all Dancing Jens in chat score {icon:subs} together,
+    m_Localized: 'Dance Break: all Dancing Jens in chat score {icon:cash} together,
       1 / 4 / 9 / 16 / 25 in total for 1 / 2 / 3 / 4 / 5 of them.'
     m_Metadata:
       m_Items: []

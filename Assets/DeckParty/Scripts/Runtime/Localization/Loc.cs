@@ -184,7 +184,7 @@ namespace DeckParty
         const string IconToken = "{icon:";
 
         /// <summary>
-        /// Resources and communities are written as icons, never named: "{icon:subs}", "{icon:cash}", "{icon:risk}" or
+        /// Resources and communities are written as icons, never named: "{icon:cash}", "{icon:influence}", "{icon:risk}" or
         /// "{icon:CoreFanbase}" become inline sprites (see <see cref="GameIcons"/>). Unknown names are left as they are.
         /// </summary>
         static string ExpandIcons(string value)

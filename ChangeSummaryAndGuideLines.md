@@ -15,12 +15,12 @@
 | **Timer runs out** | **Stream timer:** the stream ends and is scored. If the stream was deplatformed, a **random** viewer gets the Temporary Ban, because someone must always be banned. In Take Turns the shop timer then starts. **Shop timer:** Take Turns passes the turn; Free For All marks everyone ready for the next stream. In Free For All the stream timer also marks everyone ready for the shop. |
 | **Free For All: end of stream** | No pop-up. The panel over the shop says **Waiting for other streamers** and who is still streaming. When the last stream ends, every player's stream summary (a column each) appears on that panel, and only then does **Ready for the Shop** appear. |
 | **Shop layout** | One shop panel. The row under the title holds the streamer (portrait and active), **Raise Sub Cap**, **Remove a Viewer**, the **Audience**, the waiting text and **Go Live / Ready**. The viewer grid is underneath. |
-| **Remove a Viewer** | A new shop button: pick one of your viewer cards and confirm, and it leaves your Audience for good. The first removal costs 2 Cash, then 1 more each time (up to 12). Your Audience can't go below 5 cards. The removed copy goes back to the shared shop stock. |
-| **Shop summary (multiplayer)** | No pop-up. A panel at the bottom of the left column shows each player's shop: recruits, removals, Sub Cap, actives, Clout and Cash. It fades after 10 seconds; hovering it keeps it up. |
+| **Remove a Viewer** | A new shop button: pick one of your viewer cards and confirm, and it leaves your Audience for good. The first removal costs 2 Influence, then 1 more each time (up to 12). Your Audience can't go below 5 cards. The removed copy goes back to the shared shop stock. |
+| **Shop summary (multiplayer)** | No pop-up. A panel at the bottom of the left column shows each player's shop: recruits, removals, Sub Cap, actives, Cash and Influence. It fades after 10 seconds; hovering it keeps it up. |
 | **Emotes** | At most 4 emotes per player in any 12 seconds, at least 1.5 s apart. The host and the sender both check. The buttons dim while you have to wait, and a "slow down" toast tells you for how long. Each other player's row has a **mute** button that hides their emotes on your screen only; it turns red while muted. |
-| **Scoring** | Each resource flies to its own menu-bar icon: Clout to Clout, Cash to Cash, and a Trophy viewer's +1 to the Trophy pips. Community rewards fly the same way. |
+| **Scoring** | Each resource flies to its own menu-bar icon: Cash to Cash, Influence to Influence, and a Trophy viewer's +1 to the Trophy pips. Community rewards fly the same way. |
 | **Plays → Trophies** | Renamed everywhere in all 5 languages (zh 奖杯, ru трофей, es Trofeo, pt Troféu). The icon is still the UI Skin's **IconStar** slot, now labelled "Trophies" in the Game Database. |
-| **Players panel** | It grows with the number of players instead of scrolling. Each row shows only Clout, Cash and the Trophy icon with the number of Trophy viewers owned (no stream number, status or record). The game over table keeps the full details. |
+| **Players panel** | It grows with the number of players instead of scrolling. Each row shows only Cash, Influence and the Trophy icon with the number of Trophy viewers owned (no stream number, status or record). The game over table keeps the full details. |
 | **Audience overview** | A **Communities** column on the right. For each community in your Audience it shows how many different viewers you own from it, the best score they could reach together in one chat, and the bonus at that score. Hover an icon for the rule. |
 | **Viewer actions** | Click anywhere on a viewer in chat to use their action, not just the small button on the ring. |
 | **Community scores** | A community needs **two different viewers** in chat to score: two score 1 point, three score 2, and so on. One viewer alone does nothing, so the Community Beats show 0 and nothing triggers. |
@@ -78,9 +78,9 @@ These come from your edited `ViewerList.csv` and `Communities.csv`.
 
 | Card | Now |
 |---|---|
-| **Account Manager** | 3 Clout, −1 Cash. New action **Upsell**: one viewer in chat permanently earns +1 Cash (up to 9), like the Affiliate's Checkout Code. |
-| **Crypto Enthusiast** | Costs 6. No Clout, no action (Rug Pull is gone). Millennials. All Crypto Enthusiasts in chat score Cash together: **0 / 1 / 4 / 9 / 16** in total for 1 / 2 / 3 / 4 / 5 of them. |
-| **Dancing Jen** (new) | The original game's Dancer. Costs 7. Millennials. All Dancing Jens in chat score Clout together: **1 / 4 / 9 / 16 / 25** in total for 1 / 2 / 3 / 4 / 5 of them. |
+| **Account Manager** | 3 Cash, −1 Influence. New action **Upsell**: one viewer in chat permanently earns +1 Influence (up to 9), like the Affiliate's Checkout Code. |
+| **Crypto Enthusiast** | Costs 6. No Cash, no action (Rug Pull is gone). Millennials. All Crypto Enthusiasts in chat score Influence together: **0 / 1 / 4 / 9 / 16** in total for 1 / 2 / 3 / 4 / 5 of them. |
+| **Dancing Jen** (new) | The original game's Dancer. Costs 7. Millennials. All Dancing Jens in chat score Cash together: **1 / 4 / 9 / 16 / 25** in total for 1 / 2 / 3 / 4 / 5 of them. |
 
 ### Communities
 
@@ -101,7 +101,7 @@ The tooltips and the rules page show the new numbers in all 5 languages.
 
 ### Where things are
 
-- The group tables: `GameRules.DancingJenClout` and `GameRules.CryptoEnthusiastCash`. Group scoring is in `PartyEngine.ApplyPassive` and `GroupShare`.
+- The group tables: `GameRules.DancingJenCash` and `GameRules.CryptoEnthusiastInfluence`. Group scoring is in `PartyEngine.ApplyPassive` and `GroupShare`.
 - Per-card copy limits: the `maxCopies` argument in `GuestCatalog` (`GuestInfo.MaxCopies` and `ShopStock`).
 - The fixed button colours: `SitePalette.Go` and `SitePalette.Stop`, used by `EditorUI.SiteButton.Go` and `SiteButton.Stop`.
 
@@ -109,8 +109,8 @@ The tooltips and the rules page show the new numbers in all 5 languages.
 
 1. **How a group's total is shown:** the total is split evenly across the copies in chat, so each of 3 Jens shows +3 (9 in all). If it doesn't split evenly, the first copy in chat takes the rest: with 2 Crypto Enthusiasts, the first scores +1 and the second 0. The total always matches your table. Community bonuses then apply to each copy's part. For example, Content gives each Jen its own chance to score its part again.
 2. **5 copies:** the usual limit is 4 copies of a card. Dancing Jen and Crypto Enthusiast allow 5 (owned and in the shared shop), so the 25 step can be reached.
-3. **Crypto's table (changed later on 2026-11-08):** 0 / 1 / 4 / 9 / 16 Cash in total for 1 to 5 in chat, so one on its own earns nothing and 5 earn 16. Scoring works the same way as before; only the numbers changed.
+3. **Crypto's table (changed later on 2026-11-08):** 0 / 1 / 4 / 9 / 16 Influence in total for 1 to 5 in chat, so one on its own earns nothing and 5 earn 16. Scoring works the same way as before; only the numbers changed.
 4. **Going Live:** Dancing Jen replaces Binge Bunny, which was standing in for the original Dancer. Brand Deal Wishlist keeps Binge Bunny (for the Cheerleader). Its description now says "Crypto hype" instead of "Rug pulls".
-5. **Account Manager vs Affiliate:** both now have the same action and −1 Cash, but the Account Manager is cheaper (5 vs 7) and earns 3 Clout. Worth a look when you next balance the Affiliate.
+5. **Account Manager vs Affiliate:** both now have the same action and −1 Influence, but the Account Manager is cheaper (5 vs 7) and earns 3 Cash. Worth a look when you next balance the Affiliate.
 6. **Marketers can't reach 3 yet:** only Producer and Marketing Manager are Marketers, so the most it can score is 1 point. Full Stream still can't score (only Promo Code User).
 7. **Account Manager's stamp:** "UPSOLD!" when Upsell is used (all 5 languages). The old "RUG PULL!" stamp is no longer used.

@@ -153,7 +153,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125599
-    m_Localized: Bank everyone's {icon:subs} and {icon:cash}.
+    m_Localized: Bank everyone's {icon:cash} and {icon:influence}.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125600
@@ -524,7 +524,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514224
-    m_Localized: '{subs}  {cash}  Trophies owned {owned}  best {best}'
+    m_Localized: '{cash}  {influence}  Trophies owned {owned}  best {best}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514225
@@ -595,8 +595,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514241
-    m_Localized: 'Earned: {icon:subs} {subs}   {icon:cash} {cash}    Audience: {viewers}
-      viewers ({diamonds} Trophies)    Sub Cap: {cap}'
+    m_Localized: 'Earned: {icon:cash} {cash}   {icon:influence} {influence}    Audience:
+      {viewers} viewers ({diamonds} Trophies)    Sub Cap: {cap}'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514242
@@ -888,12 +888,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514313
-    m_Localized: You couldn't pay {cash} {icon:cash} in fees and lost {penalty} {icon:subs}.
+    m_Localized: You couldn't pay {influence} {icon:influence} in fees and lost {penalty}
+      {icon:cash}.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514314
-    m_Localized: '{player} couldn''t pay {cash} {icon:cash} in fees and lost {penalty}
-      {icon:subs}.'
+    m_Localized: '{player} couldn''t pay {influence} {icon:influence} in fees and
+      lost {penalty} {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514315
@@ -913,7 +914,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514319
-    m_Localized: Banked {subs} and {cash}
+    m_Localized: Banked {cash} and {influence}
     m_Metadata:
       m_Items: []
   - m_Id: 1582514320
@@ -971,14 +972,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514333
-    m_Localized: <b>Happy:</b> +3 {icon:subs}.   <b>Sad:</b> +3 {icon:cash}.   <b>Angry:</b>
-      +6 {icon:subs} and +1 {icon:risk}.\nLasts until the stream ends.
+    m_Localized: <b>Happy:</b> +3 {icon:cash}.   <b>Sad:</b> +3 {icon:influence}.  
+      <b>Angry:</b> +6 {icon:cash} and +1 {icon:risk}.\nLasts until the stream ends.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514334
-    m_Localized: Stake {subs} {icon:subs} or {cash} {icon:cash} from your bank. If
-      the stream succeeds you get {mult}x back; if it gets deplatformed or the server
-      goes down, it's gone.\nYou have {have_subs} {icon:subs} and {have_cash} {icon:cash}.
+    m_Localized: Stake {cash} {icon:cash} or {influence} {icon:influence} from your
+      bank. If the stream succeeds you get {mult}x back; if it gets deplatformed
+      or the server goes down, it's gone.\nYou have {have_cash} {icon:cash} and {have_influence}
+      {icon:influence}.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514335
@@ -997,14 +999,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514338
     m_Localized: 'You''ll pick two viewers: the first earns nothing tonight, the
-      second doubles their printed {icon:subs} or {icon:cash}.\nWhat should the second
-      viewer double?'
+      second doubles their printed {icon:cash} or {icon:influence}.\nWhat should
+      the second viewer double?'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514339
-    m_Localized: You'll pick one viewer for tonight.\n<b>{icon:subs} to {icon:cash}:</b>
-      every 2 {icon:subs} become 1 {icon:cash}.   <b>{icon:cash} to {icon:subs}:</b>
-      every 1 {icon:cash} becomes 2 {icon:subs}.
+    m_Localized: You'll pick one viewer for tonight.\n<b>{icon:cash} to {icon:influence}:</b>
+      every 2 {icon:cash} become 1 {icon:influence}.   <b>{icon:influence} to {icon:cash}:</b>
+      every 1 {icon:influence} becomes 2 {icon:cash}.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514340
@@ -1055,15 +1057,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514351
-    m_Localized: '{actor}: choose a viewer to kick. You get half their cost as {icon:subs}.'
+    m_Localized: '{actor}: choose a viewer to kick. You get half their cost as {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514352
-    m_Localized: '{actor}: choose a viewer to compare printed {icon:subs} with.'
+    m_Localized: '{actor}: choose a viewer to compare printed {icon:cash} with.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514353
-    m_Localized: '{actor}: choose a viewer to get +1 {icon:risk} and +3 {icon:subs}.'
+    m_Localized: '{actor}: choose a viewer to get +1 {icon:risk} and +3 {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514354
@@ -1095,7 +1097,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514361
-    m_Localized: '{actor}: choose who {first} swaps printed {icon:subs} with.'
+    m_Localized: '{actor}: choose who {first} swaps printed {icon:cash} with.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514362
@@ -1549,8 +1551,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087877
-    m_Localized: '{actor}: choose a viewer to earn +1 {icon:cash} for good (up to
-      {cap} {icon:cash}).'
+    m_Localized: '{actor}: choose a viewer to earn +1 {icon:influence} for good (up
+      to {cap} {icon:influence}).'
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087878
@@ -1847,7 +1849,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960068
-    m_Localized: '{viewer} inherits {cash} for good.'
+    m_Localized: '{viewer} inherits {influence} for good.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960069
@@ -1855,7 +1857,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960070
-    m_Localized: '{viewer} inherited +1 {icon:cash}'
+    m_Localized: '{viewer} inherited +1 {icon:influence}'
     m_Metadata:
       m_Items: []
   - m_Id: 2431125118607360
@@ -1863,7 +1865,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408000
-    m_Localized: '{subs}  {cash}  {icon:plays} {owned}'
+    m_Localized: '{cash}  {influence}  {icon:plays} {owned}'
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408001
@@ -1916,7 +1918,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2431125265408013
     m_Localized: Take one viewer card out of your Audience for good. Each removal
-      costs 1 {icon:cash} more than the last. Your Audience keeps at least {min}
+      costs 1 {icon:influence} more than the last. Your Audience keeps at least {min}
       viewers.
     m_Metadata:
       m_Items: []
@@ -2178,6 +2180,24 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3987740103892994
     m_Localized: Go Live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685007093760
+    m_Localized: <b>Cash</b>\nViewers bring it in during a stream. Spend it in the
+      shop to recruit new viewers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685065814016
+    m_Localized: <b>Influence</b>\nRaises your Sub Cap and pays for your streamer's
+      active power.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685065814017
+    m_Localized: '{icon:influence} x2'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685065814018
+    m_Localized: '{actor}: choose who doubles their printed {icon:influence}.'
     m_Metadata:
       m_Items: []
   references:

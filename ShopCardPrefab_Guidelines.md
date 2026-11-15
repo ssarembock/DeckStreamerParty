@@ -48,7 +48,7 @@ all five languages.
 
 ## 3. Prices above the buttons
 
-The Streamer active, Raise Sub Cap and Remove a Viewer show their Cash price just above the button. The price turns red when you can't
+The Streamer active, Raise Sub Cap and Remove a Viewer show their Influence price just above the button. The price turns red when you can't
 afford it.
 
 | Setting | What it does |
@@ -56,7 +56,7 @@ afford it.
 | **Font size** | The price's size (built-in 26). |
 | **Gap above the button** | Pixels between the price and its button (built-in 6). |
 | **Colour** | The price's colour (built-in: the shop's text colour). |
-| **Colour when too expensive** | The colour when you're short of Cash (built-in red). |
+| **Colour when too expensive** | The colour when you're short of Influence (built-in red). |
 
 The price texts are also listed in **UI Skin > Text Colours** (Shop > ... > Cost). A colour set there wins over these
 settings, including the red.
@@ -104,13 +104,13 @@ You can also duplicate `Assets/DeckParty/Prefabs/UI/ShopItem.prefab` (the built-
 
 ### Cards made from the older template
 
-Templates made before 12 November have **Stats** as one text, with icons for Clout, Cash and Risk. New templates split
-it into two numbers with no icons: a **Clout** text and a **Cash** text inside a **Stats** group. Risk is left out,
+Templates made before 12 November have **Stats** as one text, with icons for Cash, Influence and Risk. New templates split
+it into two numbers with no icons: a **Cash** text and a **Influence** text inside a **Stats** group. Risk is left out,
 because the Risk Badge already shows it.
 
 To change an older card, either:
-- select the prefab in the Project window and choose **Deck Party > Shop > Split Stats into Clout and Cash**; or
-- press **Split Stats into Clout and Cash** under the **Card prefab** field in UI Skin > Shop. The button only shows
+- select the prefab in the Project window and choose **Deck Party > Shop > Split Stats into Cash and Influence**; or
+- press **Split Stats into Cash and Influence** under the **Card prefab** field in UI Skin > Shop. The button only shows
   when the card has the old Stats text.
 
 Stats keeps its place and size and becomes the group. The two new texts copy your old Stats text's font, size, colour
@@ -150,10 +150,10 @@ aren't parts (decorations, extra labels, backgrounds) are left as you made them.
 | **Initials** | Text | The viewer's initials, shown on the placeholder. | |
 | **Name** | Text | The viewer's name. | ViewerName |
 | **Description** | Text | What the viewer does (the card description; it can be long). | |
-| **Stats** | Text | What the viewer scores on one line, with icons: Clout, Cash and Risk. The template doesn't use it (see Clout and Cash below). | |
-| **Clout** / **Cash** | Text | Just the number the viewer scores, no icon (+2, +1, 0). Group cards show their steps instead (Dancing Jen's Clout 1/4/9/16/25, Crypto Enthusiast's Cash 0/1/4/9/16), so let these texts shrink to fit (Auto Size). In the template they sit in a group named **Stats**: Clout on the left, Cash on the right. The group itself is just a holder. | |
+| **Stats** | Text | What the viewer scores on one line, with icons: Cash, Influence and Risk. The template doesn't use it (see Cash and Influence below). | |
+| **Cash** / **Influence** | Text | Just the number the viewer scores, no icon (+2, +1, 0). Group cards show their steps instead (Dancing Jen's Cash 1/4/9/16/25, Crypto Enthusiast's Influence 0/1/4/9/16), so let these texts shrink to fit (Auto Size). In the template they sit in a group named **Stats**: Cash on the left, Influence on the right. The group itself is just a holder. | |
 | **Action** | Text | The name of the viewer's action; empty when it has none. | |
-| **Price** | Text | The Clout icon and the price. The game colours it: your text colour if you can afford it, red if you can't. **Recommended.** | Cost |
+| **Price** | Text | The Cash icon and the price. The game colours it: your text colour if you can afford it, red if you can't. **Recommended.** | Cost |
 | **Copies Left** | Text | How many are left to buy ("×3"); empty for Trophy viewers, which never run out. Turns orange on the last copy and red when sold out. | Left, Copies |
 | **Communities** | An empty object | Its child Images become the community icons, in order (three is plenty). Unused ones hide. Hovering one explains the community. | |
 | **Trophy Badge** | Any object | Shown only on Trophy viewers. | Trophy |

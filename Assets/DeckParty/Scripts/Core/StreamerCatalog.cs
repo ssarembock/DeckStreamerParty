@@ -35,25 +35,25 @@ namespace DeckParty.Core
 
     /// <summary>
     /// Rule data for one streamer. Names and descriptions are localized on the Unity side (keys "streamer.&lt;Type&gt;.*").
-    /// Actives are paid in Cash, and like raising the Sub Cap each use costs more (up to <see cref="StreamerCatalog.MaxPowerCost"/>).
+    /// Actives are paid in Influence, and like raising the Sub Cap each use costs more (up to <see cref="StreamerCatalog.MaxPowerCost"/>).
     /// </summary>
     public sealed class StreamerInfo
     {
         public readonly StreamerType Type;
         public readonly PowerKind Kind;
-        /// <summary>Cash the first use costs.</summary>
-        public readonly int CashCost;
+        /// <summary>Influence the first use costs.</summary>
+        public readonly int InfluenceCost;
         /// <summary>Added to the cost after every use.</summary>
-        public readonly int CashStep;
+        public readonly int InfluenceStep;
         /// <summary>Turns the power is unavailable after a use (0 = once per turn).</summary>
         public readonly int Cooldown;
 
-        public StreamerInfo(StreamerType type, PowerKind kind, int cash = 0, int cashStep = 0, int cooldown = 0)
+        public StreamerInfo(StreamerType type, PowerKind kind, int influence = 0, int influenceStep = 0, int cooldown = 0)
         {
             Type = type;
             Kind = kind;
-            CashCost = cash;
-            CashStep = cashStep;
+            InfluenceCost = influence;
+            InfluenceStep = influenceStep;
             Cooldown = cooldown;
         }
 
@@ -79,27 +79,27 @@ namespace DeckParty.Core
         public const int WealthTaxAmount = 2;
         public const int PalSphereMaxCost = 6;
         public const int XRayCount = 3;
-        /// <summary>Beautiful Sequence (Manim Maketh Man): Clout per great stream in a row, up to this much.</summary>
+        /// <summary>Beautiful Sequence (Manim Maketh Man): Cash per great stream in a row, up to this much.</summary>
         public const int StreakMaxBonus = 5;
         /// <summary>Three-Hour Episode (Bro Jogan): extra Sub Cap for the next stream only.</summary>
         public const int EpisodeSeats = 1;
-        /// <summary>Bark at Chat (IRunFast): extra Clout for each viewer carrying Risk in the next stream.</summary>
+        /// <summary>Bark at Chat (IRunFast): extra Cash for each viewer carrying Risk in the next stream.</summary>
         public const int BarkBonus = 2;
 
         static readonly StreamerInfo[] s_All =
         {
             new StreamerInfo(StreamerType.None, PowerKind.None),
-            new StreamerInfo(StreamerType.Fate, PowerKind.Rival, cash: 1, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.BroJogan, PowerKind.NextStream, cash: 2, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.Shinobi, PowerKind.NextStream, cash: 2, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.IRunFast, PowerKind.NextStream, cash: 2, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.MrShark, PowerKind.NextStream, cash: 3, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.EthicalFboi, PowerKind.Rival, cash: 1, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.SoftHardBodyMan, PowerKind.NextStream, cash: 1, cashStep: 1),
-            new StreamerInfo(StreamerType.StrategicAbomination, PowerKind.NextStream, cash: 2, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.Palmane, PowerKind.Instant, cash: 2, cashStep: 1, cooldown: 3),
-            new StreamerInfo(StreamerType.ManimMakethMan, PowerKind.Instant, cash: 1, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.RudeRadiologist, PowerKind.NextStream, cash: 1, cashStep: 1),
+            new StreamerInfo(StreamerType.Fate, PowerKind.Rival, influence: 1, influenceStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.BroJogan, PowerKind.NextStream, influence: 2, influenceStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.Shinobi, PowerKind.NextStream, influence: 2, influenceStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.IRunFast, PowerKind.NextStream, influence: 2, influenceStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.MrShark, PowerKind.NextStream, influence: 3, influenceStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.EthicalFboi, PowerKind.Rival, influence: 1, influenceStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.SoftHardBodyMan, PowerKind.NextStream, influence: 1, influenceStep: 1),
+            new StreamerInfo(StreamerType.StrategicAbomination, PowerKind.NextStream, influence: 2, influenceStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.Palmane, PowerKind.Instant, influence: 2, influenceStep: 1, cooldown: 3),
+            new StreamerInfo(StreamerType.ManimMakethMan, PowerKind.Instant, influence: 1, influenceStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.RudeRadiologist, PowerKind.NextStream, influence: 1, influenceStep: 1),
         };
 
         /// <summary>Real streamers in select-screen order (None and Random are extra tiles).</summary>
@@ -124,12 +124,12 @@ namespace DeckParty.Core
             return IsValid(type) ? type : StreamerType.None;
         }
 
-        /// <summary>The Cash the next use costs: it grows with every use, like raising the Sub Cap, up to <see cref="MaxPowerCost"/>.</summary>
+        /// <summary>The Influence the next use costs: it grows with every use, like raising the Sub Cap, up to <see cref="MaxPowerCost"/>.</summary>
         public static int Cost(PlayerState s)
         {
             var info = Get(s.Streamer);
             if (!info.IsActive) return 0;
-            return Math.Min(MaxPowerCost, info.CashCost + info.CashStep * Math.Max(0, s.PowerUses));
+            return Math.Min(MaxPowerCost, info.InfluenceCost + info.InfluenceStep * Math.Max(0, s.PowerUses));
         }
     }
 }

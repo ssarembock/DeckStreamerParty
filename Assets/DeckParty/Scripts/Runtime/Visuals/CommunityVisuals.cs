@@ -23,8 +23,8 @@ namespace DeckParty
             switch (community)
             {
                 case Community.CoreFanbase: per = Communities.CoreFanbasePercentPerPoint; break;
-                case Community.Staff: per = Communities.StaffCashPerPoint; break;
-                case Community.Trolls: per = Communities.TrollArmyCloutPerRisk; break;
+                case Community.Staff: per = Communities.StaffInfluencePerPoint; break;
+                case Community.Trolls: per = Communities.TrollArmyCashPerRisk; break;
                 case Community.Content: per = Communities.ContentPercentPerPoint; break;
                 case Community.HypeMen: per = Communities.HypeMenPercentPerPoint; break;
                 case Community.Mods: per = Communities.ModsPercentPerPoint; break;
@@ -48,8 +48,8 @@ namespace DeckParty
                 ("t1", Communities.TechspertiseChance(1)),
                 ("t2", Communities.TechspertiseChance(2)),
                 ("t3", Communities.TechspertiseChance(3)),
-                ("subs", community == Community.Zoomer ? Communities.ZoomerSubs : Communities.CloutSubs),
-                ("cash", Communities.ZoomerCashCost));
+                ("cash", community == Community.Zoomer ? Communities.ZoomerCash : Communities.CloutCash),
+                ("influence", Communities.ZoomerInfluenceCost));
         }
 
         public static Color Color(Community community) => GameIcons.CommunityColor(community);
@@ -72,9 +72,9 @@ namespace DeckParty
                     // Extra action uses: how many are left right now.
                     if (community == Community.Gatekeepers || community == Community.Marketers || community == Community.Voyeurs)
                         value = PartyEngine.ExtraUsesLeft(state, community);
-                    // Troll Army: the Clout this stream's Risk would bring right now.
+                    // Troll Army: the Cash this stream's Risk would bring right now.
                     else if (community == Community.Trolls)
-                        value = PartyEngine.TrollArmyClout(state);
+                        value = PartyEngine.TrollArmyCash(state);
                     sb.Append("\n").Append(GuestVisuals.Colored(Loc.Get($"community.{community}.now", ("value", value)), UIPalette.Gold));
                 }
             }
@@ -88,22 +88,22 @@ namespace DeckParty
             return max > 0 ? Loc.Get("community.points_max", "count", points, "max", max) : Loc.Get("community.points", "count", points);
         }
 
-        /// <summary>The compact effect under a Community Beats chip: "30%", "+2", "-1 [cash]"...</summary>
+        /// <summary>The compact effect under a Community Beats chip: "30%", "+2", "-1 [influence]"...</summary>
         public static string ChipEffect(Community community, int points)
         {
             int effect = Communities.Effect(community, points);
             if (Communities.IsChance(community)) return effect + "%";
-            string subs = GameIcons.Tag(ResourceIcon.Subs);
             string cash = GameIcons.Tag(ResourceIcon.Cash);
+            string influence = GameIcons.Tag(ResourceIcon.Influence);
             switch (community)
             {
                 // Per point while nobody's here, the stream's total once there are points.
-                case Community.Boomer: return $"-{Communities.BoomerDiscount(Mathf.Max(1, points))}{cash}";
-                case Community.Staff: return $"+{Communities.StaffCash(Mathf.Max(1, points))}{cash}";
-                // Clout per point of Risk.
-                case Community.Trolls: return $"+{Communities.TrollArmyCloutPerRisk}{subs}/{GameIcons.Tag(ResourceIcon.Risk)}";
-                case Community.ShopControl: return $"-{Communities.ShopControlDiscount(Mathf.Max(1, points))}{subs}";
-                case Community.Saboteurs: return $"+{Communities.SabotageAmount(Mathf.Max(1, points))}{subs}";
+                case Community.Boomer: return $"-{Communities.BoomerDiscount(Mathf.Max(1, points))}{influence}";
+                case Community.Staff: return $"+{Communities.StaffInfluence(Mathf.Max(1, points))}{influence}";
+                // Cash per point of Risk.
+                case Community.Trolls: return $"+{Communities.TrollArmyCashPerRisk}{cash}/{GameIcons.Tag(ResourceIcon.Risk)}";
+                case Community.ShopControl: return $"-{Communities.ShopControlDiscount(Mathf.Max(1, points))}{cash}";
+                case Community.Saboteurs: return $"+{Communities.SabotageAmount(Mathf.Max(1, points))}{cash}";
                 case Community.Millennial: return $"x{Communities.Inheritances(points)}";
                 case Community.FullStream: return $"-{effect}";
                 default: return "+" + effect;

@@ -179,7 +179,7 @@ namespace DeckParty.UI
                 case GameEventType.PoliceRaid:
                 case GameEventType.FireMarshal:
                 case GameEventType.ServerRestored:
-                case GameEventType.CashShortfall:
+                case GameEventType.InfluenceShortfall:
                 case GameEventType.GuestBlamed:
                 case GameEventType.InvestmentPaid:
                 case GameEventType.TrollsPaid:

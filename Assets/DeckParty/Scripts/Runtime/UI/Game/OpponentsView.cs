@@ -75,14 +75,14 @@ namespace DeckParty.UI
         }
 
         /// <summary>
-        /// The in-game Players panel's line under a name: just the player's Clout and Cash and how many Trophy viewers they own
+        /// The in-game Players panel's line under a name: just the player's Cash and Influence and how many Trophy viewers they own
         /// (the Trophy icon and a number). No stream number, status or record (watch a stream to see what they're doing).
         /// </summary>
         public static string PanelLine(NetPlayer p)
         {
             if (!p.Connected) return $"<color=#B9AED6>{Loc.Get("players.left")}</color>";
-            return Loc.Get("players.panel_line", ("subs", GuestVisuals.GiftedSubsText(p.Pop)),
-                ("cash", $"<color=#6BE38B>{GameIcons.Amount(ResourceIcon.Cash, p.Cash)}</color>"), ("owned", p.DiamondsOwned));
+            return Loc.Get("players.panel_line", ("cash", GuestVisuals.CashBankedText(p.Cash)),
+                ("influence", $"<color=#6BE38B>{GameIcons.Amount(ResourceIcon.Influence, p.Influence)}</color>"), ("owned", p.DiamondsOwned));
         }
 
         /// <summary>The longer status (game over table): stream, what the player is doing, resources and their record.</summary>
@@ -133,7 +133,7 @@ namespace DeckParty.UI
                 }
             }
             return Loc.Get("players.night", "night", p.Night) + "  -  " + phase + "\n" +
-                   Loc.Get("players.wallet", ("subs", GuestVisuals.GiftedSubsText(p.Pop)), ("cash", $"<color=#6BE38B>{GameIcons.Amount(ResourceIcon.Cash, p.Cash)}</color>"),
+                   Loc.Get("players.wallet", ("cash", GuestVisuals.CashBankedText(p.Cash)), ("influence", $"<color=#6BE38B>{GameIcons.Amount(ResourceIcon.Influence, p.Influence)}</color>"),
                        ("owned", p.DiamondsOwned), ("best", p.BestDiamonds));
         }
     }

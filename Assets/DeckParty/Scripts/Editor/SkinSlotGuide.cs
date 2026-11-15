@@ -76,10 +76,10 @@ namespace DeckParty.EditorTools
         static readonly Info[] s_All =
         {
             // --- Resources ---
-            new Info(SkinSlot.IconPop, Area.Resources, "Clout icon", Kind.Icon,
-                "The Clout counter in the menu bar, prices in the shop, and the small Clout icon inside text (card descriptions, tooltips, recaps and scores)."),
             new Info(SkinSlot.IconCash, Area.Resources, "Cash icon", Kind.Icon,
-                "The Cash counter in the menu bar, and the small Cash icon inside text (card descriptions, tooltips, recaps and scores)."),
+                "The Cash counter in the menu bar, prices in the shop, and the small Cash icon inside text (card descriptions, tooltips, recaps and scores)."),
+            new Info(SkinSlot.IconInfluence, Area.Resources, "Influence icon", Kind.Icon,
+                "The Influence counter in the menu bar, and the small Influence icon inside text (card descriptions, tooltips, recaps and scores)."),
             new Info(SkinSlot.IconTrouble, Area.Resources, "Deplatform Risk icon", Kind.Icon,
                 "The three risk pips in the title band at the top of the Stream Chat window, the risk badge on chat avatars and viewer cards, and the small Risk icon inside text."),
             new Info(SkinSlot.IconStar, Area.Resources, "Trophy icon", Kind.Icon,
@@ -100,10 +100,10 @@ namespace DeckParty.EditorTools
                 "The hourglass beside the stream and shop countdowns. It only shows in matches that use timers."),
             new Info(SkinSlot.FrameNight, Area.MenuBar, "Stream counter frame", Kind.Frame,
                 "The rounded frame around the stream counter (its icon and number), next to the platform logo at the left of the menu bar. Built-in: a thin black outline. " + FrameNote),
-            new Info(SkinSlot.FramePop, Area.MenuBar, "Clout frame", Kind.Frame,
-                "The rounded frame around the Clout counter (its icon and number) in the middle of the menu bar. " + FrameNote),
             new Info(SkinSlot.FrameCash, Area.MenuBar, "Cash frame", Kind.Frame,
                 "The rounded frame around the Cash counter (its icon and number) in the middle of the menu bar. " + FrameNote),
+            new Info(SkinSlot.FrameInfluence, Area.MenuBar, "Influence frame", Kind.Frame,
+                "The rounded frame around the Influence counter (its icon and number) in the middle of the menu bar. " + FrameNote),
             new Info(SkinSlot.FrameStars, Area.MenuBar, "Trophies frame", Kind.Frame,
                 "The rounded frame around the Trophies count (its icon and \"in chat / needed\") in the middle of the menu bar. " + FrameNote),
             new Info(SkinSlot.FrameAudience, Area.MenuBar, "Audience button frame", Kind.Frame,

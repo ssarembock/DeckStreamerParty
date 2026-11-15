@@ -151,8 +151,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125599
-    m_Localized: "\u5B58\u4E0B\u76F4\u64AD\u95F4\u6240\u6709\u4EBA\u7684 {icon:subs}
-      \u548C {icon:cash}\u3002"
+    m_Localized: "\u5B58\u4E0B\u76F4\u64AD\u95F4\u6240\u6709\u4EBA\u7684 {icon:cash}
+      \u548C {icon:influence}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1574125600
@@ -421,7 +421,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514199
-    m_Localized: "{icon:risk} \u592A\u9AD8\uFF0C\u76F4\u64AD\u88AB\u5C01\u53F7\u4E86\u3002\u4ECA\u665A\u8C01\u90FD\u62FF\u4E0D\u5230\u94B1\u3002"
+    m_Localized: "{icon:risk} \u592A\u9AD8\uFF0C\u76F4\u64AD\u88AB\u5C01\u53F7\u4E86\u3002\u4ECA\u665A\u8C01\u90FD\u62FF\u4E0D\u5230\u6536\u76CA\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514200
@@ -521,7 +521,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514224
-    m_Localized: "{subs}  {cash}  \u62E5\u6709\u5956\u676F {owned}  \u6700\u4F73
+    m_Localized: "{cash}  {influence}  \u62E5\u6709\u5956\u676F {owned}  \u6700\u4F73
       {best}"
     m_Metadata:
       m_Items: []
@@ -593,8 +593,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514241
-    m_Localized: "\u83B7\u5F97\uFF1A{icon:subs} {subs}   {icon:cash} {cash}    \u7C89\u4E1D\u56E2\uFF1A{viewers}
-      \u4F4D\u89C2\u4F17\uFF08{diamonds} \u4E2A\u5956\u676F\uFF09    \u4EBA\u6570\u4E0A\u9650\uFF1A{cap}"
+    m_Localized: "\u83B7\u5F97\uFF1A{icon:cash} {cash}   {icon:influence} {influence}   
+      \u7C89\u4E1D\u56E2\uFF1A{viewers} \u4F4D\u89C2\u4F17\uFF08{diamonds} \u4E2A\u5956\u676F\uFF09   
+      \u4EBA\u6570\u4E0A\u9650\uFF1A{cap}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514242
@@ -888,13 +889,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514313
-    m_Localized: "\u4F60\u4ED8\u4E0D\u8D77 {cash} {icon:cash} \u7684\u8D39\u7528\uFF0C\u635F\u5931\u4E86
-      {penalty} {icon:subs}\u3002"
+    m_Localized: "\u4F60\u4ED8\u4E0D\u8D77 {influence} {icon:influence} \u7684\u8D39\u7528\uFF0C\u635F\u5931\u4E86
+      {penalty} {icon:cash}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514314
-    m_Localized: "{player} \u4ED8\u4E0D\u8D77 {cash} {icon:cash} \u7684\u8D39\u7528\uFF0C\u635F\u5931\u4E86
-      {penalty} {icon:subs}\u3002"
+    m_Localized: "{player} \u4ED8\u4E0D\u8D77 {influence} {icon:influence} \u7684\u8D39\u7528\uFF0C\u635F\u5931\u4E86
+      {penalty} {icon:cash}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514315
@@ -914,7 +915,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514319
-    m_Localized: "\u5B58\u5165 {subs} \u548C {cash}"
+    m_Localized: "\u5B58\u5165 {cash} \u548C {influence}"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514320
@@ -971,14 +972,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514333
-    m_Localized: "<b>\u5F00\u5FC3\uFF1A</b>+3 {icon:subs}\u3002   <b>\u96BE\u8FC7\uFF1A</b>+3
-      {icon:cash}\u3002   <b>\u6124\u6012\uFF1A</b>+6 {icon:subs}\u548C +1 {icon:risk}\u3002\\n\u6301\u7EED\u5230\u76F4\u64AD\u7ED3\u675F\u3002"
+    m_Localized: "<b>\u5F00\u5FC3\uFF1A</b>+3 {icon:cash}\u3002   <b>\u96BE\u8FC7\uFF1A</b>+3
+      {icon:influence}\u3002   <b>\u6124\u6012\uFF1A</b>+6 {icon:cash}\u548C +1 {icon:risk}\u3002\\n\u6301\u7EED\u5230\u76F4\u64AD\u7ED3\u675F\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514334
-    m_Localized: "\u4ECE\u5B58\u6B3E\u4E2D\u6295\u5165 {subs} {icon:subs} \u6216
-      {cash} {icon:cash}\u3002\u76F4\u64AD\u6210\u529F\u8FD4\u8FD8 {mult} \u500D\uFF1B\u88AB\u5C01\u53F7\u6216\u670D\u52A1\u5668\u5D29\u6E83\u5C31\u8840\u672C\u65E0\u5F52\u3002\\n\u4F60\u6709
-      {have_subs} {icon:subs} \u548C {have_cash} {icon:cash}\u3002"
+    m_Localized: "\u4ECE\u5B58\u6B3E\u4E2D\u6295\u5165 {cash} {icon:cash} \u6216
+      {influence} {icon:influence}\u3002\u76F4\u64AD\u6210\u529F\u8FD4\u8FD8 {mult}
+      \u500D\uFF1B\u88AB\u5C01\u53F7\u6216\u670D\u52A1\u5668\u5D29\u6E83\u5C31\u8840\u672C\u65E0\u5F52\u3002\\n\u4F60\u6709
+      {have_cash} {icon:cash} \u548C {have_influence} {icon:influence}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514335
@@ -994,14 +996,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514338
-    m_Localized: "\u4F60\u8981\u9009\u4E24\u4F4D\u89C2\u4F17\uFF1A\u7B2C\u4E00\u4F4D\u4ECA\u665A\u4E00\u5206\u90FD\u8D5A\u4E0D\u5230\uFF0C\u7B2C\u4E8C\u4F4D\u7684\u5370\u5237{icon:subs}\u6216
-      {icon:cash} \u7FFB\u500D\u3002\\n\u7B2C\u4E8C\u4F4D\u89C2\u4F17\u8981\u7FFB\u500D\u4EC0\u4E48\uFF1F"
+    m_Localized: "\u4F60\u8981\u9009\u4E24\u4F4D\u89C2\u4F17\uFF1A\u7B2C\u4E00\u4F4D\u4ECA\u665A\u4E00\u5206\u90FD\u8D5A\u4E0D\u5230\uFF0C\u7B2C\u4E8C\u4F4D\u7684\u5370\u5237{icon:cash}\u6216
+      {icon:influence} \u7FFB\u500D\u3002\\n\u7B2C\u4E8C\u4F4D\u89C2\u4F17\u8981\u7FFB\u500D\u4EC0\u4E48\uFF1F"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514339
-    m_Localized: "\u4F60\u8981\u4E3A\u4ECA\u665A\u9009\u4E00\u4F4D\u89C2\u4F17\u3002\\n<b>{icon:subs}\u6362
-      {icon:cash}\uFF1A</b>\u6BCF 2 {icon:subs}\u6362 1 {icon:cash}\u3002   <b>{icon:cash}
-      \u6362{icon:subs}\uFF1A</b>\u6BCF 1 {icon:cash} \u6362 2 {icon:subs}\u3002"
+    m_Localized: "\u4F60\u8981\u4E3A\u4ECA\u665A\u9009\u4E00\u4F4D\u89C2\u4F17\u3002\\n<b>{icon:cash}\u6362
+      {icon:influence}\uFF1A</b>\u6BCF 2 {icon:cash}\u6362 1 {icon:influence}\u3002  
+      <b>{icon:influence} \u6362{icon:cash}\uFF1A</b>\u6BCF 1 {icon:influence} \u6362
+      2 {icon:cash}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514340
@@ -1050,16 +1053,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514351
-    m_Localized: "{actor}\uFF1A\u9009\u62E9\u4E00\u4F4D\u89C2\u4F17\u8E22\u8D70\u3002\u4F60\u4F1A\u83B7\u5F97\u4ED6\u4E00\u534A\u8EAB\u4EF7\u7684{icon:subs}\u3002"
+    m_Localized: "{actor}\uFF1A\u9009\u62E9\u4E00\u4F4D\u89C2\u4F17\u8E22\u8D70\u3002\u4F60\u4F1A\u83B7\u5F97\u4ED6\u4E00\u534A\u8EAB\u4EF7\u7684{icon:cash}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514352
-    m_Localized: "{actor}\uFF1A\u9009\u62E9\u4E00\u4F4D\u89C2\u4F17\u6BD4\u8F83\u5370\u5237{icon:subs}\u3002"
+    m_Localized: "{actor}\uFF1A\u9009\u62E9\u4E00\u4F4D\u89C2\u4F17\u6BD4\u8F83\u5370\u5237{icon:cash}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514353
     m_Localized: "{actor}\uFF1A\u9009\u62E9\u4E00\u4F4D\u89C2\u4F17\u83B7\u5F97 +1
-      {icon:risk}\u548C +3 {icon:subs}\u3002"
+      {icon:risk}\u548C +3 {icon:cash}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514354
@@ -1091,7 +1094,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514361
-    m_Localized: "{actor}\uFF1A\u9009\u62E9\u548C {first} \u4EA4\u6362\u5370\u5237{icon:subs}\u7684\u89C2\u4F17\u3002"
+    m_Localized: "{actor}\uFF1A\u9009\u62E9\u548C {first} \u4EA4\u6362\u5370\u5237{icon:cash}\u7684\u89C2\u4F17\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514362
@@ -1103,7 +1106,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514364
-    m_Localized: "{actor}\uFF1A\u9009\u62E9\u5370\u5237 {icon:cash} \u7FFB\u500D\u7684\u89C2\u4F17\u3002"
+    m_Localized: "{actor}\uFF1A\u9009\u62E9\u5370\u5237{icon:cash}\u7FFB\u500D\u7684\u89C2\u4F17\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1582514365
@@ -1545,7 +1548,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416593483087877
     m_Localized: "{actor}\uFF1A\u9009\u62E9\u4E00\u4F4D\u89C2\u4F17\u6C38\u4E45 +1
-      {icon:cash}\uFF08\u6700\u591A {cap} {icon:cash}\uFF09\u3002"
+      {icon:influence}\uFF08\u6700\u591A {cap} {icon:influence}\uFF09\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087878
@@ -1844,7 +1847,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960068
-    m_Localized: "{viewer} \u6C38\u4E45\u7EE7\u627F\u4E86 {cash}\u3002"
+    m_Localized: "{viewer} \u6C38\u4E45\u7EE7\u627F\u4E86 {influence}\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960069
@@ -1852,7 +1855,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960070
-    m_Localized: "{viewer} \u7EE7\u627F +1 {icon:cash}"
+    m_Localized: "{viewer} \u7EE7\u627F +1 {icon:influence}"
     m_Metadata:
       m_Items: []
   - m_Id: 2431125118607360
@@ -1860,7 +1863,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408000
-    m_Localized: '{subs}  {cash}  {icon:plays} {owned}'
+    m_Localized: '{cash}  {influence}  {icon:plays} {owned}'
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408001
@@ -1913,7 +1916,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2431125265408013
     m_Localized: "\u628A\u4E00\u5F20\u89C2\u4F17\u5361\u6C38\u4E45\u79FB\u51FA\u4F60\u7684\u89C2\u4F17\u7FA4\u3002\u6BCF\u6B21\u79FB\u9664\u6BD4\u4E0A\u6B21\u591A\u82B1
-      1 {icon:cash}\u3002\u89C2\u4F17\u7FA4\u81F3\u5C11\u4FDD\u7559 {min} \u4F4D\u89C2\u4F17\u3002"
+      1 {icon:influence}\u3002\u89C2\u4F17\u7FA4\u81F3\u5C11\u4FDD\u7559 {min} \u4F4D\u89C2\u4F17\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408014
@@ -2173,6 +2176,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3987740103892994
     m_Localized: "\u5F00\u64AD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685007093760
+    m_Localized: "<b>\u73B0\u91D1</b>\\n\u89C2\u4F17\u5728\u76F4\u64AD\u4E2D\u5E26\u6765\u73B0\u91D1\u3002\u5728\u5546\u5E97\u91CC\u82B1\u73B0\u91D1\u6765\u62DB\u52DF\u65B0\u89C2\u4F17\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685065814016
+    m_Localized: "<b>\u5F71\u54CD\u529B</b>\\n\u7528\u6765\u63D0\u9AD8\u4EBA\u6570\u4E0A\u9650\uFF0C\u5E76\u652F\u4ED8\u4E3B\u64AD\u4E3B\u52A8\u80FD\u529B\u7684\u8D39\u7528\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685065814017
+    m_Localized: '{icon:influence} x2'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685065814018
+    m_Localized: "{actor}\uFF1A\u9009\u62E9\u5370\u5237 {icon:influence} \u7FFB\u500D\u7684\u89C2\u4F17\u3002"
     m_Metadata:
       m_Items: []
   references:

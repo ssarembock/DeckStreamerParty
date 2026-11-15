@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383746
-    m_Localized: 'Sem firula: rende muito {icon:cash}.'
+    m_Localized: 'Sem firula: rende muita {icon:influence}.'
     m_Metadata:
       m_Items: []
   - m_Id: 500383747
@@ -128,7 +128,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 500383769
     m_Localized: "A\xE7\xE3o: mande outro espectador de volta pra fila (ele pode
-      voltar hoje). Ganha +2 {icon:subs} por cada vez que esse espectador foi trollado,
+      voltar hoje). Ganha +2 {icon:cash} por cada vez que esse espectador foi trollado,
       incluindo esta."
     m_Metadata:
       m_Items: []
@@ -141,8 +141,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383772
-    m_Localized: "A\xE7\xE3o: escolha Feliz (+3 {icon:subs}), Triste (+3 {icon:cash})
-      ou Bravo (+6 {icon:subs} e +1 {icon:risk}) at\xE9 o fim da live."
+    m_Localized: "A\xE7\xE3o: escolha Feliz (+3 {icon:cash}), Triste (+3 {icon:influence})
+      ou Bravo (+6 {icon:cash} e +1 {icon:risk}) at\xE9 o fim da live."
     m_Metadata:
       m_Items: []
   - m_Id: 500383773
@@ -154,8 +154,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383775
-    m_Localized: "Energia alfa: +3 {icon:subs} se for o \xFAnico espectador com 5+
-      {icon:subs} base. Cada Gigachad extra d\xE1 -2 {icon:subs} pra todos os Gigachads."
+    m_Localized: "Energia alfa: +3 {icon:cash} se for o \xFAnico espectador com 5+
+      {icon:cash} base. Cada Gigachad extra d\xE1 -2 {icon:cash} pra todos os Gigachads."
     m_Metadata:
       m_Items: []
   - m_Id: 500383776
@@ -173,7 +173,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 500383779
-    m_Localized: "Sofrimento compartilhado: +2 {icon:subs} por cada outro espectador
+    m_Localized: "Sofrimento compartilhado: +2 {icon:cash} por cada outro espectador
       sofrendo ({icon:risk}, status negativo, infectado, zerado ou penalizado), m\xE1x.
       +6."
     m_Metadata:
@@ -197,7 +197,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578052
     m_Localized: "Rastro de arco-\xEDris: cada espectador sem {icon:risk} que entra
-      depois dela sem quebrar a sequ\xEAncia ganha +1, +2, +3... {icon:subs} (m\xE1x.
+      depois dela sem quebrar a sequ\xEAncia ganha +1, +2, +3... {icon:cash} (m\xE1x.
       +6 cada). Uma chegada com {icon:risk} quebra a corrente."
     m_Metadata:
       m_Items: []
@@ -206,8 +206,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578054
-    m_Localized: "A\xE7\xE3o: invista 2 {icon:subs} ou 1 {icon:cash}. Se a live der
-      certo volta o triplo; se der errado, j\xE1 era."
+    m_Localized: "A\xE7\xE3o: invista 2 {icon:cash} ou 1 {icon:influence}. Se a live
+      der certo volta o triplo; se der errado, j\xE1 era."
     m_Metadata:
       m_Items: []
   - m_Id: 504578055
@@ -220,7 +220,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578057
     m_Localized: "N\xE3o me bonka: com um Doge no chat, anula 1 {icon:risk} e Doge
-      e Cheems ganham +2 {icon:subs}. Sem Doge, -1 {icon:subs} por {icon:risk}."
+      e Cheems ganham +2 {icon:cash}. Sem Doge, -1 {icon:cash} por {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 504578058
@@ -228,7 +228,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578059
-    m_Localized: "A\xE7\xE3o: compare {icon:subs} base com outro espectador. Se ele
+    m_Localized: "A\xE7\xE3o: compare {icon:cash} base com outro espectador. Se ele
       tiver menos, d\xE1 1 pro Chad pra sempre. Se tiver mais, o Chad perde 1 pra
       sempre."
     m_Metadata:
@@ -242,7 +242,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578062
-    m_Localized: 'Doomscroll: +2 {icon:subs} por {icon:risk} no chat.'
+    m_Localized: 'Doomscroll: +2 {icon:cash} por {icon:risk} no chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578063
@@ -250,8 +250,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578064
-    m_Localized: "A modinha: ao entrar, copia {icon:subs} base e o {icon:cash} de
-      quem entrou logo antes. N\xE3o a a\xE7\xE3o, o {icon:risk} nem o Trof\xE9u."
+    m_Localized: "A modinha: ao entrar, copia {icon:cash} base e a {icon:influence}
+      de quem entrou logo antes. N\xE3o a a\xE7\xE3o, o {icon:risk} nem o Trof\xE9u."
     m_Metadata:
       m_Items: []
   - m_Id: 504578065
@@ -259,8 +259,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578066
-    m_Localized: "Mesa pra um: +10 {icon:subs} se ele for o \xFAnico espectador quando
-      a live acabar. Sen\xE3o, +1 {icon:subs} por vaga vazia."
+    m_Localized: "Mesa pra um: +10 {icon:cash} se ele for o \xFAnico espectador quando
+      a live acabar. Sen\xE3o, +1 {icon:cash} por vaga vazia."
     m_Metadata:
       m_Items: []
   - m_Id: 504578067
@@ -268,8 +268,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578068
-    m_Localized: 'Gostei disso: ganha +2 {icon:subs} quando outro espectador adiciona
-      {icon:risk} e +1 {icon:cash} por {icon:risk} removido.'
+    m_Localized: 'Gostei disso: ganha +2 {icon:cash} quando outro espectador adiciona
+      {icon:risk} e +1 {icon:influence} por {icon:risk} removido.'
     m_Metadata:
       m_Items: []
   - m_Id: 504578069
@@ -277,9 +277,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578070
-    m_Localized: "A\xE7\xE3o: expulse outro espectador. Ganha +2 {icon:subs} se ele
-      tinha {icon:risk}; sen\xE3o, +1 {icon:cash}. Os efeitos de sa\xEDda dele acontecem
-      igual."
+    m_Localized: "A\xE7\xE3o: expulse outro espectador. Ganha +2 {icon:cash} se ele
+      tinha {icon:risk}; sen\xE3o, +1 {icon:influence}. Os efeitos de sa\xEDda dele
+      acontecem igual."
     m_Metadata:
       m_Items: []
   - m_Id: 504578071
@@ -292,7 +292,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578073
     m_Localized: "O ritmo continua: cada terceiro espectador que entra depois do
-      Bongo Cat d\xE1 +2 {icon:subs} nesta noite ao Bongo Cat e a todos que compartilham
+      Bongo Cat d\xE1 +2 {icon:cash} nesta noite ao Bongo Cat e a todos que compartilham
       alguma das comunidades dele."
     m_Metadata:
       m_Items: []
@@ -301,8 +301,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578075
-    m_Localized: "Pop pop pop: ganha +1 {icon:subs} sempre que algu\xE9m usa uma
-      a\xE7\xE3o. A cada tr\xEAs a\xE7\xF5es tamb\xE9m ganha +1 {icon:cash}."
+    m_Localized: "Pop pop pop: ganha +1 {icon:cash} sempre que algu\xE9m usa uma
+      a\xE7\xE3o. A cada tr\xEAs a\xE7\xF5es tamb\xE9m ganha +1 {icon:influence}."
     m_Metadata:
       m_Items: []
   - m_Id: 504578076
@@ -310,7 +310,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578077
-    m_Localized: "Chungus absoluto: ocupa 3 vagas. +1 {icon:subs} por ponto de limite
+    m_Localized: "Chungus absoluto: ocupa 3 vagas. +1 {icon:cash} por ponto de limite
       acima de 10 (m\xE1x. +5)."
     m_Metadata:
       m_Items: []
@@ -320,7 +320,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578079
     m_Localized: "Me sigam: ao entrar, adiciona uma c\xF3pia tempor\xE1ria de si
-      na fila desta noite (c\xF3pias n\xE3o se copiam). +1 {icon:subs} por cada outro
+      na fila desta noite (c\xF3pias n\xE3o se copiam). +1 {icon:cash} por cada outro
       Knuckles no chat."
     m_Metadata:
       m_Items: []
@@ -329,7 +329,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578081
-    m_Localized: "Pra sempre sua: ao entrar, gruda no melhor espectador. {icon:subs}
+    m_Localized: "Pra sempre sua: ao entrar, gruda no melhor espectador. {icon:cash}
       dele dobram e ele n\xE3o pode ser expulso enquanto ela estiver aqui. Se ele
       for for\xE7ado a sair, ela vai junto."
     m_Metadata:
@@ -339,8 +339,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578083
-    m_Localized: "A\xE7\xE3o: outro espectador ganha +1 {icon:risk} e +3 {icon:subs},
-      e ela +2 {icon:subs}. N\xE3o d\xE1 pra usar se fizer a live ser desplataformizada."
+    m_Localized: "A\xE7\xE3o: outro espectador ganha +1 {icon:risk} e +3 {icon:cash},
+      e ela +2 {icon:cash}. N\xE3o d\xE1 pra usar se fizer a live ser desplataformizada."
     m_Metadata:
       m_Items: []
   - m_Id: 504578084
@@ -353,7 +353,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578086
     m_Localized: "Sorrindo por fora: os espectadores do chat n\xE3o caem abaixo dos
-      {icon:subs} base. Ganha +1 {icon:subs} por queda evitada (m\xE1x. +5)."
+      {icon:cash} base. Ganha +1 {icon:cash} por queda evitada (m\xE1x. +5)."
     m_Metadata:
       m_Items: []
   - m_Id: 504578087
@@ -376,7 +376,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578091
     m_Localized: "O que pode dar errado?: uma vez por live, a primeira tentativa
-      de expuls\xE1-lo ou tirar o {icon:risk} dele falha, e ele ganha +1 {icon:subs}
+      de expuls\xE1-lo ou tirar o {icon:risk} dele falha, e ele ganha +1 {icon:cash}
       pra sempre."
     m_Metadata:
       m_Items: []
@@ -385,8 +385,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578093
-    m_Localized: "A\xE7\xE3o: d\xEA uma pancada em outro espectador. 1\xAA: +2 {icon:subs}.
-      2\xAA: tira o {icon:risk} dele. 3\xAA: expulsa ele e o Tung Tung ganha +1 {icon:subs}
+    m_Localized: "A\xE7\xE3o: d\xEA uma pancada em outro espectador. 1\xAA: +2 {icon:cash}.
+      2\xAA: tira o {icon:risk} dele. 3\xAA: expulsa ele e o Tung Tung ganha +1 {icon:cash}
       pra sempre. As pancadas ficam salvas entre lives."
     m_Metadata:
       m_Items: []
@@ -425,7 +425,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578102
-    m_Localized: "A\xE7\xE3o: dois espectadores trocam {icon:subs} base pelo resto
+    m_Localized: "A\xE7\xE3o: dois espectadores trocam {icon:cash} base pelo resto
       da noite."
     m_Metadata:
       m_Items: []
@@ -438,7 +438,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578105
-    m_Localized: "Invas\xE3o Skibidi: ao entrar, infecta outro espectador (+2 {icon:subs},
+    m_Localized: "Invas\xE3o Skibidi: ao entrar, infecta outro espectador (+2 {icon:cash},
       +1 {icon:risk}). Toda vez que algu\xE9m entra, a infec\xE7\xE3o passa pra mais
       um. Acaba com a live."
     m_Metadata:
@@ -448,7 +448,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578107
-    m_Localized: "Grindset: +1 {icon:subs} por vaga vazia (m\xE1x. +8). -1 {icon:subs}
+    m_Localized: "Grindset: +1 {icon:cash} por vaga vazia (m\xE1x. +8). -1 {icon:cash}
       por cada outro Macho Sigma no chat."
     m_Metadata:
       m_Items: []
@@ -458,7 +458,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578109
     m_Localized: "A\xE7\xE3o: expulse outro espectador por esta noite e ganhe metade
-      do custo dele em {icon:subs} (m\xE1x. 8)."
+      do custo dele em {icon:cash} (m\xE1x. 8)."
     m_Metadata:
       m_Items: []
   - m_Id: 504578110
@@ -495,7 +495,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578117
     m_Localized: "A\xE7\xE3o: escolha dois espectadores. O primeiro n\xE3o ganha
-      nada esta noite; o segundo dobra {icon:subs} base ou o {icon:cash}."
+      nada esta noite; o segundo dobra {icon:cash} base ou a {icon:influence}."
     m_Metadata:
       m_Items: []
   - m_Id: 504578118
@@ -507,9 +507,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578120
-    m_Localized: "A\xE7\xE3o: por esta noite, troque {icon:subs} de um espectador
-      por {icon:cash} (2 {icon:subs} = 1 {icon:cash}) ou o {icon:cash} dele por {icon:subs}
-      (1 {icon:cash} = 2 {icon:subs})."
+    m_Localized: "A\xE7\xE3o: por esta noite, troque {icon:cash} de um espectador
+      por {icon:influence} (2 {icon:cash} = 1 {icon:influence}) ou a {icon:influence}
+      dele por {icon:cash} (1 {icon:influence} = 2 {icon:cash})."
     m_Metadata:
       m_Items: []
   - m_Id: 504578121
@@ -557,7 +557,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 504578131
     m_Localized: "Anima\xE7\xE3o em loop: sempre que duas a\xE7\xF5es seguidas s\xE3o
-      do mesmo tipo, ganha +3 {icon:subs} (m\xE1x. +9 por live)."
+      do mesmo tipo, ganha +3 {icon:cash} (m\xE1x. +9 por live)."
     m_Metadata:
       m_Items: []
   - m_Id: 504578132
@@ -654,11 +654,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578155
-    m_Localized: Investir 2 {icon:subs}
+    m_Localized: Investir 2 {icon:cash}
     m_Metadata:
       m_Items: []
   - m_Id: 504578156
-    m_Localized: Investir 1 {icon:cash}
+    m_Localized: Investir 1 {icon:influence}
     m_Metadata:
       m_Items: []
   - m_Id: 504578157
@@ -670,19 +670,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 504578159
-    m_Localized: '{icon:subs} em dobro'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 504578160
     m_Localized: '{icon:cash} em dobro'
     m_Metadata:
       m_Items: []
+  - m_Id: 504578160
+    m_Localized: '{icon:influence} em dobro'
+    m_Metadata:
+      m_Items: []
   - m_Id: 504578161
-    m_Localized: '{icon:subs} em {icon:cash}'
+    m_Localized: '{icon:cash} em {icon:influence}'
     m_Metadata:
       m_Items: []
   - m_Id: 508772352
-    m_Localized: '{icon:cash} em {icon:subs}'
+    m_Localized: '{icon:influence} em {icon:cash}'
     m_Metadata:
       m_Items: []
   - m_Id: 416591515959296
@@ -779,7 +779,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262485
-    m_Localized: "{icon:plays} Colapso do mercado: custa 1 {icon:cash} e 2 {icon:subs}
+    m_Localized: "{icon:plays} Colapso do mercado: custa 1 {icon:influence} e 2 {icon:cash}
       na pontua\xE7\xE3o."
     m_Metadata:
       m_Items: []
@@ -856,7 +856,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262503
-    m_Localized: Muitos {icon:subs}, mas o problema vem junto.
+    m_Localized: Muitos {icon:cash}, mas o problema vem junto.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262504
@@ -877,7 +877,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262508
-    m_Localized: "Paga bem, mas a galera pula o an\xFAncio: -1 {icon:subs} na pontua\xE7\xE3o."
+    m_Localized: "Paga bem, mas a galera pula o an\xFAncio: -1 {icon:cash} na pontua\xE7\xE3o."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262509
@@ -894,8 +894,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262512
-    m_Localized: "A\xE7\xE3o: um espectador do chat ganha +1 {icon:cash} a mais pra
-      sempre (at\xE9 9 {icon:cash}). Custa 1 {icon:cash} na pontua\xE7\xE3o."
+    m_Localized: "A\xE7\xE3o: um espectador do chat ganha +1 {icon:influence} a mais
+      pra sempre (at\xE9 9 {icon:influence}). Custa 1 {icon:influence} na pontua\xE7\xE3o."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262513
@@ -938,7 +938,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262522
-    m_Localized: "#EleTamb\xE9m?: muita grana, muito {icon:risk}."
+    m_Localized: "#EleTamb\xE9m?: muita {icon:influence}, muito {icon:risk}."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262523
@@ -972,7 +972,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262530
-    m_Localized: Traz {icon:subs} e grana, e um pouco de {icon:risk}.
+    m_Localized: Traz {icon:cash} e {icon:influence}, e um pouco de {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262531
@@ -981,8 +981,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591587262532
     m_Localized: "A\xE7\xE3o (uma vez por live entre todos): cada espectador do chat
-      cai pra 0 {icon:subs} nesta noite, e voc\xEA recebe 1 {icon:cash} na hora por
-      cada Benfeitor bilion\xE1rio no chat."
+      cai pra 0 {icon:cash} nesta noite, e voc\xEA recebe 1 {icon:influence} na hora
+      por cada Benfeitor bilion\xE1rio no chat."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262533
@@ -1016,7 +1016,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456769
-    m_Localized: "Voc\xEA n\xE3o vai assistir!: +1 {icon:subs} por vaga livre no
+    m_Localized: "Voc\xEA n\xE3o vai assistir!: +1 {icon:cash} por vaga livre no
       chat na pontua\xE7\xE3o."
     m_Metadata:
       m_Items: []
@@ -1025,7 +1025,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456771
-    m_Localized: "Toca do coelho algor\xEDtmica: +1 {icon:subs} por cada F\xE3 de
+    m_Localized: "Toca do coelho algor\xEDtmica: +1 {icon:cash} por cada F\xE3 de
       carteirinha no chat."
     m_Metadata:
       m_Items: []
@@ -1044,7 +1044,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591591456775
     m_Localized: "Cupom: quando a live pontua, um espectador aleat\xF3rio do chat
-      ganha +1 {icon:cash} a mais pra sempre (at\xE9 9 {icon:cash})."
+      ganha +1 {icon:influence} a mais pra sempre (at\xE9 9 {icon:influence})."
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456776
@@ -1056,8 +1056,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456778
-    m_Localized: "Escada do caos: +2 {icon:cash} por espectador do chat que ainda
-      tem {icon:risk} ({icon:risk} anulado tamb\xE9m conta)."
+    m_Localized: "Escada do caos: +2 {icon:influence} por espectador do chat que
+      ainda tem {icon:risk} ({icon:risk} anulado tamb\xE9m conta)."
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456779
@@ -1065,7 +1065,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456780
-    m_Localized: "N\xE3o existe publicidade ruim: +2 {icon:subs} por espectador do
+    m_Localized: "N\xE3o existe publicidade ruim: +2 {icon:cash} por espectador do
       chat que ainda tem {icon:risk} ({icon:risk} anulado tamb\xE9m conta)."
     m_Metadata:
       m_Items: []
@@ -1074,8 +1074,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591591456782
-    m_Localized: "Garantir o dele: ganha +1 {icon:cash} pra sempre toda vez que entra
-      no chat (at\xE9 9 {icon:cash}), mesmo se a live acabar mal."
+    m_Localized: "Garantir o dele: ganha +1 {icon:influence} pra sempre toda vez
+      que entra no chat (at\xE9 9 {icon:influence}), mesmo se a live acabar mal."
     m_Metadata:
       m_Items: []
   - m_Id: 736681897705472
@@ -1083,7 +1083,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008640
-    m_Localized: "Tanta sinergia: +1 {icon:subs} por cada comunidade diferente no
+    m_Localized: "Tanta sinergia: +1 {icon:cash} por cada comunidade diferente no
       chat (m\xE1x. +5). Outros Cachorros Degen n\xE3o contam."
     m_Metadata:
       m_Items: []
@@ -1092,7 +1092,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008642
-    m_Localized: "Todo mundo me abandona: ganha +1 {icon:subs} ou +1 {icon:cash}
+    m_Localized: "Todo mundo me abandona: ganha +1 {icon:cash} ou +1 {icon:influence}
       (aleat\xF3rio) sempre que outro espectador sai ou \xE9 expulso."
     m_Metadata:
       m_Items: []
@@ -1114,7 +1114,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008647
-    m_Localized: "+3 {icon:cash} se o chat estiver cheio na pontua\xE7\xE3o."
+    m_Localized: "+3 {icon:influence} se o chat estiver cheio na pontua\xE7\xE3o."
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008648
@@ -1122,7 +1122,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736681969008649
-    m_Localized: "Rumo \xE0 lua: todos os Entusiastas de cripto do chat pontuam {icon:cash}
+    m_Localized: "Rumo \xE0 lua: todos os Entusiastas de cripto do chat pontuam {icon:influence}
       juntos, 0 / 1 / 4 / 9 / 16 no total com 1 / 2 / 3 / 4 / 5 deles."
     m_Metadata:
       m_Items: []
@@ -1148,7 +1148,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2838162012987393
-    m_Localized: "Hora da dan\xE7a: todas as Jen Dan\xE7arina do chat pontuam {icon:subs}
+    m_Localized: "Hora da dan\xE7a: todas as Jen Dan\xE7arina do chat pontuam {icon:cash}
       juntas, 1 / 4 / 9 / 16 / 25 no total com 1 / 2 / 3 / 4 / 5 delas."
     m_Metadata:
       m_Items: []

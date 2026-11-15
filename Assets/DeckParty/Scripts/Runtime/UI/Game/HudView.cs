@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// The site's menu bar (top of the stream and shop): the stream count, then Clout, Cash and Trophies (in chat / needed to
+    /// The site's menu bar (top of the stream and shop): the stream count, then Cash, Influence and Trophies (in chat / needed to
     /// win) in the middle, then the Audience and Menu icon buttons. It also lights the Deplatform Risk pips, which sit in the
     /// Stream Chat's title band. Everything is an icon and a number; hovering any of it says what it is
     /// (the night's tooltip also names the character set).
@@ -16,8 +16,8 @@ namespace DeckParty.UI
     {
         [SerializeField] internal TMP_Text scenarioLabel;
         [SerializeField] internal TMP_Text nightLabel;
-        [SerializeField] internal TMP_Text popLabel;
         [SerializeField] internal TMP_Text cashLabel;
+        [SerializeField] internal TMP_Text influenceLabel;
         [SerializeField] internal TMP_Text capacityLabel;
         [Tooltip("Optional text next to the risk pips (older scenes). The pips alone show the count.")]
         [SerializeField] internal TMP_Text troubleLabel;
@@ -34,8 +34,8 @@ namespace DeckParty.UI
         [SerializeField] internal Button menuButton;
 
         [Header("Website bar (optional)")]
-        [SerializeField] internal Image popIcon;
         [SerializeField] internal Image cashIcon;
+        [SerializeField] internal Image influenceIcon;
         [SerializeField] internal Image nightIcon;
         [SerializeField] internal Image capacityIcon;
         [Tooltip("The Trophy icon next to the Trophies count (in chat / needed to win).")]
@@ -54,8 +54,8 @@ namespace DeckParty.UI
         /// <summary>Where Plays feedbacks play.</summary>
         public Transform PlaysAnchor => starsMeter != null ? starsMeter : starsLabel != null ? starsLabel.transform : transform;
 
-        int m_LastPop = int.MinValue;
         int m_LastCash = int.MinValue;
+        int m_LastInfluence = int.MinValue;
         int m_LastTrouble = -1;
         int m_LastDiamonds = -1;
         /// <summary>The Deplatform Risk the pips show (0 outside a stream).</summary>
@@ -84,14 +84,17 @@ namespace DeckParty.UI
         /// <summary>Static captions and their tooltips (captions are upper-cased by the font style, not in code).</summary>
         void ApplyCaptions()
         {
-            SetCaption("Pop", null, Loc.Get("hud.tip.gifted_subs"));
-            SetCaption("Cash", null, Loc.Get("hud.tip.cash"));
+            // Scenes built since 2026-11-15 call these blocks Cash and Influence; older ones Pop (now Cash) and Cash (now Influence).
+            var influenceBlock = transform.Find("Influence");
+            bool renamed = influenceBlock != null || FindDeep(transform, "Influence") != null;
+            SetCaption(renamed ? "Cash" : "Pop", null, Loc.Get("hud.tip.cash_banked"));
+            SetCaption(renamed ? "Influence" : "Cash", null, Loc.Get("hud.tip.influence"));
             SetCaption("House", null, Loc.Get("hud.tip.sub_cap"));
             // Icon buttons say what they do on hover; text buttons (older scenes) keep their caption.
             SetButton(rolodexButton, Loc.Get("hud.audience_button"));
             SetButton(menuButton, Loc.Get("hud.menu") + "  [Esc]");
-            if (popIcon != null) popIcon.color = GameIcons.Tint(ResourceIcon.Subs);
             if (cashIcon != null) cashIcon.color = GameIcons.Tint(ResourceIcon.Cash);
+            if (influenceIcon != null) influenceIcon.color = GameIcons.Tint(ResourceIcon.Influence);
             if (starsIcon != null) starsIcon.color = GameIcons.Tint(ResourceIcon.Plays);
             // Your own art keeps its colours; the white placeholder shapes take the menu bar's text colour (UI Skin > Site Colours).
             if (nightIcon != null) nightIcon.color = GameIcons.SlotTint(SkinSlot.IconNight, SiteColours.Get(SiteColourRole.Text, nightIcon.transform));
@@ -120,11 +123,12 @@ namespace DeckParty.UI
         }
 
         /// <param name="caption">Null hides the caption (resources show only their icon and number).</param>
-        void SetCaption(string block, string caption, string tooltip)
+        /// <returns>False when there is no such block.</returns>
+        bool SetCaption(string block, string caption, string tooltip)
         {
             var root = transform.Find(block);
             if (root == null) root = FindDeep(transform, block);
-            if (root == null) return;
+            if (root == null) return false;
             var label = root.Find("Texts/Caption");
             if (label != null)
             {
@@ -132,6 +136,7 @@ namespace DeckParty.UI
                 if (caption != null && label.TryGetComponent<TMP_Text>(out var text)) text.text = caption;
             }
             if (root.TryGetComponent<TooltipTrigger>(out var trigger)) trigger.Text = tooltip;
+            return true;
         }
 
         static Transform FindDeep(Transform parent, string name)
@@ -154,12 +159,12 @@ namespace DeckParty.UI
             if (nightLabel != null)
                 nightLabel.text = nightTooltip != null ? $"{s.Night}<size=70%><color={faint}>/{s.TotalNights}</color></size>" : Loc.Get("hud.night", "night", s.Night, "total", s.TotalNights);
 
-            popLabel.text = s.Pop.ToString();
             cashLabel.text = s.Cash.ToString();
-            if (m_LastPop != int.MinValue && s.Pop != m_LastPop) UITween.Punch(this, popLabel.transform, 0.25f);
+            influenceLabel.text = s.Influence.ToString();
             if (m_LastCash != int.MinValue && s.Cash != m_LastCash) UITween.Punch(this, cashLabel.transform, 0.25f);
-            m_LastPop = s.Pop;
+            if (m_LastInfluence != int.MinValue && s.Influence != m_LastInfluence) UITween.Punch(this, influenceLabel.transform, 0.25f);
             m_LastCash = s.Cash;
+            m_LastInfluence = s.Influence;
 
             bool party = s.Phase == GamePhase.Party;
             RenderQueue(s, party);

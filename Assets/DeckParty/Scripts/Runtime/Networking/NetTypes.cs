@@ -181,15 +181,15 @@ namespace DeckParty.Networking
 
         public byte Night;
         public byte Phase;
-        public int Pop;
         public int Cash;
+        public int Influence;
         public byte Capacity;
         public byte Guests;
         public byte DiamondsOwned;
         public byte DiamondsInHouse;
         public byte BestDiamonds;
         public byte Trouble;
-        public int TotalPop;
+        public int TotalCash;
         public byte WinNight;
         public byte Rank;
         public byte LastOutcome;
@@ -229,15 +229,15 @@ namespace DeckParty.Networking
             serializer.SerializeValue(ref ReadyForShop);
             serializer.SerializeValue(ref Night);
             serializer.SerializeValue(ref Phase);
-            serializer.SerializeValue(ref Pop);
             serializer.SerializeValue(ref Cash);
+            serializer.SerializeValue(ref Influence);
             serializer.SerializeValue(ref Capacity);
             serializer.SerializeValue(ref Guests);
             serializer.SerializeValue(ref DiamondsOwned);
             serializer.SerializeValue(ref DiamondsInHouse);
             serializer.SerializeValue(ref BestDiamonds);
             serializer.SerializeValue(ref Trouble);
-            serializer.SerializeValue(ref TotalPop);
+            serializer.SerializeValue(ref TotalCash);
             serializer.SerializeValue(ref WinNight);
             serializer.SerializeValue(ref Rank);
             serializer.SerializeValue(ref LastOutcome);
@@ -249,8 +249,8 @@ namespace DeckParty.Networking
         {
             return ClientId == o.ClientId && Name.Equals(o.Name) && ColorIndex == o.ColorIndex && Streamer == o.Streamer && LobbyReady == o.LobbyReady &&
                    Connected == o.Connected && ReadyNextNight == o.ReadyNextNight && ReadyForShop == o.ReadyForShop && Night == o.Night && Phase == o.Phase &&
-                   Pop == o.Pop && Cash == o.Cash && Capacity == o.Capacity && Guests == o.Guests && DiamondsOwned == o.DiamondsOwned &&
-                   DiamondsInHouse == o.DiamondsInHouse && BestDiamonds == o.BestDiamonds && Trouble == o.Trouble && TotalPop == o.TotalPop &&
+                   Cash == o.Cash && Influence == o.Influence && Capacity == o.Capacity && Guests == o.Guests && DiamondsOwned == o.DiamondsOwned &&
+                   DiamondsInHouse == o.DiamondsInHouse && BestDiamonds == o.BestDiamonds && Trouble == o.Trouble && TotalCash == o.TotalCash &&
                    WinNight == o.WinNight && Rank == o.Rank && LastOutcome == o.LastOutcome && Watchers == o.Watchers &&
                    PlatformUserId == o.PlatformUserId;
         }

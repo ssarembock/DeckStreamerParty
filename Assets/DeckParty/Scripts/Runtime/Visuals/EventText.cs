@@ -69,8 +69,8 @@ namespace DeckParty
                 case GameEventType.PartyEnded:
                     return Loc.Get("log.stream_ended", "values", Values(e.A, e.B), "diamonds", Terms.DiamondCount(e.C));
 
-                case GameEventType.CashShortfall:
-                    return GuestVisuals.Colored(Loc.Get("log.shortfall", "cash", e.A, "penalty", e.B), UIPalette.Red);
+                case GameEventType.InfluenceShortfall:
+                    return GuestVisuals.Colored(Loc.Get("log.shortfall", "influence", e.A, "penalty", e.B), UIPalette.Red);
 
                 case GameEventType.GuestBlamed:
                     return Loc.Get("log.banned", "viewer", viewer);
@@ -79,7 +79,7 @@ namespace DeckParty
                     return mine ? Loc.Get("log.purchased_you", "viewer", viewer) : Loc.Get("log.purchased_other", "viewer", viewer, "player", owner);
 
                 case GameEventType.GuestDismissed:
-                    return mine ? Loc.Get("log.removed_you", "viewer", viewer, "cash", e.A) : Loc.Get("log.removed_other", ("viewer", viewer), ("player", owner), ("cash", e.A));
+                    return mine ? Loc.Get("log.removed_you", "viewer", viewer, "influence", e.A) : Loc.Get("log.removed_other", ("viewer", viewer), ("player", owner), ("influence", e.A));
 
                 case GameEventType.HouseExpanded:
                     return Loc.Get("log.sub_cap_raised", "cap", e.A);
@@ -155,13 +155,13 @@ namespace DeckParty
                     return Loc.Get("log.immune", "viewer", viewer);
 
                 case GameEventType.Converted:
-                    return Loc.Get(e.A == 1 ? "log.convert_cash" : "log.convert_subs", "viewer", viewer);
+                    return Loc.Get(e.A == 1 ? "log.convert_influence" : "log.convert_cash", "viewer", viewer);
 
                 case GameEventType.Zeroed:
                     return Loc.Get("log.zeroed", "viewer", viewer);
 
                 case GameEventType.Doubled:
-                    return Loc.Get(e.A == 1 ? "log.doubled_subs" : "log.doubled_cash", "viewer", viewer);
+                    return Loc.Get(e.A == 1 ? "log.doubled_cash" : "log.doubled_influence", "viewer", viewer);
 
                 case GameEventType.AttractionRevealed:
                     return Loc.Get("log.attraction", "viewer", viewer, "count", e.A);
@@ -177,10 +177,10 @@ namespace DeckParty
                     return Loc.Get("log.scored_now", ("viewer", viewer), ("source", Source(e.C, state)), ("values", Values(e.A, e.B)));
 
                 case GameEventType.InterviewGiven:
-                    return GuestVisuals.Colored(Loc.Get("log.interview", "viewer", viewer, "cash", GuestVisuals.CashText(e.A)), UIPalette.Green);
+                    return GuestVisuals.Colored(Loc.Get("log.interview", "viewer", viewer, "influence", GuestVisuals.InfluenceText(e.A)), UIPalette.Green);
 
-                case GameEventType.CashBoosted:
-                    return Loc.Get("log.cash_boosted", "viewer", viewer, "total", GuestVisuals.CashText(e.B));
+                case GameEventType.InfluenceBoosted:
+                    return Loc.Get("log.influence_boosted", "viewer", viewer, "total", GuestVisuals.InfluenceText(e.B));
 
                 case GameEventType.MoodFlipped:
                     return e.A != 0
@@ -233,18 +233,18 @@ namespace DeckParty
                     switch (community)
                     {
                         case Community.Staff:
-                            return tag + Loc.Get("log.staff_free", "viewer", viewer, "cash", GuestVisuals.CashText(-e.B));
+                            return tag + Loc.Get("log.staff_free", "viewer", viewer, "influence", GuestVisuals.InfluenceText(-e.B));
                         case Community.CoreFanbase:
                         case Community.Content:
                             return tag + Loc.Get("log.content_encore", "viewer", viewer);
                         case Community.FinanceBros:
-                            return tag + Loc.Get("log.finance_double", "viewer", viewer, "cash", GuestVisuals.CashText(e.B));
+                            return tag + Loc.Get("log.finance_double", "viewer", viewer, "influence", GuestVisuals.InfluenceText(e.B));
                         case Community.Doomsdayers:
                             return tag + GuestVisuals.Colored(Loc.Get("log.doomed", "viewer", viewer), UIPalette.Red);
                         case Community.ArmchairActivists:
                             return tag + GuestVisuals.Colored(Loc.Get("log.all_talk", "viewer", viewer), UIPalette.TextDim);
                         case Community.Clout:
-                            return tag + Loc.Get("log.clout", "viewer", viewer, "subs", GuestVisuals.PopText(e.B));
+                            return tag + Loc.Get("log.clout", "viewer", viewer, "cash", GuestVisuals.CashText(e.B));
                     }
                     return null;
                 }
@@ -286,7 +286,7 @@ namespace DeckParty
                 case GameEventType.BoomerRetired:
                     return GameIcons.Tag(Community.Boomer) + " " + GuestVisuals.Colored(Loc.Get("log.boomer_retired", "viewer", GuestVisuals.NameTag(e.Guest)), UIPalette.Orange);
                 case GameEventType.Inheritance:
-                    return GameIcons.Tag(Community.Millennial) + " " + Loc.Get("log.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "cash", GuestVisuals.CashText(e.A));
+                    return GameIcons.Tag(Community.Millennial) + " " + Loc.Get("log.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "influence", GuestVisuals.InfluenceText(e.A));
                 case GameEventType.TrollsPaid:
                     return GameIcons.Tag(Community.Trolls) + " " + GuestVisuals.Colored(Loc.Get("log.trolls_paid", "values", Amounts(e.A, e.B)), UIPalette.Orange);
                 case GameEventType.DoomApplied:
@@ -295,8 +295,8 @@ namespace DeckParty
             return null;
         }
 
-        static string CostSuffix(int cash) =>
-            cash > 0 ? "  " + GuestVisuals.Colored("(-" + cash + " " + GameIcons.Tag(ResourceIcon.Cash) + ")", UIPalette.TextDim) : string.Empty;
+        static string CostSuffix(int influence) =>
+            influence > 0 ? "  " + GuestVisuals.Colored("(-" + influence + " " + GameIcons.Tag(ResourceIcon.Influence) + ")", UIPalette.TextDim) : string.Empty;
 
         static string Player(int index) => PlayerName != null ? PlayerName(index) : Loc.Get("common.rival");
 
@@ -306,14 +306,14 @@ namespace DeckParty
             return g != null ? GuestVisuals.NameTag(g.Kind) : Loc.Get("common.someone");
         }
 
-        static string Values(int pop, int cash) => Amounts(pop, cash);
+        static string Values(int cash, int influence) => Amounts(cash, influence);
 
-        /// <summary>Subs and Cash as icon amounts ("+3 [subs] +1 [cash]"), skipping a zero.</summary>
-        public static string Amounts(int pop, int cash)
+        /// <summary>Cash and Influence as icon amounts ("+3 [cash] +1 [influence]"), skipping a zero.</summary>
+        public static string Amounts(int cash, int influence)
         {
-            if (cash == 0) return GuestVisuals.PopText(pop);
-            if (pop == 0) return GuestVisuals.CashText(cash);
-            return GuestVisuals.PopText(pop) + " " + GuestVisuals.CashText(cash);
+            if (influence == 0) return GuestVisuals.CashText(cash);
+            if (cash == 0) return GuestVisuals.InfluenceText(influence);
+            return GuestVisuals.CashText(cash) + " " + GuestVisuals.InfluenceText(influence);
         }
     }
 }

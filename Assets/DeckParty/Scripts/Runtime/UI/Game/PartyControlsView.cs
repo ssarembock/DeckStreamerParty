@@ -139,12 +139,12 @@ namespace DeckParty.UI
 
             var endBlocker = PartyEngine.GetEndPartyBlocker(s);
             endButton.interactable = endBlocker == null && !targeting && interactive;
-            PartyEngine.ProjectScore(s, out int pop, out int cash);
-            int penalty = PartyEngine.ProjectPenalty(s, cash);
+            PartyEngine.ProjectScore(s, out int cash, out int influence);
+            int penalty = PartyEngine.ProjectPenalty(s, influence);
             int diamonds = PartyEngine.DiamondsPresent(s);
             m_WinReady = diamonds >= GameRules.DiamondsToWin && endBlocker == null;
             if (endLabel != null) endLabel.text = Loc.Get(m_WinReady ? "controls.end_win" : "controls.end");
-            var sub = $"{GuestVisuals.PopText(pop)}  {GuestVisuals.CashText(cash)}";
+            var sub = $"{GuestVisuals.CashText(cash)}  {GuestVisuals.InfluenceText(influence)}";
             if (penalty > 0) sub += $"  <color=#FF5A5A>-{penalty}</color>";
             if (endSubLabel != null) endSubLabel.text = endLabel != null && interactive ? sub + "  <color=#B9AED6>[E]</color>" : sub;
             if (m_EndTooltip != null)

@@ -47,8 +47,8 @@ namespace DeckParty.EditorTools
         static readonly SkinSlot[] s_UiIcons =
         {
             // In the UI Skin inspector's order: resources, menu bar, stream, shop, players.
-            SkinSlot.IconPop,
             SkinSlot.IconCash,
+            SkinSlot.IconInfluence,
             SkinSlot.IconTrouble,
             SkinSlot.IconStar,
             SkinSlot.IconCancel,
@@ -74,8 +74,8 @@ namespace DeckParty.EditorTools
         static readonly SkinSlot[] s_UiFrames =
         {
             SkinSlot.FrameNight,
-            SkinSlot.FramePop,
             SkinSlot.FrameCash,
+            SkinSlot.FrameInfluence,
             SkinSlot.FrameStars,
             SkinSlot.FrameAudience,
             SkinSlot.FrameMenu,
@@ -151,7 +151,7 @@ namespace DeckParty.EditorTools
                 "Emojis and Emotes: slice the sheet (Sprite Mode Multiple), select every slice in the Project window and drag them onto the list. " +
                 "Stream Endings show full-screen when a stream gets deplatformed or the server goes down. " +
                 "Community Icons appear on cards, shop tiles, tooltips, inside text and on the Community Beats chips. " +
-                "The resource icons (Clout, Cash, Deplatform Risk, Plays) and the button icons live in the UI Skin: IconPop, IconCash, IconTrouble, " +
+                "The resource icons (Cash, Influence, Deplatform Risk, Trophies) and the button icons live in the UI Skin: IconCash, IconInfluence, IconTrouble, " +
                 "IconStar, and IconAddViewer, IconEndStream, IconAudience, IconMenu, IconAction, IconGoLive, IconClose, IconNight.", MessageType.None);
             using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {

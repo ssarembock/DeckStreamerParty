@@ -3,16 +3,16 @@ namespace DeckParty
     /// <summary>
     /// Standalone names for game mechanics (tooltips, rules). Resources are shown as icons in the game (see GameIcons); these
     /// names are what hovering an icon says. The rules code keeps its original internal names
-    /// (Pop, Trouble, Star, Rolodex, House...). Inside sentences each language writes its own wording in the string
+    /// (Cash, Trouble, Star, Rolodex, House...). Inside sentences each language writes its own wording in the string
     /// tables, so grammar works; edit the "term.*" keys in AudienceCapture_Strings.csv to rename a mechanic.
     /// </summary>
     public static class Terms
     {
-        /// <summary>What viewers bring in during a stream (was Pop).</summary>
-        public static string Subs => Loc.Get("term.subs");
-        /// <summary>The banked currency you recruit viewers with.</summary>
-        public static string GiftedSubs => Loc.Get("term.gifted_subs");
+        /// <summary>What viewers bring in during a stream (was Cash).</summary>
         public static string Cash => Loc.Get("term.cash");
+        /// <summary>The banked currency you recruit viewers with.</summary>
+        public static string CashBanked => Loc.Get("term.cash_banked");
+        public static string Influence => Loc.Get("term.influence");
 
         /// <summary>Was Trouble (then Swatting Risk, then Deplatform Risk): Deplatform Risk.</summary>
         public static string Risk => Loc.Get("term.risk");

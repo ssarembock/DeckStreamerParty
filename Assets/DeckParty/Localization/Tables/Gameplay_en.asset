@@ -491,7 +491,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412341
-    m_Localized: No base {icon:subs}
+    m_Localized: No base {icon:cash}
     m_Metadata:
       m_Items: []
   - m_Id: 479412342
@@ -587,11 +587,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412365
-    m_Localized: Printed {icon:subs} {value}
+    m_Localized: Printed {icon:cash} {value}
     m_Metadata:
       m_Items: []
   - m_Id: 479412366
-    m_Localized: Copied {subs} {icon:subs} / {cash} {icon:cash}
+    m_Localized: Copied {cash} {icon:cash} / {influence} {icon:influence}
     m_Metadata:
       m_Items: []
   - m_Id: 479412367
@@ -718,7 +718,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412397
-    m_Localized: 'Couldn''t pay {cash} {icon:cash} in fees: -{penalty} {icon:subs}.'
+    m_Localized: 'Couldn''t pay {influence} {icon:influence} in fees: -{penalty}
+      {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 479412398
@@ -788,7 +789,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606542
     m_Localized: '{viewer}''s bad luck holds: it doesn''t work, and he permanently
-      gains +1 {icon:subs}.'
+      gains +1 {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606543
@@ -796,11 +797,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606544
-    m_Localized: '{viewer} permanently gains {amount} {icon:subs} (now {total}).'
+    m_Localized: '{viewer} permanently gains {amount} {icon:cash} (now {total}).'
     m_Metadata:
       m_Items: []
   - m_Id: 483606545
-    m_Localized: '{viewer} permanently loses {amount} {icon:subs} (now {total}).'
+    m_Localized: '{viewer} permanently loses {amount} {icon:cash} (now {total}).'
     m_Metadata:
       m_Items: []
   - m_Id: 483606546
@@ -816,7 +817,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606549
-    m_Localized: '{a} and {b} swap their printed {icon:subs}.'
+    m_Localized: '{a} and {b} swap their printed {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606550
@@ -840,7 +841,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606555
-    m_Localized: '{viewer} will turn their {icon:subs} into {icon:cash} tonight.'
+    m_Localized: '{viewer} will turn their {icon:influence} into {icon:cash} tonight.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606556
@@ -890,7 +891,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606567
-    m_Localized: Giveaway is live! Every viewer earns +{count} {icon:subs} this stream.
+    m_Localized: Giveaway is live! Every viewer earns +{count} {icon:cash} this stream.
     m_Metadata:
       m_Items: []
   - m_Id: 483606568
@@ -898,12 +899,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606569
-    m_Localized: 'Soft landing: {value} {icon:subs} banked anyway.'
+    m_Localized: 'Soft landing: {value} {icon:cash} banked anyway.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606570
     m_Localized: 'Beautiful Sequence: {count} great {count:plural:stream|streams}
-      in a row. +{bonus} {icon:subs}.'
+      in a row. +{bonus} {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606571
@@ -924,11 +925,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606575
-    m_Localized: '{taxer} collected a Wealth Tax: -{amount} {icon:cash}.'
+    m_Localized: '{taxer} collected a Wealth Tax: -{amount} {icon:influence}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606576
-    m_Localized: 'Wealth Tax collected from {payer}: +{amount} {icon:cash}.'
+    m_Localized: 'Wealth Tax collected from {payer}: +{amount} {icon:influence}.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606577
@@ -1136,7 +1137,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606628
-    m_Localized: That rival has no {icon:cash} to tax.
+    m_Localized: That rival has no {icon:influence} to tax.
     m_Metadata:
       m_Items: []
   - m_Id: 483606629
@@ -1166,9 +1167,9 @@ MonoBehaviour:
       next viewer from your Audience join. Each viewer can join once per stream.
       Viewers with a purple <b>action</b> button can use it once per stream. When
       you're happy, press <b>End the Stream</b> to bank what everyone in chat brought
-      in.\n<b>2. The shop.</b> Viewers bring in {icon:subs}; when the stream ends
-      they're banked and recruit new viewers into your Audience. {icon:cash} raises
-      your <b>Sub Cap</b> (how many viewers fit in chat at once).
+      in.\n<b>2. The shop.</b> Viewers bring in {icon:cash}; when the stream ends
+      they're banked and recruit new viewers into your Audience. {icon:influence}
+      raises your <b>Sub Cap</b> (how many viewers fit in chat at once).
     m_Metadata:
       m_Items: []
   - m_Id: 483606635
@@ -1196,16 +1197,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606639
-    m_Localized: Money
+    m_Localized: Influence
     m_Metadata:
       m_Items: []
   - m_Id: 483606640
-    m_Localized: 'Raising your Sub Cap costs 2 {icon:cash}, then 1 more each time
-      (max 12 per space, up to 34). Some viewers charge fees (negative {icon:cash}).
-      Fees are paid from your {icon:cash}; any unpaid amount costs <b>7 {icon:subs}
-      per {icon:cash}</b>.\nThe shop''s stock is <b>shared by every player</b>: each
-      normal viewer has 4 copies for the whole match, and you can own at most 4 of
-      each; Trophies are unlimited. You can''t remove viewers from your Audience,
+    m_Localized: 'Raising your Sub Cap costs 2 {icon:influence}, then 1 more each
+      time (max 12 per space, up to 34). Some viewers charge fees (negative {icon:influence}).
+      Fees are paid from your {icon:influence}; any unpaid amount costs <b>7 {icon:cash}
+      per {icon:influence}</b>.\nThe shop''s stock is <b>shared by every player</b>:
+      each normal viewer has 4 copies for the whole match, and you can own at most
+      4 of each; Trophies are unlimited. You can''t remove viewers from your Audience,
       so every recruit changes your odds.'
     m_Metadata:
       m_Items: []
@@ -1228,7 +1229,7 @@ MonoBehaviour:
   - m_Id: 483606644
     m_Localized: Before a season you <b>Select Your Streamer</b>. Each one has an
       <b>active</b> power, used from the shop after your stream (on your turn). It
-      costs {icon:cash}, gets more expensive every time you use it (like raising
+      costs {icon:influence}, gets more expensive every time you use it (like raising
       your Sub Cap) and may need a few turns to recharge. <b>Rival</b> powers (Raid,
       Wealth Tax) hit another player, so they only work in multiplayer. Pick <b>No
       Streamer</b> to play the classic rules. Your streamer also brings their own
@@ -1264,16 +1265,17 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606649
     m_Localized: <b>Win:</b> 4 {icon:plays} Trophies in one successful stream.\n<b>Icons:</b>
-      {icon:subs} Clout   {icon:cash} Cash   {icon:risk} Deplatform Risk   {icon:plays}
-      Trophies (hover any icon to see what it is).\n<b>Add Viewer:</b> the next viewer
-      in the queue joins chat.  <b>End the Stream:</b> banks everyone's {icon:subs}
-      and {icon:cash}.\n<b>3 net {icon:risk}</b> = deplatformed (no payout, one viewer
-      gets a Temporary Ban).\n<b>Over your Sub Cap</b> = Server Down (no payout).\n<b>Communities:</b>
-      each different viewer in chat scores a point for their community; points give
-      growing bonuses (Community Beats, top of the chat).\n<b>Shop:</b> {icon:subs}
-      recruit viewers (the stock is shared by every player), {icon:cash} raises your
-      Sub Cap and pays for streamer actives.\n<b>Keys:</b> Space add viewer/confirm/next
-      night, E end the stream, R Audience, Esc menu, F11 fullscreen.
+      {icon:cash} Cash   {icon:influence} Influence   {icon:risk} Deplatform Risk  
+      {icon:plays} Trophies (hover any icon to see what it is).\n<b>Add Viewer:</b>
+      the next viewer in the queue joins chat.  <b>End the Stream:</b> banks everyone's
+      {icon:cash} and {icon:influence}.\n<b>3 net {icon:risk}</b> = deplatformed
+      (no payout, one viewer gets a Temporary Ban).\n<b>Over your Sub Cap</b> = Server
+      Down (no payout).\n<b>Communities:</b> each different viewer in chat scores
+      a point for their community; points give growing bonuses (Community Beats,
+      top of the chat).\n<b>Shop:</b> {icon:cash} recruit viewers (the stock is shared
+      by every player), {icon:influence} raises your Sub Cap and pays for streamer
+      actives.\n<b>Keys:</b> Space add viewer/confirm/next night, E end the stream,
+      R Audience, Esc menu, F11 fullscreen.
     m_Metadata:
       m_Items: []
   - m_Id: 416591918612480
@@ -1382,12 +1384,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721369
-    m_Localized: '{source} cashes in {viewer} right now: {values} banked.'
+    m_Localized: '{source} scores {viewer} right now: {values} banked.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721370
-    m_Localized: '{viewer} gives a softball interview: everyone here earns 0 {icon:subs}
-      tonight, {cash} banked.'
+    m_Localized: '{viewer} gives a softball interview: everyone here earns 0 {icon:cash}
+      tonight, {influence} banked.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721371
@@ -1444,12 +1446,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091268
-    m_Localized: The people the stream pays. Each point adds +{per} {icon:cash} when
-      the stream is scored ({top} {icon:cash} at {max} points).
+    m_Localized: The people the stream pays. Each point adds +{per} {icon:influence}
+      when the stream is scored ({top} {icon:influence} at {max} points).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091269
-    m_Localized: 'Now: +{value} {icon:cash} when the stream is scored.'
+    m_Localized: 'Now: +{value} {icon:influence} when the stream is scored.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091270
@@ -1484,12 +1486,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091277
-    m_Localized: Each point gives every viewer a {per}% chance to score their {icon:cash}
+    m_Localized: Each point gives every viewer a {per}% chance to score their {icon:influence}
       reward twice ({top}% at {max} points).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091278
-    m_Localized: 'Now: {value}% chance per viewer to double their {icon:cash} reward.'
+    m_Localized: 'Now: {value}% chance per viewer to double their {icon:influence}
+      reward.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091279
@@ -1498,12 +1501,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091280
     m_Localized: They love the drama. Once the community scores, a scored stream
-      earns +{per} {icon:subs} for every point of {icon:risk} in it (cancelled {icon:risk}
+      earns +{per} {icon:cash} for every point of {icon:risk} in it (cancelled {icon:risk}
       counts).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091281
-    m_Localized: 'Now: +{value} {icon:subs} if the stream is scored.'
+    m_Localized: 'Now: +{value} {icon:cash} if the stream is scored.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091282
@@ -1526,12 +1529,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091286
     m_Localized: Old money, old opinions. Each point makes Sub Cap upgrades {per}
-      {icon:cash} cheaper in your next shop. After a scored stream, each Boomer in
-      chat has a {retire}% chance to log off for good (they leave your Audience).
+      {icon:influence} cheaper in your next shop. After a scored stream, each Boomer
+      in chat has a {retire}% chance to log off for good (they leave your Audience).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
-    m_Localized: 'Now: Sub Cap upgrades {value} {icon:cash} cheaper next shop.'
+    m_Localized: 'Now: Sub Cap upgrades {value} {icon:influence} cheaper next shop.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091288
@@ -1540,8 +1543,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091289
     m_Localized: Very online, waiting on the inheritance. Each time a Boomer leaves
-      your Audience, a random Millennial you own earns +1 {icon:cash} for good, once
-      per point (at least once).
+      your Audience, a random Millennial you own earns +1 {icon:influence} for good,
+      once per point (at least once).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
@@ -1554,8 +1557,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091292
     m_Localized: 'Chaotic. When the stream is scored, two separate rolls, each with
-      a {per}% chance per point ({top}% at {max} points): +{subs} {icon:subs}, and
-      -{cash} {icon:cash}.'
+      a {per}% chance per point ({top}% at {max} points): +{cash} {icon:cash}, and
+      -{influence} {icon:influence}.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091293
@@ -1598,7 +1601,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091302
-    m_Localized: '{viewer} works for free tonight ({cash} waived).'
+    m_Localized: '{viewer} works for free tonight ({influence} waived).'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091303
@@ -1606,7 +1609,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091304
-    m_Localized: '{viewer}''s {icon:cash} reward doubles ({cash}).'
+    m_Localized: '{viewer}''s {icon:influence} reward doubles ({influence}).'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091305
@@ -1647,18 +1650,19 @@ MonoBehaviour:
       with them. Every point makes the bonus bigger. Watch the <b>Community Beats</b>
       beside the chat and hover any community icon to see exactly what it does:\n{icon:CoreFanbase}
       <b>Core Fanbase</b>: 10% per point (up to 30%) that a Core Fanbase viewer scores
-      twice.\n{icon:Staff} <b>Staff</b>: +1 {icon:cash} per point (up to 3) when
-      the stream is scored.\n{icon:Boomer} <b>Boomers</b>: Sub Cap upgrades cost
-      1 {icon:cash} less per point in your next shop; after a stream each Boomer
-      has a 10% chance to leave your Audience for good.\n{icon:Millennial} <b>Millennials</b>:
-      when a Boomer leaves, a random Millennial you own earns +1 {icon:cash} for
-      good, once per point.\n{icon:GenZ} <b>Gen-Z</b>: after a stream, each Gen-Z
-      viewer grows +1 {icon:subs} or {icon:cash} for good per point (up to 2).\n{icon:Gatekeepers}
-      <b>Gatekeepers</b>: one more removal per point this stream.\n{icon:HypeMen}
-      <b>Hype Men</b>: 10 / 20% that a Server Down stream still scores.\n{icon:Trolls}
-      <b>Troll Army</b>: when the stream is scored, +2 {icon:subs} for every point
-      of {icon:risk} in it (cancelled {icon:risk} counts).\n{icon:Voyeurs} <b>Voyeurs</b>:
-      one more peek per point this stream (up to 1).'
+      twice.\n{icon:Staff} <b>Staff</b>: +1 {icon:influence} per point (up to 3)
+      when the stream is scored.\n{icon:Boomer} <b>Boomers</b>: Sub Cap upgrades
+      cost 1 {icon:influence} less per point in your next shop; after a stream each
+      Boomer has a 10% chance to leave your Audience for good.\n{icon:Millennial}
+      <b>Millennials</b>: when a Boomer leaves, a random Millennial you own earns
+      +1 {icon:influence} for good, once per point.\n{icon:GenZ} <b>Gen-Z</b>: after
+      a stream, each Gen-Z viewer grows +1 {icon:cash} or {icon:influence} for good
+      per point (up to 2).\n{icon:Gatekeepers} <b>Gatekeepers</b>: one more removal
+      per point this stream.\n{icon:HypeMen} <b>Hype Men</b>: 10 / 20% that a Server
+      Down stream still scores.\n{icon:Trolls} <b>Troll Army</b>: when the stream
+      is scored, +2 {icon:cash} for every point of {icon:risk} in it (cancelled {icon:risk}
+      counts).\n{icon:Voyeurs} <b>Voyeurs</b>: one more peek per point this stream
+      (up to 1).'
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656
@@ -1668,12 +1672,12 @@ MonoBehaviour:
   - m_Id: 736682367467520
     m_Localized: Everyone wants a piece. Each viewer outside the {icon:CoreFanbase}
       Core Fanbase has a {per}% chance per point ({top}% at {max} points) to bring
-      +{subs} {icon:subs} more, every time they score.
+      +{cash} {icon:cash} more, every time they score.
     m_Metadata:
       m_Items: []
   - m_Id: 736682367467521
     m_Localized: 'Now: {value}% for each viewer outside the Core Fanbase to bring
-      one more {icon:subs}.'
+      one more {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 736682367467522
@@ -1705,7 +1709,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736682367467528
-    m_Localized: '{viewer} brings extra clout: {subs}.'
+    m_Localized: '{viewer} brings extra clout: {cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 736682367467529
@@ -1732,8 +1736,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123028570112
     m_Localized: Start weak, grow fast. After a scored stream, each Gen-Z viewer
-      in chat gains +1 {icon:subs} or +1 {icon:cash} for good (at random), once per
-      point (up to {max}).
+      in chat gains +1 {icon:cash} or +1 {icon:influence} for good (at random), once
+      per point (up to {max}).
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570113
@@ -1826,11 +1830,11 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123028570133
     m_Localized: Friends in the shop. When the stream is scored, each point makes
-      your first recruit in the next shop cost 1 {icon:subs} less (up to {max}).
+      your first recruit in the next shop cost 1 {icon:cash} less (up to {max}).
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570134
-    m_Localized: 'Now: your next recruit costs {value} {icon:subs} less.'
+    m_Localized: 'Now: your next recruit costs {value} {icon:cash} less.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570135
@@ -1839,11 +1843,11 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123028570136
     m_Localized: Multiplayer. When the stream is scored, each point makes every rival's
-      next recruit cost 1 {icon:subs} more (up to {max}).
+      next recruit cost 1 {icon:cash} more (up to {max}).
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570137
-    m_Localized: 'Now: rivals'' next recruit costs {value} {icon:subs} more.'
+    m_Localized: 'Now: rivals'' next recruit costs {value} {icon:cash} more.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513152
@@ -1863,15 +1867,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513156
-    m_Localized: Sub Cap upgrades cost {value} {icon:cash} less in this shop.
+    m_Localized: Sub Cap upgrades cost {value} {icon:influence} less in this shop.
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513157
-    m_Localized: Your next recruit costs {value} {icon:subs} less.
+    m_Localized: Your next recruit costs {value} {icon:cash} less.
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513158
-    m_Localized: Your rivals' next recruit costs {value} {icon:subs} more.
+    m_Localized: Your rivals' next recruit costs {value} {icon:cash} more.
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513159
@@ -1879,7 +1883,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513160
-    m_Localized: '{viewer} inherits {cash} for good.'
+    m_Localized: '{viewer} inherits {influence} for good.'
     m_Metadata:
       m_Items: []
   - m_Id: 2431123679961088
@@ -1891,12 +1895,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431123721904129
-    m_Localized: You removed {viewer} from your Audience for good (-{cash} {icon:cash}).
+    m_Localized: You removed {viewer} from your Audience for good (-{influence} {icon:influence}).
     m_Metadata:
       m_Items: []
   - m_Id: 2431123721904130
-    m_Localized: '{player} removed {viewer} from their Audience for good (-{cash}
-      {icon:cash}).'
+    m_Localized: '{player} removed {viewer} from their Audience for good (-{influence}
+      {icon:influence}).'
     m_Metadata:
       m_Items: []
   - m_Id: 2838162222702592
@@ -1912,17 +1916,73 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5311984024772608
-    m_Localized: Bark at Chat! Viewers carrying {icon:risk} earn +{count} {icon:subs}
+    m_Localized: Bark at Chat! Viewers carrying {icon:risk} earn +{count} {icon:cash}
       this stream.
     m_Metadata:
       m_Items: []
   - m_Id: 5311984024772609
     m_Localized: 'Soft Landing is on: if this stream gets deplatformed, you keep
-      half its {icon:subs}.'
+      half its {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 5311984037355520
     m_Localized: You need at least one great stream in a row first.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683522310144
+    m_Localized: Cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683551670272
+    m_Localized: Influence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683551670273
+    m_Localized: '{icon:cash} {value}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683551670274
+    m_Localized: '{value} {icon:influence}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864576
+    m_Localized: Grows +1 {icon:influence} per entrance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864577
+    m_Localized: No {icon:cash} tonight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864578
+    m_Localized: Double {icon:influence}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864579
+    m_Localized: '{icon:cash} to {icon:influence}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864580
+    m_Localized: '{icon:influence} to {icon:cash}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864581
+    m_Localized: '{viewer} will turn their {icon:cash} into {icon:influence} tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864582
+    m_Localized: '{viewer}''s printed {icon:influence} are doubled tonight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864583
+    m_Localized: '{viewer} now earns {total} more for good.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864584
+    m_Localized: Needs {0} {icon:cash}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864585
+    m_Localized: Needs {0} {icon:influence}.
     m_Metadata:
       m_Items: []
   references:

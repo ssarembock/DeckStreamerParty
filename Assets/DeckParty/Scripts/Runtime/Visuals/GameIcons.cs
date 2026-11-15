@@ -10,9 +10,9 @@ namespace DeckParty
     /// <summary>The key resources. Shown as icons everywhere; hovering one names it.</summary>
     public enum ResourceIcon
     {
-        /// <summary>Subs a viewer brings in, banked as Gifted Subs.</summary>
-        Subs,
+        /// <summary>Cash a viewer brings in, banked as Cash.</summary>
         Cash,
+        Influence,
         /// <summary>Deplatform Risk.</summary>
         Risk,
         /// <summary>Plays (were Diamonds): the viewers that win the game, four in one stream.</summary>
@@ -22,9 +22,9 @@ namespace DeckParty
     /// <summary>
     /// Resource and community icons, as Image sprites and as inline TextMeshPro sprites.
     /// <para>
-    /// Strings write icons as tokens: <c>{icon:subs}</c>, <c>{icon:cash}</c>, <c>{icon:risk}</c> or <c>{icon:CoreFanbase}</c> (any
-    /// <see cref="Community"/> name). <see cref="Loc"/> expands them into <c>&lt;sprite="dp_icons" name="cash"&gt;</c>, and the
-    /// sprite asset behind that tag is built here at runtime from your art: resources from the UI Skin (IconPop, IconCash,
+    /// Strings write icons as tokens: <c>{icon:cash}</c>, <c>{icon:influence}</c>, <c>{icon:risk}</c> or <c>{icon:CoreFanbase}</c> (any
+    /// <see cref="Community"/> name). <see cref="Loc"/> expands them into <c>&lt;sprite="dp_icons" name="influence"&gt;</c>, and the
+    /// sprite asset behind that tag is built here at runtime from your art: resources from the UI Skin (IconCash, IconInfluence,
     /// IconTrouble), communities from the Game Database (Stream Art > Community Icons). Until art is assigned, tinted
     /// placeholders stand in.
     /// </para>
@@ -34,8 +34,8 @@ namespace DeckParty
         /// <summary>The sprite asset name used in tags (resolved through <see cref="TMP_Text.OnSpriteAssetRequest"/>).</summary>
         public const string AssetName = "dp_icons";
 
-        const string SubsId = "subs";
         const string CashId = "cash";
+        const string InfluenceId = "influence";
         const string RiskId = "risk";
         const string PlaysId = "plays";
 
@@ -44,7 +44,7 @@ namespace DeckParty
         static Sprite[] s_CommunityPlaceholders;
 
         public static string Id(ResourceIcon icon) =>
-            icon == ResourceIcon.Cash ? CashId : icon == ResourceIcon.Risk ? RiskId : icon == ResourceIcon.Plays ? PlaysId : SubsId;
+            icon == ResourceIcon.Influence ? InfluenceId : icon == ResourceIcon.Risk ? RiskId : icon == ResourceIcon.Plays ? PlaysId : CashId;
 
         public static string Id(Community community) => community.ToString();
 
@@ -75,7 +75,7 @@ namespace DeckParty
         }
 
         public static Color ResourceColor(ResourceIcon icon) =>
-            icon == ResourceIcon.Cash ? UIPalette.Green : icon == ResourceIcon.Risk ? UIPalette.Red : UIPalette.Gold;
+            icon == ResourceIcon.Influence ? UIPalette.Green : icon == ResourceIcon.Risk ? UIPalette.Red : UIPalette.Gold;
 
         /// <summary>True when the UI Skin slot holds your own art (not the generated white placeholder shape).</summary>
         public static bool HasArt(ResourceIcon icon) => !IsPlaceholder(Sprite(icon));
@@ -144,10 +144,10 @@ namespace DeckParty
         }
 
         static SkinSlot SlotOf(ResourceIcon icon) =>
-            icon == ResourceIcon.Cash ? SkinSlot.IconCash : icon == ResourceIcon.Risk ? SkinSlot.IconTrouble
-            : icon == ResourceIcon.Plays ? SkinSlot.IconStar : SkinSlot.IconPop;
+            icon == ResourceIcon.Influence ? SkinSlot.IconInfluence : icon == ResourceIcon.Risk ? SkinSlot.IconTrouble
+            : icon == ResourceIcon.Plays ? SkinSlot.IconStar : SkinSlot.IconCash;
 
-        /// <summary>The white placeholder shapes Build Everything puts in the UI Skin (icon_pop, icon_cash, icon_trouble, icon_star).</summary>
+        /// <summary>The white placeholder shapes Build Everything puts in the UI Skin (icon_pop = the sparkle on Cash, icon_cash = the coin on Influence, icon_trouble, icon_star; file names kept from before the 2026-11-15 rename).</summary>
         static bool IsPlaceholder(Sprite sprite)
         {
             if (sprite == null || sprite == RuntimeSprites.Circle) return true;
@@ -165,14 +165,17 @@ namespace DeckParty
         /// <summary>A resource amount for prices and wallets: the icon, then the number ("[icon] 5").</summary>
         public static string Amount(ResourceIcon icon, int value) => Tag(icon) + " " + value;
 
-        /// <summary>Expands an icon token's name ("cash", "subs", "risk" or a community name) into its tag, or null if unknown.</summary>
+        /// <summary>Expands an icon token's name ("cash", "influence", "risk", "plays" or a community name) into its tag, or null if unknown.</summary>
         public static string TagFor(string id)
         {
             switch (id)
             {
-                case SubsId:
-                case "gifted_subs": return Tag(ResourceIcon.Subs);
-                case CashId: return Tag(ResourceIcon.Cash);
+                case CashId:
+                // Older names of Cash in text (it was Clout / Subs / Gifted Subs until 2026-11-15).
+                case "subs":
+                case "gifted_subs":
+                case "cash_banked": return Tag(ResourceIcon.Cash);
+                case InfluenceId: return Tag(ResourceIcon.Influence);
                 case RiskId: return Tag(ResourceIcon.Risk);
                 case PlaysId:
                 case "play":
@@ -194,8 +197,8 @@ namespace DeckParty
         {
             switch (id)
             {
-                case SubsId: return Loc.Get("hud.tip.gifted_subs");
-                case CashId: return Loc.Get("hud.tip.cash");
+                case CashId: return Loc.Get("hud.tip.cash_banked");
+                case InfluenceId: return Loc.Get("hud.tip.influence");
                 case RiskId: return Loc.Get("hud.tip.risk_term", "max", GameRules.RaidTroubleThreshold);
                 case PlaysId: return Loc.Get("hud.tip.plays_term", "goal", GameRules.DiamondsToWin);
             }
@@ -233,8 +236,8 @@ namespace DeckParty
         {
             var entries = new List<(string id, Sprite sprite)>
             {
-                (SubsId, Sprite(ResourceIcon.Subs)),
                 (CashId, Sprite(ResourceIcon.Cash)),
+                (InfluenceId, Sprite(ResourceIcon.Influence)),
                 (RiskId, Sprite(ResourceIcon.Risk)),
                 (PlaysId, Sprite(ResourceIcon.Plays)),
             };

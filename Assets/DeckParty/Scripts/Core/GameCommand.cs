@@ -14,7 +14,7 @@ namespace DeckParty.Core
         ResolveAttraction = 9,
         /// <summary>Use your streamer's active power (shop phase only). TargetA = the rival's player index for rival powers, -1 for automatic.</summary>
         UseStreamerPower = 10,
-        /// <summary>Shop: pay Cash to remove a viewer from your Audience for good. TargetA = the viewer's instance id.</summary>
+        /// <summary>Shop: pay Influence to remove a viewer from your Audience for good. TargetA = the viewer's instance id.</summary>
         RemoveGuest = 11,
     }
 
@@ -40,7 +40,7 @@ namespace DeckParty.Core
         public static GameCommand ExpandHouse() => Simple(CommandType.ExpandHouse);
         public static GameCommand StartNextNight() => Simple(CommandType.StartNextNight);
 
-        /// <summary>Shop: remove this viewer card from your Audience for good (it costs Cash).</summary>
+        /// <summary>Shop: remove this viewer card from your Audience for good (it costs Influence).</summary>
         public static GameCommand RemoveGuest(int guestId)
         {
             var command = Simple(CommandType.RemoveGuest);

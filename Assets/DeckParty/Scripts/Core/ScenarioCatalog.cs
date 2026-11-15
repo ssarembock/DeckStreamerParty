@@ -59,7 +59,7 @@ namespace DeckParty.Core
                     GuestType.PrecociousYouth,
                 }),
             new ScenarioDefinition(1, "Clickbait Roulette", "Big risks, bigger numbers",
-                "Risky collaborators and hate-watchers pay well, the Master of Currency cashes in on every one of them, and Gen-Z grows while the Junior PR Manager keeps chat moving.",
+                "Risky collaborators and hate-watchers pay well, the Master of Currency influences in on every one of them, and Gen-Z grows while the Junior PR Manager keeps chat moving.",
                 "city_irl", new[]
                 {
                     GuestType.RiskyOrbiter, GuestType.DieHardFan, GuestType.SocialMediaManager, GuestType.JuniorPrManager, GuestType.CybersecurityEngineer,
@@ -86,7 +86,7 @@ namespace DeckParty.Core
                     GuestType.ClippoTheClanker, GuestType.SeniorMarketingManager,
                 }),
             new ScenarioDefinition(4, "Algorithm Magic", "One perfect stream",
-                "Gatekeepers everywhere: kick, kick again and let the Distraught Cat cash in. Generous Donators and Online Scandals keep the chat full for the Platform Owner and the Internet Starpower.",
+                "Gatekeepers everywhere: kick, kick again and let the Distraught Cat profit. Generous Donators and Online Scandals keep the chat full for the Platform Owner and the Internet Starpower.",
                 "cursed_stream", new[]
                 {
                     GuestType.BillionaireBenefactor, GuestType.OnlineJournalist, GuestType.GenerousDonator, GuestType.BotDetector, GuestType.Gatekeeper,

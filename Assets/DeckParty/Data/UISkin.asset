@@ -85,23 +85,23 @@ MonoBehaviour:
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
-  - name: IconPop
+  - name: IconCash
     slot: 10
-    sprite: {fileID: 21300000, guid: 3e3a23a9b1cfb184786c32e531bb1644, type: 3}
+    sprite: {fileID: -5782373066700672596, guid: 5ef61ae07992c3e42a631f6f13366e7c, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
-  - name: IconCash
+  - name: IconInfluence
     slot: 11
-    sprite: {fileID: -5782373066700672596, guid: 5ef61ae07992c3e42a631f6f13366e7c, type: 3}
+    sprite: {fileID: 5259797187536515068, guid: 3e3a23a9b1cfb184786c32e531bb1644, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconTrouble
     slot: 12
-    sprite: {fileID: 3480350768097531997, guid: 89c5e8e60b74f1e489198750850a232f, type: 3}
+    sprite: {fileID: 3480350768097531997, guid: fdd7bae8046d9f745a5ac74ddef3e2b3, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -295,20 +295,20 @@ MonoBehaviour:
     pixelsPerUnitMultiplier: 1.75
     overrideColor: 1
     color: {r: 0.07058824, g: 0.07058824, b: 0.078431375, a: 1}
-  - name: FramePop
+  - name: FrameCash
     slot: 40
     sprite: {fileID: 21300000, guid: ca4ebe5aa006e624eb01053f6af7faba, type: 3}
     imageType: 1
     pixelsPerUnitMultiplier: 1.75
     overrideColor: 1
-    color: {r: 0.27450982, g: 0.6901961, b: 0.8862745, a: 1}
-  - name: FrameCash
+    color: {r: 0.38431373, g: 0.77254903, b: 0.27450982, a: 1}
+  - name: FrameInfluence
     slot: 41
     sprite: {fileID: 21300000, guid: ca4ebe5aa006e624eb01053f6af7faba, type: 3}
     imageType: 1
     pixelsPerUnitMultiplier: 1.75
     overrideColor: 1
-    color: {r: 0.38431373, g: 0.77254903, b: 0.27450982, a: 1}
+    color: {r: 0.27450982, g: 0.6901961, b: 0.8862745, a: 1}
   - name: FrameStars
     slot: 42
     sprite: {fileID: 21300000, guid: ca4ebe5aa006e624eb01053f6af7faba, type: 3}
@@ -667,14 +667,6 @@ MonoBehaviour:
     missing: 0
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
-  - id: Game/GameCanvas/TopBar/Fill/Centre/Pop/Value
-    label: Centre > Pop > Value
-    group: Menu bar
-    sample: 0
-    source: Game scene
-    missing: 0
-    overrideColor: 1
-    color: {r: 0.21960784, g: 0.61960787, b: 0.827451, a: 1}
   - id: Game/GameCanvas/TopBar/Fill/Centre/Cash/Value
     label: Centre > Cash > Value
     group: Menu bar
@@ -683,6 +675,14 @@ MonoBehaviour:
     missing: 0
     overrideColor: 1
     color: {r: 0.3529412, g: 0.80784315, b: 0.23529412, a: 1}
+  - id: Game/GameCanvas/TopBar/Fill/Centre/Influence/Value
+    label: Centre > Influence > Value
+    group: Menu bar
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 1
+    color: {r: 0.21960784, g: 0.61960787, b: 0.827451, a: 1}
   - id: Game/GameCanvas/TopBar/Fill/Centre/Stars/Value
     label: Centre > Stars > Value
     group: Menu bar
@@ -1667,6 +1667,7 @@ MonoBehaviour:
     missing: 0
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  textColourRevision: 1
   shop:
     buttons:
     - name: Power

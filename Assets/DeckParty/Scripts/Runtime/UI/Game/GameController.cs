@@ -865,7 +865,7 @@ namespace DeckParty.UI
             {
                 var p = players[i];
                 if (p.ClientId == LocalId || !p.Connected || p.Finished) continue;
-                options.Add(Loc.Get("power.rival_option", "player", p.DisplayName, "cash", p.Cash));
+                options.Add(Loc.Get("power.rival_option", "player", p.DisplayName, "influence", p.Influence));
                 indexes.Add(i);
             }
             if (options.Count <= 1)
@@ -885,7 +885,7 @@ namespace DeckParty.UI
 
         // ------------------------------------------------------------------ shop: Remove a Viewer
 
-        /// <summary>Remove a Viewer: pick one of your viewer cards, confirm, and it leaves your Audience for good (it costs Cash).</summary>
+        /// <summary>Remove a Viewer: pick one of your viewer cards, confirm, and it leaves your Audience for good (it costs Influence).</summary>
         void OpenRemovePicker()
         {
             var s = State;
@@ -904,7 +904,7 @@ namespace DeckParty.UI
             var ids = new List<int>();
             foreach (var g in s.Rolodex)
                 if (!g.Temporary) ids.Add(g.Id);
-            string price = GameIcons.Amount(ResourceIcon.Cash, PartyEngine.RemovalCost(s));
+            string price = GameIcons.Amount(ResourceIcon.Influence, PartyEngine.RemovalCost(s));
             picker.Open(Loc.Get("pick.remove_title", "cost", price), Loc.Get("pick.remove_hint", "min", GameRules.MinAudience), s, ids, pick =>
             {
                 var chosen = State?.Find(pick);
@@ -957,8 +957,8 @@ namespace DeckParty.UI
                 case AbilityKind.Mood:
                     return Loc.Get("help.mood");
                 case AbilityKind.Invest:
-                    return Loc.Get("help.invest", ("subs", GameRules.StonksInvestPop), ("cash", GameRules.StonksInvestCash), ("mult", GameRules.StonksMultiplier),
-                        ("have_subs", s.Pop), ("have_cash", s.Cash));
+                    return Loc.Get("help.invest", ("cash", GameRules.StonksInvestCash), ("influence", GameRules.StonksInvestInfluence), ("mult", GameRules.StonksMultiplier),
+                        ("have_cash", s.Cash), ("have_influence", s.Influence));
                 case AbilityKind.Reroll:
                 {
                     var last = PartyEngine.CanReroll(s) ? s.Find(s.LastRandomArrival) : null;
@@ -980,8 +980,8 @@ namespace DeckParty.UI
             for (int i = 0; i < count; i++) enabled[i] = true;
             if (kind == AbilityKind.Invest && count >= 2)
             {
-                enabled[0] = s.Pop >= GameRules.StonksInvestPop;
-                enabled[1] = s.Cash >= GameRules.StonksInvestCash;
+                enabled[0] = s.Cash >= GameRules.StonksInvestCash;
+                enabled[1] = s.Influence >= GameRules.StonksInvestInfluence;
             }
             else if (kind == AbilityKind.Reroll && count >= 2)
             {
@@ -1102,11 +1102,11 @@ namespace DeckParty.UI
                 case AbilityKind.Pirouette:
                     return m_Picks.Count == 0 ? Loc.Get("target.pirouette_first", "actor", who) : Loc.Get("target.pirouette_second", "actor", who, "first", first);
                 case AbilityKind.Drake:
-                    return m_Picks.Count == 0 ? Loc.Get("target.drake_first", "actor", who) : Loc.Get(m_Option == 0 ? "target.drake_second_subs" : "target.drake_second_cash", "actor", who);
+                    return m_Picks.Count == 0 ? Loc.Get("target.drake_first", "actor", who) : Loc.Get(m_Option == 0 ? "target.drake_second_cash" : "target.drake_second_influence", "actor", who);
                 case AbilityKind.Bombard:
                     return Loc.Get("target.bombard", "actor", who);
                 case AbilityKind.Photograph: return Loc.Get("target.photograph", "actor", who);
-                case AbilityKind.Style: return Loc.Get("target.style", "actor", who, "cap", GameRules.PermanentCashCap);
+                case AbilityKind.Style: return Loc.Get("target.style", "actor", who, "cap", GameRules.PermanentInfluenceCap);
                 case AbilityKind.BootPair:
                     return m_Picks.Count == 0 ? Loc.Get("target.bot_pair_first", "actor", who) : Loc.Get("target.bot_pair_second", "actor", who, "first", first);
                 default: return Loc.Get("target.default", "actor", who);
@@ -1292,11 +1292,11 @@ namespace DeckParty.UI
             }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            // Testing aid: F9 grants Gifted Subs and Cash in single player (never in release builds or multiplayer).
+            // Testing aid: F9 grants Cash and Influence in single player (never in release builds or multiplayer).
             if (InputHelper.Pressed(HotKey.F9) && m_Session is LocalGameSession debugSession)
             {
                 debugSession.DebugGrant(50, 10);
-                ToastView.Show($"Debug: +50 {GameIcons.Tag(ResourceIcon.Subs)}, +10 {GameIcons.Tag(ResourceIcon.Cash)}", ToastKind.Info);
+                ToastView.Show($"Debug: +50 {GameIcons.Tag(ResourceIcon.Cash)}, +10 {GameIcons.Tag(ResourceIcon.Influence)}", ToastKind.Info);
                 return;
             }
 #endif

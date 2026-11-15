@@ -12,7 +12,7 @@ namespace DeckParty.Core
     {
         /// <summary>
         /// v2: meme roster, per-guest party modifiers, ordered waiting line. v3: streamers and their powers.
-        /// v4: audience classics (permanent Cash, Hate-Watcher mood, Softball Interview) and the shared shop.
+        /// v4: audience classics (permanent Influence, Hate-Watcher mood, Softball Interview) and the shared shop.
         /// v5: rival Doomsdayers. v6: Bots in flight. v7: V5 communities (extra action uses, shop perks, Mods shield, Saboteurs)
         /// and each card's action use count. v8: Remove a Viewer purchases. v9: the match's player count (shared shop stack size).
         /// v10: what the new streamer actives armed for this stream (extra Sub Cap, Bark at Chat, Soft Landing).
@@ -35,8 +35,8 @@ namespace DeckParty.Core
                 for (int i = 0; i < s.Shop.Count; i++) w.Write((byte)s.Shop[i]);
 
                 w.Write(s.Night);
-                w.Write(s.Pop);
                 w.Write(s.Cash);
+                w.Write(s.Influence);
                 w.Write(s.Capacity);
                 w.Write(s.Expansions);
 
@@ -52,26 +52,26 @@ namespace DeckParty.Core
                 WriteIds(w, s.Excluded);
                 WriteIds(w, s.UsedAbilities);
                 w.Write(s.PeekedId);
-                w.Write(s.PartyPop);
                 w.Write(s.PartyCash);
-                w.Write(s.InvestPop);
+                w.Write(s.PartyInfluence);
                 w.Write(s.InvestCash);
+                w.Write(s.InvestInfluence);
                 w.Write((byte)s.LastActionCategory);
                 w.Write(s.LastRandomArrival);
                 w.Write(s.AttractionActor);
                 WriteIds(w, s.AttractionCandidates);
 
                 w.Write((byte)s.LastOutcome);
-                w.Write(s.LastPop);
                 w.Write(s.LastCash);
+                w.Write(s.LastInfluence);
                 w.Write(s.LastDiamonds);
                 w.Write(s.LastPenalty);
                 w.Write(s.LastBlamedId);
                 WriteIds(w, s.RaidSuspects);
 
                 w.Write(s.BestDiamonds);
-                w.Write(s.TotalPopEarned);
                 w.Write(s.TotalCashEarned);
+                w.Write(s.TotalInfluenceEarned);
                 w.Write(s.SuccessfulParties);
                 w.Write(s.Raids);
                 w.Write(s.FireMarshals);
@@ -164,8 +164,8 @@ namespace DeckParty.Core
                 for (int i = 0; i < shopCount; i++) s.Shop.Add(ReadType(r));
 
                 s.Night = r.ReadInt32();
-                s.Pop = r.ReadInt32();
                 s.Cash = r.ReadInt32();
+                s.Influence = r.ReadInt32();
                 s.Capacity = r.ReadInt32();
                 s.Expansions = r.ReadInt32();
 
@@ -181,26 +181,26 @@ namespace DeckParty.Core
                 ReadIds(r, s.Excluded);
                 ReadIds(r, s.UsedAbilities);
                 s.PeekedId = r.ReadInt32();
-                s.PartyPop = r.ReadInt32();
                 s.PartyCash = r.ReadInt32();
-                s.InvestPop = r.ReadInt32();
+                s.PartyInfluence = r.ReadInt32();
                 s.InvestCash = r.ReadInt32();
+                s.InvestInfluence = r.ReadInt32();
                 s.LastActionCategory = (ActionCategory)r.ReadByte();
                 s.LastRandomArrival = r.ReadInt32();
                 s.AttractionActor = r.ReadInt32();
                 ReadIds(r, s.AttractionCandidates);
 
                 s.LastOutcome = (PartyOutcome)r.ReadByte();
-                s.LastPop = r.ReadInt32();
                 s.LastCash = r.ReadInt32();
+                s.LastInfluence = r.ReadInt32();
                 s.LastDiamonds = r.ReadInt32();
                 s.LastPenalty = r.ReadInt32();
                 s.LastBlamedId = r.ReadInt32();
                 ReadIds(r, s.RaidSuspects);
 
                 s.BestDiamonds = r.ReadInt32();
-                s.TotalPopEarned = r.ReadInt32();
                 s.TotalCashEarned = r.ReadInt32();
+                s.TotalInfluenceEarned = r.ReadInt32();
                 s.SuccessfulParties = r.ReadInt32();
                 s.Raids = r.ReadInt32();
                 s.FireMarshals = r.ReadInt32();
@@ -309,19 +309,19 @@ namespace DeckParty.Core
         {
             w.Write(g.Id);
             w.Write((byte)g.Type);
-            w.Write((short)g.BonusPop);
+            w.Write((short)g.BonusCash);
             w.Write((byte)g.TrolledCount);
             w.Write((byte)g.StrikeCount);
             w.Write(g.Temporary);
 
-            w.Write((short)g.PartyPop);
             w.Write((short)g.PartyCash);
+            w.Write((short)g.PartyInfluence);
             w.Write((short)g.PartyTrouble);
             w.Write(g.TroubleCleared);
             w.Write(g.Disguise);
             w.Write(g.HasCopy);
-            w.Write((short)g.CopyPop);
             w.Write((short)g.CopyCash);
+            w.Write((short)g.CopyInfluence);
             w.Write(g.HasOverride);
             w.Write((short)g.PrintedOverride);
             w.Write(g.Infected);
@@ -342,19 +342,19 @@ namespace DeckParty.Core
             {
                 Id = r.ReadInt32(),
                 Type = ReadType(r),
-                BonusPop = r.ReadInt16(),
+                BonusCash = r.ReadInt16(),
                 TrolledCount = r.ReadByte(),
                 StrikeCount = r.ReadByte(),
                 Temporary = r.ReadBoolean(),
 
-                PartyPop = r.ReadInt16(),
                 PartyCash = r.ReadInt16(),
+                PartyInfluence = r.ReadInt16(),
                 PartyTrouble = r.ReadInt16(),
                 TroubleCleared = r.ReadBoolean(),
                 Disguise = r.ReadByte(),
                 HasCopy = r.ReadBoolean(),
-                CopyPop = r.ReadInt16(),
                 CopyCash = r.ReadInt16(),
+                CopyInfluence = r.ReadInt16(),
                 HasOverride = r.ReadBoolean(),
                 PrintedOverride = r.ReadInt16(),
                 Infected = r.ReadBoolean(),
@@ -376,16 +376,16 @@ namespace DeckParty.Core
         /// <summary>Per-guest fields added in v4, written after the v3 block (same guest order as the Audience).</summary>
         static void WriteGuestV4(BinaryWriter w, GuestInstance g)
         {
-            w.Write((short)g.BonusCash);
+            w.Write((short)g.BonusInfluence);
             w.Write(g.Wolf);
-            w.Write(g.SubsMuted);
+            w.Write(g.CashMuted);
         }
 
         static void ReadGuestV4(BinaryReader r, GuestInstance g)
         {
-            g.BonusCash = r.ReadInt16();
+            g.BonusInfluence = r.ReadInt16();
             g.Wolf = r.ReadBoolean();
-            g.SubsMuted = r.ReadBoolean();
+            g.CashMuted = r.ReadBoolean();
         }
 
         static GuestType ReadType(BinaryReader r)

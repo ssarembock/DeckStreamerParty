@@ -10,7 +10,7 @@ namespace DeckParty.EditorTools
 {
     /// <summary>
     /// Builds Assets/DeckParty/Scenes/Game.unity in the V5 "streaming website" look: a light page with a white rounded menu bar
-    /// floating at the top (the animated platform logo, then stream, Clout, Cash, Sub Cap, risk and Plays as icons and numbers in
+    /// floating at the top (the animated platform logo, then stream, Cash, Influence, Sub Cap, risk and Plays as icons and numbers in
     /// sections, then the Audience and Menu icon buttons). During a stream the page shows the Stream Chat window (black border,
     /// a title, round viewer avatars and a footer picture), the Add Viewer and End the Stream buttons under it, and beside it a
     /// channel column (the facecam with the LIVE badge, and the Community Beats panel). The shop is two white cards: the
@@ -215,7 +215,7 @@ namespace DeckParty.EditorTools
         /// <summary>
         /// The menu bar: a plain white rectangle along the top edge of the screen, the full width of the screen, with a black
         /// border along its bottom edge (both from UI Skin > Site Colours > Menu bar). The platform logo and the stream count sit
-        /// on the left; Clout, Cash and Trophies (one icon and "in chat / needed to win") are centred on the screen; Audience
+        /// on the left; Cash, Influence and Trophies (one icon and "in chat / needed to win") are centred on the screen; Audience
         /// (with the number of viewers still in the queue) and Menu sit on the right. Every item sits in a rounded frame of the same
         /// height, centred on the bar. Sections are split by short grey lines. The Deplatform Risk pips are in the Stream Chat's
         /// title band (see <see cref="BuildStream"/>).
@@ -242,11 +242,11 @@ namespace DeckParty.EditorTools
             Separator(left, "Sep1");
             var night = Stat(left, "Night", EditorUI.Night, SkinSlot.IconNight, SkinSlot.FrameNight, SitePalette.Text, 190, out var nightIcon, out var nightTip);
 
-            // Centre of the screen: Clout, Cash and Trophies (the Sub Cap count is gone: the chat's seats show it).
+            // Centre of the screen: Cash, Influence and Trophies (the Sub Cap count is gone: the chat's seats show it).
             var centre = BarGroup(bar, "Centre", 0.5f, 0f);
-            var pop = Stat(centre, "Pop", EditorUI.Sparkle, SkinSlot.IconPop, SkinSlot.FramePop, UIPalette.Gold, 170, out var popIcon, out _);
+            var cash = Stat(centre, "Cash", EditorUI.Sparkle, SkinSlot.IconCash, SkinSlot.FrameCash, UIPalette.Gold, 170, out var cashIcon, out _);
             Separator(centre, "Sep2");
-            var cash = Stat(centre, "Cash", EditorUI.Coin, SkinSlot.IconCash, SkinSlot.FrameCash, UIPalette.Green, 162, out var cashIcon, out _);
+            var influence = Stat(centre, "Influence", EditorUI.Coin, SkinSlot.IconInfluence, SkinSlot.FrameInfluence, UIPalette.Green, 162, out var influenceIcon, out _);
             Separator(centre, "Sep3");
             var stars = Stat(centre, "Stars", EditorUI.Star, SkinSlot.IconStar, SkinSlot.FrameStars, UIPalette.Gold, 158, out var starsIcon, out var starsTip);
 
@@ -271,10 +271,10 @@ namespace DeckParty.EditorTools
             view.nightTooltip = nightTip;
             view.nightIcon = nightIcon;
             view.capacityIcon = null;
-            view.popLabel = pop;
-            view.popIcon = popIcon;
             view.cashLabel = cash;
             view.cashIcon = cashIcon;
+            view.influenceLabel = influence;
+            view.influenceIcon = influenceIcon;
             view.capacityLabel = null;
             view.troubleLabel = null;
             // The risk pips, their block and tooltip are set by Build (they're in the Stream Chat's title band).
@@ -907,7 +907,7 @@ namespace DeckParty.EditorTools
         }
 
         /// <summary>
-        /// The price just above a shop button (the Cash icon and the amount; PlanningView writes it and turns it red when you
+        /// The price just above a shop button (the Influence icon and the amount; PlanningView writes it and turns it red when you
         /// can't afford it, in the shop's text colour otherwise).
         /// </summary>
         static TextMeshProUGUI CostLabel(Button button)

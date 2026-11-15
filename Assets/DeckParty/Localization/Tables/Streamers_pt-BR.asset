@@ -138,7 +138,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 496189467
     m_Localized: "Na sua pr\xF3xima live, espectadores com {icon:risk} ganham +2
-      {icon:subs}."
+      {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -158,7 +158,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189472
-    m_Localized: "Na sua pr\xF3xima live, cada espectador ganha +1 {icon:subs}."
+    m_Localized: "Na sua pr\xF3xima live, cada espectador ganha +1 {icon:cash}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189473
@@ -178,7 +178,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189477
-    m_Localized: "O rival mais rico te paga at\xE9 2 {icon:cash}."
+    m_Localized: "O rival mais influente te paga at\xE9 2 {icon:influence}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189478
@@ -199,7 +199,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 496189482
     m_Localized: "Se sua pr\xF3xima live for desplataformizada, voc\xEA ainda fica
-      com metade dos {icon:subs} dela."
+      com metade dos {icon:cash} dela."
     m_Metadata:
       m_Items: []
   - m_Id: 496189483
@@ -261,7 +261,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189497
-    m_Localized: "Ganhe +1 {icon:subs} por cada \xF3tima live seguida (m\xE1x. +5).
+    m_Localized: "Ganhe +1 {icon:cash} por cada \xF3tima live seguida (m\xE1x. +5).
       Uma live fracassada zera a sequ\xEAncia."
     m_Metadata:
       m_Items: []
@@ -440,7 +440,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189541
-    m_Localized: '{player} ({cash} {icon:cash})'
+    m_Localized: '{player} ({influence} {icon:influence})'
     m_Metadata:
       m_Items: []
   - m_Id: 496189542

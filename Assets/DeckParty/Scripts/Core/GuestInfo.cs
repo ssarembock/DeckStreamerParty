@@ -12,8 +12,8 @@ namespace DeckParty.Core
         public readonly bool Purchasable;
         public readonly bool IsDiamond;
         public readonly GuestCategory Category;
-        public readonly int Pop;
         public readonly int Cash;
+        public readonly int Influence;
         public readonly bool Trouble;
         public readonly bool CancelsTrouble;
         public readonly int Brings;
@@ -29,8 +29,8 @@ namespace DeckParty.Core
             int cost,
             GuestCategory category,
             string description,
-            int pop = 0,
             int cash = 0,
+            int influence = 0,
             bool trouble = false,
             bool diamond = false,
             bool cancels = false,
@@ -46,8 +46,8 @@ namespace DeckParty.Core
             Cost = cost;
             Category = category;
             Description = description;
-            Pop = pop;
             Cash = cash;
+            Influence = influence;
             Trouble = trouble;
             IsDiamond = diamond;
             CancelsTrouble = cancels;
@@ -146,10 +146,10 @@ namespace DeckParty.Core
             switch (kind)
             {
                 case AbilityKind.Mood: return new[] { "Happy", "Sad", "Angry" };
-                case AbilityKind.Invest: return new[] { "Invest 2 Subs", "Invest 1 $" };
+                case AbilityKind.Invest: return new[] { "Invest 2 Cash", "Invest 1 $" };
                 case AbilityKind.Reroll: return new[] { "Reroll", "Peek" };
-                case AbilityKind.Drake: return new[] { "Double Subs", "Double $" };
-                case AbilityKind.Convert: return new[] { "Subs to $", "$ to Subs" };
+                case AbilityKind.Drake: return new[] { "Double Cash", "Double $" };
+                case AbilityKind.Convert: return new[] { "Cash to $", "$ to Cash" };
                 default: return null;
             }
         }

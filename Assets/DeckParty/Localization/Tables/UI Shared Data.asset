@@ -2115,6 +2115,22 @@ MonoBehaviour:
     m_Key: shopbtn.go_live
     m_Metadata:
       m_Items: []
+  - m_Id: 5322685007093760
+    m_Key: hud.tip.cash_banked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685065814016
+    m_Key: hud.tip.influence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685065814017
+    m_Key: score.tag.influence_double
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322685065814018
+    m_Key: target.drake_second_influence
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

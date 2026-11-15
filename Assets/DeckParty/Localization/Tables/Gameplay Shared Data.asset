@@ -1795,6 +1795,62 @@ MonoBehaviour:
     m_Key: err.power_no_streak
     m_Metadata:
       m_Items: []
+  - m_Id: 5322683522310144
+    m_Key: term.cash_banked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683551670272
+    m_Key: term.influence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683551670273
+    m_Key: fmt.cash_banked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683551670274
+    m_Key: fmt.influence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864576
+    m_Key: card.grows_influence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864577
+    m_Key: status.no_cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864578
+    m_Key: status.double_influence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864579
+    m_Key: status.cash_to_influence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864580
+    m_Key: status.influence_to_cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864581
+    m_Key: log.convert_influence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864582
+    m_Key: log.doubled_influence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864583
+    m_Key: log.influence_boosted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864584
+    m_Key: err.needs_cash_banked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5322683555864585
+    m_Key: err.needs_influence
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

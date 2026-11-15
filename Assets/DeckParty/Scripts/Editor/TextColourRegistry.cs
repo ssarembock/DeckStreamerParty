@@ -76,12 +76,46 @@ namespace DeckParty.EditorTools
             }
         }
 
+        /// <summary>
+        /// Objects the builders renamed, by revision (old path, new path). Each revision runs once per UI Skin and renames the
+        /// saved entries, so the colours you set follow the texts. The pairs of one revision are applied together.
+        /// </summary>
+        static readonly (string from, string to)[][] s_Renamed =
+        {
+            // 1 (2026-11-15): the resources were renamed. Clout's counter "Pop" is now "Cash"; the old "Cash" is now "Influence".
+            new[]
+            {
+                ("Game/GameCanvas/TopBar/Fill/Centre/Cash/", "Game/GameCanvas/TopBar/Fill/Centre/Influence/"),
+                ("Game/GameCanvas/TopBar/Fill/Centre/Pop/", "Game/GameCanvas/TopBar/Fill/Centre/Cash/"),
+            },
+        };
+
+        /// <summary>Renames the saved entries for any revision this UI Skin hasn't had yet.</summary>
+        static void MigrateIds(UISkin skin)
+        {
+            if (skin.textColours == null || skin.textColourRevision >= s_Renamed.Length) return;
+            for (int revision = skin.textColourRevision; revision < s_Renamed.Length; revision++)
+                foreach (var entry in skin.textColours)
+                {
+                    if (entry == null || string.IsNullOrEmpty(entry.id)) continue;
+                    foreach (var (from, to) in s_Renamed[revision])
+                        if (entry.id.StartsWith(from, System.StringComparison.Ordinal))
+                        {
+                            entry.id = to + entry.id.Substring(from.Length);
+                            break;
+                        }
+                }
+            skin.textColourRevision = s_Renamed.Length;
+            EditorUtility.SetDirty(skin);
+        }
+
         /// <summary>Merges what a build found into the UI Skin's list, keeping your colours.</summary>
         static void Commit(string source, List<TextColourEntry> found)
         {
             var skin = Skin();
             if (skin == null) return;
             skin.EnsureAllSlots();
+            MigrateIds(skin);
             var old = new Dictionary<string, TextColourEntry>();
             foreach (var entry in skin.textColours)
                 if (entry != null && !string.IsNullOrEmpty(entry.id)) old[entry.id] = entry;
@@ -179,7 +213,7 @@ namespace DeckParty.EditorTools
             return "Other";
         }
 
-        /// <summary>The text's place under the root, root included ("GameCanvas/TopBar/Fill/Centre/Pop/Value").</summary>
+        /// <summary>The text's place under the root, root included ("GameCanvas/TopBar/Fill/Centre/Cash/Value").</summary>
         static string PathOf(Transform t, Transform root)
         {
             var parts = new List<string>();
@@ -191,7 +225,7 @@ namespace DeckParty.EditorTools
             return string.Join("/", parts);
         }
 
-        /// <summary>The last few levels of its place, readable ("Centre > Pop > Value"), skipping the panels' inner fills.</summary>
+        /// <summary>The last few levels of its place, readable ("Centre > Cash > Value"), skipping the panels' inner fills.</summary>
         static string LabelOf(Transform t, Transform root)
         {
             var parts = new List<string>();

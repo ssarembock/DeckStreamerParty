@@ -54,13 +54,13 @@ namespace DeckParty.EditorTools
             using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {
                 EditorGUILayout.LabelField("Prices above the buttons", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("The Cash icon and amount above Use, Raise Sub Cap and Remove a Viewer.", s_Faint);
+                EditorGUILayout.LabelField("The Influence icon and amount above the streamer active, Raise Sub Cap and Remove a Viewer.", s_Faint);
                 EditorGUILayout.PropertyField(shop.FindPropertyRelative("costSize"), new GUIContent("Font size", "0: the built-in size (26)."));
                 EditorGUILayout.PropertyField(shop.FindPropertyRelative("costGap"), new GUIContent("Gap above the button",
                     "Pixels between the price and the top of its button. -1: the built-in gap (6)."));
                 EditorGUILayout.PropertyField(shop.FindPropertyRelative("costColour"), new GUIContent("Colour", "Unticked: the shop's text colour."));
                 EditorGUILayout.PropertyField(shop.FindPropertyRelative("costTooExpensive"), new GUIContent("Colour when too expensive",
-                    "When you don't have enough Cash. Unticked: red."));
+                    "When you don't have enough Influence. Unticked: red."));
             }
 
             EditorGUILayout.Space(2);
@@ -234,11 +234,11 @@ namespace DeckParty.EditorTools
             EditorGUILayout.LabelField("Found: " + (found.Length > 0 ? found.ToString() : "nothing"), s_Wrap);
             EditorGUILayout.LabelField("Not in this card (fine if you don't want them): " + (missing.Length > 0 ? missing.ToString() : "none"), s_Faint);
 
-            if (!parts[ShopCardPart.Part.Clout] && !parts[ShopCardPart.Part.Cash] && ShopCardTemplate.StatsText(card) != null)
+            if (!parts[ShopCardPart.Part.Cash] && !parts[ShopCardPart.Part.Influence] && ShopCardTemplate.StatsText(card) != null)
             {
-                EditorGUILayout.HelpBox("This card's Stats is one text with icons for Clout, Cash and Risk. New templates split it into " +
-                                        "a Clout number and a Cash number instead (no icons; the Risk Badge shows Risk).", MessageType.Info);
-                if (GUILayout.Button("Split Stats into Clout and Cash"))
+                EditorGUILayout.HelpBox("This card's Stats is one text with icons for Cash, Influence and Risk. New templates split it into " +
+                                        "a Cash number and an Influence number instead (no icons; the Risk Badge shows Risk).", MessageType.Info);
+                if (GUILayout.Button("Split Stats into Cash and Influence"))
                     EditorApplication.delayCall += () => ShopCardTemplate.SplitStats(card);
             }
             if (!parts[ShopCardPart.Part.Background])

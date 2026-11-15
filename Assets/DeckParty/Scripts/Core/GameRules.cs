@@ -41,11 +41,11 @@ namespace DeckParty.Core
         /// <summary>Copies in each shared stack for a match of this many players.</summary>
         public static int SharedStock(int players) => Math.Max(SharedStockPerGuest, StockPerPlayer * Math.Max(1, players));
 
-        /// <summary>Highest printed Cash permanent bonuses can raise a viewer to (Affiliate's Checkout Code, Gen Z with Job).</summary>
-        public const int PermanentCashCap = 9;
+        /// <summary>Highest printed Influence permanent bonuses can raise a viewer to (Affiliate's Checkout Code, Gen Z with Job).</summary>
+        public const int PermanentInfluenceCap = 9;
 
-        /// <summary>Gifted Subs lost for every Cash a party cannot pay.</summary>
-        public const int CashShortfallPopPenalty = 7;
+        /// <summary>Cash lost for every Influence a party cannot pay.</summary>
+        public const int InfluenceShortfallCashPenalty = 7;
 
         /// <summary>Most viewer cards in one chat row: past this the chat starts a new row (more only once cards hit their minimum size).</summary>
         public const int HouseColumns = 8;
@@ -57,8 +57,8 @@ namespace DeckParty.Core
         public const int WojakPerSufferer = 2;
         public const int WojakMaxBonus = 6;
         public const int NyanMaxPerArrival = 6;
-        public const int StonksInvestPop = 2;
-        public const int StonksInvestCash = 1;
+        public const int StonksInvestCash = 2;
+        public const int StonksInvestInfluence = 1;
         public const int StonksMultiplier = 3;
         public const int ForeverAloneSoloBonus = 10;
         public const int BigChungusCapacityBase = 10;
@@ -72,9 +72,9 @@ namespace DeckParty.Core
         public const int AttractionRevealCount = 3;
 
         // --- Audience classics tuning ---
-        /// <summary>Promo Code User: Cash when chat is full at scoring time (2026-11-10; it was +5 Subs).</summary>
-        public const int PromoCodeFullCash = 3;
-        /// <summary>Master of Currency ($) and Executive PR (Subs): bonus per viewer still carrying Deplatform Risk.</summary>
+        /// <summary>Promo Code User: Influence when chat is full at scoring time (2026-11-10; it was +5 Cash).</summary>
+        public const int PromoCodeFullInfluence = 3;
+        /// <summary>Master of Currency ($) and Executive PR (Cash): bonus per viewer still carrying Deplatform Risk.</summary>
         public const int PerRiskyViewerBonus = 2;
         /// <summary>PR Manager's Damage Control: random viewers sent back to the queue.</summary>
         public const int PrManagerSendBack = 5;
@@ -82,26 +82,26 @@ namespace DeckParty.Core
         // --- Group-scoring cards (viewer card edits, 2026-11-08) ---
         // The copies in chat score one total together, read from a table by how many are in chat (1 to 5), instead of
         // each copy scoring on its own. The original game's Dancer scored D squared each; Dancing Jen scores D squared in all.
-        static readonly int[] s_DancingJenClout = { 1, 4, 9, 16, 25 };
-        static readonly int[] s_CryptoEnthusiastCash = { 0, 1, 4, 9, 16 };
+        static readonly int[] s_DancingJenCash = { 1, 4, 9, 16, 25 };
+        static readonly int[] s_CryptoEnthusiastInfluence = { 0, 1, 4, 9, 16 };
 
         /// <summary>Copy limit (and shared shop stock) of the group-scoring cards, so the table's last step can be reached.</summary>
         public const int GroupCardMaxCopies = 5;
 
-        /// <summary>Dancing Jen: Clout (Subs) the whole group scores with this many Jens in chat (25 at most).</summary>
-        public static int DancingJenClout(int copies) => GroupStep(s_DancingJenClout, copies);
+        /// <summary>Dancing Jen: Cash (Cash) the whole group scores with this many Jens in chat (25 at most).</summary>
+        public static int DancingJenCash(int copies) => GroupStep(s_DancingJenCash, copies);
 
-        /// <summary>Crypto Enthusiast: Cash the whole group scores with this many in chat (nothing alone, 16 at most).</summary>
-        public static int CryptoEnthusiastCash(int copies) => GroupStep(s_CryptoEnthusiastCash, copies);
+        /// <summary>Crypto Enthusiast: Influence the whole group scores with this many in chat (nothing alone, 16 at most).</summary>
+        public static int CryptoEnthusiastInfluence(int copies) => GroupStep(s_CryptoEnthusiastInfluence, copies);
 
         /// <summary>The table as compact text for card stat lines ("1/4/9/16/25").</summary>
-        public static string DancingJenSteps => string.Join("/", s_DancingJenClout);
+        public static string DancingJenSteps => string.Join("/", s_DancingJenCash);
 
-        public static string CryptoEnthusiastSteps => string.Join("/", s_CryptoEnthusiastCash);
+        public static string CryptoEnthusiastSteps => string.Join("/", s_CryptoEnthusiastInfluence);
 
         static int GroupStep(int[] table, int copies) => copies <= 0 ? 0 : table[Math.Min(copies, table.Length) - 1];
 
-        /// <summary>Remove a Viewer (shop): the first removal costs this much Cash, every one after costs 1 more, up to the max.</summary>
+        /// <summary>Remove a Viewer (shop): the first removal costs this much Influence, every one after costs 1 more, up to the max.</summary>
         public const int FirstRemovalCost = 2;
         public const int MaxRemovalCost = 12;
         /// <summary>Remove a Viewer can't take your Audience below this many viewer cards.</summary>
@@ -110,8 +110,8 @@ namespace DeckParty.Core
         public static int RemovalCost(int removalsBought) => Math.Min(FirstRemovalCost + Math.Max(0, removalsBought), MaxRemovalCost);
 
         /// <summary>
-        /// When true, guest fees are paid from banked Cash before the Gifted Subs penalty applies.
-        /// When false, only the party's own Cash income can cover fees.
+        /// When true, guest fees are paid from banked Influence before the Cash penalty applies.
+        /// When false, only the party's own Influence income can cover fees.
         /// </summary>
         public static readonly bool FeesDrawFromBank = true;
 

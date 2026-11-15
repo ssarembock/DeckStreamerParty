@@ -7,7 +7,7 @@ namespace DeckParty.Core
     {
         Party = 0,      // Doors are open.
         RaidBlame = 1,  // The stream got deplatformed; choose who gets the Temporary Ban.
-        Planning = 2,   // Spend Gifted Subs and Cash, then start the next night.
+        Planning = 2,   // Spend Cash and Influence, then start the next night.
         Victory = 3,
         Defeat = 4,
     }
@@ -40,8 +40,8 @@ namespace DeckParty.Core
         public GuestType Type;
 
         // Permanent
-        public int BonusPop;        // Permanent Subs change (Chad vs Virgin, Tung Tung, Bad Luck Brian).
-        public int BonusCash;       // Permanent Cash change (Affiliate's Checkout Code, Gen Z with Job's entrances).
+        public int BonusCash;        // Permanent Cash change (Chad vs Virgin, Tung Tung, Bad Luck Brian).
+        public int BonusInfluence;       // Permanent Influence change (Affiliate's Checkout Code, Gen Z with Job's entrances).
         public int TrolledCount;    // Times Trollface has trolled this guest.
         public int StrikeCount;     // Tung Tung Tung Sahur strikes so far (0-2).
         public bool Temporary;      // Ugandan Knuckles copy or a rival's Bot: vanishes when the party ends.
@@ -49,26 +49,26 @@ namespace DeckParty.Core
         public int ActionUses;      // Times this card's action has been used, ever (Junior PR Manager sends one more viewer each time).
 
         // Tonight only (cleared when the party ends)
-        public int PartyPop;               // Subs this guest gained tonight.
-        public int PartyCash;              // Cash this guest gained tonight.
+        public int PartyCash;               // Cash this guest gained tonight.
+        public int PartyInfluence;              // Influence this guest gained tonight.
         public int PartyTrouble;           // Extra Deplatform Risk added tonight.
         public bool TroubleCleared;        // Printed Deplatform Risk removed for the rest of the party.
-        public bool SubsMuted;             // Billionaire Benefactor's Softball Interview: earns 0 Subs tonight.
+        public bool CashMuted;             // Billionaire Benefactor's Softball Interview: earns 0 Cash tonight.
         public byte Disguise = NoDisguise; // Rickroll: the character this guest is pretending to be.
         public bool HasCopy;               // NPC Wojak copied stats.
-        public int CopyPop;
         public int CopyCash;
-        public bool HasOverride;           // Ballerina Cappuccina exchanged printed Subs.
+        public int CopyInfluence;
+        public bool HasOverride;           // Ballerina Cappuccina exchanged printed Cash.
         public int PrintedOverride;
         public bool Infected;              // Skibidi Toilet.
         public bool Zeroed;                // Drakeposting: earns nothing tonight.
-        public byte DoubleMode;            // Drakeposting: 1 doubles printed Subs, 2 doubles printed Cash.
-        public byte ConvertMode;           // Confused Math Lady: 1 Subs to Cash, 2 Cash to Subs.
+        public byte DoubleMode;            // Drakeposting: 1 doubles printed Cash, 2 doubles printed Influence.
+        public byte ConvertMode;           // Confused Math Lady: 1 Cash to Influence, 2 Influence to Cash.
         public bool Immune;                // Roll Safe.
         public int AttachedTo = -1;        // Overly Attached Girlfriend's partner (or AttachPending).
         public PepeMood Mood;
         public int Counter;                // Nyan chain / Bongo beat / Pop Cat action count.
-        public int Gained;                 // Dancing Baby combo Subs so far.
+        public int Gained;                 // Dancing Baby combo Cash so far.
         public bool ShieldUsed;            // Bad Luck Brian's once-per-party shield.
 
         /// <summary>The character this guest acts as tonight (differs from <see cref="Type"/> while Rickrolled).</summary>
@@ -84,15 +84,15 @@ namespace DeckParty.Core
 
         public void ResetParty()
         {
-            PartyPop = 0;
             PartyCash = 0;
+            PartyInfluence = 0;
             PartyTrouble = 0;
             TroubleCleared = false;
-            SubsMuted = false;
+            CashMuted = false;
             Disguise = NoDisguise;
             HasCopy = false;
-            CopyPop = 0;
             CopyCash = 0;
+            CopyInfluence = 0;
             HasOverride = false;
             PrintedOverride = 0;
             Infected = false;
@@ -122,11 +122,11 @@ namespace DeckParty.Core
 
         // Economy
         public int Night;
-        public int Pop;
         public int Cash;
+        public int Influence;
         public int Capacity = GameRules.StartingCapacity;
         public int Expansions;
-        /// <summary>Viewers removed for good with Remove a Viewer (each one makes the next cost 1 Cash more).</summary>
+        /// <summary>Viewers removed for good with Remove a Viewer (each one makes the next cost 1 Influence more).</summary>
         public int Removals;
 
         // Collection
@@ -143,10 +143,10 @@ namespace DeckParty.Core
         public readonly List<int> Excluded = new List<int>();
         public readonly List<int> UsedAbilities = new List<int>();
         public int PeekedId = -1;
-        public int PartyPop;
         public int PartyCash;
-        public int InvestPop;
+        public int PartyInfluence;
         public int InvestCash;
+        public int InvestInfluence;
         public ActionCategory LastActionCategory;
         public int LastRandomArrival = -1;
         public int AttractionActor = -1;
@@ -169,8 +169,8 @@ namespace DeckParty.Core
 
         // Last party summary
         public PartyOutcome LastOutcome;
-        public int LastPop;
         public int LastCash;
+        public int LastInfluence;
         public int LastDiamonds;
         public int LastPenalty;
         public int LastBlamedId = -1;
@@ -209,11 +209,11 @@ namespace DeckParty.Core
         public int PartyExtraRecruits;
         /// <summary>Voyeurs: extra peek-action uses already taken this stream.</summary>
         public int PartyExtraPeeks;
-        /// <summary>Boomers: Cash off every Sub Cap upgrade in this shop (set when a stream is scored, gone when the next starts).</summary>
+        /// <summary>Boomers: Influence off every Sub Cap upgrade in this shop (set when a stream is scored, gone when the next starts).</summary>
         public int ExpansionDiscount;
-        /// <summary>Shop Control: Clout off your first recruit in this shop (set when a stream is scored, gone when the next starts).</summary>
+        /// <summary>Shop Control: Cash off your first recruit in this shop (set when a stream is scored, gone when the next starts).</summary>
         public int RecruitDiscount;
-        /// <summary>Rival Saboteurs: Clout added to your next recruit (cleared by that purchase).</summary>
+        /// <summary>Rival Saboteurs: Cash added to your next recruit (cleared by that purchase).</summary>
         public int IncomingSabotage;
         /// <summary>Saboteurs points your last scored stream earned, waiting for the host to pass them to your rivals.</summary>
         public int SabotageOut;
@@ -223,17 +223,17 @@ namespace DeckParty.Core
         // Current stream: streamer power effects
         public int PartyHeat;          // Deplatform Risk from rivals' raids.
         public int PartyShield;        // Deplatform Risk ignored (Smoke Bomb).
-        public int PartyViewerBonus;   // Extra Subs per viewer (Giveaway).
+        public int PartyViewerBonus;   // Extra Cash per viewer (Giveaway).
         public int PartyFreeActions;   // Viewer actions that refresh after use (Double Move).
         public bool PartyXRay;         // The next viewers in the queue are visible (X-Ray Vision).
         public int PartySeats;         // Extra Sub Cap for this stream only (Three-Hour Episode); taken back off Capacity when it ends.
-        public int PartyBark;          // Extra Subs for each viewer carrying Risk (Bark at Chat).
-        public bool PartySoftLanding;  // A deplatformed stream still banks half its Subs (Soft Landing).
+        public int PartyBark;          // Extra Cash for each viewer carrying Risk (Bark at Chat).
+        public bool PartySoftLanding;  // A deplatformed stream still banks half its Cash (Soft Landing).
 
         // Stats
         public int BestDiamonds;
-        public int TotalPopEarned;
         public int TotalCashEarned;
+        public int TotalInfluenceEarned;
         public int SuccessfulParties;
         public int Raids;
         public int FireMarshals;

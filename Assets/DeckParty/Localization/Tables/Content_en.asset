@@ -41,7 +41,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274884
     m_Localized: Risky collaborators and hate-watchers pay well, a {icon:Boomer}
-      Boomer cashes in on every one of them, {icon:GenZ} Gen-Z grows and {icon:Voyeurs}
+      Boomer profits from every one of them, {icon:GenZ} Gen-Z grows and {icon:Voyeurs}
       Voyeurs peek at who's next.
     m_Metadata:
       m_Items: []
@@ -83,8 +83,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 433274893
     m_Localized: '{icon:Gatekeepers} Gatekeepers everywhere: kick, kick again and
-      cash in on every exit. {icon:HypeMen} Hype Men keep the chat full for two rare
-      {icon:plays}.'
+      profit from every exit. {icon:HypeMen} Hype Men keep the chat full for two
+      rare {icon:plays}.'
     m_Metadata:
       m_Items: []
   - m_Id: 433274894

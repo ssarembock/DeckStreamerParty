@@ -59,14 +59,14 @@ namespace DeckParty
         }
 
         /// <summary>
-        /// Testing aid (editor and development builds only): grants banked Gifted Subs and Cash outside the rules.
+        /// Testing aid (editor and development builds only): grants banked Cash and Influence outside the rules.
         /// Not available in multiplayer, where the host's engine is the only authority.
         /// </summary>
-        public void DebugGrant(int giftedSubs, int cash)
+        public void DebugGrant(int cashBanked, int influence)
         {
             if (State.IsGameOver) return;
-            State.Pop += giftedSubs;
-            State.Cash += cash;
+            State.Cash += cashBanked;
+            State.Influence += influence;
             SaveSystem.Save(State, m_VenueChoice);
             m_Events.Clear();
             StateChanged?.Invoke(State, m_Events);

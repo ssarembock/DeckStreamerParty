@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 3772219141239546779}
   - component: {fileID: 4400380463039730823}
   m_Layer: 5
-  m_Name: Cash
+  m_Name: Influence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1263,7 +1263,7 @@ GameObject:
   - component: {fileID: 6746434702129160099}
   - component: {fileID: 6130014704752294653}
   m_Layer: 5
-  m_Name: Clout
+  m_Name: Cash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

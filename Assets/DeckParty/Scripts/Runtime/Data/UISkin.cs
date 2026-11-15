@@ -22,8 +22,8 @@ namespace DeckParty
         SlotEmpty = 7,
         Badge = 8,
         Circle = 9,
-        IconPop = 10,
-        IconCash = 11,
+        IconCash = 10,
+        IconInfluence = 11,
         IconTrouble = 12,
         IconStar = 13,
         IconCancel = 14,
@@ -61,10 +61,10 @@ namespace DeckParty
         // The rounded frames around the menu bar's icons (one entry each, so each can have its own art and colour).
         /// <summary>The frame around the stream counter icon (left of the menu bar).</summary>
         FrameNight = 39,
-        /// <summary>The frame around the Clout icon in the menu bar.</summary>
-        FramePop = 40,
         /// <summary>The frame around the Cash icon in the menu bar.</summary>
-        FrameCash = 41,
+        FrameCash = 40,
+        /// <summary>The frame around the Influence icon in the menu bar.</summary>
+        FrameInfluence = 41,
         /// <summary>The frame around the Trophies icon in the menu bar.</summary>
         FrameStars = 42,
         /// <summary>The frame of the Audience button in the menu bar (its border).</summary>
@@ -139,6 +139,8 @@ namespace DeckParty
         [Tooltip("A colour for each text of the stream and shop. The list is filled when the scenes are rebuilt; tick an entry " +
                  "to give that text its own colour.")]
         public List<TextColourEntry> textColours = new List<TextColourEntry>();
+        /// <summary>Which renames of scene objects the Text Colours list has had (see TextColourRegistry; 1 = the 2026-11-15 resource renames).</summary>
+        [HideInInspector] public int textColourRevision;
 
         [Tooltip("The shop: its toolbar buttons (icon, text, shape), the prices above them and the viewer cards (your own card " +
                  "prefab, sizes, piles, colours). Empty or zero values keep the built-in look.")]

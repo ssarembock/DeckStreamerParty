@@ -342,7 +342,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670121132744704
-    m_Localized: '{0}''s Saboteurs make every rival''s next recruit cost {1} {icon:subs}
+    m_Localized: '{0}''s Saboteurs make every rival''s next recruit cost {1} {icon:cash}
       more!'
     m_Metadata:
       m_Items: []

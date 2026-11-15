@@ -68,7 +68,7 @@ namespace DeckParty.UI
                 for (int i = 0; !keepOrder && i < groups.Count; i++)
                 {
                     var other = groups[i].guest;
-                    if (other.Type == g.Type && other.BonusPop == g.BonusPop && other.StrikeCount == g.StrikeCount && other.Temporary == g.Temporary)
+                    if (other.Type == g.Type && other.BonusCash == g.BonusCash && other.StrikeCount == g.StrikeCount && other.Temporary == g.Temporary)
                     {
                         found = i;
                         break;

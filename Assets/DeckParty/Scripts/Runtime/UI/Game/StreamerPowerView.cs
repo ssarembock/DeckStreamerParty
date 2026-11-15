@@ -141,7 +141,7 @@ namespace DeckParty.UI
                 if (useCost != null)
                 {
                     useCost.text = StreamerVisuals.CostText(cost);
-                    useCost.color = ShopLook.CostColour(s.Cash >= cost, SiteColours.Get(SiteColourRole.Text, useCost.transform));
+                    useCost.color = ShopLook.CostColour(s.Influence >= cost, SiteColours.Get(SiteColourRole.Text, useCost.transform));
                 }
             }
             // Older scenes: just the price next to the icon; the words are in the tooltip.

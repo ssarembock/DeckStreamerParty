@@ -320,14 +320,14 @@ namespace DeckParty.UI
                 troubleIcon.color = trouble && live && !PartyEngine.HasTroubleProperty(state, guest) ? UIPalette.TextDim.WithAlpha(0.6f) : GameIcons.Tint(ResourceIcon.Risk);
             if (cancelBadge != null) cancelBadge.SetActive(live ? PartyEngine.CancelsTroubleNow(state, guest) : info.CancelsTrouble);
 
-            // Permanent upgrades: Subs (pink badge) first, otherwise Cash (Checkout Code, Gen Z with Job). Icons, not words.
-            int bonus = guest.BonusPop;
-            int bonusCash = guest.BonusCash;
-            if (bonusBadge != null) bonusBadge.SetActive(bonus != 0 || bonusCash != 0);
+            // Permanent upgrades: Cash (pink badge) first, otherwise Influence (Checkout Code, Gen Z with Job). Icons, not words.
+            int bonus = guest.BonusCash;
+            int bonusInfluence = guest.BonusInfluence;
+            if (bonusBadge != null) bonusBadge.SetActive(bonus != 0 || bonusInfluence != 0);
             if (bonusLabel != null)
                 bonusLabel.text = bonus != 0
-                    ? (bonus > 0 ? "+" : "") + bonus + GameIcons.Tag(ResourceIcon.Subs)
-                    : (bonusCash > 0 ? "+" : "") + bonusCash + GameIcons.Tag(ResourceIcon.Cash);
+                    ? (bonus > 0 ? "+" : "") + bonus + GameIcons.Tag(ResourceIcon.Cash)
+                    : (bonusInfluence > 0 ? "+" : "") + bonusInfluence + GameIcons.Tag(ResourceIcon.Influence);
 
             if (frame != null && avatarMode)
             {

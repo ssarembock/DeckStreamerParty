@@ -10,7 +10,7 @@ namespace DeckParty.UI
     /// <summary>
     /// The quick summary pop-up after a stream ("Great stream!") and, in multiplayer, after the shop: a white card with a black
     /// border, a short title and one column per player (their streamer's avatar, their name and streamer, then the key changes:
-    /// the result, Clout, Cash and Plays for a stream; recruits, Sub Cap, actives and resources for a shop), with grey lines
+    /// the result, Cash, Influence and Plays for a stream; recruits, Sub Cap, actives and resources for a shop), with grey lines
     /// between the columns. Close it with the button, a click outside, Space, Enter or Esc.
     /// </summary>
     public sealed class RecapView : MonoBehaviour, IPointerClickHandler

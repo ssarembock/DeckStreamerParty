@@ -27,15 +27,15 @@ namespace DeckParty.UI
             Name = 5,
             /// <summary>Text: what the viewer does (the card description).</summary>
             Description = 6,
-            /// <summary>Text: what the viewer scores, as icons and numbers (Clout, Cash, Risk).</summary>
+            /// <summary>Text: what the viewer scores, as icons and numbers (Cash, Influence, Risk).</summary>
             Stats = 7,
-            /// <summary>Text: the Clout the viewer scores (a number like +2).</summary>
-            Clout = 8,
-            /// <summary>Text: the Cash the viewer scores (a number like +1).</summary>
-            Cash = 9,
+            /// <summary>Text: the Cash the viewer scores (a number like +2). Objects named "Clout" (its old name) count too.</summary>
+            Cash = 8,
+            /// <summary>Text: the Influence the viewer scores (a number like +1).</summary>
+            Influence = 9,
             /// <summary>Text: the name of the viewer's action (empty when it has none).</summary>
             Action = 10,
-            /// <summary>Text: the price (the Clout icon and the number), red when you can't afford it.</summary>
+            /// <summary>Text: the price (the Cash icon and the number), red when you can't afford it.</summary>
             Price = 11,
             /// <summary>Text: how many are left to buy ("×3"; empty for Trophy viewers, which never run out).</summary>
             CopiesLeft = 12,
