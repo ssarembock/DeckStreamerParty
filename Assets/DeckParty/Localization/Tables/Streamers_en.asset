@@ -96,8 +96,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189457
-    m_Localized: 'Passive: start with +1 Sub Cap. Sub Cap upgrades cost 1 {icon:cash}
-      more.'
+    m_Localized: Your next stream has +1 Sub Cap.
     m_Metadata:
       m_Items: []
   - m_Id: 496189458
@@ -137,7 +136,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189467
-    m_Localized: 'Passive: viewers carrying {icon:risk} earn +1 {icon:subs}.'
+    m_Localized: In your next stream, viewers carrying {icon:risk} earn +2 {icon:subs}.
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -197,8 +196,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189482
-    m_Localized: 'Passive: when your stream gets deplatformed, you still bank half
-      that stream''s {icon:subs}.'
+    m_Localized: If your next stream gets deplatformed, you still bank half its {icon:subs}.
     m_Metadata:
       m_Items: []
   - m_Id: 496189483
@@ -260,8 +258,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189497
-    m_Localized: 'Passive: each great stream in a row earns +1, +2, +3... {icon:subs}
-      (max +5). A failed stream resets it.'
+    m_Localized: Gain +1 {icon:subs} for each great stream in a row (max +5). A failed
+      stream resets the streak.
     m_Metadata:
       m_Items: []
   - m_Id: 496189498

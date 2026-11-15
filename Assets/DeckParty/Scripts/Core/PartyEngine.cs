@@ -35,8 +35,6 @@ namespace DeckParty.Core
                 Night = 1,
                 Streamer = streamer,
             };
-            // Bro Jogan's Three-Hour Episode: one extra seat from the start.
-            if (streamer == StreamerType.BroJogan) s.Capacity += StreamerCatalog.BigStudioCapacity;
             s.Shop.AddRange(ScenarioCatalog.BuildShop(scenarioId, seed));
 
             foreach (var (type, count) in s_StartingAudience)
@@ -287,7 +285,8 @@ namespace DeckParty.Core
 
                 ApplyPassive(g, i, ctx, ref pop, ref cash);
                 pop += s.PartyViewerBonus;
-                if (s.Streamer == StreamerType.IRunFast && GuestTrouble(s, g) > 0) pop += 1;
+                // Bark at Chat (IRunFast, armed for this stream): viewers carrying Risk earn extra.
+                if (s.PartyBark > 0 && GuestTrouble(s, g) > 0) pop += s.PartyBark;
                 pop += g.PartyPop;
                 cash += g.PartyCash;
                 if (g.Infected) pop += InfectionPop;
@@ -528,7 +527,7 @@ namespace DeckParty.Core
 
         /// <summary>The next Sub Cap upgrade's price, after Boomers' discount for this shop.</summary>
         public static int ExpansionCost(PlayerState s) =>
-            Math.Max(0, GameRules.ExpansionCost(s.Expansions) + (s.Streamer == StreamerType.BroJogan ? StreamerCatalog.BigStudioUpgradeTax : 0) - s.ExpansionDiscount);
+            Math.Max(0, GameRules.ExpansionCost(s.Expansions) - s.ExpansionDiscount);
 
         /// <summary>
         /// What recruiting this viewer costs right now: its price, less your Shop Control discount and plus rival Saboteurs'
@@ -957,6 +956,11 @@ namespace DeckParty.Core
             s.PartyViewerBonus = 0;
             s.PartyFreeActions = 0;
             s.PartyXRay = false;
+            // Three-Hour Episode's extra seat was for that stream only.
+            if (s.PartySeats > 0) s.Capacity = Math.Max(1, s.Capacity - s.PartySeats);
+            s.PartySeats = 0;
+            s.PartyBark = 0;
+            s.PartySoftLanding = false;
             s.PartyInterviewUsed = false;
             s.PartyDoom = 0;
             s.PartyExtraEvictions = 0;
@@ -1952,13 +1956,8 @@ namespace DeckParty.Core
                 if (g != null && !g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Boomer)) boomers.Add(id);
             }
 
+            // Great streams in a row: Manim Maketh Man's Beautiful Sequence cashes it in from the shop.
             s.Streak++;
-            if (s.Streamer == StreamerType.ManimMakethMan)
-            {
-                int bonus = Math.Min(StreamerCatalog.StreakMaxBonus, s.Streak);
-                pop += bonus;
-                Emit(ev, GameEventType.StreakBonus, null, bonus, s.Streak);
-            }
 
             int unpaid;
             if (GameRules.FeesDrawFromBank)
@@ -2376,6 +2375,7 @@ namespace DeckParty.Core
                 if (s.IsFinalNight) return Err.Of("err.power_no_next");
             }
             if (s.Streamer == StreamerType.Palmane && PalSphereChoices(s).Count == 0) return Err.Of("err.power_no_pals");
+            if (s.Streamer == StreamerType.ManimMakethMan && s.Streak <= 0) return Err.Of("err.power_no_streak");
 
             int cost = StreamerCatalog.Cost(s);
             if (s.Cash < cost) return Err.Of("err.needs_cash", cost);
@@ -2421,6 +2421,14 @@ namespace DeckParty.Core
                 var type = choices[DeterministicRandom.Range(ref s.RngState, choices.Count)];
                 var g = AddGuest(s, type);
                 Emit(ev, GameEventType.PalCaught, g);
+            }
+            else if (s.Streamer == StreamerType.ManimMakethMan)
+            {
+                // Beautiful Sequence: +1 Subs for each great stream in a row (the streak itself carries on).
+                int bonus = Math.Min(StreamerCatalog.StreakMaxBonus, s.Streak);
+                s.Pop += bonus;
+                s.TotalPopEarned += bonus;
+                Emit(ev, GameEventType.StreakBonus, null, bonus, s.Streak);
             }
             return CommandResult.Success;
         }
@@ -2508,6 +2516,20 @@ namespace DeckParty.Core
                     s.PartyXRay = true;
                     Emit(ev, GameEventType.XRayActive, null, StreamerCatalog.XRayCount);
                     break;
+                case StreamerType.BroJogan:
+                    // Taken back off in ClearParty when the stream ends, however it ends.
+                    s.PartySeats = StreamerCatalog.EpisodeSeats;
+                    s.Capacity += s.PartySeats;
+                    Emit(ev, GameEventType.ExtraSeatActive, null, s.PartySeats);
+                    break;
+                case StreamerType.IRunFast:
+                    s.PartyBark = StreamerCatalog.BarkBonus;
+                    Emit(ev, GameEventType.BarkActive, null, s.PartyBark);
+                    break;
+                case StreamerType.SoftHardBodyMan:
+                    s.PartySoftLanding = true;
+                    Emit(ev, GameEventType.SoftLandingReady, null);
+                    break;
             }
         }
 
@@ -2519,10 +2541,10 @@ namespace DeckParty.Core
             Emit(ev, GameEventType.FreeActionUsed, s.Find(actorId));
         }
 
-        /// <summary>Soft Hard Body Man: a deplatformed stream still banks half its Subs.</summary>
+        /// <summary>Soft Hard Body Man's Soft Landing (armed for this stream): a deplatformed stream still banks half its Subs.</summary>
         static void SoftLanding(PlayerState s, List<GameEvent> ev)
         {
-            if (s.Streamer != StreamerType.SoftHardBodyMan) return;
+            if (!s.PartySoftLanding) return;
             ProjectScore(s, out int pop, out _);
             int banked = Math.Max(0, pop) / 2;
             if (banked <= 0) return;

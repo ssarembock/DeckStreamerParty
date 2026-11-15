@@ -13,7 +13,7 @@ Select the UI Skin (**Deck Party > Select UI Skin**) and open **Shop (buttons, p
 
 The section has three parts:
 
-- **Toolbar buttons:** one block per button (Use, Raise Sub Cap, Remove a Viewer, Go Live). The icon and text on each button are centred together.
+- **Toolbar buttons:** one block per button (Streamer active, Raise Sub Cap, Remove a Viewer, Go Live). The contents of each button are centred together. The Streamer active button, at the left end, shows the streamer's portrait and the active's icon, with no text by default.
 - **Prices above the buttons.**
 - **Viewer cards:** your own card prefab, the card sizes, the built-in card's shape and piles, and the card colours.
 
@@ -34,13 +34,13 @@ switched off in the scene. Switch it on to see the buttons while you work, and o
 | **Icon > Art** | Replaces the icon on this button only. Empty uses the icon entry further down the UI Skin. That entry may be shared with other places in the game. |
 | **Icon > Colour** | Tints the icon. Unticked, your own art keeps its colours. |
 | **Icon > Size** | The icon's width and height in pixels. |
-| **Text > Shows** | **Built In:** the game's numbers (+1 on Raise Sub Cap, -1 on Remove a Viewer; nothing on Go Live). **Words:** a short word in the player's language ("Use", "Sub Cap +1", "Remove", "Go Live"). **Custom:** your own text, the same in every language. **None:** only the icon, centred. |
+| **Text > Shows** | **Built In:** the game's numbers (+1 on Raise Sub Cap, -1 on Remove a Viewer; nothing on the Streamer active and Go Live). **Words:** a short word in the player's language ("Use", "Sub Cap +1", "Remove", "Go Live"). **Custom:** your own text, the same in every language. **None:** only the icon, centred. |
 | **Text > Colour / Font size** | The button's text. |
 | **Shape > Background art** | The button's shape. Use a 9-slice sprite (set its borders in the Sprite Editor) so the corners don't stretch. |
 | **Shape > Inside colour / Border colour / Border width** | The button's colours and outline. To show background art exactly as drawn, set Inside colour to white (ticked) and Border width to 0. |
-| **Shape > Size** | The button's width and height. The row makes room automatically, except for Use, which sits inside the streamer panel (330 px wide, with the portrait): keep it under about 210 px wide. |
+| **Shape > Size** | The button's width and height. The row makes room automatically. The Streamer active button holds the streamer's 76 px portrait as well as the icon, so keep it at least about 170 px wide. |
 
-Use and Go Live are filled with the site accent colour and have no border. Tick their Inside colour to change it.
+The Streamer active and Go Live buttons are filled with the site accent colour and have no border. Tick their Inside colour to change it. The portrait's ring is the **Avatar ring** entry in the UI Skin.
 
 The **Words** text for each button is in `Resources/Localization/AudienceCapture_Strings.csv`. The keys are
 `shopbtn.power`, `shopbtn.raise_cap`, `shopbtn.remove` and `shopbtn.go_live`. Edit the word in
@@ -48,7 +48,7 @@ all five languages.
 
 ## 3. Prices above the buttons
 
-Use, Raise Sub Cap and Remove a Viewer show their Cash price just above the button. The price turns red when you can't
+The Streamer active, Raise Sub Cap and Remove a Viewer show their Cash price just above the button. The price turns red when you can't
 afford it.
 
 | Setting | What it does |

@@ -19,7 +19,7 @@ namespace DeckParty.EditorTools
 
         static readonly (ShopButton button, string name, string where, SkinSlot icon)[] s_ShopButtons =
         {
-            (ShopButton.Power, "Use (streamer active)", "Beside the streamer's portrait at the left of the toolbar. Built-in text: \"Use\" in the player's language.", SkinSlot.IconAction),
+            (ShopButton.Power, "Streamer active", "At the left end of the toolbar: the streamer's portrait and the active's icon (hover it for the streamer and the power). Built-in text: none.", SkinSlot.IconAction),
             (ShopButton.RaiseSubCap, "Raise Sub Cap", "Built-in text: +1 (the Sub Cap when it's maxed).", SkinSlot.IconDoor),
             (ShopButton.RemoveViewer, "Remove a Viewer", "Built-in text: -1.", SkinSlot.IconRemoveViewer),
             (ShopButton.GoLive, "Go Live", "At the right end of the toolbar. Built-in text: none (just the icon).", SkinSlot.IconGoLive),

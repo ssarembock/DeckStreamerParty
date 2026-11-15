@@ -1779,6 +1779,22 @@ MonoBehaviour:
     m_Key: card.together
     m_Metadata:
       m_Items: []
+  - m_Id: 5311983949275136
+    m_Key: log.extra_seat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984024772608
+    m_Key: log.bark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984024772609
+    m_Key: log.soft_landing_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984037355520
+    m_Key: err.power_no_streak
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

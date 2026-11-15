@@ -15,8 +15,9 @@ namespace DeckParty.Core
         /// v4: audience classics (permanent Cash, Hate-Watcher mood, Softball Interview) and the shared shop.
         /// v5: rival Doomsdayers. v6: Bots in flight. v7: V5 communities (extra action uses, shop perks, Mods shield, Saboteurs)
         /// and each card's action use count. v8: Remove a Viewer purchases. v9: the match's player count (shared shop stack size).
+        /// v10: what the new streamer actives armed for this stream (extra Sub Cap, Bark at Chat, Soft Landing).
         /// </summary>
-        const byte FormatVersion = 9;
+        const byte FormatVersion = 10;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -120,6 +121,11 @@ namespace DeckParty.Core
 
                 // v9: players in the match (sizes the shared shop's stacks)
                 w.Write((byte)Math.Min(255, Math.Max(1, s.MatchPlayers)));
+
+                // v10: streamer actives that replaced the passives (Three-Hour Episode, Bark at Chat, Soft Landing)
+                w.Write((byte)Math.Min(255, Math.Max(0, s.PartySeats)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.PartyBark)));
+                w.Write(s.PartySoftLanding);
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -270,6 +276,14 @@ namespace DeckParty.Core
                 if (version >= 9)
                 {
                     s.MatchPlayers = Math.Max(1, (int)r.ReadByte());
+                }
+
+                // v9 and older saves predate the new streamer actives (nothing armed for this stream).
+                if (version >= 10)
+                {
+                    s.PartySeats = r.ReadByte();
+                    s.PartyBark = r.ReadByte();
+                    s.PartySoftLanding = r.ReadBoolean();
                 }
 
                 int eventCount = ReadCount(r);

@@ -81,8 +81,10 @@ namespace DeckParty.EditorTools
             var skin = (UISkin)target;
             int before = skin.entries.Count;
             int areasBefore = skin.siteColours != null && skin.siteColours.areas != null ? skin.siteColours.areas.Count : -1;
+            int shopRevision = skin.shop != null ? skin.shop.SavedRevision : -1;
             skin.EnsureAllSlots();
-            if (skin.entries.Count != before || skin.siteColours.areas.Count != areasBefore) EditorUtility.SetDirty(skin);
+            if (skin.entries.Count != before || skin.siteColours.areas.Count != areasBefore || skin.shop.SavedRevision != shopRevision)
+                EditorUtility.SetDirty(skin);
             foreach (SkinSlotGuide.Area area in System.Enum.GetValues(typeof(SkinSlotGuide.Area)))
                 m_Open[area] = area != SkinSlotGuide.Area.NotShown;
             m_Only = s_Focus;

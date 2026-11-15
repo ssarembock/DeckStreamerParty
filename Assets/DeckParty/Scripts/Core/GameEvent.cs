@@ -63,8 +63,8 @@ namespace DeckParty.Core
         ShieldApplied = 45,    // A = Deplatform Risk ignored this stream (Smoke Bomb)
         GiveawayActive = 46,   // A = extra Subs per viewer this stream
         PalCaught = 47,        // Guest = the viewer caught from the shop
-        SoftLanding = 48,      // A = Gifted Subs banked despite being deplatformed
-        StreakBonus = 49,      // A = bonus Subs, B = streak length
+        SoftLanding = 48,      // A = Gifted Subs banked despite being deplatformed (Soft Landing, armed for the stream)
+        StreakBonus = 49,      // A = bonus Subs, B = streak length (Beautiful Sequence, used in the shop)
         FreeActionUsed = 50,   // Guest = the viewer whose action refreshed (Double Move)
         XRayActive = 51,       // A = how many queued viewers are visible
         RaidReceived = 52,     // A = Deplatform Risk added to your next stream, B = raider's player index
@@ -102,6 +102,9 @@ namespace DeckParty.Core
         ShopPerk = 73,         // A stream earned a shop effect. A = Community (Boomer, ShopControl, Saboteurs), B = amount
         SentBack = 74,         // Junior PR Manager / PR Manager sent random viewers back to the queue. Guest = actor, A = count sent
         GuestDismissed = 75,   // Shop: Remove a Viewer took this viewer out of your Audience for good. Guest = the viewer (no longer owned), A = Cash paid
+        ExtraSeatActive = 76,  // Three-Hour Episode: A = extra Sub Cap this stream
+        BarkActive = 77,       // Bark at Chat: A = extra Subs for each viewer carrying Risk this stream
+        SoftLandingReady = 78, // Soft Landing is on for this stream (if it gets deplatformed, half its Subs are banked)
     }
 
     public struct GameEvent

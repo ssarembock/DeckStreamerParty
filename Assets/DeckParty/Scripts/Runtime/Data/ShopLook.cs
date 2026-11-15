@@ -36,7 +36,7 @@ namespace DeckParty
     /// <summary>What a shop button says beside its icon.</summary>
     public enum ShopButtonText
     {
-        /// <summary>The game's own: +1 (Sub Cap), -1 (Remove a Viewer), your Audience count; nothing on Use and Go Live.</summary>
+        /// <summary>The game's own: +1 (Sub Cap), -1 (Remove a Viewer); nothing on Use (the streamer and its icon) and Go Live.</summary>
         BuiltIn = 0,
         /// <summary>A short word in the player's language ("Use", "Sub Cap +1", "Remove", "Audience", "Go Live").</summary>
         Words = 1,
@@ -89,6 +89,13 @@ namespace DeckParty
     public sealed class ShopLook
     {
         public List<ShopButtonLook> buttons = new List<ShopButtonLook>();
+        /// <summary>Which one-time changes to the defaults this skin has had (see <see cref="EnsureAll"/>).</summary>
+        [SerializeField, HideInInspector] int revision;
+
+        /// <summary>1: the Use button no longer says "Use" by default (2026-11-15).</summary>
+        public const int Revision = 1;
+
+        public int SavedRevision => revision;
 
         [Header("Prices above the buttons")]
         [Tooltip("Font size of the price above Use, Sub Cap +1 and Remove a Viewer. 0: the built-in size.")]
@@ -154,22 +161,28 @@ namespace DeckParty
             return null;
         }
 
-        /// <summary>Adds a look for any button that has none (Use starts with Words, so it says "Use").</summary>
+        /// <summary>
+        /// Adds a look for any button that has none, and makes the one-time default changes this skin hasn't had yet:
+        /// revision 1 takes the "Use" word off the Use button (it shows the streamer and the icon instead).
+        /// </summary>
         public void EnsureAll()
         {
             if (buttons == null) buttons = new List<ShopButtonLook>();
             foreach (ShopButton button in Enum.GetValues(typeof(ShopButton)))
             {
                 var look = Get(button);
-                if (look == null)
-                {
-                    look = new ShopButtonLook { button = button };
-                    if (button == ShopButton.Power) look.text = ShopButtonText.Words;
-                    buttons.Add(look);
-                }
+                if (look == null) buttons.Add(look = new ShopButtonLook { button = button });
                 look.name = button.ToString();
             }
             buttons.Sort((a, b) => a.button.CompareTo(b.button));
+
+            if (revision < 1)
+            {
+                // The old default was Words ("Use"); your own Custom text or None stays as you set it.
+                var power = Get(ShopButton.Power);
+                if (power != null && power.text == ShopButtonText.Words) power.text = ShopButtonText.BuiltIn;
+            }
+            revision = Revision;
         }
 
         /// <summary>The translated word a button shows when its Text is Words.</summary>

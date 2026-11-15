@@ -19,6 +19,8 @@ namespace DeckParty.UI
         [Tooltip("The button's inside (the button's own image on filled buttons).")]
         [SerializeField] internal Image fill;
         [SerializeField] internal Image icon;
+        [Tooltip("Optional: a picture shown before the icon, centred with it (the streamer on the Use button).")]
+        [SerializeField] internal RectTransform lead;
         [SerializeField] internal TMP_Text label;
         [Tooltip("The price above the button (optional).")]
         [SerializeField] internal TMP_Text cost;
@@ -223,26 +225,32 @@ namespace DeckParty.UI
         const float IconTextGap = 10f;
 
         /// <summary>
-        /// Centres the icon and the text together on the button, as one group: the text's own width decides where the icon
-        /// goes. Text too long for the button shrinks to fit (never closer than <see cref="iconInset"/> to the sides).
+        /// Centres the button's contents together, as one group: the leading picture (if any), the icon, then the text. The
+        /// text's own width decides where the rest goes. Text too long for the button shrinks to fit (never closer than
+        /// <see cref="iconInset"/> to the sides).
         /// </summary>
         void Arrange(ShopButtonLook look, bool hasText)
         {
             var size = Size(look);
+            bool hasLead = lead != null && lead.gameObject.activeSelf;
             bool hasIcon = icon != null && icon.gameObject.activeSelf;
+            float leadSize = hasLead ? lead.sizeDelta.x : 0f;
             float iconSize = hasIcon ? icon.rectTransform.sizeDelta.x : 0f;
+            float leadGap = hasLead && (hasIcon || hasText) ? IconTextGap : 0f;
             float gap = hasIcon && hasText ? IconTextGap : 0f;
             float margin = Mathf.Max(0f, iconInset);
 
             float textWidth = 0f;
             if (hasText)
             {
-                float room = Mathf.Max(0f, size.x - 2f * margin - iconSize - gap);
+                float room = Mathf.Max(0f, size.x - 2f * margin - leadSize - leadGap - iconSize - gap);
                 float wanted = label.GetPreferredValues(label.text, float.PositiveInfinity, size.y).x + 2f;
                 textWidth = Mathf.Min(wanted, room);
             }
-            float start = Mathf.Max(0f, (size.x - (iconSize + gap + textWidth)) * 0.5f);
+            float start = Mathf.Max(0f, (size.x - (leadSize + leadGap + iconSize + gap + textWidth)) * 0.5f);
 
+            if (hasLead) Place(lead, new Vector2(0f, 0.5f), new Vector2(start, 0f), new Vector2(0f, 0.5f));
+            start += leadSize + leadGap;
             if (hasIcon) Place(icon.rectTransform, new Vector2(0f, 0.5f), new Vector2(start, 0f), new Vector2(0f, 0.5f));
             if (!hasText) return;
             var rect = label.rectTransform;

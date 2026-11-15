@@ -79,23 +79,26 @@ namespace DeckParty.Core
         public const int WealthTaxAmount = 2;
         public const int PalSphereMaxCost = 6;
         public const int XRayCount = 3;
+        /// <summary>Beautiful Sequence (Manim Maketh Man): Clout per great stream in a row, up to this much.</summary>
         public const int StreakMaxBonus = 5;
-        public const int BigStudioCapacity = 1;
-        public const int BigStudioUpgradeTax = 1;
+        /// <summary>Three-Hour Episode (Bro Jogan): extra Sub Cap for the next stream only.</summary>
+        public const int EpisodeSeats = 1;
+        /// <summary>Bark at Chat (IRunFast): extra Clout for each viewer carrying Risk in the next stream.</summary>
+        public const int BarkBonus = 2;
 
         static readonly StreamerInfo[] s_All =
         {
             new StreamerInfo(StreamerType.None, PowerKind.None),
             new StreamerInfo(StreamerType.Fate, PowerKind.Rival, cash: 1, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.BroJogan, PowerKind.Passive),
+            new StreamerInfo(StreamerType.BroJogan, PowerKind.NextStream, cash: 2, cashStep: 1, cooldown: 2),
             new StreamerInfo(StreamerType.Shinobi, PowerKind.NextStream, cash: 2, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.IRunFast, PowerKind.Passive),
+            new StreamerInfo(StreamerType.IRunFast, PowerKind.NextStream, cash: 2, cashStep: 1, cooldown: 2),
             new StreamerInfo(StreamerType.MrShark, PowerKind.NextStream, cash: 3, cashStep: 1, cooldown: 2),
             new StreamerInfo(StreamerType.EthicalFboi, PowerKind.Rival, cash: 1, cashStep: 1, cooldown: 2),
-            new StreamerInfo(StreamerType.SoftHardBodyMan, PowerKind.Passive),
+            new StreamerInfo(StreamerType.SoftHardBodyMan, PowerKind.NextStream, cash: 1, cashStep: 1),
             new StreamerInfo(StreamerType.StrategicAbomination, PowerKind.NextStream, cash: 2, cashStep: 1, cooldown: 2),
             new StreamerInfo(StreamerType.Palmane, PowerKind.Instant, cash: 2, cashStep: 1, cooldown: 3),
-            new StreamerInfo(StreamerType.ManimMakethMan, PowerKind.Passive),
+            new StreamerInfo(StreamerType.ManimMakethMan, PowerKind.Instant, cash: 1, cashStep: 1, cooldown: 2),
             new StreamerInfo(StreamerType.RudeRadiologist, PowerKind.NextStream, cash: 1, cashStep: 1),
         };
 

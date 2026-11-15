@@ -226,6 +226,9 @@ namespace DeckParty.Core
         public int PartyViewerBonus;   // Extra Subs per viewer (Giveaway).
         public int PartyFreeActions;   // Viewer actions that refresh after use (Double Move).
         public bool PartyXRay;         // The next viewers in the queue are visible (X-Ray Vision).
+        public int PartySeats;         // Extra Sub Cap for this stream only (Three-Hour Episode); taken back off Capacity when it ends.
+        public int PartyBark;          // Extra Subs for each viewer carrying Risk (Bark at Chat).
+        public bool PartySoftLanding;  // A deplatformed stream still banks half its Subs (Soft Landing).
 
         // Stats
         public int BestDiamonds;

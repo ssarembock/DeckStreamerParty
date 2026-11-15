@@ -80,8 +80,10 @@ namespace DeckParty.Networking
         /// deckparty-13: online platforms (Steam): players carry a platform user id, the approval payload has a fourth part.
         /// deckparty-14: card edits of 2026-11-10 (Fish / Whale, six communities retired, Staff and Troll Army rules, state format v9).
         /// deckparty-15: Core Fanbase 10% a point up to 30% (2026-11-10).
+        /// deckparty-16: every streamer has an active (Bro Jogan, IRunFast, Soft Hard Body Man and Manim Maketh Man lost their
+        /// passives; state format v10).
         /// </summary>
-        public const string ProtocolVersion = "deckparty-15";
+        public const string ProtocolVersion = "deckparty-16";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

@@ -1232,13 +1232,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606644
     m_Localized: "Antes de uma temporada voc\xEA <b>escolhe seu streamer</b>. Cada
-      um tem um poder: poderes <b>passivos</b> est\xE3o sempre ativos; poderes <b>ativos</b>
-      s\xE3o usados na loja depois da live (na sua vez), custam {icon:cash}, ficam
-      mais caros a cada uso (como aumentar o limite) e podem precisar de alguns turnos
-      pra recarregar. Poderes de <b>rival</b> (Raid, Imposto sobre fortunas) atingem
-      outro jogador, ent\xE3o s\xF3 funcionam no multijogador. Escolha <b>Sem streamer</b>
-      pra jogar com as regras cl\xE1ssicas. Seu streamer tamb\xE9m traz o pr\xF3prio
-      cen\xE1rio."
+      um tem um poder <b>ativo</b>: ele \xE9 usado na loja depois da live (na sua
+      vez), custa {icon:cash}, fica mais caro a cada uso (como aumentar o limite)
+      e pode precisar de alguns turnos pra recarregar. Poderes de <b>rival</b> (Raid,
+      Imposto sobre fortunas) atingem outro jogador, ent\xE3o s\xF3 funcionam no
+      multijogador. Escolha <b>Sem streamer</b> pra jogar com as regras cl\xE1ssicas.
+      Seu streamer tamb\xE9m traz o pr\xF3prio cen\xE1rio."
     m_Metadata:
       m_Items: []
   - m_Id: 483606645
@@ -1927,6 +1926,25 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2838162356920320
     m_Localized: '{value} em grupo'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311983949275136
+    m_Localized: "Epis\xF3dio de tr\xEAs horas! Esta live tem +{count} de limite
+      do chat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984024772608
+    m_Localized: Latir pro chat! Espectadores com {icon:risk} ganham +{count} {icon:subs}
+      nesta live.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984024772609
+    m_Localized: "Pouso suave ativado: se esta live for desplataformizada, voc\xEA
+      fica com metade dos {icon:subs} dela."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984037355520
+    m_Localized: "Primeiro voc\xEA precisa de pelo menos uma \xF3tima live seguida."
     m_Metadata:
       m_Items: []
   references:

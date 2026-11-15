@@ -276,6 +276,9 @@ namespace DeckParty.UI
                     case GameEventType.GiveawayActive:
                     case GameEventType.DoubleMoveActive:
                     case GameEventType.XRayActive:
+                    case GameEventType.ExtraSeatActive:
+                    case GameEventType.BarkActive:
+                    case GameEventType.SoftLandingReady:
                         Consider(Sfx.Notify, 4);
                         break;
                     case GameEventType.SoftLanding:

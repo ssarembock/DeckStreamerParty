@@ -97,8 +97,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189457
-    m_Localized: 'Passivo: comece com +1 de limite do chat. Aumentos de limite custam
-      1 {icon:cash} a mais.'
+    m_Localized: "Sua pr\xF3xima live tem +1 de limite do chat."
     m_Metadata:
       m_Items: []
   - m_Id: 496189458
@@ -138,7 +137,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189467
-    m_Localized: 'Passivo: espectadores com {icon:risk} ganham +1 {icon:subs}.'
+    m_Localized: "Na sua pr\xF3xima live, espectadores com {icon:risk} ganham +2
+      {icon:subs}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -198,7 +198,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189482
-    m_Localized: "Passivo: se sua live for desplataformizada, voc\xEA ainda fica
+    m_Localized: "Se sua pr\xF3xima live for desplataformizada, voc\xEA ainda fica
       com metade dos {icon:subs} dela."
     m_Metadata:
       m_Items: []
@@ -261,8 +261,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189497
-    m_Localized: "Passivo: cada \xF3tima live seguida d\xE1 +1, +2, +3... {icon:subs}
-      (m\xE1x. +5). Uma live fracassada zera a sequ\xEAncia."
+    m_Localized: "Ganhe +1 {icon:subs} por cada \xF3tima live seguida (m\xE1x. +5).
+      Uma live fracassada zera a sequ\xEAncia."
     m_Metadata:
       m_Items: []
   - m_Id: 496189498

@@ -96,8 +96,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189457
-    m_Localized: "Pasivo: empiezas con +1 de cupo del chat. Las mejoras de cupo cuestan
-      1 {icon:cash} m\xE1s."
+    m_Localized: "Tu pr\xF3ximo stream tiene +1 de cupo del chat."
     m_Metadata:
       m_Items: []
   - m_Id: 496189458
@@ -137,7 +136,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189467
-    m_Localized: 'Pasivo: los espectadores con {icon:risk} ganan +1 {icon:subs}.'
+    m_Localized: "En tu pr\xF3ximo stream, los espectadores con {icon:risk} ganan
+      +2 {icon:subs}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189468
@@ -197,8 +197,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189482
-    m_Localized: 'Pasivo: si te desplataforman, igual te quedas con la mitad de los
-      {icon:subs} de ese stream.'
+    m_Localized: "Si te desplataforman en tu pr\xF3ximo stream, igual te quedas con
+      la mitad de sus {icon:subs}."
     m_Metadata:
       m_Items: []
   - m_Id: 496189483
@@ -260,8 +260,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189497
-    m_Localized: "Pasivo: cada gran stream seguido da +1, +2, +3... {icon:subs} (m\xE1x.
-      +5). Un stream fallido la reinicia."
+    m_Localized: "Gana +1 {icon:subs} por cada gran stream seguido (m\xE1x. +5).
+      Un stream fallido reinicia la racha."
     m_Metadata:
       m_Items: []
   - m_Id: 496189498

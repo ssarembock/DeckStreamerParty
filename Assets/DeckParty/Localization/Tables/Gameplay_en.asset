@@ -1226,13 +1226,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606644
-    m_Localized: 'Before a season you <b>Select Your Streamer</b>. Each one has a
-      power: <b>passive</b> powers are always on; <b>active</b> powers are used from
-      the shop after your stream (on your turn), cost {icon:cash}, get more expensive
-      every time you use them (like raising your Sub Cap) and may need a few turns
-      to recharge. <b>Rival</b> powers (Raid, Wealth Tax) hit another player, so
-      they only work in multiplayer. Pick <b>No Streamer</b> to play the classic
-      rules. Your streamer also brings their own stream setup.'
+    m_Localized: Before a season you <b>Select Your Streamer</b>. Each one has an
+      <b>active</b> power, used from the shop after your stream (on your turn). It
+      costs {icon:cash}, gets more expensive every time you use it (like raising
+      your Sub Cap) and may need a few turns to recharge. <b>Rival</b> powers (Raid,
+      Wealth Tax) hit another player, so they only work in multiplayer. Pick <b>No
+      Streamer</b> to play the classic rules. Your streamer also brings their own
+      stream setup.
     m_Metadata:
       m_Items: []
   - m_Id: 483606645
@@ -1905,6 +1905,24 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2838162356920320
     m_Localized: '{value} together'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311983949275136
+    m_Localized: Three-Hour Episode! This stream has +{count} Sub Cap.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984024772608
+    m_Localized: Bark at Chat! Viewers carrying {icon:risk} earn +{count} {icon:subs}
+      this stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984024772609
+    m_Localized: 'Soft Landing is on: if this stream gets deplatformed, you keep
+      half its {icon:subs}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984037355520
+    m_Localized: You need at least one great stream in a row first.
     m_Metadata:
       m_Items: []
   references:

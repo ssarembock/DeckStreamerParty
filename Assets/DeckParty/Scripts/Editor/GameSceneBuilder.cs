@@ -1093,63 +1093,72 @@ namespace DeckParty.EditorTools
         }
 
         /// <summary>
-        /// The streamer in the shop's toolbar: their portrait in a ring (hover for name, power, what it does and its status),
-        /// the active as an icon button with its price beside it, a small badge with the cooldown and a tick while it's armed.
+        /// The streamer's active in the shop's toolbar: one button at the left end holding the streamer's portrait (in a ring)
+        /// and the active's icon, with no words. Hover it for the streamer, what the power does, its status and price. The
+        /// price sits above it like the other buttons'; a small badge on the portrait shows the cooldown, a tick that it's armed.
         /// </summary>
-        /// <param name="buttonHeight">The shop buttons' height: the Use button matches them, so the prices above line up.</param>
+        /// <param name="buttonHeight">The shop buttons' height: this one matches them, so the prices above line up.</param>
         static StreamerPowerView BuildStreamerPower(Transform parent, float buttonHeight)
         {
-            const float portraitSize = 108f;
-            var panel = EditorUI.Rect(parent, "StreamerPower");
-            panel.sizeDelta = new Vector2(330, 116);
-            EditorUI.Layout(panel, 330, 116, 0);
-            var hit = panel.gameObject.AddComponent<Image>();
-            hit.color = new Color(0, 0, 0, 0);
-            var info = EditorUI.Tooltip(panel);
+            const float portraitSize = 76f;
+            const float iconSize = 44f;
+            const float inset = 16f;
+            var useSize = new Vector2(184, buttonHeight);
 
-            var content = EditorUI.Rect(panel, "Content").Stretch();
-            var frame = EditorUI.Rect(content, "Portrait").Place(new Vector2(0, 0.5f), new Vector2(4, 0), new Vector2(portraitSize, portraitSize), new Vector2(0, 0.5f));
+            // As wide as its button (UI Skin > Shop can resize it), with room for "No streamer power" when there's none.
+            var panel = EditorUI.Rect(parent, "StreamerPower");
+            panel.sizeDelta = useSize;
+            EditorUI.HLayout(panel, 0, EditorUI.Pad(0), TextAnchor.MiddleLeft, true, true, false, false);
+            EditorUI.Layout(panel, -1, -1, 0, -1, 150, buttonHeight);
+
+            var use = EditorUI.IconButton(panel, "Use", EditorUI.Action, SkinSlot.IconAction, EditorUI.SiteButton.Accent, useSize, iconSize, out var useIcon);
+            EditorUI.Layout(use, useSize.x, useSize.y, 0);
+            useIcon.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(inset + portraitSize + 10, 0), new Vector2(iconSize, iconSize), new Vector2(0, 0.5f));
+
+            // The streamer, inside the button before the icon (ShopButtonSkin centres the two together).
+            var frame = EditorUI.Rect(use.transform, "Portrait").Place(new Vector2(0, 0.5f), new Vector2(inset, 0), new Vector2(portraitSize, portraitSize), new Vector2(0, 0.5f));
             var maskImage = EditorUI.Image(frame, "Mask", SitePalette.SurfaceAlt, EditorUI.Circle);
-            maskImage.rectTransform.Stretch(5, 5, 5, 5);
+            maskImage.rectTransform.Stretch(4, 4, 4, 4);
+            maskImage.raycastTarget = false;
             maskImage.gameObject.AddComponent<Mask>().showMaskGraphic = true;
             var placeholder = EditorUI.Image(maskImage.transform, "Placeholder", UIPalette.Purple, EditorUI.Circle);
             placeholder.rectTransform.Stretch();
-            var initials = EditorUI.Text(placeholder.transform, "Initials", "?", 40, Color.white, TextAlignmentOptions.Center, true, true, false);
+            placeholder.raycastTarget = false;
+            var initials = EditorUI.Text(placeholder.transform, "Initials", "?", 30, Color.white, TextAlignmentOptions.Center, true, true, false);
             initials.rectTransform.Stretch();
             var portrait = EditorUI.Image(maskImage.transform, "Art", Color.white);
-            portrait.rectTransform.Stretch(3, 3, 3, 3);
+            portrait.rectTransform.Stretch(2, 2, 2, 2);
             portrait.preserveAspect = true;
+            portrait.raycastTarget = false;
             portrait.enabled = false;
             var ring = EditorUI.Image(frame, "Ring", SitePalette.Outline, EditorUI.Ring, SkinSlot.AvatarRing);
             ring.rectTransform.Stretch();
+            ring.raycastTarget = false;
 
-            var cooldownLabel = EditorUI.Pill(frame, "Cooldown", 20, out var cooldown);
-            cooldown.rectTransform.Place(new Vector2(1, 1), new Vector2(8, 4), new Vector2(46, 34), new Vector2(1, 1));
+            var cooldownLabel = EditorUI.Pill(frame, "Cooldown", 18, out var cooldown);
+            cooldown.rectTransform.Place(new Vector2(1, 1), new Vector2(10, 4), new Vector2(40, 30), new Vector2(1, 1));
             cooldown.gameObject.SetActive(false);
             var armed = EditorUI.Image(frame, "Armed", UIPalette.Green, EditorUI.Circle);
-            armed.rectTransform.Place(new Vector2(1, 0), new Vector2(4, 2), new Vector2(40, 40), new Vector2(1, 0));
-            var armedTick = EditorUI.Icon(armed.transform, "Tick", EditorUI.Check, Color.white, SkinSlot.IconCheck, 24);
-            armedTick.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(24, 24));
+            armed.rectTransform.Place(new Vector2(1, 0), new Vector2(6, -2), new Vector2(34, 34), new Vector2(1, 0));
+            var armedTick = EditorUI.Icon(armed.transform, "Tick", EditorUI.Check, Color.white, SkinSlot.IconCheck, 20);
+            armedTick.rectTransform.Place(new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(20, 20));
             armed.gameObject.SetActive(false);
 
-            // As tall as the other shop buttons, so its price lines up with theirs above the row.
-            var useSize = new Vector2(196, buttonHeight);
-            var use = EditorUI.IconButton(content, "Use", EditorUI.Action, SkinSlot.IconAction, EditorUI.SiteButton.Accent, useSize, 40, out var useIcon);
-            ((RectTransform)use.transform).Place(new Vector2(1, 0.5f), new Vector2(-2, 0), useSize, new Vector2(1, 0.5f));
-            useIcon.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(18, 0), new Vector2(40, 40), new Vector2(0, 0.5f));
+            // No words by default; UI Skin > Shop > Streamer active can add some ("Use", or your own).
             TextMeshProUGUI useLabel;
             using (EditorUI.PlainColourScope())
-                useLabel = EditorUI.Text(use.transform, "Label", "Use", 28, Color.white, TextAlignmentOptions.MidlineLeft, true, false, false);
-            useLabel.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(70, 4), new Vector2(-12, -4));
+                useLabel = EditorUI.Text(use.transform, "Label", string.Empty, 28, Color.white, TextAlignmentOptions.Center, true, false, false);
+            useLabel.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(12, 4), new Vector2(-12, -4));
             useLabel.gameObject.AddComponent<SiteAccent>().role = SiteAccent.Role.Content;
-            // Over the streamer's own tooltip: it comes back when the pointer leaves the button.
-            use.GetComponent<TooltipTrigger>().overlay = true;
             var useCost = CostLabel(use);
-            // "Use" in the player's language by default (UI Skin > Shop > Use can change it).
-            SkinShopButton(use, ShopButton.Power, useIcon, useLabel, useCost, 18f, ShopButtonText.Words, string.Empty);
+            SkinShopButton(use, ShopButton.Power, useIcon, useLabel, useCost, inset, ShopButtonText.BuiltIn, string.Empty);
+            var useSkin = use.GetComponent<ShopButtonSkin>();
+            useSkin.lead = frame;
+            useSkin.Apply();
 
             var empty = EditorUI.Text(panel, "Empty", "power.none", 20, SitePalette.TextFaint, TextAlignmentOptions.Center, false, false, false);
-            empty.rectTransform.Stretch(portraitSize + 12, 10, 6, 10);
+            empty.rectTransform.Stretch(4, 4, 4, 4);
+            EditorUI.Layout(empty).ignoreLayout = true;
 
             var view = panel.gameObject.AddComponent<StreamerPowerView>();
             view.portrait = portrait;
@@ -1163,10 +1172,11 @@ namespace DeckParty.EditorTools
             view.useButton = use;
             view.useLabel = useLabel;
             view.useCost = useCost;
+            // One tooltip on the button: the streamer, the power, its status and price (no separate hover on the portrait).
             view.useTooltip = use.GetComponent<TooltipTrigger>();
+            view.infoTooltip = null;
             view.emptyState = empty.gameObject;
-            view.content = content.gameObject;
-            view.infoTooltip = info;
+            view.content = null;
             view.cooldownBadge = cooldown.gameObject;
             view.cooldownLabel = cooldownLabel;
             view.armedBadge = armed.gameObject;

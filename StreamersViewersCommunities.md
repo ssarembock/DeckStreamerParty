@@ -75,16 +75,14 @@ When you hand the file back, I compare it with this version to see exactly what 
 Each player picks one streamer, or **No Streamer** (classic rules, no power), or **Random**.
 
 **How the powers work:**
-- **Passives** are always on.
 - **Actives** are bought in the shop with Cash. Each use costs 1 more than the last (never more than 12).
 - **Next stream** powers take effect in your next stream.
 - **Rival** powers hit another player and only exist in multiplayer.
 - **Cooldown 2** means the power can't be used again in the shops of the next 2 streams. It does not keep the power
   active: a power that affects a future stream only applies to the next one.
 
-**Waiting on you:** streamers are to lose their passives, and each gets a unique active instead. The new actives
-aren't written in this file yet, so Bro Jogan, IRunFast, Soft Hard Body Man and Manim Maketh Man still have their
-passives below. Write each one's new active in its section.
+**Every streamer has an active** (since 15 November 2026). Bro Jogan, IRunFast, Soft Hard Body Man and Manim Maketh
+Man had passives until then; their actives below are first drafts, so change them freely.
 
 The platform only changes the animated logo in the menu bar.
 
@@ -96,8 +94,9 @@ The platform only changes the animated logo in the menu bar.
 
 ### Bro Jogan · `BroJogan`
 - **Title:** The Three-Hour Podcaster · **Platform:** Tunes
-- **Power: Three-Hour Episode** (passive)
-- **Rule:** start the season with +1 Sub Cap (7 seats). Every Sub Cap raise costs 1 Cash more.
+- **Power: Three-Hour Episode** (active, next stream). Costs 2 Cash (+1 per use), cooldown 2.
+- **Rule:** your next stream has +1 Sub Cap (that stream only). Was a passive until 15 November (+1 Sub Cap from the
+  start, Sub Cap upgrades cost 1 Cash more).
 - **Quote:** "Jamie, pull that up."
 
 ### Shinobi · `Shinobi`
@@ -108,8 +107,9 @@ The platform only changes the animated logo in the menu bar.
 
 ### IRunFast · `IRunFast`
 - **Title:** The Human Siren · **Platform:** Cough
-- **Power: Bark at Chat** (passive)
-- **Rule:** every viewer carrying Risk earns +1 Clout when scored.
+- **Power: Bark at Chat** (active, next stream). Costs 2 Cash (+1 per use), cooldown 2.
+- **Rule:** in your next stream, every viewer carrying Risk earns +2 Clout when scored. Was a passive until 15
+  November (+1 Clout every stream).
 - **Quote:** "SIUUUUUUU!"
 
 ### MrShark · `MrShark`
@@ -126,8 +126,9 @@ The platform only changes the animated logo in the menu bar.
 
 ### Soft Hard Body Man · `SoftHardBodyMan`
 - **Title:** Looks Hard, Is Soft · **Platform:** Swipe
-- **Power: Soft Landing** (passive)
-- **Rule:** when your stream gets deplatformed, you still bank half of that stream's Clout.
+- **Power: Soft Landing** (active, next stream). Costs 1 Cash (+1 per use), no cooldown (once per turn).
+- **Rule:** if your next stream gets deplatformed, you still bank half of that stream's Clout. Was a passive until 15
+  November (every stream).
 - **Quote:** "REFORMED. And a little bit squishy."
 
 ### Strategic Abomination · `StrategicAbomination`
@@ -145,8 +146,10 @@ The platform only changes the animated logo in the menu bar.
 
 ### Manim Maketh Man · `ManimMakethMan`
 - **Title:** The Animated Proof · **Platform:** Post
-- **Power: Beautiful Sequence** (passive)
-- **Rule:** each scored stream in a row earns +1, +2, +3... Clout (maximum +5). A failed stream resets the streak.
+- **Power: Beautiful Sequence** (active, instant). Costs 1 Cash (+1 per use), cooldown 2.
+- **Rule:** gain +1 Clout for each great (scored) stream in a row, up to +5, straight away in the shop. Needs a
+  streak of at least 1; a failed stream resets the streak. Using it doesn't reset the streak. Was a passive until 15
+  November (each scored stream in a row earned +1, +2, +3... Clout, max +5).
 - **Quote:** "Let's visualize that."
 
 ### Rude Radiologist · `RudeRadiologist`
@@ -670,8 +673,8 @@ give a viewer one of them and say so. "Put-aside members" are viewers from secti
 
 These are how the game behaves today. They look unintended or unfinished:
 
-1. **Streamer actives:** the four passive streamers (Bro Jogan, IRunFast, Soft Hard Body Man, Manim Maketh Man)
-   still need their new actives (see section 2).
+1. **Streamer actives:** Bro Jogan, IRunFast, Soft Hard Body Man and Manim Maketh Man got first-draft actives on 15
+   November (see section 2). Change them if you have better ideas.
 2. **Gen-Z** has only two members now (Affiliate left it), so it tops out at 1 point.
 3. **Troll Army** only needs 1 point; more points don't add more Clout. Say so if you want it to scale with points.
 4. **Staff** stops at 3 points (+3 Cash), as before. It has 12 members, so the cap is easy to reach.

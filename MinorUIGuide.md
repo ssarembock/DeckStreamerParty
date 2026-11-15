@@ -131,8 +131,19 @@ Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** once. Full details: *
 
 | Area | Now |
 |---|---|
-| **Prices** | The Cash price of Use, Raise Sub Cap and Remove a Viewer sits just above each button (red when you can't afford it). The buttons keep their short text: +1, -1 and "Use". The toolbar is 32 px taller to fit the prices, and Use is as tall as the other buttons. |
+| **Prices** | The Cash price of Use, Raise Sub Cap and Remove a Viewer sits just above each button (red when you can't afford it). The buttons keep their short text: +1 and -1. The toolbar is 32 px taller to fit the prices, and Use is as tall as the other buttons. |
 | **UI Skin > Shop > Toolbar buttons** | Each button's icon (art, colour, size), text (built-in numbers, translated words, your own text, or none) and shape (background art, inside and border colours, border width, size). |
 | **UI Skin > Shop > Prices** | Font size, gap and colours of the prices. |
 | **No Audience button in the shop** (2026-11-15) | The shop toolbar no longer has its own Audience button: the one in the menu bar does the same. A bought viewer's "+1" now flies to the menu bar's Audience button. The icon and text on every toolbar button are centred together. Needs one Rebuild. |
 | **UI Skin > Shop > Viewer cards** | Your own card prefab (with a template maker and a parts check), card sizes, proportions, spacing (with extra space between rows and above the first row) and hover growth, the built-in card's shape, border and piles, and card colours (Trophy border, price, copies left, veil). |
+
+## 11. Every streamer has an active; the streamer is on the active button (2026-11-15)
+
+Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** once. The full rules for every streamer are in
+**StreamersViewersCommunities.md** (section 2).
+
+| Area | Now |
+|---|---|
+| **No more passives** | The four streamers who had passives now have actives, bought in the shop like the others. **Bro Jogan, Three-Hour Episode** (next stream): +1 Sub Cap for that stream only. 2 Cash (+1 per use), cooldown 2. **IRunFast, Bark at Chat** (next stream): viewers carrying Risk earn +2 Clout. 2 Cash (+1 per use), cooldown 2. **Soft Hard Body Man, Soft Landing** (next stream): if that stream gets deplatformed, you still bank half its Clout. 1 Cash (+1 per use), no cooldown. **Manim Maketh Man, Beautiful Sequence** (instant): +1 Clout for each great stream in a row, up to +5. Needs at least 1. 1 Cash (+1 per use), cooldown 2. |
+| **Streamer active button** | The streamer's portrait (in its ring) now sits inside the active button, beside the active's icon, at the left end of the shop's toolbar. The portrait on its own and the "Use" text are gone. The price stays above the button. The cooldown badge and the armed tick sit on the portrait. Hover the button for the streamer's name, the power, what it does, its status and price. |
+| **UI Skin > Shop > Streamer active** | The same settings as the other buttons. Its text now defaults to none. Your UI Skin is switched from "Use" (Words) to none once, when you rebuild or open the UI Skin. Pick **Words** again to bring "Use" back. |

@@ -875,7 +875,7 @@ MonoBehaviour:
     missing: 0
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
-  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Content/Portrait/Mask/Placeholder/Initials
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Use/Portrait/Mask/Placeholder/Initials
     label: Mask > Placeholder > Initials
     group: Shop
     sample: '?'
@@ -883,7 +883,7 @@ MonoBehaviour:
     missing: 0
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
-  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Content/Portrait/Cooldown/Label
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Use/Portrait/Cooldown/Label
     label: Portrait > Cooldown > Label
     group: Shop
     sample: 
@@ -891,15 +891,15 @@ MonoBehaviour:
     missing: 0
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
-  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Content/Use/Label
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Use/Label
     label: Streamer Power > Use > Label
     group: Shop
-    sample: Use
+    sample: 
     source: Game scene
     missing: 0
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
-  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Content/Use/Cost
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/StreamerPower/Use/Cost
     label: Streamer Power > Use > Cost
     group: Shop
     sample: 3
@@ -1686,7 +1686,7 @@ MonoBehaviour:
         colour: {r: 0, g: 0, b: 0, a: 1}
       borderWidth: -1
       size: {x: 0, y: 0}
-      text: 1
+      text: 0
       customText: 
       textColour:
         use: 1
@@ -1784,6 +1784,7 @@ MonoBehaviour:
         use: 0
         colour: {r: 0, g: 0, b: 0, a: 1}
       textSize: 0
+    revision: 1
     costSize: 0
     costGap: -2
     costColour:

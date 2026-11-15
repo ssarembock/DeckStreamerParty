@@ -133,9 +133,10 @@ namespace DeckParty.UI
             string useWords = Loc.Get("power.use", "cost", StreamerVisuals.CostText(StreamerCatalog.Cost(s)));
             // Icon button: just the price next to the icon; the words are in the tooltip.
             int cost = StreamerCatalog.Cost(s);
-            if (useButton.TryGetComponent<ShopButtonSkin>(out var useSkin))
+            bool skinned = useButton.TryGetComponent<ShopButtonSkin>(out var useSkin);
+            if (skinned)
             {
-                // The button's text comes from UI Skin > Shop ("Use" by default); the price sits above the button.
+                // The button shows the streamer and the active's icon (UI Skin > Shop can add text); the price sits above it.
                 useSkin.SetCaption(string.Empty);
                 if (useCost != null)
                 {
@@ -149,7 +150,13 @@ namespace DeckParty.UI
             if (useTooltip != null)
             {
                 string why = lockReason ?? (blocker != null ? Loc.Error(blocker) : null);
-                useTooltip.Text = infoTooltip != null
+                if (infoTooltip == null && skinned)
+                {
+                    // Scenes built since 2026-11-15: the streamer is on the button, so its one tooltip says who they are,
+                    // what the power does, its status and the price.
+                    useTooltip.Text = InfoTooltip() + "\n" + useWords + (why != null ? "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : string.Empty);
+                }
+                else useTooltip.Text = infoTooltip != null
                     ? $"<b>{StreamerVisuals.PowerName(type)}</b>  {useWords}\n{StreamerVisuals.CostRules(type)}" + (why != null ? "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : string.Empty)
                     : why ?? StreamerVisuals.CostRules(type);
             }

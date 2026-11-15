@@ -1233,13 +1233,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606644
     m_Localized: "Antes de una temporada <b>eliges a tu streamer</b>. Cada uno tiene
-      un poder: los <b>pasivos</b> siempre est\xE1n activos; los <b>activos</b> se
-      usan desde la tienda despu\xE9s de tu stream (en tu turno), cuestan {icon:cash},
-      se encarecen con cada uso (como subir el cupo) y pueden necesitar unos turnos
-      para recargarse. Los poderes de <b>rival</b> (Raid, Impuesto a la riqueza)
-      golpean a otro jugador, as\xED que solo funcionan en multijugador. Elige <b>Sin
-      streamer</b> para jugar con las reglas cl\xE1sicas. Tu streamer tambi\xE9n
-      trae su propio escenario."
+      un poder <b>activo</b>: se usa desde la tienda despu\xE9s de tu stream (en
+      tu turno), cuesta {icon:cash}, se encarece con cada uso (como subir el cupo)
+      y puede necesitar unos turnos para recargarse. Los poderes de <b>rival</b>
+      (Raid, Impuesto a la riqueza) golpean a otro jugador, as\xED que solo funcionan
+      en multijugador. Elige <b>Sin streamer</b> para jugar con las reglas cl\xE1sicas.
+      Tu streamer tambi\xE9n trae su propio escenario."
     m_Metadata:
       m_Items: []
   - m_Id: 483606645
@@ -1932,6 +1931,25 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2838162356920320
     m_Localized: '{value} en grupo'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311983949275136
+    m_Localized: "\xA1Episodio de tres horas! Este stream tiene +{count} de cupo
+      del chat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984024772608
+    m_Localized: "\xA1Ladrarle al chat! Los espectadores con {icon:risk} ganan +{count}
+      {icon:subs} en este stream."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984024772609
+    m_Localized: 'Aterrizaje suave activado: si te desplataforman en este stream,
+      te quedas con la mitad de sus {icon:subs}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311984037355520
+    m_Localized: Primero necesitas al menos un gran stream seguido.
     m_Metadata:
       m_Items: []
   references:

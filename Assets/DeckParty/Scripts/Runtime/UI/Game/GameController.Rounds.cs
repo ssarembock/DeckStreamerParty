@@ -202,6 +202,9 @@ namespace DeckParty.UI
                 case GameEventType.GiveawayActive:
                 case GameEventType.DoubleMoveActive:
                 case GameEventType.XRayActive:
+                case GameEventType.ExtraSeatActive:
+                case GameEventType.BarkActive:
+                case GameEventType.SoftLandingReady:
                 case GameEventType.Victory:
                 case GameEventType.Defeat:
                     return true;

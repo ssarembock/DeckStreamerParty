@@ -212,6 +212,12 @@ namespace DeckParty
                     return GuestVisuals.Colored(Loc.Get("log.double_move"), UIPalette.Purple);
                 case GameEventType.XRayActive:
                     return GuestVisuals.Colored(Loc.Get("log.xray", "count", e.A), UIPalette.Teal);
+                case GameEventType.ExtraSeatActive:
+                    return GuestVisuals.Colored(Loc.Get("log.extra_seat", "count", e.A), UIPalette.Gold);
+                case GameEventType.BarkActive:
+                    return GuestVisuals.Colored(Loc.Get("log.bark", "count", e.A), UIPalette.Orange);
+                case GameEventType.SoftLandingReady:
+                    return GuestVisuals.Colored(Loc.Get("log.soft_landing_ready"), UIPalette.Pink);
                 case GameEventType.RaidReceived:
                     return GuestVisuals.Colored(Loc.Get("log.raid_received", "raider", Player(e.B), "count", e.A), UIPalette.Red);
                 case GameEventType.TaxPaid:

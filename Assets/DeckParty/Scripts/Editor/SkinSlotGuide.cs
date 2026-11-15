@@ -127,10 +127,10 @@ namespace DeckParty.EditorTools
                 "The rounded rectangle under the red End the Stream button at the bottom of the Stream Chat window, as wide as the button (the button overlaps its top). " +
                 "Built-in: a darker red. It fades with the button while the button can't be pressed. Its art and colour can also be set in the Game Database's UI Icons list."),
             new Info(SkinSlot.AvatarRing, Area.Stream, "Avatar ring", Kind.Shape,
-                "The round border of every chat avatar (with its highlight ring and the empty-seat ring), including the waiting viewer, and the round frames of the streamer portrait in the shop and in the stream recap. The game colours it by state.",
+                "The round border of every chat avatar (with its highlight ring and the empty-seat ring), including the waiting viewer, and the round frames of the streamer portrait (on the shop's streamer active button) and in the stream recap. The game colours it by state.",
                 gameColoured: true),
             new Info(SkinSlot.IconAction, Area.Stream, "Action button icon", Kind.Icon,
-                "The small action button on chat avatars whose action is ready, and the Use button of the streamer's power in the shop."),
+                "The small action button on chat avatars whose action is ready, and the icon beside the streamer's portrait on the streamer active button in the shop."),
             new Info(SkinSlot.IconCheck, Area.Stream, "Tick icon (Approve, Confirm, Ready)", Kind.Icon,
                 "Approve on the waiting-viewer panel, Confirm on the targeting bar, the ready tick on Go Live (Free For All), the ready tick in player rows, the tick on an armed streamer power, and the cleared tick on character sets."),
             new Info(SkinSlot.IconClose, Area.Stream, "Cross icon (Deny, Cancel, Sold out)", Kind.Icon,
