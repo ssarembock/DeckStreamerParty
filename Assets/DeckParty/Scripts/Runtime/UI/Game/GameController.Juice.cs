@@ -356,6 +356,14 @@ namespace DeckParty.UI
             }
         }
 
+        /// <summary>The Audience button a bought viewer flies to: the shop's own in older scenes, else the menu bar's.</summary>
+        RectTransform AudienceButtonRect()
+        {
+            var own = planning.RolodexButtonRect;
+            if (own != null) return own;
+            return hud != null && hud.rolodexButton != null ? (RectTransform)hud.rolodexButton.transform : null;
+        }
+
         /// <summary>A bought (or caught) viewer flies from the shop to the Audience button.</summary>
         void PurchaseFlourish(GuestType type)
         {
@@ -363,9 +371,10 @@ namespace DeckParty.UI
             var item = planning.FindItem(type);
             var from = item != null ? item.PortraitRect.position : planning.transform.position;
             // No names on screen: a "+1" flies to the Audience button (the bought viewer's name is in the tooltip and the log).
-            effects.FlyChip(GuestVisuals.Colored("+1", GuestVisuals.Tint(type)), from, planning.RolodexButtonRect.position);
+            var audience = AudienceButtonRect();
+            if (audience != null) effects.FlyChip(GuestVisuals.Colored("+1", GuestVisuals.Tint(type)), from, audience.position);
             if (item != null) Fx.Play(FxCue.Purchase, item.AnimRoot);
-            Fx.Play(FxCue.CounterPunch, planning.RolodexButtonRect, 1.2f);
+            if (audience != null) Fx.Play(FxCue.CounterPunch, audience, 1.2f);
         }
 
         void PlayCardAnimations(PlayerState s, IReadOnlyList<GameEvent> events)

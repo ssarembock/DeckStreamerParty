@@ -30,6 +30,7 @@ namespace DeckParty.UI
         [SerializeField] internal float defaultBorderWidth = 2.5f;
         [SerializeField] internal Vector2 defaultSize = new Vector2(200, 96);
         [SerializeField] internal float defaultIconSize = 46f;
+        [Tooltip("The smallest space between the icon (or text) and the button's sides. The icon and text are centred together.")]
         [SerializeField] internal float iconInset = 20f;
         [SerializeField] internal Color defaultIconColour = Color.black;
         [SerializeField] internal Sprite defaultIcon;
@@ -79,11 +80,18 @@ namespace DeckParty.UI
             ApplyCost();
         }
 
-        void ApplySize(ShopButtonLook look)
+        /// <summary>The button's size: UI Skin > Shop's, or the built-in one.</summary>
+        Vector2 Size(ShopButtonLook look)
         {
             var size = defaultSize;
             if (look != null && look.size.x > 0f) size.x = look.size.x;
             if (look != null && look.size.y > 0f) size.y = look.size.y;
+            return size;
+        }
+
+        void ApplySize(ShopButtonLook look)
+        {
+            var size = Size(look);
             var rect = (RectTransform)transform;
             if (rect.sizeDelta != size) rect.sizeDelta = size;
             if (TryGetComponent<LayoutElement>(out var layout))
@@ -187,19 +195,13 @@ namespace DeckParty.UI
         void ApplyText(ShopButtonLook look)
         {
             string caption = Caption(look);
-            bool hasText = !string.IsNullOrEmpty(caption);
-            float iconSize = icon != null ? icon.rectTransform.sizeDelta.x : 0f;
-
-            // The icon sits at the left with the text beside it, or centred when there's no text.
-            if (icon != null)
+            bool hasText = !string.IsNullOrEmpty(caption) && label != null;
+            if (label != null) label.gameObject.SetActive(hasText);
+            if (!hasText)
             {
-                var rect = icon.rectTransform;
-                if (hasText) Place(rect, new Vector2(0f, 0.5f), new Vector2(iconInset, 0f), new Vector2(0f, 0.5f));
-                else Place(rect, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(0.5f, 0.5f));
+                Arrange(look, false);
+                return;
             }
-            if (label == null) return;
-            label.gameObject.SetActive(hasText);
-            if (!hasText) return;
             if (label.text != caption) label.text = caption;
             float size = look != null && look.textSize > 0f ? look.textSize : defaultTextSize;
             label.fontSizeMax = size;
@@ -214,10 +216,43 @@ namespace DeckParty.UI
                 else label.color = defaultTextColour;
             }
             else label.color = ownColour ? look.textColour.colour : defaultTextColour;
+            Arrange(look, true);
+        }
 
-            float left = icon != null && icon.gameObject.activeSelf ? iconInset + iconSize + 12f : 12f;
-            label.rectTransform.offsetMin = new Vector2(left, 4f);
-            label.rectTransform.offsetMax = new Vector2(-12f, -4f);
+        /// <summary>Space between the icon and the text.</summary>
+        const float IconTextGap = 10f;
+
+        /// <summary>
+        /// Centres the icon and the text together on the button, as one group: the text's own width decides where the icon
+        /// goes. Text too long for the button shrinks to fit (never closer than <see cref="iconInset"/> to the sides).
+        /// </summary>
+        void Arrange(ShopButtonLook look, bool hasText)
+        {
+            var size = Size(look);
+            bool hasIcon = icon != null && icon.gameObject.activeSelf;
+            float iconSize = hasIcon ? icon.rectTransform.sizeDelta.x : 0f;
+            float gap = hasIcon && hasText ? IconTextGap : 0f;
+            float margin = Mathf.Max(0f, iconInset);
+
+            float textWidth = 0f;
+            if (hasText)
+            {
+                float room = Mathf.Max(0f, size.x - 2f * margin - iconSize - gap);
+                float wanted = label.GetPreferredValues(label.text, float.PositiveInfinity, size.y).x + 2f;
+                textWidth = Mathf.Min(wanted, room);
+            }
+            float start = Mathf.Max(0f, (size.x - (iconSize + gap + textWidth)) * 0.5f);
+
+            if (hasIcon) Place(icon.rectTransform, new Vector2(0f, 0.5f), new Vector2(start, 0f), new Vector2(0f, 0.5f));
+            if (!hasText) return;
+            var rect = label.rectTransform;
+            rect.anchorMin = new Vector2(0f, 0f);
+            rect.anchorMax = new Vector2(0f, 1f);
+            rect.pivot = new Vector2(0f, 0.5f);
+            float x = start + iconSize + gap;
+            rect.offsetMin = new Vector2(x, 4f);
+            rect.offsetMax = new Vector2(x + textWidth, -4f);
+            label.horizontalAlignment = HorizontalAlignmentOptions.Center;
         }
 
         static void Place(RectTransform rect, Vector2 anchor, Vector2 position, Vector2 pivot)

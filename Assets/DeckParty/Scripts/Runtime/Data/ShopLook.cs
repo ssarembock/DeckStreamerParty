@@ -28,6 +28,7 @@ namespace DeckParty
         Power = 0,
         RaiseSubCap = 1,
         RemoveViewer = 2,
+        /// <summary>Older scenes only: the shop no longer has its own Audience button (the menu bar has one).</summary>
         Audience = 3,
         GoLive = 4,
     }
@@ -109,6 +110,18 @@ namespace DeckParty
         public float cardAspect;
         [Tooltip("Space between cards, across and down. 0: built-in (38 x 36).")]
         public Vector2 cardSpacing;
+        [Tooltip("Extra space added between one row of cards and the next, on top of the space down. -1: built-in (32); 0: none.")]
+        public float rowGap = -1f;
+
+        [Tooltip("Space above the first row of cards (between the top of the card area and the first row), in pixels. " +
+                 "-1: built-in (30 plus the extra space between rows).")]
+        public float firstRowSpace = -1f;
+
+        /// <summary>The extra space between rows when <see cref="rowGap"/> is -1.</summary>
+        public const float BuiltInRowGap = 32f;
+
+        /// <summary>The extra space between rows of cards, in pixels (the skin's value, or the built-in one).</summary>
+        public float RowGap => rowGap >= 0f ? rowGap : BuiltInRowGap;
         [Tooltip("How much a card grows under the pointer (1 = not at all). 0: built-in (1.04).")]
         public float hoverScale;
 

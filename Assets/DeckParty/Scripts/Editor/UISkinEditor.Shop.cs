@@ -22,7 +22,6 @@ namespace DeckParty.EditorTools
             (ShopButton.Power, "Use (streamer active)", "Beside the streamer's portrait at the left of the toolbar. Built-in text: \"Use\" in the player's language.", SkinSlot.IconAction),
             (ShopButton.RaiseSubCap, "Raise Sub Cap", "Built-in text: +1 (the Sub Cap when it's maxed).", SkinSlot.IconDoor),
             (ShopButton.RemoveViewer, "Remove a Viewer", "Built-in text: -1.", SkinSlot.IconRemoveViewer),
-            (ShopButton.Audience, "Audience", "Built-in text: how many viewers are in your Audience.", SkinSlot.IconAudience),
             (ShopButton.GoLive, "Go Live", "At the right end of the toolbar. Built-in text: none (just the icon).", SkinSlot.IconGoLive),
         };
 
@@ -186,6 +185,11 @@ namespace DeckParty.EditorTools
                 EditorGUILayout.PropertyField(shop.FindPropertyRelative("cardAspect"), new GUIContent("Height / width",
                     "0: built-in (1.4), or your prefab's own proportions."));
                 EditorGUILayout.PropertyField(shop.FindPropertyRelative("cardSpacing"), new GUIContent("Space between", "Across and down, in pixels. 0: built-in (38 x 36)."));
+                EditorGUILayout.PropertyField(shop.FindPropertyRelative("rowGap"), new GUIContent("Extra space between rows",
+                    "Pixels added between one row of cards and the next, on top of the space down. -1: built-in (32); 0: none."));
+                EditorGUILayout.PropertyField(shop.FindPropertyRelative("firstRowSpace"), new GUIContent("Space above the first row",
+                    "Pixels between the top of the card area and the first row (its card piles peek into it). " +
+                    "-1: built-in (30 plus the extra space between rows); 0: none."));
                 EditorGUILayout.PropertyField(shop.FindPropertyRelative("hoverScale"), new GUIContent("Hover growth",
                     "How much a card grows under the pointer (1 = not at all). 0: built-in (1.04)."));
 

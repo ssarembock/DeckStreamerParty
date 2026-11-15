@@ -44,7 +44,9 @@ namespace DeckParty.UI
             Button(partyControls.rejectButton, PresenceButton.Deny);
             Button(planning.expandButton, PresenceButton.RaiseSubCap);
             Button(planning.nextNightButton, PresenceButton.EndTurn);
-            Button(planning.rolodexButton, PresenceButton.Audience);
+            // The shop's Audience button in older scenes, the menu bar's otherwise.
+            if (planning.rolodexButton != null) Button(planning.rolodexButton, PresenceButton.Audience);
+            else if (hud.rolodexButton != null) Button(hud.rolodexButton, PresenceButton.Audience);
             if (planning.power != null && planning.power.useButton != null) Button(planning.power.useButton, PresenceButton.Power);
         }
 
@@ -183,7 +185,7 @@ namespace DeckParty.UI
                 case PresenceButton.Deny: return (RectTransform)partyControls.rejectButton.transform;
                 case PresenceButton.RaiseSubCap: return planning.ExpandButtonRect;
                 case PresenceButton.EndTurn: return planning.NextNightButtonRect;
-                case PresenceButton.Audience: return planning.RolodexButtonRect;
+                case PresenceButton.Audience: return AudienceButtonRect();
                 case PresenceButton.Power: return planning.PowerButtonRect;
                 default: return null;
             }

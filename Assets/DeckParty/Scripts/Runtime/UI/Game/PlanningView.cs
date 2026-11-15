@@ -66,6 +66,7 @@ namespace DeckParty.UI
         [SerializeField] internal TooltipTrigger removeTooltip;
         [Tooltip("The price above Remove a Viewer.")]
         [SerializeField] internal TMP_Text removeCost;
+        [Tooltip("Optional: scenes built since 2026-11-15 have no Audience button in the shop (the menu bar has one).")]
         [SerializeField] internal Button rolodexButton;
         [SerializeField] internal TMP_Text rolodexLabel;
         [SerializeField] internal Button nextNightButton;
@@ -115,21 +116,27 @@ namespace DeckParty.UI
         /// <summary>The grid's children: the tile itself, or the holder around one of your own cards.</summary>
         readonly List<GameObject> m_Holders = new List<GameObject>();
         Vector2 m_DefaultSpacing = new Vector2(38f, 36f);
+        int m_DefaultTopPadding = 30;
 
         public RectTransform ExpandButtonRect => (RectTransform)expandButton.transform;
         public RectTransform NextNightButtonRect => (RectTransform)nextNightButton.transform;
-        public RectTransform RolodexButtonRect => (RectTransform)rolodexButton.transform;
+        /// <summary>The shop's own Audience button, or null (scenes built since 2026-11-15 use the menu bar's).</summary>
+        public RectTransform RolodexButtonRect => rolodexButton != null ? (RectTransform)rolodexButton.transform : null;
         public RectTransform PowerButtonRect => power != null ? power.UseButtonRect : null;
 
         void Awake()
         {
             expandButton.onClick.AddListener(() => ExpandClicked?.Invoke());
             if (removeButton != null) removeButton.onClick.AddListener(() => RemoveClicked?.Invoke());
-            rolodexButton.onClick.AddListener(() => RolodexClicked?.Invoke());
+            if (rolodexButton != null) rolodexButton.onClick.AddListener(() => RolodexClicked?.Invoke());
             nextNightButton.onClick.AddListener(() => NextNightClicked?.Invoke());
             if (power != null) power.UseClicked += () => PowerClicked?.Invoke();
             if (gate != null) gate.ReadyClicked += () => ShopReadyClicked?.Invoke();
-            if (shopGrid != null) m_DefaultSpacing = shopGrid.spacing;
+            if (shopGrid != null)
+            {
+                m_DefaultSpacing = shopGrid.spacing;
+                m_DefaultTopPadding = shopGrid.padding.top;
+            }
             UISkin.SkinChanged += OnSkinChanged;
             Loc.Changed += OnLanguageChanged;
         }
@@ -196,7 +203,10 @@ namespace DeckParty.UI
             // Boomers made upgrades cheaper for this shop.
             if (!maxed && s.ExpansionDiscount > 0)
                 expandWords += "\n" + GameIcons.Tag(Community.Boomer) + " " + Loc.Get("log.perk_boomer", "value", s.ExpansionDiscount);
-            if (expandButton.TryGetComponent<ShopButtonSkin>(out var expandSkin))
+            // Icon buttons (the website look): numbers on the buttons, words in the tooltips.
+            bool expandSkinned = expandButton.TryGetComponent<ShopButtonSkin>(out var expandSkin);
+            bool iconLook = expandSkinned || rolodexTooltip != null;
+            if (expandSkinned)
             {
                 // The button says +1 (or the maxed Sub Cap) unless UI Skin > Shop says otherwise; the price sits above it.
                 expandSkin.SetCaption(maxed ? s.Capacity.ToString() : "+1");
@@ -206,30 +216,34 @@ namespace DeckParty.UI
             else if (expandLabel != null)
             {
                 // Older scenes: icon buttons carry numbers only (Sub Cap now -> next, and the price); the words are in the tooltip.
-                expandLabel.text = rolodexTooltip != null
+                expandLabel.text = iconLook
                     ? (maxed ? s.Capacity.ToString() : $"+1   {GameIcons.Amount(ResourceIcon.Cash, PartyEngine.ExpansionCost(s))}")
                     : expandWords;
             }
             if (expandTooltip != null)
             {
                 string why = watching || waitingForTurn ? lockReason : expandBlocker != null ? Loc.Error(expandBlocker) : null;
-                expandTooltip.Text = rolodexTooltip != null
+                expandTooltip.Text = iconLook
                     ? $"<b>{expandWords}</b>\n{Loc.Get("shop.raise_cap_tip")}" + (why != null ? "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : string.Empty)
                     : why ?? Loc.Get("shop.raise_cap_tip");
             }
 
             RenderRemove(s, locked, watching || waitingForTurn ? lockReason : null);
 
-            string audienceWords = watching
-                ? Loc.Get("shop.view_audience_other", "player", ctx.Owner, "count", s.PermanentCount)
-                : Loc.Get("shop.view_audience", "count", s.PermanentCount);
-            if (rolodexTooltip != null)
+            // Older scenes only: the shop's own Audience button (it's in the menu bar now).
+            if (rolodexButton != null)
             {
-                if (rolodexButton.TryGetComponent<ShopButtonSkin>(out var rolodexSkin)) rolodexSkin.SetCaption(s.PermanentCount.ToString());
-                else if (rolodexLabel != null) rolodexLabel.text = s.PermanentCount.ToString();
-                rolodexTooltip.Text = audienceWords + "  <color=#B9AED6>[R]</color>";
+                string audienceWords = watching
+                    ? Loc.Get("shop.view_audience_other", "player", ctx.Owner, "count", s.PermanentCount)
+                    : Loc.Get("shop.view_audience", "count", s.PermanentCount);
+                if (rolodexTooltip != null)
+                {
+                    if (rolodexButton.TryGetComponent<ShopButtonSkin>(out var rolodexSkin)) rolodexSkin.SetCaption(s.PermanentCount.ToString());
+                    else if (rolodexLabel != null) rolodexLabel.text = s.PermanentCount.ToString();
+                    rolodexTooltip.Text = audienceWords + "  <color=#B9AED6>[R]</color>";
+                }
+                else if (rolodexLabel != null) rolodexLabel.text = audienceWords + "  <color=#B9AED6>[R]</color>";
             }
-            else if (rolodexLabel != null) rolodexLabel.text = audienceWords + "  <color=#B9AED6>[R]</color>";
 
             if (power != null) power.Render(s, ctx.RivalsAvailable, locked ? lockReason : null, ctx.Owner);
 
@@ -424,7 +438,15 @@ namespace DeckParty.UI
             var spacingXY = m_DefaultSpacing;
             if (look != null && look.cardSpacing.x > 0f) spacingXY.x = look.cardSpacing.x;
             if (look != null && look.cardSpacing.y > 0f) spacingXY.y = look.cardSpacing.y;
+            // Extra room between rows (the card piles peek out above each card and eat into the space down).
+            float rowGap = look != null ? look.RowGap : ShopLook.BuiltInRowGap;
+            spacingXY.y += rowGap;
             if (shopGrid.spacing != spacingXY) shopGrid.spacing = spacingXY;
+            // The space above the first row is the grid's top padding: the skin's value, or the built-in padding plus the
+            // same extra row gap, so the first row gets as much room above its piles as the others.
+            int top = Mathf.RoundToInt(look != null && look.firstRowSpace >= 0f ? look.firstRowSpace : m_DefaultTopPadding + rowGap);
+            var padding = shopGrid.padding;
+            if (padding.top != top) shopGrid.padding = new RectOffset(padding.left, padding.right, top, padding.bottom);
             float minWidth = look != null && look.minCardWidth > 0f ? look.minCardWidth : minTileWidth;
             float maxWidth = Mathf.Max(minWidth, look != null && look.maxCardWidth > 0f ? look.maxCardWidth : maxTileWidth);
             float aspect = tileAspect;

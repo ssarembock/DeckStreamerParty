@@ -122,7 +122,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconDoor
     slot: 15
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: 056098d5d1814674fb93d4774dda20a5, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -922,7 +922,7 @@ MonoBehaviour:
     source: Game scene
     missing: 0
     overrideColor: 0
-    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/Expand/Cost
     label: Toolbar > Expand > Cost
     group: Shop
@@ -938,19 +938,11 @@ MonoBehaviour:
     source: Game scene
     missing: 0
     overrideColor: 0
-    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/RemoveViewer/Cost
     label: Toolbar > Remove Viewer > Cost
     group: Shop
     sample: 3
-    source: Game scene
-    missing: 0
-    overrideColor: 0
-    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
-  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/Rolodex/Label
-    label: Toolbar > Rolodex > Label
-    group: Shop
-    sample: 12
     source: Game scene
     missing: 0
     overrideColor: 0
@@ -1805,6 +1797,8 @@ MonoBehaviour:
     maxCardWidth: 0
     cardAspect: 0
     cardSpacing: {x: 0, y: 0}
+    rowGap: 60
+    firstRowSpace: 90
     hoverScale: 0
     cardShape: {fileID: 0}
     cardBorderWidth: -1

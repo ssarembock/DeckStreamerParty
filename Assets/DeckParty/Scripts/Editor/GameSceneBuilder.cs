@@ -779,7 +779,7 @@ namespace DeckParty.EditorTools
         /// <summary>
         /// The shop in the website look: one white card holding everything you can do between streams. Along the top, under
         /// the title, a row with the player's streamer (their active as an icon button with its price), Raise Sub Cap (+1 and
-        /// the price), Remove a Viewer (-1 and the price), the Audience (and how many), what you are waiting for and the big
+        /// the price), Remove a Viewer (-1 and the price), what you are waiting for and the big
         /// Go Live / Ready button; under it, the grid of viewers to recruit. Words are in the hover tooltips.
         /// </summary>
         static PlanningView BuildPlanning(RectTransform mainArea, UIPrefabs prefabs)
@@ -810,9 +810,7 @@ namespace DeckParty.EditorTools
             var remove = WideIconButton(toolbar, "RemoveViewer", EditorUI.RemoveViewer, SkinSlot.IconRemoveViewer, ShopButton.RemoveViewer, 210, buttonHeight,
                 "-1", true, out var removeLabel, out var removeCost);
             var removeTip = remove.GetComponent<TooltipTrigger>();
-            var rolodex = WideIconButton(toolbar, "Rolodex", EditorUI.Audience, SkinSlot.IconAudience, ShopButton.Audience, 170, buttonHeight, "12", false,
-                out var rolodexLabel, out _);
-            var rolodexTip = rolodex.GetComponent<TooltipTrigger>();
+            // No Audience button here: the menu bar at the top has one.
 
             var spacer = EditorUI.Rect(toolbar, "Spacer");
             EditorUI.Layout(spacer, -1, 10, 1);
@@ -857,9 +855,6 @@ namespace DeckParty.EditorTools
             view.removeLabel = removeLabel;
             view.removeTooltip = removeTip;
             view.removeCost = removeCost;
-            view.rolodexButton = rolodex;
-            view.rolodexLabel = rolodexLabel;
-            view.rolodexTooltip = rolodexTip;
             view.nextNightButton = next;
             view.nextNightLabel = null;
             view.nextNightTooltip = next.GetComponent<TooltipTrigger>();

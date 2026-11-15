@@ -131,7 +131,8 @@ Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs** once. Full details: *
 
 | Area | Now |
 |---|---|
-| **Prices** | The Cash price of Use, Raise Sub Cap and Remove a Viewer sits just above each button (red when you can't afford it). The buttons keep their short text: +1, -1, the Audience count, and "Use". The toolbar is 32 px taller to fit the prices, and Use is as tall as the other buttons. |
+| **Prices** | The Cash price of Use, Raise Sub Cap and Remove a Viewer sits just above each button (red when you can't afford it). The buttons keep their short text: +1, -1 and "Use". The toolbar is 32 px taller to fit the prices, and Use is as tall as the other buttons. |
 | **UI Skin > Shop > Toolbar buttons** | Each button's icon (art, colour, size), text (built-in numbers, translated words, your own text, or none) and shape (background art, inside and border colours, border width, size). |
 | **UI Skin > Shop > Prices** | Font size, gap and colours of the prices. |
-| **UI Skin > Shop > Viewer cards** | Your own card prefab (with a template maker and a parts check), card sizes, proportions, spacing and hover growth, the built-in card's shape, border and piles, and card colours (Trophy border, price, copies left, veil). |
+| **No Audience button in the shop** (2026-11-15) | The shop toolbar no longer has its own Audience button: the one in the menu bar does the same. A bought viewer's "+1" now flies to the menu bar's Audience button. The icon and text on every toolbar button are centred together. Needs one Rebuild. |
+| **UI Skin > Shop > Viewer cards** | Your own card prefab (with a template maker and a parts check), card sizes, proportions, spacing (with extra space between rows and above the first row) and hover growth, the built-in card's shape, border and piles, and card colours (Trophy border, price, copies left, veil). |

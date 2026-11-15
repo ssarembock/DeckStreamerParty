@@ -13,7 +13,7 @@ Select the UI Skin (**Deck Party > Select UI Skin**) and open **Shop (buttons, p
 
 The section has three parts:
 
-- **Toolbar buttons:** one block per button (Use, Raise Sub Cap, Remove a Viewer, Audience, Go Live).
+- **Toolbar buttons:** one block per button (Use, Raise Sub Cap, Remove a Viewer, Go Live). The icon and text on each button are centred together.
 - **Prices above the buttons.**
 - **Viewer cards:** your own card prefab, the card sizes, the built-in card's shape and piles, and the card colours.
 
@@ -31,10 +31,10 @@ switched off in the scene. Switch it on to see the buttons while you work, and o
 
 | Setting | What it does |
 |---|---|
-| **Icon > Art** | Replaces the icon on this button only. Empty uses the icon entry further down the UI Skin. That entry is shared: for example, the Audience icon also shows in the menu bar. |
+| **Icon > Art** | Replaces the icon on this button only. Empty uses the icon entry further down the UI Skin. That entry may be shared with other places in the game. |
 | **Icon > Colour** | Tints the icon. Unticked, your own art keeps its colours. |
 | **Icon > Size** | The icon's width and height in pixels. |
-| **Text > Shows** | **Built In:** the game's numbers (+1 on Raise Sub Cap, -1 on Remove a Viewer, your Audience count; nothing on Go Live). **Words:** a short word in the player's language ("Use", "Sub Cap +1", "Remove", "Audience", "Go Live"). **Custom:** your own text, the same in every language. **None:** only the icon, centred. |
+| **Text > Shows** | **Built In:** the game's numbers (+1 on Raise Sub Cap, -1 on Remove a Viewer; nothing on Go Live). **Words:** a short word in the player's language ("Use", "Sub Cap +1", "Remove", "Go Live"). **Custom:** your own text, the same in every language. **None:** only the icon, centred. |
 | **Text > Colour / Font size** | The button's text. |
 | **Shape > Background art** | The button's shape. Use a 9-slice sprite (set its borders in the Sprite Editor) so the corners don't stretch. |
 | **Shape > Inside colour / Border colour / Border width** | The button's colours and outline. To show background art exactly as drawn, set Inside colour to white (ticked) and Border width to 0. |
@@ -43,7 +43,7 @@ switched off in the scene. Switch it on to see the buttons while you work, and o
 Use and Go Live are filled with the site accent colour and have no border. Tick their Inside colour to change it.
 
 The **Words** text for each button is in `Resources/Localization/AudienceCapture_Strings.csv`. The keys are
-`shopbtn.power`, `shopbtn.raise_cap`, `shopbtn.remove`, `shopbtn.audience` and `shopbtn.go_live`. Edit the word in
+`shopbtn.power`, `shopbtn.raise_cap`, `shopbtn.remove` and `shopbtn.go_live`. Edit the word in
 all five languages.
 
 ## 3. Prices above the buttons
@@ -70,6 +70,8 @@ settings, including the red.
 | **Narrowest / Widest** | The card width range. The shop fits as many columns as it can (built-in 160 to 196 px). |
 | **Height / width** | The card's proportions. Built-in is 1.4; 0 with your own prefab uses that prefab's proportions. |
 | **Space between** | The gap between cards, across and down (built-in 38 x 36). |
+| **Extra space between rows** | Added between one row of cards and the next, on top of the space down, so the card piles above each card don't crowd the row above. -1 = built-in (32 px); 0 = none. |
+| **Space above the first row** | The gap between the top of the card area and the first row (the first row's card piles peek into it). -1 = built-in (30 px plus the extra space between rows, so the first row gets the same extra room as the others); 0 = none. |
 | **Hover growth** | How much a card grows under the pointer (built-in 1.04; 1 = not at all). |
 | **Shape** *(built-in card)* | A 9-slice sprite for the card's outline and inside, for example rounded corners. It's also used for the card backs in the pile. |
 | **Border width** *(built-in card)* | The card's outline (built-in 3; 0 = none). |

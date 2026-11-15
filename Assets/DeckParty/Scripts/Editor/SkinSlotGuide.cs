@@ -93,7 +93,7 @@ namespace DeckParty.EditorTools
             new Info(SkinSlot.IconDoor, Area.Shop, "Sub Cap icon", Kind.Icon,
                 "The Raise Sub Cap button in the shop toolbar. (The menu bar no longer shows the Sub Cap: the chat's seats show it.)"),
             new Info(SkinSlot.IconAudience, Area.MenuBar, "Audience button icon", Kind.Icon,
-                "The Audience button in the menu bar and in the shop toolbar (it opens the Audience overview)."),
+                "The Audience button in the menu bar (it opens the Audience overview)."),
             new Info(SkinSlot.IconMenu, Area.MenuBar, "Menu button icon", Kind.Icon,
                 "The Menu button at the right end of the menu bar (it opens the pause menu)."),
             new Info(SkinSlot.IconTimer, Area.MenuBar, "Countdown timer icon", Kind.Icon,
