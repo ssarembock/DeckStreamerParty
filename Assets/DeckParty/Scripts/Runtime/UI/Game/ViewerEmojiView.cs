@@ -41,7 +41,7 @@ namespace DeckParty.UI
             if (s == null || s.Phase != GamePhase.Party) return 0;
             int net = PartyEngine.NetTrouble(s);
             if (net <= 0) return 0;
-            return net >= GameRules.RaidTroubleThreshold - 1 ? 2 : 1;
+            return net >= PartyEngine.RiskLimit(s) - 1 ? 2 : 1;
         }
 
         /// <param name="live">False while the board isn't showing a live stream (shop, scoring sequence...).</param>

@@ -48,6 +48,8 @@ namespace DeckParty
         public static void Play(FxCue cue, Transform target, float intensity = 1f)
         {
             if (target == null || !target.gameObject.activeInHierarchy) return;
+            // Elements that settle back to their rest pose wait until effects have stopped moving them.
+            FxRestPose.Touch(target);
             var entry = FxLibrary.Current.Get(cue);
             if (entry != null && !entry.enabled) return;
             float strength = intensity * (entry != null ? entry.intensity : 1f);

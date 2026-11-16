@@ -2523,6 +2523,10 @@ MonoBehaviour:
     m_Key: shop.add_stream_detail
     m_Metadata:
       m_Items: []
+  - m_Id: 5845087965241344
+    m_Key: hud.tip.plays_term_endless
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

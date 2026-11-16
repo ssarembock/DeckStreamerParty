@@ -146,7 +146,8 @@ namespace DeckParty.UI
             PartyEngine.ProjectScore(s, out int cash, out int influence);
             int penalty = PartyEngine.ProjectPenalty(s, influence);
             int diamonds = PartyEngine.DiamondsPresent(s);
-            m_WinReady = diamonds >= GameRules.DiamondsToWin && endBlocker == null;
+            // Endless has no win: the button never says WIN (and doesn't flash gold).
+            m_WinReady = !s.IsEndless && diamonds >= GameRules.DiamondsToWin && endBlocker == null;
             if (endLabel != null) endLabel.text = Loc.Get(m_WinReady ? "controls.end_win" : "controls.end");
             var sub = $"{GuestVisuals.CashText(cash)}  {GuestVisuals.InfluenceText(influence)}";
             if (penalty > 0) sub += $"  <color=#FF5A5A>-{penalty}</color>";
@@ -272,7 +273,7 @@ namespace DeckParty.UI
                 var g = s.Find(s.Pool[i]);
                 if (PartyEngine.WouldArriveRisky(g)) troubleWaiting++;
             }
-            bool oneAway = PartyEngine.NetTrouble(s) >= GameRules.RaidTroubleThreshold - 1;
+            bool oneAway = PartyEngine.NetTrouble(s) >= PartyEngine.RiskLimit(s) - 1;
             if (riskBadge != null)
             {
                 // Website style: an icon and the number in a pill; the sentence is in the tooltip.

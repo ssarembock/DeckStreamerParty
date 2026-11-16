@@ -18,6 +18,15 @@ namespace DeckParty.Core
         /// <summary>Net Deplatform Risk at (or above) this value gets the stream deplatformed (internally: a raid).</summary>
         public const int RaidTroubleThreshold = 3;
 
+        /// <summary>
+        /// Teams (2v2, co-op Endless): the two players share one Risk count for the whole stream, so they get a higher limit.
+        /// Use <see cref="PartyEngine.RiskLimit"/> for the limit that applies to a season.
+        /// </summary>
+        public const int TeamRiskLimit = 4;
+
+        /// <summary>The most Risk pips any season shows (the team limit).</summary>
+        public const int MaxRiskLimit = TeamRiskLimit;
+
         /// <summary>Diamonds that must attend one successful party to win.</summary>
         public const int DiamondsToWin = 4;
 

@@ -236,8 +236,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469235
-    m_Localized: "Empieza la temporada: {0}, {1} noches. \xA1Gana el primer stream
-      de {2} Trofeos!"
+    m_Localized: "Empieza la temporada: {0}, {1} streams. \xA1Gana el primer stream
+      con {2} Trofeos!"
     m_Metadata:
       m_Items: []
   - m_Id: 437469236
@@ -535,6 +535,11 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5802214540533763
     m_Localized: Temporizador de la tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845084467191808
+    m_Localized: "Empieza Infinito cooperativo: {0}, {1} streams. \xA1Aguanten juntos
+      todo lo que puedan!"
     m_Metadata:
       m_Items: []
   references:

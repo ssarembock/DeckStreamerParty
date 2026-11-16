@@ -1909,7 +1909,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408007
-    m_Localized: "m\xE1ximo {points} {points:plural:ponto|pontos}: {effect}"
+    m_Localized: "at\xE9 {effect}"
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408008
@@ -2500,15 +2500,16 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5802217975668799
     m_Localized: "dois times de dois fazendo live ao mesmo tempo. Os parceiros dividem
-      Grana, Influ\xEAncia e loja, mas cada um tem sua Audi\xEAncia e limite, e os
-      dois lados da live pontuam como um s\xF3. Vence o primeiro time com {count}
-      Trof\xE9us numa live."
+      Grana, Influ\xEAncia, Trof\xE9us e Risco (o limite \xE9 {risk}), mas cada um
+      tem sua Audi\xEAncia e limite, e os dois lados da live pontuam como um s\xF3.
+      Vence o primeiro time com {count} Trof\xE9us numa live."
     m_Metadata:
       m_Items: []
   - m_Id: 5802217975668800
-    m_Localized: "dois jogadores dividem uma partida Infinita: uma loja, um caixa
-      e duas audi\xEAncias. Voc\xEAs come\xE7am com {count} lives e Trof\xE9us compram
-      mais. Quanto aguentam juntos?"
+    m_Localized: "dois jogadores dividem uma partida Infinita: Grana, Influ\xEAncia,
+      Trof\xE9us e Risco (o limite \xE9 {risk}) s\xE3o compartilhados, e cada um
+      tem sua Audi\xEAncia e limite. Voc\xEAs come\xE7am com {count} lives e Trof\xE9us
+      compram mais. Quanto aguentam juntos?"
     m_Metadata:
       m_Items: []
   - m_Id: 5802217975668801
@@ -2624,6 +2625,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5802218063749138
     m_Localized: 'Esta partida: {streams} lives, faltam {left}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845087965241344
+    m_Localized: "<b>{icon:plays} Trof\xE9us</b>\\nEspectadores com este \xEDcone
+      s\xE3o Trof\xE9us. Cada um numa live que pontua guarda um Trof\xE9u pra gastar
+      na loja."
     m_Metadata:
       m_Items: []
   references:

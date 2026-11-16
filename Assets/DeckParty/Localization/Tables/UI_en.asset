@@ -1889,7 +1889,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408007
-    m_Localized: 'best {points} {points:plural:point|points}: {effect}'
+    m_Localized: up to {effect}
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408008
@@ -2477,15 +2477,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802217975668799
-    m_Localized: two teams of two, streaming at once. Teammates share Cash, Influence
-      and the shop, keep their own Audience and Sub Cap, and their two sides of the
-      stream score as one. First team to {count} Trophies in one stream wins.
+    m_Localized: two teams of two, streaming at once. Teammates share Cash, Influence,
+      Trophies and Risk (the limit is {risk}), keep their own Audience and Sub Cap,
+      and their two sides of the stream score as one. First team to {count} Trophies
+      in one stream wins.
     m_Metadata:
       m_Items: []
   - m_Id: 5802217975668800
-    m_Localized: 'two players share one Endless run: one shop, one bank, two Audiences.
-      You start with {count} streams and Trophies buy more. How long can you last
-      together?'
+    m_Localized: 'two players share one Endless run: Cash, Influence, Trophies and
+      Risk (the limit is {risk}) are shared, and each keeps their own Audience and
+      Sub Cap. You start with {count} streams and Trophies buy more. How long can
+      you last together?'
     m_Metadata:
       m_Items: []
   - m_Id: 5802217975668801
@@ -2601,6 +2603,11 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5802218063749138
     m_Localized: 'This run: {streams} streams, {left} left'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845087965241344
+    m_Localized: <b>{icon:plays} Trophies</b>\nViewers with this icon are Trophies.
+      Each one in a scored stream banks a Trophy to spend in the shop.
     m_Metadata:
       m_Items: []
   references:

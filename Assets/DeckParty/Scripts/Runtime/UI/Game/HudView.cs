@@ -62,6 +62,9 @@ namespace DeckParty.UI
         int m_LastBanked = -1;
         /// <summary>The Deplatform Risk the pips show (0 outside a stream).</summary>
         int m_PipTrouble;
+        /// <summary>The Risk limit of the season on screen (3, or 4 for a team): how many pips show.</summary>
+        int m_RiskLimit = GameRules.RaidTroubleThreshold;
+        bool m_PipsFitted;
         PlayerState m_State;
 
         void Awake()
@@ -73,6 +76,13 @@ namespace DeckParty.UI
             if (nightTooltip != null) nightTooltip.Provider = NightTooltip;
             ApplyCaptions();
             Loc.Changed += OnLanguageChanged;
+            // The meters and numbers that effects punch and wobble always settle back to the pose they were built with.
+            if (troubleMeter != null) FxRestPose.Ensure(troubleMeter);
+            if (troubleLabel != null) FxRestPose.Ensure(troubleLabel.transform);
+            if (starsMeter != null) FxRestPose.Ensure(starsMeter);
+            if (starsLabel != null) FxRestPose.Ensure(starsLabel.transform);
+            if (cashLabel != null) FxRestPose.Ensure(cashLabel.transform);
+            if (influenceLabel != null) FxRestPose.Ensure(influenceLabel.transform);
         }
 
         void OnDestroy() => Loc.Changed -= OnLanguageChanged;
@@ -180,14 +190,20 @@ namespace DeckParty.UI
             int trouble = party ? PartyEngine.NetTrouble(s) : 0;
             int diamonds = party ? PartyEngine.DiamondsPresent(s) : 0;
 
+            int riskLimit = PartyEngine.RiskLimit(s);
+            if (!m_PipsFitted || riskLimit != m_RiskLimit)
+            {
+                FitRiskPips(riskLimit);
+                m_PipsFitted = true;
+            }
             m_PipTrouble = trouble;
             ApplyRiskPips();
             if (troubleLabel != null)
             {
                 troubleLabel.enableAutoSizing = true;
                 troubleLabel.fontSizeMin = 14;
-                string riskText = Loc.Get("hud.risk", "risk", trouble, "max", GameRules.RaidTroubleThreshold);
-                troubleLabel.text = trouble >= GameRules.RaidTroubleThreshold - 1 && party ? $"<color=#FF5A5A>{riskText}</color>" : riskText;
+                string riskText = Loc.Get("hud.risk", "risk", trouble, "max", riskLimit);
+                troubleLabel.text = trouble >= riskLimit - 1 && party ? $"<color=#FF5A5A>{riskText}</color>" : riskText;
             }
 
             // Older scenes: a pip per Trophy. Now: one Trophy icon and "in chat / needed to win", counting up as Trophy viewers join.
@@ -221,13 +237,52 @@ namespace DeckParty.UI
         void ApplyRiskPips()
         {
             if (troublePips == null) return;
-            for (int i = 0; i < troublePips.Length; i++)
+            for (int i = 0; i < troublePips.Length && i < m_RiskLimit; i++)
             {
                 if (troublePips[i] == null) continue;
                 bool lit = i < m_PipTrouble;
-                var hot = i >= GameRules.RaidTroubleThreshold - 1 ? SitePalette.Danger : SitePalette.Warning;
+                var hot = i >= m_RiskLimit - 1 ? SitePalette.Danger : SitePalette.Warning;
                 troublePips[i].color = GameIcons.PipColor(ResourceIcon.Risk, lit, hot, SitePalette.Off);
             }
+        }
+
+        /// <summary>
+        /// One pip per point of the season's Risk limit (3, or 4 for a team). Scenes built with 3 pips get a copy of the last
+        /// one; pips past the limit are hidden, and the meter is resized so it stays centred and its tooltip covers it.
+        /// </summary>
+        void FitRiskPips(int limit)
+        {
+            m_RiskLimit = Mathf.Max(1, limit);
+            if (troublePips == null || troublePips.Length == 0) return;
+            if (troublePips.Length < m_RiskLimit)
+            {
+                var last = troublePips[troublePips.Length - 1];
+                if (last == null) return;
+                var pips = new Image[m_RiskLimit];
+                Array.Copy(troublePips, pips, troublePips.Length);
+                for (int i = troublePips.Length; i < m_RiskLimit; i++)
+                {
+                    pips[i] = Instantiate(last, last.transform.parent);
+                    pips[i].name = "Pip" + (i + 1);
+                    pips[i].transform.SetSiblingIndex(pips[i - 1].transform.GetSiblingIndex() + 1);
+                }
+                troublePips = pips;
+            }
+            int shown = 0;
+            float pipWidth = 0f;
+            for (int i = 0; i < troublePips.Length; i++)
+            {
+                if (troublePips[i] == null) continue;
+                bool on = i < m_RiskLimit;
+                if (troublePips[i].gameObject.activeSelf != on) troublePips[i].gameObject.SetActive(on);
+                if (!on) continue;
+                shown++;
+                pipWidth = Mathf.Max(pipWidth, troublePips[i].rectTransform.rect.width);
+            }
+            if (troubleMeter == null || shown == 0 || pipWidth <= 0f || !troubleMeter.TryGetComponent<HorizontalLayoutGroup>(out var row)) return;
+            float width = shown * pipWidth + (shown - 1) * row.spacing + row.padding.horizontal;
+            if (Mathf.Abs(troubleMeter.sizeDelta.x - width) > 0.5f) troubleMeter.sizeDelta = new Vector2(width, troubleMeter.sizeDelta.y);
+            if (troubleMeter.TryGetComponent<LayoutElement>(out var element) && Mathf.Abs(element.preferredWidth - width) > 0.5f) element.preferredWidth = width;
         }
 
         string NightTooltip()
@@ -242,7 +297,7 @@ namespace DeckParty.UI
         /// <summary>Outside a stream: what Risk is. During one: where this stream's Risk comes from, against the limit.</summary>
         string TroubleTooltip()
         {
-            int max = GameRules.RaidTroubleThreshold;
+            int max = PartyEngine.RiskLimit(m_State);
             if (m_State == null || m_State.Phase != GamePhase.Party)
                 return TipText.Titled(Loc.Get("hud.tip.risk_title")).Line(Loc.Get("hud.tip.risk_rule", "max", max));
             int net = PartyEngine.NetTrouble(m_State);

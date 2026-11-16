@@ -266,6 +266,8 @@ namespace DeckParty.Core
         public int Members = 1;
         public int PartnerCapacity = GameRules.StartingCapacity;
         public int PartnerExpansions;
+        /// <summary>Teams: viewers member 1 has removed (each player has their own Audience, so their own removal price).</summary>
+        public int PartnerRemovals;
         /// <summary>Teams: one bit per member who has ended their side of this stream. It's scored once every member has.</summary>
         public int StreamDone;
 
@@ -314,6 +316,9 @@ namespace DeckParty.Core
 
         /// <summary>Sub Cap upgrades a member has bought.</summary>
         public int ExpansionsOf(int member) => IsTeam && member == 1 ? PartnerExpansions : Expansions;
+
+        /// <summary>Viewers a member has removed with Remove a Viewer (sets their next removal price).</summary>
+        public int RemovalsOf(int member) => IsTeam && member == 1 ? PartnerRemovals : Removals;
 
         /// <summary>Both sides' Sub Caps together (a solo season: <see cref="Capacity"/>).</summary>
         public int TotalCapacity => IsTeam ? Capacity + PartnerCapacity : Capacity;

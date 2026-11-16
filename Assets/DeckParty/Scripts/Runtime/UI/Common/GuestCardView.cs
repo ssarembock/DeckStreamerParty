@@ -141,6 +141,9 @@ namespace DeckParty.UI
             m_Hooked = true;
             if (button != null) button.onClick.AddListener(() => Clicked?.Invoke(this));
             if (abilityButton != null) abilityButton.onClick.AddListener(() => AbilityClicked?.Invoke(this));
+            // Chat avatars draw nothing that catches the pointer (only their small badges did, so a viewer could only be
+            // picked by its community icons): the whole avatar takes clicks and hovers. Prefabs since 2026-11-17 have it built in.
+            if (button != null && avatarMode) HitArea.Ensure((RectTransform)transform);
             if (frame != null) m_FrameBase = frame.color;
             if (characterPortrait == null && portrait != null)
             {

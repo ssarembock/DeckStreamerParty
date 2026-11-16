@@ -1916,7 +1916,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408007
-    m_Localized: "m\xE1ximo {points} {points:plural:punto|puntos}: {effect}"
+    m_Localized: hasta {effect}
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408008
@@ -2508,15 +2508,16 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5802217975668799
     m_Localized: "dos equipos de dos que transmiten a la vez. Los compa\xF1eros comparten
-      Plata, Influencia y tienda, tienen su propia Audiencia y cupo, y sus dos lados
-      del stream punt\xFAan como uno. Gana el primer equipo con {count} Trofeos en
-      un stream."
+      Plata, Influencia, Trofeos y Riesgo (el l\xEDmite es {risk}), tienen su propia
+      Audiencia y cupo, y sus dos lados del stream punt\xFAan como uno. Gana el primer
+      equipo con {count} Trofeos en un stream."
     m_Metadata:
       m_Items: []
   - m_Id: 5802217975668800
-    m_Localized: "dos jugadores comparten una partida Infinita: una tienda, una caja
-      y dos audiencias. Empiezan con {count} streams y los Trofeos compran m\xE1s.
-      \xBFCu\xE1nto aguantan juntos?"
+    m_Localized: "dos jugadores comparten una partida Infinita: Plata, Influencia,
+      Trofeos y Riesgo (el l\xEDmite es {risk}) son compartidos, y cada uno tiene
+      su propia Audiencia y cupo. Empiezan con {count} streams y los Trofeos compran
+      m\xE1s. \xBFCu\xE1nto aguantan juntos?"
     m_Metadata:
       m_Items: []
   - m_Id: 5802217975668801
@@ -2632,6 +2633,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5802218063749138
     m_Localized: 'Esta partida: {streams} streams, quedan {left}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845087965241344
+    m_Localized: "<b>{icon:plays} Trofeos</b>\\nLos espectadores con este \xEDcono
+      son Trofeos. Cada uno en un stream que punt\xFAa guarda un Trofeo para gastar
+      en la tienda."
     m_Metadata:
       m_Items: []
   references:

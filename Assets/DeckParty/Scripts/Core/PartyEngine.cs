@@ -167,17 +167,22 @@ namespace DeckParty.Core
 
         public static int NetTrouble(PlayerState s) => Math.Max(0, TroubleTotal(s) - CancelCount(s));
 
+        /// <summary>
+        /// Net Deplatform Risk that gets this stream deplatformed: 3, or 4 for a team (2v2, co-op Endless), whose two players
+        /// share one Risk count across both sides of the chat.
+        /// </summary>
+        public static int RiskLimit(PlayerState s) => s != null && s.IsTeam ? GameRules.TeamRiskLimit : GameRules.RaidTroubleThreshold;
+
         // ================================================================== queries: communities
 
         /// <summary>
-        /// Each community's score right now (indexed by <see cref="Community"/>): how many <b>different</b> viewers in chat
-        /// belong to it, minus one (a lone viewer is not a community, so it scores 0). Two copies of the same card count once; a
-        /// Rickrolled viewer counts as the character they've become.
+        /// How many <b>different</b> viewers in chat belong to each community right now (indexed by <see cref="Community"/>).
+        /// Two copies of the same card count once; a Rickrolled viewer counts as the character they've become.
         /// </summary>
-        public static int[] CommunityScores(PlayerState s)
+        public static int[] CommunityMembers(PlayerState s)
         {
-            var scores = new int[Communities.Count];
-            if (s.House.Count == 0) return scores;
+            var members = new int[Communities.Count];
+            if (s == null || s.House.Count == 0) return members;
             var seen = new bool[GuestCatalog.Count];
             for (int i = 0; i < s.House.Count; i++)
             {
@@ -188,10 +193,19 @@ namespace DeckParty.Core
                 seen[kind] = true;
                 int mask = (int)GuestCatalog.CommunitiesOf(g.Kind);
                 for (int c = 0; c < Communities.Count; c++)
-                    if ((mask & (1 << c)) != 0) scores[c]++;
+                    if ((mask & (1 << c)) != 0) members[c]++;
             }
-            // One viewer is not a community: it takes two different viewers to score 1, three to score 2, and so on (the
-            // Boomers have levels instead: 2 different Boomers for level 1, 4 for level 2).
+            return members;
+        }
+
+        /// <summary>
+        /// Each community's score right now (indexed by <see cref="Community"/>): its different viewers in chat
+        /// (<see cref="CommunityMembers"/>) minus one, as a lone viewer is not a community, so it scores 0. The Boomers have
+        /// levels instead: 2 different Boomers for level 1, 4 for level 2.
+        /// </summary>
+        public static int[] CommunityScores(PlayerState s)
+        {
+            var scores = CommunityMembers(s);
             for (int c = 0; c < scores.Length; c++) scores[c] = Communities.PointsFromMembers((Community)c, scores[c]);
             return scores;
         }
@@ -735,7 +749,7 @@ namespace DeckParty.Core
         }
 
         static bool WouldRaidWithExtraTrouble(PlayerState s) =>
-            Math.Max(0, TroubleTotal(s) + 1 - CancelCount(s)) >= GameRules.RaidTroubleThreshold;
+            Math.Max(0, TroubleTotal(s) + 1 - CancelCount(s)) >= RiskLimit(s);
 
         static int CountValidTargets(PlayerState s, int actorId)
         {
@@ -973,15 +987,15 @@ namespace DeckParty.Core
             return Math.Max(0, Math.Min(info.MaxCopies - s.CountOwned(type, member), SharedLeft(s, type)));
         }
 
-        /// <summary>What Remove a Viewer costs right now (Influence): 2 for the first, 1 more for each one since.</summary>
-        public static int RemovalCost(PlayerState s) => GameRules.RemovalCost(s.Removals);
+        /// <summary>What Remove a Viewer costs right now (Influence): 2 for the first, 1 more for each one since. Teams: per player.</summary>
+        public static int RemovalCost(PlayerState s, int member = 0) => GameRules.RemovalCost(s.RemovalsOf(member));
 
         /// <summary>Why Remove a Viewer can't be bought right now (null when it can). Doesn't check which viewer. Teams: per member's Audience.</summary>
         public static string GetRemoveBlocker(PlayerState s, int member = 0)
         {
             if (s.Phase != GamePhase.Planning) return Err.Of("err.remove_between");
             if (s.PermanentCountOf(member) <= GameRules.MinAudience) return Err.Of("err.min_audience", GameRules.MinAudience);
-            int cost = RemovalCost(s);
+            int cost = RemovalCost(s, member);
             if (s.Influence < cost) return Err.Of("err.needs_influence", cost);
             return null;
         }
@@ -995,9 +1009,10 @@ namespace DeckParty.Core
             if (g == null || g.Temporary) return CommandResult.Fail(Err.Of("err.unknown_viewer"));
             if (!s.Owns(g, member)) return CommandResult.Fail(Err.Of("err.partners_viewer"));
 
-            int cost = RemovalCost(s);
+            int cost = RemovalCost(s, member);
             s.Influence -= cost;
-            s.Removals++;
+            if (s.IsTeam && member == 1) s.PartnerRemovals++;
+            else s.Removals++;
             s.Rolodex.Remove(g);
             if (s.BannedNextParty == guestId) s.BannedNextParty = -1;
             Emit(ev, GameEventType.GuestDismissed, g, cost);
@@ -1568,7 +1583,7 @@ namespace DeckParty.Core
         static bool CheckRaid(PlayerState s, List<GameEvent> ev)
         {
             if (s.Phase != GamePhase.Party) return false;
-            if (NetTrouble(s) < GameRules.RaidTroubleThreshold) return false;
+            if (NetTrouble(s) < RiskLimit(s)) return false;
 
             // This Is Fine Dog: the first time it would happen, the deplatforming is called off.
             GuestInstance dog = null;
@@ -1589,7 +1604,7 @@ namespace DeckParty.Core
                 RemoveFromParty(s, dog.Id, LeaveReason.Gone, -1, false, ev);
                 s.UsedAbilities.Remove(dog.Id);
                 s.Rolodex.Remove(dog);
-                if (NetTrouble(s) < GameRules.RaidTroubleThreshold) return false;
+                if (NetTrouble(s) < RiskLimit(s)) return false;
             }
 
             int trouble = NetTrouble(s);
@@ -2653,7 +2668,8 @@ namespace DeckParty.Core
 
             if (s.IncomingHeat > 0)
             {
-                s.PartyHeat = Math.Min(StreamerCatalog.MaxRaidHeat, s.IncomingHeat);
+                // Raids alone never reach the limit (3 solo, 4 for a team): at most one under it.
+                s.PartyHeat = Math.Min(RiskLimit(s) - 1, s.IncomingHeat);
                 s.IncomingHeat = 0;
                 Emit(ev, GameEventType.HeatApplied, null, s.PartyHeat);
             }

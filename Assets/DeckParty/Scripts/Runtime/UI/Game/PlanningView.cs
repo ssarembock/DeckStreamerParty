@@ -353,11 +353,11 @@ namespace DeckParty.UI
             if (removeButton == null) return;
             var blocker = PartyEngine.GetRemoveBlocker(s, member);
             removeButton.interactable = blocker == null && !locked;
-            string price = GameIcons.Amount(ResourceIcon.Influence, PartyEngine.RemovalCost(s));
+            string price = GameIcons.Amount(ResourceIcon.Influence, PartyEngine.RemovalCost(s, member));
             if (removeButton.TryGetComponent<ShopButtonSkin>(out var removeSkin))
             {
                 removeSkin.SetCaption("-1");
-                SetCost(removeCost, price, s.Influence >= PartyEngine.RemovalCost(s));
+                SetCost(removeCost, price, s.Influence >= PartyEngine.RemovalCost(s, member));
             }
             else if (removeLabel != null) removeLabel.text = "-1   " + price;
             if (removeTooltip != null)

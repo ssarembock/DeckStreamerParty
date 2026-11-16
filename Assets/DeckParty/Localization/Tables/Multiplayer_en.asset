@@ -228,7 +228,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469235
-    m_Localized: 'The season begins: {0}, {1} nights. First stream with {2} Trophies
+    m_Localized: 'The season begins: {0}, {1} streams. First stream with {2} Trophies
       wins!'
     m_Metadata:
       m_Items: []
@@ -518,6 +518,11 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5802214540533763
     m_Localized: Shop timer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845084467191808
+    m_Localized: 'Co-op Endless begins: {0}, {1} streams. Last as long as you can
+      together!'
     m_Metadata:
       m_Items: []
   references:

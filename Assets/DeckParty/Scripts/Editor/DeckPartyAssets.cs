@@ -512,6 +512,9 @@ namespace DeckParty.EditorTools
 
             var root = EditorUI.Rect(null, "ChatAvatar");
             root.sizeDelta = size;
+            // The whole avatar takes clicks and hovers (its pictures have raycasts off): picking a target, using its action
+            // and its tooltip work anywhere on it, not just on the community badges.
+            HitArea.Ensure(root);
             var visual = EditorUI.Rect(root, "Visual").Place(new Vector2(0.5f, 0.5f), Vector2.zero, size);
             var anim = EditorUI.Rect(visual, "Anim").Stretch();
 

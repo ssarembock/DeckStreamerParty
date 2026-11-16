@@ -234,7 +234,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 437469235
-    m_Localized: "A temporada come\xE7a: {0}, {1} noites. Vence a primeira live de
+    m_Localized: "A temporada come\xE7a: {0}, {1} lives. Vence a primeira live com
       {2} Trof\xE9us!"
     m_Metadata:
       m_Items: []
@@ -532,6 +532,11 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5802214540533763
     m_Localized: "Cron\xF4metro da loja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845084467191808
+    m_Localized: "Come\xE7a o Infinito cooperativo: {0}, {1} lives. Aguentem juntos
+      o m\xE1ximo que puderem!"
     m_Metadata:
       m_Items: []
   references:

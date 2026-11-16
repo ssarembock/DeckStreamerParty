@@ -87,3 +87,24 @@ Key non-obvious decisions:
   - Code builds tooltip text with Runtime/Visuals/TipText (Titled(title, note).Line/Detail/Good/Warn/Section; title and body are split by '\u001E'). A CSV tooltip whose first line starts with <b> gets that line as its title (TipText.TrySplit).
   - Copy pass in all 5 languages: "tonight" -> "this stream" in reachable text (put-aside meme cards left alone); card tags in sentence case ("PLAY" -> "{icon:plays} Trophy"); proper plurals instead of "(s)"; shorter community rules and lobby mode texts.
   - Shop tiles and their tooltips now count copies per team member (ShopItemView.Bind member, GuestVisuals.Tooltip shopMember).
+- Bug fixes (2026-11-17; report BugFixReport.md in the repo root):
+  - Team chat layout: HouseView now places team seats by hand. The GridLayoutGroup and ContentSizeFitter are paused, with half the width per side, one shared seat size and columns, and a single divider line. Below MinCardScale it reduces the columns and scrolls. EnsureCards gives new seats the current CardScale; unscaled late seats were the cause of the "enlarged right side".
+  - Chat avatars had no raycast graphic (only the badges did), so they could be clicked only on community icons. HitArea (Runtime/UI/Common, a draw-nothing MaskableGraphic) is added by the builder and at runtime in GuestCardView (avatarMode).
+  - Teams:
+    - The Risk limit is 4 (GameRules.TeamRiskLimit, PartyEngine.RiskLimit(s)); every former RaidTroubleThreshold use goes through it.
+    - Scenes get 4 Risk pips (GameRules.MaxRiskLimit). HudView.FitRiskPips hides or clones pips.
+    - The Raid heat cap is RiskLimit - 1.
+    - Remove a Viewer is priced per member (PlayerState.PartnerRemovals, RemovalsOf, RemovalCost(s, member)).
+    - State format 13, protocol deckparty-19.
+    - Teams still share one streamer (flagged to the user).
+  - Endless:
+    - No "one more" headline in Co-op Endless; it gets its own mp.coop_begins headline.
+    - No WIN End button or chat win hint.
+    - The Trophy icon tooltip has an Endless variant.
+    - 2v2 keeps its win notices (flagged).
+  - Skewed Risk pips: Feel's additive wobble restarted or interrupted mid-wobble keeps the tilt.
+    - GameController.PlayRiskPip plays once per frame.
+    - FxRestPose (Runtime/Fx) on the HUD anchors eases back to the built pose 1.2 s after the last Fx.Play or UITween.Punch touch (FxRestPose.Touch), and snaps back on disable.
+  - Community Beats show different viewers in chat / the viewers needed for the top bonus:
+    - PartyEngine.CommunityMembers; CommunityVisuals.MembersForMax and MembersText; strings community.members(_max).
+    - The 10 community descriptions are worded in viewers ({first}, {maxv} placeholders). The How to Play text still uses points (flagged).

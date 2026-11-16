@@ -507,6 +507,10 @@ MonoBehaviour:
     m_Key: timer.shop_title
     m_Metadata:
       m_Items: []
+  - m_Id: 5845084467191808
+    m_Key: mp.coop_begins
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

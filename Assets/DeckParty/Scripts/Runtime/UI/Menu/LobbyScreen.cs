@@ -323,9 +323,9 @@ namespace DeckParty.UI
                 case MatchMode.Turns:
                     return "<color=#FF4F8B>" + Loc.Get("mode.turns") + ":</color> " + Loc.Get("lobby.mode_turns", "count", GameRules.DiamondsToWin);
                 case MatchMode.TwoVsTwo:
-                    return "<color=#6BE38B>" + Loc.Get("mode.two_vs_two") + ":</color> " + Loc.Get("lobby.mode_two_vs_two", "count", GameRules.DiamondsToWin);
+                    return "<color=#6BE38B>" + Loc.Get("mode.two_vs_two") + ":</color> " + Loc.Get("lobby.mode_two_vs_two", "count", GameRules.DiamondsToWin, "risk", GameRules.TeamRiskLimit);
                 case MatchMode.CoopEndless:
-                    return "<color=#FFC94A>" + Loc.Get("mode.coop_endless") + ":</color> " + Loc.Get("lobby.mode_coop", "count", GameRules.EndlessStartingStreams);
+                    return "<color=#FFC94A>" + Loc.Get("mode.coop_endless") + ":</color> " + Loc.Get("lobby.mode_coop", "count", GameRules.EndlessStartingStreams, "risk", GameRules.TeamRiskLimit);
                 case MatchMode.Race:
                     return "<color=#FF9A3D>" + Loc.Get("mode.race") + ":</color> " + Loc.Get("lobby.mode_race", "count", GameRules.DiamondsToWin);
                 default:

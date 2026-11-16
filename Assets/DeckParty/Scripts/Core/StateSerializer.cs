@@ -18,8 +18,9 @@ namespace DeckParty.Core
         /// v10: what the new streamer actives armed for this stream (extra Sub Cap, Bark at Chat, Soft Landing).
         /// v11: who sits in a Hype Men spare seat (2026-11-16).
         /// v12: game modes and teams (Endless Trophies and purchases, team members, their Sub Caps, whose card is whose).
+        /// v13: each team member's own Remove a Viewer price (2026-11-17).
         /// </summary>
-        const byte FormatVersion = 12;
+        const byte FormatVersion = 13;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -142,6 +143,9 @@ namespace DeckParty.Core
                 w.Write(s.PartnerExpansions);
                 w.Write((byte)Math.Min(255, Math.Max(0, s.StreamDone)));
                 for (int i = 0; i < s.Rolodex.Count; i++) w.Write(s.Rolodex[i].Owner);
+
+                // v13: the second team member's removals (their own Remove a Viewer price)
+                w.Write((short)Math.Min(short.MaxValue, Math.Max(0, s.PartnerRemovals)));
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -321,6 +325,9 @@ namespace DeckParty.Core
                     s.StreamDone = r.ReadByte();
                     for (int i = 0; i < s.Rolodex.Count; i++) s.Rolodex[i].Owner = r.ReadByte();
                 }
+
+                // v12 and older: the team shared one removal count (it stays with member 0).
+                if (version >= 13) s.PartnerRemovals = r.ReadInt16();
 
                 int eventCount = ReadCount(r);
                 for (int i = 0; i < eventCount; i++)

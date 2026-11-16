@@ -604,7 +604,10 @@ namespace DeckParty.Networking
             m_ActivePlayer.Value = settings.Mode == MatchMode.Turns ? NextTurnPlayer() : NoPlayer;
             ServerStartTimer(MatchTimer.Stream, FirstTimerGrace);
 
-            ServerHeadline(Core.Err.Of("mp.season_begins", "@s" + settings.ScenarioId, settings.Nights) + Core.Err.Separator + GameRules.DiamondsToWin);
+            // Co-op Endless has no win: its opening line says how many streams the run starts with instead.
+            ServerHeadline(settings.Mode == MatchMode.CoopEndless
+                ? Core.Err.Of("mp.coop_begins", "@s" + settings.ScenarioId, GameRules.EndlessStartingStreams)
+                : Core.Err.Of("mp.season_begins", "@s" + settings.ScenarioId, settings.Nights) + Core.Err.Separator + GameRules.DiamondsToWin);
             NetworkManager.SceneManager.LoadScene(SceneNames.Game, LoadSceneMode.Single);
         }
 
@@ -1303,7 +1306,8 @@ namespace DeckParty.Networking
                         ServerHeadline(Core.Err.Of("mp.server_down", name));
                         break;
                     case GameEventType.PartyEnded:
-                        if (e.C == GameRules.DiamondsToWin - 1) ServerHeadline(Core.Err.Of("mp.one_more", name, e.C));
+                        // Endless (co-op) has no win, so nobody is ever "one Trophy away".
+                        if (e.C == GameRules.DiamondsToWin - 1 && Settings.Mode != MatchMode.CoopEndless) ServerHeadline(Core.Err.Of("mp.one_more", name, e.C));
                         break;
                     case GameEventType.GuestPurchased:
                         if (GuestCatalog.Get(e.Guest).IsDiamond) ServerHeadline(Core.Err.Of("mp.signed", name, Core.Err.Guest(e.Guest)));

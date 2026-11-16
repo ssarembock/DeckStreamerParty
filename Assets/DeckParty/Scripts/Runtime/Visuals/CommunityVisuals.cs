@@ -42,6 +42,9 @@ namespace DeckParty
                 ("every", Communities.CoreFanbasePointsPerCancel),
                 ("per", per),
                 ("max", max),
+                // Different viewers in chat for the top bonus (the descriptions count viewers, as the chips do).
+                ("maxv", MembersForMax(community)),
+                ("first", Communities.MembersForFirstPoint),
                 ("top", Communities.Effect(community, max)),
                 ("retire", Communities.BoomerRetirePercent),
                 ("t1", Communities.TechspertiseChance(1)),
@@ -61,10 +64,12 @@ namespace DeckParty
         /// <summary>What the community does and how it scales, plus its score and current effect during a stream.</summary>
         public static string Tooltip(Community community, PlayerState state = null)
         {
-            // During a stream the title shows the community's points, and the body ends with what it gives right now.
+            // During a stream the title shows how many different viewers from it are in chat (out of what its top bonus
+            // needs), and the body ends with what it gives right now.
             bool live = state != null && state.Phase == GamePhase.Party;
-            int points = live ? PartyEngine.CommunityScore(state, community) : 0;
-            var tip = TipText.Titled(GameIcons.Tag(community) + " " + Name(community), live ? PointsText(community, points) : null);
+            int members = live ? PartyEngine.CommunityMembers(state)[(int)community] : 0;
+            int points = Communities.PointsFromMembers(community, members);
+            var tip = TipText.Titled(GameIcons.Tag(community) + " " + Name(community), live ? MembersText(community, members) : null);
             tip.Line(Description(community));
             if (!live) return tip;
 
@@ -92,12 +97,24 @@ namespace DeckParty
             return tip.Section().Good(now);
         }
 
-        /// <summary>"3 points" or, for capped communities, "3/9 points" (Boomers: "Level 1/2").</summary>
-        public static string PointsText(Community community, int points)
+        /// <summary>
+        /// Different viewers needed in chat for a community's top bonus (its last point or Boomers level), or 0 for a
+        /// community with no cap. One more than the top point: 2 viewers make the first point.
+        /// </summary>
+        public static int MembersForMax(Community community)
         {
             int max = Communities.MaxPoints(community);
-            if (community == Community.Boomer) return Loc.Get("community.level_max", "count", points, "max", max);
-            return max > 0 ? Loc.Get("community.points_max", "count", points, "max", max) : Loc.Get("community.points", "count", points);
+            return max > 0 ? Communities.MembersForPoint(community, max) : 0;
+        }
+
+        /// <summary>
+        /// A community's progress as different viewers in chat: "2/4 in chat" (out of what its top bonus needs), or "3 in chat"
+        /// with no cap. The bonus starts at 2 different viewers, so the first step already reads 2.
+        /// </summary>
+        public static string MembersText(Community community, int members)
+        {
+            int needed = MembersForMax(community);
+            return needed > 0 ? Loc.Get("community.members_max", "count", members, "max", needed) : Loc.Get("community.members", "count", members);
         }
 
         /// <summary>The compact effect under a Community Beats chip: "30%", "+2", "-1 [influence]"...</summary>

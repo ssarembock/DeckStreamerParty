@@ -607,9 +607,10 @@ namespace DeckParty.UI
             if (blame) raidBlame.Render(s, act ? null : Loc.Get("ban.watching", "player", ViewingOwn ? Loc.Get("common.you") : NameOf(m_ViewId)));
 
             int trouble = party ? PartyEngine.NetTrouble(s) : 0;
-            bool anxious = party && trouble >= GameRules.RaidTroubleThreshold - 1;
+            int riskLimit = PartyEngine.RiskLimit(s);
+            bool anxious = party && trouble >= riskLimit - 1;
             background.SetEnergy(party ? s.Occupancy / (float)Mathf.Max(1, s.Capacity) : 0.2f);
-            background.SetRisk(party ? trouble / (float)(GameRules.RaidTroubleThreshold - 1) : 0f);
+            background.SetRisk(party ? trouble / (float)(riskLimit - 1) : 0f);
             effects.SetDanger(anxious ? 1f : 0f);
             if (anxiety != null) anxiety.Set(anxious, s.Streamer);
             if (overlay != null) overlay.Render(s);
@@ -946,7 +947,7 @@ namespace DeckParty.UI
             var ids = new List<int>();
             foreach (var g in s.Rolodex)
                 if (!g.Temporary && s.Owns(g, m_Member)) ids.Add(g.Id);
-            string price = GameIcons.Amount(ResourceIcon.Influence, PartyEngine.RemovalCost(s));
+            string price = GameIcons.Amount(ResourceIcon.Influence, PartyEngine.RemovalCost(s, m_Member));
             picker.Open(Loc.Get("pick.remove_title", "cost", price), Loc.Get("pick.remove_hint", "min", GameRules.MinAudience), s, ids, pick =>
             {
                 var chosen = State?.Find(pick);

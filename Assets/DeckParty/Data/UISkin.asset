@@ -353,21 +353,21 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconModePuzzles
     slot: 48
-    sprite: {fileID: 0}
+    sprite: {fileID: -4766196716911180030, guid: 283513f2714e99d48b0ddc3723d58274, type: 3}
     imageType: 1
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconModeEndless
     slot: 49
-    sprite: {fileID: 0}
+    sprite: {fileID: 325732347345254350, guid: 283513f2714e99d48b0ddc3723d58274, type: 3}
     imageType: 1
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconModeVersusAi
     slot: 50
-    sprite: {fileID: 0}
+    sprite: {fileID: 6208393817914379501, guid: 283513f2714e99d48b0ddc3723d58274, type: 3}
     imageType: 1
     pixelsPerUnitMultiplier: 1
     overrideColor: 0

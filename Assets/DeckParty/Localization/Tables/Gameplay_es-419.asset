@@ -1442,8 +1442,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091265
-    m_Localized: "Los de siempre. Cada punto da a cada espectador del N\xFAcleo de
-      fans un {per}% de probabilidad de puntuar dos veces ({top}% con {max} puntos)."
+    m_Localized: "Los de siempre. Con {first} espectadores distintos del N\xFAcleo
+      de fans en el chat, cada uno tiene un {per}% de probabilidad de puntuar dos
+      veces, +{per}% por cada uno m\xE1s ({top}% con {maxv})."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091266
@@ -1455,8 +1456,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091268
-    m_Localized: "En n\xF3mina. Cada punto suma +{per} {icon:influence} cuando el
-      stream punt\xFAa (+{top} con {max} puntos)."
+    m_Localized: "En n\xF3mina. Con {first} espectadores distintos del Staff en el
+      chat, el stream que punt\xFAa gana +{per} {icon:influence}, +{per} m\xE1s por
+      cada uno extra (+{top} con {maxv})."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091269
@@ -1508,8 +1510,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091280
-    m_Localized: "Aman el drama. Con al menos 1 punto, el stream que punt\xFAa gana
-      +{per} {icon:cash} por cada {icon:risk} (el anulado tambi\xE9n cuenta)."
+    m_Localized: "Aman el drama. Con {first} espectadores distintos del Ej\xE9rcito
+      troll en el chat, el stream que punt\xFAa gana +{per} {icon:cash} por cada
+      {icon:risk} (el anulado tambi\xE9n cuenta)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091281
@@ -1535,11 +1538,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091286
-    m_Localized: "Dinero viejo, opiniones viejas. Niveles en vez de puntos: {l1}
-      Boomers distintos dan el nivel 1 y {l2} el nivel {max}. Cada nivel descuenta
-      {per} {icon:influence} al subir el cupo y al poder activo de tu streamer en
-      la pr\xF3xima tienda. Tras un stream que punt\xFAa, cada Boomer del chat tiene
-      un {retire}% de probabilidad de desconectarse para siempre."
+    m_Localized: "Dinero viejo, opiniones viejas. {l1} Boomers distintos en el chat
+      dan el nivel 1 y {l2} el nivel {max}. Cada nivel descuenta {per} {icon:influence}
+      al subir el cupo y al poder activo de tu streamer en la pr\xF3xima tienda.
+      Tras un stream que punt\xFAa, cada Boomer del chat tiene un {retire}% de probabilidad
+      de desconectarse para siempre."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
@@ -1553,8 +1556,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091289
     m_Localized: "Siempre en l\xEDnea, esperando la herencia. Cuando un Boomer deja
-      tu Audiencia, un Millennial tuyo al azar gana +1 {icon:cash} para siempre,
-      una vez por punto (al menos una vez)."
+      tu Audiencia, un Millennial tuyo al azar gana +1 {icon:cash} para siempre:
+      una vez por cada Millennial distinto en el chat despu\xE9s del primero (al
+      menos una vez)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
@@ -1757,7 +1761,8 @@ MonoBehaviour:
   - m_Id: 1670123028570112
     m_Localized: "Empiezan flojos, crecen r\xE1pido. Tras un stream que punt\xFAa,
       cada espectador Gen Z del chat gana +1 {icon:cash} o +1 {icon:influence} para
-      siempre (al azar), una vez por punto (hasta {max})."
+      siempre (al azar): una vez por cada Gen Z distinto en el chat despu\xE9s del
+      primero (hasta {max} veces)."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570113
@@ -1771,8 +1776,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123028570115
     m_Localized: "Aqu\xED no se queda nadie. La acci\xF3n de un Guardi\xE1n manda
-      espectadores al azar del chat de vuelta a la fila: {g0} con 0 puntos, {g1}
-      con 1 punto y a todos los dem\xE1s con {max}. Nunca a s\xED mismo."
+      espectadores al azar del chat de vuelta a la fila: {g0} con un Guardi\xE1n
+      en el chat, {g1} con {first} distintos y a todos los dem\xE1s con {maxv}. Nunca
+      a s\xED mismo."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570116
@@ -1785,9 +1791,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570118
-    m_Localized: "Traen amigos. Cada punto suma {per} {per:plural:asiento extra|asientos
-      extra} por encima de tu cupo ({top} con {max} puntos). Solo pueden ocuparlos
-      los espectadores que trae un Animador; t\xFA no puedes sumar a un chat lleno."
+    m_Localized: "Traen amigos. Con {first} Animadores distintos en el chat tienes
+      {per} {per:plural:asiento extra|asientos extra} por encima de tu cupo, +{per}
+      por cada uno m\xE1s ({top} con {maxv}). Solo pueden ocuparlos los espectadores
+      que trae un Animador; t\xFA no puedes sumar a un chat lleno."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570119
@@ -1800,8 +1807,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570121
-    m_Localized: "El martillo de baneo, listo. Cada punto da un uso m\xE1s de la
-      acci\xF3n de sacar de un Mod en este stream (compartido entre los Mods)."
+    m_Localized: "El martillo de baneo, listo. Con {first} Mods distintos en el chat,
+      la acci\xF3n de sacar de un Mod gana 1 uso extra en este stream, +1 por cada
+      Mod m\xE1s (compartido entre los Mods)."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570122
@@ -1840,8 +1848,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570130
-    m_Localized: "Siempre mirando. Cada punto da un uso m\xE1s de la acci\xF3n de
-      espiar de un Mir\xF3n en este stream (hasta {max}, compartidos)."
+    m_Localized: "Siempre mirando. Con {first} Mirones distintos en el chat, la acci\xF3n
+      de espiar de un Mir\xF3n gana usos extra en este stream: 1 por cada Mir\xF3n
+      despu\xE9s del primero, hasta {max} (compartidos)."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570131
@@ -2056,6 +2065,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5802216411193349
     m_Localized: "Terminaste tu lado. Esperando a tu compa\xF1ero."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845086316879872
+    m_Localized: '{count} en el chat'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845086379794432
+    m_Localized: '{count}/{max} en el chat'
     m_Metadata:
       m_Items: []
   references:

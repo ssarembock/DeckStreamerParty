@@ -1435,8 +1435,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091265
-    m_Localized: The regulars. Each point gives every Core Fanbase viewer a {per}%
-      chance to score twice ({top}% at {max} points).
+    m_Localized: The regulars. With {first} different Core Fanbase viewers in chat,
+      each of them has a {per}% chance to score twice, +{per}% for every extra one
+      ({top}% with {maxv}).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091266
@@ -1448,8 +1449,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091268
-    m_Localized: On the payroll. Each point adds +{per} {icon:influence} when the
-      stream is scored (+{top} at {max} points).
+    m_Localized: On the payroll. With {first} different Staff viewers in chat, a
+      scored stream earns +{per} {icon:influence}, +{per} more for every extra one
+      (+{top} with {maxv}).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091269
@@ -1502,8 +1504,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091280
-    m_Localized: They love drama. With at least 1 point, a scored stream earns +{per}
-      {icon:cash} per {icon:risk} in it (cancelled {icon:risk} counts too).
+    m_Localized: They love drama. With {first} different Troll Army viewers in chat,
+      a scored stream earns +{per} {icon:cash} per {icon:risk} in it (cancelled {icon:risk}
+      counts too).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091281
@@ -1529,10 +1532,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091286
-    m_Localized: 'Old money, old opinions. Levels, not points: {l1} different Boomers
-      make level 1, {l2} make level {max}. Each level takes {per} {icon:influence}
-      off Sub Cap upgrades and your streamer''s active in the next shop. After a
-      scored stream, each Boomer in chat has a {retire}% chance to log off for good.'
+    m_Localized: Old money, old opinions. {l1} different Boomers in chat make level
+      1, {l2} make level {max}. Each level takes {per} {icon:influence} off Sub Cap
+      upgrades and your streamer's active in the next shop. After a scored stream,
+      each Boomer in chat has a {retire}% chance to log off for good.
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
@@ -1545,9 +1548,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091289
-    m_Localized: Very online, waiting on the inheritance. Whenever a Boomer leaves
-      your Audience, a random Millennial you own gains +1 {icon:cash} for good, once
-      per point (at least once).
+    m_Localized: 'Very online, waiting on the inheritance. Whenever a Boomer leaves
+      your Audience, a random Millennial you own gains +1 {icon:cash} for good: once
+      for each different Millennial in chat after the first (at least once).'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
@@ -1741,9 +1744,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570112
-    m_Localized: Start weak, grow fast. After a scored stream, each Gen-Z viewer
-      in chat gains +1 {icon:cash} or +1 {icon:influence} for good (at random), once
-      per point (up to {max}).
+    m_Localized: 'Start weak, grow fast. After a scored stream, each Gen-Z viewer
+      in chat gains +1 {icon:cash} or +1 {icon:influence} for good (at random): once
+      for each different Gen-Z viewer in chat after the first (up to {max} times).'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570113
@@ -1757,8 +1760,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123028570115
     m_Localized: 'Nobody stays. A Gatekeeper''s action sends random viewers in chat
-      back to the queue: {g0} at 0 points, {g1} at 1 point, everyone else at {max}.
-      Never itself.'
+      back to the queue: {g0} with one Gatekeeper in chat, {g1} with {first} different
+      ones, and everyone else with {maxv}. Never itself.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570116
@@ -1770,9 +1773,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570118
-    m_Localized: They bring friends. Each point adds {per} spare {per:plural:seat|seats}
-      past your Sub Cap ({top} at {max} points). Only viewers a Hype Man brings in
-      can sit there; you still can't add viewers to a full chat yourself.
+    m_Localized: They bring friends. With {first} different Hype Men in chat you
+      get {per} spare {per:plural:seat|seats} past your Sub Cap, +{per} for every
+      extra one ({top} with {maxv}). Only viewers a Hype Man brings in can sit there;
+      you still can't add viewers to a full chat yourself.
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570119
@@ -1784,8 +1788,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570121
-    m_Localized: Banhammer ready. Each point gives one more use of a Mod's removal
-      action this stream (shared between Mods).
+    m_Localized: Banhammer ready. With {first} different Mods in chat, a Mod's removal
+      action gets 1 extra use this stream, +1 for every extra Mod (shared between
+      Mods).
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570122
@@ -1823,8 +1828,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570130
-    m_Localized: Always watching. Each point gives one more use of a Voyeur's peek
-      action this stream (up to {max}, shared).
+    m_Localized: 'Always watching. With {first} different Voyeurs in chat, a Voyeur''s
+      peek action gets extra uses this stream: 1 for every Voyeur after the first,
+      up to {max} (shared).'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570131
@@ -2032,6 +2038,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5802216411193349
     m_Localized: You've ended your side. Waiting for your partner.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845086316879872
+    m_Localized: '{count} in chat'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5845086379794432
+    m_Localized: '{count}/{max} in chat'
     m_Metadata:
       m_Items: []
   references:

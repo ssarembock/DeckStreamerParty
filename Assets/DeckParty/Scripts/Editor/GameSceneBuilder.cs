@@ -442,7 +442,8 @@ namespace DeckParty.EditorTools
 
             // The title band shows the Deplatform Risk pips (they light up as risk builds; hover for the details). HudView
             // colours them. They replaced the Stream Chat title icon and moved here from the menu bar.
-            riskMeter = Meter(inner.transform, "Risk", EditorUI.Cross, SkinSlot.IconTrouble, GameRules.RaidTroubleThreshold, RiskPipSize, RiskPipGap, out riskPips);
+            // Four pips (the team limit); HudView hides the fourth in a solo season (limit 3).
+            riskMeter = Meter(inner.transform, "Risk", EditorUI.Cross, SkinSlot.IconTrouble, GameRules.MaxRiskLimit, RiskPipSize, RiskPipGap, out riskPips);
             riskMeter.Place(new Vector2(0.5f, 1), new Vector2(0, -ChatHeaderHeight * 0.5f), riskMeter.sizeDelta, new Vector2(0.5f, 0.5f));
             riskTooltip = EditorUI.Tooltip(riskMeter);
             var titleLine = EditorUI.Line(inner.transform, "TitleLine", SitePalette.Divider);
@@ -492,7 +493,7 @@ namespace DeckParty.EditorTools
 
             controlsView = BuildChatButtons(inner.transform, prefabs);
 
-            // Teams (2v2, co-op): the line between the two players' sides (cloned for every row; UI Skin: Team Divider) and
+            // Teams (2v2, co-op): the line between the two players' sides (one copy, as tall as the rows; UI Skin: Team Divider) and
             // their names above each side. Hidden outside team play.
             var divider = EditorUI.SkinShape(viewport, "TeamDivider", null, SitePalette.Outline, SkinSlot.TeamDivider);
             divider.rectTransform.sizeDelta = new Vector2(4, 100);

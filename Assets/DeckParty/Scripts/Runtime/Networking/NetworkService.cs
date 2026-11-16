@@ -86,8 +86,9 @@ namespace DeckParty.Networking
         /// Isolationists, Loyal Fan and Fish in every shop; state format v11).
         /// deckparty-18: game modes (2026-11-16): 2v2 and co-op Endless (teams share a season; players carry a team and a
         /// member slot), Endless Trophies and shop purchases, state format v12.
+        /// deckparty-19: team fixes (2026-11-17): a 4-Risk limit for teams, each member's own removal price (state format v13).
         /// </summary>
-        public const string ProtocolVersion = "deckparty-18";
+        public const string ProtocolVersion = "deckparty-19";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

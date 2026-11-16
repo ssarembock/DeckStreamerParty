@@ -78,7 +78,7 @@ namespace DeckParty.Core
             double fill = s.Capacity > 0 ? Math.Min(1.0, s.Occupancy / (double)s.Capacity) : 1.0;
             int risk = PartyEngine.NetTrouble(s);
             double chance = 0.08 + 0.35 * fill * fill;
-            if (risk >= GameRules.RaidTroubleThreshold - 1) chance += 0.55;
+            if (risk >= PartyEngine.RiskLimit(s) - 1) chance += 0.55;
             else if (risk > 0) chance += 0.1 * risk;
             if (PartyEngine.DiamondsPresent(s) >= GameRules.DiamondsToWin) chance = 1.0;
             return Math.Min(1.0, chance);

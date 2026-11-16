@@ -60,6 +60,7 @@ namespace DeckParty.UI
         public static Coroutine Punch(MonoBehaviour host, Transform target, float amount = 0.15f, float duration = 0.3f)
         {
             if (target == null || host == null || !host.isActiveAndEnabled) return null;
+            DeckParty.FxRestPose.Touch(target);
             var baseScale = Vector3.one;
             return host.StartCoroutine(Run(duration, t =>
             {

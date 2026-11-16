@@ -29,6 +29,8 @@ namespace DeckParty.UI
             [Tooltip("The halo, rays and shader shine shown while this community's score is at its maximum.")]
             public CommunityMaxFx maxFx;
             [NonSerialized] public int last;
+            /// <summary>Different viewers from it in chat at the last render (-1 outside a stream).</summary>
+            [NonSerialized] public int lastMembers;
         }
 
         [SerializeField] internal Chip[] chips;
@@ -57,6 +59,7 @@ namespace DeckParty.UI
                 {
                     if (chip == null) continue;
                     chip.last = -1;
+                    chip.lastMembers = -1;
                     var community = chip.community;
                     if (chip.tooltip != null) chip.tooltip.Provider = () => CommunityVisuals.Tooltip(community, m_State);
                 }
@@ -70,7 +73,8 @@ namespace DeckParty.UI
             Hook();
             m_State = s;
             bool live = s != null && s.Phase == GamePhase.Party;
-            var scores = live ? PartyEngine.CommunityScores(s) : new int[Communities.Count];
+            // The chips count different viewers in chat (2 already makes the first bonus); the bonuses come from the points.
+            var members = live ? PartyEngine.CommunityMembers(s) : new int[Communities.Count];
             var relevant = RelevantCommunities(s);
             float width = 0f;
             int visible = 0;
@@ -80,18 +84,21 @@ namespace DeckParty.UI
                 foreach (var chip in chips)
                 {
                     if (chip == null || chip.root == null) continue;
-                    int points = scores[(int)chip.community];
-                    bool show = points > 0 || Communities.Has(relevant, chip.community);
+                    int count = members[(int)chip.community];
+                    int points = Communities.PointsFromMembers(chip.community, count);
+                    bool show = count > 0 || Communities.Has(relevant, chip.community);
                     if (chip.root.gameObject.activeSelf != show) chip.root.gameObject.SetActive(show);
                     if (!show)
                     {
                         chip.last = -1;
+                        chip.lastMembers = -1;
                         if (chip.maxFx != null) chip.maxFx.SetMaxed(false, Color.white);
                         continue;
                     }
                     width += ChipWidth(chip.root);
                     visible++;
                     int max = Communities.MaxPoints(chip.community);
+                    int needed = CommunityVisuals.MembersForMax(chip.community);
 
                     if (chip.icon != null)
                     {
@@ -104,7 +111,7 @@ namespace DeckParty.UI
                             : points > 0 ? CommunityVisuals.Color(chip.community).WithAlpha(0.35f) : UIPalette.PanelDeep.WithAlpha(0.7f);
                     string dim = siteStyle ? "#9A9AA6" : "#B9AED6";
                     if (chip.pointsLabel != null)
-                        chip.pointsLabel.text = max > 0 ? $"{points}<size=60%><color={dim}>/{max}</color></size>" : points.ToString();
+                        chip.pointsLabel.text = needed > 0 ? $"{count}<size=60%><color={dim}>/{needed}</color></size>" : count.ToString();
                     if (chip.effectLabel != null)
                     {
                         chip.effectLabel.text = CommunityVisuals.ChipEffect(chip.community, points);
@@ -114,12 +121,10 @@ namespace DeckParty.UI
                     }
                     if (chip.group != null) chip.group.alpha = points > 0 ? 1f : siteStyle ? 0.6f : 0.5f;
 
-                    // Every point bestows a bigger bonus: make the rise felt.
-                    if (chip.last >= 0 && points > chip.last && isActiveAndEnabled)
-                    {
-                        UITween.Punch(this, chip.root, 0.22f, 0.35f);
-                        AudioService.PlayPitched(Sfx.Coin, 1.1f + 0.05f * points, 0.5f);
-                    }
+                    // Each new viewer from the community moves the counter (a small punch); each new bonus step rings.
+                    if (chip.lastMembers >= 0 && count > chip.lastMembers && isActiveAndEnabled) UITween.Punch(this, chip.root, 0.22f, 0.35f);
+                    if (chip.last >= 0 && points > chip.last && isActiveAndEnabled) AudioService.PlayPitched(Sfx.Coin, 1.1f + 0.05f * points, 0.5f);
+                    chip.lastMembers = live ? count : -1;
                     chip.last = live ? points : -1;
 
                     // At the maximum (5/5, 9/9...) the icon shines (CommunityMaxFx: halo, rays, shader glow).

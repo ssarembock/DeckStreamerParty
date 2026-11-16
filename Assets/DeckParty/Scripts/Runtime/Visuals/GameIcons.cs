@@ -199,8 +199,8 @@ namespace DeckParty
             {
                 case CashId: return Loc.Get("hud.tip.cash_banked");
                 case InfluenceId: return Loc.Get("hud.tip.influence");
-                case RiskId: return Loc.Get("hud.tip.risk_term", "max", GameRules.RaidTroubleThreshold);
-                case PlaysId: return Loc.Get("hud.tip.plays_term", "goal", GameRules.DiamondsToWin);
+                case RiskId: return Loc.Get("hud.tip.risk_term", "max", PartyEngine.RiskLimit(state));
+                case PlaysId: return state != null && state.IsEndless ? Loc.Get("hud.tip.plays_term_endless") : Loc.Get("hud.tip.plays_term", "goal", GameRules.DiamondsToWin);
             }
             return Enum.TryParse(id, false, out Community community) && Enum.IsDefined(typeof(Community), community)
                 ? CommunityVisuals.Tooltip(community, state)

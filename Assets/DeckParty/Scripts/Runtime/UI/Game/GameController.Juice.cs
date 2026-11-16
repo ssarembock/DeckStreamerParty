@@ -16,6 +16,20 @@ namespace DeckParty.UI
         /// <summary>True while the events of a stream whose scoring sequence just played are processed (its chips already flew).</summary>
         bool m_AfterSequence;
         PlayerState m_LastLive;
+        /// <summary>The frame the Risk meter last got its punch and wobble.</summary>
+        int m_RiskPipFrame = -1;
+
+        /// <summary>
+        /// The Risk meter's punch and wobble, at most once a frame. One arrival can raise several Risk events at once (a
+        /// Hate-Watcher's mood flip and its Risk); stacking the wobble on itself left the meter tilted (FxRestPose eases it
+        /// back as well).
+        /// </summary>
+        void PlayRiskPip(float intensity = 1f)
+        {
+            if (m_RiskPipFrame == Time.frameCount) return;
+            m_RiskPipFrame = Time.frameCount;
+            Fx.Play(FxCue.RiskPip, hud.RiskAnchor, intensity);
+        }
 
         /// <summary>Banners, sounds and effects for events on the board being shown. <paramref name="who"/> is null for your own stream.</summary>
         void ProcessEvents(PlayerState s, IReadOnlyList<GameEvent> events, string who)
@@ -94,7 +108,7 @@ namespace DeckParty.UI
                         break;
                     case GameEventType.MoodFlipped:
                         m_Pulses.Add(e.GuestId);
-                        if (e.A != 0) Fx.Play(FxCue.RiskPip, hud.RiskAnchor);
+                        if (e.A != 0) PlayRiskPip();
                         break;
                     case GameEventType.GuestGained:
                     case GameEventType.PartyPotGained:
@@ -106,7 +120,7 @@ namespace DeckParty.UI
                         PlayActionImpact(e);
                         break;
                     case GameEventType.TroubleAdded:
-                        Fx.Play(FxCue.RiskPip, hud.RiskAnchor);
+                        PlayRiskPip();
                         break;
                     case GameEventType.EveryoneOutside:
                     case GameEventType.Transformed:
@@ -269,7 +283,7 @@ namespace DeckParty.UI
                     }
                     case GameEventType.HeatApplied:
                         banner.Show(Loc.Get("power.raided_title"), Loc.Get("game.heat_sub", "count", e.A), UIPalette.Red, 1.4f);
-                        Fx.Play(FxCue.RiskPip, hud.RiskAnchor, 1.5f);
+                        PlayRiskPip(1.5f);
                         Consider(Sfx.Raid, 6);
                         break;
                     case GameEventType.ShieldApplied:
