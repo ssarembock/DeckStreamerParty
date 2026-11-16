@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DeckParty.Core;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -54,7 +55,8 @@ namespace DeckParty.UI
         [Tooltip("The name of the viewer's action (empty when it has none).")]
         [SerializeField] internal TMP_Text actionLabel;
         [SerializeField] internal GameObject riskBadge;
-        [SerializeField] internal GameObject cancelsRiskBadge;
+        [Tooltip("Shown only on viewers that cancel Deplatform Risk (negative Risk: a shield).")]
+        [SerializeField, FormerlySerializedAs("cancelsRiskBadge")] internal GameObject shieldBadge;
         [SerializeField] internal GameObject actionBadge;
 
         [Tooltip("The built-in card (set by the builder): UI Skin > Shop's card shape, border and pile step apply to it.")]
@@ -80,6 +82,10 @@ namespace DeckParty.UI
         float m_HoverScale = 1.04f;
         Vector2[] m_StackOffsets;
         readonly List<(Image image, Sprite sprite)> m_PileImages = new List<(Image, Sprite)>();
+        /// <summary>Inner outlines on the card that light up when the viewer has an action (found once, see <see cref="InnerOutline"/>).</summary>
+        InnerOutline[] m_ActionOutlines;
+        GuestType m_OutlineType;
+        bool m_OutlineBound;
 
         void Awake() => Hook();
 
@@ -183,8 +189,9 @@ namespace DeckParty.UI
             if (influenceLabel != null) influenceLabel.text = GuestVisuals.InfluenceValue(info);
             if (actionLabel != null) actionLabel.text = info.HasAbility ? GuestVisuals.ActionName(type) : string.Empty;
             if (riskBadge != null) riskBadge.SetActive(info.Trouble);
-            if (cancelsRiskBadge != null) cancelsRiskBadge.SetActive(info.CancelsTrouble);
+            if (shieldBadge != null) shieldBadge.SetActive(info.CancelsTrouble);
             if (actionBadge != null) actionBadge.SetActive(info.HasAbility);
+            ShowActionOutlines(type, info.HasAbility);
 
             if (groupIcon != null) groupIcon.gameObject.SetActive(false);
             if (communities != null) communities.Bind(type);
@@ -256,6 +263,19 @@ namespace DeckParty.UI
             }
         }
 
+        /// <summary>
+        /// Lights the card's inner outlines that are set to "Viewer has an action" (see <see cref="InnerOutline"/>) on viewers
+        /// with an action. Straight away when the card shows a different viewer, with a fade otherwise.
+        /// </summary>
+        void ShowActionOutlines(GuestType type, bool hasAction)
+        {
+            if (m_ActionOutlines == null) m_ActionOutlines = GetComponentsInChildren<InnerOutline>(true);
+            bool instant = !m_OutlineBound || type != m_OutlineType;
+            m_OutlineBound = true;
+            m_OutlineType = type;
+            foreach (var outline in m_ActionOutlines)
+                if (outline != null && outline.showWhen == InnerOutline.ShowWhen.ViewerHasAction) outline.SetShown(hasAction, instant);
+        }
 
         /// <summary>UI Skin > Shop on this card: hover growth, and on the built-in card its shape, border and pile step.</summary>
         void ApplyShape(ShopLook look)
@@ -326,7 +346,7 @@ namespace DeckParty.UI
             if (dim == null) dim = Find<Image>(parts, all, ShopCardPart.Part.CantBuyVeil);
             if (diamondBadge == null) diamondBadge = FindObject(parts, all, ShopCardPart.Part.TrophyBadge);
             if (riskBadge == null) riskBadge = FindObject(parts, all, ShopCardPart.Part.RiskBadge);
-            if (cancelsRiskBadge == null) cancelsRiskBadge = FindObject(parts, all, ShopCardPart.Part.CancelsRiskBadge);
+            if (shieldBadge == null) shieldBadge = FindObject(parts, all, ShopCardPart.Part.ShieldBadge);
             if (actionBadge == null) actionBadge = FindObject(parts, all, ShopCardPart.Part.ActionBadge);
             if (soldOutBadge == null) soldOutBadge = FindObject(parts, all, ShopCardPart.Part.SoldOut);
             if (animRoot == null) animRoot = Find<RectTransform>(parts, all, ShopCardPart.Part.AnimRoot);
@@ -348,6 +368,7 @@ namespace DeckParty.UI
             // The fields are set now: hook them up (Awake ran before, when nothing was wired yet).
             m_Captured = false;
             m_PileImages.Clear();
+            m_ActionOutlines = null;
             Hook();
         }
 
@@ -390,6 +411,7 @@ namespace DeckParty.UI
             { ShopCardPart.Part.Name, new[] { "ViewerName" } },
             // Parts renamed on 2026-11-15: objects still named after the old resource names count.
             { ShopCardPart.Part.Cash, new[] { "Clout" } },
+            { ShopCardPart.Part.ShieldBadge, new[] { "Shield", "CancelsRiskBadge" } },
         };
 
         static bool NameMatches(string objectName, ShopCardPart.Part part)

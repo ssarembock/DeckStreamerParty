@@ -45,8 +45,8 @@ namespace DeckParty.UI
             TrophyBadge = 14,
             /// <summary>Any object: shown only on viewers that add Deplatform Risk.</summary>
             RiskBadge = 15,
-            /// <summary>Any object: shown only on viewers that cancel Deplatform Risk.</summary>
-            CancelsRiskBadge = 16,
+            /// <summary>Any object: shown only on viewers that cancel Deplatform Risk (a shield). Objects named "Shield" or "CancelsRiskBadge" (its old name) count too.</summary>
+            ShieldBadge = 16,
             /// <summary>Any object: shown only on viewers with an action.</summary>
             ActionBadge = 17,
             /// <summary>Image: laid over the card while you can't buy it (its colour can be set in UI Skin > Shop).</summary>

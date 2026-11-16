@@ -1420,10 +1420,10 @@ MonoBehaviour:
   communityIcons:
   - name: CoreFanbase
     community: 0
-    icon: {fileID: -3718661556379673043, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
+    icon: {fileID: 1240287252667764825, guid: 4facbabb9b18a2a43991f76b345b66c5, type: 3}
   - name: Staff
     community: 1
-    icon: {fileID: 876949719, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
+    icon: {fileID: 1355933461631909499, guid: 1748bda8b024aaf48878bbd407e54894, type: 3}
   - name: Content
     community: 2
     icon: {fileID: -1990347680, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
@@ -1435,16 +1435,16 @@ MonoBehaviour:
     icon: {fileID: 1694016268, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Trolls
     community: 5
-    icon: {fileID: -879461028, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
+    icon: {fileID: -3349123384108907415, guid: 641a95058d5229a4386262c340c150bd, type: 3}
   - name: Doomsdayers
     community: 6
     icon: {fileID: -1792304835, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: Boomer
     community: 7
-    icon: {fileID: -354942310, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
+    icon: {fileID: -9180737836824457675, guid: d985f8215d92bd74eb04c19141607900, type: 3}
   - name: Millennial
     community: 8
-    icon: {fileID: -449042378, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
+    icon: {fileID: -5744490541911851378, guid: ac0ff8c45d8188f4baf981c78106d384, type: 3}
   - name: Zoomer
     community: 9
     icon: {fileID: -1886377628, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
@@ -1462,13 +1462,13 @@ MonoBehaviour:
     icon: {fileID: -2109503479, guid: a5ca6f64f2cbb464cb71a1afed23daa7, type: 3}
   - name: GenZ
     community: 14
-    icon: {fileID: 0}
+    icon: {fileID: -4192420766978679195, guid: cccfbe5c85b880c49b5b7e7cce857a7e, type: 3}
   - name: Gatekeepers
     community: 15
-    icon: {fileID: 0}
+    icon: {fileID: -6079171509200529451, guid: 508cab1d49e747743b180c3c4f9258ac, type: 3}
   - name: HypeMen
     community: 16
-    icon: {fileID: 0}
+    icon: {fileID: 2267109590465053618, guid: 180753495d9036c4d8568959ae8a21a1, type: 3}
   - name: Mods
     community: 17
     icon: {fileID: 0}
@@ -1486,7 +1486,7 @@ MonoBehaviour:
     icon: {fileID: 0}
   - name: Voyeurs
     community: 22
-    icon: {fileID: 0}
+    icon: {fileID: -2151912229828221906, guid: a5896d5a3c96ee24fa609bf21ba88a80, type: 3}
   platforms:
   - name: Cough
     platform: 0

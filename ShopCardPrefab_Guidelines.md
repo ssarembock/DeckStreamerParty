@@ -158,7 +158,7 @@ aren't parts (decorations, extra labels, backgrounds) are left as you made them.
 | **Communities** | An empty object | Its child Images become the community icons, in order (three is plenty). Unused ones hide. Hovering one explains the community. | |
 | **Trophy Badge** | Any object | Shown only on Trophy viewers. | Trophy |
 | **Risk Badge** | Any object | Shown only on viewers that add Deplatform Risk. | |
-| **Cancels Risk Badge** | Any object | Shown only on viewers that cancel Deplatform Risk. | |
+| **Shield Badge** | Any object | Shown only on viewers that cancel Deplatform Risk (negative Risk), for example a shield icon. The template puts it in the Risk Badge's spot, since no viewer has both. | Shield, CancelsRiskBadge |
 | **Action Badge** | Any object | Shown only on viewers with an action. | |
 | **Cant Buy Veil** | Image | Laid over the card while you can't buy it. Leave the Image switched off; the game switches it on. The colour can be set in the skin. | Veil, Dim |
 | **Sold Out** | Any object | Shown when none are left. Leave it switched off. | |
@@ -172,6 +172,46 @@ name on the card; it's still in the hover tooltip).
 
 You can also add a **Shop Item View** component to the card's root and drag objects into its fields. The game only
 looks up parts for the fields you leave empty.
+
+### Action outline (the inner outline on viewers with an action)
+
+A glowing line just inside the card's edge that lights up (fading in) only on viewers that have an action. It comes
+from an **Inner Outline** component (its own shader, `DeckParty/UI/Inner Outline`) on an object called
+`ActionOutline`.
+
+- **New templates** already have it, in the Body above the card's content and under the can't-buy veil.
+- **Cards you already made:** select the prefab and choose **Deck Party > Shop > Add Action Outline**, or press **Add
+  the action outline** under the Card prefab field in UI Skin > Shop. It follows your Frame's place and size and goes
+  under the veil. If the prefab is open in Prefab Mode, save it afterwards.
+- **By hand:** add an empty object covering the card (or its frame), above the content, and give it **Add Component >
+  Deck Party > Inner Outline**.
+
+Select the ActionOutline object in the prefab editor to adjust it. Changes show live while **Preview In Editor** is on. The pulse and the rotating colours only move in the Scene view while it redraws: turn on **Always Refresh** in the Scene view's effects menu (the picture icon in its toolbar) to watch them.
+
+| Setting | What it does |
+|---|---|
+| **Show When** | **Viewer Has Action** (shop cards: only on viewers with an action) or **Always**. |
+| **Preview In Editor** | Keeps it lit while you edit, so you can see your changes. It doesn't affect the game. |
+| **Fade Time** | Seconds to fade in or out. |
+| **Outline Colour** | The line's colour. It's an HDR colour: raise the intensity above 1 for a brighter line. |
+| **Width** | The line's thickness, in card pixels. |
+| **Inset** | How far inside the edge the line starts, in card pixels (for example your frame's border width). |
+| **Corner Radius** | The roundness of the corners, in card pixels. Match it to your frame art. |
+| **Softness** | 0: a crisp line. 1: the line fades out across its whole width. |
+| **Opacity** | The strength of the whole effect. |
+| **Glow Width / Glow Strength** | A soft light that fades further into the card (Glow Width 0 = no glow). |
+| **Pulse Speed / Pulse Amount** | A slow breathing pulse: pulses per second, and how much it dims (0 = steady). |
+| **Rotating Colours** | Tick it to fade the outline between **Outline Colour** and **Second Colour** in a wave that travels round the border. |
+| **Second Colour** | The colour the wave fades to (HDR, like Outline Colour). |
+| **Rotation Speed** | Turns round the border per second. Negative: the other way. 0: the colours stay still. |
+| **Colour Repeats** | How many times the two colours repeat round the border (1 to 8). |
+| **Colour Sharpness** | 0: one long smooth fade between the colours. 1: almost hard bands of colour. |
+| **Border Size** | How far in from the edge the effect reaches, in card pixels (from where the line starts, after the Inset). Everything closer to the centre stays clear, so the rotating colours only show along the border. It follows the card's shape, so the border is equally thick all the way round. 0: no limit. |
+| **Border Fade** | How softly the effect fades out at the border's inner edge, in card pixels (0: a hard edge). |
+| **Color** | Tints the whole effect (white keeps the Outline Colour as it is). |
+
+The outline is drawn over whatever is below it in the hierarchy, so keep the object above the card's content. Several
+outlines on one card all follow the same rule (for example a second one set to Always).
 
 ### Tips
 

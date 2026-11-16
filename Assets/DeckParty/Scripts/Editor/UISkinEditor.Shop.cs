@@ -241,6 +241,15 @@ namespace DeckParty.EditorTools
                 if (GUILayout.Button("Split Stats into Cash and Influence"))
                     EditorApplication.delayCall += () => ShopCardTemplate.SplitStats(card);
             }
+            if (ShopCardTemplate.HasActionOutline(card))
+                EditorGUILayout.LabelField("Action outline: yes. Open the prefab and select its Inner Outline object to adjust it.", s_Wrap);
+            else
+            {
+                EditorGUILayout.HelpBox("No action outline: an inner outline along the card's edge that lights up on viewers with an action.",
+                    MessageType.Info);
+                if (GUILayout.Button("Add the action outline"))
+                    EditorApplication.delayCall += () => ShopCardTemplate.AddActionOutline(card);
+            }
             if (!parts[ShopCardPart.Part.Background])
                 EditorGUILayout.HelpBox("No Background (and no Image on the card's root): the card can't be clicked. Mark an Image as Background.", MessageType.Error);
             if (!parts[ShopCardPart.Part.Portrait])

@@ -89,6 +89,11 @@ namespace DeckParty.EditorTools
             risk.rectTransform.Place(new Vector2(1, 1), new Vector2(-8, -42), new Vector2(26, 26), new Vector2(1, 1));
             risk.preserveAspect = true;
             Mark(risk, ShopCardPart.Part.RiskBadge);
+            // Viewers that cancel Risk (negative Risk) show a shield instead, in the same spot: no viewer does both.
+            var shield = EditorUI.Image(body, "ShieldBadge", UIPalette.Teal, EditorUI.Shield);
+            shield.rectTransform.Place(new Vector2(1, 1), new Vector2(-8, -42), new Vector2(26, 26), new Vector2(1, 1));
+            shield.preserveAspect = true;
+            Mark(shield, ShopCardPart.Part.ShieldBadge);
 
             var name = Text(body, "Name", "Viewer Name", 22, SitePalette.Text, TextAlignmentOptions.Center, true);
             name.rectTransform.Box(new Vector2(0.05f, 0.24f), new Vector2(0.95f, 0.35f), Vector2.zero, Vector2.zero);
@@ -110,6 +115,9 @@ namespace DeckParty.EditorTools
             var left = Text(body, "CopiesLeft", "×3", 20, SitePalette.TextDim, TextAlignmentOptions.MidlineRight, true);
             left.rectTransform.Box(new Vector2(0.6f, 0.02f), new Vector2(0.94f, 0.14f), Vector2.zero, Vector2.zero);
             Mark(left, ShopCardPart.Part.CopiesLeft);
+
+            // An inner outline along the card's edge, lit only on viewers that have an action.
+            MakeActionOutline(body, false);
 
             // Over everything: the veil while you can't buy the card (off until then) and the sold-out cross.
             var veil = EditorUI.Image(body, "CantBuyVeil", new Color(1f, 1f, 1f, 0.62f), EditorUI.RoundedSmall);
@@ -150,6 +158,107 @@ namespace DeckParty.EditorTools
                 Mark(label, part);
                 if (undo) Undo.RegisterCreatedObjectUndo(label.gameObject, "Split Stats into Cash and Influence");
             }
+        }
+
+        // ------------------------------------------------------------------ the action outline
+
+        const string OutlineMenu = "Deck Party/Shop/Add Action Outline";
+
+        /// <summary>
+        /// An "ActionOutline" object covering <paramref name="parent"/> with an <see cref="InnerOutline"/> set to light up only
+        /// on viewers with an action (the site's accent colour, just inside a 3 px frame border, rounded corners).
+        /// </summary>
+        static InnerOutline MakeActionOutline(Transform parent, bool undo)
+        {
+            var rect = EditorUI.Rect(parent, "ActionOutline").Stretch();
+            if (undo) Undo.RegisterCreatedObjectUndo(rect.gameObject, "Add Action Outline");
+            var outline = rect.gameObject.AddComponent<InnerOutline>();
+            outline.OutlineShader = Shader.Find(InnerOutline.ShaderName);
+            outline.raycastTarget = false;
+            outline.showWhen = InnerOutline.ShowWhen.ViewerHasAction;
+            outline.outlineColour = SitePalette.Accent;
+            return outline;
+        }
+
+        /// <summary>Whether a card already has an inner outline.</summary>
+        public static bool HasActionOutline(GameObject card) => card != null && card.GetComponentInChildren<InnerOutline>(true) != null;
+
+        [MenuItem(OutlineMenu, priority = 42)]
+        static void AddOutlineToSelected()
+        {
+            int done = 0;
+            foreach (var go in Selection.gameObjects)
+                if (AddActionOutline(go)) done++;
+            if (done == 0)
+                EditorUtility.DisplayDialog("Add Action Outline", "Select a shop card prefab without an Inner Outline in the Project " +
+                                                                    "window (or open it in Prefab Mode), then try again.", "OK");
+        }
+
+        [MenuItem(OutlineMenu, true)]
+        static bool CanAddOutlineToSelected()
+        {
+            foreach (var go in Selection.gameObjects)
+                if (go != null && !HasActionOutline(go)) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Adds the action outline to a card prefab: an "ActionOutline" object over the card's frame (or the whole card), in
+        /// the part that bounces, above the card's content and under the can't-buy veil. If the prefab is open in Prefab
+        /// Mode, the change is made there (undoable; save the prefab); otherwise the prefab asset is saved.
+        /// </summary>
+        public static bool AddActionOutline(GameObject card)
+        {
+            if (card == null || HasActionOutline(card)) return false;
+            var stage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+            string path = AssetDatabase.GetAssetPath(card);
+            if (stage != null && (card.scene == stage.scene || (!string.IsNullOrEmpty(path) && stage.assetPath == path)))
+            {
+                if (!AddOutline(stage.prefabContentsRoot, true)) return false;
+                UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(stage.scene);
+                return true;
+            }
+            if (string.IsNullOrEmpty(path) || !path.EndsWith(".prefab")) return false;
+            var root = PrefabUtility.LoadPrefabContents(path);
+            try
+            {
+                if (!AddOutline(root, false)) return false;
+                PrefabUtility.SaveAsPrefabAsset(root, path);
+                return true;
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(root);
+            }
+        }
+
+        static bool AddOutline(GameObject root, bool undo)
+        {
+            if (HasActionOutline(root)) return false;
+            var body = ShopItemView.FindPart<RectTransform>(root, ShopCardPart.Part.AnimRoot);
+            Transform parent = body != null ? body : root.transform;
+            var outline = MakeActionOutline(parent, undo);
+            var rect = outline.rectTransform;
+
+            // Follow the frame's edges when the frame sits in the same place.
+            var frame = ShopItemView.FindPart<RectTransform>(root, ShopCardPart.Part.Frame);
+            if (frame != null && frame.parent == parent)
+            {
+                rect.anchorMin = frame.anchorMin;
+                rect.anchorMax = frame.anchorMax;
+                rect.offsetMin = frame.offsetMin;
+                rect.offsetMax = frame.offsetMax;
+            }
+
+            // Above the content, under the veil and the sold-out cross.
+            Transform under = null;
+            var veil = ShopItemView.FindPart<RectTransform>(root, ShopCardPart.Part.CantBuyVeil);
+            var soldOut = ShopItemView.FindPart<RectTransform>(root, ShopCardPart.Part.SoldOut);
+            if (veil != null && veil.parent == parent) under = veil;
+            if (soldOut != null && soldOut.parent == parent && (under == null || soldOut.GetSiblingIndex() < under.GetSiblingIndex())) under = soldOut;
+            if (under != null) rect.SetSiblingIndex(under.GetSiblingIndex());
+            else rect.SetAsLastSibling();
+            return true;
         }
 
         // ------------------------------------------------------------------ cards made from an older template
