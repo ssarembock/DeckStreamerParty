@@ -108,14 +108,14 @@ namespace DeckParty.UI
             {
                 int count = types[(int)community];
                 if (count == 0) continue;
-                int best = Communities.Capped(community, count - Communities.MembersForFirstPoint + 1);
+                int best = Communities.Capped(community, Communities.PointsFromMembers(community, count));
                 sb.Append(GameIcons.Tag(community)).Append(" <b>").Append(GuestVisuals.Colored(CommunityVisuals.Name(community), CommunityVisuals.Color(community)))
                   .Append("</b>\n<size=85%>");
                 sb.Append(Loc.Get("audience.community_types", "count", count));
                 if (best > 0)
                     sb.Append("  ·  ").Append(Loc.Get("audience.community_best", "points", best, "effect", CommunityVisuals.ChipEffect(community, best)));
                 else
-                    sb.Append("  ·  <color=#53535F>").Append(Loc.Get("audience.community_needs", "count", Communities.MembersForFirstPoint)).Append("</color>");
+                    sb.Append("  ·  <color=#53535F>").Append(Loc.Get("audience.community_needs", "count", Communities.MembersForPoint(community, 1))).Append("</color>");
                 sb.Append("</size>\n\n");
             }
             if (sb.Length == 0) return $"<color=#53535F>{Loc.Get("audience.no_communities")}</color>";

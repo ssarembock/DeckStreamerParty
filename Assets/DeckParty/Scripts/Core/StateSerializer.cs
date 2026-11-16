@@ -16,8 +16,9 @@ namespace DeckParty.Core
         /// v5: rival Doomsdayers. v6: Bots in flight. v7: V5 communities (extra action uses, shop perks, Mods shield, Saboteurs)
         /// and each card's action use count. v8: Remove a Viewer purchases. v9: the match's player count (shared shop stack size).
         /// v10: what the new streamer actives armed for this stream (extra Sub Cap, Bark at Chat, Soft Landing).
+        /// v11: who sits in a Hype Men spare seat (2026-11-16).
         /// </summary>
-        const byte FormatVersion = 10;
+        const byte FormatVersion = 11;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -126,6 +127,9 @@ namespace DeckParty.Core
                 w.Write((byte)Math.Min(255, Math.Max(0, s.PartySeats)));
                 w.Write((byte)Math.Min(255, Math.Max(0, s.PartyBark)));
                 w.Write(s.PartySoftLanding);
+
+                // v11: Hype Men spare seats (one flag per Audience card, same order as the Audience)
+                for (int i = 0; i < s.Rolodex.Count; i++) w.Write(s.Rolodex[i].HypeSeat);
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -284,6 +288,12 @@ namespace DeckParty.Core
                     s.PartySeats = r.ReadByte();
                     s.PartyBark = r.ReadByte();
                     s.PartySoftLanding = r.ReadBoolean();
+                }
+
+                // v10 and older saves predate the Hype Men spare seats (nobody sits in one).
+                if (version >= 11)
+                {
+                    for (int i = 0; i < s.Rolodex.Count; i++) s.Rolodex[i].HypeSeat = r.ReadBoolean();
                 }
 
                 int eventCount = ReadCount(r);

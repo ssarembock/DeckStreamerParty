@@ -82,9 +82,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274893
-    m_Localized: '{icon:Gatekeepers} Gatekeepers everywhere: kick, kick again and
-      profit from every exit. {icon:HypeMen} Hype Men keep the chat full for two
-      rare {icon:plays}.'
+    m_Localized: '{icon:Mods} Mods kick, {icon:Gatekeepers} Gatekeepers clear the
+      room and the Isolationists profit from every empty seat. {icon:HypeMen} Hype
+      Men refill the chat for two rare {icon:plays}.'
     m_Metadata:
       m_Items: []
   - m_Id: 433274894
@@ -96,8 +96,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274896
-    m_Localized: Twelve random viewers and three random Trophies. Win five in a row
-      to earn the Cherry.
+    m_Localized: Loyal Fans, Fish, twelve random viewers and three random Trophies.
+      Win five in a row to earn the Cherry.
     m_Metadata:
       m_Items: []
   - m_Id: 433274897

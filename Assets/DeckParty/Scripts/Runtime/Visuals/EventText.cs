@@ -218,6 +218,8 @@ namespace DeckParty
                     return GuestVisuals.Colored(Loc.Get("log.bark", "count", e.A), UIPalette.Orange);
                 case GameEventType.SoftLandingReady:
                     return GuestVisuals.Colored(Loc.Get("log.soft_landing_ready"), UIPalette.Pink);
+                case GameEventType.HypeSeatTaken:
+                    return GameIcons.Tag(Community.HypeMen) + " " + Loc.Get("log.hype_seat", "viewer", viewer, "count", e.B);
                 case GameEventType.RaidReceived:
                     return GuestVisuals.Colored(Loc.Get("log.raid_received", "raider", Player(e.B), "count", e.A), UIPalette.Red);
                 case GameEventType.TaxPaid:
@@ -286,7 +288,7 @@ namespace DeckParty
                 case GameEventType.BoomerRetired:
                     return GameIcons.Tag(Community.Boomer) + " " + GuestVisuals.Colored(Loc.Get("log.boomer_retired", "viewer", GuestVisuals.NameTag(e.Guest)), UIPalette.Orange);
                 case GameEventType.Inheritance:
-                    return GameIcons.Tag(Community.Millennial) + " " + Loc.Get("log.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "influence", GuestVisuals.InfluenceText(e.A));
+                    return GameIcons.Tag(Community.Millennial) + " " + Loc.Get("log.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "amount", GuestVisuals.CashText(e.A));
                 case GameEventType.TrollsPaid:
                     return GameIcons.Tag(Community.Trolls) + " " + GuestVisuals.Colored(Loc.Get("log.trolls_paid", "values", Amounts(e.A, e.B)), UIPalette.Orange);
                 case GameEventType.DoomApplied:

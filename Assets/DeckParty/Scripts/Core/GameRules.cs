@@ -21,7 +21,10 @@ namespace DeckParty.Core
         /// <summary>Diamonds that must attend one successful party to win.</summary>
         public const int DiamondsToWin = 4;
 
-        /// <summary>Copy limit per player for non-Diamond guest types (Diamonds are unlimited). Starting viewers count.</summary>
+        /// <summary>
+        /// Copy limit per player for non-Diamond guest types (Diamonds are unlimited). Starting viewers count, except for
+        /// Loyal Fan and Fish (in every shop since 2026-11-16): you can buy this many more of them on top of the starting copies.
+        /// </summary>
         public const int MaxCopiesPerGuest = 4;
 
         /// <summary>
@@ -76,7 +79,10 @@ namespace DeckParty.Core
         public const int PromoCodeFullInfluence = 3;
         /// <summary>Master of Currency ($) and Executive PR (Cash): bonus per viewer still carrying Deplatform Risk.</summary>
         public const int PerRiskyViewerBonus = 2;
-        /// <summary>PR Manager's Damage Control: random viewers sent back to the queue.</summary>
+        /// <summary>
+        /// PR Manager's Damage Control when it isn't a Gatekeeper (only if you take it out of the Gatekeepers in the Game
+        /// Database): random viewers sent back to the queue. As a Gatekeeper it sends 3, 6 or everyone else (Communities.GatekeeperSendBack).
+        /// </summary>
         public const int PrManagerSendBack = 5;
 
         // --- Group-scoring cards (viewer card edits, 2026-11-08) ---

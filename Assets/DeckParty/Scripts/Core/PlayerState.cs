@@ -70,6 +70,7 @@ namespace DeckParty.Core
         public int Counter;                // Nyan chain / Bongo beat / Pop Cat action count.
         public int Gained;                 // Dancing Baby combo Cash so far.
         public bool ShieldUsed;            // Bad Luck Brian's once-per-party shield.
+        public bool HypeSeat;              // Hype Men: sits in a spare seat past the Sub Cap (a Hype Man brought them in).
 
         /// <summary>The character this guest acts as tonight (differs from <see cref="Type"/> while Rickrolled).</summary>
         public GuestType Kind => Disguise != NoDisguise ? (GuestType)Disguise : Type;
@@ -105,6 +106,7 @@ namespace DeckParty.Core
             Counter = 0;
             Gained = 0;
             ShieldUsed = false;
+            HypeSeat = false;
         }
     }
 
@@ -203,13 +205,16 @@ namespace DeckParty.Core
         public int BotsOut;
 
         // Communities (V5)
-        /// <summary>Gatekeepers: extra eviction-action uses already taken this stream.</summary>
+        /// <summary>Mods (the Gatekeepers until 2026-11-16): extra eviction-action uses already taken this stream.</summary>
         public int PartyExtraEvictions;
         /// <summary>Marketers: extra recruit-action uses already taken this stream.</summary>
         public int PartyExtraRecruits;
         /// <summary>Voyeurs: extra peek-action uses already taken this stream.</summary>
         public int PartyExtraPeeks;
-        /// <summary>Boomers: Influence off every Sub Cap upgrade in this shop (set when a stream is scored, gone when the next starts).</summary>
+        /// <summary>
+        /// Boomers: Influence off every Sub Cap upgrade and every use of the streamer's active in this shop (set when a stream
+        /// is scored, gone when the next starts).
+        /// </summary>
         public int ExpansionDiscount;
         /// <summary>Shop Control: Cash off your first recruit in this shop (set when a stream is scored, gone when the next starts).</summary>
         public int RecruitDiscount;
@@ -217,7 +222,7 @@ namespace DeckParty.Core
         public int IncomingSabotage;
         /// <summary>Saboteurs points your last scored stream earned, waiting for the host to pass them to your rivals.</summary>
         public int SabotageOut;
-        /// <summary>Mods: your next stream starts with 1 Deplatform Risk cancelled.</summary>
+        /// <summary>The Mods' old rule (retired 2026-11-16): your next stream starts with 1 Deplatform Risk cancelled. Never set now.</summary>
         public bool ModsShieldNext;
 
         // Current stream: streamer power effects

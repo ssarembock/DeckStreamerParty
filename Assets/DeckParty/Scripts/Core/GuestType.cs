@@ -1,7 +1,7 @@
 namespace DeckParty.Core
 {
     /// <summary>
-    /// All 85 guest types: the viewer cards (48 in the current roster, the rest put aside; see
+    /// All 87 guest types: the viewer cards (50 in the current roster, the rest put aside; see
     /// <see cref="GuestCatalog.IsPutAside"/>) and the Bot token the Bots community sends. The numeric values are serialized
     /// (saves and network packets), so only ever append new entries at the end. Bump <see cref="StateSerializer"/>'s format
     /// version if you renumber. Identifiers follow the current English names; the Game Database migrates art stored under
@@ -98,7 +98,8 @@ namespace DeckParty.Core
         BillionaireBenefactor = 72,
         TechAdmin = 73,
         OnlineJournalist = 74,
-        Gatekeeper = 75,
+        /// <summary>Called Gatekeeper until 2026-11-16 (the Gatekeepers community is something else).</summary>
+        InfluentialIsolationist = 75,
         BingeBunny = 76,
         HateWatcher = 77,
         Affiliate = 78,
@@ -114,6 +115,11 @@ namespace DeckParty.Core
 
         // --- Card edits (2026-11-10, StreamersViewersCommunities.md): the big Influence viewer (the old Whale is now Fish). ---
         Whale = 84,
+
+        // --- Card edits (2026-11-16, StreamersViewersCommunities.md) ---
+        BoomerTroll = 85,
+        /// <summary>The Cash twin of the Influential Isolationist (+1 Cash per empty seat).</summary>
+        BillionaireIsolationist = 86,
     }
 
     /// <summary>
@@ -163,7 +169,7 @@ namespace DeckParty.Core
         BootPair,   // Bot Detector: remove two guests sitting next to each other.
         Interview,  // Billionaire Benefactor: everyone's Cash drop to 0; bank 1 Influence per Billionaire Benefactor.
         Style,      // Affiliate: a guest permanently earns +1 Influence.
-        SendBack,   // Junior PR Manager (1, 2, 3... random viewers, growing per use) / PR Manager (5): random viewers back to the queue.
+        SendBack,   // Junior PR Manager (1, 2, 3... random viewers, growing per use) / Gatekeepers like the PR Manager (3, 6 or all, by the community's level): random viewers back to the queue.
     }
 
     /// <summary>Effect families for actions. Dancing Baby rewards two in a row from the same family.</summary>

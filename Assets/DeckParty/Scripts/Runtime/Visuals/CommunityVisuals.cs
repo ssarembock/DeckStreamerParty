@@ -26,8 +26,7 @@ namespace DeckParty
                 case Community.Staff: per = Communities.StaffInfluencePerPoint; break;
                 case Community.Trolls: per = Communities.TrollArmyCashPerRisk; break;
                 case Community.Content: per = Communities.ContentPercentPerPoint; break;
-                case Community.HypeMen: per = Communities.HypeMenPercentPerPoint; break;
-                case Community.Mods: per = Communities.ModsPercentPerPoint; break;
+                case Community.HypeMen: per = Communities.HypeMenSeatsPerPoint; break;
                 case Community.Boomer: per = Communities.BoomerDiscountPerPoint; break;
                 // Retired.
                 case Community.FinanceBros: per = Communities.FinancePercentPerPoint; break;
@@ -49,7 +48,12 @@ namespace DeckParty
                 ("t2", Communities.TechspertiseChance(2)),
                 ("t3", Communities.TechspertiseChance(3)),
                 ("cash", community == Community.Zoomer ? Communities.ZoomerCash : Communities.CloutCash),
-                ("influence", Communities.ZoomerInfluenceCost));
+                ("influence", Communities.ZoomerInfluenceCost),
+                // Boomers: different Boomers for level 1 and level 2. Gatekeepers: viewers sent back at 0 and 1 points.
+                ("l1", Communities.MembersForPoint(community, 1)),
+                ("l2", Communities.MembersForPoint(community, 2)),
+                ("g0", Communities.GatekeeperSendBack(0)),
+                ("g1", Communities.GatekeeperSendBack(1)));
         }
 
         public static Color Color(Community community) => GameIcons.CommunityColor(community);
@@ -66,25 +70,36 @@ namespace DeckParty
             {
                 int points = PartyEngine.CommunityScore(state, community);
                 sb.Append("\n\n").Append(GuestVisuals.Colored(PointsText(community, points), UIPalette.Gold));
-                if (points > 0)
+                // Gatekeepers act from 0 points (3 viewers); the others need a point first.
+                if (community == Community.Gatekeepers)
+                {
+                    int sent = Communities.GatekeeperSendBack(points);
+                    string now = sent == int.MaxValue ? Loc.Get("community.Gatekeepers.now_all") : Loc.Get("community.Gatekeepers.now", ("value", sent));
+                    sb.Append("\n").Append(GuestVisuals.Colored(now, UIPalette.Gold));
+                }
+                else if (points > 0)
                 {
                     int value = Communities.Effect(community, points);
                     // Extra action uses: how many are left right now.
-                    if (community == Community.Gatekeepers || community == Community.Marketers || community == Community.Voyeurs)
+                    if (community == Community.Mods || community == Community.Marketers || community == Community.Voyeurs)
                         value = PartyEngine.ExtraUsesLeft(state, community);
                     // Troll Army: the Cash this stream's Risk would bring right now.
                     else if (community == Community.Trolls)
                         value = PartyEngine.TrollArmyCash(state);
+                    // Hype Men: spare seats still free.
+                    else if (community == Community.HypeMen)
+                        value = PartyEngine.FreeHypeSeats(state);
                     sb.Append("\n").Append(GuestVisuals.Colored(Loc.Get($"community.{community}.now", ("value", value)), UIPalette.Gold));
                 }
             }
             return sb.ToString();
         }
 
-        /// <summary>"3 points" or, for capped communities, "3/9 points".</summary>
+        /// <summary>"3 points" or, for capped communities, "3/9 points" (Boomers: "Level 1/2").</summary>
         public static string PointsText(Community community, int points)
         {
             int max = Communities.MaxPoints(community);
+            if (community == Community.Boomer) return Loc.Get("community.level_max", "count", points, "max", max);
             return max > 0 ? Loc.Get("community.points_max", "count", points, "max", max) : Loc.Get("community.points", "count", points);
         }
 
@@ -105,6 +120,14 @@ namespace DeckParty
                 case Community.ShopControl: return $"-{Communities.ShopControlDiscount(Mathf.Max(1, points))}{cash}";
                 case Community.Saboteurs: return $"+{Communities.SabotageAmount(Mathf.Max(1, points))}{cash}";
                 case Community.Millennial: return $"x{Communities.Inheritances(points)}";
+                // Viewers a Gatekeeper sends back now: 3, 6 or everyone.
+                case Community.Gatekeepers:
+                {
+                    int sent = Communities.GatekeeperSendBack(points);
+                    return sent == int.MaxValue ? Loc.Get("beats.gatekeepers_all") : "x" + sent;
+                }
+                // Spare seats (per point while nobody's here).
+                case Community.HypeMen: return "+" + Loc.Get("beats.seats", "count", Communities.HypeSeats(Mathf.Max(1, points)));
                 case Community.FullStream: return $"-{effect}";
                 default: return "+" + effect;
             }

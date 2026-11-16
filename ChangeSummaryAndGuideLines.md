@@ -114,3 +114,114 @@ The tooltips and the rules page show the new numbers in all 5 languages.
 5. **Account Manager vs Affiliate:** both now have the same action and −1 Influence, but the Account Manager is cheaper (5 vs 7) and earns 3 Cash. Worth a look when you next balance the Affiliate.
 6. **Marketers can't reach 3 yet:** only Producer and Marketing Manager are Marketers, so the most it can score is 1 point. Full Stream still can't score (only Promo Code User).
 7. **Account Manager's stamp:** "UPSOLD!" when Upsell is used (all 5 languages). The old "RUG PULL!" stamp is no longer used.
+
+## 7. Card and community edits from StreamersViewersCommunities.md (2026-11-16)
+
+These come from your edits to `StreamersViewersCommunities.md`. Where the viewer blocks and the community section
+disagreed, the viewer blocks won, as you asked. The document has been rewritten to match the game (every card was
+checked against the code).
+
+### Do this first in Unity
+
+1. Let the scripts compile.
+2. Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs**. This:
+   - adds the Boomer Troll and the Billionaire Isolationist to the Game Database;
+   - gives every roster viewer the new communities once (revision 7; your later edits rule);
+   - adds the **Mods** chip to Community Beats;
+   - re-imports the strings.
+3. Give the two new viewers portraits in the Game Database. Files named `BoomerTroll` or `BillionaireIsolationist` are
+   picked up by **Deck Party > Art > Auto-Assign Sprites by Name**. The Influential Isolationist keeps the old
+   Gatekeeper's art.
+4. Give the **Mods** an icon in Game Database > Communities (it shows a placeholder until then). The Gatekeepers keep
+   their icon.
+5. Multiplayer needs every player on this build (protocol `deckparty-17`). Saves still load (state format 11 reads 2-10).
+
+### Viewer cards
+
+| Card | Now |
+|---|---|
+| **Influential Troll** | Costs 5. +4 Influence (was +4 Cash), Risk 1. |
+| **Boomer Troll** (new) | Costs 9. +3 Cash, +2 Influence, Risk 1. Troll Army, Boomers. |
+| **Paid Sponsorship** | Costs 10 (was 4). +4 Cash, Risk 1 (was −1 Cash, +3 Influence). |
+| **Influential Isolationist** (was Gatekeeper) | Costs 7. +1 Influence, and +1 Influence per empty seat. Core Fanbase. |
+| **Billionaire Isolationist** (new) | Costs 6. +1 Cash, and +1 Cash per empty seat. Core Fanbase, Boomers. |
+| **PR Manager** | Damage Control sends 3, 6 or everyone else back, by the Gatekeepers' points. |
+| **Billionaire Benefactor** | +4 Influence (was +5). |
+| **Mainstream Celebrity** | +4 Cash, +1 Influence (was +3 Cash). |
+| **Loyal Fan, Fish** | Sold in every shop (Random Mix too). You can buy 4 more of each on top of the starting copies. |
+
+Communities moved as you set them in the viewer blocks:
+
+- **Mods:** Chat Admin, Tech Admin, Platform Owner, Bot Detector.
+- **Gatekeepers:** PR Manager, Distraught Cat.
+- **Boomers:** joined by Mildly Risky Collaborator, Mainstream Celebrity and the two new cards.
+- **Millennials:** joined by Highly Risky Collaborator and Doomer (Doomer is also Troll Army).
+- **Gen-Z:** joined by Precocious Youth.
+
+### Communities
+
+| Community | Now |
+|---|---|
+| **Mods** | The old Gatekeepers rule: each point gives one more use of a Mod's removal action this stream (shared). No cap. The Mods' own old rule (a chance to cancel 1 Risk) is gone. |
+| **Gatekeepers** | A Gatekeeper's action sends random other viewers back to the queue: 3 at 0 points, 6 at 1, everyone else at 2. Never itself. |
+| **Hype Men** | Each point (up to 2) is a spare seat past the Sub Cap. Only a viewer a Hype Man brings in can take one, so it doesn't crash the server. Free spare seats show as grey dotted circles after the normal seats; a viewer sitting in one gets a grey dotted ring. Add Viewer still stops at the Sub Cap. |
+| **Boomers** | Levels: 2 different Boomers make level 1, 4 make level 2. Each level takes 1 Influence off every Sub Cap upgrade **and every use of your streamer's active** in the next shop (never below 0). The tooltip says "Level 1/2". |
+| **Millennials** | The inheritance is +1 **Cash** (was Influence), once per point (at least once). |
+
+The tooltips, Community Beats chips, rules page, set descriptions and logs say all this in all 5 languages.
+
+### Sets
+
+Every shop sells Loyal Fan and Fish on top of its list. Random Mix sells them plus 12 random viewers and 3 Trophies.
+
+| Set | Out | In |
+|---|---|---|
+| Going Live | Cybersecurity Engineer | Junior PR Manager (a Gen-Z partner for the Precocious Youth) |
+| Clickbait Roulette | Tech Admin | Boomer Troll |
+| Brand Deal Wishlist | Tech Admin, Hate-Watcher | Generous Donator, Boomer Troll (3 Hype Men, 4 Boomers) |
+| Monetization Meeting | Risky Orbiter | Billionaire Isolationist (a second Boomer) |
+| Algorithm Magic | Normie, Gen Z with Job | Billionaire Isolationist, PR Manager (kicks leave empty seats for the Isolationists) |
+
+Section 5 of `StreamersViewersCommunities.md` has the full lists and the strongest communities in each set.
+
+### Where things are
+
+- **Community numbers:** `Communities` in `Core/Community.cs`. The relevant members are:
+  - `PointsFromMembers` (the Boomers' levels);
+  - `BoomerDiscount`;
+  - `GatekeeperSendBack` (the 3 / 6 table);
+  - `HypeSeats`;
+  - `InheritanceCash`.
+- **Spare seats:** in `PartyEngine` (`HypeSeats`, `HypeSeated`, `FreeHypeSeats`, `SettleHypeSeats`, the overflow check in `Arrive`).
+  - The flag is `GuestInstance.HypeSeat`.
+  - The chat draws them in `HouseView.Render` and `GuestCardView.ShowSpareSeat`.
+  - The dotted ring is `RuntimeSprites.DottedRing`.
+- **Send-back count:** `PartyEngine.SendBackCount`.
+- **The Boomers' discount on actives:** `StreamerCatalog.Cost` (and `BaseCost` without it).
+- **Always-in-shop viewers:** `ScenarioCatalog.AlwaysInShop`.
+
+### Decisions I made (please check)
+
+1. **Bot Detector is a Mod.** Its block still said "Gatekeepers (Gatekeepers points give extra uses)", which describes
+   the old rule (now Mods). It also picks its two viewers, and you described Gatekeepers as the random kickers.
+2. **Distraught Cat is a Gatekeeper** (its block says Gatekeepers). It has no action, so it adds a point and gains from
+   every viewer the PR Manager sends back. With only two Gatekeepers, the "everyone else" level can't be reached yet.
+3. **Millennials:** I read "This bonus increases per Millennials point" as the existing "once per point" rule, so
+   each departing Boomer gives +1 Cash to a random Millennial once per point. If you meant a bigger single bonus (for
+   example +2 Cash at 1 point), say so.
+4. **"Brought in by a Hype Man":**
+   - These count: the viewers Online Journalist and Bigger Star bring along, the Generous Donator's guest, and the
+     Evangelist's 2-for-1!. The Evangelist's action works in a full chat while a spare seat is free.
+   - A Marketing Manager's guest doesn't count.
+   - When a normal seat frees up, a viewer in a spare seat moves into it.
+5. **Loyal Fan and Fish copy limits:** with the usual limit of 4 (starting copies count), you could never buy a Loyal
+   Fan. You can now buy 4 more of each on top of the starting copies.
+6. **Spelling:** "Influencial Isolationist" is spelled **Influential Isolationist** in the game, like the Influential
+   Troll.
+7. **Old card names:**
+   - **Art:** the old Gatekeeper's art and Game Database entry stay with the Influential Isolationist (same slot).
+   - **Strings:** the `char.Gatekeeper.*` keys were renamed to `char.InfluentialIsolationist.*`.
+8. **Translations** of the new names:
+   - Boomer Troll: 婴儿潮喷子 / Тролль-бумер / Trol boomer / Troll boomer.
+   - Influential Isolationist: 大V孤立主义者 / Влиятельный изоляционист / Aislacionista influyente / Isolacionista influente.
+   - Billionaire Isolationist: 亿万富翁孤立主义者 / Изоляционист-миллиардер / Aislacionista multimillonario / Isolacionista bilionário.

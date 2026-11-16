@@ -131,6 +131,9 @@ namespace DeckParty.UI
             if (useButton == null) return;
             useButton.gameObject.SetActive(true);
             string useWords = Loc.Get("power.use", "cost", StreamerVisuals.CostText(StreamerCatalog.Cost(s)));
+            // Boomers made the active cheaper for this shop (as they do Sub Cap upgrades).
+            if (s.ExpansionDiscount > 0 && StreamerCatalog.BaseCost(s) > 0)
+                useWords += "\n" + GameIcons.Tag(Community.Boomer) + " " + Loc.Get("log.perk_boomer", "value", s.ExpansionDiscount);
             // Icon button: just the price next to the icon; the words are in the tooltip.
             int cost = StreamerCatalog.Cost(s);
             bool skinned = useButton.TryGetComponent<ShopButtonSkin>(out var useSkin);

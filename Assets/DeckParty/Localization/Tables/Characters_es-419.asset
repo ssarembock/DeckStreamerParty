@@ -853,7 +853,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262503
-    m_Localized: Muchos {icon:cash}, pero trae problemas.
+    m_Localized: Mucha {icon:influence}, pero trae problemas.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262504
@@ -874,8 +874,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262508
-    m_Localized: "Paga bien, pero el p\xFAblico se salta el anuncio: -1 {icon:cash}
-      al puntuar."
+    m_Localized: Paga muy bien, pero el patrocinador trae {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262509
@@ -923,8 +922,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262519
-    m_Localized: "Acci\xF3n: manda 5 espectadores al azar del chat de vuelta a la
-      fila para que vuelvan a entrar. Las acciones usadas siguen usadas."
+    m_Localized: "Acci\xF3n: manda espectadores al azar del chat de vuelta a la fila
+      para que vuelvan a entrar: 3, 6 o todos los dem\xE1s, seg\xFAn los puntos de
+      los {icon:Gatekeepers} Guardianes. Las acciones usadas siguen usadas."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262520
@@ -1168,6 +1168,32 @@ MonoBehaviour:
   - m_Id: 3526868751441921
     m_Localized: 'Invitados no deseados: al entrar trae a dos espectadores al azar.
       Puede hacer que el chat pase el cupo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693806473216
+    m_Localized: Aislacionista influyente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639040
+    m_Localized: "\xA1No ver\xE1s nada!: +1 {icon:influence} por cada lugar libre
+      en el chat al puntuar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639041
+    m_Localized: Aislacionista multimillonario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639042
+    m_Localized: "\xA1No ver\xE1s nada!: +1 {icon:cash} por cada lugar libre en el
+      chat al puntuar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639043
+    m_Localized: Trol boomer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639044
+    m_Localized: Muchos {icon:cash}, pero trae problemas.
     m_Metadata:
       m_Items: []
   references:

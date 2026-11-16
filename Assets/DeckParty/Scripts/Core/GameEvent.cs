@@ -94,17 +94,18 @@ namespace DeckParty.Core
         BotsArrived = 67,      // A rival's Bots joined your Audience for this stream. A = count
 
         // V5 communities
-        ActionRefreshed = 68,  // Gatekeepers / Marketers / Voyeurs: the action can be used again. Guest = actor, A = Community, B = extra uses left
+        ActionRefreshed = 68,  // Mods / Marketers / Voyeurs: the action can be used again. Guest = actor, A = Community, B = extra uses left
         BoomerRetired = 69,    // A Boomer left your Audience for good after the stream. Guest = the Boomer (no longer owned)
-        Inheritance = 70,      // Millennials: a Millennial inherited from a Boomer. Guest = Millennial, A = Influence gained, B = new permanent Influence bonus
+        Inheritance = 70,      // Millennials: a Millennial inherited from a Boomer. Guest = Millennial, A = Cash gained, B = new permanent Cash bonus (Influence until 2026-11-16)
         GenZGrowth = 71,       // Gen-Z: a viewer grew for good. Guest, A = Cash gained, B = Influence gained
-        ModsShield = 72,       // Mods: A = 1: your next stream will start with 1 Risk cancelled (B = chance %); A = 2: applied as this stream starts
+        ModsShield = 72,       // Retired 2026-11-16 (the Mods' old rule): A = 1: your next stream will start with 1 Risk cancelled (B = chance %); A = 2: applied as this stream starts
         ShopPerk = 73,         // A stream earned a shop effect. A = Community (Boomer, ShopControl, Saboteurs), B = amount
-        SentBack = 74,         // Junior PR Manager / PR Manager sent random viewers back to the queue. Guest = actor, A = count sent
+        SentBack = 74,         // Junior PR Manager / a Gatekeeper sent random viewers back to the queue. Guest = actor, A = count sent, B = count aimed for
         GuestDismissed = 75,   // Shop: Remove a Viewer took this viewer out of your Audience for good. Guest = the viewer (no longer owned), A = Influence paid
         ExtraSeatActive = 76,  // Three-Hour Episode: A = extra Sub Cap this stream
         BarkActive = 77,       // Bark at Chat: A = extra Cash for each viewer carrying Risk this stream
         SoftLandingReady = 78, // Soft Landing is on for this stream (if it gets deplatformed, half its Cash are banked)
+        HypeSeatTaken = 79,    // Hype Men: a viewer a Hype Man brought in took a spare seat past the Sub Cap. Guest = viewer, A = the Hype Man's id, B = spare seats still free
     }
 
     public struct GameEvent

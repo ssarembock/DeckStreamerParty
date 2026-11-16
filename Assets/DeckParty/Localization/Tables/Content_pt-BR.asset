@@ -82,9 +82,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274893
-    m_Localized: "{icon:Gatekeepers} Porteiros por toda parte: expulse, expulse de
-      novo e lucre com cada sa\xEDda. Os {icon:HypeMen} Animadores lotam o chat para
-      dois {icon:plays} raros."
+    m_Localized: '{icon:Mods} Os Mods expulsam, {icon:Gatekeepers} os Porteiros esvaziam
+      a sala e os Isolacionistas lucram com cada vaga livre. {icon:HypeMen} Os Animadores
+      enchem o chat de novo para dois {icon:plays} raros.'
     m_Metadata:
       m_Items: []
   - m_Id: 433274894
@@ -96,8 +96,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274896
-    m_Localized: "Doze espectadores aleat\xF3rios e tr\xEAs Trof\xE9us aleat\xF3rios.
-      Ven\xE7a cinco seguidas pra ganhar a Cereja."
+    m_Localized: "F\xE3s de carteirinha, Peixinhos, doze espectadores aleat\xF3rios
+      e tr\xEAs Trof\xE9us aleat\xF3rios. Ven\xE7a cinco seguidas pra ganhar a Cereja."
     m_Metadata:
       m_Items: []
   - m_Id: 433274897

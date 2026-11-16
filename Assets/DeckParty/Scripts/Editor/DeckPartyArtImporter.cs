@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 
@@ -8,7 +9,9 @@ namespace DeckParty.EditorTools
     /// <summary>
     /// Makes adding art a drag-and-drop job. Images dropped into Assets/DeckParty/Art/Characters, Streamers,
     /// Backgrounds or UI are imported as sprites (first import only; your own Inspector changes are kept afterwards),
-    /// then the auto-assigner hooks them up to guests, streamers and venues by file name.
+    /// then the auto-assigner hooks them up to guests, streamers and venues by file name. Only the files just imported are
+    /// matched, and UI Skin icons you chose by hand are never replaced automatically (empty slots and placeholders are filled);
+    /// Deck Party > Art > Auto-Assign Sprites by Name still reassigns on request.
     /// </summary>
     public sealed class DeckPartyArtImporter : AssetPostprocessor
     {
@@ -57,17 +60,25 @@ namespace DeckParty.EditorTools
             importer.textureCompression = TextureImporterCompression.CompressedHQ;
         }
 
+        /// <summary>The art files imported since the last automatic run (several imports in a row are handled together).</summary>
+        static readonly HashSet<string> s_Imported = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
         static void OnPostprocessAllAssets(string[] imported, string[] deleted, string[] moved, string[] movedFrom)
         {
-            if (!AutoAssign || s_Pending) return;
-            if (!imported.Concat(moved).Any(IsArt)) return;
+            if (!AutoAssign) return;
+            foreach (var path in imported.Concat(moved))
+                if (IsArt(path)) s_Imported.Add(path.Replace('\\', '/'));
+            if (s_Pending || s_Imported.Count == 0) return;
 
             s_Pending = true;
             EditorApplication.delayCall += () =>
             {
                 s_Pending = false;
+                // Only the files just imported are matched, and UI Skin icons you chose are kept (see AssignByName).
+                var paths = new HashSet<string>(s_Imported, StringComparer.OrdinalIgnoreCase);
+                s_Imported.Clear();
                 if (EditorApplication.isPlayingOrWillChangePlaymode) return;
-                SpriteAutoAssigner.AssignByName(true);
+                SpriteAutoAssigner.AssignByName(true, paths);
             };
         }
     }

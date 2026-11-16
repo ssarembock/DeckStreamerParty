@@ -1193,7 +1193,8 @@ MonoBehaviour:
     m_Localized: You can't add viewers once you've hit your Sub Cap, but viewers
       who <b>bring</b> others (Marketing Manager, Online Journalist, Bigger Star)
       can push you over it. If that happens the <b>server goes down</b> and the stream
-      ends with no payout. Leave spare room!
+      ends with no payout. Leave spare room! {icon:HypeMen} Hype Men give spare seats
+      to the viewers they bring in.
     m_Metadata:
       m_Items: []
   - m_Id: 483606639
@@ -1528,13 +1529,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091286
-    m_Localized: Old money, old opinions. Each point makes Sub Cap upgrades {per}
-      {icon:influence} cheaper in your next shop. After a scored stream, each Boomer
-      in chat has a {retire}% chance to log off for good (they leave your Audience).
+    m_Localized: 'Old money, old opinions. Boomers have levels instead of points:
+      {l1} different Boomers in chat make level 1, {l2} make level {max}. Each level
+      makes Sub Cap upgrades and your streamer''s active {per} {icon:influence} cheaper
+      in your next shop (never below 0). After a scored stream, each Boomer in chat
+      has a {retire}% chance to log off for good (they leave your Audience).'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
-    m_Localized: 'Now: Sub Cap upgrades {value} {icon:influence} cheaper next shop.'
+    m_Localized: 'Now: Sub Cap upgrades and your streamer''s active {value} {icon:influence}
+      cheaper next shop.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091288
@@ -1543,8 +1547,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091289
     m_Localized: Very online, waiting on the inheritance. Each time a Boomer leaves
-      your Audience, a random Millennial you own earns +1 {icon:influence} for good,
-      once per point (at least once).
+      your Audience, a random Millennial you own earns +1 {icon:cash} for good, once
+      per point (at least once).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
@@ -1651,18 +1655,20 @@ MonoBehaviour:
       beside the chat and hover any community icon to see exactly what it does:\n{icon:CoreFanbase}
       <b>Core Fanbase</b>: 10% per point (up to 30%) that a Core Fanbase viewer scores
       twice.\n{icon:Staff} <b>Staff</b>: +1 {icon:influence} per point (up to 3)
-      when the stream is scored.\n{icon:Boomer} <b>Boomers</b>: Sub Cap upgrades
-      cost 1 {icon:influence} less per point in your next shop; after a stream each
-      Boomer has a 10% chance to leave your Audience for good.\n{icon:Millennial}
-      <b>Millennials</b>: when a Boomer leaves, a random Millennial you own earns
-      +1 {icon:influence} for good, once per point.\n{icon:GenZ} <b>Gen-Z</b>: after
-      a stream, each Gen-Z viewer grows +1 {icon:cash} or {icon:influence} for good
-      per point (up to 2).\n{icon:Gatekeepers} <b>Gatekeepers</b>: one more removal
-      per point this stream.\n{icon:HypeMen} <b>Hype Men</b>: 10 / 20% that a Server
-      Down stream still scores.\n{icon:Trolls} <b>Troll Army</b>: when the stream
-      is scored, +2 {icon:cash} for every point of {icon:risk} in it (cancelled {icon:risk}
-      counts).\n{icon:Voyeurs} <b>Voyeurs</b>: one more peek per point this stream
-      (up to 1).'
+      when the stream is scored.\n{icon:Boomer} <b>Boomers</b>: level 1 with 2 different
+      Boomers, level 2 with 4; Sub Cap upgrades and your streamer''s active cost
+      1 {icon:influence} less per level in your next shop; after a stream each Boomer
+      has a 10% chance to leave your Audience for good.\n{icon:Millennial} <b>Millennials</b>:
+      when a Boomer leaves, a random Millennial you own earns +1 {icon:cash} for
+      good, once per point.\n{icon:GenZ} <b>Gen-Z</b>: after a stream, each Gen-Z
+      viewer grows +1 {icon:cash} or {icon:influence} for good per point (up to 2).\n{icon:Mods}
+      <b>Mods</b>: one more removal per point this stream.\n{icon:Gatekeepers} <b>Gatekeepers</b>:
+      a Gatekeeper''s action sends 3 random viewers back to the queue, 6 at 1 point,
+      everyone else at 2.\n{icon:HypeMen} <b>Hype Men</b>: 1 spare seat past the
+      Sub Cap per point (up to 2) for the viewers they bring in.\n{icon:Trolls} <b>Troll
+      Army</b>: when the stream is scored, +2 {icon:cash} for every point of {icon:risk}
+      in it (cancelled {icon:risk} counts).\n{icon:Voyeurs} <b>Voyeurs</b>: one more
+      peek per point this stream (up to 1).'
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656
@@ -1749,12 +1755,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570115
-    m_Localized: Nobody gets in. Each point gives one more use of a Gatekeeper's
-      removal action this stream (the extra uses are shared).
+    m_Localized: 'Nobody stays. A Gatekeeper''s action sends random other viewers
+      in chat back to the queue: {g0} at 0 points, {g1} at 1 point, and everyone
+      else at {max} points. It never sends itself.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570116
-    m_Localized: 'Now: {value} extra use(s) left.'
+    m_Localized: 'Now: a Gatekeeper''s action sends {value} random viewers back.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570117
@@ -1762,13 +1769,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570118
-    m_Localized: They bring friends. If the server goes down (chat over the Sub Cap),
-      each point gives a {per}% chance the stream still scores ({top}% at {max} points).
+    m_Localized: They bring friends. Each point adds {per} spare seat past your Sub
+      Cap ({top} at {max} points), shown as a grey dotted circle. Only a viewer a
+      Hype Man brings in can take one, so they don't crash the server. You still
+      can't add viewers yourself once the Sub Cap is full.
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570119
-    m_Localized: 'Now: {value}% chance the stream still scores if the server goes
-      down.'
+    m_Localized: 'Now: {value} spare seat(s) free for viewers the Hype Men bring
+      in.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570120
@@ -1776,13 +1785,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570121
-    m_Localized: Keeping it civil. When the stream is scored, each point gives a
-      {per}% chance that your next stream starts with 1 {icon:risk} cancelled ({top}%
-      at {max} points).
+    m_Localized: Banhammer ready. Each point gives one more use of a Mod's removal
+      action this stream (the extra uses are shared).
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570122
-    m_Localized: 'Now: {value}% chance to cancel 1 {icon:risk} next stream.'
+    m_Localized: 'Now: {value} extra use(s) left.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570123
@@ -1867,7 +1875,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513156
-    m_Localized: Sub Cap upgrades cost {value} {icon:influence} less in this shop.
+    m_Localized: Sub Cap upgrades and your streamer's active cost {value} {icon:influence}
+      less in this shop.
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513157
@@ -1883,7 +1892,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513160
-    m_Localized: '{viewer} inherits {influence} for good.'
+    m_Localized: '{viewer} inherits {amount} for good.'
     m_Metadata:
       m_Items: []
   - m_Id: 2431123679961088
@@ -1983,6 +1992,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5322683555864585
     m_Localized: Needs {0} {icon:influence}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740694234292224
+    m_Localized: Level {count}/{max}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740694381092864
+    m_Localized: 'Now: a Gatekeeper''s action sends everyone else back.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740694381092865
+    m_Localized: '{viewer} takes a spare seat ({count} left).'
     m_Metadata:
       m_Items: []
   references:

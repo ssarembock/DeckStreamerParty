@@ -1869,7 +1869,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960068
-    m_Localized: '{viewer} herda {influence} pra sempre.'
+    m_Localized: '{viewer} herda {amount} pra sempre.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960069
@@ -1877,7 +1877,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960070
-    m_Localized: '{viewer} herdou +1 {icon:influence}'
+    m_Localized: '{viewer} herdou +1 {icon:cash}'
     m_Metadata:
       m_Items: []
   - m_Id: 2431125118607360
@@ -2218,6 +2218,23 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5322685065814018
     m_Localized: '{actor}: escolha quem dobra a {icon:influence} base.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695727464448
+    m_Localized: "<b>Lugar extra</b>\\nS\xF3 um espectador trazido por um {icon:HypeMen}
+      Animador pode sentar aqui, assim o servidor n\xE3o cai."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695777796096
+    m_Localized: Todos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695777796097
+    m_Localized: '{count} {count:plural:lugar|lugares}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695966539776
+    m_Localized: Lugar extra!
     m_Metadata:
       m_Items: []
   references:

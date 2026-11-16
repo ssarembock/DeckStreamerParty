@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DeckParty.Core
 {
     /// <summary>
-    /// Every guest type: the 83 viewer cards (the 44 of the current roster plus the ones put aside, see <see cref="IsPutAside"/>)
+    /// Every guest type: the 86 viewer cards (the 50 of the current roster plus the ones put aside, see <see cref="IsPutAside"/>)
     /// and the Bot token. The English names and descriptions here are fallbacks: players see the localized text from the
     /// strings CSV (keys char.&lt;GuestType&gt;.name / .desc / .action).
     /// </summary>
@@ -45,6 +45,8 @@ namespace DeckParty.Core
             // 2026-11-10 (StreamersViewersCommunities.md): the old Whale is Fish (a new Whale took the name), Online Scandal is Online Journalist.
             { "Whale", GuestType.Fish },
             { "OnlineScandal", GuestType.OnlineJournalist },
+            // 2026-11-16: the Gatekeeper viewer is the Influential Isolationist (Gatekeepers is a community).
+            { "Gatekeeper", GuestType.InfluentialIsolationist },
         };
 
         // ------------------------------------------------------------------ the roster
@@ -112,14 +114,16 @@ namespace DeckParty.Core
         const CommunityMask GenZ = CommunityMask.GenZ;
         const CommunityMask Gatekeepers = CommunityMask.Gatekeepers;
         const CommunityMask HypeMen = CommunityMask.HypeMen;
+        const CommunityMask Mods = CommunityMask.Mods;
         const CommunityMask Voyeurs = CommunityMask.Voyeurs;
 
         /// <summary>
-        /// The communities each roster card starts with (2026-11-10: StreamersViewersCommunities.md; before that the V5 card
-        /// table). The Game Database copies these and you can change them there (Viewers > Communities);
-        /// <see cref="SetCommunities"/> applies your edits. Cards not listed have no community (Mildly / Highly Risky
-        /// Collaborator, Risky Orbiter, Affiliate, Precocious Youth, Internet Starpower, Mainstream Celebrity, Degen Dog and
-        /// Doomer). Content, Mods, Full Stream, Marketers, Shop Control and Saboteurs left the game, so nobody carries them.
+        /// The communities each roster card starts with (2026-11-16: the viewer blocks of StreamersViewersCommunities.md;
+        /// before that the 2026-11-10 version and the V5 card table). The Game Database copies these and you can change them
+        /// there (Viewers > Communities); <see cref="SetCommunities"/> applies your edits. Cards not listed have no community
+        /// (Risky Orbiter, Affiliate, Internet Starpower and Degen Dog). Since 2026-11-16 the old Gatekeepers (extra removal
+        /// uses) are called Mods, and Gatekeepers are the random kickers (PR Manager, Distraught Cat). Content, Full Stream,
+        /// Marketers, Shop Control and Saboteurs left the game, so nobody carries them.
         /// </summary>
         static readonly Dictionary<GuestType, CommunityMask> s_RosterCommunities = new Dictionary<GuestType, CommunityMask>
         {
@@ -128,12 +132,15 @@ namespace DeckParty.Core
             { GuestType.Whale, Core },
             { GuestType.IneffectiveTroll, Core | Trolls },
             { GuestType.InfluentialTroll, Trolls },
+            { GuestType.BoomerTroll, Trolls | Boomer },
             { GuestType.Producer, Staff },
-            { GuestType.ChatAdmin, Staff | Gatekeepers },
+            { GuestType.ChatAdmin, Staff | Mods },
             { GuestType.Normie, Core },
             { GuestType.CybersecurityEngineer, Staff | Voyeurs },
             { GuestType.PaidSponsorship, Boomer },
-            { GuestType.Gatekeeper, Core },
+            { GuestType.InfluentialIsolationist, Core },
+            { GuestType.BillionaireIsolationist, Core | Boomer },
+            { GuestType.MildlyRiskyCollaborator, Boomer },
             { GuestType.JuniorPrManager, Staff | GenZ },
             { GuestType.MarketingManager, Staff },
             { GuestType.PromoCodeUser, Core },
@@ -143,25 +150,29 @@ namespace DeckParty.Core
             { GuestType.BingeBunny, Core },
             { GuestType.HateWatcher, Trolls },
             { GuestType.PrManager, Staff | Gatekeepers },
+            { GuestType.HighlyRiskyCollaborator, Millennial },
             { GuestType.DieHardFan, Core },
             { GuestType.ChatArbitrator, Staff },
             { GuestType.DistraughtCat, Gatekeepers },
-            { GuestType.BotDetector, Gatekeepers },
+            { GuestType.BotDetector, Mods },
             { GuestType.SocialMediaManager, Staff | Voyeurs },
             { GuestType.MasterOfCurrency, Boomer | Trolls },
             { GuestType.BillionaireBenefactor, Boomer },
-            { GuestType.TechAdmin, Gatekeepers },
+            { GuestType.TechAdmin, Mods },
             { GuestType.OnlineJournalist, HypeMen },
             { GuestType.ExecutivePr, Staff | Boomer },
             { GuestType.GenZWithJob, GenZ },
             { GuestType.BigBoomer, Boomer },
             { GuestType.ClippoTheClanker, Staff },
             { GuestType.BiggerStar, HypeMen },
-            { GuestType.PlatformOwner, Boomer | Gatekeepers },
+            { GuestType.PrecociousYouth, GenZ },
+            { GuestType.PlatformOwner, Boomer | Mods },
+            { GuestType.MainstreamCelebrity, Boomer },
             { GuestType.SeniorMarketingManager, Staff | Millennial },
             { GuestType.Evangelist, HypeMen },
             { GuestType.DancingJen, Millennial },
             { GuestType.ForeverAlone, Millennial },
+            { GuestType.Doomer, Trolls | Millennial },
         };
 
         /// <summary>The communities the put-aside cards had when they left the roster, ready for when they come back.</summary>
@@ -276,10 +287,12 @@ namespace DeckParty.Core
             var list = new GuestInfo[]
             {
                 // --- The audience classics ---
+                // Loyal Fan and Fish are in every shop (ScenarioCatalog.AlwaysInShop); you can buy 4 more of each on top
+                // of the starting copies.
                 new GuestInfo(GuestType.LoyalFan, "Loyal Fan", 2, Tbd,
-                    "A basic starting viewer. Always shows up.", cash: 1),
+                    "A basic starting viewer. Always shows up.", cash: 1, maxCopies: 4 + GameRules.MaxCopiesPerGuest),
                 new GuestInfo(GuestType.Fish, "Fish", 3, Tbd,
-                    "A basic starting viewer who pays for your first Sub Cap upgrades.", influence: 1),
+                    "A basic starting viewer who pays for your first Sub Cap upgrades.", influence: 1, maxCopies: 2 + GameRules.MaxCopiesPerGuest),
                 new GuestInfo(GuestType.IneffectiveTroll, "Ineffective Troll", 0, Tbd,
                     "Starting viewer only. Lots of noise, a little risk.", cash: 2, trouble: true, purchasable: false),
                 new GuestInfo(GuestType.Producer, "Producer", 3, Tbd,
@@ -419,20 +432,20 @@ namespace DeckParty.Core
                 new GuestInfo(GuestType.PlatformOwner, "Platform Owner", 45, Tbd,
                     "DIAMOND. Action: remove one viewer for the rest of the stream (even itself).", influence: 3, diamond: true, ability: AbilityKind.Boot, abilityName: "Free The Speech!"),
                 new GuestInfo(GuestType.MainstreamCelebrity, "Mainstream Celebrity", 50, Tbd,
-                    "DIAMOND. Mass Appeal.", cash: 3, influence: 1, diamond: true),
+                    "DIAMOND. Mass Appeal.", cash: 4, influence: 1, diamond: true),
                 new GuestInfo(GuestType.SeniorMarketingManager, "Senior Marketing Manager", 50, Tbd,
                     "DIAMOND. Product Placement.", cash: 5, influence: -1, diamond: true),
                 new GuestInfo(GuestType.Evangelist, "Evangelist", 55, Tbd,
                     "DIAMOND. Action: summon any viewer from the queue, even another Diamond.", diamond: true, ability: AbilityKind.Fetch, abilityName: "2-for-1!"),
 
                 // --- V3: the rest of the audience classics ---
-                new GuestInfo(GuestType.InfluentialTroll, "Influential Troll", 3, Tbd,
-                    "Lots of Cash, but trouble follows.", cash: 4, trouble: true),
+                new GuestInfo(GuestType.InfluentialTroll, "Influential Troll", 5, Tbd,
+                    "Lots of Influence, but trouble follows.", influence: 4, trouble: true),
                 new GuestInfo(GuestType.CybersecurityEngineer, "Cybersecurity Engineer", 4, Tbd,
                     "Action: look at the next viewer in the queue, then let them in or deny them for the rest of the stream.",
                     cash: 3, influence: -1, ability: AbilityKind.Peek, abilityName: "Read Access"),
-                new GuestInfo(GuestType.PaidSponsorship, "Paid Sponsorship", 4, Tbd,
-                    "Pays well, but viewers skip the ad: -1 Cash when scored.", cash: -1, influence: 3),
+                new GuestInfo(GuestType.PaidSponsorship, "Paid Sponsorship", 10, Tbd,
+                    "Pays very well, but the sponsor brings risk.", cash: 4, trouble: true),
                 new GuestInfo(GuestType.PromoCodeUser, "Promo Code User", 5, Tbd,
                     "+3 Influence, but only if chat is full when scored.", cash: 1),
                 new GuestInfo(GuestType.AccountManager, "Account Manager", 5, Tbd,
@@ -444,7 +457,7 @@ namespace DeckParty.Core
                 new GuestInfo(GuestType.GenerousDonator, "Generous Donator", 5, Tbd,
                     "Give to the Rich!: when joining, brings in the next viewer from the queue and scores them once right away (banked).", cash: 1, influence: 1),
                 new GuestInfo(GuestType.PrManager, "PR Manager", 6, Tbd,
-                    "Action: send 5 random viewers in chat back to the queue so they can join again. Used actions stay used.",
+                    "Action: send random viewers in chat back to the queue so they can join again: 3, 6 or everyone else, by the Gatekeepers' level. Used actions stay used.",
                     cash: 3, influence: -1, ability: AbilityKind.SendBack, abilityName: "Damage Control"),
                 new GuestInfo(GuestType.HighlyRiskyCollaborator, "Highly Risky Collaborator", 6, Tbd,
                     "#NotHimToo?: big money, big risk.", influence: 4, trouble: true),
@@ -461,14 +474,14 @@ namespace DeckParty.Core
                     cash: 3, influence: -1, ability: AbilityKind.Peek, abilityName: "Sneak Peek"),
                 new GuestInfo(GuestType.BillionaireBenefactor, "Billionaire Benefactor", 9, Tbd,
                     "Action (once per stream for all of them): every viewer in chat drops to 0 Cash tonight, and you bank 1 Influence right now for each Billionaire Benefactor in chat.",
-                    influence: 5, ability: AbilityKind.Interview, abilityName: "Softball Interview"),
+                    influence: 4, ability: AbilityKind.Interview, abilityName: "Softball Interview"),
                 new GuestInfo(GuestType.TechAdmin, "Tech Admin", 9, Tbd,
                     "Action: remove one viewer for the rest of the stream (even the Tech Admin).",
                     cash: 2, ability: AbilityKind.Boot, abilityName: "Admin Rights"),
                 new GuestInfo(GuestType.OnlineJournalist, "Online Journalist", 11, Tbd,
                     "Unwanted Guests: brings two random viewers along when joining. Can push chat over the Sub Cap.", cash: 2, influence: 3, brings: 2),
-                new GuestInfo(GuestType.Gatekeeper, "Gatekeeper", 4, Tbd,
-                    "You Shall Not Watch!: +1 Cash for every empty space in chat when scored.", cash: 1),
+                new GuestInfo(GuestType.InfluentialIsolationist, "Influential Isolationist", 7, Tbd,
+                    "You Shall Not Watch!: +1 Influence for every empty space in chat when scored.", influence: 1),
                 new GuestInfo(GuestType.BingeBunny, "Binge Bunny", 5, Tbd,
                     "Algorithmic Rabbit Hole: +1 Cash for every Loyal Fan in chat.", cash: 1),
                 new GuestInfo(GuestType.HateWatcher, "Hate-Watcher", 5, Tbd,
@@ -494,6 +507,12 @@ namespace DeckParty.Core
                 // --- Card edits (2026-11-10): the big Influence viewer (the starter that used to be called Whale is Fish) ---
                 new GuestInfo(GuestType.Whale, "Whale", 8, Tbd,
                     "No frills: scores a lot of Influence.", influence: 4),
+
+                // --- Card edits (2026-11-16) ---
+                new GuestInfo(GuestType.BoomerTroll, "Boomer Troll", 9, Tbd,
+                    "Lots of Cash, but trouble follows.", cash: 3, influence: 2, trouble: true),
+                new GuestInfo(GuestType.BillionaireIsolationist, "Billionaire Isolationist", 6, Tbd,
+                    "You Shall Not Watch!: +1 Cash for every empty space in chat when scored.", cash: 1),
             };
 
             // Guard against an entry being out of order relative to the enum.

@@ -1071,6 +1071,30 @@ MonoBehaviour:
     m_Key: char.OnlineJournalist.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 5740693806473216
+    m_Key: char.InfluentialIsolationist.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639040
+    m_Key: char.InfluentialIsolationist.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639041
+    m_Key: char.BillionaireIsolationist.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639042
+    m_Key: char.BillionaireIsolationist.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639043
+    m_Key: char.BoomerTroll.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639044
+    m_Key: char.BoomerTroll.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

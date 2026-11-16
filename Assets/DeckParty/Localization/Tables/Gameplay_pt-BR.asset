@@ -1195,7 +1195,8 @@ MonoBehaviour:
     m_Localized: "Voc\xEA n\xE3o pode adicionar espectadores quando bate o limite,
       mas quem <b>traz</b> outros (Gerente de marketing, Jornalista online, Estrela
       maior) pode estourar. Se acontecer, <b>o servidor cai</b> e a live acaba sem
-      pagamento. Deixe espa\xE7o sobrando!"
+      pagamento. Deixe espa\xE7o sobrando! {icon:HypeMen} Os Animadores d\xE3o lugares
+      extras aos espectadores que trazem."
     m_Metadata:
       m_Items: []
   - m_Id: 483606639
@@ -1534,15 +1535,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091286
-    m_Localized: "Dinheiro velho, opini\xF5es velhas. Cada ponto deixa aumentar o
-      limite {per} {icon:influence} mais barato na sua pr\xF3xima loja. Depois de
-      uma live que pontua, cada Boomer no chat tem {retire}% de chance de sair de
-      vez (deixa sua audi\xEAncia)."
+    m_Localized: "Dinheiro velho, opini\xF5es velhas. Os Boomers t\xEAm n\xEDveis
+      em vez de pontos: {l1} Boomers diferentes no chat d\xE3o o n\xEDvel 1 e {l2}
+      d\xE3o o n\xEDvel {max}. Cada n\xEDvel deixa aumentar o limite e o poder ativo
+      do seu streamer {per} {icon:influence} mais baratos na sua pr\xF3xima loja
+      (nunca abaixo de 0). Depois de uma live que pontua, cada Boomer no chat tem
+      {retire}% de chance de sair de vez (deixa sua audi\xEAncia)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
-    m_Localized: "Agora: aumentar o limite custa {value} {icon:influence} a menos
-      na pr\xF3xima loja."
+    m_Localized: "Agora: aumentar o limite e o poder ativo do seu streamer custam
+      {value} {icon:influence} a menos na pr\xF3xima loja."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091288
@@ -1551,8 +1554,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091289
     m_Localized: "Sempre online, esperando a heran\xE7a. Toda vez que um Boomer deixa
-      sua audi\xEAncia, um Millennial seu aleat\xF3rio ganha +1 {icon:influence}
-      pra sempre, uma vez por ponto (pelo menos uma vez)."
+      sua audi\xEAncia, um Millennial seu aleat\xF3rio ganha +1 {icon:cash} pra sempre,
+      uma vez por ponto (pelo menos uma vez)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
@@ -1660,15 +1663,19 @@ MonoBehaviour:
       \xEDcone de comunidade pra ver o que ela faz:\\n{icon:CoreFanbase} <b>Base
       de f\xE3s</b>: 10% por ponto (at\xE9 30%) de um espectador da Base de f\xE3s
       pontuar duas vezes.\\n{icon:Staff} <b>Equipe</b>: +1 {icon:influence} por ponto
-      (at\xE9 3) quando a live pontua.\\n{icon:Boomer} <b>Boomers</b>: na sua pr\xF3xima
-      loja aumentar o limite custa 1 {icon:influence} a menos por ponto; depois de
-      uma live cada Boomer tem 10% de chance de deixar sua audi\xEAncia de vez.\\n{icon:Millennial}
-      <b>Millennials</b>: quando um Boomer sai, um Millennial seu aleat\xF3rio ganha
-      +1 {icon:influence} pra sempre, uma vez por ponto.\\n{icon:GenZ} <b>Gera\xE7\xE3o
-      Z</b>: depois de uma live, cada espectador da Gera\xE7\xE3o Z cresce +1 {icon:cash}
-      ou {icon:influence} pra sempre por ponto (at\xE9 2).\\n{icon:Gatekeepers} <b>Porteiros</b>:
-      mais uma expuls\xE3o por ponto nesta live.\\n{icon:HypeMen} <b>Animadores</b>:
-      10 / 20% de uma live com o servidor ca\xEDdo ainda pontuar.\\n{icon:Trolls}
+      (at\xE9 3) quando a live pontua.\\n{icon:Boomer} <b>Boomers</b>: n\xEDvel 1
+      com 2 Boomers diferentes, n\xEDvel 2 com 4; na sua pr\xF3xima loja aumentar
+      o limite e o poder ativo do seu streamer custam 1 {icon:influence} a menos
+      por n\xEDvel; depois de uma live cada Boomer tem 10% de chance de deixar sua
+      audi\xEAncia de vez.\\n{icon:Millennial} <b>Millennials</b>: quando um Boomer
+      sai, um Millennial seu aleat\xF3rio ganha +1 {icon:cash} pra sempre, uma vez
+      por ponto.\\n{icon:GenZ} <b>Gera\xE7\xE3o Z</b>: depois de uma live, cada espectador
+      da Gera\xE7\xE3o Z cresce +1 {icon:cash} ou {icon:influence} pra sempre por
+      ponto (at\xE9 2).\\n{icon:Mods} <b>Mods</b>: mais uma expuls\xE3o por ponto
+      nesta live.\\n{icon:Gatekeepers} <b>Porteiros</b>: a a\xE7\xE3o de um Porteiro
+      manda 3 espectadores aleat\xF3rios de volta pra fila, 6 com 1 ponto e todos
+      os outros com 2.\\n{icon:HypeMen} <b>Animadores</b>: 1 lugar extra acima do
+      limite por ponto (at\xE9 2) pros espectadores que eles trazem.\\n{icon:Trolls}
       <b>Ex\xE9rcito troll</b>: quando a live pontua, +2 {icon:cash} por cada ponto
       de {icon:risk} nela ({icon:risk} anulado conta).\\n{icon:Voyeurs} <b>Bisbilhoteiros</b>:
       mais uma espiada por ponto nesta live (at\xE9 1)."
@@ -1761,12 +1768,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570115
-    m_Localized: "Ningu\xE9m entra. Cada ponto d\xE1 mais um uso da a\xE7\xE3o de
-      remover de um Porteiro nesta live (os usos extras s\xE3o compartilhados)."
+    m_Localized: "Ningu\xE9m fica. A a\xE7\xE3o de um Porteiro manda outros espectadores
+      aleat\xF3rios do chat de volta pra fila: {g0} com 0 pontos, {g1} com 1 ponto
+      e todos os outros com {max} pontos. Nunca manda a si mesmo."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570116
-    m_Localized: 'Agora: restam {value} uso(s) extra(s).'
+    m_Localized: "Agora: a a\xE7\xE3o de um Porteiro manda {value} espectadores aleat\xF3rios
+      de volta."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570117
@@ -1774,14 +1783,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570118
-    m_Localized: "Eles trazem amigos. Se o servidor cair (chat acima do limite),
-      cada ponto d\xE1 {per}% de chance de a live ainda pontuar ({top}% com {max}
-      pontos)."
+    m_Localized: "Eles trazem amigos. Cada ponto d\xE1 {per} lugar extra acima do
+      seu limite ({top} com {max} pontos), mostrado como um c\xEDrculo cinza pontilhado.
+      S\xF3 um espectador trazido por um Animador pode ocup\xE1-lo, ent\xE3o o servidor
+      n\xE3o cai. Voc\xEA ainda n\xE3o pode adicionar espectadores quando o limite
+      est\xE1 cheio."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570119
-    m_Localized: 'Agora: {value}% de chance de a live pontuar mesmo se o servidor
-      cair.'
+    m_Localized: 'Agora: {value} lugar(es) extra(s) livre(s) pros espectadores que
+      os Animadores trazem.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570120
@@ -1789,14 +1800,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570121
-    m_Localized: "Mant\xEAm a ordem. Quando a live pontua, cada ponto d\xE1 {per}%
-      de chance de a sua pr\xF3xima live come\xE7ar com 1 {icon:risk} anulado ({top}%
-      com {max} pontos)."
+    m_Localized: "O martelo do ban est\xE1 pronto. Cada ponto d\xE1 mais um uso da
+      a\xE7\xE3o de remover de um Mod nesta live (os usos extras s\xE3o compartilhados)."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570122
-    m_Localized: "Agora: {value}% de chance de anular 1 {icon:risk} na pr\xF3xima
-      live."
+    m_Localized: 'Agora: restam {value} uso(s) extra(s).'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570123
@@ -1885,7 +1894,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513156
-    m_Localized: Nesta loja, aumentar o limite custa {value} {icon:influence} a menos.
+    m_Localized: Nesta loja, aumentar o limite e o poder ativo do seu streamer custam
+      {value} {icon:influence} a menos.
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513157
@@ -1902,7 +1912,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123070513160
-    m_Localized: '{viewer} herda {influence} pra sempre.'
+    m_Localized: '{viewer} herda {amount} pra sempre.'
     m_Metadata:
       m_Items: []
   - m_Id: 2431123679961088
@@ -2004,6 +2014,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5322683555864585
     m_Localized: Precisa de {0} {icon:influence}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740694234292224
+    m_Localized: "N\xEDvel {count}/{max}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740694381092864
+    m_Localized: "Agora: a a\xE7\xE3o de um Porteiro manda todos os outros de volta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740694381092865
+    m_Localized: '{viewer} ocupa um lugar extra (restam {count}).'
     m_Metadata:
       m_Items: []
   references:

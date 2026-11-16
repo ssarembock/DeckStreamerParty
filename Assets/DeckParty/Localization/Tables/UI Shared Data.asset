@@ -2131,6 +2131,22 @@ MonoBehaviour:
     m_Key: target.drake_second_influence
     m_Metadata:
       m_Items: []
+  - m_Id: 5740695727464448
+    m_Key: chat.spare_seat_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695777796096
+    m_Key: beats.gatekeepers_all
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695777796097
+    m_Key: beats.seats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695966539776
+    m_Key: game.hype_seat
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

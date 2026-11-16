@@ -44,63 +44,75 @@ namespace DeckParty.Core
         // V5: five preset sets, one per Party House scenario (Alien Invitation, High or Low, Best Wishes, Money Management,
         // A Magical Night), each holding the new versions of that scenario's guests and stars. Guests this game doesn't have
         // were swapped for the closest viewer (Private Eye -> Cybersecurity Engineer, Cheerleader -> Binge Bunny,
-        // Magician -> Distraught Cat); the Dancer is Dancing Jen since 2026-11-08. The first set has one Play, like Alien
+        // Magician -> Distraught Cat); the Dancer is Dancing Jen since 2026-11-08. The first set has one Trophy, like Alien
         // Invitation; the others have two.
+        // 2026-11-16 (card edits): every shop also sells Loyal Fan and Fish (AlwaysInShop), and the sets were tuned to the
+        // new communities: Going Live gives the Precocious Youth a Gen-Z partner, Clickbait Roulette and Brand Deal Wishlist
+        // get the Boomer Troll, Brand Deal Wishlist a third Hype Man, Monetization Meeting a second Boomer, and Algorithm
+        // Magic is about kicking (Mods, Gatekeepers) and the empty seats it leaves (both Isolationists, Forever Alone).
         // Ids are kept (progress is stored per id); the old sets 7-9 are gone.
         static readonly ScenarioDefinition[] s_All =
         {
             new ScenarioDefinition(0, "Going Live", "Your first broadcast",
-                "A gentle first season: cheap regulars, a Producer and a Chat Admin to run the room, and one Play to collect.",
+                "A gentle first season: cheap regulars, staff to run the room and a single Trophy to collect.",
                 "bedroom", new[]
                 {
-                    GuestType.Producer, GuestType.ChatAdmin, GuestType.Normie, GuestType.CybersecurityEngineer, GuestType.PaidSponsorship,
+                    GuestType.Producer, GuestType.ChatAdmin, GuestType.Normie, GuestType.JuniorPrManager, GuestType.PaidSponsorship,
                     GuestType.MildlyRiskyCollaborator, GuestType.MarketingManager, GuestType.PromoCodeUser, GuestType.DancingJen,
                     GuestType.BillionaireBenefactor, GuestType.InfluentialTroll, GuestType.Whale,
                     GuestType.PrecociousYouth,
                 }),
             new ScenarioDefinition(1, "Clickbait Roulette", "Big risks, bigger numbers",
-                "Risky collaborators and hate-watchers pay well, the Master of Currency influences in on every one of them, and Gen-Z grows while the Junior PR Manager keeps chat moving.",
+                "Risky collaborators and hate-watchers pay well, a Boomer profits from every one of them, Gen-Z grows and Voyeurs peek at who's next.",
                 "city_irl", new[]
                 {
                     GuestType.RiskyOrbiter, GuestType.DieHardFan, GuestType.SocialMediaManager, GuestType.JuniorPrManager, GuestType.CybersecurityEngineer,
-                    GuestType.MasterOfCurrency, GuestType.GenZWithJob, GuestType.TechAdmin, GuestType.HighlyRiskyCollaborator,
+                    GuestType.MasterOfCurrency, GuestType.GenZWithJob, GuestType.BoomerTroll, GuestType.HighlyRiskyCollaborator,
                     GuestType.HateWatcher, GuestType.InfluentialTroll, GuestType.Doomer,
                     GuestType.MainstreamCelebrity, GuestType.BiggerStar,
                 }),
             new ScenarioDefinition(2, "Brand Deal Wishlist", "Be careful what you wish for",
-                "Crypto hype, Checkout Codes and PR spin. The Evangelist grants a second Play, the Big Boomer brings the opinions, and the Executive PR loves a scandal.",
+                "Crypto hype, checkout codes and PR spin. Hype Men keep the chat packed, a Degen Dog chases every community, and two very different Trophies wait at the top.",
                 "content_house", new[]
                 {
                     GuestType.MildlyRiskyCollaborator, GuestType.Affiliate, GuestType.ChatArbitrator, GuestType.PrManager, GuestType.CryptoEnthusiast,
                     GuestType.BingeBunny, GuestType.OnlineJournalist, GuestType.ExecutivePr, GuestType.Normie,
-                    GuestType.TechAdmin, GuestType.HateWatcher, GuestType.DegenDog,
+                    GuestType.GenerousDonator, GuestType.BoomerTroll, GuestType.DegenDog,
                     GuestType.Evangelist, GuestType.BigBoomer,
                 }),
             new ScenarioDefinition(3, "Monetization Meeting", "Every cent accounted for",
-                "Staff on payroll, sponsors on call and a Clanker that costs a fortune. Count every coin: the Senior Marketing Manager pays, and inherits from any Boomer who leaves.",
+                "Staff on payroll, sponsors on call and a Trophy that costs a fortune. Count every coin: a Millennial inherits whenever a Boomer logs off.",
                 "studio_stage", new[]
                 {
                     GuestType.SocialMediaManager, GuestType.PrManager, GuestType.ChatAdmin, GuestType.Affiliate, GuestType.CryptoEnthusiast,
                     GuestType.CybersecurityEngineer, GuestType.DieHardFan, GuestType.AccountManager, GuestType.PaidSponsorship,
-                    GuestType.HighlyRiskyCollaborator, GuestType.RiskyOrbiter, GuestType.Whale,
+                    GuestType.HighlyRiskyCollaborator, GuestType.BillionaireIsolationist, GuestType.Whale,
                     GuestType.ClippoTheClanker, GuestType.SeniorMarketingManager,
                 }),
             new ScenarioDefinition(4, "Algorithm Magic", "One perfect stream",
-                "Gatekeepers everywhere: kick, kick again and let the Distraught Cat profit. Generous Donators and Online Scandals keep the chat full for the Platform Owner and the Internet Starpower.",
+                "Mods kick, Gatekeepers clear the room and the Isolationists profit from every empty seat. Hype Men refill the chat for two rare Trophies.",
                 "cursed_stream", new[]
                 {
-                    GuestType.BillionaireBenefactor, GuestType.OnlineJournalist, GuestType.GenerousDonator, GuestType.BotDetector, GuestType.Gatekeeper,
-                    GuestType.GenZWithJob, GuestType.Normie, GuestType.DieHardFan, GuestType.ChatAdmin,
+                    GuestType.BillionaireBenefactor, GuestType.OnlineJournalist, GuestType.GenerousDonator, GuestType.BotDetector, GuestType.InfluentialIsolationist,
+                    GuestType.BillionaireIsolationist, GuestType.PrManager, GuestType.DieHardFan, GuestType.ChatAdmin,
                     GuestType.TechAdmin, GuestType.DistraughtCat, GuestType.ForeverAlone,
                     GuestType.PlatformOwner, GuestType.InternetStarpower,
                 }),
             new ScenarioDefinition(RandomScenarioId, "Random Mix", "A fresh character set every time",
-                "Twelve random viewers and three random Trophy viewers. Win five in a row to earn the Cherry.",
+                "Loyal Fans, Fish, twelve random viewers and three random Trophy viewers. Win five in a row to earn the Cherry.",
                 "metaverse", null, isRandom: true),
             new ScenarioDefinition(SandboxScenarioId, "Open Lobby", "Everyone's invited (sandbox)",
                 "Every recruitable guest is in the shop. Great for experimenting; does not count toward progress.",
                 "irl_beach", null, isSandbox: true),
         };
+
+        /// <summary>
+        /// Sold in every shop, whatever the set (2026-11-16): the two buyable starting viewers, like the original game's Old
+        /// Friend and Rich Pal. Random Mix sells them on top of its twelve random viewers.
+        /// </summary>
+        public static readonly GuestType[] AlwaysInShop = { GuestType.LoyalFan, GuestType.Fish };
+
+        public static bool IsAlwaysInShop(GuestType type) => System.Array.IndexOf(AlwaysInShop, type) >= 0;
 
         public static IReadOnlyList<ScenarioDefinition> All => s_All;
 
@@ -129,7 +141,7 @@ namespace DeckParty.Core
                 var diamonds = new List<GuestType>();
                 foreach (var info in GuestCatalog.Roster)
                 {
-                    if (!info.Purchasable) continue;
+                    if (!info.Purchasable || IsAlwaysInShop(info.Type)) continue;
                     (info.IsDiamond ? diamonds : regulars).Add(info.Type);
                 }
 
@@ -140,8 +152,12 @@ namespace DeckParty.Core
             else
             {
                 foreach (var type in scenario.FixedShop)
-                    if (GuestCatalog.InRoster(type)) shop.Add(type);
+                    if (GuestCatalog.InRoster(type) && !shop.Contains(type)) shop.Add(type);
             }
+
+            // Loyal Fan and Fish are in every shop.
+            foreach (var type in AlwaysInShop)
+                if (GuestCatalog.InRoster(type) && GuestCatalog.Get(type).Purchasable && !shop.Contains(type)) shop.Add(type);
 
             shop.Sort((a, b) =>
             {

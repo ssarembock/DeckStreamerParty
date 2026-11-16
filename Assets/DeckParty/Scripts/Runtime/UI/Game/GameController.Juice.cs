@@ -225,8 +225,8 @@ namespace DeckParty.UI
                     case GameEventType.Inheritance:
                         if (who == null)
                         {
-                            ToastView.Show(GameIcons.Tag(Community.Millennial) + " " + Loc.Get("game.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "influence", GuestVisuals.InfluenceText(e.A)), ToastKind.Success);
-                            effects.FloatText(GameIcons.Tag(Community.Millennial) + " " + GuestVisuals.InfluenceText(e.A), new Vector2(0f, -40f), 40f);
+                            ToastView.Show(GameIcons.Tag(Community.Millennial) + " " + Loc.Get("game.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "amount", GuestVisuals.CashText(e.A)), ToastKind.Success);
+                            effects.FloatText(GameIcons.Tag(Community.Millennial) + " " + GuestVisuals.CashText(e.A), new Vector2(0f, -40f), 40f);
                         }
                         Consider(Sfx.Coin, 6);
                         break;
@@ -280,6 +280,12 @@ namespace DeckParty.UI
                     case GameEventType.BarkActive:
                     case GameEventType.SoftLandingReady:
                         Consider(Sfx.Notify, 4);
+                        break;
+                    case GameEventType.HypeSeatTaken:
+                        // Hype Men: the viewer took a spare seat past the Sub Cap instead of crashing the server.
+                        if (who == null)
+                            effects.FloatText(GameIcons.Tag(Community.HypeMen) + " " + GuestVisuals.Colored(Loc.Get("game.hype_seat"), CommunityVisuals.Color(Community.HypeMen)), new Vector2(0f, -120f), 40f);
+                        Consider(Sfx.Notify, 5);
                         break;
                     case GameEventType.SoftLanding:
                     case GameEventType.StreakBonus:

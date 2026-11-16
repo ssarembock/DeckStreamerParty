@@ -81,8 +81,13 @@ namespace DeckParty.UI
         public void Render(PlayerState s)
         {
             m_State = s;
-            EnsureCards(s.Capacity);
-            if (s.Capacity != m_Capacity || Viewport.rect.size != m_LastAreaSize) Relayout(s.Capacity);
+            // Hype Men's spare seats come after the Sub Cap's seats: grey dotted circles only a viewer a Hype Man brings in
+            // can take (a viewer sitting in one gets the dotted ring too).
+            int spare = PartyEngine.HypeSeats(s);
+            int seated = PartyEngine.HypeSeated(s);
+            int seats = Math.Max(s.Capacity + Math.Max(spare, seated), s.Occupancy);
+            EnsureCards(seats);
+            if (seats != m_Capacity || Viewport.rect.size != m_LastAreaSize) Relayout(seats);
 
             // Each viewer takes one card; big viewers (Big Chungus) also fill extra slots after their card.
             int slot = 0;
@@ -94,7 +99,9 @@ namespace DeckParty.UI
                 Show(slot++).ShowGuest(g, s, true);
                 for (int extra = 1; extra < g.Info.Size; extra++) Show(slot++).ShowFiller(g.Kind);
             }
-            for (; slot < s.Capacity; slot++) Show(slot).ShowEmpty();
+            int emptyNormal = Math.Max(0, s.Capacity - (s.Occupancy - seated));
+            for (int k = 0; k < emptyNormal && slot < seats; k++, slot++) Show(slot).ShowEmpty();
+            for (int k = Math.Max(0, spare - seated); k > 0 && slot < seats; k--, slot++) Show(slot).ShowSpareSeat();
             for (int i = slot; i < m_Cards.Count; i++) m_Cards[i].gameObject.SetActive(false);
 
             // Optional (scenes from before V4.2 have it): the "Live Chat 3/5 Sub Cap - 7 in the queue" line.

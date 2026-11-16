@@ -176,8 +176,9 @@ namespace DeckParty.Core
                 for (int c = 0; c < Communities.Count; c++)
                     if ((mask & (1 << c)) != 0) scores[c]++;
             }
-            // One viewer is not a community: it takes two different viewers to score 1, three to score 2, and so on.
-            for (int c = 0; c < scores.Length; c++) scores[c] = Math.Max(0, scores[c] - Communities.MembersForFirstPoint + 1);
+            // One viewer is not a community: it takes two different viewers to score 1, three to score 2, and so on (the
+            // Boomers have levels instead: 2 different Boomers for level 1, 4 for level 2).
+            for (int c = 0; c < scores.Length; c++) scores[c] = Communities.PointsFromMembers((Community)c, scores[c]);
             return scores;
         }
 
@@ -442,7 +443,11 @@ namespace DeckParty.Core
                 case GuestType.PromoCodeUser:
                     if (ctx.Full) influence += GameRules.PromoCodeFullInfluence;
                     break;
-                case GuestType.Gatekeeper:
+                // You Shall Not Watch!: +1 per empty seat (Influence for the Influential Isolationist, Cash for the Billionaire one).
+                case GuestType.InfluentialIsolationist:
+                    influence += ctx.Empty;
+                    break;
+                case GuestType.BillionaireIsolationist:
                     cash += ctx.Empty;
                     break;
                 case GuestType.BingeBunny:
@@ -525,7 +530,7 @@ namespace DeckParty.Core
             return available < 0 ? -available * GameRules.InfluenceShortfallCashPenalty : 0;
         }
 
-        /// <summary>The next Sub Cap upgrade's price, after Boomers' discount for this shop.</summary>
+        /// <summary>The next Sub Cap upgrade's price, after Boomers' discount for this shop (never below 0).</summary>
         public static int ExpansionCost(PlayerState s) =>
             Math.Max(0, GameRules.ExpansionCost(s.Expansions) - s.ExpansionDiscount);
 
@@ -541,15 +546,16 @@ namespace DeckParty.Core
             s.HouseFull || s.EmptySpaces <= Communities.FullStreamSlack(CommunityScore(s, Community.FullStream));
 
         /// <summary>
-        /// The community that can give this viewer's action extra uses this stream: Gatekeepers for evictions (removals and
-        /// sending viewers back), Marketers for recruits, Voyeurs for peeks. Null when the viewer isn't in that community.
+        /// The community that can give this viewer's action extra uses this stream: Mods for evictions (removals and
+        /// sending viewers back; the Gatekeepers had this rule until 2026-11-16), Marketers for recruits, Voyeurs for peeks.
+        /// Null when the viewer isn't in that community.
         /// </summary>
         public static Community? ExtraUseCommunity(GuestInstance actor)
         {
             if (actor == null || !actor.Info.HasAbility) return null;
             var ability = actor.Info.Ability;
             Community community;
-            if (ability == AbilityKind.SendBack || actor.Info.ActionCategory == ActionCategory.Remove) community = Community.Gatekeepers;
+            if (ability == AbilityKind.SendBack || actor.Info.ActionCategory == ActionCategory.Remove) community = Community.Mods;
             else if (actor.Info.ActionCategory == ActionCategory.Recruit) community = Community.Marketers;
             else if (actor.Info.ActionCategory == ActionCategory.Scout) community = Community.Voyeurs;
             else return null;
@@ -560,10 +566,63 @@ namespace DeckParty.Core
         public static int ExtraUsesLeft(PlayerState s, Community community)
         {
             int allowed = Communities.ExtraUses(community, CommunityScore(s, community));
-            int used = community == Community.Gatekeepers ? s.PartyExtraEvictions
+            int used = community == Community.Mods ? s.PartyExtraEvictions
                 : community == Community.Marketers ? s.PartyExtraRecruits
                 : community == Community.Voyeurs ? s.PartyExtraPeeks : allowed;
             return Math.Max(0, allowed - used);
+        }
+
+        /// <summary>
+        /// How many random viewers a send-back action would send right now: a Gatekeeper's (the PR Manager) 3, 6 or everyone
+        /// else (<see cref="int.MaxValue"/>) by the Gatekeepers' points; otherwise the Junior PR Manager's 1, 2, 3... (one more
+        /// per use of that card). A PR Manager taken out of the Gatekeepers in the Game Database sends its old 5.
+        /// </summary>
+        public static int SendBackCount(PlayerState s, GuestInstance actor)
+        {
+            if (actor == null) return 0;
+            if (GuestCatalog.InCommunity(actor.Kind, Community.Gatekeepers))
+                return Communities.GatekeeperSendBack(CommunityScore(s, Community.Gatekeepers));
+            return actor.Kind == GuestType.PrManager ? GameRules.PrManagerSendBack : actor.ActionUses + 1;
+        }
+
+        // ================================================================== queries: Hype Men's spare seats
+
+        /// <summary>Hype Men: spare seats past the Sub Cap right now (1 per point, at most 2), for viewers a Hype Man brings in.</summary>
+        public static int HypeSeats(PlayerState s) =>
+            s.Phase == GamePhase.Party ? Communities.HypeSeats(CommunityScore(s, Community.HypeMen)) : 0;
+
+        /// <summary>Viewers in chat sitting in a Hype Men spare seat.</summary>
+        public static int HypeSeated(PlayerState s)
+        {
+            int count = 0;
+            for (int i = 0; i < s.House.Count; i++)
+            {
+                var g = s.Find(s.House[i]);
+                if (g != null && g.HypeSeat) count++;
+            }
+            return count;
+        }
+
+        /// <summary>Spare seats still free (only a viewer a Hype Man brings in can take one).</summary>
+        public static int FreeHypeSeats(PlayerState s) => Math.Max(0, HypeSeats(s) - HypeSeated(s));
+
+        /// <summary>Whether this viewer brings others in as a Hype Man (so they may take a spare seat).</summary>
+        public static bool IsHypeMan(GuestInstance g) => g != null && GuestCatalog.InCommunity(g.Kind, Community.HypeMen);
+
+        /// <summary>
+        /// When a seat inside the Sub Cap frees up, a viewer in a spare seat moves into it (the earliest first), so spare seats
+        /// only ever hold the overflow.
+        /// </summary>
+        static void SettleHypeSeats(PlayerState s)
+        {
+            int seated = HypeSeated(s);
+            for (int i = 0; i < s.House.Count && seated > 0 && s.Occupancy - seated < s.Capacity; i++)
+            {
+                var g = s.Find(s.House[i]);
+                if (g == null || !g.HypeSeat) continue;
+                g.HypeSeat = false;
+                seated--;
+            }
         }
 
         // ================================================================== queries: what can be done
@@ -604,7 +663,8 @@ namespace DeckParty.Core
             {
                 case AbilityKind.Fetch:
                     if (s.Pool.Count == 0) return Err.Of("err.queue_empty");
-                    if (s.HouseFull) return Err.Of("err.sub_cap");
+                    // A Hype Man (the Evangelist) may still bring someone into a free spare seat.
+                    if (s.HouseFull && !(IsHypeMan(actor) && FreeHypeSeats(s) > 0)) return Err.Of("err.sub_cap");
                     break;
                 case AbilityKind.Inspect:
                     if (s.Pool.Count < 2) return Err.Of("err.needs_two_queued");
@@ -1036,11 +1096,20 @@ namespace DeckParty.Core
             OnArrival(s, g, ev);
             ReactToArrival(s, g, ev);
 
-            if (s.Occupancy > s.Capacity)
+            if (s.Occupancy > s.Capacity + HypeSeated(s))
             {
-                // Techspertise may bring the server back, in which case the stream still scores.
-                if (!TryRestoreServer(s, ev)) ShutDownFireMarshal(s, ev);
-                return false;
+                // Hype Men: a viewer a Hype Man brought in takes a free spare seat instead of crashing the server.
+                if (IsHypeMan(s.Find(sourceId)) && FreeHypeSeats(s) > 0)
+                {
+                    g.HypeSeat = true;
+                    Emit(ev, GameEventType.HypeSeatTaken, g, sourceId, HypeSeats(s) - HypeSeated(s));
+                }
+                else
+                {
+                    // The retired Techspertise may bring the server back, in which case the stream still scores.
+                    if (!TryRestoreServer(s, ev)) ShutDownFireMarshal(s, ev);
+                    return false;
+                }
             }
             if (CheckRaid(s, ev)) return false;
 
@@ -1316,6 +1385,9 @@ namespace DeckParty.Core
             int trouble = GuestTrouble(s, g);
             s.House.Remove(id);
             if (s.LastRandomArrival == id) s.LastRandomArrival = -1;
+            // A freed seat inside the Sub Cap goes to a viewer in a Hype Men spare seat.
+            g.HypeSeat = false;
+            SettleHypeSeats(s);
 
             // Presence-bound effects end when a guest leaves.
             if (g.Infected)
@@ -1473,13 +1545,13 @@ namespace DeckParty.Core
         }
 
         /// <summary>
-        /// Hype Men (and the retired Techspertise): a chance (by points, max 3) that the server comes back and the stream
-        /// still scores.
+        /// The retired Techspertise: a chance (by points, max 3) that the server comes back and the stream still scores. (Hype
+        /// Men had a chance too until 2026-11-16; they give spare seats now.)
         /// </summary>
         static bool TryRestoreServer(PlayerState s, List<GameEvent> ev)
         {
             var scores = CommunityScores(s);
-            int chance = Communities.HypeMenChance(scores[(int)Community.HypeMen]) + Communities.TechspertiseChance(scores[(int)Community.Techspertise]);
+            int chance = Communities.TechspertiseChance(scores[(int)Community.Techspertise]);
             if (!Roll(s, chance)) return false;
             Emit(ev, GameEventType.ServerRestored, null, chance, s.Occupancy, s.Capacity);
             ScoreStream(s, ev);
@@ -1848,8 +1920,9 @@ namespace DeckParty.Core
 
                 case AbilityKind.SendBack:
                 {
-                    // PR Manager: 5 random viewers. Junior PR Manager: 1, then one more every time this card uses it.
-                    int count = actor.Kind == GuestType.PrManager ? GameRules.PrManagerSendBack : actor.ActionUses + 1;
+                    // A Gatekeeper (the PR Manager): 3, 6 or everyone else, by the Gatekeepers' level (counted while the actor is
+                    // still in chat). Junior PR Manager: 1, then one more every time this card uses it. Never the actor itself.
+                    int count = SendBackCount(s, actor);
                     var others = new List<int>(s.House);
                     others.Remove(actorId);
                     int sent = 0;
@@ -1860,7 +1933,7 @@ namespace DeckParty.Core
                         others.RemoveAt(index);
                         if (RemoveFromParty(s, id, LeaveReason.SentOutside, actorId, true, ev)) sent++;
                     }
-                    Emit(ev, GameEventType.SentBack, actor, sent, count);
+                    Emit(ev, GameEventType.SentBack, actor, sent, Math.Min(count, short.MaxValue));
                     CheckRaid(s, ev);
                     break;
                 }
@@ -1871,7 +1944,7 @@ namespace DeckParty.Core
             if (extraUse && s.Phase == GamePhase.Party && s.House.Contains(actorId) && s.UsedAbilities.Remove(actorId))
             {
                 var community = extraCommunity.Value;
-                if (community == Community.Gatekeepers) s.PartyExtraEvictions++;
+                if (community == Community.Mods) s.PartyExtraEvictions++;
                 else if (community == Community.Marketers) s.PartyExtraRecruits++;
                 else s.PartyExtraPeeks++;
                 Emit(ev, GameEventType.ActionRefreshed, actor, (int)community, ExtraUsesLeft(s, community));
@@ -1956,7 +2029,7 @@ namespace DeckParty.Core
                 if (g != null && !g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Boomer)) boomers.Add(id);
             }
 
-            // Great streams in a row: Manim Maketh Man's Beautiful Sequence influences it in from the shop.
+            // Great streams in a row: Manim Maketh Man's Beautiful Sequence cashes it in from the shop.
             s.Streak++;
 
             int unpaid;
@@ -2007,8 +2080,8 @@ namespace DeckParty.Core
         }
 
         /// <summary>
-        /// What a scored stream's communities leave behind: Gen-Z viewers grow for good, Mods may cancel a Risk next stream,
-        /// Boomers and Shop Control discount the coming shop, and Saboteurs aim a surcharge at the rivals (the host delivers it).
+        /// What a scored stream's communities leave behind: Gen-Z viewers grow for good, Boomers (and the retired Shop Control)
+        /// discount the coming shop, and the retired Saboteurs aim a surcharge at the rivals (the host delivers it).
         /// </summary>
         static void CommunityAftermath(PlayerState s, int[] scores, List<GameEvent> ev)
         {
@@ -2042,13 +2115,9 @@ namespace DeckParty.Core
                 }
             }
 
-            int mods = Communities.ModsChance(scores[(int)Community.Mods]);
-            if (Roll(s, mods))
-            {
-                s.ModsShieldNext = true;
-                Emit(ev, GameEventType.ModsShield, null, 1, mods);
-            }
+            // The Mods' old rule (a chance to cancel 1 Risk next stream) retired on 2026-11-16: Mods give extra removal uses now.
 
+            // Boomers: Sub Cap upgrades and the streamer's active cost less in the coming shop.
             s.ExpansionDiscount = Communities.BoomerDiscount(scores[(int)Community.Boomer]);
             if (s.ExpansionDiscount > 0) Emit(ev, GameEventType.ShopPerk, null, (int)Community.Boomer, s.ExpansionDiscount);
             s.RecruitDiscount = Communities.ShopControlDiscount(scores[(int)Community.ShopControl]);
@@ -2059,8 +2128,8 @@ namespace DeckParty.Core
 
         /// <summary>
         /// Boomers: each one who was in the scored stream has a chance to leave your Audience for good. Every time one does,
-        /// a random Millennial you own inherits +1 Influence for good, once per Millennials point (at least once). Without a
-        /// Millennial nothing is inherited.
+        /// a random Millennial you own inherits +1 Cash for good (Influence until 2026-11-16), once per Millennials point (at
+        /// least once). Without a Millennial nothing is inherited.
         /// </summary>
         static void RetireBoomers(PlayerState s, List<int> boomers, int millennialPoints, List<GameEvent> ev)
         {
@@ -2077,12 +2146,12 @@ namespace DeckParty.Core
                 {
                     var heirs = new List<GuestInstance>();
                     foreach (var g in s.Rolodex)
-                        if (!g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Millennial) && g.BaseInfo.Influence + g.BonusInfluence < GameRules.PermanentInfluenceCap)
+                        if (!g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Millennial) && g.BaseInfo.Cash + g.BonusCash < GameRules.PermanentInfluenceCap)
                             heirs.Add(g);
                     if (heirs.Count == 0) break;
                     var heir = heirs[DeterministicRandom.Range(ref s.RngState, heirs.Count)];
-                    heir.BonusInfluence += Communities.InheritanceInfluence;
-                    Emit(ev, GameEventType.Inheritance, heir, Communities.InheritanceInfluence, heir.BonusInfluence);
+                    heir.BonusCash += Communities.InheritanceCash;
+                    Emit(ev, GameEventType.Inheritance, heir, Communities.InheritanceCash, heir.BonusCash);
                 }
             }
         }

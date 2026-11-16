@@ -60,7 +60,7 @@ namespace DeckParty.EditorTools
             ("prmanager", GuestType.PrManager), ("highlyrisky", GuestType.HighlyRiskyCollaborator), ("arbitrator", GuestType.ChatArbitrator),
             ("botdetector", GuestType.BotDetector), ("orbiter", GuestType.RiskyOrbiter), ("smm", GuestType.SocialMediaManager),
             ("socialmedia", GuestType.SocialMediaManager), ("billionaire", GuestType.BillionaireBenefactor), ("techadmin", GuestType.TechAdmin),
-            ("journalist", GuestType.OnlineJournalist), ("scandal", GuestType.OnlineJournalist), ("gatekeeper", GuestType.Gatekeeper), ("bunny", GuestType.BingeBunny),
+            ("journalist", GuestType.OnlineJournalist), ("scandal", GuestType.OnlineJournalist), ("gatekeeper", GuestType.InfluentialIsolationist), ("bunny", GuestType.BingeBunny),
             ("rabbit", GuestType.BingeBunny), ("hatewatcher", GuestType.HateWatcher), ("affiliate", GuestType.Affiliate),
             ("currency", GuestType.MasterOfCurrency), ("executivepr", GuestType.ExecutivePr), ("genz", GuestType.GenZWithJob),
             ("jen", GuestType.DancingJen), ("dancer", GuestType.DancingJen),
@@ -69,8 +69,12 @@ namespace DeckParty.EditorTools
         [MenuItem("Deck Party/Art/Auto-Assign Sprites by Name", priority = 0)]
         public static void AssignByNameMenu() => AssignByName(false);
 
-        /// <summary>Matches every sprite under Assets/DeckParty/Art by name. Returns how many were assigned.</summary>
-        public static int AssignByName(bool quiet)
+        /// <summary>
+        /// Matches sprites under Assets/DeckParty/Art by name. Returns how many were assigned. With <paramref name="onlyPaths"/>
+        /// (the automatic run after images are imported), only those files are matched, and UI Skin icons you chose are never
+        /// replaced: only empty slots and slots still showing a placeholder are filled.
+        /// </summary>
+        public static int AssignByName(bool quiet, ICollection<string> onlyPaths = null)
         {
             if (AssetDatabase.LoadAssetAtPath<GameDatabase>(DeckPartyPaths.Database) == null)
             {
@@ -94,13 +98,17 @@ namespace DeckParty.EditorTools
             int guests = 0, streamers = 0, venues = 0, skins = 0, avatars = 0;
             var unmatched = new List<string>();
 
+            // The automatic run (after an import) only looks at the files just imported, so adding new art never reshuffles
+            // what is already assigned (two files with the same name in different folders used to swap on every import).
+            bool automatic = onlyPaths != null;
             foreach (var (sprite, path) in FindSprites(DeckPartyPaths.Art))
             {
+                if (automatic && !onlyPaths.Contains(path)) continue;
                 string key = Normalize(StripIndex(sprite.name));
                 bool inBackgrounds = path.StartsWith(DeckPartyPaths.ArtBackgrounds + "/", StringComparison.OrdinalIgnoreCase);
                 bool inStreamers = path.StartsWith(DeckPartyPaths.ArtStreamers + "/", StringComparison.OrdinalIgnoreCase);
 
-                if (TryAssignSkin(db, key, sprite)) { skins++; continue; }
+                if (TryAssignSkin(db, key, sprite, automatic, out bool skinChanged)) { if (skinChanged) skins++; continue; }
                 if (TryAssignVenue(db, key, sprite, inBackgrounds)) { venues++; continue; }
                 if (TryAssignStreamer(db, key, sprite, inStreamers)) { streamers++; continue; }
 
@@ -258,8 +266,15 @@ namespace DeckParty.EditorTools
             { SkinSlot.FrameCash, "FramePop" },
         };
 
-        static bool TryAssignSkin(GameDatabase db, string key, Sprite sprite)
+        /// <summary>
+        /// Puts <paramref name="sprite"/> in the UI Skin slot its name matches. Returns whether a slot matched; <paramref name="changed"/>
+        /// says whether the slot was actually changed. A slot that already shows a file with this name keeps it (so two
+        /// same-named files can't swap back and forth), and with <paramref name="keepChosen"/> (automatic runs) a slot that
+        /// already has your own art keeps it: only empty slots and placeholders are filled.
+        /// </summary>
+        static bool TryAssignSkin(GameDatabase db, string key, Sprite sprite, bool keepChosen, out bool changed)
         {
+            changed = false;
             if (db.skin == null) return false;
             string stripped = StripPrefix(key, s_SkinPrefixes);
             foreach (SkinSlot slot in Enum.GetValues(typeof(SkinSlot)))
@@ -274,11 +289,22 @@ namespace DeckParty.EditorTools
 
                 var entry = db.skin.Get(slot);
                 if (entry == null) return false;
+                if (entry.sprite == sprite) return true;
+                if (entry.sprite != null && Normalize(StripIndex(entry.sprite.name)) == key) return true;
+                if (keepChosen && entry.sprite != null && !IsPlaceholder(entry.sprite)) return true;
                 entry.sprite = sprite;
                 entry.imageType = sprite.border != Vector4.zero ? UnityEngine.UI.Image.Type.Sliced : UnityEngine.UI.Image.Type.Simple;
+                changed = true;
                 return true;
             }
             return false;
+        }
+
+        /// <summary>The generated placeholder shapes (Art/Placeholders), which art is allowed to replace automatically.</summary>
+        static bool IsPlaceholder(Sprite sprite)
+        {
+            string path = AssetDatabase.GetAssetPath(sprite);
+            return string.IsNullOrEmpty(path) || path.Replace('\\', '/').Contains("/Placeholders/");
         }
 
         static bool TryAssignVenue(GameDatabase db, string key, Sprite sprite, bool inBackgroundsFolder)

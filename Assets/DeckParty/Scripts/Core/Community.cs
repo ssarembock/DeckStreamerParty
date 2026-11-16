@@ -30,9 +30,9 @@ namespace DeckParty.Core
 
         // --- V5 ---
         GenZ = 14,
-        Gatekeepers = 15,
+        Gatekeepers = 15,       // 2026-11-16: random kickers (the old Gatekeepers rule is Mods now)
         HypeMen = 16,
-        Mods = 17,              // retired 2026-11-10
+        Mods = 17,              // retired 2026-11-10, back 2026-11-16 with the old Gatekeepers rule (extra removal uses)
         FullStream = 18,        // retired 2026-11-10
         Marketers = 19,         // retired 2026-11-10
         Saboteurs = 20,         // retired 2026-11-10
@@ -72,23 +72,28 @@ namespace DeckParty.Core
 
     /// <summary>
     /// Community rules and tuning. Chances are whole percentages, rolled with the season's deterministic RNG, so the host
-    /// and every client agree. The communities in the game (2026-11-10, StreamersViewersCommunities.md):
+    /// and every client agree. The communities in the game (2026-11-16, StreamersViewersCommunities.md):
     /// <list type="bullet">
     /// <item>Core Fanbase: 10% per point (max 3 points, 30%) that each Core Fanbase viewer scores twice (the scoring plays twice).</item>
     /// <item>Staff: a flat +1 Influence per point (max 3) when the stream is scored.</item>
-    /// <item>Boomers: each point makes Sub Cap upgrades 1 Influence cheaper in your next shop. After a scored stream each Boomer
-    /// in chat has a 10% chance to leave your Audience for good (and a Millennial inherits).</item>
-    /// <item>Millennials: each time a Boomer leaves your Audience, a random Millennial you own permanently earns +1 Influence,
+    /// <item>Boomers: levels instead of points (level 1 at 2 different Boomers in chat, level 2 at 4). Each level makes Sub Cap
+    /// upgrades and the streamer's active 1 Influence cheaper in your next shop (never below 0). After a scored stream each
+    /// Boomer in chat has a 10% chance to leave your Audience for good (and a Millennial inherits).</item>
+    /// <item>Millennials: each time a Boomer leaves your Audience, a random Millennial you own permanently earns +1 Cash,
     /// once per point (at least once).</item>
     /// <item>Gen-Z: after a scored stream, each Gen-Z viewer in chat permanently gains +1 Cash or +1 Influence (random) per point.</item>
-    /// <item>Gatekeepers: each point gives one more use of a Gatekeeper's eviction action this stream.</item>
-    /// <item>Hype Men: 10% per point (max 2 points, 20%) that a Server Down stream still scores.</item>
+    /// <item>Gatekeepers: a Gatekeeper's action sends random other viewers back to the queue: 3 at 0 points, 6 at 1 point,
+    /// everyone else at 2 points.</item>
+    /// <item>Hype Men: each point (max 2) is a spare seat past the Sub Cap that only viewers brought in by a Hype Man can
+    /// take, so they don't crash the server.</item>
+    /// <item>Mods: each point gives one more use of a Mod's removal action this stream (the old Gatekeepers rule).</item>
     /// <item>Troll Army (Trolls): +2 Cash per point of Risk in the stream when it's scored, cancelled Risk included.</item>
     /// <item>Voyeurs: each point (max 1) gives one more use of a Voyeur's peek action this stream.</item>
     /// </list>
-    /// Retired 2026-11-10 (still in the code, nobody belongs): Content, Mods, Full Stream, Marketers, Shop Control and
-    /// Saboteurs; retired in V5: Techspertise, Finance Bros, Doomsdayers, Zoomer, Armchair Activists, Clout, Memetics
-    /// Division and Bots. Their numbers are kept below for when they come back.
+    /// Retired 2026-11-10 (still in the code, nobody belongs): Content, Full Stream, Marketers, Shop Control and Saboteurs
+    /// (and the old Mods rule, a chance to cancel 1 Risk next stream); retired in V5: Techspertise, Finance Bros,
+    /// Doomsdayers, Zoomer, Armchair Activists, Clout, Memetics Division and Bots. Their numbers are kept below for when
+    /// they come back.
     /// </summary>
     public static class Communities
     {
@@ -111,19 +116,27 @@ namespace DeckParty.Core
         public const int StaffMaxPoints = 3;
         public const int ContentPercentPerPoint = 30;
         public const int ContentMaxPoints = 3;
-        /// <summary>Boomers: Influence off each Sub Cap upgrade in the next shop, per point.</summary>
+        /// <summary>Boomers: Influence off each Sub Cap upgrade and each use of the streamer's active in the next shop, per level.</summary>
         public const int BoomerDiscountPerPoint = 1;
+        /// <summary>Boomers (2026-11-16): different Boomers in chat for level 1 and level 2 (the most). Not the usual "members - 1".</summary>
+        static readonly int[] s_BoomerLevelMembers = { 2, 4 };
+        public const int BoomerMaxPoints = 2;
         /// <summary>Boomers: chance (%) that each Boomer in chat leaves the Audience for good after a scored stream.</summary>
         public const int BoomerRetirePercent = 10;
-        /// <summary>Millennials: Influence a Millennial inherits each time.</summary>
-        public const int InheritanceInfluence = 1;
+        /// <summary>Millennials (2026-11-16: Cash, it was Influence): Cash a Millennial inherits each time.</summary>
+        public const int InheritanceCash = 1;
         public const int GenZMaxPoints = 2;
-        public const int HypeMenPercentPerPoint = 10;
+        /// <summary>Hype Men (2026-11-16): spare seats past the Sub Cap per point, for viewers a Hype Man brings in.</summary>
+        public const int HypeMenSeatsPerPoint = 1;
         public const int HypeMenMaxPoints = 2;
+        /// <summary>Gatekeepers (2026-11-16): random viewers a Gatekeeper's action sends back at 0 and 1 points; at 2 points, everyone else.</summary>
+        static readonly int[] s_GatekeeperSendBack = { 3, 6 };
+        public const int GatekeepersMaxPoints = 2;
         /// <summary>Troll Army (2026-11-10): Cash per point of Risk in the stream when scored, cancelled Risk included.</summary>
         public const int TrollArmyCashPerRisk = 2;
+        /// <summary>The Mods' old rule (retired 2026-11-16, Mods give extra removal uses now): chance per point to cancel 1 Risk next stream.</summary>
         public const int ModsPercentPerPoint = 10;
-        public const int ModsMaxPoints = 2;
+        public const int ModsShieldMaxPoints = 2;
         public const int FullStreamMaxPoints = 3;
         public const int SaboteurMaxPoints = 5;
         public const int ShopControlMaxPoints = 5;
@@ -163,7 +176,7 @@ namespace DeckParty.Core
         public static readonly Community[] All =
         {
             Community.CoreFanbase, Community.Staff, Community.Boomer, Community.Millennial, Community.GenZ,
-            Community.Gatekeepers, Community.HypeMen, Community.Trolls, Community.Voyeurs,
+            Community.Mods, Community.Gatekeepers, Community.HypeMen, Community.Trolls, Community.Voyeurs,
         };
 
         /// <summary>Every community value, retired ones included (art slots, saved masks).</summary>
@@ -200,6 +213,28 @@ namespace DeckParty.Core
             return count;
         }
 
+        /// <summary>
+        /// A community's score from the number of <b>different</b> members in chat: one point for every member after the
+        /// first (<see cref="MembersForFirstPoint"/>), except the Boomers, who have levels (2 members for level 1, 4 for
+        /// level 2, the most). Other caps are applied by the rules (<see cref="Capped"/>), so the score can pass them.
+        /// </summary>
+        public static int PointsFromMembers(Community community, int members)
+        {
+            if (community == Community.Boomer)
+            {
+                int level = 0;
+                while (level < s_BoomerLevelMembers.Length && members >= s_BoomerLevelMembers[level]) level++;
+                return level;
+            }
+            return Math.Max(0, members - MembersForFirstPoint + 1);
+        }
+
+        /// <summary>Different members in chat a community needs for this point (or Boomers level).</summary>
+        public static int MembersForPoint(Community community, int point) =>
+            community == Community.Boomer
+                ? s_BoomerLevelMembers[Math.Max(0, Math.Min(s_BoomerLevelMembers.Length, point) - 1)]
+                : MembersForFirstPoint + Math.Max(1, point) - 1;
+
         /// <summary>The highest score that still changes anything (0 = no cap: every point keeps adding).</summary>
         public static int MaxPoints(Community community)
         {
@@ -208,9 +243,10 @@ namespace DeckParty.Core
                 case Community.CoreFanbase: return CoreFanbaseMaxPoints;
                 case Community.Staff: return StaffMaxPoints;
                 case Community.Content: return ContentMaxPoints;
+                case Community.Boomer: return BoomerMaxPoints;
                 case Community.GenZ: return GenZMaxPoints;
                 case Community.HypeMen: return HypeMenMaxPoints;
-                case Community.Mods: return ModsMaxPoints;
+                case Community.Gatekeepers: return GatekeepersMaxPoints;
                 case Community.FullStream: return FullStreamMaxPoints;
                 case Community.Saboteurs: return SaboteurMaxPoints;
                 case Community.ShopControl: return ShopControlMaxPoints;
@@ -243,22 +279,38 @@ namespace DeckParty.Core
 
         public static int ContentEncoreChance(int points) => Clamp(points, ContentMaxPoints) * ContentPercentPerPoint;
 
-        public static int BoomerDiscount(int points) => Math.Max(0, points) * BoomerDiscountPerPoint;
+        /// <summary>Boomers: Influence off each Sub Cap upgrade and each use of the streamer's active in the next shop (at most 2).</summary>
+        public static int BoomerDiscount(int level) => Clamp(level, BoomerMaxPoints) * BoomerDiscountPerPoint;
 
         /// <summary>How many times a Millennial inherits when one Boomer leaves (once per point, at least once).</summary>
         public static int Inheritances(int millennialPoints) => Math.Max(1, millennialPoints);
 
         public static int GenZGrowth(int points) => Clamp(points, GenZMaxPoints);
 
-        /// <summary>Extra uses of a member's action this stream (Gatekeepers, Marketers, Voyeurs).</summary>
+        /// <summary>Extra uses of a member's action this stream (Mods, Marketers, Voyeurs).</summary>
         public static int ExtraUses(Community community, int points) => Capped(community, points);
 
-        public static int HypeMenChance(int points) => Clamp(points, HypeMenMaxPoints) * HypeMenPercentPerPoint;
+        /// <summary>Hype Men: spare seats past the Sub Cap for viewers a Hype Man brings in (1 per point, at most 2).</summary>
+        public static int HypeSeats(int points) => Clamp(points, HypeMenMaxPoints) * HypeMenSeatsPerPoint;
+
+        /// <summary>
+        /// Gatekeepers: how many random other viewers a Gatekeeper's action sends back: 3 at 0 points, 6 at 1 point, and
+        /// everyone else (<see cref="int.MaxValue"/>) at 2 points.
+        /// </summary>
+        public static int GatekeeperSendBack(int points)
+        {
+            int level = Clamp(points, GatekeepersMaxPoints);
+            return level < s_GatekeeperSendBack.Length ? s_GatekeeperSendBack[level] : int.MaxValue;
+        }
+
+        /// <summary>Gatekeepers' send-back counts as compact text for tooltips ("3/6").</summary>
+        public static string GatekeeperSteps => string.Join("/", s_GatekeeperSendBack);
 
         /// <summary>Troll Army: Cash a scored stream earns with this much Risk in it (cancelled Risk counts), once the community scores.</summary>
         public static int TrollArmyCash(int points, int risk) => points > 0 ? TrollArmyCashPerRisk * Math.Max(0, risk) : 0;
 
-        public static int ModsChance(int points) => Clamp(points, ModsMaxPoints) * ModsPercentPerPoint;
+        /// <summary>The Mods' old rule (retired 2026-11-16): the chance to cancel 1 Risk next stream. Nothing rolls it any more.</summary>
+        public static int ModsShieldChance(int points) => Clamp(points, ModsShieldMaxPoints) * ModsPercentPerPoint;
 
         /// <summary>Full Stream: how many empty spaces chat may have and still count as full.</summary>
         public static int FullStreamSlack(int points) => Clamp(points, FullStreamMaxPoints);
@@ -299,7 +351,8 @@ namespace DeckParty.Core
 
         /// <summary>
         /// The headline number for a score: the chance in percent, or for counting communities the amount (Influence off
-        /// upgrades, resources if deplatformed, extra uses, spaces of slack, Cash on/off a recruit, inheritances, growth).
+        /// upgrades, extra uses, spare seats, viewers sent back (0 = everyone), spaces of slack, Cash on/off a recruit,
+        /// inheritances, growth).
         /// </summary>
         public static int Effect(Community community, int points)
         {
@@ -311,12 +364,16 @@ namespace DeckParty.Core
                 case Community.Boomer: return BoomerDiscount(points);
                 case Community.Millennial: return points > 0 ? Inheritances(points) : 0;
                 case Community.GenZ: return GenZGrowth(points);
-                case Community.Gatekeepers:
+                case Community.Mods:
                 case Community.Marketers:
                 case Community.Voyeurs: return ExtraUses(community, points);
-                case Community.HypeMen: return HypeMenChance(points);
+                case Community.Gatekeepers:
+                {
+                    int sent = GatekeeperSendBack(points);
+                    return sent == int.MaxValue ? 0 : sent;
+                }
+                case Community.HypeMen: return HypeSeats(points);
                 case Community.Trolls: return points > 0 ? TrollArmyCashPerRisk : 0;
-                case Community.Mods: return ModsChance(points);
                 case Community.FullStream: return FullStreamSlack(points);
                 case Community.Saboteurs: return SabotageAmount(points);
                 case Community.ShopControl: return ShopControlDiscount(points);
@@ -340,8 +397,6 @@ namespace DeckParty.Core
             {
                 case Community.CoreFanbase:
                 case Community.Content:
-                case Community.HypeMen:
-                case Community.Mods:
                 case Community.Techspertise:
                 case Community.FinanceBros:
                 case Community.Doomsdayers:

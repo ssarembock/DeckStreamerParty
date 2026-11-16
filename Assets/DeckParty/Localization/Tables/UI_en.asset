@@ -1849,7 +1849,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960068
-    m_Localized: '{viewer} inherits {influence} for good.'
+    m_Localized: '{viewer} inherits {amount} for good.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960069
@@ -1857,7 +1857,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960070
-    m_Localized: '{viewer} inherited +1 {icon:influence}'
+    m_Localized: '{viewer} inherited +1 {icon:cash}'
     m_Metadata:
       m_Items: []
   - m_Id: 2431125118607360
@@ -2198,6 +2198,23 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5322685065814018
     m_Localized: '{actor}: choose who doubles their printed {icon:influence}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695727464448
+    m_Localized: <b>Spare seat</b>\nOnly a viewer a {icon:HypeMen} Hype Man brings
+      in can sit here, so they don't crash the server.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695777796096
+    m_Localized: All
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695777796097
+    m_Localized: '{count} {count:plural:seat|seats}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740695966539776
+    m_Localized: Spare seat!
     m_Metadata:
       m_Items: []
   references:

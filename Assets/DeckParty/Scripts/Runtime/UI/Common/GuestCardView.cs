@@ -251,10 +251,77 @@ namespace DeckParty.UI
             if (layout != null) layout.cellSize = CellSize(scale);
         }
 
+        // ------------------------------------------------------------------ Hype Men spare seats
+
+        /// <summary>The grey of a Hype Men spare seat's dotted ring.</summary>
+        static readonly Color SpareSeatGrey = new Color(0.55f, 0.55f, 0.6f, 1f);
+
+        Sprite m_FrameSprite;
+        bool m_FrameSpriteSaved;
+        Image m_EmptyRing;
+        Sprite m_EmptyRingSprite;
+        Color m_EmptyRingColor;
+        bool m_EmptyRingSaved;
+
+        /// <summary>
+        /// A free Hype Men spare seat past the Sub Cap: an empty seat with a grey dotted ring. Only a viewer a Hype Man brings
+        /// in can take it (hover says so).
+        /// </summary>
+        public void ShowSpareSeat()
+        {
+            ShowEmpty();
+            var ring = EmptyRing();
+            if (ring != null)
+            {
+                ring.sprite = RuntimeSprites.DottedRing;
+                ring.color = SpareSeatGrey;
+            }
+            if (emptyFill != null) emptyFill.color = SiteColours.Get(SiteColourRole.SoftFill, transform).WithAlpha(0.45f);
+            if (tooltip != null) tooltip.Provider = () => Loc.Get("chat.spare_seat_tip");
+        }
+
+        /// <summary>The empty seat's own ring (the "Ring" image under the empty state), remembered with its look.</summary>
+        Image EmptyRing()
+        {
+            if (!m_EmptyRingSaved && emptyState != null)
+            {
+                var ring = emptyState.transform.Find("Ring");
+                m_EmptyRing = ring != null ? ring.GetComponent<Image>() : null;
+                if (m_EmptyRing != null)
+                {
+                    m_EmptyRingSprite = m_EmptyRing.sprite;
+                    m_EmptyRingColor = m_EmptyRing.color;
+                }
+                m_EmptyRingSaved = true;
+            }
+            return m_EmptyRing;
+        }
+
+        /// <summary>Back to the normal empty-seat ring (after a spare seat used this slot).</summary>
+        void RestoreEmptyRing()
+        {
+            if (!m_EmptyRingSaved || m_EmptyRing == null) return;
+            m_EmptyRing.sprite = m_EmptyRingSprite;
+            m_EmptyRing.color = m_EmptyRingColor;
+        }
+
+        /// <summary>Avatar: a viewer sitting in a spare seat gets the grey dotted ring instead of the usual one.</summary>
+        void ShowSpareRing(bool spare)
+        {
+            if (!avatarMode || frame == null) return;
+            if (!m_FrameSpriteSaved)
+            {
+                m_FrameSprite = frame.sprite;
+                m_FrameSpriteSaved = true;
+            }
+            frame.sprite = spare ? RuntimeSprites.DottedRing : m_FrameSprite;
+        }
+
         /// <summary>An open chat slot: just the faded frame (no text), or a label such as a big viewer's name on its extra spaces.</summary>
         public void ShowEmpty(string label = null)
         {
             Hook();
+            RestoreEmptyRing();
             GuestId = -1;
             m_ActionReady = false;
             content.SetActive(false);
@@ -332,7 +399,10 @@ namespace DeckParty.UI
             if (frame != null && avatarMode)
             {
                 // The ring shows the viewer's state; the action cue (pulsing accent) takes over while their action is unused.
-                m_FrameBase = AvatarRingColor(info, guest, live, SiteColours.Get(SiteColourRole.PanelBorder, transform));
+                // In a Hype Men spare seat it's a grey dotted ring.
+                bool spare = live && guest.HypeSeat;
+                ShowSpareRing(spare);
+                m_FrameBase = spare ? SpareSeatGrey : AvatarRingColor(info, guest, live, SiteColours.Get(SiteColourRole.PanelBorder, transform));
                 frame.color = m_FrameBase;
             }
             else if (frame != null)

@@ -849,7 +849,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262503
-    m_Localized: Lots of {icon:cash}, but trouble follows.
+    m_Localized: Lots of {icon:influence}, but trouble follows.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262504
@@ -870,7 +870,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262508
-    m_Localized: 'Pays well, but viewers skip the ad: -1 {icon:cash} when scored.'
+    m_Localized: Pays very well, but the sponsor brings {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262509
@@ -918,8 +918,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262519
-    m_Localized: 'Action: send 5 random viewers in chat back to the queue so they
-      can join again. Used actions stay used.'
+    m_Localized: 'Action: send random viewers in chat back to the queue so they can
+      join again: 3, 6 or everyone else, by the {icon:Gatekeepers} Gatekeepers''
+      points. Used actions stay used.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262520
@@ -1160,6 +1161,32 @@ MonoBehaviour:
   - m_Id: 3526868751441921
     m_Localized: 'Unwanted Guests: brings two random viewers along when joining.
       Can push chat over the Sub Cap.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693806473216
+    m_Localized: Influential Isolationist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639040
+    m_Localized: 'You Shall Not Watch!: +1 {icon:influence} for every empty space
+      in chat when scored.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639041
+    m_Localized: Billionaire Isolationist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639042
+    m_Localized: 'You Shall Not Watch!: +1 {icon:cash} for every empty space in chat
+      when scored.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639043
+    m_Localized: Boomer Troll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639044
+    m_Localized: Lots of {icon:cash}, but trouble follows.
     m_Metadata:
       m_Items: []
   references:

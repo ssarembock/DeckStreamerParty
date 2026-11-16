@@ -80,6 +80,27 @@ namespace DeckParty
             return Mathf.Clamp01((half - Mathf.Abs(x)) * 24f) * Mathf.Clamp01((y + 0.98f) * 24f);
         }));
 
+        static Sprite s_DottedRing;
+
+        /// <summary>
+        /// A dotted ring (16 rounded dashes) the size of the avatar ring: the Hype Men's spare seats in chat. 256 px, so it
+        /// stays crisp on the big chat avatars.
+        /// </summary>
+        public static Sprite DottedRing => s_DottedRing != null ? s_DottedRing : (s_DottedRing = Build("dp_dotted_ring", 256, Vector4.zero, (x, y) =>
+        {
+            const int dashes = 16;
+            const float radius = 58f / 64f;       // the same circle as the avatar ring placeholder (ui_ring)
+            const float halfWidth = 5.5f / 64f;   // a little bolder than the solid ring, so the gaps read
+            float d = Mathf.Sqrt(x * x + y * y);
+            float ring = Mathf.Clamp01((halfWidth - Mathf.Abs(d - radius)) * 128f);
+            if (ring <= 0f) return 0f;
+            // Position along the ring in dash units; each dash fills 55% of its unit, with soft ends.
+            float along = (Mathf.Atan2(y, x) / (2f * Mathf.PI) + 1f) * dashes;
+            float t = along - Mathf.Floor(along);
+            float dash = Mathf.Clamp01((0.275f - Mathf.Abs(t - 0.5f)) * 40f);
+            return ring * dash;
+        }));
+
         static Sprite Build(string name, int size, Vector4 border, Func<float, float, float> alpha)
         {
             var tex = new Texture2D(size, size, TextureFormat.RGBA32, false)

@@ -856,7 +856,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262503
-    m_Localized: Muitos {icon:cash}, mas o problema vem junto.
+    m_Localized: Muita {icon:influence}, mas o problema vem junto.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262504
@@ -877,7 +877,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262508
-    m_Localized: "Paga bem, mas a galera pula o an\xFAncio: -1 {icon:cash} na pontua\xE7\xE3o."
+    m_Localized: Paga muito bem, mas o patrocinador traz {icon:risk}.
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262509
@@ -925,8 +925,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262519
-    m_Localized: "A\xE7\xE3o: manda 5 espectadores aleat\xF3rios do chat de volta
-      pra fila pra eles entrarem de novo. A\xE7\xF5es usadas continuam usadas."
+    m_Localized: "A\xE7\xE3o: manda espectadores aleat\xF3rios do chat de volta pra
+      fila pra eles entrarem de novo: 3, 6 ou todos os outros, conforme os pontos
+      dos {icon:Gatekeepers} Porteiros. A\xE7\xF5es usadas continuam usadas."
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262520
@@ -1168,6 +1169,32 @@ MonoBehaviour:
   - m_Id: 3526868751441921
     m_Localized: "Convidados indesejados: ao entrar traz dois espectadores aleat\xF3rios
       junto. Pode fazer o chat passar do limite."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693806473216
+    m_Localized: Isolacionista influente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639040
+    m_Localized: "Voc\xEA n\xE3o vai assistir!: +1 {icon:influence} por vaga livre
+      no chat na pontua\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639041
+    m_Localized: "Isolacionista bilion\xE1rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639042
+    m_Localized: "Voc\xEA n\xE3o vai assistir!: +1 {icon:cash} por vaga livre no
+      chat na pontua\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639043
+    m_Localized: Troll boomer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5740693831639044
+    m_Localized: Muitos {icon:cash}, mas o problema vem junto.
     m_Metadata:
       m_Items: []
   references:

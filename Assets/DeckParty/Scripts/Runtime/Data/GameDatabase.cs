@@ -219,12 +219,14 @@ namespace DeckParty
         /// roster card takes the table's communities again). 5: the viewer card edits of 2026-11-08 (Crypto Enthusiast and
         /// the new Dancing Jen join the Millennials; only those two cards change, so your other edits are kept). 6: the card edits
         /// of 2026-11-10 (StreamersViewersCommunities.md: six communities retired, several cards moved, Fish / Whale, Degen Dog,
-        /// Doomer and Forever Alone back); every roster card takes the new table once.
+        /// Doomer and Forever Alone back); every roster card takes the new table once. 7: the card edits of 2026-11-16
+        /// (StreamersViewersCommunities.md: the old Gatekeepers are Mods, new Gatekeepers, Boomer Troll and the Isolationists,
+        /// several cards moved); every roster card takes the new table once.
         /// </summary>
-        public const int CommunityDefaultsRevision = 6;
+        public const int CommunityDefaultsRevision = 7;
 
         /// <summary>Whether a revision's built-in communities replace a roster card's (instead of merging into them).</summary>
-        static bool IsRosterTableRevision(int revision) => revision == 3 || revision == 4 || revision == 6;
+        static bool IsRosterTableRevision(int revision) => revision == 3 || revision == 4 || revision == 6 || revision == 7;
 
         /// <summary>Whether a revision resets this one card to its built-in communities (a revision that edits a few cards).</summary>
         static bool ResetsCard(int revision, GuestType type) =>

@@ -124,8 +124,19 @@ namespace DeckParty.Core
             return IsValid(type) ? type : StreamerType.None;
         }
 
-        /// <summary>The Influence the next use costs: it grows with every use, like raising the Sub Cap, up to <see cref="MaxPowerCost"/>.</summary>
+        /// <summary>
+        /// The Influence the next use costs: it grows with every use, like raising the Sub Cap, up to <see cref="MaxPowerCost"/>.
+        /// The Boomers' discount for this shop comes off (never below 0), as it does for Sub Cap upgrades.
+        /// </summary>
         public static int Cost(PlayerState s)
+        {
+            var info = Get(s.Streamer);
+            if (!info.IsActive) return 0;
+            return Math.Max(0, BaseCost(s) - Math.Max(0, s.ExpansionDiscount));
+        }
+
+        /// <summary>The next use's price before the Boomers' discount.</summary>
+        public static int BaseCost(PlayerState s)
         {
             var info = Get(s.Streamer);
             if (!info.IsActive) return 0;

@@ -82,9 +82,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274893
-    m_Localized: '{icon:Gatekeepers} Guardianes por todas partes: echa, vuelve a
-      echar y gana con cada salida. Los {icon:HypeMen} Animadores llenan el chat
-      para dos {icon:plays} raros.'
+    m_Localized: "{icon:Mods} Los Mods echan, {icon:Gatekeepers} los Guardianes vac\xEDan
+      la sala y los Aislacionistas sacan provecho de cada lugar libre. {icon:HypeMen}
+      Los Animadores vuelven a llenar el chat para dos {icon:plays} raros."
     m_Metadata:
       m_Items: []
   - m_Id: 433274894
@@ -96,8 +96,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274896
-    m_Localized: Doce espectadores al azar y tres Trofeos al azar. Gana cinco seguidas
-      para conseguir la Cereza.
+    m_Localized: Fans incondicionales, Pececitos, doce espectadores al azar y tres
+      Trofeos al azar. Gana cinco seguidas para conseguir la Cereza.
     m_Metadata:
       m_Items: []
   - m_Id: 433274897
