@@ -159,6 +159,13 @@ namespace DeckParty.Core
             foreach (var type in AlwaysInShop)
                 if (GuestCatalog.InRoster(type) && GuestCatalog.Get(type).Purchasable && !shop.Contains(type)) shop.Add(type);
 
+            SortShop(shop);
+            return shop;
+        }
+
+        /// <summary>The shop's order: regular viewers by price, then Trophy viewers by price.</summary>
+        public static void SortShop(List<GuestType> shop)
+        {
             shop.Sort((a, b) =>
             {
                 var ia = GuestCatalog.Get(a);
@@ -167,7 +174,6 @@ namespace DeckParty.Core
                 int c = ia.Cost.CompareTo(ib.Cost);
                 return c != 0 ? c : ((int)a).CompareTo((int)b);
             });
-            return shop;
         }
 
         static void PickInto(List<GuestType> source, int count, List<GuestType> into, ref ulong rng)

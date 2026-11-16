@@ -2147,6 +2147,382 @@ MonoBehaviour:
     m_Key: game.hype_seat
     m_Metadata:
       m_Items: []
+  - m_Id: 5802217921142784
+    m_Key: modes.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668736
+    m_Key: modes.subtitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668737
+    m_Key: modes.puzzles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668738
+    m_Key: modes.puzzles_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668739
+    m_Key: modes.puzzles_progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668740
+    m_Key: modes.endless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668741
+    m_Key: modes.endless_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668742
+    m_Key: modes.endless_best
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668743
+    m_Key: modes.endless_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668744
+    m_Key: modes.versus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668745
+    m_Key: modes.versus_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668746
+    m_Key: single.endless_mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668747
+    m_Key: single.endless_streams
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668748
+    m_Key: single.versus_mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668749
+    m_Key: single.versus_record
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668750
+    m_Key: game.endless_welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668751
+    m_Key: game.versus_intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668752
+    m_Key: game.ai_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668753
+    m_Key: players.title_versus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668754
+    m_Key: game.rival_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668755
+    m_Key: game.rival_scored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668756
+    m_Key: game.rival_banned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668757
+    m_Key: game.rival_banned_short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668758
+    m_Key: game.rival_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668759
+    m_Key: game.rival_down_short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668760
+    m_Key: game.rival_bought
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668761
+    m_Key: game.rival_power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668762
+    m_Key: game.rival_won_toast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668763
+    m_Key: game.rival_won_banner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668764
+    m_Key: game.rival_won_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668765
+    m_Key: game.stream_bought
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668766
+    m_Key: game.shop_viewer_added
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668767
+    m_Key: game.side_ended_you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668768
+    m_Key: game.side_ended_partner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668769
+    m_Key: controls.team_status
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668770
+    m_Key: controls.side_live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668771
+    m_Key: controls.side_ended
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668772
+    m_Key: hud.night_endless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668773
+    m_Key: shop.add_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668774
+    m_Key: shop.add_stream_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668775
+    m_Key: shop.add_viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668776
+    m_Key: shop.add_viewer_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668777
+    m_Key: shopbtn.add_stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668778
+    m_Key: shopbtn.add_viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668779
+    m_Key: pick.shop_viewer_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668780
+    m_Key: pick.shop_viewer_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668781
+    m_Key: over.endless_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668782
+    m_Key: over.endless_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668783
+    m_Key: over.endless_new_best
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668784
+    m_Key: over.stats_endless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668785
+    m_Key: over.versus_won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668786
+    m_Key: over.versus_lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668787
+    m_Key: over.versus_lost_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668788
+    m_Key: over.versus_nobody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668789
+    m_Key: over.versus_nobody_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668790
+    m_Key: over.coop_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668791
+    m_Key: over.coop_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668792
+    m_Key: over.team_you_win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668793
+    m_Key: over.team_wins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668794
+    m_Key: team.a
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668795
+    m_Key: team.b
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668796
+    m_Key: team.you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668797
+    m_Key: lobby.switch_team
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668798
+    m_Key: lobby.mode_needs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668799
+    m_Key: lobby.mode_two_vs_two
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668800
+    m_Key: lobby.mode_coop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668801
+    m_Key: mode.two_vs_two
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668802
+    m_Key: mode.two_vs_two_short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668803
+    m_Key: mode.coop_endless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668804
+    m_Key: mode.coop_short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640256
+    m_Key: log.stream_bought
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640257
+    m_Key: log.shop_viewer_added
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640258
+    m_Key: log.trophies_banked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640259
+    m_Key: log.side_ended
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640260
+    m_Key: log.rival_won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749120
+    m_Key: lobby.picking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749121
+    m_Key: lobby.teammate_picking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749122
+    m_Key: hud.audience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749123
+    m_Key: hud.tip.risk_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749124
+    m_Key: hud.tip.risk_rule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749125
+    m_Key: hud.tip.risk_added
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749126
+    m_Key: hud.tip.risk_cancelled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749127
+    m_Key: hud.tip.trophies_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749128
+    m_Key: hud.tip.trophies_in_chat_goal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749129
+    m_Key: hud.tip.trophies_in_chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749130
+    m_Key: hud.tip.trophies_owned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749131
+    m_Key: hud.tip.trophies_best
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749132
+    m_Key: hud.tip.trophies_rule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749133
+    m_Key: hud.tip.trophies_banked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749134
+    m_Key: hud.tip.trophies_endless_rule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749135
+    m_Key: shop.raise_cap_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749136
+    m_Key: shop.remove_viewer_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749137
+    m_Key: shop.remove_viewer_rule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749138
+    m_Key: shop.add_stream_detail
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

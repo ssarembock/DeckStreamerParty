@@ -63,6 +63,7 @@ namespace DeckParty.UI
         PlayerState m_State;
         bool m_Targeting;
         bool m_Interactive = true;
+        int m_Member;
 
         void Awake()
         {
@@ -87,7 +88,7 @@ namespace DeckParty.UI
         {
             SetTip(admitButton, Loc.Get("controls.approve"));
             SetTip(rejectButton, Loc.Get("controls.deny"));
-            if (m_State != null) Render(m_State, m_Targeting, m_Interactive);
+            if (m_State != null) Render(m_State, m_Targeting, m_Interactive, m_Member);
         }
 
         static void SetTip(Component target, string text)
@@ -114,30 +115,33 @@ namespace DeckParty.UI
         }
 
         /// <param name="interactive">False while watching someone else's party (or waiting for your turn): everything is shown, nothing is clickable.</param>
-        public void Render(PlayerState s, bool targeting, bool interactive = true)
+        /// <param name="member">Teams (2v2, co-op): the member these controls act for (their queue, Sub Cap and side of the stream).</param>
+        public void Render(PlayerState s, bool targeting, bool interactive = true, int member = 0)
         {
             m_State = s;
             m_Targeting = targeting;
             m_Interactive = interactive;
+            m_Member = member;
             bool peeking = s.PeekedId >= 0;
-            var doorBlocker = PartyEngine.GetDoorBlocker(s);
+            var doorBlocker = PartyEngine.GetDoorBlocker(s, member);
             string doorBlockerText = doorBlocker != null ? Loc.Error(doorBlocker) : null;
             doorButton.interactable = doorBlocker == null && !targeting && interactive;
             if (doorLabel != null) doorLabel.text = Loc.Get("controls.add_viewer");
-            string next = NextGuestPreview(s);
+            string next = NextGuestPreview(s, member);
+            int queued = s.PoolCountOf(member);
             if (doorSubLabel != null)
-                doorSubLabel.text = doorBlockerText ?? (next ?? Loc.Get("controls.queue_count", "count", s.Pool.Count)) + (interactive ? "  <color=#B9AED6>[Space]</color>" : string.Empty);
+                doorSubLabel.text = doorBlockerText ?? (next ?? Loc.Get("controls.queue_count", "count", queued)) + (interactive ? "  <color=#B9AED6>[Space]</color>" : string.Empty);
             if (doorTooltip != null)
             {
-                string tip = $"<b>{Loc.Get("controls.add_viewer")}</b>  <color=#B9AED6>[Space]</color>\n{Loc.Get("controls.add_viewer_tip")}\n" +
-                             GuestVisuals.Colored(Loc.Get("controls.queue_count", "count", s.Pool.Count), UIPalette.TextDim);
-                if (next != null) tip += "\n" + next;
-                if (doorBlockerText != null) tip += "\n" + GuestVisuals.Colored(doorBlockerText, UIPalette.Orange);
-                doorTooltip.Text = tip;
+                doorTooltip.Text = TipText.Titled(Loc.Get("controls.add_viewer"), TipText.Key("Space"))
+                    .Line(Loc.Get("controls.add_viewer_tip"))
+                    .Line(next)
+                    .Detail(Loc.Get("controls.queue_count", "count", queued))
+                    .Warn(doorBlockerText);
             }
-            RenderQueue(s);
+            RenderQueue(s, member);
 
-            var endBlocker = PartyEngine.GetEndPartyBlocker(s);
+            var endBlocker = PartyEngine.GetEndPartyBlocker(s, member);
             endButton.interactable = endBlocker == null && !targeting && interactive;
             PartyEngine.ProjectScore(s, out int cash, out int influence);
             int penalty = PartyEngine.ProjectPenalty(s, influence);
@@ -149,10 +153,13 @@ namespace DeckParty.UI
             if (endSubLabel != null) endSubLabel.text = endLabel != null && interactive ? sub + "  <color=#B9AED6>[E]</color>" : sub;
             if (m_EndTooltip != null)
             {
-                string tip = $"<b>{Loc.Get(m_WinReady ? "controls.end_win" : "controls.end")}</b>  <color=#B9AED6>[E]</color>\n{Loc.Get("controls.end_tip")}\n{sub}";
-                if (penalty > 0) tip += "  " + GuestVisuals.Colored(Loc.Get("controls.fees", "count", penalty), UIPalette.Red);
-                if (endBlocker != null) tip += "\n" + GuestVisuals.Colored(Loc.Error(endBlocker), UIPalette.Orange);
-                m_EndTooltip.Text = tip;
+                string payout = $"{GuestVisuals.CashText(cash)}  {GuestVisuals.InfluenceText(influence)}";
+                if (penalty > 0) payout += "  " + GuestVisuals.Colored(Loc.Get("controls.fees", "count", penalty), UIPalette.Red);
+                var tip = TipText.Titled(Loc.Get(m_WinReady ? "controls.end_win" : "controls.end"), TipText.Key("E"))
+                    .Line(Loc.Get("controls.end_tip", "payout", payout));
+                // Teams: the stream is scored once both of you have ended your side.
+                if (s.IsTeam) tip.Detail(TeamStatus(s, member));
+                m_EndTooltip.Text = tip.Warn(endBlocker != null ? Loc.Error(endBlocker) : null);
             }
             if (!m_WinReady && endButtonImage != null) endButtonImage.color = m_EndBaseColor;
             if (doorBase != null) doorBase.alpha = doorButton.interactable ? 1f : DisabledBaseAlpha;
@@ -166,16 +173,16 @@ namespace DeckParty.UI
                 var g = s.Find(s.PeekedId);
                 if (g != null) peekCard.ShowGuest(g, s, false);
                 if (peekTitle != null) peekTitle.text = Loc.Get("controls.waiting_viewer");
-                admitButton.interactable = !s.HouseFull && interactive;
+                admitButton.interactable = (g == null || !s.SideFull(g.Owner)) && interactive;
                 rejectButton.interactable = interactive;
             }
         }
 
         /// <summary>The faces of the viewers an effect has revealed as next in the queue (names on hover).</summary>
-        void RenderQueue(PlayerState s)
+        void RenderQueue(PlayerState s, int member)
         {
             if (queueRoot == null || queueFaces == null) return;
-            NextGuests(s, s_Next);
+            NextGuests(s, s_Next, member);
             queueRoot.SetActive(s_Next.Count > 0);
             for (int i = 0; i < queueFaces.Length; i++)
             {
@@ -204,22 +211,23 @@ namespace DeckParty.UI
             }
         }
 
-        static void NextGuests(PlayerState s, List<int> into)
+        static void NextGuests(PlayerState s, List<int> into, int member)
         {
             into.Clear();
-            var xray = PartyEngine.XRayQueue(s);
+            var xray = PartyEngine.XRayQueue(s, member);
             if (xray.Count > 0)
             {
                 into.AddRange(xray);
                 return;
             }
-            if (s.Pool.Count > 0 && s.CountInHouse(GuestType.SideEyeChloe) > 0) into.Add(s.Pool[0]);
+            int first = s.NextInPool(member);
+            if (first >= 0 && s.CountInHouse(GuestType.SideEyeChloe) > 0) into.Add(first);
         }
 
         /// <summary>Side Eye Chloe shows who's next in the queue; the Rude Radiologist's X-Ray shows the next three (tooltip text).</summary>
-        static string NextGuestPreview(PlayerState s)
+        static string NextGuestPreview(PlayerState s, int member)
         {
-            var xray = PartyEngine.XRayQueue(s);
+            var xray = PartyEngine.XRayQueue(s, member);
             if (xray.Count > 0)
             {
                 var names = new System.Text.StringBuilder();
@@ -232,9 +240,18 @@ namespace DeckParty.UI
                 }
                 return Loc.Get("controls.xray", "viewers", names.ToString());
             }
-            if (s.Pool.Count == 0 || s.CountInHouse(GuestType.SideEyeChloe) == 0) return null;
-            var next = s.Find(s.Pool[0]);
+            if (s.NextInPool(member) < 0 || s.CountInHouse(GuestType.SideEyeChloe) == 0) return null;
+            var next = s.Find(s.NextInPool(member));
             return next != null ? Loc.Get("controls.next_up", "viewer", GuestVisuals.NameTag(next.Kind)) : null;
+        }
+
+        /// <summary>Teams: whether you and your partner are still streaming or have ended your sides.</summary>
+        static string TeamStatus(PlayerState s, int member)
+        {
+            int partner = member == 0 ? 1 : 0;
+            return Loc.Get("controls.team_status",
+                "you", Loc.Get(s.StreamDoneFor(member) ? "controls.side_ended" : "controls.side_live"),
+                "partner", Loc.Get(s.StreamDoneFor(partner) ? "controls.side_ended" : "controls.side_live"));
         }
 
         /// <summary>Hides the risky-queue badge (it sits in the menu bar, so it would otherwise stay up in the shop).</summary>

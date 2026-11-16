@@ -65,6 +65,8 @@ namespace DeckParty
         {
             if (!TryLoad(out var state, out _)) return null;
             string text = Loc.Get("menu.save_desc", ("set", ContentText.ScenarioName(state.ScenarioId)), ("night", state.Night), ("total", state.TotalNights));
+            // An Endless run says so.
+            if (state.IsEndless) text = Loc.Get("modes.endless") + " - " + text;
             return state.Streamer != StreamerType.None ? StreamerVisuals.Name(state.Streamer) + " - " + text : text;
         }
 

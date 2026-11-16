@@ -16,6 +16,10 @@ namespace DeckParty.Core
         UseStreamerPower = 10,
         /// <summary>Shop: pay Influence to remove a viewer from your Audience for good. TargetA = the viewer's instance id.</summary>
         RemoveGuest = 11,
+        /// <summary>Endless shop: pay Trophies for one more stream in the run.</summary>
+        BuyExtraStream = 12,
+        /// <summary>Endless shop: pay Trophies to add a viewer to the shop. Guest = the viewer (one of PartyEngine.ShopViewerChoices).</summary>
+        BuyShopViewer = 13,
     }
 
     /// <summary>A player's intent. Identical for local play and network play.</summary>
@@ -29,9 +33,32 @@ namespace DeckParty.Core
         /// <summary>Which option was chosen for actions that offer a choice (Pepe's mood, Stonks' investment...).</summary>
         public int Option;
         public GuestType Guest;
+        /// <summary>
+        /// Teams: which member sends it (0 or 1); it picks whose queue, Sub Cap, Audience and side of the stream it applies to.
+        /// The multiplayer host sets it from the sender, so clients can't act for their partner. -1 on End the Stream ends
+        /// every member's side (timeouts). Always 0 for a solo season.
+        /// </summary>
+        public int Member;
 
         static GameCommand Simple(CommandType type) =>
             new GameCommand { Type = type, Actor = -1, TargetA = -1, TargetB = -1, TargetC = -1 };
+
+        /// <summary>The same command, sent by this team member.</summary>
+        public GameCommand ForMember(int member)
+        {
+            var command = this;
+            command.Member = member;
+            return command;
+        }
+
+        public static GameCommand BuyExtraStream() => Simple(CommandType.BuyExtraStream);
+
+        public static GameCommand BuyShopViewer(GuestType type)
+        {
+            var command = Simple(CommandType.BuyShopViewer);
+            command.Guest = type;
+            return command;
+        }
 
         public static GameCommand OpenDoor() => Simple(CommandType.OpenDoor);
         public static GameCommand EndParty() => Simple(CommandType.EndParty);

@@ -495,7 +495,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412342
-    m_Localized: PLAY
+    m_Localized: '{icon:plays} Trophy'
     m_Metadata:
       m_Items: []
   - m_Id: 479412343
@@ -503,19 +503,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412344
-    m_Localized: CANCELS {icon:risk}
+    m_Localized: Cancels {icon:risk}
     m_Metadata:
       m_Items: []
   - m_Id: 479412345
-    m_Localized: BRINGS {count}
+    m_Localized: Brings {count}
     m_Metadata:
       m_Items: []
   - m_Id: 479412346
-    m_Localized: TAKES {count} SPACES
+    m_Localized: Takes {count} spaces
     m_Metadata:
       m_Items: []
   - m_Id: 479412347
-    m_Localized: 'ACTION: {action}'
+    m_Localized: 'Action: {action}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412348
@@ -527,11 +527,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412350
-    m_Localized: Rickrolled! Really {viewer}.
+    m_Localized: Rickrolled! It's really {viewer}.
     m_Metadata:
       m_Items: []
   - m_Id: 479412351
-    m_Localized: 'Permanent: {value}'
+    m_Localized: 'Permanent bonus: {value}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412352
@@ -543,7 +543,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412354
-    m_Localized: 'Temporary copy: gone after tonight.'
+    m_Localized: 'Temporary copy: gone after this stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 479412355
@@ -551,7 +551,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412356
-    m_Localized: 'Temporary Ban: sitting out tonight.'
+    m_Localized: 'Temporary Ban: sits out this stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 479412357
@@ -679,7 +679,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412388
-    m_Localized: '{viewer} is denied for tonight.'
+    m_Localized: '{viewer} is denied for this stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 479412389
@@ -755,7 +755,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606534
-    m_Localized: '{viewer} earns {values} for tonight''s take.'
+    m_Localized: '{viewer} adds {values} to this stream''s take.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606535
@@ -825,7 +825,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606551
-    m_Localized: 'Invested so far tonight: {values}. Triple back if the stream succeeds.'
+    m_Localized: 'Invested this stream: {values}. Triple back if the stream succeeds.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606552
@@ -837,11 +837,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606554
-    m_Localized: '{viewer} is now immune to actions tonight.'
+    m_Localized: '{viewer} is immune to actions for the rest of the stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606555
-    m_Localized: '{viewer} will turn their {icon:influence} into {icon:cash} tonight.'
+    m_Localized: '{viewer} will turn their {icon:influence} into {icon:cash} this
+      stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606556
@@ -849,7 +850,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606557
-    m_Localized: '{viewer} earns nothing tonight.'
+    m_Localized: '{viewer} earns nothing this stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606558
@@ -857,7 +858,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606559
-    m_Localized: '{viewer}''s printed {icon:cash} are doubled tonight.'
+    m_Localized: '{viewer}''s printed {icon:cash} are doubled this stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606560
@@ -977,7 +978,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606588
-    m_Localized: '{0} was already used tonight.'
+    m_Localized: '{0} was already used this stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606589
@@ -1093,7 +1094,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606617
-    m_Localized: Finish tonight's stream first.
+    m_Localized: Finish this stream first.
     m_Metadata:
       m_Items: []
   - m_Id: 483606618
@@ -1360,15 +1361,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721363
-    m_Localized: Hate-watching right now (+1 {icon:risk})
+    m_Localized: Hate-watching now (+1 {icon:risk})
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721364
-    m_Localized: Will hate-watch on their next entrance
+    m_Localized: Hate-watches next time they join
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721365
-    m_Localized: SOMETIMES +1 {icon:risk}
+    m_Localized: Sometimes +1 {icon:risk}
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721366
@@ -1376,12 +1377,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721367
-    m_Localized: DEPLATFORMED! {icon:risk} hit {risk}. No payout tonight.
+    m_Localized: DEPLATFORMED! {icon:risk} hit {risk}. No payout.
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721368
     m_Localized: SERVER DOWN! {filled} spaces filled with a Sub Cap of {cap}. No
-      payout tonight.
+      payout.
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721369
@@ -1390,7 +1391,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591985721370
     m_Localized: '{viewer} gives a softball interview: everyone here earns 0 {icon:cash}
-      tonight, {influence} banked.'
+      this stream, {influence} banked.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721371
@@ -1435,11 +1436,11 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091265
     m_Localized: The regulars. Each point gives every Core Fanbase viewer a {per}%
-      chance to score twice when the stream ends ({top}% at {max} points).
+      chance to score twice ({top}% at {max} points).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091266
-    m_Localized: 'Now: {value}% chance per Core Fanbase viewer to score twice.'
+    m_Localized: 'Now: {value}% chance each to score twice.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091267
@@ -1447,8 +1448,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091268
-    m_Localized: The people the stream pays. Each point adds +{per} {icon:influence}
-      when the stream is scored ({top} {icon:influence} at {max} points).
+    m_Localized: On the payroll. Each point adds +{per} {icon:influence} when the
+      stream is scored (+{top} at {max} points).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091269
@@ -1501,9 +1502,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091280
-    m_Localized: They love the drama. Once the community scores, a scored stream
-      earns +{per} {icon:cash} for every point of {icon:risk} in it (cancelled {icon:risk}
-      counts).
+    m_Localized: They love drama. With at least 1 point, a scored stream earns +{per}
+      {icon:cash} per {icon:risk} in it (cancelled {icon:risk} counts too).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091281
@@ -1529,16 +1529,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091286
-    m_Localized: 'Old money, old opinions. Boomers have levels instead of points:
-      {l1} different Boomers in chat make level 1, {l2} make level {max}. Each level
-      makes Sub Cap upgrades and your streamer''s active {per} {icon:influence} cheaper
-      in your next shop (never below 0). After a scored stream, each Boomer in chat
-      has a {retire}% chance to log off for good (they leave your Audience).'
+    m_Localized: 'Old money, old opinions. Levels, not points: {l1} different Boomers
+      make level 1, {l2} make level {max}. Each level takes {per} {icon:influence}
+      off Sub Cap upgrades and your streamer''s active in the next shop. After a
+      scored stream, each Boomer in chat has a {retire}% chance to log off for good.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
-    m_Localized: 'Now: Sub Cap upgrades and your streamer''s active {value} {icon:influence}
-      cheaper next shop.'
+    m_Localized: 'Now: -{value} {icon:influence} on Sub Cap upgrades and your active
+      in the next shop.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091288
@@ -1546,13 +1545,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091289
-    m_Localized: Very online, waiting on the inheritance. Each time a Boomer leaves
-      your Audience, a random Millennial you own earns +1 {icon:cash} for good, once
+    m_Localized: Very online, waiting on the inheritance. Whenever a Boomer leaves
+      your Audience, a random Millennial you own gains +1 {icon:cash} for good, once
       per point (at least once).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
-    m_Localized: 'Now: {value}x inheritance per departed Boomer.'
+    m_Localized: 'Now: {value} {value:plural:inheritance|inheritances} per Boomer
+      who leaves.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091291
@@ -1605,7 +1605,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091302
-    m_Localized: '{viewer} works for free tonight ({influence} waived).'
+    m_Localized: '{viewer} works for free this stream ({influence} waived).'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091303
@@ -1747,7 +1747,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570113
-    m_Localized: 'Now: each Gen-Z viewer grows {value}x after the stream.'
+    m_Localized: 'Now: each Gen-Z viewer grows {value} {value:plural:time|times}
+      after the stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570114
@@ -1755,9 +1756,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570115
-    m_Localized: 'Nobody stays. A Gatekeeper''s action sends random other viewers
-      in chat back to the queue: {g0} at 0 points, {g1} at 1 point, and everyone
-      else at {max} points. It never sends itself.'
+    m_Localized: 'Nobody stays. A Gatekeeper''s action sends random viewers in chat
+      back to the queue: {g0} at 0 points, {g1} at 1 point, everyone else at {max}.
+      Never itself.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570116
@@ -1769,15 +1770,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570118
-    m_Localized: They bring friends. Each point adds {per} spare seat past your Sub
-      Cap ({top} at {max} points), shown as a grey dotted circle. Only a viewer a
-      Hype Man brings in can take one, so they don't crash the server. You still
-      can't add viewers yourself once the Sub Cap is full.
+    m_Localized: They bring friends. Each point adds {per} spare {per:plural:seat|seats}
+      past your Sub Cap ({top} at {max} points). Only viewers a Hype Man brings in
+      can sit there; you still can't add viewers to a full chat yourself.
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570119
-    m_Localized: 'Now: {value} spare seat(s) free for viewers the Hype Men bring
-      in.'
+    m_Localized: 'Now: {value} spare {value:plural:seat|seats} free.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570120
@@ -1786,11 +1785,11 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123028570121
     m_Localized: Banhammer ready. Each point gives one more use of a Mod's removal
-      action this stream (the extra uses are shared).
+      action this stream (shared between Mods).
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570122
-    m_Localized: 'Now: {value} extra use(s) left.'
+    m_Localized: 'Now: {value} extra {value:plural:use|uses} left.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570123
@@ -1829,7 +1828,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570131
-    m_Localized: 'Now: {value} extra use(s) left.'
+    m_Localized: 'Now: {value} extra {value:plural:use|uses} left.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570132
@@ -1959,7 +1958,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5322683555864577
-    m_Localized: No {icon:cash} tonight
+    m_Localized: No {icon:cash} this stream
     m_Metadata:
       m_Items: []
   - m_Id: 5322683555864578
@@ -1975,11 +1974,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5322683555864581
-    m_Localized: '{viewer} will turn their {icon:cash} into {icon:influence} tonight.'
+    m_Localized: '{viewer} will turn their {icon:cash} into {icon:influence} this
+      stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 5322683555864582
-    m_Localized: '{viewer}''s printed {icon:influence} are doubled tonight.'
+    m_Localized: '{viewer}''s printed {icon:influence} is doubled this stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 5322683555864583
@@ -2004,6 +2004,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5740694381092865
     m_Localized: '{viewer} takes a spare seat ({count} left).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216390221824
+    m_Localized: Endless mode only.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193344
+    m_Localized: Only in the shop.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193345
+    m_Localized: Needs {0} {icon:plays}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193346
+    m_Localized: The shop already sells every viewer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193347
+    m_Localized: That viewer isn't on offer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193348
+    m_Localized: That's your partner's viewer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193349
+    m_Localized: You've ended your side. Waiting for your partner.
     m_Metadata:
       m_Items: []
   references:

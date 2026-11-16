@@ -31,6 +31,10 @@ namespace DeckParty
         /// <summary>Older scenes only: the shop no longer has its own Audience button (the menu bar has one).</summary>
         Audience = 3,
         GoLive = 4,
+        /// <summary>Endless only: buy one more stream with Trophies.</summary>
+        AddStream = 5,
+        /// <summary>Endless only: add a viewer to the shop with Trophies.</summary>
+        AddShopViewer = 6,
     }
 
     /// <summary>What a shop button says beside its icon.</summary>
@@ -194,6 +198,8 @@ namespace DeckParty
                 case ShopButton.RaiseSubCap: return "shopbtn.raise_cap";
                 case ShopButton.RemoveViewer: return "shopbtn.remove";
                 case ShopButton.Audience: return "shopbtn.audience";
+                case ShopButton.AddStream: return "shopbtn.add_stream";
+                case ShopButton.AddShopViewer: return "shopbtn.add_viewer";
                 default: return "shopbtn.go_live";
             }
         }

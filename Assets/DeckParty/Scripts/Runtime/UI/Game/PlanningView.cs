@@ -43,6 +43,9 @@ namespace DeckParty.UI
         public bool AllStreamsOver;
         /// <summary>Free For All: every player's stream summary for this round, shown on the gate once all streams are over.</summary>
         public IList<RecapEntry> StreamRecap;
+
+        /// <summary>Teams (2v2, co-op): the team member on this screen (their Sub Cap, Audience and copy limits). 0 otherwise.</summary>
+        public int Member;
     }
 
     /// <summary>
@@ -80,6 +83,18 @@ namespace DeckParty.UI
         [Tooltip("Free For All: covers the shop until it opens for everyone (Go to the Shop, then the 3-2-1).")]
         [SerializeField] internal ShopGateView gate;
 
+        [Header("Endless (2026-11-16)")]
+        [Tooltip("Endless only: buy one more stream with Trophies (hidden in the other modes).")]
+        [SerializeField] internal Button addStreamButton;
+        [Tooltip("The Trophy price above Add a Stream.")]
+        [SerializeField] internal TMP_Text addStreamCost;
+        [SerializeField] internal TooltipTrigger addStreamTooltip;
+        [Tooltip("Endless only: add a viewer the shop doesn't sell yet, for Trophies (hidden in the other modes).")]
+        [SerializeField] internal Button addViewerButton;
+        [Tooltip("The Trophy price above Add a Viewer to the Shop.")]
+        [SerializeField] internal TMP_Text addViewerCost;
+        [SerializeField] internal TooltipTrigger addViewerTooltip;
+
         [Header("Icon buttons (website look)")]
         [SerializeField] internal TooltipTrigger rolodexTooltip;
         [SerializeField] internal TooltipTrigger nextNightTooltip;
@@ -106,6 +121,10 @@ namespace DeckParty.UI
         public event Action ShopReadyClicked;
         /// <summary>A shop tile was hovered (type) or left (null). Used for multiplayer presence signals.</summary>
         public event Action<GuestType?> ShopHovered;
+        /// <summary>Endless: Add a Stream was pressed.</summary>
+        public event Action AddStreamClicked;
+        /// <summary>Endless: Add a Viewer to the Shop was pressed (the game screen opens the choice).</summary>
+        public event Action AddShopViewerClicked;
 
         readonly List<ShopItemView> m_Items = new List<ShopItemView>();
         PlayerState m_State;
@@ -132,6 +151,8 @@ namespace DeckParty.UI
             nextNightButton.onClick.AddListener(() => NextNightClicked?.Invoke());
             if (power != null) power.UseClicked += () => PowerClicked?.Invoke();
             if (gate != null) gate.ReadyClicked += () => ShopReadyClicked?.Invoke();
+            if (addStreamButton != null) addStreamButton.onClick.AddListener(() => AddStreamClicked?.Invoke());
+            if (addViewerButton != null) addViewerButton.onClick.AddListener(() => AddShopViewerClicked?.Invoke());
             if (shopGrid != null)
             {
                 m_DefaultSpacing = shopGrid.spacing;
@@ -195,11 +216,13 @@ namespace DeckParty.UI
                 : Loc.Get("shop.lock_ready");
             RenderGate(ctx, gated);
 
-            var expandBlocker = PartyEngine.GetExpandBlocker(s);
+            int member = ctx.Member;
+            var expandBlocker = PartyEngine.GetExpandBlocker(s, member);
             expandButton.interactable = expandBlocker == null && !locked;
-            bool maxed = s.Capacity >= GameRules.MaxCapacity;
+            int capacity = s.CapacityOf(member);
+            bool maxed = capacity >= GameRules.MaxCapacity;
             string expandWords = maxed ? Loc.Get("shop.cap_maxed")
-                : Loc.Get("shop.raise_cap", ("from", s.Capacity), ("to", s.Capacity + 1), ("cost", GameIcons.Amount(ResourceIcon.Influence, PartyEngine.ExpansionCost(s))));
+                : Loc.Get("shop.raise_cap", ("from", capacity), ("to", capacity + 1), ("cost", GameIcons.Amount(ResourceIcon.Influence, PartyEngine.ExpansionCost(s, member))));
             // Boomers made upgrades cheaper for this shop.
             if (!maxed && s.ExpansionDiscount > 0)
                 expandWords += "\n" + GameIcons.Tag(Community.Boomer) + " " + Loc.Get("log.perk_boomer", "value", s.ExpansionDiscount);
@@ -209,26 +232,36 @@ namespace DeckParty.UI
             if (expandSkinned)
             {
                 // The button says +1 (or the maxed Sub Cap) unless UI Skin > Shop says otherwise; the price sits above it.
-                expandSkin.SetCaption(maxed ? s.Capacity.ToString() : "+1");
-                int cost = PartyEngine.ExpansionCost(s);
+                expandSkin.SetCaption(maxed ? capacity.ToString() : "+1");
+                int cost = PartyEngine.ExpansionCost(s, member);
                 SetCost(expandCost, maxed ? string.Empty : GameIcons.Amount(ResourceIcon.Influence, cost), s.Influence >= cost);
             }
             else if (expandLabel != null)
             {
                 // Older scenes: icon buttons carry numbers only (Sub Cap now -> next, and the price); the words are in the tooltip.
                 expandLabel.text = iconLook
-                    ? (maxed ? s.Capacity.ToString() : $"+1   {GameIcons.Amount(ResourceIcon.Influence, PartyEngine.ExpansionCost(s))}")
+                    ? (maxed ? capacity.ToString() : $"+1   {GameIcons.Amount(ResourceIcon.Influence, PartyEngine.ExpansionCost(s, member))}")
                     : expandWords;
             }
             if (expandTooltip != null)
             {
                 string why = watching || waitingForTurn ? lockReason : expandBlocker != null ? Loc.Error(expandBlocker) : null;
-                expandTooltip.Text = iconLook
-                    ? $"<b>{expandWords}</b>\n{Loc.Get("shop.raise_cap_tip")}" + (why != null ? "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : string.Empty)
-                    : why ?? Loc.Get("shop.raise_cap_tip");
+                if (iconLook)
+                {
+                    var tip = maxed
+                        ? TipText.Titled(Loc.Get("shop.cap_maxed"))
+                        : TipText.Titled(Loc.Get("shop.raise_cap_title", "from", capacity, "to", capacity + 1),
+                            GameIcons.Amount(ResourceIcon.Influence, PartyEngine.ExpansionCost(s, member)));
+                    tip.Line(Loc.Get("shop.raise_cap_tip"));
+                    if (!maxed && s.ExpansionDiscount > 0)
+                        tip.Good(GameIcons.Tag(Community.Boomer) + " " + Loc.Get("log.perk_boomer", "value", s.ExpansionDiscount));
+                    expandTooltip.Text = tip.Warn(why);
+                }
+                else expandTooltip.Text = why ?? Loc.Get("shop.raise_cap_tip");
             }
 
-            RenderRemove(s, locked, watching || waitingForTurn ? lockReason : null);
+            RenderRemove(s, member, locked, watching || waitingForTurn ? lockReason : null);
+            RenderEndless(s, locked, watching || waitingForTurn || gated ? lockReason : null);
 
             // Older scenes only: the shop's own Audience button (it's in the menu bar now).
             if (rolodexButton != null)
@@ -258,8 +291,8 @@ namespace DeckParty.UI
                 var tile = m_Items[i];
                 m_Holders[i].SetActive(true);
                 var type = s.Shop[i];
-                var blocker = PartyEngine.GetBuyBlocker(s, type);
-                tile.Bind(type, s, locked ? lockReason : blocker != null ? Loc.Error(blocker) : null);
+                var blocker = PartyEngine.GetBuyBlocker(s, type, member);
+                tile.Bind(type, s, locked ? lockReason : blocker != null ? Loc.Error(blocker) : null, member);
             }
             for (int i = s.Shop.Count; i < m_Holders.Count; i++) m_Holders[i].SetActive(false);
             LayoutGrid();
@@ -315,10 +348,10 @@ namespace DeckParty.UI
         }
 
         /// <summary>Remove a Viewer: the price on the button (a minus and the Influence), the words and any reason in its tooltip.</summary>
-        void RenderRemove(PlayerState s, bool locked, string lockReason)
+        void RenderRemove(PlayerState s, int member, bool locked, string lockReason)
         {
             if (removeButton == null) return;
-            var blocker = PartyEngine.GetRemoveBlocker(s);
+            var blocker = PartyEngine.GetRemoveBlocker(s, member);
             removeButton.interactable = blocker == null && !locked;
             string price = GameIcons.Amount(ResourceIcon.Influence, PartyEngine.RemovalCost(s));
             if (removeButton.TryGetComponent<ShopButtonSkin>(out var removeSkin))
@@ -330,8 +363,43 @@ namespace DeckParty.UI
             if (removeTooltip != null)
             {
                 string why = lockReason ?? (blocker != null ? Loc.Error(blocker) : null);
-                removeTooltip.Text = $"<b>{Loc.Get("shop.remove_viewer", "cost", price)}</b>\n{Loc.Get("shop.remove_viewer_tip", "min", GameRules.MinAudience)}" +
-                                     (why != null ? "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : string.Empty);
+                removeTooltip.Text = TipText.Titled(Loc.Get("shop.remove_viewer_title"), price)
+                    .Line(Loc.Get("shop.remove_viewer_tip"))
+                    .Detail(Loc.Get("shop.remove_viewer_rule", "min", GameRules.MinAudience))
+                    .Warn(why);
+            }
+        }
+
+        /// <summary>
+        /// Endless: Add a Stream and Add a Viewer to the Shop, each with its Trophy price above it (red when you can't afford
+        /// it). Hidden in the other modes. Their look (icon, text, shape, size) is in UI Skin > Shop like the other buttons.
+        /// </summary>
+        void RenderEndless(PlayerState s, bool locked, string lockReason)
+        {
+            bool endless = s.IsEndless;
+            // Single player has nothing to wait for: the (empty) waiting line makes room for the two Endless buttons.
+            if (waitingLabel != null) waitingLabel.gameObject.SetActive(!(endless && !m_Context.Multiplayer));
+            RenderEndlessButton(addStreamButton, addStreamCost, addStreamTooltip, endless, locked, lockReason, PartyEngine.GetExtraStreamBlocker(s),
+                PartyEngine.ExtraStreamCost(s), s.Trophies, Loc.Get("shop.add_stream"),
+                Loc.Get("shop.add_stream_tip"), Loc.Get("shop.add_stream_detail", "streams", s.TotalNights, "left", s.NightsRemaining));
+            RenderEndlessButton(addViewerButton, addViewerCost, addViewerTooltip, endless, locked, lockReason, PartyEngine.GetShopViewerBlocker(s),
+                PartyEngine.ShopViewerCost(s), s.Trophies, Loc.Get("shop.add_viewer"), Loc.Get("shop.add_viewer_tip", "count", GameRules.EndlessViewerChoices));
+        }
+
+        static void RenderEndlessButton(Button button, TMP_Text costLabel, TooltipTrigger tooltip, bool shown, bool locked, string lockReason, string blocker,
+            int cost, int trophies, string title, string tip, string detail = null)
+        {
+            if (button == null) return;
+            button.gameObject.SetActive(shown);
+            if (costLabel != null) costLabel.gameObject.SetActive(shown);
+            if (!shown) return;
+            button.interactable = blocker == null && !locked;
+            if (button.TryGetComponent<ShopButtonSkin>(out var skin)) skin.SetCaption("+1");
+            SetCost(costLabel, GameIcons.Amount(ResourceIcon.Plays, cost), trophies >= cost);
+            if (tooltip != null)
+            {
+                string why = lockReason ?? (blocker != null ? Loc.Error(blocker) : null);
+                tooltip.Text = TipText.Titled(title, GameIcons.Amount(ResourceIcon.Plays, cost)).Line(tip).Detail(detail).Warn(why);
             }
         }
 

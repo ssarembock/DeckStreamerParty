@@ -17,8 +17,9 @@ namespace DeckParty.Core
         /// and each card's action use count. v8: Remove a Viewer purchases. v9: the match's player count (shared shop stack size).
         /// v10: what the new streamer actives armed for this stream (extra Sub Cap, Bark at Chat, Soft Landing).
         /// v11: who sits in a Hype Men spare seat (2026-11-16).
+        /// v12: game modes and teams (Endless Trophies and purchases, team members, their Sub Caps, whose card is whose).
         /// </summary>
-        const byte FormatVersion = 11;
+        const byte FormatVersion = 12;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -130,6 +131,17 @@ namespace DeckParty.Core
 
                 // v11: Hype Men spare seats (one flag per Audience card, same order as the Audience)
                 for (int i = 0; i < s.Rolodex.Count; i++) w.Write(s.Rolodex[i].HypeSeat);
+
+                // v12: game modes (Endless) and teams (2v2, co-op)
+                w.Write((byte)s.Mode);
+                w.Write(s.Trophies);
+                w.Write((short)Math.Min(short.MaxValue, Math.Max(0, s.StreamsBought)));
+                w.Write((short)Math.Min(short.MaxValue, Math.Max(0, s.ShopViewersBought)));
+                w.Write((byte)Math.Min(255, Math.Max(1, s.Members)));
+                w.Write(s.PartnerCapacity);
+                w.Write(s.PartnerExpansions);
+                w.Write((byte)Math.Min(255, Math.Max(0, s.StreamDone)));
+                for (int i = 0; i < s.Rolodex.Count; i++) w.Write(s.Rolodex[i].Owner);
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -294,6 +306,20 @@ namespace DeckParty.Core
                 if (version >= 11)
                 {
                     for (int i = 0; i < s.Rolodex.Count; i++) s.Rolodex[i].HypeSeat = r.ReadBoolean();
+                }
+
+                // v11 and older saves are classic solo seasons.
+                if (version >= 12)
+                {
+                    s.Mode = (GameMode)r.ReadByte();
+                    s.Trophies = r.ReadInt32();
+                    s.StreamsBought = r.ReadInt16();
+                    s.ShopViewersBought = r.ReadInt16();
+                    s.Members = Math.Max(1, Math.Min(GameRules.TeamSize, (int)r.ReadByte()));
+                    s.PartnerCapacity = r.ReadInt32();
+                    s.PartnerExpansions = r.ReadInt32();
+                    s.StreamDone = r.ReadByte();
+                    for (int i = 0; i < s.Rolodex.Count; i++) s.Rolodex[i].Owner = r.ReadByte();
                 }
 
                 int eventCount = ReadCount(r);

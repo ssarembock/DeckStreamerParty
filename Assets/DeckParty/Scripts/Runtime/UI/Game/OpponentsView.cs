@@ -48,7 +48,7 @@ namespace DeckParty.UI
                 m_RowIds[i] = p.ClientId;
                 m_Rows[i].gameObject.SetActive(true);
                 m_Rows[i].Set(p.DisplayName, PanelLine(p), color,
-                    mode != MatchMode.Race && (p.ReadyNextNight || (mode == MatchMode.SyncNights && session.Stage != RoundStage.Shopping && p.ReadyForShop)),
+                    mode != MatchMode.Race && (p.ReadyNextNight || (MatchModes.UsesRounds(mode) && session.Stage != RoundStage.Shopping && p.ReadyForShop)),
                     session.IsHostPlayer(p.ClientId), p.Rank, p.ClientId == session.LocalClientId);
                 m_Rows[i].SetStreamer((StreamerType)p.Streamer);
                 m_Rows[i].SetViewed(p.ClientId == viewedId, color);
@@ -61,6 +61,40 @@ namespace DeckParty.UI
 
         /// <summary>Multiplayer presence: what a player is doing right now ("choosing Trollface's target..."), or null.</summary>
         public Func<ulong, string> PresenceLine;
+
+        /// <summary>One row of the panel without a network session (Versus the AI: you and the AI).</summary>
+        public struct LocalRow
+        {
+            public string Name;
+            public string Line;
+            public Color Color;
+            public StreamerType Streamer;
+            public bool IsLocal;
+            /// <summary>Shown as a ready tick (the AI has finished its turn, or its season is over).</summary>
+            public bool Done;
+        }
+
+        /// <summary>Versus the AI (2026-11-16): the panel lists you and the AI from local states (no network session).</summary>
+        public void RenderLocal(string title, IReadOnlyList<LocalRow> rows)
+        {
+            titleLabel.text = title;
+            for (int i = 0; i < rows.Count; i++)
+            {
+                if (i >= m_Rows.Count)
+                {
+                    m_Rows.Add(Instantiate(rowPrefab, list));
+                    m_RowIds.Add(0);
+                }
+                var row = rows[i];
+                m_Rows[i].gameObject.SetActive(true);
+                m_Rows[i].Set(row.Name, row.Line, row.Color, row.Done, false, 0, row.IsLocal);
+                m_Rows[i].SetStreamer(row.Streamer);
+                m_Rows[i].SetViewed(row.IsLocal, row.Color);
+                m_Rows[i].SetPresence(null);
+                m_Rows[i].SetMute(false, false);
+            }
+            for (int i = rows.Count; i < m_Rows.Count; i++) m_Rows[i].gameObject.SetActive(false);
+        }
 
         public PlayerRowView RowFor(ulong clientId)
         {
@@ -106,7 +140,7 @@ namespace DeckParty.UI
                     phase = p.ReadyNextNight ? $"<color=#6BE38B>{Loc.Get("players.done_tonight")}</color>" : Loc.Get("players.waiting_turn");
                 }
             }
-            else if (mode == MatchMode.SyncNights && !p.Finished)
+            else if (MatchModes.UsesRounds(mode) && !p.Finished)
             {
                 switch (p.GamePhase)
                 {
@@ -122,7 +156,7 @@ namespace DeckParty.UI
             }
             else
             {
-                bool sync = mode == MatchMode.SyncNights;
+                bool sync = MatchModes.UsesRounds(mode);
                 switch (p.GamePhase)
                 {
                     case GamePhase.Party: phase = Loc.Get("players.streaming") + " " + streaming; break;

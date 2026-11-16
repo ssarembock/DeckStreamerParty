@@ -492,6 +492,19 @@ namespace DeckParty.EditorTools
 
             controlsView = BuildChatButtons(inner.transform, prefabs);
 
+            // Teams (2v2, co-op): the line between the two players' sides (cloned for every row; UI Skin: Team Divider) and
+            // their names above each side. Hidden outside team play.
+            var divider = EditorUI.SkinShape(viewport, "TeamDivider", null, SitePalette.Outline, SkinSlot.TeamDivider);
+            divider.rectTransform.sizeDelta = new Vector2(4, 100);
+            divider.raycastTarget = false;
+            divider.gameObject.SetActive(false);
+            var leftName = EditorUI.Text(viewport, "LeftSideName", "-", 22, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, false, false);
+            leftName.rectTransform.Box(new Vector2(0, 1), new Vector2(0.5f, 1), new Vector2(18, -38), new Vector2(-18, -4));
+            leftName.gameObject.SetActive(false);
+            var rightName = EditorUI.Text(viewport, "RightSideName", "-", 22, SitePalette.Text, TextAlignmentOptions.MidlineRight, true, false, false);
+            rightName.rectTransform.Box(new Vector2(0.5f, 1), new Vector2(1, 1), new Vector2(18, -38), new Vector2(-18, -4));
+            rightName.gameObject.SetActive(false);
+
             var view = partyRoot.gameObject.AddComponent<HouseView>();
             view.area = area;
             view.grid = grid;
@@ -499,6 +512,9 @@ namespace DeckParty.EditorTools
             view.cardPrefab = prefabs.ChatAvatar;
             view.hintLabel = null;
             view.avoid = null;
+            view.dividerTemplate = divider;
+            view.leftSideLabel = leftName;
+            view.rightSideLabel = rightName;
 
             // The channel column: Community Beats on top, the facecam in the bottom-right corner (like a streamer's camera).
             var column = EditorUI.Rect(partyRoot, "Channel").Box(new Vector2(1, 0), new Vector2(1, 1), new Vector2(-ChannelWidth, 0), Vector2.zero);
@@ -782,6 +798,9 @@ namespace DeckParty.EditorTools
         /// the price), Remove a Viewer (-1 and the price), what you are waiting for and the big
         /// Go Live / Ready button; under it, the grid of viewers to recruit. Words are in the hover tooltips.
         /// </summary>
+        /// <summary>Width of the two Endless buttons in the shop toolbar (narrower than Raise Sub Cap so the row still fits).</summary>
+        const float EndlessButtonWidth = 170f;
+
         static PlanningView BuildPlanning(RectTransform mainArea, UIPrefabs prefabs)
         {
             const float toolbarTop = 84f;
@@ -810,6 +829,13 @@ namespace DeckParty.EditorTools
             var remove = WideIconButton(toolbar, "RemoveViewer", EditorUI.RemoveViewer, SkinSlot.IconRemoveViewer, ShopButton.RemoveViewer, 210, buttonHeight,
                 "-1", true, out var removeLabel, out var removeCost);
             var removeTip = remove.GetComponent<TooltipTrigger>();
+            // Endless only (hidden in the other modes): one more stream, and one more viewer in the shop, for Trophies.
+            var addStream = WideIconButton(toolbar, "AddStream", EditorUI.Night, SkinSlot.IconAddStream, ShopButton.AddStream, EndlessButtonWidth, buttonHeight,
+                "+1", true, out _, out var addStreamCost);
+            var addViewer = WideIconButton(toolbar, "AddShopViewer", EditorUI.AddViewer, SkinSlot.IconAddShopViewer, ShopButton.AddShopViewer, EndlessButtonWidth,
+                buttonHeight, "+1", true, out _, out var addViewerCost);
+            addStream.gameObject.SetActive(false);
+            addViewer.gameObject.SetActive(false);
             // No Audience button here: the menu bar at the top has one.
 
             var spacer = EditorUI.Rect(toolbar, "Spacer");
@@ -855,6 +881,12 @@ namespace DeckParty.EditorTools
             view.removeLabel = removeLabel;
             view.removeTooltip = removeTip;
             view.removeCost = removeCost;
+            view.addStreamButton = addStream;
+            view.addStreamCost = addStreamCost;
+            view.addStreamTooltip = addStream.GetComponent<TooltipTrigger>();
+            view.addViewerButton = addViewer;
+            view.addViewerCost = addViewerCost;
+            view.addViewerTooltip = addViewer.GetComponent<TooltipTrigger>();
             view.nextNightButton = next;
             view.nextNightLabel = null;
             view.nextNightTooltip = next.GetComponent<TooltipTrigger>();

@@ -281,6 +281,32 @@ namespace DeckParty.UI
                     case GameEventType.SoftLandingReady:
                         Consider(Sfx.Notify, 4);
                         break;
+                    // --- Game modes (2026-11-16) ---
+                    case GameEventType.TrophiesBanked:
+                        // Endless: Trophies bank like the other resources.
+                        effects.FloatText($"+{e.A} {GameIcons.Tag(ResourceIcon.Plays)}", new Vector2(0f, 0f), 46f);
+                        Fx.Play(FxCue.CounterPunch, hud.PlaysAnchor, 1.4f);
+                        Consider(Sfx.StarArrive, 7);
+                        break;
+                    case GameEventType.StreamBought:
+                        ToastView.Show(Loc.Get("game.stream_bought", "total", e.B), ToastKind.Success);
+                        Fx.Play(FxCue.CounterPunch, hud.nightLabel != null ? hud.nightLabel.transform : hud.PlaysAnchor, 1.3f);
+                        Consider(Sfx.Coin, 6);
+                        break;
+                    case GameEventType.ShopViewerAdded:
+                        ToastView.Show(Loc.Get("game.shop_viewer_added", "viewer", GuestVisuals.NameTag((GuestType)e.A)), ToastKind.Success);
+                        Consider(Sfx.Coin, 6);
+                        break;
+                    case GameEventType.MemberStreamEnded:
+                        // Teams: one of you ended their side; the stream is scored when the other does too.
+                        ToastView.Show(Loc.Get(e.A == m_Member ? "game.side_ended_you" : "game.side_ended_partner"), ToastKind.Info);
+                        Consider(Sfx.Notify, 4);
+                        break;
+                    case GameEventType.RivalVictory:
+                        banner.Show(Loc.Get("game.rival_won_banner", "rival", m_RivalName ?? string.Empty), Loc.Get("game.rival_won_sub", "count", GameRules.DiamondsToWin),
+                            UIPalette.Red, 2f);
+                        Consider(Sfx.Defeat, 9);
+                        break;
                     case GameEventType.HypeSeatTaken:
                         // Hype Men: the viewer took a spare seat past the Sub Cap instead of crashing the server.
                         if (who == null)

@@ -33,6 +33,19 @@ namespace DeckParty.UI
         [Tooltip("Optional: a rect overlapping the chat that the cards keep clear of (the facecam).")]
         [SerializeField] internal RectTransform avoid;
 
+        [Header("Teams (2v2, co-op)")]
+        [Tooltip("The line between the two players' sides of the chat (UI Skin: Team Divider). Cloned for every row. Optional: " +
+                 "without it the sides are split by a plain grey line.")]
+        [SerializeField] internal Image dividerTemplate;
+        [Tooltip("Optional: the left player's name above their side of the chat.")]
+        [SerializeField] internal TMP_Text leftSideLabel;
+        [Tooltip("Optional: the right player's name above their side of the chat.")]
+        [SerializeField] internal TMP_Text rightSideLabel;
+
+        /// <summary>Teams: the names over the two sides (member 0 on the left, member 1 on the right), set by the game screen.</summary>
+        public string LeftSideName { get; set; }
+        public string RightSideName { get; set; }
+
         /// <summary>Gap kept between the cards and <see cref="avoid"/>.</summary>
         const float AvoidGap = 12f;
 
@@ -67,7 +80,13 @@ namespace DeckParty.UI
 
         void Update()
         {
-            if (Viewport == null || m_Capacity <= 0) return;
+            if (Viewport == null) return;
+            if (m_TeamColumns > 0)
+            {
+                if (Viewport.rect.size != m_LastAreaSize) RelayoutTeam(m_TeamColumns, m_TeamRows);
+                return;
+            }
+            if (m_Capacity <= 0) return;
             if (Viewport.rect.size != m_LastAreaSize || (Obstacle() - m_LastObstacle).sqrMagnitude > 1f) Relayout(m_Capacity);
         }
 
@@ -81,6 +100,12 @@ namespace DeckParty.UI
         public void Render(PlayerState s)
         {
             m_State = s;
+            if (s.IsTeam)
+            {
+                RenderTeam(s);
+                return;
+            }
+            LeaveTeamLayout();
             // Hype Men's spare seats come after the Sub Cap's seats: grey dotted circles only a viewer a Hype Man brings in
             // can take (a viewer sitting in one gets the dotted ring too).
             int spare = PartyEngine.HypeSeats(s);
@@ -127,6 +152,214 @@ namespace DeckParty.UI
             var card = m_Cards[slot];
             card.gameObject.SetActive(true);
             return card;
+        }
+
+        // ================================================================== teams (2v2, co-op)
+
+        /// <summary>What one cell of a team's chat shows.</summary>
+        enum CellKind { Guest, Filler, Empty, Spare }
+
+        struct Cell
+        {
+            public CellKind Kind;
+            public GuestInstance Guest;
+        }
+
+        readonly List<RectTransform> m_Spacers = new List<RectTransform>();
+        readonly List<Cell>[] m_Sides = { new List<Cell>(), new List<Cell>() };
+        /// <summary>Teams: columns per side and rows of the split layout (0 when the solo layout is on).</summary>
+        int m_TeamColumns;
+        int m_TeamRows;
+        /// <summary>The grid's own top padding, before the team layout made room for the side names.</summary>
+        int m_SoloTopPadding = -1;
+
+        /// <summary>Height of the band above a team's chat for the two side names.</summary>
+        const int TeamLabelBand = 40;
+        const float DividerWidth = 4f;
+
+        /// <summary>
+        /// Teams: the chat split down the middle. Member 0's viewers and seats on the left, member 1's on the right, with a
+        /// line between them (a column of its own in the grid). Each side lists its viewers in joining order, then its empty
+        /// seats; the Hype Men's free spare seats go on the side of the first Hype Man in chat.
+        /// </summary>
+        void RenderTeam(PlayerState s)
+        {
+            int spare = PartyEngine.HypeSeats(s);
+            int seated = PartyEngine.HypeSeated(s);
+            int spareSide = 0;
+            for (int i = 0; i < s.House.Count; i++)
+            {
+                var g = s.Find(s.House[i]);
+                if (g != null && PartyEngine.IsHypeMan(g)) { spareSide = g.Owner; break; }
+            }
+
+            for (int side = 0; side < 2; side++)
+            {
+                var cells = m_Sides[side];
+                cells.Clear();
+                for (int i = 0; i < s.House.Count; i++)
+                {
+                    var g = s.Find(s.House[i]);
+                    if (g == null || g.Owner != side) continue;
+                    cells.Add(new Cell { Kind = CellKind.Guest, Guest = g });
+                    for (int extra = 1; extra < g.Info.Size; extra++) cells.Add(new Cell { Kind = CellKind.Filler, Guest = g });
+                }
+                int empty = Math.Max(0, s.CapacityOf(side) - (s.OccupancyOf(side) - PartyEngine.HypeSeated(s, side)));
+                for (int k = 0; k < empty; k++) cells.Add(new Cell { Kind = CellKind.Empty });
+                if (side == spareSide)
+                    for (int k = Math.Max(0, spare - seated); k > 0; k--) cells.Add(new Cell { Kind = CellKind.Spare });
+            }
+
+            int widest = Math.Max(m_Sides[0].Count, m_Sides[1].Count);
+            int perSide = Mathf.Clamp(widest, 1, Mathf.Max(1, BaseColumns / 2));
+            int rows = Mathf.Max(1, Mathf.CeilToInt(widest / (float)perSide));
+
+            int cards = m_Sides[0].Count + m_Sides[1].Count;
+            EnsureCards(cards);
+            int spacersNeeded = rows * (perSide * 2 + 1) - cards;
+            EnsureSpacers(spacersNeeded);
+
+            // Lay the cells out row by row: the left side's cells, the divider, the right side's cells.
+            int cardIndex = 0, spacerIndex = 0, sibling = 0;
+            for (int row = 0; row < rows; row++)
+            {
+                for (int side = 0; side < 2; side++)
+                {
+                    if (side == 1) PlaceSpacer(spacerIndex++, sibling++, true);
+                    var cells = m_Sides[side];
+                    for (int column = 0; column < perSide; column++)
+                    {
+                        int index = row * perSide + column;
+                        if (index >= cells.Count)
+                        {
+                            PlaceSpacer(spacerIndex++, sibling++, false);
+                            continue;
+                        }
+                        var card = Show(cardIndex++);
+                        card.transform.SetSiblingIndex(sibling++);
+                        var cell = cells[index];
+                        switch (cell.Kind)
+                        {
+                            case CellKind.Guest: card.ShowGuest(cell.Guest, s, true); break;
+                            case CellKind.Filler: card.ShowFiller(cell.Guest.Kind); break;
+                            case CellKind.Spare: card.ShowSpareSeat(); break;
+                            default: card.ShowEmpty(); break;
+                        }
+                    }
+                }
+            }
+            for (int i = cardIndex; i < m_Cards.Count; i++) m_Cards[i].gameObject.SetActive(false);
+            for (int i = spacerIndex; i < m_Spacers.Count; i++) m_Spacers[i].gameObject.SetActive(false);
+
+            EnterTeamLayout();
+            if (perSide != m_TeamColumns || rows != m_TeamRows || Viewport.rect.size != m_LastAreaSize) RelayoutTeam(perSide, rows);
+            if (headerLabel != null)
+                headerLabel.text = Loc.Get("chat.header", ("filled", s.Occupancy), ("cap", s.TotalCapacity), ("queue", s.Pool.Count));
+            if (hintLabel != null) hintLabel.text = string.Empty;
+        }
+
+        void EnsureSpacers(int count)
+        {
+            while (m_Spacers.Count < count)
+            {
+                var spacer = new GameObject("Spacer " + (m_Spacers.Count + 1), typeof(RectTransform)).GetComponent<RectTransform>();
+                spacer.SetParent(grid.transform, false);
+                // The divider line, drawn only on the spacers in the middle column.
+                Image line;
+                if (dividerTemplate != null)
+                {
+                    line = Instantiate(dividerTemplate, spacer);
+                    line.gameObject.SetActive(true);
+                }
+                else
+                {
+                    line = new GameObject("Line", typeof(RectTransform), typeof(Image)).GetComponent<Image>();
+                    line.transform.SetParent(spacer, false);
+                    line.color = new Color(0.6f, 0.6f, 0.65f, 1f);
+                }
+                line.name = "Line";
+                line.raycastTarget = false;
+                m_Spacers.Add(spacer);
+            }
+        }
+
+        void PlaceSpacer(int index, int sibling, bool divider)
+        {
+            var spacer = m_Spacers[index];
+            spacer.gameObject.SetActive(true);
+            spacer.SetSiblingIndex(sibling);
+            var line = spacer.childCount > 0 ? (RectTransform)spacer.GetChild(0) : null;
+            if (line == null) return;
+            line.gameObject.SetActive(divider);
+            if (!divider) return;
+            // A thin line down the middle of the cell, reaching into the gaps above and below so the rows join up.
+            float gap = grid.spacing.y * 0.5f;
+            line.anchorMin = new Vector2(0.5f, 0f);
+            line.anchorMax = new Vector2(0.5f, 1f);
+            line.pivot = new Vector2(0.5f, 0.5f);
+            line.offsetMin = new Vector2(-DividerWidth * 0.5f, -gap);
+            line.offsetMax = new Vector2(DividerWidth * 0.5f, gap);
+        }
+
+        /// <summary>Teams: room above the grid for the side names, which show the two players.</summary>
+        void EnterTeamLayout()
+        {
+            if (m_SoloTopPadding < 0) m_SoloTopPadding = grid.padding.top;
+            if (grid.padding.top != m_SoloTopPadding + TeamLabelBand)
+                grid.padding = new RectOffset(grid.padding.left, grid.padding.right, m_SoloTopPadding + TeamLabelBand, grid.padding.bottom);
+            SetSideLabel(leftSideLabel, LeftSideName);
+            SetSideLabel(rightSideLabel, RightSideName);
+        }
+
+        /// <summary>Back to the solo layout (no spacers, no side names, the grid's own padding).</summary>
+        void LeaveTeamLayout()
+        {
+            if (m_TeamColumns == 0 && m_Spacers.Count == 0) return;
+            m_TeamColumns = 0;
+            m_TeamRows = 0;
+            m_Capacity = -1;
+            foreach (var spacer in m_Spacers) spacer.gameObject.SetActive(false);
+            // The team layout reordered the cards: back in seat order.
+            for (int i = 0; i < m_Cards.Count; i++) m_Cards[i].transform.SetSiblingIndex(i);
+            if (m_SoloTopPadding >= 0 && grid.padding.top != m_SoloTopPadding)
+                grid.padding = new RectOffset(grid.padding.left, grid.padding.right, m_SoloTopPadding, grid.padding.bottom);
+            SetSideLabel(leftSideLabel, null);
+            SetSideLabel(rightSideLabel, null);
+        }
+
+        static void SetSideLabel(TMP_Text label, string text)
+        {
+            if (label == null) return;
+            label.gameObject.SetActive(!string.IsNullOrEmpty(text));
+            label.text = text ?? string.Empty;
+        }
+
+        /// <summary>Teams: sizes the split grid (both sides and the divider column) to fit the chat, scrolling past the minimum size.</summary>
+        void RelayoutTeam(int perSide, int rows)
+        {
+            m_TeamColumns = perSide;
+            m_TeamRows = rows;
+            m_LastAreaSize = Viewport.rect.size;
+            if (m_LastAreaSize.x <= 1f || m_LastAreaSize.y <= 1f) return;
+
+            int columns = perSide * 2 + 1;
+            float spacing = Mathf.Lerp(18f, 8f, Mathf.InverseLerp(5, GameRules.MaxCapacity, perSide * rows * 2));
+            grid.spacing = new Vector2(spacing, spacing);
+            var padding = grid.padding;
+            float width = m_LastAreaSize.x - padding.horizontal;
+            float height = m_LastAreaSize.y - padding.vertical;
+            float scale = Mathf.Min(CardScaleFor(width, columns, spacing, true), CardScaleFor(height, rows, spacing, false));
+            bool scrolling = scale < MinCardScale;
+            float finalScale = Mathf.Clamp(scale, MinCardScale, MaxCardScale);
+
+            CardScale = finalScale;
+            grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            grid.constraintCount = columns;
+            grid.cellSize = CellAt(finalScale);
+            if (scroll != null) scroll.vertical = scrolling;
+            var gridRect = (RectTransform)grid.transform;
+            gridRect.anchoredPosition = new Vector2(0f, gridRect.anchoredPosition.y);
+            foreach (var card in m_Cards) card.SetScale(finalScale);
         }
 
         void EnsureCards(int capacity)

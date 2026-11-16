@@ -420,7 +420,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 496189536
-    m_Localized: "Pronto para a sua pr\xF3xima live"
+    m_Localized: "Ativado para a sua pr\xF3xima live"
     m_Metadata:
       m_Items: []
   - m_Id: 496189537
@@ -465,6 +465,52 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 496189547
     m_Localized: "O chat est\xE1 pegando fogo..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215446503424
+    m_Localized: ESCOLHA SEU RIVAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474944
+    m_Localized: Escolha seu streamer para o duelo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474945
+    m_Localized: Agora escolha com quem a IA joga.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474946
+    m_Localized: "Voc\xEA escolhe o streamer dele em seguida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474947
+    m_Localized: TRAVAR RIVAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474948
+    m_Localized: "VOC\xCA: {streamer}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474949
+    m_Localized: Escolhido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474950
+    m_Localized: "Todos escolhem ao mesmo tempo. A partida come\xE7a quando todos
+      confirmarem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215475863552
+    m_Localized: "Escolha o streamer do seu time. Seu parceiro joga com ele tamb\xE9m."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215475863553
+    m_Localized: "Setas para escolher \xB7 Enter para confirmar \xB7 se o tempo acabar,
+      um aleat\xF3rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215475863554
+    m_Localized: Confirmado. Esperando mais {count}...
     m_Metadata:
       m_Items: []
   references:

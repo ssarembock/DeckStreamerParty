@@ -218,6 +218,17 @@ namespace DeckParty
                     return GuestVisuals.Colored(Loc.Get("log.bark", "count", e.A), UIPalette.Orange);
                 case GameEventType.SoftLandingReady:
                     return GuestVisuals.Colored(Loc.Get("log.soft_landing_ready"), UIPalette.Pink);
+                // --- Game modes (2026-11-16) ---
+                case GameEventType.StreamBought:
+                    return GuestVisuals.Colored(Loc.Get("log.stream_bought", "cost", GameIcons.Amount(ResourceIcon.Plays, e.A), "total", e.B), UIPalette.Teal);
+                case GameEventType.ShopViewerAdded:
+                    return GuestVisuals.Colored(Loc.Get("log.shop_viewer_added", "viewer", GuestVisuals.NameTag((GuestType)e.A), "cost", GameIcons.Amount(ResourceIcon.Plays, e.B)), UIPalette.Teal);
+                case GameEventType.TrophiesBanked:
+                    return GuestVisuals.Colored(Loc.Get("log.trophies_banked", "count", e.A, "total", e.B), UIPalette.Gold);
+                case GameEventType.MemberStreamEnded:
+                    return GuestVisuals.Colored(Loc.Get("log.side_ended"), UIPalette.TextDim);
+                case GameEventType.RivalVictory:
+                    return GuestVisuals.Colored(Loc.Get("log.rival_won", "night", e.A), UIPalette.Red);
                 case GameEventType.HypeSeatTaken:
                     return GameIcons.Tag(Community.HypeMen) + " " + Loc.Get("log.hype_seat", "viewer", viewer, "count", e.B);
                 case GameEventType.RaidReceived:

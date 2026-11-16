@@ -521,7 +521,7 @@ namespace DeckParty.UI
             if (abilityTooltip != null)
             {
                 // Icon buttons name their action on hover; text buttons only explain why they're disabled.
-                if (abilityLabel == null) abilityTooltip.Text = enabled || string.IsNullOrEmpty(blocker) ? $"<b>{label}</b>" : $"<b>{label}</b>\n{blocker}";
+                if (abilityLabel == null) abilityTooltip.Text = TipText.Titled(label).Warn(enabled ? null : blocker);
                 else abilityTooltip.Text = enabled ? null : blocker;
             }
         }

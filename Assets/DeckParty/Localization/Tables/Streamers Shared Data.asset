@@ -455,6 +455,50 @@ MonoBehaviour:
     m_Key: anxious.sub_none
     m_Metadata:
       m_Items: []
+  - m_Id: 5802215446503424
+    m_Key: select.title_rival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474944
+    m_Key: select.subtitle_versus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474945
+    m_Key: select.subtitle_rival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474946
+    m_Key: select.opponent_versus_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474947
+    m_Key: select.confirm_rival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474948
+    m_Key: select.you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474949
+    m_Key: select.you_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215467474950
+    m_Key: select.subtitle_match
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215475863552
+    m_Key: select.subtitle_team
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215475863553
+    m_Key: select.hint_match
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802215475863554
+    m_Key: select.waiting_players
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

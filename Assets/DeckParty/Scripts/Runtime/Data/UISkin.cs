@@ -75,6 +75,24 @@ namespace DeckParty
         AddViewerBase = 45,
         /// <summary>The rounded rectangle under the End the Stream button (the button overlaps its top).</summary>
         EndStreamBase = 46,
+
+        // --- Game modes (2026-11-16, additionalgamemodes.md) ---
+        /// <summary>The background of the three big buttons on the single-player mode screen.</summary>
+        ModeButton = 47,
+        /// <summary>The Puzzles (character sets) button's icon on the single-player mode screen.</summary>
+        IconModePuzzles = 48,
+        /// <summary>The Endless button's icon on the single-player mode screen.</summary>
+        IconModeEndless = 49,
+        /// <summary>The Versus the AI button's icon on the single-player mode screen.</summary>
+        IconModeVersusAi = 50,
+        /// <summary>Endless shop: the Add a Stream button's icon.</summary>
+        IconAddStream = 51,
+        /// <summary>Endless shop: the Add a Viewer to the Shop button's icon.</summary>
+        IconAddShopViewer = 52,
+        /// <summary>Teams: the vertical line between the two players' sides of the stream chat.</summary>
+        TeamDivider = 53,
+        /// <summary>Lobby (2v2): the Switch Team button's icon.</summary>
+        IconSwitchTeam = 54,
     }
 
     [Serializable]

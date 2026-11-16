@@ -22,6 +22,20 @@ namespace DeckParty.Core
         FireMarshal = 3,
     }
 
+    /// <summary>
+    /// The rules a season is played with (2026-11-16, additionalgamemodes.md). Saved and sent over the network: only append.
+    /// </summary>
+    public enum GameMode : byte
+    {
+        /// <summary>The usual rules: 4 Trophy viewers in one scored stream wins.</summary>
+        Classic = 0,
+        /// <summary>
+        /// Endless: no win. Trophy viewers in a scored stream bank Trophies, which buy extra streams and extra viewers for the
+        /// shop. The run lasts as long as the streams do.
+        /// </summary>
+        Endless = 1,
+    }
+
     public enum PepeMood : byte
     {
         None = 0,
@@ -47,6 +61,8 @@ namespace DeckParty.Core
         public bool Temporary;      // Ugandan Knuckles copy or a rival's Bot: vanishes when the party ends.
         public bool Wolf;           // Hate-Watcher: hate-watching (risky) since their last entrance. Flips on every entrance.
         public int ActionUses;      // Times this card's action has been used, ever (Junior PR Manager sends one more viewer each time).
+        /// <summary>Teams (2v2, co-op): which team member's Audience this card is in (0 or 1). Always 0 for a solo season.</summary>
+        public byte Owner;
 
         // Tonight only (cleared when the party ends)
         public int PartyCash;               // Cash this guest gained tonight.
@@ -235,6 +251,24 @@ namespace DeckParty.Core
         public int PartyBark;          // Extra Cash for each viewer carrying Risk (Bark at Chat).
         public bool PartySoftLanding;  // A deplatformed stream still banks half its Cash (Soft Landing).
 
+        // Game mode (2026-11-16)
+        public GameMode Mode;
+        /// <summary>Endless: Trophies banked (one for every Trophy viewer in a scored stream), spent on streams and shop viewers.</summary>
+        public int Trophies;
+        /// <summary>Endless: extra streams bought (each one costs 1 Trophy more).</summary>
+        public int StreamsBought;
+        /// <summary>Endless: viewers added to the shop (each one costs 1 Trophy more).</summary>
+        public int ShopViewersBought;
+
+        // Teams (2026-11-16): two players share one season (resources, the stream, the shop) but keep their own Audience
+        // and Sub Cap. Member 0 uses Capacity / Expansions, member 1 PartnerCapacity / PartnerExpansions.
+        /// <summary>Players sharing this season: 1, or 2 for a team (2v2, co-op).</summary>
+        public int Members = 1;
+        public int PartnerCapacity = GameRules.StartingCapacity;
+        public int PartnerExpansions;
+        /// <summary>Teams: one bit per member who has ended their side of this stream. It's scored once every member has.</summary>
+        public int StreamDone;
+
         // Stats
         public int BestDiamonds;
         public int TotalCashEarned;
@@ -262,8 +296,94 @@ namespace DeckParty.Core
             }
         }
 
-        public bool HouseFull => Occupancy >= Capacity;
-        public int EmptySpaces => Math.Max(0, Capacity - Occupancy);
+        /// <summary>Every seat in chat is taken (a team: both members' sides are full).</summary>
+        public bool HouseFull => IsTeam ? SideFull(0) && SideFull(1) : Occupancy >= Capacity;
+
+        /// <summary>Empty seats in chat (a team: both sides together, since the two streams score as one).</summary>
+        public int EmptySpaces => IsTeam
+            ? Math.Max(0, Capacity - OccupancyOf(0)) + Math.Max(0, PartnerCapacity - OccupancyOf(1))
+            : Math.Max(0, Capacity - Occupancy);
+
+        // ------------------------------------------------------------------ modes and teams
+
+        public bool IsEndless => Mode == GameMode.Endless;
+        public bool IsTeam => Members > 1;
+
+        /// <summary>A member's Sub Cap (member 0, or a solo season: <see cref="Capacity"/>).</summary>
+        public int CapacityOf(int member) => IsTeam && member == 1 ? PartnerCapacity : Capacity;
+
+        /// <summary>Sub Cap upgrades a member has bought.</summary>
+        public int ExpansionsOf(int member) => IsTeam && member == 1 ? PartnerExpansions : Expansions;
+
+        /// <summary>Both sides' Sub Caps together (a solo season: <see cref="Capacity"/>).</summary>
+        public int TotalCapacity => IsTeam ? Capacity + PartnerCapacity : Capacity;
+
+        /// <summary>Seats a member's viewers take in chat (a solo season: <see cref="Occupancy"/>).</summary>
+        public int OccupancyOf(int member)
+        {
+            if (!IsTeam) return Occupancy;
+            int total = 0;
+            for (int i = 0; i < House.Count; i++)
+            {
+                var g = Find(House[i]);
+                if (g != null && g.Owner == member) total += g.Info.Size;
+            }
+            return total;
+        }
+
+        /// <summary>A member's side of the chat is full.</summary>
+        public bool SideFull(int member) => OccupancyOf(member) >= CapacityOf(member);
+
+        /// <summary>Teams: this member has ended their side of the stream.</summary>
+        public bool StreamDoneFor(int member) => IsTeam && (StreamDone & (1 << member)) != 0;
+
+        /// <summary>The next viewer in this member's queue (a solo season: the whole queue), or -1.</summary>
+        public int NextInPool(int member)
+        {
+            for (int i = 0; i < Pool.Count; i++)
+            {
+                if (!IsTeam) return Pool[i];
+                var g = Find(Pool[i]);
+                if (g != null && g.Owner == member) return Pool[i];
+            }
+            return -1;
+        }
+
+        /// <summary>Viewers waiting in this member's queue (a solo season: the whole queue).</summary>
+        public int PoolCountOf(int member)
+        {
+            if (!IsTeam) return Pool.Count;
+            int count = 0;
+            for (int i = 0; i < Pool.Count; i++)
+            {
+                var g = Find(Pool[i]);
+                if (g != null && g.Owner == member) count++;
+            }
+            return count;
+        }
+
+        /// <summary>Permanent cards of this type in a member's Audience (a solo season: the whole Audience).</summary>
+        public int CountOwned(GuestType type, int member)
+        {
+            if (!IsTeam) return CountOwned(type);
+            int count = 0;
+            for (int i = 0; i < Rolodex.Count; i++)
+                if (Rolodex[i].Type == type && !Rolodex[i].Temporary && Rolodex[i].Owner == member) count++;
+            return count;
+        }
+
+        /// <summary>Permanent cards in a member's Audience (a solo season: the whole Audience).</summary>
+        public int PermanentCountOf(int member)
+        {
+            if (!IsTeam) return PermanentCount;
+            int count = 0;
+            for (int i = 0; i < Rolodex.Count; i++)
+                if (!Rolodex[i].Temporary && Rolodex[i].Owner == member) count++;
+            return count;
+        }
+
+        /// <summary>Whether a card belongs to this member (a solo season: always).</summary>
+        public bool Owns(GuestInstance g, int member) => g != null && (!IsTeam || g.Owner == member);
         public bool IsGameOver => Phase == GamePhase.Victory || Phase == GamePhase.Defeat;
         public bool IsFinalNight => Night >= TotalNights;
         public int NightsRemaining => Math.Max(0, TotalNights - Night);

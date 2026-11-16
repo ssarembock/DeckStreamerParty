@@ -32,13 +32,15 @@ namespace DeckParty.UI
 
         public void Init(MainMenuController menu) => m_Menu = menu;
 
-        /// <summary>The streamer picked on the select screen before this one.</summary>
-        public byte Streamer { get; set; }
+
+        /// <summary>Puzzles (the usual character sets), Endless or Versus the AI (picked on the mode screen).</summary>
+        public SinglePlayerMode Mode { get; set; }
+
 
         void Awake()
         {
             startButton.onClick.AddListener(StartSeason);
-            backButton.onClick.AddListener(() => m_Menu.ShowStreamerSelect(StreamerSelectMode.SinglePlayer));
+            backButton.onClick.AddListener(() => m_Menu.ShowCharacterSetsBack());
             venueSelector.Changed += OnVenueChanged;
             Loc.Changed += () =>
             {
@@ -96,13 +98,24 @@ namespace DeckParty.UI
             descriptionLabel.text = ContentText.ScenarioDescription(scenario.Id);
 
             var progress = new StringBuilder();
-            if (scenario.IsPreset) progress.Append(ProgressStore.IsCleared(scenario.Id) ? $"<color=#6BE38B>{Loc.Get("single.cleared")}</color>" : $"<color=#B9AED6>{Loc.Get("single.not_cleared")}</color>");
+            if (Mode == SinglePlayerMode.Endless)
+            {
+                // Endless: no win, so no cleared marks or streaks; the longest run instead.
+                progress.Append($"<color=#3DDBD9>{Loc.Get("single.endless_mode")}</color>    ");
+                progress.Append(ProgressStore.BestEndlessRun > 0 ? Loc.Get("modes.endless_best", "count", ProgressStore.BestEndlessRun) : Loc.Get("modes.endless_none"));
+            }
+            else if (Mode == SinglePlayerMode.VersusAi)
+            {
+                // The rival's streamer is picked after Start, with yours.
+                progress.Append($"<color=#FF4F8B>{Loc.Get("modes.versus")}</color>    ");
+                progress.Append(Loc.Get("single.versus_record", "wins", ProgressStore.VersusWins, "losses", ProgressStore.VersusLosses));
+            }
+            else if (scenario.IsPreset) progress.Append(ProgressStore.IsCleared(scenario.Id) ? $"<color=#6BE38B>{Loc.Get("single.cleared")}</color>" : $"<color=#B9AED6>{Loc.Get("single.not_cleared")}</color>");
             else if (scenario.IsRandom)
                 progress.Append(Loc.Get("single.streak", ("streak", $"<color=#3DDBD9>{ProgressStore.RandomStreak}</color>"), ("goal", ProgressStore.CherryStreak), ("best", ProgressStore.BestRandomStreak)));
             else progress.Append($"<color=#B9AED6>{Loc.Get("single.sandbox")}</color>");
-            progress.Append("    ").Append(Loc.Get("single.nights", "count", GameRules.DefaultNights));
-            if (Streamer != (byte)StreamerType.None && Streamer != StreamerCatalog.RandomPick)
-                progress.Append("    ").Append(Loc.Get("audience.streamer", "streamer", StreamerVisuals.NameTag((StreamerType)Streamer), "power", StreamerVisuals.PowerName((StreamerType)Streamer)));
+            progress.Append("    ").Append(Loc.Get(Mode == SinglePlayerMode.Endless ? "single.endless_streams" : "single.nights", "count", GameRules.DefaultNights));
+            // The streamer is picked last, after Start (like a fighting game), so it isn't shown here.
             progressLabel.text = progress.ToString();
 
             foreach (var row in m_Rows) row.gameObject.SetActive(false);
@@ -149,7 +162,9 @@ namespace DeckParty.UI
             venueDescription.text = $"<b>{GameDatabase.VenueName(venue)}</b>{note}\n<color=#B9AED6>{ContentText.VenueDescription(venue)}</color>";
         }
 
-        StreamerType PreviewStreamer => Streamer == StreamerCatalog.RandomPick || !StreamerCatalog.IsValid((StreamerType)Streamer) ? StreamerType.None : (StreamerType)Streamer;
+        /// <summary>The streamer is picked after Start, so the setup preview shows the setup chosen here (no streamer's own).</summary>
+        static StreamerType PreviewStreamer => StreamerType.None;
+
 
         void StartSeason()
         {
@@ -158,17 +173,27 @@ namespace DeckParty.UI
                 ScenarioId = m_Selected,
                 Seed = (uint)Random.Range(1, int.MaxValue),
                 VenueChoice = AppSettings.VenueId,
-                Streamer = Streamer,
+                // The streamers are picked next (after Start), last thing before the season.
+                Mode = Mode == SinglePlayerMode.Endless ? GameMode.Endless : GameMode.Classic,
+                VersusAi = Mode == SinglePlayerMode.VersusAi,
+
             };
             AppSettings.LastScenario = m_Selected;
+
+            // Versus the AI isn't saved, so an unfinished solo season stays where it is.
+            if (launch.VersusAi)
+            {
+                m_Menu.PickStreamersAndStart(launch);
+                return;
+            }
 
             if (SaveSystem.HasSave && SaveSystem.Describe() != null)
             {
                 ModalDialog.Show(Loc.Get("single.replace_title"), Loc.Get("single.replace_body"),
-                    () => SceneFlow.StartSinglePlayer(launch), Loc.Get("single.start_new"));
+                    () => m_Menu.PickStreamersAndStart(launch), Loc.Get("single.start_new"));
                 return;
             }
-            SceneFlow.StartSinglePlayer(launch);
+            m_Menu.PickStreamersAndStart(launch);
         }
     }
 }

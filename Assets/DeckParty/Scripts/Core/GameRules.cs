@@ -115,6 +115,22 @@ namespace DeckParty.Core
 
         public static int RemovalCost(int removalsBought) => Math.Min(FirstRemovalCost + Math.Max(0, removalsBought), MaxRemovalCost);
 
+        // --- Endless mode (2026-11-16, additionalgamemodes.md) ---
+        /// <summary>Endless: streams a run starts with (Trophies buy more).</summary>
+        public const int EndlessStartingStreams = 25;
+        /// <summary>Endless: Trophies the first extra stream (and the first extra shop viewer) costs; each one after costs this much more.</summary>
+        public const int EndlessFirstTrophyCost = 2;
+        public const int EndlessTrophyCostStep = 1;
+        /// <summary>Endless: viewers offered when adding a viewer to the shop (pick one).</summary>
+        public const int EndlessViewerChoices = 3;
+
+        /// <summary>Endless: Trophies the next purchase costs after <paramref name="bought"/> of the same kind.</summary>
+        public static int EndlessTrophyCost(int bought) => EndlessFirstTrophyCost + EndlessTrophyCostStep * Math.Max(0, bought);
+
+        // --- Teams (2v2, co-op) ---
+        /// <summary>Players in a team (2v2 and co-op).</summary>
+        public const int TeamSize = 2;
+
         /// <summary>
         /// When true, guest fees are paid from banked Influence before the Cash penalty applies.
         /// When false, only the party's own Influence income can cover fees.

@@ -495,7 +495,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412342
-    m_Localized: PLAY
+    m_Localized: '{icon:plays} Trofeo'
     m_Metadata:
       m_Items: []
   - m_Id: 479412343
@@ -503,19 +503,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412344
-    m_Localized: ANULA {icon:risk}
+    m_Localized: Anula {icon:risk}
     m_Metadata:
       m_Items: []
   - m_Id: 479412345
-    m_Localized: TRAE {count}
+    m_Localized: Trae {count}
     m_Metadata:
       m_Items: []
   - m_Id: 479412346
-    m_Localized: OCUPA {count} LUGARES
+    m_Localized: Ocupa {count} lugares
     m_Metadata:
       m_Items: []
   - m_Id: 479412347
-    m_Localized: "ACCI\xD3N: {action}"
+    m_Localized: "Acci\xF3n: {action}"
     m_Metadata:
       m_Items: []
   - m_Id: 479412348
@@ -531,7 +531,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412351
-    m_Localized: 'Permanente: {value}'
+    m_Localized: 'Bonus permanente: {value}'
     m_Metadata:
       m_Items: []
   - m_Id: 479412352
@@ -543,7 +543,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412354
-    m_Localized: "Copia temporal: desaparece despu\xE9s de esta noche."
+    m_Localized: "Copia temporal: desaparece despu\xE9s de este stream."
     m_Metadata:
       m_Items: []
   - m_Id: 479412355
@@ -551,7 +551,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412356
-    m_Localized: 'Baneo temporal: hoy no viene.'
+    m_Localized: 'Baneo temporal: se pierde este stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 479412357
@@ -679,7 +679,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 479412388
-    m_Localized: '{viewer} fue rechazado por esta noche.'
+    m_Localized: '{viewer} queda fuera de este stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 479412389
@@ -755,7 +755,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606534
-    m_Localized: "{viewer} suma {values} a la recaudaci\xF3n de hoy."
+    m_Localized: "{viewer} suma {values} a la recaudaci\xF3n del stream."
     m_Metadata:
       m_Items: []
   - m_Id: 483606535
@@ -825,8 +825,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606551
-    m_Localized: 'Invertido esta noche: {values}. Si el stream sale bien vuelve el
-      triple.'
+    m_Localized: 'Invertido en este stream: {values}. Si el stream sale bien, vuelve
+      el triple.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606552
@@ -838,12 +838,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606554
-    m_Localized: '{viewer} es inmune a las acciones esta noche.'
+    m_Localized: '{viewer} es inmune a las acciones el resto del stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606555
-    m_Localized: "{viewer} convertir\xE1 su {icon:influence} en {icon:cash} esta
-      noche."
+    m_Localized: "{viewer} convertir\xE1 su {icon:influence} en {icon:cash} en este
+      stream."
     m_Metadata:
       m_Items: []
   - m_Id: 483606556
@@ -851,7 +851,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606557
-    m_Localized: '{viewer} no gana nada esta noche.'
+    m_Localized: '{viewer} no gana nada en este stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606558
@@ -859,7 +859,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606559
-    m_Localized: '{icon:cash} base de {viewer} se duplican esta noche.'
+    m_Localized: Los {icon:cash} base de {viewer} se duplican en este stream.
     m_Metadata:
       m_Items: []
   - m_Id: 483606560
@@ -980,7 +980,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606588
-    m_Localized: "{0} ya se us\xF3 esta noche."
+    m_Localized: "{0} ya se us\xF3 en este stream."
     m_Metadata:
       m_Items: []
   - m_Id: 483606589
@@ -1096,7 +1096,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 483606617
-    m_Localized: Primero termina el stream de esta noche.
+    m_Localized: Primero termina este stream.
     m_Metadata:
       m_Items: []
   - m_Id: 483606618
@@ -1371,11 +1371,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721364
-    m_Localized: "En su pr\xF3xima entrada mirar\xE1 por odio"
+    m_Localized: "Mirar\xE1 por odio la pr\xF3xima vez que entre"
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721365
-    m_Localized: A VECES +1 {icon:risk}
+    m_Localized: A veces +1 {icon:risk}
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721366
@@ -1383,13 +1383,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721367
-    m_Localized: "\xA1DESPLATAFORMADO! El {icon:risk} lleg\xF3 a {risk}. Hoy no se
-      cobra nada."
+    m_Localized: "\xA1DESPLATAFORMADO! El {icon:risk} lleg\xF3 a {risk}. Sin ganancias."
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721368
     m_Localized: "\xA1SERVIDOR CA\xCDDO! {filled} lugares ocupados con un cupo de
-      {cap}. Hoy no se cobra nada."
+      {cap}. Sin ganancias."
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721369
@@ -1398,7 +1397,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591985721370
     m_Localized: '{viewer} da una entrevista complaciente: todos los presentes ganan
-      0 {icon:cash} esta noche, {influence} al banco.'
+      0 {icon:cash} en este stream, {influence} al banco.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591985721371
@@ -1444,13 +1443,11 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091265
     m_Localized: "Los de siempre. Cada punto da a cada espectador del N\xFAcleo de
-      fans un {per}% de probabilidad de puntuar dos veces al terminar el stream ({top}%
-      con {max} puntos)."
+      fans un {per}% de probabilidad de puntuar dos veces ({top}% con {max} puntos)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091266
-    m_Localized: "Ahora: {value}% de probabilidad por espectador del N\xFAcleo de
-      fans de puntuar dos veces."
+    m_Localized: 'Ahora: {value}% de probabilidad cada uno de puntuar dos veces.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091267
@@ -1458,8 +1455,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091268
-    m_Localized: "La gente a la que paga el stream. Cada punto suma +{per} {icon:influence}
-      cuando el stream punt\xFAa ({top} {icon:influence} con {max} puntos)."
+    m_Localized: "En n\xF3mina. Cada punto suma +{per} {icon:influence} cuando el
+      stream punt\xFAa (+{top} con {max} puntos)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091269
@@ -1511,9 +1508,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091280
-    m_Localized: "Aman el drama. Si la comunidad punt\xFAa, el stream que punt\xFAa
-      gana +{per} {icon:cash} por cada punto de {icon:risk} en \xE9l (el {icon:risk}
-      anulado cuenta)."
+    m_Localized: "Aman el drama. Con al menos 1 punto, el stream que punt\xFAa gana
+      +{per} {icon:cash} por cada {icon:risk} (el anulado tambi\xE9n cuenta)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091281
@@ -1539,17 +1535,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091286
-    m_Localized: "Dinero viejo, opiniones viejas. Los Boomers tienen niveles en vez
-      de puntos: {l1} Boomers distintos en el chat dan el nivel 1 y {l2} dan el nivel
-      {max}. Cada nivel hace que subir el cupo y el poder activo de tu streamer cuesten
-      {per} {icon:influence} menos en tu pr\xF3xima tienda (nunca menos de 0). Tras
-      un stream que punt\xFAa, cada Boomer del chat tiene un {retire}% de probabilidad
-      de desconectarse para siempre (deja tu audiencia)."
+    m_Localized: "Dinero viejo, opiniones viejas. Niveles en vez de puntos: {l1}
+      Boomers distintos dan el nivel 1 y {l2} el nivel {max}. Cada nivel descuenta
+      {per} {icon:influence} al subir el cupo y al poder activo de tu streamer en
+      la pr\xF3xima tienda. Tras un stream que punt\xFAa, cada Boomer del chat tiene
+      un {retire}% de probabilidad de desconectarse para siempre."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
-    m_Localized: "Ahora: subir el cupo y el poder activo de tu streamer cuestan {value}
-      {icon:influence} menos en la pr\xF3xima tienda."
+    m_Localized: "Ahora: -{value} {icon:influence} al subir el cupo y en tu poder
+      activo en la pr\xF3xima tienda."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091288
@@ -1557,13 +1552,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091289
-    m_Localized: "Siempre en l\xEDnea, esperando la herencia. Cada vez que un Boomer
-      deja tu audiencia, un Millennial tuyo al azar gana +1 {icon:cash} para siempre,
+    m_Localized: "Siempre en l\xEDnea, esperando la herencia. Cuando un Boomer deja
+      tu Audiencia, un Millennial tuyo al azar gana +1 {icon:cash} para siempre,
       una vez por punto (al menos una vez)."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
-    m_Localized: 'Ahora: {value} herencia(s) por Boomer que se va.'
+    m_Localized: 'Ahora: {value} {value:plural:herencia|herencias} por cada Boomer
+      que se va.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091291
@@ -1616,7 +1612,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091302
-    m_Localized: '{viewer} trabaja gratis esta noche (sin cobrar {influence}).'
+    m_Localized: '{viewer} trabaja gratis en este stream (sin cobrar {influence}).'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091303
@@ -1765,7 +1761,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570113
-    m_Localized: 'Ahora: cada espectador Gen Z crece {value} vez/veces tras el stream.'
+    m_Localized: 'Ahora: cada espectador Gen Z crece {value} {value:plural:vez|veces}
+      tras el stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570114
@@ -1774,9 +1771,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123028570115
     m_Localized: "Aqu\xED no se queda nadie. La acci\xF3n de un Guardi\xE1n manda
-      a otros espectadores al azar del chat de vuelta a la fila: {g0} con 0 puntos,
-      {g1} con 1 punto y a todos los dem\xE1s con {max} puntos. Nunca se manda a
-      s\xED mismo."
+      espectadores al azar del chat de vuelta a la fila: {g0} con 0 puntos, {g1}
+      con 1 punto y a todos los dem\xE1s con {max}. Nunca a s\xED mismo."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570116
@@ -1789,15 +1785,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570118
-    m_Localized: "Traen amigos. Cada punto suma {per} asiento extra por encima de
-      tu cupo ({top} con {max} puntos), que se ve como un c\xEDrculo gris punteado.
-      Solo un espectador que trae un Animador puede ocuparlo, as\xED no se cae el
-      servidor. T\xFA igual no puedes sumar espectadores cuando el cupo est\xE1 lleno."
+    m_Localized: "Traen amigos. Cada punto suma {per} {per:plural:asiento extra|asientos
+      extra} por encima de tu cupo ({top} con {max} puntos). Solo pueden ocuparlos
+      los espectadores que trae un Animador; t\xFA no puedes sumar a un chat lleno."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570119
-    m_Localized: 'Ahora: {value} asiento(s) extra libre(s) para los espectadores
-      que traen los Animadores.'
+    m_Localized: 'Ahora: {value} {value:plural:asiento extra libre|asientos extra
+      libres}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570120
@@ -1806,11 +1801,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1670123028570121
     m_Localized: "El martillo de baneo, listo. Cada punto da un uso m\xE1s de la
-      acci\xF3n de sacar de un Mod en este stream (los usos extra se comparten)."
+      acci\xF3n de sacar de un Mod en este stream (compartido entre los Mods)."
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570122
-    m_Localized: 'Ahora: quedan {value} uso(s) extra.'
+    m_Localized: 'Ahora: {value:plural:queda|quedan} {value} {value:plural:uso extra|usos
+      extra}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570123
@@ -1849,7 +1845,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570131
-    m_Localized: 'Ahora: quedan {value} uso(s) extra.'
+    m_Localized: 'Ahora: {value:plural:queda|quedan} {value} {value:plural:uso extra|usos
+      extra}.'
     m_Metadata:
       m_Items: []
   - m_Id: 1670123028570132
@@ -1984,7 +1981,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5322683555864577
-    m_Localized: Sin {icon:cash} esta noche
+    m_Localized: Sin {icon:cash} en este stream
     m_Metadata:
       m_Items: []
   - m_Id: 5322683555864578
@@ -2000,12 +1997,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5322683555864581
-    m_Localized: "{viewer} convertir\xE1 sus {icon:cash} en {icon:influence} esta
-      noche."
+    m_Localized: "{viewer} convertir\xE1 sus {icon:cash} en {icon:influence} en este
+      stream."
     m_Metadata:
       m_Items: []
   - m_Id: 5322683555864582
-    m_Localized: La {icon:influence} base de {viewer} se duplica esta noche.
+    m_Localized: La {icon:influence} base de {viewer} se duplica en este stream.
     m_Metadata:
       m_Items: []
   - m_Id: 5322683555864583
@@ -2031,6 +2028,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5740694381092865
     m_Localized: '{viewer} ocupa un asiento extra (quedan {count}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216390221824
+    m_Localized: Solo en modo Infinito.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193344
+    m_Localized: Solo en la tienda.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193345
+    m_Localized: Se necesitan {0} {icon:plays}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193346
+    m_Localized: La tienda ya vende a todos los espectadores.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193347
+    m_Localized: "Ese espectador no est\xE1 en la oferta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193348
+    m_Localized: "Ese espectador es de tu compa\xF1ero."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193349
+    m_Localized: "Terminaste tu lado. Esperando a tu compa\xF1ero."
     m_Metadata:
       m_Items: []
   references:

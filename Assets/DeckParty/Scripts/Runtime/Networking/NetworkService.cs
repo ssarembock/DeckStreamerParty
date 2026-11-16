@@ -84,8 +84,10 @@ namespace DeckParty.Networking
         /// passives; state format v10).
         /// deckparty-17: card edits of 2026-11-16 (Mods / Gatekeepers / Hype Men / Boomers rules, Boomer Troll and the
         /// Isolationists, Loyal Fan and Fish in every shop; state format v11).
+        /// deckparty-18: game modes (2026-11-16): 2v2 and co-op Endless (teams share a season; players carry a team and a
+        /// member slot), Endless Trophies and shop purchases, state format v12.
         /// </summary>
-        public const string ProtocolVersion = "deckparty-17";
+        public const string ProtocolVersion = "deckparty-18";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

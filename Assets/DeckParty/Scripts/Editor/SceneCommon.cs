@@ -236,31 +236,51 @@ namespace DeckParty.EditorTools
             toast.label = toastLabel;
             toast.accent = accent;
 
-            // Tooltip
+            // Tooltip: the shop and streamer panels' card (soft corners, black border, white inside), sized to its text up
+            // to TooltipView.maxWidth. A bold title row, a grey divider, then the body (TipText builds the text).
             var tipHost = EditorUI.Rect(overlay, "Tooltip").Stretch();
             var tipGroup = tipHost.gameObject.AddComponent<CanvasGroup>();
-            // Hover pop-ups: a white card, a strong black border and black text (pale colours in the text are darkened).
-            var tipPanel = EditorUI.Image(tipHost, "Panel", SitePalette.Outline, EditorUI.RoundedSmall);
+            var tipPanel = EditorUI.Image(tipHost, "Panel", SitePalette.Outline, EditorUI.PanelSprite);
             EditorUI.TagArea(tipPanel, SiteArea.Tooltips);
             EditorUI.TagSite(tipPanel, SiteColourRole.PanelBorder);
-            tipPanel.type = Image.Type.Sliced;
             tipPanel.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
             tipPanel.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
             tipPanel.rectTransform.pivot = new Vector2(0, 1);
-            tipPanel.rectTransform.sizeDelta = new Vector2(440, 120);
-            var tipFill = EditorUI.Image(tipPanel.transform, "Fill", SitePalette.Surface, EditorUI.RoundedSmall);
+            tipPanel.rectTransform.sizeDelta = new Vector2(TooltipMaxWidth, 120);
+            var tipFill = EditorUI.Image(tipPanel.transform, "Fill", SitePalette.Surface, EditorUI.PanelSprite);
             EditorUI.TagSite(tipFill, SiteColourRole.PanelFill);
-            tipFill.type = Image.Type.Sliced;
-            tipFill.rectTransform.Stretch(2.5f, 2.5f, 2.5f, 2.5f);
+            tipFill.rectTransform.Stretch(TooltipBorder, TooltipBorder, TooltipBorder, TooltipBorder);
             tipFill.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
-            EditorUI.VLayout(tipPanel, 0, EditorUI.Pad(20, 16), TextAnchor.UpperLeft, true, true, true, false);
+            // Smaller corners than the big panels (a pop-up is small), the border the same thickness all round.
+            tipPanel.type = Image.Type.Sliced;
+            tipPanel.pixelsPerUnitMultiplier = EditorUI.PanelRadius / TooltipRadius;
+            tipFill.type = Image.Type.Sliced;
+            tipFill.pixelsPerUnitMultiplier = EditorUI.PanelRadius / Mathf.Max(1f, TooltipRadius - TooltipBorder);
+            EditorUI.VLayout(tipPanel, 10, new RectOffset(20, 20, 14, 16), TextAnchor.UpperLeft, true, true, true, false);
             EditorUI.Fit(tipPanel, false, true);
-            var tipLabel = EditorUI.Readable(EditorUI.Text(tipPanel.transform, "Label", string.Empty, 21, SitePalette.Text, TextAlignmentOptions.TopLeft));
+
+            var tipTitle = EditorUI.Readable(EditorUI.Text(tipPanel.transform, "Title", string.Empty, 22, SitePalette.Text, TextAlignmentOptions.TopLeft, true));
+            tipTitle.enableAutoSizing = false;
+            var tipDivider = EditorUI.Line(tipPanel.transform, "Divider", SitePalette.Divider, 2f);
+            EditorUI.TagSite(tipDivider, SiteColourRole.Divider);
+            EditorUI.Layout(tipDivider, -1, 2f);
+            var tipLabel = EditorUI.Readable(EditorUI.Text(tipPanel.transform, "Label", string.Empty, 20, SitePalette.Text, TextAlignmentOptions.TopLeft));
+            tipLabel.enableAutoSizing = false;
+            tipLabel.lineSpacing = 6f;
+
             var tooltip = tipHost.gameObject.AddComponent<TooltipView>();
             tooltip.panel = tipPanel.rectTransform;
             tooltip.label = tipLabel;
+            tooltip.header = tipTitle;
+            tooltip.divider = tipDivider;
             tooltip.group = tipGroup;
+            tooltip.maxWidth = TooltipMaxWidth;
         }
+
+        /// <summary>The hover pop-up's widest size, its border and its corner radius, in pixels.</summary>
+        const float TooltipMaxWidth = 440f;
+        const float TooltipBorder = 3f;
+        const float TooltipRadius = 14f;
 
         /// <summary>
         /// The Display &amp; Language block (language, window mode, resolution + Apply, screen shake, reduce flashing, Activity

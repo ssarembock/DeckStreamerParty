@@ -220,7 +220,8 @@ namespace DeckParty.UI
                 QueueRecap(RecapKind.Stream, night, owner);
                 return;
             }
-            switch (RecapMode)
+            // Team modes play Free For All rounds.
+            switch (MatchModes.UsesRounds(RecapMode) ? MatchMode.SyncNights : RecapMode)
             {
                 case MatchMode.Turns:
                     if (owner == m_Net.ActivePlayer) QueueRecap(RecapKind.Stream, night, owner);
@@ -241,7 +242,7 @@ namespace DeckParty.UI
         {
             if (m_Net == null) return;
             if (RecapMode == MatchMode.Turns) QueueRecap(RecapKind.Shop, night, owner);
-            else if (RecapMode == MatchMode.SyncNights) CheckRoundRecap(RecapKind.Shop, night);
+            else if (MatchModes.UsesRounds(RecapMode)) CheckRoundRecap(RecapKind.Shop, night);
         }
 
         /// <summary>Free For All: once every player still in the season has finished this half of the round, show them all.</summary>

@@ -14,6 +14,15 @@ namespace DeckParty.UI
         Multiplayer,
         /// <summary>Changing your streamer from the lobby.</summary>
         Lobby,
+        /// <summary>Versus the AI: your own streamer (rival powers work, there's a rival).</summary>
+        VersusAi,
+        /// <summary>Versus the AI: the streamer the AI plays as.</summary>
+        Opponent,
+        /// <summary>
+        /// Multiplayer, once everyone is ready and the host starts: every player picks at once against a real countdown, then
+        /// waits for the others. There's no going back (unless someone leaves and the pick is called off).
+        /// </summary>
+        MatchPick,
     }
 
     /// <summary>
@@ -104,6 +113,9 @@ namespace DeckParty.UI
         }
 
         /// <summary>Opens the select screen. <paramref name="onConfirmed"/> receives the pick (a real streamer or None).</summary>
+        /// <summary>Versus the AI: the streamer you picked, shown on the right while you pick the AI's.</summary>
+        public byte PlayerPick { get; set; }
+
         public void Open(StreamerSelectMode mode, Action<byte> onConfirmed, Action onBack)
         {
             m_Mode = mode;
@@ -156,17 +168,36 @@ namespace DeckParty.UI
 
         void ApplyStatic()
         {
-            if (titleLabel != null) titleLabel.text = Loc.Get("select.title");
-            if (subtitleLabel != null) subtitleLabel.text = Loc.Get(m_Mode == StreamerSelectMode.SinglePlayer ? "select.subtitle_single" : "select.subtitle_multi");
-            if (hintLabel != null) hintLabel.text = Loc.Get("select.hint");
+            bool rivalPick = m_Mode == StreamerSelectMode.Opponent;
+            if (titleLabel != null) titleLabel.text = Loc.Get(rivalPick ? "select.title_rival" : "select.title");
+            string subtitle = m_Mode == StreamerSelectMode.SinglePlayer ? "select.subtitle_single"
+                : m_Mode == StreamerSelectMode.VersusAi ? "select.subtitle_versus"
+                : m_Mode == StreamerSelectMode.MatchPick ? (TeamPick ? "select.subtitle_team" : "select.subtitle_match")
+                : rivalPick ? "select.subtitle_rival" : "select.subtitle_multi";
+            if (subtitleLabel != null) subtitleLabel.text = Loc.Get(subtitle);
+            if (hintLabel != null) hintLabel.text = Loc.Get(m_Mode == StreamerSelectMode.MatchPick ? "select.hint_match" : "select.hint");
             if (vsLabel != null) vsLabel.text = Loc.Get("select.vs");
-            if (confirmLabel != null) confirmLabel.text = Loc.Get("select.confirm");
+            if (backButton != null) backButton.gameObject.SetActive(m_Mode != StreamerSelectMode.MatchPick);
+            if (confirmLabel != null) confirmLabel.text = Loc.Get(rivalPick ? "select.confirm_rival" : "select.confirm");
+
+            if (rivalPick)
+            {
+                // Picking the AI's streamer: you (already picked) stand on the right.
+                bool random = PlayerPick == StreamerCatalog.RandomPick;
+                var you = random ? StreamerType.None : (StreamerType)PlayerPick;
+                if (p2Name != null) p2Name.text = Loc.Get("select.you", "streamer", random ? Loc.Get("streamer.Random.name") : StreamerVisuals.Name(you));
+                if (p2Sub != null) p2Sub.text = Loc.Get("select.you_sub");
+                if (p2Initials != null) p2Initials.text = random ? "?" : StreamerVisuals.Initials(you);
+                if (p2Placeholder != null) p2Placeholder.color = random ? UIPalette.Purple : StreamerVisuals.Color(you);
+                return;
+            }
 
             bool single = m_Mode == StreamerSelectMode.SinglePlayer;
-            if (p2Name != null) p2Name.text = Loc.Get(single ? "select.opponent_algorithm" : "select.opponent_unknown");
-            if (p2Sub != null) p2Sub.text = Loc.Get(single ? "select.opponent_algorithm_sub" : "select.opponent_unknown_sub");
-            if (p2Initials != null) p2Initials.text = single ? "A" : "?";
-            if (p2Placeholder != null) p2Placeholder.color = single ? UIPalette.Gold : UIPalette.TextDim;
+            bool versus = m_Mode == StreamerSelectMode.VersusAi;
+            if (p2Name != null) p2Name.text = Loc.Get(single || versus ? "select.opponent_algorithm" : "select.opponent_unknown");
+            if (p2Sub != null) p2Sub.text = Loc.Get(versus ? "select.opponent_versus_sub" : single ? "select.opponent_algorithm_sub" : "select.opponent_unknown_sub");
+            if (p2Initials != null) p2Initials.text = single || versus ? "A" : "?";
+            if (p2Placeholder != null) p2Placeholder.color = single || versus ? UIPalette.Gold : UIPalette.TextDim;
         }
 
         void Highlight(int index, bool feedback)
@@ -232,7 +263,10 @@ namespace DeckParty.UI
                 Set(p1Quote, quote.Length > 0 ? $"<i>\"{quote}\"</i>" : string.Empty);
             }
 
-            bool rivalWarning = !random && m_Mode == StreamerSelectMode.SinglePlayer && StreamerCatalog.Get(type).NeedsRival;
+            // Rival powers need a rival: none in a solo season, and none in co-op (both players are one team).
+            bool noRival = m_Mode == StreamerSelectMode.SinglePlayer ||
+                           (m_Mode == StreamerSelectMode.MatchPick && Net != null && Net.Settings.Mode == Networking.MatchMode.CoopEndless);
+            bool rivalWarning = !random && noRival && StreamerCatalog.Get(type).NeedsRival;
             Set(p1Warning, rivalWarning ? Loc.Get("select.rival_warning") : string.Empty);
         }
 
@@ -244,6 +278,12 @@ namespace DeckParty.UI
         void Update()
         {
             if (!IsVisible) return;
+
+            if (m_Mode == StreamerSelectMode.MatchPick)
+            {
+                UpdateMatchPick();
+                return;
+            }
 
             // The decorative fighting-game clock. It never runs out: chat always gets more time.
             m_Timer -= Time.unscaledDeltaTime;
@@ -257,6 +297,41 @@ namespace DeckParty.UI
             else if (InputHelper.Pressed(HotKey.Down)) Move(0, 1);
             else if (InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Space)) Confirm();
             else if (InputHelper.Pressed(HotKey.Escape)) Back();
+        }
+
+        static Networking.DeckPartyNetSession Net => Networking.DeckPartyNetSession.Instance;
+
+        /// <summary>Team modes: this player picks the team's streamer (their teammate waits).</summary>
+        bool TeamPick => Net != null && Net.IsTeamMode;
+
+        /// <summary>
+        /// Multiplayer pick: the clock is the real pick timer (anyone not locked in when it runs out plays a random streamer);
+        /// once you've locked in, the hint says how many players are still choosing. If the pick is called off (someone
+        /// left), back to the lobby.
+        /// </summary>
+        void UpdateMatchPick()
+        {
+            var net = Net;
+            if (net == null || !net.IsSpawned || net.Phase == Networking.MatchPhase.Lobby)
+            {
+                if (!m_Locked) Back();
+                else if (m_OnBack != null) m_OnBack();
+                m_OnBack = null;
+                return;
+            }
+            if (timerLabel != null) timerLabel.text = Mathf.CeilToInt(net.PickSecondsLeft).ToString("00");
+            if (m_Locked)
+            {
+                if (hintLabel != null) hintLabel.text = Loc.Get("select.waiting_players", "count", net.PlayersStillPicking);
+                return;
+            }
+            if (InputHelper.IsTyping || ModalDialog.IsOpen) return;
+            if (InputHelper.Pressed(HotKey.Left)) Move(-1, 0);
+            else if (InputHelper.Pressed(HotKey.Right)) Move(1, 0);
+            else if (InputHelper.Pressed(HotKey.Up)) Move(0, -1);
+            else if (InputHelper.Pressed(HotKey.Down)) Move(0, 1);
+            else if (InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Space)) Confirm();
+            // No Esc: the match is starting.
         }
 
         void Move(int dx, int dy)
@@ -281,7 +356,8 @@ namespace DeckParty.UI
                 pick = (byte)StreamerCatalog.Roster[UnityEngine.Random.Range(0, StreamerCatalog.Roster.Length)];
                 ShowPick(pick);
             }
-            AppSettings.LastStreamer = m_Tiles[m_Index].Pick;
+            // The AI's pick isn't remembered as yours.
+            if (m_Mode != StreamerSelectMode.Opponent) AppSettings.LastStreamer = m_Tiles[m_Index].Pick;
             StartCoroutine(ConfirmRoutine(pick));
         }
 
@@ -327,6 +403,8 @@ namespace DeckParty.UI
         void Back()
         {
             if (m_Locked) return;
+            // The multiplayer pick has no way back while it's on (the match is starting).
+            if (m_Mode == StreamerSelectMode.MatchPick && Net != null && Net.PickingStreamers) return;
             var callback = m_OnBack;
             m_OnBack = null;
             if (callback != null) callback();

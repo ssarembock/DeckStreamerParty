@@ -37,6 +37,10 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text statusLabel;
         [SerializeField] internal ChatView chat;
 
+        [Header("Teams (2v2)")]
+        [Tooltip("2v2 only: move to the other team (two a side). Optional in scenes built before 2026-11-16.")]
+        [SerializeField] internal Button switchTeamButton;
+
         [Header("Online platform (Steam)")]
         [Tooltip("Opens Invite Friends (in place of Copy while the lobby is a Steam lobby).")]
         [SerializeField] internal Button inviteButton;
@@ -70,6 +74,7 @@ namespace DeckParty.UI
             if (shopTimerSelector != null) shopTimerSelector.Changed += _ => PushSettings();
             if (customTimerInput != null) customTimerInput.onEndEdit.AddListener(_ => PushSettings());
             if (streamerButton != null) streamerButton.onClick.AddListener(() => m_Menu.ShowStreamerSelect(StreamerSelectMode.Lobby));
+            if (switchTeamButton != null) switchTeamButton.onClick.AddListener(() => m_Session?.SwitchTeam());
             Loc.Changed += () =>
             {
                 if (IsVisible && m_Session != null) FillSelectors();
@@ -166,7 +171,12 @@ namespace DeckParty.UI
         // Starting a season loads the Game scene while the lobby is showing; the session outlives this screen.
         protected override void OnUnloaded() => OnHide();
 
-        void OnPhaseChanged(MatchPhase phase) => Refresh();
+        void OnPhaseChanged(MatchPhase phase)
+        {
+            Refresh();
+            // The host started: on to the streamer select screen (a team's second player waits here while their teammate picks).
+            if (phase == MatchPhase.PickingStreamers && IsVisible) m_Menu.ShowMatchPick();
+        }
 
         void OnSessionDespawned()
         {
@@ -216,9 +226,13 @@ namespace DeckParty.UI
                 bool host = m_Session.IsHostPlayer(p.ClientId);
                 bool ready = host || p.LobbyReady;
                 m_Rows[i].gameObject.SetActive(true);
-                m_Rows[i].Set(p.DisplayName, host ? Loc.Get("lobby.host") : (p.LobbyReady ? $"<color=#6BE38B>{Loc.Get("players.ready")}</color>" : $"<color=#B9AED6>{Loc.Get("lobby.not_ready")}</color>"),
+                string status = host ? Loc.Get("lobby.host") : (p.LobbyReady ? $"<color=#6BE38B>{Loc.Get("players.ready")}</color>" : $"<color=#B9AED6>{Loc.Get("lobby.not_ready")}</color>");
+                // 2v2: each player's team, in the team's colour.
+                if (m_Session.Settings.Mode == MatchMode.TwoVsTwo) status = TeamTag(p.Team) + "  " + status;
+                m_Rows[i].Set(p.DisplayName, status,
                     UIPalette.PlayerColor(p.ColorIndex), ready, host, 0, p.ClientId == m_Session.LocalClientId);
-                m_Rows[i].SetStreamer(p.Streamer == StreamerCatalog.RandomPick ? StreamerType.None : (StreamerType)p.Streamer);
+                // Streamers are picked after the lobby (once everyone is ready and the host starts), so none show here.
+                m_Rows[i].SetStreamer(StreamerType.None);
 
                 // Steam: the player's avatar, and their profile on click.
                 m_RowPlatformIds[i] = platform != null ? p.PlatformUserId : 0;
@@ -256,15 +270,20 @@ namespace DeckParty.UI
             }
             m_Applying = false;
             // More than two players: Free For All is the only mode (the host switches automatically).
-            bool freeForAllOnly = m_Session.ConnectedCount > MatchModes.MaxPlayersForAnyMode;
+            // More than four players: Free For All is the only mode (the host switches automatically).
+            bool freeForAllOnly = m_Session.ConnectedCount > MatchModes.TwoVsTwoPlayers;
             scenarioSelector.Interactable = isHost;
             modeSelector.Interactable = isHost && !freeForAllOnly;
-            nightsSelector.Interactable = isHost;
+            // Co-op is an Endless run: it starts with its own number of streams.
+            nightsSelector.Interactable = isHost && settings.Mode != MatchMode.CoopEndless;
+            if (switchTeamButton != null) switchTeamButton.gameObject.SetActive(settings.Mode == MatchMode.TwoVsTwo);
 
             var summary = new StringBuilder();
             summary.Append($"<b>{ContentText.ScenarioName(settings.ScenarioId)}</b> - {ContentText.ScenarioDescription(settings.ScenarioId)}\n");
             summary.Append(ModeSummary(settings.Mode));
-            if (freeForAllOnly) summary.Append("\n<color=#FF9A3D>").Append(Loc.Get("lobby.ffa_only", "count", MatchModes.MaxPlayersForAnyMode)).Append("</color>");
+            if (freeForAllOnly) summary.Append("\n<color=#FF9A3D>").Append(Loc.Get("lobby.ffa_only", "count", MatchModes.TwoVsTwoPlayers)).Append("</color>");
+            else if (MatchModes.RequiredPlayers(settings.Mode) > 0 && m_Session.ConnectedCount != MatchModes.RequiredPlayers(settings.Mode))
+                summary.Append("\n<color=#FF9A3D>").Append(Loc.Get("lobby.mode_needs", "count", MatchModes.RequiredPlayers(settings.Mode))).Append("</color>");
             if (turns) summary.Append("\n").Append(Loc.Get("lobby.timer_summary", "timer", TurnTimers.Describe(settings.TurnSeconds), "shop", ShopTimers.Describe(settings.ShopSeconds)));
             settingsSummary.text = summary.ToString();
 
@@ -275,12 +294,24 @@ namespace DeckParty.UI
                 var mine = local.Streamer == StreamerCatalog.RandomPick ? StreamerType.None : (StreamerType)local.Streamer;
                 streamerLabel.text = Loc.Get("lobby.change_streamer", "streamer", StreamerVisuals.NameTag(mine));
             }
-            if (streamerButton != null) streamerButton.interactable = !local.LobbyReady || isHost;
+            // The streamer is picked after the lobby now (scenes built before 2026-11-16 still have this button).
+            if (streamerButton != null) streamerButton.gameObject.SetActive(false);
             readyButton.gameObject.SetActive(!isHost);
             readyLabel.text = Loc.Get(local.LobbyReady ? "lobby.unready" : "lobby.ready");
             startButton.gameObject.SetActive(isHost);
             bool canStart = m_Session.ServerCanStart(out var reason);
             startButton.interactable = isHost && canStart;
+            if (m_Session.PickingStreamers)
+            {
+                // A team's second player waits here while their teammate picks the team's streamer.
+                statusLabel.text = m_Session.PicksStreamer(m_Session.LocalClientId)
+                    ? Loc.Get("lobby.picking", "count", m_Session.PlayersStillPicking)
+                    : Loc.Get("lobby.teammate_picking", "count", m_Session.PlayersStillPicking);
+                startButton.interactable = false;
+                readyButton.interactable = false;
+                return;
+            }
+            readyButton.interactable = true;
             if (isHost) statusLabel.text = canStart ? Loc.Get(players.Count == 1 ? "lobby.solo" : "lobby.all_ready") : Loc.Error(reason);
             else statusLabel.text = Loc.Get(local.LobbyReady ? "lobby.waiting_host" : "lobby.press_ready");
         }
@@ -291,12 +322,21 @@ namespace DeckParty.UI
             {
                 case MatchMode.Turns:
                     return "<color=#FF4F8B>" + Loc.Get("mode.turns") + ":</color> " + Loc.Get("lobby.mode_turns", "count", GameRules.DiamondsToWin);
+                case MatchMode.TwoVsTwo:
+                    return "<color=#6BE38B>" + Loc.Get("mode.two_vs_two") + ":</color> " + Loc.Get("lobby.mode_two_vs_two", "count", GameRules.DiamondsToWin);
+                case MatchMode.CoopEndless:
+                    return "<color=#FFC94A>" + Loc.Get("mode.coop_endless") + ":</color> " + Loc.Get("lobby.mode_coop", "count", GameRules.EndlessStartingStreams);
                 case MatchMode.Race:
                     return "<color=#FF9A3D>" + Loc.Get("mode.race") + ":</color> " + Loc.Get("lobby.mode_race", "count", GameRules.DiamondsToWin);
                 default:
                     return "<color=#3DDBD9>" + Loc.Get("mode.sync") + ":</color> " + Loc.Get("lobby.mode_sync", "count", GameRules.DiamondsToWin);
             }
         }
+
+        /// <summary>2v2: "Team A" / "Team B" in the team's colour.</summary>
+        static string TeamTag(int team) => team == 0
+            ? $"<color=#3DDBD9>{Loc.Get("team.a")}</color>"
+            : $"<color=#FF9A3D>{Loc.Get("team.b")}</color>";
 
         static int IndexOfScenario(int id)
         {
@@ -358,7 +398,8 @@ namespace DeckParty.UI
                 ToastView.Show(Loc.Error(reason), ToastKind.Warning);
                 return;
             }
-            m_Session.ServerStartMatch();
+            // Everyone picks their streamer now, last thing before the match (the match starts when all have locked in).
+            m_Session.ServerBeginStreamerPick();
         }
 
         void OpenProfile(int rowIndex)

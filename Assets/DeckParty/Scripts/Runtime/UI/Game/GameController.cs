@@ -160,16 +160,25 @@ namespace DeckParty.UI
                 if (launch != null && !string.IsNullOrEmpty(launch.VenueChoice)) venue = launch.VenueChoice;
                 byte pick = launch != null ? launch.Streamer : AppSettings.LastStreamer;
                 var streamer = StreamerCatalog.Resolve(pick, new System.Random((int)seed));
-                state = PartyEngine.CreateGame(scenarioId, seed, GameRules.DefaultNights, streamer);
-                log.Add(Loc.Get("game.welcome", ("set", $"<b>{ContentText.ScenarioName(scenarioId)}</b>"), ("count", GameRules.DiamondsToWin), ("nights", state.TotalNights)));
+                var mode = launch != null ? launch.Mode : GameMode.Classic;
+                int streams = mode == GameMode.Endless ? GameRules.EndlessStartingStreams : GameRules.DefaultNights;
+                state = PartyEngine.CreateGame(scenarioId, seed, streams, streamer, mode);
+                log.Add(mode == GameMode.Endless
+                    ? Loc.Get("game.endless_welcome", ("set", $"<b>{ContentText.ScenarioName(scenarioId)}</b>"), ("nights", state.TotalNights),
+                        ("cost", GameRules.EndlessFirstTrophyCost))
+                    : Loc.Get("game.welcome", ("set", $"<b>{ContentText.ScenarioName(scenarioId)}</b>"), ("count", GameRules.DiamondsToWin), ("nights", state.TotalNights)));
                 if (streamer != StreamerType.None)
                     log.Add(Loc.Get("game.streamer_intro", "streamer", StreamerVisuals.NameTag(streamer), "power", StreamerVisuals.PowerName(streamer)));
             }
 
             m_VenueChoice = venue;
-            m_Session = new LocalGameSession(state, venue);
+            // Versus the AI isn't saved (the AI's season couldn't be resumed), so it leaves any saved season alone.
+            bool versus = launch != null && launch.VersusAi && !launch.ContinueSave;
+            m_Local = new LocalGameSession(state, venue, !versus);
+            m_Session = m_Local;
             opponents.gameObject.SetActive(false);
             if (emotes != null) SetEmotesVisible(false);
+            SetupRival(versus ? launch : null, state);
         }
 
         void StartNetwork(DeckPartyNetSession net)
@@ -178,6 +187,8 @@ namespace DeckParty.UI
             m_Session = new NetworkGameSession(net);
             m_VenueChoice = AppSettings.VenueId;
             m_ViewId = net.LocalClientId;
+            // Teams (2v2, co-op): your place in your team's season (your queue, Sub Cap and Audience).
+            m_Member = net.MemberOf(net.LocalClientId);
             m_RecapActive = net.ActivePlayer;
             if (net.TakingTurns && net.ActivePlayer != DeckPartyNetSession.NoPlayer) m_ViewId = net.ActivePlayer;
 
@@ -301,6 +312,8 @@ namespace DeckParty.UI
             planning.NextNightClicked += NextNight;
             planning.PowerClicked += UseStreamerPower;
             planning.ShopReadyClicked += ToggleShopReady;
+            planning.AddStreamClicked += BuyExtraStream;
+            planning.AddShopViewerClicked += OpenShopViewerChoice;
 
             raidBlame.GuestChosen += id => Submit(GameCommand.Blame(id));
             targetingBanner.CancelClicked += () => CancelTargeting(true);
@@ -345,6 +358,13 @@ namespace DeckParty.UI
 
         void OnPlayerState(ulong owner, PlayerState s, IReadOnlyList<GameEvent> events)
         {
+            // Teams share a season and it comes in under whoever acted: your partner's moves are your board's, and a watched
+            // team's board is the same whichever of them acted.
+            if (m_Net != null && m_Net.IsTeamMode)
+            {
+                if (m_Net.SameTeam(owner, LocalId)) owner = LocalId;
+                else if (m_Net.SameTeam(owner, m_ViewId)) owner = m_ViewId;
+            }
             bool own = owner == LocalId;
             RecordRound(owner, s, events);
             TrackRecap(owner, s, events);
@@ -434,6 +454,8 @@ namespace DeckParty.UI
         void ShowBoard(ulong clientId)
         {
             if (m_Net == null) return;
+            // Your teammate's board is your own (you share the season).
+            if (m_Net.SameTeam(clientId, LocalId)) clientId = LocalId;
             // Every mode (Free For All included) lets you watch another player's stream live and read-only; clicking your own
             // name brings you back and gives you your controls again.
             if (clientId != LocalId && m_Net.GetState(clientId) == null)
@@ -557,7 +579,9 @@ namespace DeckParty.UI
             // The menu bar shows the on-screen streamer's platform logo (the only thing that changes per platform).
             SiteTheme.Apply(StreamerVisuals.Platform(s.Streamer));
 
-            hud.Render(s);
+            // Teams: your queue and Sub Cap on your own team's board (member 0's when watching another team).
+            int member = ViewMember;
+            hud.Render(s, member);
 
             bool party = s.Phase == GamePhase.Party;
             bool planningPhase = s.Phase == GamePhase.Planning;
@@ -569,9 +593,10 @@ namespace DeckParty.UI
 
             if (party || s.IsGameOver)
             {
+                SetTeamSideNames(s);
                 house.Render(s);
                 ApplyCardStates(s, act);
-                partyControls.Render(s, Targeting, act);
+                partyControls.Render(s, Targeting, act, member);
                 if (communityBeats != null) communityBeats.Render(s);
                 RenderLinks(s);
                 if (party) m_LastLive = s.Clone();
@@ -596,6 +621,10 @@ namespace DeckParty.UI
             {
                 opponents.Render(m_Net, m_ViewId);
                 UpdateViewBar();
+            }
+            else if (HasLocalRival)
+            {
+                RenderRivalPanel(State);
             }
 
             UpdateMusic(s);
@@ -640,7 +669,8 @@ namespace DeckParty.UI
                     if (g.Info.HasAbility && s.Phase == GamePhase.Party)
                     {
                         bool used = s.UsedAbilities.Contains(g.Id);
-                        var blocker = act ? PartyEngine.GetAbilityBlocker(s, g.Id) : null;
+                        // Teams: you use your own viewers' actions (on anyone in chat).
+                        var blocker = act ? PartyEngine.GetAbilityBlocker(s, g.Id, s.IsTeam ? m_Member : -1) : null;
                         string reason = act ? (blocker != null ? Loc.Error(blocker) : null) : watchHint;
                         bool usable = act && blocker == null && !used;
                         card.ShowAbility(GuestVisuals.ActionName(g.Kind), usable, reason, used);
@@ -657,11 +687,16 @@ namespace DeckParty.UI
 
         PlanningContext PlanningCtx()
         {
-            var ctx = new PlanningContext();
-            if (m_Net == null) return ctx;
+            var ctx = new PlanningContext { Member = ViewMember };
+            if (m_Net == null)
+            {
+                // Versus the AI: rival powers hit the AI while its season is on.
+                ctx.RivalsAvailable = RivalsAvailableFor(LocalId);
+                return ctx;
+            }
 
             ctx.Multiplayer = true;
-            ctx.SyncNights = m_Net.Settings.Mode == MatchMode.SyncNights;
+            ctx.SyncNights = MatchModes.UsesRounds(m_Net.Settings.Mode);
             ctx.Turns = TakingTurns;
             ctx.MyTurn = MyTurn;
             ctx.Owner = ViewOwnerName;
@@ -736,7 +771,7 @@ namespace DeckParty.UI
             pauseMenu.Close();
             if (roundSummary != null) roundSummary.Close();
 
-            if (m_Net == null) gameOver.ShowSingle(State, PlayAgain, () => SceneFlow.GoToMainMenu());
+            if (m_Net == null) gameOver.ShowSingle(State, PlayAgain, () => SceneFlow.GoToMainMenu(), LocalRival, m_RivalName);
             else ShowMultiplayerResults();
         }
 
@@ -770,6 +805,10 @@ namespace DeckParty.UI
                 Seed = NewSeed(),
                 VenueChoice = m_VenueChoice,
                 Streamer = s != null ? (byte)s.Streamer : AppSettings.LastStreamer,
+                // The same mode again (and the same rival streamer versus the AI).
+                Mode = s != null ? s.Mode : m_LaunchMode,
+                VersusAi = m_LaunchVersus,
+                OpponentStreamer = m_LaunchOpponent,
             });
         }
 
@@ -798,6 +837,8 @@ namespace DeckParty.UI
         void Submit(GameCommand command)
         {
             if (State == null || !CanAct || m_Scoring) return;
+            // Teams: say which member sends it (the host checks it against the sender anyway).
+            command.Member = m_Member;
             m_Session.Submit(command);
         }
 
@@ -826,7 +867,7 @@ namespace DeckParty.UI
                 return;
             }
 
-            if (m_Net != null && m_Net.Settings.Mode == MatchMode.SyncNights)
+            if (m_Net != null && MatchModes.UsesRounds(m_Net.Settings.Mode))
             {
                 m_Net.TryGetLocalPlayer(out var me);
                 if (me.ReadyNextNight) m_Net.CancelNextNightReady();
@@ -843,7 +884,7 @@ namespace DeckParty.UI
         {
             var s = State;
             if (s == null || !CanAct) return;
-            bool rivals = m_Net != null && m_Net.HasRival(LocalId);
+            bool rivals = RivalsAvailableFor(LocalId);
             var blocker = PartyEngine.GetPowerBlocker(s, rivals);
             if (blocker != null)
             {
@@ -895,15 +936,16 @@ namespace DeckParty.UI
                 OnCommandRejected("mp.shop_closed");
                 return;
             }
-            var blocker = PartyEngine.GetRemoveBlocker(s);
+            var blocker = PartyEngine.GetRemoveBlocker(s, m_Member);
             if (blocker != null)
             {
                 OnCommandRejected(blocker);
                 return;
             }
+            // Teams: only your own Audience.
             var ids = new List<int>();
             foreach (var g in s.Rolodex)
-                if (!g.Temporary) ids.Add(g.Id);
+                if (!g.Temporary && s.Owns(g, m_Member)) ids.Add(g.Id);
             string price = GameIcons.Amount(ResourceIcon.Influence, PartyEngine.RemovalCost(s));
             picker.Open(Loc.Get("pick.remove_title", "cost", price), Loc.Get("pick.remove_hint", "min", GameRules.MinAudience), s, ids, pick =>
             {
@@ -1014,7 +1056,12 @@ namespace DeckParty.UI
 
                 case TargetMode.WaitingGuest:
                     m_PickingActor = actorId;
-                    picker.Open(title, Loc.Get("pick.fetch"), s, s.Pool,
+                    // From the actor's own queue (teams: each member's queue holds their own Audience).
+                    var queue = new List<int>();
+                    var fetcher = s.Find(actorId);
+                    foreach (var waiting in s.Pool)
+                        if (fetcher == null || s.Owns(s.Find(waiting), fetcher.Owner)) queue.Add(waiting);
+                    picker.Open(title, Loc.Get("pick.fetch"), s, queue,
                         pick =>
                         {
                             m_PickingActor = -1;
@@ -1321,9 +1368,10 @@ namespace DeckParty.UI
                 {
                     if (s.PeekedId >= 0)
                     {
-                        if (!s.HouseFull) Submit(GameCommand.AdmitPeeked());
+                        var peeked = s.Find(s.PeekedId);
+                        if (!s.SideFull(peeked != null ? peeked.Owner : 0)) Submit(GameCommand.AdmitPeeked());
                     }
-                    else if (PartyEngine.GetDoorBlocker(s) == null)
+                    else if (PartyEngine.GetDoorBlocker(s, m_Member) == null)
                     {
                         Submit(GameCommand.OpenDoor());
                     }

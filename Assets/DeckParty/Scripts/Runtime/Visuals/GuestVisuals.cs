@@ -188,77 +188,82 @@ namespace DeckParty
             return sb.ToString();
         }
 
-        public static string Tags(GuestInfo info)
+        /// <summary>The card's key facts as coloured tags (Trophy, Risk, cancels, brings, size, action), dot-separated.</summary>
+        public static string Tags(GuestInfo info) => Tags(info, true, TipText.Faint("  ·  "));
+
+        static string Tags(GuestInfo info, bool withAction, string separator)
         {
             var sb = new StringBuilder();
-            void Tag(string text, Color color) => sb.Append(Colored(text, color)).Append(' ');
+            void Tag(string text, Color color)
+            {
+                if (sb.Length > 0) sb.Append(separator);
+                sb.Append(Colored(text, color));
+            }
             if (info.IsDiamond) Tag(Loc.Get("card.tag.diamond"), UIPalette.Gold);
             if (info.Trouble) Tag(Loc.Get("card.tag.risk"), UIPalette.Red);
             else if (info.Type == GuestType.HateWatcher) Tag(Loc.Get("card.tag.risk_sometimes"), UIPalette.Red);
             if (info.CancelsTrouble) Tag(Loc.Get("card.tag.cancels"), UIPalette.Teal);
             if (info.Brings > 0) Tag(Loc.Get("card.tag.brings", "count", info.Brings), UIPalette.Orange);
             if (info.Size > 1) Tag(Loc.Get("card.tag.size", "count", info.Size), UIPalette.Orange);
-            if (info.HasAbility) Tag(Loc.Get("card.tag.action", "action", ActionName(info.Type)), UIPalette.Purple);
-            return sb.ToString().TrimEnd();
+            if (withAction && info.HasAbility) Tag(Loc.Get("card.tag.action", "action", ActionName(info.Type)), UIPalette.Purple);
+            return sb.ToString();
         }
 
+        /// <summary>
+        /// A viewer's hover pop-up: name and price, what it does, its key facts and communities, its action; in the shop how
+        /// it scores and how many are left; in chat what it scores now and this stream's modifiers.
+        /// </summary>
         /// <param name="shopState">In the shop: the player whose shop it is, for their owned and copies-left numbers.</param>
-        public static string Tooltip(GuestType type, GuestInstance instance = null, PlayerState state = null, PlayerState shopState = null)
+        /// <param name="shopMember">Teams: which player of the team is shopping (copy limits are per player).</param>
+        public static string Tooltip(GuestType type, GuestInstance instance = null, PlayerState state = null, PlayerState shopState = null,
+            int shopMember = 0)
         {
             var info = GuestCatalog.Get(type);
-            var sb = new StringBuilder();
-            sb.Append("<b><size=120%>").Append(DisplayName(type)).Append("</size></b>");
-            if (info.Purchasable) sb.Append("   ").Append(Colored(GameIcons.Amount(ResourceIcon.Cash, info.Cost), UIPalette.TextDim));
-            sb.Append('\n');
-            var tags = Tags(info);
-            if (tags.Length > 0) sb.Append("<size=85%>").Append(tags).Append("</size>\n");
-            sb.Append(Description(type));
+            var tip = TipText.Titled(DisplayName(type), info.Purchasable ? GameIcons.Amount(ResourceIcon.Cash, info.Cost) : null);
+            tip.Line(Description(type));
 
-            sb.Append("\n<size=88%>").Append(CommunityVisuals.Inline(type)).Append("</size>");
+            // At a glance: Trophy, Risk, what it cancels or brings, its size and its communities; then its action.
+            tip.Section().Line(TipText.Small(TipText.Join(Tags(info, false, TipText.Faint("  ·  ")), CommunityVisuals.Inline(type))));
             if (info.HasAbility)
-                sb.Append("\n<size=85%>").Append(Colored(Loc.Get("card.action_type", "type", ActionTypeName(info.ActionCategory)), UIPalette.Purple)).Append("</size>");
+            {
+                string action = Colored(Loc.Get("card.tag.action", "action", ActionName(type)), UIPalette.Purple);
+                string kind = ActionTypeName(info.ActionCategory);
+                tip.Line(TipText.Small(kind.Length > 0 ? TipText.Join(action, TipText.Faint(kind)) : action));
+            }
 
-            // In the shop: the key scoring section (three resource icons) and how many copies are left (kept off the tile).
+            // In the shop: how it scores (the three resource icons), how many you own and how many are left (the tile's "x3").
             if (shopState != null && info.Purchasable)
             {
-                sb.Append("\n<size=80%>").Append(Colored(Loc.Get("card.when_scored"), UIPalette.TextDim)).Append("</size>")
-                  .Append("\n<size=115%>").Append(ScoringIcons(info)).Append("</size>");
-                int owned = shopState.CountOwned(type);
-                int left = PartyEngine.ShopLeft(shopState, type);
-                sb.Append("\n<size=90%>").Append(Loc.Get("shop.tip_owned", "count", owned));
-                if (left != int.MaxValue) sb.Append("   ").Append(Loc.Get("shop.tip_left", "count", left));
-                sb.Append("</size>");
+                tip.Section().Line(TipText.Faint(Loc.Get("card.when_scored")) + "  " + ScoringIcons(info));
+                int owned = shopState.CountOwned(type, shopMember);
+                int left = PartyEngine.ShopLeft(shopState, type, shopMember);
+                tip.Detail(TipText.Join(Loc.Get("shop.tip_owned", "count", owned),
+                    left == int.MaxValue ? Loc.Get("shop.left_unlimited") : Loc.Get("shop.tip_left", "count", left)));
             }
 
             if (instance != null)
             {
-                if (instance.IsDisguised)
-                    sb.Append('\n').Append(Colored(Loc.Get("card.rickrolled", "viewer", DisplayName(instance.Type)), UIPalette.Pink));
-                if (instance.BonusCash != 0)
-                    sb.Append('\n').Append(Colored(Loc.Get("card.permanent", "value", CashText(instance.BonusCash)), UIPalette.Pink));
-                if (instance.BonusInfluence != 0)
-                    sb.Append('\n').Append(Colored(Loc.Get("card.permanent", "value", InfluenceText(instance.BonusInfluence)), UIPalette.Green));
+                tip.Section();
+                if (instance.IsDisguised) tip.Line(Colored(Loc.Get("card.rickrolled", "viewer", DisplayName(instance.Type)), UIPalette.Pink));
+                if (instance.BonusCash != 0) tip.Line(Colored(Loc.Get("card.permanent", "value", CashText(instance.BonusCash)), UIPalette.Pink));
+                if (instance.BonusInfluence != 0) tip.Line(Colored(Loc.Get("card.permanent", "value", InfluenceText(instance.BonusInfluence)), UIPalette.Green));
                 if (instance.Type == GuestType.HateWatcher)
-                    sb.Append('\n').Append(Colored(Loc.Get(instance.Wolf ? "card.hate_watching" : "card.next_hate_watch"), UIPalette.Red));
-                if (instance.StrikeCount > 0)
-                    sb.Append('\n').Append(Colored(Loc.Get("card.strikes", "count", instance.StrikeCount), UIPalette.Orange));
-                if (instance.TrolledCount > 0)
-                    sb.Append('\n').Append(Colored(Loc.Get("card.trolled", "count", instance.TrolledCount), UIPalette.TextDim));
-                if (instance.Temporary)
-                    sb.Append('\n').Append(Colored(Loc.Get("card.temporary"), UIPalette.TextDim));
+                    tip.Line(Colored(Loc.Get(instance.Wolf ? "card.hate_watching" : "card.next_hate_watch"), UIPalette.Red));
+                if (instance.StrikeCount > 0) tip.Line(Colored(Loc.Get("card.strikes", "count", instance.StrikeCount), UIPalette.Orange));
+                if (instance.TrolledCount > 0) tip.Detail(Loc.Get("card.trolled", "count", instance.TrolledCount));
+                if (instance.Temporary) tip.Detail(Loc.Get("card.temporary"));
 
                 if (state != null && state.House.Contains(instance.Id))
                 {
-                    sb.Append('\n').Append(Loc.Get("card.now", "stats", LiveStats(state, instance)));
+                    string now = Loc.Get("card.now", "stats", LiveStats(state, instance));
                     int risk = PartyEngine.GuestTrouble(state, instance);
-                    if (risk > 0) sb.Append("  ").Append(RiskText(risk));
-                    var status = StatusLine(state, instance);
-                    if (status.Length > 0) sb.Append('\n').Append(status);
+                    if (risk > 0) now += "  " + RiskText(risk);
+                    tip.Line(now);
+                    tip.Line(StatusLine(state, instance));
                 }
-                if (state != null && state.BannedThisParty == instance.Id)
-                    sb.Append('\n').Append(Colored(Loc.Get("card.banned_tonight"), UIPalette.Orange));
+                if (state != null && state.BannedThisParty == instance.Id) tip.Warn(Loc.Get("card.banned_tonight"));
             }
-            return sb.ToString();
+            return tip;
         }
 
         /// <summary>Tonight's modifiers on a viewer in chat, as one line.</summary>

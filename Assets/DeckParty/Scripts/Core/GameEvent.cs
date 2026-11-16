@@ -26,8 +26,8 @@ namespace DeckParty.Core
         PartyEnded = 10,       // A = cash, B = influence, C = diamonds
         InfluenceShortfall = 11,    // A = unpaid influence, B = penalty
         GuestBlamed = 12,      // Guest (temporary ban)
-        GuestPurchased = 13,   // Guest, A = cost
-        HouseExpanded = 14,    // A = new capacity, B = cost
+        GuestPurchased = 13,   // Guest, A = cost, B = the team member who bought it
+        HouseExpanded = 14,    // A = new capacity, B = cost, C = the team member whose Sub Cap it raised
         Victory = 15,          // A = night
         Defeat = 16,
         GuestGained = 17,      // Guest, A = cash, B = influence (tonight's card bonus)
@@ -106,6 +106,12 @@ namespace DeckParty.Core
         BarkActive = 77,       // Bark at Chat: A = extra Cash for each viewer carrying Risk this stream
         SoftLandingReady = 78, // Soft Landing is on for this stream (if it gets deplatformed, half its Cash are banked)
         HypeSeatTaken = 79,    // Hype Men: a viewer a Hype Man brought in took a spare seat past the Sub Cap. Guest = viewer, A = the Hype Man's id, B = spare seats still free
+        // --- Game modes (2026-11-16) ---
+        StreamBought = 80,     // Endless: one more stream bought. A = Trophies paid, B = the run's streams now
+        ShopViewerAdded = 81,  // Endless: a viewer was added to the shop. A = (int)GuestType, B = Trophies paid
+        TrophiesBanked = 82,   // Endless: a scored stream banked Trophies. A = Trophies gained, B = Trophies banked now
+        MemberStreamEnded = 83,// Teams: a member ended their side of the stream (it's scored when every member has). A = member
+        RivalVictory = 84,     // Versus the AI: the rival won, so this season is lost. A = the rival's winning stream
     }
 
     public struct GameEvent

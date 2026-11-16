@@ -10,6 +10,11 @@ namespace DeckParty.Networking
         Lobby = 0,
         InGame = 1,
         Results = 2,
+        /// <summary>
+        /// Everyone is ready and the host pressed Start: each player picks their streamer (the fighting-game select screen),
+        /// last thing before the match (2026-11-16). The match starts once everyone has locked in, or the pick timer runs out.
+        /// </summary>
+        PickingStreamers = 3,
     }
 
     public enum MatchMode : byte
@@ -24,6 +29,17 @@ namespace DeckParty.Networking
         Race = 1,
         /// <summary>Each night players throw their parties one after another while everyone else watches.</summary>
         Turns = 2,
+        /// <summary>
+        /// 2v2 (2026-11-16): two teams of two. Each team shares one season (Cash, Influence, the stream and the shop) but
+        /// each player keeps their own Audience and Sub Cap; a team's two sides of the stream score as one. Both teams stream
+        /// at once, then the shop opens for everyone (the Free For All rounds). Exactly four players.
+        /// </summary>
+        TwoVsTwo = 3,
+        /// <summary>
+        /// Co-op Endless (2026-11-16): two players are one team in an Endless run (Trophies buy more streams and shop
+        /// viewers): see how many streams you last together. Exactly two players.
+        /// </summary>
+        CoopEndless = 4,
     }
 
     /// <summary>Free For All: where the round is. Every stream runs at once, then the shared shop opens for everyone together.</summary>
@@ -43,15 +59,51 @@ namespace DeckParty.Networking
         /// <summary>Take Turns and Race need exactly two players; with more, Free For All is the only mode.</summary>
         public const int MaxPlayersForAnyMode = 2;
 
+        /// <summary>Seconds every player has to pick a streamer once the host starts (then Random is picked for them).</summary>
+        public const float StreamerPickSeconds = 30f;
+
         /// <summary>Seconds of the Free For All countdown before the shop opens.</summary>
         public const float ShopCountdownSeconds = 3f;
 
-        public static readonly MatchMode[] Order = { MatchMode.Turns, MatchMode.SyncNights, MatchMode.Race };
+        public static readonly MatchMode[] Order = { MatchMode.Turns, MatchMode.SyncNights, MatchMode.Race, MatchMode.TwoVsTwo, MatchMode.CoopEndless };
 
-        /// <summary>Whether a mode can be played with this many players.</summary>
-        public static bool Allowed(MatchMode mode, int players) => players <= MaxPlayersForAnyMode || mode == MatchMode.SyncNights;
+        /// <summary>Players a 2v2 match needs.</summary>
+        public const int TwoVsTwoPlayers = 4;
+        /// <summary>Players a co-op run needs.</summary>
+        public const int CoopPlayers = 2;
 
-        public static string[] Labels => new[] { Loc.Get("mode.turns"), Loc.Get("mode.sync"), Loc.Get("mode.race") };
+        /// <summary>Team modes: players share a season in teams of two (2v2, co-op).</summary>
+        public static bool IsTeam(MatchMode mode) => mode == MatchMode.TwoVsTwo || mode == MatchMode.CoopEndless;
+
+        /// <summary>
+        /// Modes played in Free For All rounds: every stream at once, then the shop opens for everyone together, then the next
+        /// stream once everyone is ready. Free For All itself and the team modes (each team streams at once).
+        /// </summary>
+        public static bool UsesRounds(MatchMode mode) => mode == MatchMode.SyncNights || IsTeam(mode);
+
+        /// <summary>
+        /// Whether a mode can be played (or picked in the lobby) with this many players: 2v2 with up to four (it starts with
+        /// exactly four), co-op with up to two, Take Turns and Race with two, Free For All with any number.
+        /// </summary>
+        public static bool Allowed(MatchMode mode, int players)
+        {
+            switch (mode)
+            {
+                case MatchMode.TwoVsTwo: return players <= TwoVsTwoPlayers;
+                case MatchMode.CoopEndless: return players <= CoopPlayers;
+                case MatchMode.SyncNights: return true;
+                default: return players <= MaxPlayersForAnyMode;
+            }
+        }
+
+        /// <summary>Players a mode needs to start (0 = any number from two).</summary>
+        public static int RequiredPlayers(MatchMode mode) =>
+            mode == MatchMode.TwoVsTwo ? TwoVsTwoPlayers : mode == MatchMode.CoopEndless ? CoopPlayers : 0;
+
+        public static string[] Labels => new[]
+        {
+            Loc.Get("mode.turns"), Loc.Get("mode.sync"), Loc.Get("mode.race"), Loc.Get("mode.two_vs_two"), Loc.Get("mode.coop_endless"),
+        };
 
         public static int IndexOf(MatchMode mode)
         {
@@ -67,6 +119,8 @@ namespace DeckParty.Networking
             {
                 case MatchMode.Turns: return Loc.Get("mode.turns_short");
                 case MatchMode.Race: return Loc.Get("mode.race_short");
+                case MatchMode.TwoVsTwo: return Loc.Get("mode.two_vs_two_short");
+                case MatchMode.CoopEndless: return Loc.Get("mode.coop_short");
                 default: return Loc.Get("mode.sync_short");
             }
         }
@@ -162,7 +216,7 @@ namespace DeckParty.Networking
         public override int GetHashCode() => (ScenarioId * 397) ^ (Nights * 31) ^ (int)Mode ^ (TurnSeconds << 8) ^ (ShopSeconds << 20);
 
         /// <summary>Whether the stream and shop timers apply in this mode (not in Race, where everyone plays at their own pace).</summary>
-        public bool TimersApply => Mode == MatchMode.Turns || Mode == MatchMode.SyncNights;
+        public bool TimersApply => Mode == MatchMode.Turns || Mode == MatchMode.SyncNights || MatchModes.IsTeam(Mode);
     }
 
     /// <summary>A lobby member plus a live summary of their season (what opponents see).</summary>
@@ -197,6 +251,14 @@ namespace DeckParty.Networking
         public byte Watchers;
         /// <summary>The player's online platform id (their SteamID) for avatars and profiles; 0 off-platform.</summary>
         public ulong PlatformUserId;
+        /// <summary>Team modes (2v2, co-op): the player's team (0 or 1). Picked in the lobby (2v2), always 0 in co-op.</summary>
+        public byte Team;
+        /// <summary>Team modes: the player's place in their team's season (member 0 or 1), set when the match starts.</summary>
+        public byte Member;
+        /// <summary>Endless runs (co-op): Trophies the team has banked.</summary>
+        public int Trophies;
+        /// <summary>The streamer pick before a match: this player has locked in (their pick is <see cref="Streamer"/>).</summary>
+        public bool StreamerLocked;
 
         public static NetPlayer Create(ulong clientId, string name, byte colorIndex, byte streamer = 0, ulong platformUserId = 0)
         {
@@ -243,6 +305,10 @@ namespace DeckParty.Networking
             serializer.SerializeValue(ref LastOutcome);
             serializer.SerializeValue(ref Watchers);
             serializer.SerializeValue(ref PlatformUserId);
+            serializer.SerializeValue(ref Team);
+            serializer.SerializeValue(ref Member);
+            serializer.SerializeValue(ref Trophies);
+            serializer.SerializeValue(ref StreamerLocked);
         }
 
         public bool Equals(NetPlayer o)
@@ -252,7 +318,7 @@ namespace DeckParty.Networking
                    Cash == o.Cash && Influence == o.Influence && Capacity == o.Capacity && Guests == o.Guests && DiamondsOwned == o.DiamondsOwned &&
                    DiamondsInHouse == o.DiamondsInHouse && BestDiamonds == o.BestDiamonds && Trouble == o.Trouble && TotalCash == o.TotalCash &&
                    WinNight == o.WinNight && Rank == o.Rank && LastOutcome == o.LastOutcome && Watchers == o.Watchers &&
-                   PlatformUserId == o.PlatformUserId;
+                   PlatformUserId == o.PlatformUserId && Team == o.Team && Member == o.Member && Trophies == o.Trophies && StreamerLocked == o.StreamerLocked;
         }
 
         public override bool Equals(object obj) => obj is NetPlayer other && Equals(other);

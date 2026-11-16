@@ -368,11 +368,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431121737998337
-    m_Localized: "Temporizador del stream: cuando se acaba, el stream termina y punt\xFAa."
+    m_Localized: "Cuando se acaba, el stream termina y punt\xFAa."
     m_Metadata:
       m_Items: []
   - m_Id: 2431121737998338
-    m_Localized: 'Temporizador de la tienda: cuando se acaba, terminas de comprar.'
+    m_Localized: Cuando se acaba, terminas de comprar.
     m_Metadata:
       m_Items: []
   - m_Id: 2431121737998339
@@ -494,6 +494,47 @@ MonoBehaviour:
   - m_Id: 3193499366809604
     m_Localized: "No puedes unirte: alguien en ese lobby te bloque\xF3, o t\xFA lo
       bloqueaste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802214473424896
+    m_Localized: Este modo necesita exactamente {0} jugadores.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802214511173632
+    m_Localized: Los equipos deben ser de dos.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802214511173633
+    m_Localized: "Ese equipo est\xE1 completo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802214511173634
+    m_Localized: "\xA1{0} ganan: {1} Trofeos en un stream en el stream {2}!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802214511173635
+    m_Localized: "Nadie lleg\xF3 a {1} Trofeos. {0} quedaron m\xE1s cerca, con {2}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802214511173636
+    m_Localized: "\xA1{0} aguantaron {1} streams juntos!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802214540533760
+    m_Localized: "\xA1Todos listos: elijan sus streamers!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802214540533761
+    m_Localized: "Un jugador sali\xF3 durante la elecci\xF3n de streamers. Volviendo
+      a la sala."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802214540533762
+    m_Localized: Temporizador del stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802214540533763
+    m_Localized: Temporizador de la tienda
     m_Metadata:
       m_Items: []
   references:

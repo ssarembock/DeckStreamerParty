@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
@@ -7,15 +8,27 @@ namespace DeckParty.UI
     /// Hover tooltip that follows the pointer and stays on screen. Two layers: the base tooltip (cards, buttons) and an
     /// override for small things inside them (a community icon on a card, an icon in a line of text). Leaving the small
     /// thing brings the base tooltip back.
+    /// The card is sized to its text, up to <see cref="maxWidth"/>. Text built with <see cref="TipText"/> has a title row:
+    /// it goes in <see cref="header"/>, above <see cref="divider"/>, and the rest goes in <see cref="label"/>.
     /// </summary>
     public sealed class TooltipView : MonoBehaviour
     {
         [SerializeField] internal RectTransform panel;
+        [Tooltip("The body text (everything below the divider).")]
         [SerializeField] internal TMP_Text label;
         [SerializeField] internal CanvasGroup group;
+        [Tooltip("Optional: the title row. Scenes built before 2026-11-16 have none, so the title goes on the body's first line.")]
+        [SerializeField] internal TMP_Text header;
+        [Tooltip("Optional: the line between the title and the body.")]
+        [SerializeField] internal Graphic divider;
+        [Tooltip("The widest the pop-up gets, in pixels (short text makes it narrower). 0 keeps the width it was built with.")]
+        [SerializeField] internal float maxWidth = 440f;
+        [Tooltip("The narrowest the pop-up gets, in pixels.")]
+        [SerializeField] internal float minWidth = 96f;
 
         static TooltipView s_Active;
         RectTransform m_CanvasRect;
+        LayoutGroup m_Layout;
         float m_ShowAt;
         string m_BaseText;
         object m_BaseOwner;
@@ -30,6 +43,7 @@ namespace DeckParty.UI
             s_Active = this;
             var canvas = GetComponentInParent<Canvas>();
             m_CanvasRect = canvas != null ? (RectTransform)canvas.rootCanvas.transform : (RectTransform)transform;
+            m_Layout = panel != null ? panel.GetComponent<LayoutGroup>() : null;
             group.alpha = 0f;
             group.blocksRaycasts = false;
             group.interactable = false;
@@ -91,8 +105,46 @@ namespace DeckParty.UI
         void Refresh()
         {
             string text = m_OverrideText ?? m_BaseText;
-            if (text != null && text != m_Shown) label.text = text;
+            if (text != null && text != m_Shown) Present(text);
             m_Shown = text;
+        }
+
+        /// <summary>Splits the title row from the body, fills both texts and sizes the card to them.</summary>
+        void Present(string text)
+        {
+            TipText.TrySplit(text, out string title, out string body);
+            // No title text in this scene: the title is the body's first line.
+            if (header == null && title != null)
+            {
+                body = string.IsNullOrEmpty(body) ? title : title + "\n" + body;
+                title = null;
+            }
+
+            bool hasTitle = !string.IsNullOrEmpty(title);
+            bool hasBody = !string.IsNullOrEmpty(body);
+            if (header != null)
+            {
+                header.gameObject.SetActive(hasTitle);
+                header.text = hasTitle ? title : string.Empty;
+            }
+            if (divider != null) divider.gameObject.SetActive(hasTitle && hasBody);
+            label.gameObject.SetActive(hasBody || !hasTitle);
+            label.text = hasBody ? body : string.Empty;
+            FitWidth(hasTitle ? title : null, hasBody ? body : null);
+        }
+
+        /// <summary>As wide as the longest line needs, between <see cref="minWidth"/> and <see cref="maxWidth"/>.</summary>
+        void FitWidth(string title, string body)
+        {
+            if (panel == null || maxWidth <= 0f) return;
+            float padding = m_Layout != null ? m_Layout.padding.horizontal : 0f;
+            float inside = Mathf.Max(40f, maxWidth - padding);
+            float widest = 0f;
+            // Preferred widths are measured without wrapping: the longest line as it is.
+            if (title != null && header != null) widest = Mathf.Max(widest, header.GetPreferredValues(title, inside, 0f).x);
+            if (body != null) widest = Mathf.Max(widest, label.GetPreferredValues(body, inside, 0f).x);
+            float width = Mathf.Clamp(Mathf.Ceil(widest) + padding + 2f, Mathf.Min(minWidth, maxWidth), maxWidth);
+            panel.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
         }
 
         void LateUpdate()

@@ -65,7 +65,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125578
-    m_Localized: Spaces in use / your Sub Cap.
+    m_Localized: <b>Sub Cap</b>\nHow many viewers fit in chat at once.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125579
@@ -99,11 +99,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125586
-    m_Localized: 'From a rival''s raid: +{count}'
+    m_Localized: 'From a rival''s Raid: +{count}'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125587
-    m_Localized: 'Cancelled from the start: -{count}'
+    m_Localized: 'Ignored this stream: -{count}'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125588
@@ -153,11 +153,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125599
-    m_Localized: Bank everyone's {icon:cash} and {icon:influence}.
+    m_Localized: End now and bank {payout}.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125600
-    m_Localized: (-{count} fees)
+    m_Localized: '(fees: -{count})'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125601
@@ -262,8 +262,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125626
-    m_Localized: A bigger Sub Cap means more viewers at once (and more room for viewers
-      who bring friends).
+    m_Localized: Fit one more viewer in chat at once, in every stream.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125627
@@ -423,8 +422,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514199
-    m_Localized: '{icon:risk} got too high and the stream got deplatformed. Nobody
-      gets paid tonight.'
+    m_Localized: '{icon:risk} got too high and the stream was deplatformed. Nobody
+      gets paid for it.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514200
@@ -456,7 +455,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514207
-    m_Localized: '{viewer} is on a Temporary Ban tonight.'
+    m_Localized: '{viewer} is on a Temporary Ban this stream.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514208
@@ -468,7 +467,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514210
-    m_Localized: Dimmed viewers can't join tonight. Hover for details.
+    m_Localized: Dimmed viewers can't join this stream. Hover for details.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514211
@@ -492,7 +491,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514216
-    m_Localized: Done tonight
+    m_Localized: Done streaming
     m_Metadata:
       m_Items: []
   - m_Id: 1582514217
@@ -844,7 +843,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514302
-    m_Localized: Nobody is in chat, so you'll earn nothing tonight.
+    m_Localized: Nobody is in chat, so this stream earns nothing.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514303
@@ -1423,9 +1422,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514441
-    m_Localized: each round, players stream one after another while everyone else
-      watches live. The season ends after the first round in which someone gets {count}
-      Trophies.
+    m_Localized: players stream one after another each round while the others watch
+      live. The season ends after the first round in which someone gets {count} Trophies.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514442
@@ -1434,11 +1432,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514443
-    m_Localized: 'everyone streams at the same time; click a player to watch their
-      stream live (read-only), and your own name to come back. When every stream
-      is over and everyone clicks Go to the Shop, a 3-2-1 countdown opens the shop
-      for all at once: first come, first served. The first round in which someone
-      gets {count} Trophies ends the season. The only mode for 3 or more players.'
+    m_Localized: 'everyone streams at once (click a player to watch, your own name
+      to come back). When every stream is over, the shop opens for all at the same
+      time: first come, first served. The season ends after the first round in which
+      someone gets {count} Trophies. The only mode for 3 or more players.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514444
@@ -1526,8 +1523,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416593474699271
-    m_Localized: You can still recruit {count} (the shop's stock is shared by every
-      player)
+    m_Localized: You can recruit {count} more
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087872
@@ -1535,15 +1531,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087873
-    m_Localized: Your stream got deplatformed. No payout tonight
+    m_Localized: Your stream was deplatformed. No payout
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087874
-    m_Localized: '{player}''s stream got deplatformed. No payout tonight'
+    m_Localized: '{player}''s stream was deplatformed. No payout'
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087875
-    m_Localized: '{filled} spaces filled with a Sub Cap of {cap}. No payout tonight'
+    m_Localized: '{filled} spaces filled with a Sub Cap of {cap}. No payout'
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087876
@@ -1568,12 +1564,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675191463297024
-    m_Localized: '<b>Deplatform Risk</b>\nViewers with a red X bring it. At {max}
-      net Risk the stream gets deplatformed: no payout tonight.'
+    m_Localized: <b>{icon:risk} Deplatform Risk</b>\nViewers with this icon bring
+      it. At {max} in one stream you're deplatformed, and the stream pays nothing.
     m_Metadata:
       m_Items: []
   - m_Id: 675191551377408
-    m_Localized: '{icon:CoreFanbase} Core Fanbase cancels: -{count}'
+    m_Localized: 'Cancelled by {icon:CoreFanbase} Core Fanbase: -{count}'
     m_Metadata:
       m_Items: []
   - m_Id: 675191551377409
@@ -1784,8 +1780,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 994296414289920
-    m_Localized: <b>Trophies</b>\nViewers with this icon are Trophies. Have {goal}
-      in chat at once and end the stream well to win.
+    m_Localized: <b>{icon:plays} Trophies</b>\nViewers with this icon are Trophies.
+      End a stream with {goal} of them in chat to win.
     m_Metadata:
       m_Items: []
   - m_Id: 1064940082913280
@@ -1917,9 +1913,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408013
-    m_Localized: Take one viewer card out of your Audience for good. Each removal
-      costs 1 {icon:influence} more than the last. Your Audience keeps at least {min}
-      viewers.
+    m_Localized: Take one viewer card out of your Audience for good.
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408014
@@ -2183,13 +2177,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5322685007093760
-    m_Localized: <b>Cash</b>\nViewers bring it in during a stream. Spend it in the
-      shop to recruit new viewers.
+    m_Localized: <b>{icon:cash} Cash</b>\nViewers earn it during streams. Spend it
+      in the shop on new viewers.
     m_Metadata:
       m_Items: []
   - m_Id: 5322685065814016
-    m_Localized: <b>Influence</b>\nRaises your Sub Cap and pays for your streamer's
-      active power.
+    m_Localized: <b>{icon:influence} Influence</b>\nPays for a bigger Sub Cap and
+      your streamer's active power.
     m_Metadata:
       m_Items: []
   - m_Id: 5322685065814017
@@ -2201,8 +2195,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5740695727464448
-    m_Localized: <b>Spare seat</b>\nOnly a viewer a {icon:HypeMen} Hype Man brings
-      in can sit here, so they don't crash the server.
+    m_Localized: <b>Spare seat</b>\nOnly a viewer brought in by a {icon:HypeMen}
+      Hype Man can sit here.
     m_Metadata:
       m_Items: []
   - m_Id: 5740695777796096
@@ -2215,6 +2209,398 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5740695966539776
     m_Localized: Spare seat!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217921142784
+    m_Localized: Single Player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668736
+    m_Localized: How do you want to play?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668737
+    m_Localized: Puzzles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668738
+    m_Localized: Hand-made character sets, each with its own shop. Get 4 Trophies
+      into one stream to win.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668739
+    m_Localized: '{count}/{total} cleared'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668740
+    m_Localized: Endless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668741
+    m_Localized: No win, no limit. Trophies buy more streams and new viewers for
+      the shop. How long can you last?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668742
+    m_Localized: 'Longest run: {count} {count:plural:stream|streams}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668743
+    m_Localized: No runs yet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668744
+    m_Localized: Versus the AI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668745
+    m_Localized: Pick your streamer and your rival's, then race the AI through the
+      same season. First to 4 Trophies in one stream wins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668746
+    m_Localized: Endless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668747
+    m_Localized: Starts with {count} {count:plural:stream|streams}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668748
+    m_Localized: Versus {rival}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668749
+    m_Localized: "Record: {wins}W \xB7 {losses}L"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668750
+    m_Localized: 'Endless on {set}: last as long as you can. You start with {nights}
+      streams. Every Trophy viewer in a scored stream banks a {icon:plays}; {cost}
+      {icon:plays} buys another stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668751
+    m_Localized: 'Versus {rival}: first to {count} Trophies in one stream wins. The
+      AI plays each stream right after yours.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668752
+    m_Localized: '{rival} (AI)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668753
+    m_Localized: Versus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668754
+    m_Localized: '{rival}''s stream: {values}, {count} {icon:plays} in chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668755
+    m_Localized: "Last stream: {values} \xB7 {trophies} {icon:plays}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668756
+    m_Localized: '{rival} got deplatformed.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668757
+    m_Localized: 'Last stream: deplatformed'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668758
+    m_Localized: '{rival}''s server went down.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668759
+    m_Localized: 'Last stream: server down'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668760
+    m_Localized: '{rival} recruited {viewers}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668761
+    m_Localized: '{rival} used {power}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668762
+    m_Localized: '{rival} got {count} Trophies in one stream!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668763
+    m_Localized: '{rival} WINS'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668764
+    m_Localized: '{count} Trophies in one stream, before you.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668765
+    m_Localized: +1 stream ({total} in this run)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668766
+    m_Localized: '{viewer} joined the shop.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668767
+    m_Localized: Your side is done. The stream scores when your partner ends theirs.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668768
+    m_Localized: Your partner is done. End your side to score the stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668769
+    m_Localized: "You: {you} \xB7 Partner: {partner}. Scored once you've both ended."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668770
+    m_Localized: still streaming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668771
+    m_Localized: done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668772
+    m_Localized: "Stream <b>{night}</b>/{total} \xB7 {left} left"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668773
+    m_Localized: Add a Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668774
+    m_Localized: One more stream for this run. Buy it before your last stream ends.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668775
+    m_Localized: Add a Viewer to the Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668776
+    m_Localized: Pick 1 of {count} viewers the shop doesn't sell yet. It stays for
+      the rest of the run.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668777
+    m_Localized: +Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668778
+    m_Localized: +Viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668779
+    m_Localized: Add a Viewer to the Shop ({cost})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668780
+    m_Localized: 'Pick one: it joins the shop for the rest of the run.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668781
+    m_Localized: RUN OVER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668782
+    m_Localized: You lasted {count} {count:plural:stream|streams} ({bought} bought
+      with Trophies).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668783
+    m_Localized: New best run!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668784
+    m_Localized: "Trophies left: {trophies} \xB7 Streams bought: {streams} \xB7 Viewers
+      added to the shop: {viewers}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668785
+    m_Localized: YOU BEAT {rival}!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668786
+    m_Localized: '{rival} WINS'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668787
+    m_Localized: '{rival} got {count} Trophies in one stream on stream {night}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668788
+    m_Localized: NOBODY WON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668789
+    m_Localized: 'Your best stream: {best}. {rival}''s best: {rival_best}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668790
+    m_Localized: RUN OVER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668791
+    m_Localized: '{team} lasted {count} {count:plural:stream|streams} together.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668792
+    m_Localized: YOUR TEAM WINS!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668793
+    m_Localized: '{team} WIN'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668794
+    m_Localized: Team A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668795
+    m_Localized: Team B
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668796
+    m_Localized: '{player} (you)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668797
+    m_Localized: Switch Team
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668798
+    m_Localized: This mode needs exactly {count} players.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668799
+    m_Localized: two teams of two, streaming at once. Teammates share Cash, Influence
+      and the shop, keep their own Audience and Sub Cap, and their two sides of the
+      stream score as one. First team to {count} Trophies in one stream wins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668800
+    m_Localized: 'two players share one Endless run: one shop, one bank, two Audiences.
+      You start with {count} streams and Trophies buy more. How long can you last
+      together?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668801
+    m_Localized: 2v2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668802
+    m_Localized: 2v2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668803
+    m_Localized: Co-op Endless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668804
+    m_Localized: Co-op
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640256
+    m_Localized: 'One more stream ({cost}): {total} in this run.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640257
+    m_Localized: '{viewer} joins the shop ({cost}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640258
+    m_Localized: +{count} {icon:plays} banked ({total} in all).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640259
+    m_Localized: A teammate ended their side of the stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640260
+    m_Localized: The rival won on stream {night}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749120
+    m_Localized: 'Picking streamers: {count} still choosing.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749121
+    m_Localized: Your teammate is picking your team's streamer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749122
+    m_Localized: Audience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749123
+    m_Localized: '{icon:risk} Deplatform Risk'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749124
+    m_Localized: At {max} {icon:risk} in one stream you're deplatformed, and the
+      stream pays nothing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749125
+    m_Localized: 'From viewers: +{count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749126
+    m_Localized: 'Cancelled: -{count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749127
+    m_Localized: '{icon:plays} Trophies'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749128
+    m_Localized: 'In chat: {count}/{goal}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749129
+    m_Localized: 'In chat: {count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749130
+    m_Localized: 'In your Audience: {count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749131
+    m_Localized: 'Best stream so far: {count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749132
+    m_Localized: End a stream with {goal} in chat to win.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749133
+    m_Localized: 'Banked: {count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749134
+    m_Localized: 'Spend them in the shop: another stream costs {stream} {icon:plays},
+      a new shop viewer {viewer} {icon:plays}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749135
+    m_Localized: "Raise Sub Cap: {from} \u2192 {to}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749136
+    m_Localized: Remove a Viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749137
+    m_Localized: Each removal costs 1 {icon:influence} more. Your Audience keeps
+      at least {min} viewers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749138
+    m_Localized: 'This run: {streams} streams, {left} left'
     m_Metadata:
       m_Items: []
   references:

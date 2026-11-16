@@ -8,7 +8,7 @@ namespace DeckParty.Core
     /// produces the same result, which is what lets the host simulate every player's game and stream snapshots
     /// to clients. All randomness comes from the RNG state stored in <see cref="PlayerState"/>.
     /// </summary>
-    public static class PartyEngine
+    public static partial class PartyEngine
     {
         const int InfectionCash = 2;
 
@@ -22,23 +22,31 @@ namespace DeckParty.Core
 
         // ================================================================== setup
 
-        public static PlayerState CreateGame(int scenarioId, uint seed, int nights = GameRules.DefaultNights, StreamerType streamer = StreamerType.None)
+        /// <param name="mode">Classic (win with 4 Trophies) or Endless (last as many streams as you can).</param>
+        /// <param name="members">1, or 2 for a team (2v2, co-op): each member gets the starting Audience and their own Sub Cap.</param>
+        public static PlayerState CreateGame(int scenarioId, uint seed, int nights = GameRules.DefaultNights, StreamerType streamer = StreamerType.None,
+            GameMode mode = GameMode.Classic, int members = 1)
         {
             if (!StreamerCatalog.IsValid(streamer)) streamer = StreamerType.None;
+            members = Math.Max(1, Math.Min(GameRules.TeamSize, members));
             var s = new PlayerState
             {
                 ScenarioId = scenarioId,
                 Seed = seed,
                 TotalNights = Math.Max(1, nights),
                 Capacity = GameRules.StartingCapacity,
+                PartnerCapacity = GameRules.StartingCapacity,
                 RngState = DeterministicRandom.Seed(seed),
                 Night = 1,
                 Streamer = streamer,
+                Mode = mode,
+                Members = members,
             };
             s.Shop.AddRange(ScenarioCatalog.BuildShop(scenarioId, seed));
 
-            foreach (var (type, count) in s_StartingAudience)
-                for (int i = 0; i < count; i++) AddGuest(s, type);
+            for (int member = 0; member < members; member++)
+                foreach (var (type, count) in s_StartingAudience)
+                    for (int i = 0; i < count; i++) AddGuest(s, type, false, member);
 
             BeginParty(s, null);
             return s;
@@ -52,9 +60,9 @@ namespace DeckParty.Core
             return 0;
         }
 
-        static GuestInstance AddGuest(PlayerState s, GuestType type, bool temporary = false)
+        static GuestInstance AddGuest(PlayerState s, GuestType type, bool temporary = false, int owner = 0)
         {
-            var g = new GuestInstance { Id = s.NextInstanceId++, Type = type, Temporary = temporary };
+            var g = new GuestInstance { Id = s.NextInstanceId++, Type = type, Temporary = temporary, Owner = (byte)(s.IsTeam ? Math.Max(0, Math.Min(1, owner)) : 0) };
             s.Rolodex.Add(g);
             return g;
         }
@@ -66,25 +74,31 @@ namespace DeckParty.Core
             if (s == null) return CommandResult.Fail(Err.Of("err.no_game"));
             if (s.IsGameOver) return CommandResult.Fail(Err.Of("err.season_over"));
 
+            // Teams: the member sending it (the host fills it in from the sender). A solo season only has member 0.
+            int member = s.IsTeam ? Math.Max(-1, Math.Min(1, cmd.Member)) : 0;
+            if (member < 0 && cmd.Type != CommandType.EndParty) member = 0;
+
             switch (cmd.Type)
             {
-                case CommandType.OpenDoor: return OpenDoor(s, events);
+                case CommandType.OpenDoor: return OpenDoor(s, member, events);
                 case CommandType.UseAbility:
                 {
-                    var result = UseAbility(s, cmd, events);
+                    var result = UseAbility(s, cmd, member, events);
                     if (result.Ok) RefreshFreeAction(s, cmd.Actor, events);
                     return result;
                 }
                 case CommandType.AdmitPeeked: return AdmitPeeked(s, events);
                 case CommandType.RejectPeeked: return RejectPeeked(s, events);
                 case CommandType.ResolveAttraction: return ResolveAttraction(s, cmd.TargetA, cmd.TargetB, events);
-                case CommandType.EndParty: return EndParty(s, events);
+                case CommandType.EndParty: return EndParty(s, member, events);
                 case CommandType.BlameGuest: return Blame(s, cmd.TargetA, events);
-                case CommandType.BuyGuest: return Buy(s, cmd.Guest, events);
-                case CommandType.ExpandHouse: return Expand(s, events);
+                case CommandType.BuyGuest: return Buy(s, cmd.Guest, member, events);
+                case CommandType.ExpandHouse: return Expand(s, member, events);
                 case CommandType.StartNextNight: return StartNextNight(s, events);
-                case CommandType.UseStreamerPower: return UsePower(s, events);
-                case CommandType.RemoveGuest: return Dismiss(s, cmd.TargetA, events);
+                case CommandType.UseStreamerPower: return UsePower(s, member, events);
+                case CommandType.RemoveGuest: return Dismiss(s, cmd.TargetA, member, events);
+                case CommandType.BuyExtraStream: return BuyExtraStream(s, events);
+                case CommandType.BuyShopViewer: return BuyShopViewer(s, cmd.Guest, events);
                 default: return CommandResult.Fail(Err.Of("err.unknown_command"));
             }
         }
@@ -530,9 +544,12 @@ namespace DeckParty.Core
             return available < 0 ? -available * GameRules.InfluenceShortfallCashPenalty : 0;
         }
 
-        /// <summary>The next Sub Cap upgrade's price, after Boomers' discount for this shop (never below 0).</summary>
-        public static int ExpansionCost(PlayerState s) =>
-            Math.Max(0, GameRules.ExpansionCost(s.Expansions) - s.ExpansionDiscount);
+        /// <summary>
+        /// The next Sub Cap upgrade's price, after Boomers' discount for this shop (never below 0). Teams: each member raises
+        /// their own Sub Cap, so the price follows that member's upgrades.
+        /// </summary>
+        public static int ExpansionCost(PlayerState s, int member = 0) =>
+            Math.Max(0, GameRules.ExpansionCost(s.ExpansionsOf(member)) - s.ExpansionDiscount);
 
         /// <summary>
         /// What recruiting this viewer costs right now: its price, less your Shop Control discount and plus rival Saboteurs'
@@ -591,14 +608,14 @@ namespace DeckParty.Core
         public static int HypeSeats(PlayerState s) =>
             s.Phase == GamePhase.Party ? Communities.HypeSeats(CommunityScore(s, Community.HypeMen)) : 0;
 
-        /// <summary>Viewers in chat sitting in a Hype Men spare seat.</summary>
-        public static int HypeSeated(PlayerState s)
+        /// <summary>Viewers in chat sitting in a Hype Men spare seat (on one member's side, or -1 for everyone).</summary>
+        public static int HypeSeated(PlayerState s, int member = -1)
         {
             int count = 0;
             for (int i = 0; i < s.House.Count; i++)
             {
                 var g = s.Find(s.House[i]);
-                if (g != null && g.HypeSeat) count++;
+                if (g != null && g.HypeSeat && (member < 0 || s.Owns(g, member))) count++;
             }
             return count;
         }
@@ -615,38 +632,48 @@ namespace DeckParty.Core
         /// </summary>
         static void SettleHypeSeats(PlayerState s)
         {
-            int seated = HypeSeated(s);
-            for (int i = 0; i < s.House.Count && seated > 0 && s.Occupancy - seated < s.Capacity; i++)
+            for (int member = 0; member < s.Members; member++)
             {
-                var g = s.Find(s.House[i]);
-                if (g == null || !g.HypeSeat) continue;
-                g.HypeSeat = false;
-                seated--;
+                int seated = HypeSeated(s, member);
+                for (int i = 0; i < s.House.Count && seated > 0 && s.OccupancyOf(member) - seated < s.CapacityOf(member); i++)
+                {
+                    var g = s.Find(s.House[i]);
+                    if (g == null || !g.HypeSeat || !s.Owns(g, member)) continue;
+                    g.HypeSeat = false;
+                    seated--;
+                }
             }
         }
 
         // ================================================================== queries: what can be done
 
-        public static string GetDoorBlocker(PlayerState s)
+        /// <summary>Why this member can't Add Viewer right now (null when they can). Teams: each member has their own queue and Sub Cap.</summary>
+        public static string GetDoorBlocker(PlayerState s, int member = 0)
         {
             if (s.Phase != GamePhase.Party) return Err.Of("err.stream_over");
+            if (s.StreamDoneFor(member)) return Err.Of("err.stream_ended_self");
             if (s.PeekedId >= 0) return Err.Of("err.decide_waiting");
             if (s.AttractionPending) return Err.Of("err.decide_attraction");
-            if (s.HouseFull) return Err.Of("err.sub_cap");
-            if (s.Pool.Count == 0) return Err.Of("err.queue_empty");
+            if (s.SideFull(member)) return Err.Of("err.sub_cap");
+            if (s.NextInPool(member) < 0) return Err.Of("err.queue_empty");
             return null;
         }
 
-        public static string GetEndPartyBlocker(PlayerState s)
+        public static string GetEndPartyBlocker(PlayerState s, int member = 0)
         {
             if (s.Phase != GamePhase.Party) return Err.Of("err.stream_over");
+            if (member >= 0 && s.StreamDoneFor(member)) return Err.Of("err.stream_ended_self");
             if (s.PeekedId >= 0) return Err.Of("err.decide_waiting");
             if (s.AttractionPending) return Err.Of("err.decide_attraction");
             return null;
         }
 
-        /// <summary>Null when the guest's action can be started (targets are validated separately).</summary>
-        public static string GetAbilityBlocker(PlayerState s, int actorId)
+        /// <summary>
+        /// Null when the guest's action can be started (targets are validated separately). Teams: a member uses the actions
+        /// of their own viewers (on anyone in chat, their partner's viewers included) until they end their side of the
+        /// stream; pass -1 to skip that check.
+        /// </summary>
+        public static string GetAbilityBlocker(PlayerState s, int actorId, int member = -1)
         {
             if (s.Phase != GamePhase.Party) return Err.Of("err.stream_over");
             if (s.PeekedId >= 0) return Err.Of("err.decide_waiting");
@@ -655,6 +682,11 @@ namespace DeckParty.Core
 
             var actor = s.Find(actorId);
             if (actor == null) return Err.Of("err.unknown_viewer");
+            if (s.IsTeam && member >= 0)
+            {
+                if (!s.Owns(actor, member)) return Err.Of("err.partners_viewer");
+                if (s.StreamDoneFor(member)) return Err.Of("err.stream_ended_self");
+            }
             var info = actor.Info;
             if (!info.HasAbility) return Err.Of("err.no_action", Err.Guest(actor.Kind));
             if (s.UsedAbilities.Contains(actorId)) return Err.Of("err.action_used", Err.Action(actor.Kind));
@@ -662,9 +694,10 @@ namespace DeckParty.Core
             switch (info.Ability)
             {
                 case AbilityKind.Fetch:
-                    if (s.Pool.Count == 0) return Err.Of("err.queue_empty");
+                    // From the actor's own queue (a team member's queue holds their Audience), onto their side of the chat.
+                    if (s.NextInPool(actor.Owner) < 0) return Err.Of("err.queue_empty");
                     // A Hype Man (the Evangelist) may still bring someone into a free spare seat.
-                    if (s.HouseFull && !(IsHypeMan(actor) && FreeHypeSeats(s) > 0)) return Err.Of("err.sub_cap");
+                    if (s.SideFull(actor.Owner) && !(IsHypeMan(actor) && FreeHypeSeats(s) > 0)) return Err.Of("err.sub_cap");
                     break;
                 case AbilityKind.Inspect:
                     if (s.Pool.Count < 2) return Err.Of("err.needs_two_queued");
@@ -682,7 +715,7 @@ namespace DeckParty.Core
                     if (WouldRaidWithExtraTrouble(s)) return Err.Of("err.would_ban");
                     break;
                 case AbilityKind.Peek:
-                    if (s.Pool.Count == 0) return Err.Of("err.queue_empty");
+                    if (s.NextInPool(actor.Owner) < 0) return Err.Of("err.queue_empty");
                     break;
                 case AbilityKind.Calm:
                     if (TroublemakerCount(s) == 0) return Err.Of("err.no_risky");
@@ -722,7 +755,8 @@ namespace DeckParty.Core
             if (actor == null) return false;
             var kind = actor.Info.Ability;
 
-            if (kind == AbilityKind.Fetch) return s.Pool.Contains(candidateId);
+            // Fetch: from the actor's own queue (teams: each member's queue holds their Audience).
+            if (kind == AbilityKind.Fetch) return s.Pool.Contains(candidateId) && s.Owns(s.Find(candidateId), actor.Owner);
             if (!s.House.Contains(candidateId)) return false;
             if (chosen != null)
                 for (int i = 0; i < chosen.Count; i++)
@@ -771,23 +805,40 @@ namespace DeckParty.Core
             }
         }
 
-        /// <summary>Bot Detector: two guests sit next to each other when they're in consecutive chat spots.</summary>
+        /// <summary>
+        /// Bot Detector: two guests sit next to each other when they're in consecutive chat spots. Teams: on the same side
+        /// of the chat, consecutive among that side's viewers (as the split chat shows them).
+        /// </summary>
         public static bool AreNeighbours(PlayerState s, int a, int b)
         {
-            int ia = s.House.IndexOf(a);
-            int ib = s.House.IndexOf(b);
+            var seats = SideSeats(s, a);
+            int ia = seats.IndexOf(a);
+            int ib = seats.IndexOf(b);
             return ia >= 0 && ib >= 0 && Math.Abs(ia - ib) == 1;
+        }
+
+        /// <summary>The chat in joining order, or (teams) just the side this viewer sits on.</summary>
+        static List<int> SideSeats(PlayerState s, int id)
+        {
+            if (!s.IsTeam) return s.House;
+            var g = s.Find(id);
+            var side = new List<int>(s.House.Count);
+            if (g == null) return side;
+            foreach (var other in s.House)
+                if (s.Owns(s.Find(other), g.Owner)) side.Add(other);
+            return side;
         }
 
         /// <summary>Whether a guest has a neighbour Bot Detector could remove together with them.</summary>
         static bool HasPairPartner(PlayerState s, int id)
         {
-            int index = s.House.IndexOf(id);
+            var seats = SideSeats(s, id);
+            int index = seats.IndexOf(id);
             for (int offset = -1; offset <= 1; offset += 2)
             {
                 int j = index + offset;
-                if (j < 0 || j >= s.House.Count) continue;
-                var neighbour = s.Find(s.House[j]);
+                if (index < 0 || j < 0 || j >= seats.Count) continue;
+                var neighbour = s.Find(seats[j]);
                 if (neighbour != null && !neighbour.Immune && !IsProtected(s, neighbour)) return true;
             }
             return false;
@@ -877,13 +928,14 @@ namespace DeckParty.Core
             return result;
         }
 
-        public static string GetBuyBlocker(PlayerState s, GuestType type)
+        /// <summary>Why this member can't recruit the viewer (null when they can). Teams: copy limits are per member's Audience.</summary>
+        public static string GetBuyBlocker(PlayerState s, GuestType type, int member = 0)
         {
             if (s.Phase != GamePhase.Planning) return Err.Of("err.recruit_between");
             if (!s.Shop.Contains(type)) return Err.Of("err.not_in_set");
             var info = GuestCatalog.Get(type);
             if (!info.Purchasable) return Err.Of("err.cant_buy", Err.Guest(type));
-            if (s.CountOwned(type) >= info.MaxCopies) return Err.Of("err.max_copies", info.MaxCopies, Err.Guest(type));
+            if (s.CountOwned(type, member) >= info.MaxCopies) return Err.Of("err.max_copies", info.MaxCopies, Err.Guest(type));
             if (SharedLeft(s, type) <= 0) return Err.Of("err.sold_out", Err.Guest(type));
             int cost = RecruitCost(s, type);
             if (s.Cash < cost) return Err.Of("err.needs_cash_banked", cost);
@@ -892,8 +944,11 @@ namespace DeckParty.Core
 
         // ------------------------------------------------------------------ the shared shop
 
-        /// <summary>Copies of a type this player took from the shop (everything beyond the starting Audience).</summary>
-        public static int TakenFromShop(PlayerState s, GuestType type) => Math.Max(0, s.CountOwned(type) - StartingCopies(type));
+        /// <summary>
+        /// Copies of a type this season took from the shop (everything beyond the starting Audience; a team counts both
+        /// members' starting Audiences).
+        /// </summary>
+        public static int TakenFromShop(PlayerState s, GuestType type) => Math.Max(0, s.CountOwned(type) - StartingCopies(type) * Math.Max(1, s.Members));
 
         /// <summary>
         /// Copies still in the shop for every player (the shop's stock is shared by the whole match). Diamonds are
@@ -910,34 +965,35 @@ namespace DeckParty.Core
         /// How many more copies this player can buy: the smaller of their own copy limit and the shared stock.
         /// <see cref="int.MaxValue"/> means unlimited (Diamonds).
         /// </summary>
-        public static int ShopLeft(PlayerState s, GuestType type)
+        public static int ShopLeft(PlayerState s, GuestType type, int member = 0)
         {
             var info = GuestCatalog.Get(type);
             if (!info.Purchasable) return 0;
             if (info.IsDiamond) return int.MaxValue;
-            return Math.Max(0, Math.Min(info.MaxCopies - s.CountOwned(type), SharedLeft(s, type)));
+            return Math.Max(0, Math.Min(info.MaxCopies - s.CountOwned(type, member), SharedLeft(s, type)));
         }
 
         /// <summary>What Remove a Viewer costs right now (Influence): 2 for the first, 1 more for each one since.</summary>
         public static int RemovalCost(PlayerState s) => GameRules.RemovalCost(s.Removals);
 
-        /// <summary>Why Remove a Viewer can't be bought right now (null when it can). Doesn't check which viewer.</summary>
-        public static string GetRemoveBlocker(PlayerState s)
+        /// <summary>Why Remove a Viewer can't be bought right now (null when it can). Doesn't check which viewer. Teams: per member's Audience.</summary>
+        public static string GetRemoveBlocker(PlayerState s, int member = 0)
         {
             if (s.Phase != GamePhase.Planning) return Err.Of("err.remove_between");
-            if (s.PermanentCount <= GameRules.MinAudience) return Err.Of("err.min_audience", GameRules.MinAudience);
+            if (s.PermanentCountOf(member) <= GameRules.MinAudience) return Err.Of("err.min_audience", GameRules.MinAudience);
             int cost = RemovalCost(s);
             if (s.Influence < cost) return Err.Of("err.needs_influence", cost);
             return null;
         }
 
         /// <summary>Remove a Viewer: pays the Influence and takes one card out of the Audience for good (it goes back to the shop's stock).</summary>
-        static CommandResult Dismiss(PlayerState s, int guestId, List<GameEvent> ev)
+        static CommandResult Dismiss(PlayerState s, int guestId, int member, List<GameEvent> ev)
         {
-            var blocker = GetRemoveBlocker(s);
+            var blocker = GetRemoveBlocker(s, member);
             if (blocker != null) return CommandResult.Fail(blocker);
             var g = s.Find(guestId);
             if (g == null || g.Temporary) return CommandResult.Fail(Err.Of("err.unknown_viewer"));
+            if (!s.Owns(g, member)) return CommandResult.Fail(Err.Of("err.partners_viewer"));
 
             int cost = RemovalCost(s);
             s.Influence -= cost;
@@ -948,11 +1004,12 @@ namespace DeckParty.Core
             return CommandResult.Success;
         }
 
-        public static string GetExpandBlocker(PlayerState s)
+        /// <summary>Why this member can't raise their Sub Cap (null when they can).</summary>
+        public static string GetExpandBlocker(PlayerState s, int member = 0)
         {
             if (s.Phase != GamePhase.Planning) return Err.Of("err.upgrade_between");
-            if (s.Capacity >= GameRules.MaxCapacity) return Err.Of("err.sub_cap_maxed");
-            int cost = ExpansionCost(s);
+            if (s.CapacityOf(member) >= GameRules.MaxCapacity) return Err.Of("err.sub_cap_maxed");
+            int cost = ExpansionCost(s, member);
             if (s.Influence < cost) return Err.Of("err.needs_influence", cost);
             return null;
         }
@@ -1016,9 +1073,14 @@ namespace DeckParty.Core
             s.PartyViewerBonus = 0;
             s.PartyFreeActions = 0;
             s.PartyXRay = false;
-            // Three-Hour Episode's extra seat was for that stream only.
-            if (s.PartySeats > 0) s.Capacity = Math.Max(1, s.Capacity - s.PartySeats);
+            // Three-Hour Episode's extra seat was for that stream only (a team had it on both sides).
+            if (s.PartySeats > 0)
+            {
+                s.Capacity = Math.Max(1, s.Capacity - s.PartySeats);
+                if (s.IsTeam) s.PartnerCapacity = Math.Max(1, s.PartnerCapacity - s.PartySeats);
+            }
             s.PartySeats = 0;
+            s.StreamDone = 0;
             s.PartyBark = 0;
             s.PartySoftLanding = false;
             s.PartyInterviewUsed = false;
@@ -1047,18 +1109,20 @@ namespace DeckParty.Core
             s.Pool.Insert(index, id);
         }
 
-        static CommandResult OpenDoor(PlayerState s, List<GameEvent> ev)
+        /// <summary>Add Viewer: the next viewer in this member's queue joins their side of the chat.</summary>
+        static CommandResult OpenDoor(PlayerState s, int member, List<GameEvent> ev)
         {
-            var blocker = GetDoorBlocker(s);
+            var blocker = GetDoorBlocker(s, member);
             if (blocker != null) return CommandResult.Fail(blocker);
-            Arrive(s, s.Pool[0], -1, -1, true, ev);
+            Arrive(s, s.NextInPool(member), -1, -1, true, ev);
             return CommandResult.Success;
         }
 
         static CommandResult AdmitPeeked(PlayerState s, List<GameEvent> ev)
         {
             if (s.Phase != GamePhase.Party || s.PeekedId < 0) return CommandResult.Fail(Err.Of("err.nobody_waiting"));
-            if (s.HouseFull) return CommandResult.Fail(Err.Of("err.cap_deny"));
+            var peeked = s.Find(s.PeekedId);
+            if (s.SideFull(peeked != null ? peeked.Owner : 0)) return CommandResult.Fail(Err.Of("err.cap_deny"));
             int id = s.PeekedId;
             s.PeekedId = -1;
             Arrive(s, id, -1, -1, false, ev);
@@ -1096,7 +1160,9 @@ namespace DeckParty.Core
             OnArrival(s, g, ev);
             ReactToArrival(s, g, ev);
 
-            if (s.Occupancy > s.Capacity + HypeSeated(s))
+            // Server Down: this viewer's side of the chat (the whole chat for a solo season) is over its Sub Cap.
+            int side = g.Owner;
+            if (s.OccupancyOf(side) > s.CapacityOf(side) + HypeSeated(s, s.IsTeam ? side : -1))
             {
                 // Hype Men: a viewer a Hype Man brought in takes a free spare seat instead of crashing the server.
                 if (IsHypeMan(s.Find(sourceId)) && FreeHypeSeats(s) > 0)
@@ -1113,16 +1179,18 @@ namespace DeckParty.Core
             }
             if (CheckRaid(s, ev)) return false;
 
+            // Viewers who bring others take them from their own queue (teams: their member's queue, onto that side).
             for (int i = 0; i < g.Info.Brings; i++)
             {
-                if (s.Pool.Count == 0) break;
-                if (!Arrive(s, s.Pool[0], -1, id, true, ev)) return false;
+                int next = s.NextInPool(g.Owner);
+                if (next < 0) break;
+                if (!Arrive(s, next, -1, id, true, ev)) return false;
             }
 
             // Generous Donator: brings in the next viewer and scores them once right away.
-            if (g.Kind == GuestType.GenerousDonator && s.Pool.Count > 0)
+            if (g.Kind == GuestType.GenerousDonator && s.NextInPool(g.Owner) >= 0)
             {
-                int greeted = s.Pool[0];
+                int greeted = s.NextInPool(g.Owner);
                 if (!Arrive(s, greeted, -1, id, true, ev)) return false;
                 var guest = s.Find(greeted);
                 if (guest != null && s.House.Contains(greeted)) ScoreNow(s, guest, id, ev);
@@ -1572,10 +1640,10 @@ namespace DeckParty.Core
 
         // ================================================================== actions
 
-        static CommandResult UseAbility(PlayerState s, GameCommand cmd, List<GameEvent> ev)
+        static CommandResult UseAbility(PlayerState s, GameCommand cmd, int member, List<GameEvent> ev)
         {
             int actorId = cmd.Actor;
-            var blocker = GetAbilityBlocker(s, actorId);
+            var blocker = GetAbilityBlocker(s, actorId, s.IsTeam ? member : -1);
             if (blocker != null) return CommandResult.Fail(blocker);
             var error = ValidateCommand(s, cmd);
             if (error != null) return CommandResult.Fail(error);
@@ -1723,8 +1791,8 @@ namespace DeckParty.Core
                     }
                     else
                     {
-                        int peeked = s.Pool[0];
-                        s.Pool.RemoveAt(0);
+                        int peeked = s.NextInPool(actor.Owner);
+                        s.Pool.Remove(peeked);
                         s.PeekedId = peeked;
                         Emit(ev, GameEventType.GuestPeeked, s.Find(peeked), actorId);
                     }
@@ -1866,8 +1934,8 @@ namespace DeckParty.Core
 
                 case AbilityKind.Peek:
                 {
-                    int peeked = s.Pool[0];
-                    s.Pool.RemoveAt(0);
+                    int peeked = s.NextInPool(actor.Owner);
+                    s.Pool.Remove(peeked);
                     s.PeekedId = peeked;
                     Emit(ev, GameEventType.GuestPeeked, s.Find(peeked), actorId);
                     break;
@@ -1982,10 +2050,24 @@ namespace DeckParty.Core
 
         // ================================================================== ending a party
 
-        static CommandResult EndParty(PlayerState s, List<GameEvent> ev)
+        /// <summary>
+        /// End the Stream. Teams: each member ends their own side; the stream is scored (as one) once every member has.
+        /// Member -1 ends every side at once (the host's timeouts).
+        /// </summary>
+        static CommandResult EndParty(PlayerState s, int member, List<GameEvent> ev)
         {
-            var blocker = GetEndPartyBlocker(s);
+            var blocker = GetEndPartyBlocker(s, member);
             if (blocker != null) return CommandResult.Fail(blocker);
+            if (s.IsTeam)
+            {
+                int all = (1 << s.Members) - 1;
+                s.StreamDone = member < 0 ? all : s.StreamDone | (1 << member);
+                if (s.StreamDone != all)
+                {
+                    Emit(ev, GameEventType.MemberStreamEnded, null, member);
+                    return CommandResult.Success;
+                }
+            }
             ScoreStream(s, ev);
             return CommandResult.Success;
         }
@@ -2067,7 +2149,16 @@ namespace DeckParty.Core
             s.DoomOut = doom;
             s.BotsOut = bots;
 
-            if (diamonds >= GameRules.DiamondsToWin)
+            if (s.IsEndless)
+            {
+                // Endless: no win. Every Trophy viewer in a scored stream banks a Trophy, spent on streams and shop viewers.
+                if (diamonds > 0)
+                {
+                    s.Trophies += diamonds;
+                    Emit(ev, GameEventType.TrophiesBanked, null, diamonds, s.Trophies);
+                }
+            }
+            else if (diamonds >= GameRules.DiamondsToWin)
             {
                 s.Phase = GamePhase.Victory;
                 s.WinNight = s.Night;
@@ -2385,10 +2476,11 @@ namespace DeckParty.Core
 
         // ================================================================== planning phase
 
-        static CommandResult Buy(PlayerState s, GuestType type, List<GameEvent> ev)
+        /// <summary>Recruit: paid from the (shared) Cash; the card joins this member's Audience.</summary>
+        static CommandResult Buy(PlayerState s, GuestType type, int member, List<GameEvent> ev)
         {
             if (!GuestCatalog.IsValid(type)) return CommandResult.Fail(Err.Of("err.unknown_viewer"));
-            var blocker = GetBuyBlocker(s, type);
+            var blocker = GetBuyBlocker(s, type, member);
             if (blocker != null) return CommandResult.Fail(blocker);
 
             // Shop Control's discount and rival Saboteurs' surcharge only touch this one recruit.
@@ -2396,21 +2488,30 @@ namespace DeckParty.Core
             s.Cash -= cost;
             s.RecruitDiscount = 0;
             s.IncomingSabotage = 0;
-            var g = AddGuest(s, type);
-            Emit(ev, GameEventType.GuestPurchased, g, cost);
+            var g = AddGuest(s, type, false, member);
+            Emit(ev, GameEventType.GuestPurchased, g, cost, member);
             return CommandResult.Success;
         }
 
-        static CommandResult Expand(PlayerState s, List<GameEvent> ev)
+        /// <summary>Raise the Sub Cap: paid from the (shared) Influence; raises this member's Sub Cap.</summary>
+        static CommandResult Expand(PlayerState s, int member, List<GameEvent> ev)
         {
-            var blocker = GetExpandBlocker(s);
+            var blocker = GetExpandBlocker(s, member);
             if (blocker != null) return CommandResult.Fail(blocker);
 
-            int cost = ExpansionCost(s);
+            int cost = ExpansionCost(s, member);
             s.Influence -= cost;
-            s.Capacity++;
-            s.Expansions++;
-            Emit(ev, GameEventType.HouseExpanded, null, s.Capacity, cost);
+            if (s.IsTeam && member == 1)
+            {
+                s.PartnerCapacity++;
+                s.PartnerExpansions++;
+            }
+            else
+            {
+                s.Capacity++;
+                s.Expansions++;
+            }
+            Emit(ev, GameEventType.HouseExpanded, null, s.CapacityOf(member), cost, member);
             return CommandResult.Success;
         }
 
@@ -2474,7 +2575,7 @@ namespace DeckParty.Core
             return result;
         }
 
-        static CommandResult UsePower(PlayerState s, List<GameEvent> ev)
+        static CommandResult UsePower(PlayerState s, int member, List<GameEvent> ev)
         {
             var blocker = GetPowerBlocker(s);
             if (blocker != null) return CommandResult.Fail(blocker);
@@ -2488,7 +2589,7 @@ namespace DeckParty.Core
             {
                 var choices = PalSphereChoices(s);
                 var type = choices[DeterministicRandom.Range(ref s.RngState, choices.Count)];
-                var g = AddGuest(s, type);
+                var g = AddGuest(s, type, false, member);
                 Emit(ev, GameEventType.PalCaught, g);
             }
             else if (s.Streamer == StreamerType.ManimMakethMan)
@@ -2589,6 +2690,7 @@ namespace DeckParty.Core
                     // Taken back off in ClearParty when the stream ends, however it ends.
                     s.PartySeats = StreamerCatalog.EpisodeSeats;
                     s.Capacity += s.PartySeats;
+                    if (s.IsTeam) s.PartnerCapacity += s.PartySeats;
                     Emit(ev, GameEventType.ExtraSeatActive, null, s.PartySeats);
                     break;
                 case StreamerType.IRunFast:
@@ -2623,11 +2725,12 @@ namespace DeckParty.Core
         }
 
         /// <summary>The next viewers in the queue that X-Ray Vision reveals this stream (empty without it).</summary>
-        public static List<int> XRayQueue(PlayerState s)
+        public static List<int> XRayQueue(PlayerState s, int member = 0)
         {
             var result = new List<int>();
             if (!s.PartyXRay || s.Phase != GamePhase.Party) return result;
-            for (int i = 0; i < s.Pool.Count && i < StreamerCatalog.XRayCount; i++) result.Add(s.Pool[i]);
+            for (int i = 0; i < s.Pool.Count && result.Count < StreamerCatalog.XRayCount; i++)
+                if (s.Owns(s.Find(s.Pool[i]), member)) result.Add(s.Pool[i]);
             return result;
         }
 

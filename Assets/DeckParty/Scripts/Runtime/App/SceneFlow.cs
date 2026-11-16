@@ -18,6 +18,12 @@ namespace DeckParty
         public bool ContinueSave;
         /// <summary>The streamer picked on the select screen (a StreamerType; the Random pick is resolved when the game is created).</summary>
         public byte Streamer;
+        /// <summary>Classic (the character sets) or Endless.</summary>
+        public Core.GameMode Mode = Core.GameMode.Classic;
+        /// <summary>Versus the AI: a simple AI plays its own season alongside yours.</summary>
+        public bool VersusAi;
+        /// <summary>Versus the AI: the AI's streamer (a StreamerType or the Random pick).</summary>
+        public byte OpponentStreamer;
     }
 
     /// <summary>Local (non-networked) scene transitions plus hand-off data between scenes.</summary>

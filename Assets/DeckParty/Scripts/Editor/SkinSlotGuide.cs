@@ -83,7 +83,7 @@ namespace DeckParty.EditorTools
             new Info(SkinSlot.IconTrouble, Area.Resources, "Deplatform Risk icon", Kind.Icon,
                 "The three risk pips in the title band at the top of the Stream Chat window, the risk badge on chat avatars and viewer cards, and the small Risk icon inside text."),
             new Info(SkinSlot.IconStar, Area.Resources, "Trophy icon", Kind.Icon,
-                "The Trophies count in the middle of the menu bar (the icon and \"in chat / needed to win\"), the Trophy badge on chat avatars, viewer cards, viewer rows and shop tiles, the Trophies in the Players panel, and the small Trophy icon inside text."),
+                "The Trophies count in the middle of the menu bar (the icon and \"in chat / needed to win\"; in Endless, the Trophies banked), the Trophy badge on chat avatars, viewer cards, viewer rows and shop tiles, the Trophies in the Players panel, the Trophy prices of the Endless shop buttons, and the small Trophy icon inside text."),
             new Info(SkinSlot.IconCancel, Area.Resources, "Cancels Risk badge", Kind.Icon,
                 "The shield badge on chat avatars and viewer cards whose viewer cancels 1 Deplatform Risk (for example the Normie)."),
 
@@ -141,6 +141,24 @@ namespace DeckParty.EditorTools
                 "The play icon on the big Go Live button at the end of the shop toolbar."),
             new Info(SkinSlot.IconRemoveViewer, Area.Shop, "Remove a Viewer button icon", Kind.Icon,
                 "The Remove a Viewer button in the shop toolbar."),
+            new Info(SkinSlot.IconAddStream, Area.Shop, "Add a Stream button icon (Endless)", Kind.Icon,
+                "Endless mode only: the Add a Stream button in the shop toolbar (it buys one more stream with Trophies). The rest of its look is in UI Skin > Shop > Add Stream."),
+            new Info(SkinSlot.IconAddShopViewer, Area.Shop, "Add a Viewer to the Shop button icon (Endless)", Kind.Icon,
+                "Endless mode only: the Add a Viewer to the Shop button in the shop toolbar (it adds a viewer the shop doesn't sell yet, for Trophies). The rest of its look is in UI Skin > Shop > Add Shop Viewer."),
+
+            // --- Game modes ---
+            new Info(SkinSlot.TeamDivider, Area.Stream, "Team divider (2v2 and co-op)", Kind.Frame,
+                "Team modes only: the vertical line between the two players' sides of the Stream Chat window. Override Colour sets its colour; art is stretched to the line."),
+            new Info(SkinSlot.ModeButton, Area.Menus, "Single-player mode buttons", Kind.Frame,
+                "The background of the three big buttons on the single-player mode screen (Puzzles, Endless, Versus the AI)."),
+            new Info(SkinSlot.IconModePuzzles, Area.Menus, "Puzzles button icon", Kind.Icon,
+                "The icon on the Puzzles (character sets) button of the single-player mode screen."),
+            new Info(SkinSlot.IconModeEndless, Area.Menus, "Endless button icon", Kind.Icon,
+                "The icon on the Endless button of the single-player mode screen."),
+            new Info(SkinSlot.IconModeVersusAi, Area.Menus, "Versus the AI button icon", Kind.Icon,
+                "The icon on the Versus the AI button of the single-player mode screen."),
+            new Info(SkinSlot.IconSwitchTeam, Area.Players, "Switch Team button icon (2v2)", Kind.Icon,
+                "2v2 lobbies only: the Switch Team button beside the player list."),
 
             // --- Players ---
             new Info(SkinSlot.IconCrown, Area.Players, "Host crown", Kind.Icon,

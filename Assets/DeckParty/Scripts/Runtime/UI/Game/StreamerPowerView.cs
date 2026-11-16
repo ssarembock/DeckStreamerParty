@@ -50,17 +50,20 @@ namespace DeckParty.UI
             if (infoTooltip != null) infoTooltip.Provider = InfoTooltip;
         }
 
-        string InfoTooltip()
+        string InfoTooltip() => Info()?.ToString();
+
+        /// <summary>Who the streamer is, what their power does and whether it's ready (the price rules sit under it).</summary>
+        TipText Info()
         {
             if (m_State == null) return null;
             var type = m_State.Streamer;
-            if (type == StreamerType.None) return Loc.Get("power.none");
+            if (type == StreamerType.None) return TipText.Titled(Loc.Get("power.none"));
             var info = StreamerCatalog.Get(type);
-            string text = $"<b><size=115%>{StreamerVisuals.NameTag(type)}</size></b>\n" +
-                          GuestVisuals.Colored(StreamerVisuals.KindLabel(type), UIPalette.Gold) + "   " + GuestVisuals.Colored(StreamerVisuals.PowerName(type), UIPalette.Pink) + "\n" +
-                          StreamerVisuals.PowerDescription(type);
-            text += "\n" + (info.IsPassive ? GuestVisuals.Colored(Loc.Get("power.passive"), UIPalette.Teal) : Status(m_State, info, m_Rivals));
-            return text;
+            var tip = TipText.Titled(StreamerVisuals.Name(type), StreamerVisuals.KindLabel(type));
+            tip.Line(TipText.Bold(GuestVisuals.Colored(StreamerVisuals.PowerName(type), UIPalette.Pink)) + "  " + StreamerVisuals.PowerDescription(type));
+            tip.Section().Line(info.IsPassive ? GuestVisuals.Colored(Loc.Get("power.passive"), UIPalette.Teal) : Status(m_State, info, m_Rivals, false));
+            if (!info.IsPassive) tip.Detail(StreamerVisuals.CostRules(type));
+            return tip;
         }
 
         void OnDisable() => ResetPose();
@@ -157,20 +160,22 @@ namespace DeckParty.UI
                 {
                     // Scenes built since 2026-11-15: the streamer is on the button, so its one tooltip says who they are,
                     // what the power does, its status and the price.
-                    useTooltip.Text = InfoTooltip() + "\n" + useWords + (why != null ? "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : string.Empty);
+                    useTooltip.Text = Info().Line(useWords).Warn(why);
                 }
                 else useTooltip.Text = infoTooltip != null
-                    ? $"<b>{StreamerVisuals.PowerName(type)}</b>  {useWords}\n{StreamerVisuals.CostRules(type)}" + (why != null ? "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : string.Empty)
+                    ? TipText.Titled(StreamerVisuals.PowerName(type)).Line(useWords).Detail(StreamerVisuals.CostRules(type)).Warn(why)
                     : why ?? StreamerVisuals.CostRules(type);
             }
         }
 
-        static string Status(PlayerState s, StreamerInfo info, bool rivalsAvailable)
+        /// <param name="withRules">False for the pop-up, which shows the price rules on a line of their own.</param>
+        static string Status(PlayerState s, StreamerInfo info, bool rivalsAvailable, bool withRules = true)
         {
             if (info.NeedsRival && !rivalsAvailable) return GuestVisuals.Colored(Loc.Get("power.single_player"), UIPalette.TextDim);
             if (s.PowerArmed) return GuestVisuals.Colored(Loc.Get("power.armed"), UIPalette.Gold);
             if (s.PowerCooldown > 0) return GuestVisuals.Colored(Loc.Get("power.cooldown", "count", s.PowerCooldown), UIPalette.Orange);
-            return GuestVisuals.Colored(Loc.Get("power.ready"), UIPalette.Green) + "   " + GuestVisuals.Colored(StreamerVisuals.CostRules(s.Streamer), UIPalette.TextDim);
+            string ready = GuestVisuals.Colored(Loc.Get("power.ready"), UIPalette.Green);
+            return withRules ? ready + "   " + GuestVisuals.Colored(StreamerVisuals.CostRules(s.Streamer), UIPalette.TextDim) : ready;
         }
     }
 }

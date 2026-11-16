@@ -37,14 +37,39 @@ namespace DeckParty.UI
             root.SetActive(false);
         }
 
-        public void ShowSingle(PlayerState s, Action playAgain, Action mainMenu)
+        /// <param name="rival">Versus the AI: the AI's season (null otherwise).</param>
+        /// <param name="rivalName">Versus the AI: the AI's name.</param>
+        public void ShowSingle(PlayerState s, Action playAgain, Action mainMenu, PlayerState rival = null, string rivalName = null)
         {
             bool won = s.Phase == GamePhase.Victory;
             var scenario = ScenarioCatalog.Get(s.ScenarioId);
             titleLabel.text = Loc.Get(won ? "over.victory" : "over.season_over");
             titleLabel.color = won ? UIPalette.Gold : UIPalette.TextDim;
 
-            if (won)
+            if (s.IsEndless)
+            {
+                // Endless: no win, just how long the run lasted.
+                int streams = PartyEngine.StreamsLasted(s);
+                bool best = streams >= ProgressStore.BestEndlessRun;
+                titleLabel.text = Loc.Get("over.endless_title");
+                titleLabel.color = best ? UIPalette.Gold : UIPalette.Teal;
+                subtitleLabel.text = Loc.Get("over.endless_detail", "count", streams, "bought", s.StreamsBought) + "\n" +
+                                     (best ? $"<color=#FFC94A>{Loc.Get("over.endless_new_best")}</color>" : Loc.Get("modes.endless_best", "count", ProgressStore.BestEndlessRun));
+            }
+            else if (rival != null)
+            {
+                // Versus the AI: you, the AI, or nobody.
+                bool rivalWon = !won && rival.Phase == GamePhase.Victory;
+                titleLabel.text = won ? Loc.Get("over.versus_won", "rival", rivalName) : rivalWon ? Loc.Get("over.versus_lost", "rival", rivalName) : Loc.Get("over.versus_nobody");
+                titleLabel.color = won ? UIPalette.Gold : rivalWon ? UIPalette.Red : UIPalette.TextDim;
+                subtitleLabel.text = won
+                    ? Loc.Get("over.won_detail", ("count", GameRules.DiamondsToWin), ("night", s.WinNight), ("total", s.TotalNights), ("set", ContentText.ScenarioName(s.ScenarioId)))
+                    : rivalWon
+                        ? Loc.Get("over.versus_lost_detail", ("rival", rivalName), ("count", GameRules.DiamondsToWin), ("night", rival.WinNight))
+                        : Loc.Get("over.versus_nobody_detail", ("best", Terms.DiamondCount(s.BestDiamonds)), ("rival", rivalName), ("rival_best", Terms.DiamondCount(rival.BestDiamonds)));
+                subtitleLabel.text += "\n" + Loc.Get("single.versus_record", "wins", ProgressStore.VersusWins, "losses", ProgressStore.VersusLosses);
+            }
+            else if (won)
             {
                 subtitleLabel.text = Loc.Get("over.won_detail", ("count", GameRules.DiamondsToWin), ("night", s.WinNight), ("total", s.TotalNights), ("set", ContentText.ScenarioName(s.ScenarioId)));
                 if (scenario.IsRandom)
@@ -73,7 +98,26 @@ namespace DeckParty.UI
                 return b.BestDiamonds.CompareTo(a.BestDiamonds);
             });
 
-            if (matchOver && players.Count > 0)
+            if (net.Settings.Mode == MatchMode.CoopEndless && local != null && (matchOver || local.IsGameOver))
+            {
+                // Co-op: no winner, the run you lasted together.
+                titleLabel.text = Loc.Get("over.coop_title");
+                titleLabel.color = UIPalette.Teal;
+                subtitleLabel.text = Loc.Get("over.coop_detail", "team", net.TeamName(0), "count", PartyEngine.StreamsLasted(local));
+            }
+            else if (matchOver && players.Count > 0 && net.IsTeamMode)
+            {
+                // 2v2: the winning team (you share your teammate's result).
+                var winner = players[0];
+                bool localWon = winner.Team == net.TeamOf(net.LocalClientId);
+                string team = net.TeamName(winner.Team);
+                titleLabel.text = localWon ? Loc.Get("over.team_you_win") : Loc.Get("over.team_wins", "team", team);
+                titleLabel.color = localWon ? UIPalette.Gold : UIPalette.PlayerColor(winner.ColorIndex);
+                subtitleLabel.text = winner.Won
+                    ? Loc.Get("over.mp_won_detail", "count", GameRules.DiamondsToWin, "night", winner.WinNight)
+                    : Loc.Get("over.mp_nobody", "count", GameRules.DiamondsToWin, "best", winner.BestDiamonds);
+            }
+            else if (matchOver && players.Count > 0)
             {
                 var winner = players[0];
                 bool localWon = winner.ClientId == net.LocalClientId;
@@ -114,7 +158,9 @@ namespace DeckParty.UI
         {
             string text = Loc.Get("over.stats1", ("great", s.SuccessfulParties), ("banned", s.Raids), ("server_down", s.FireMarshals)) + "\n" +
                           Loc.Get("over.stats2", ("cash", s.TotalCashEarned), ("influence", s.TotalInfluenceEarned), ("viewers", s.PermanentCount),
-                              ("diamonds", s.DiamondsOwned()), ("cap", s.Capacity));
+                              ("diamonds", s.DiamondsOwned()), ("cap", s.TotalCapacity));
+            if (s.IsEndless)
+                text += "\n" + Loc.Get("over.stats_endless", ("trophies", s.Trophies), ("streams", s.StreamsBought), ("viewers", s.ShopViewersBought));
             if (s.Streamer != StreamerType.None)
                 text += "\n" + Loc.Get("over.stats_streamer", "streamer", StreamerVisuals.NameTag(s.Streamer), "uses", s.PowerUses);
             return text;

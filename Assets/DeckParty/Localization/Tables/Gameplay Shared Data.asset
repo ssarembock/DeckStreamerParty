@@ -1863,6 +1863,34 @@ MonoBehaviour:
     m_Key: log.hype_seat
     m_Metadata:
       m_Items: []
+  - m_Id: 5802216390221824
+    m_Key: err.endless_only
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193344
+    m_Key: err.shop_only
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193345
+    m_Key: err.needs_trophies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193346
+    m_Key: err.shop_has_all
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193347
+    m_Key: err.not_offered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193348
+    m_Key: err.partners_viewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802216411193349
+    m_Key: err.stream_ended_self
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

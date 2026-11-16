@@ -980,7 +980,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 416591587262532
     m_Localized: "Acci\xF3n (una vez por stream entre todos): cada espectador del
-      chat baja a 0 {icon:cash} esta noche, y cobras 1 {icon:influence} al instante
+      chat baja a 0 {icon:cash} en este stream, y cobras 1 {icon:influence} al instante
       por cada Benefactor multimillonario en el chat."
     m_Metadata:
       m_Items: []

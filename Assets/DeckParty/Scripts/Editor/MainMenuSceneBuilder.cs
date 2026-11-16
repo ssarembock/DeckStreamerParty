@@ -29,6 +29,7 @@ namespace DeckParty.EditorTools
             var screens = EditorUI.Rect(canvas, "Screens").Stretch();
 
             var main = BuildMainScreen(screens);
+            var modes = BuildSinglePlayerModeScreen(screens);
             var single = BuildSinglePlayerScreen(screens, prefabs);
             var multi = BuildMultiplayerScreen(screens);
             var lobby = BuildLobbyScreen(screens, prefabs);
@@ -49,8 +50,79 @@ namespace DeckParty.EditorTools
             controller.settingsScreen = settings;
             controller.howToPlayScreen = howTo;
             controller.streamerSelectScreen = select;
+            controller.singlePlayerModeScreen = modes;
 
             EditorSceneManager.SaveScene(scene, DeckPartyPaths.MainMenuScene);
+        }
+
+        // ------------------------------------------------------------------ single-player modes
+
+        /// <summary>Card size of the three single-player mode buttons.</summary>
+        static readonly Vector2 ModeCardSize = new Vector2(500, 560);
+        const float ModeCardGap = 48f;
+        const float ModeIconSize = 190f;
+
+        /// <summary>
+        /// Single Player's first screen (2026-11-16): Puzzles (the character sets), Endless and Versus the AI, as three big
+        /// cards. Each card's background is the UI Skin's Mode Button entry and its icon has its own entry.
+        /// </summary>
+        static SinglePlayerModeScreen BuildSinglePlayerModeScreen(Transform parent)
+        {
+            var screen = SceneCommon.Screen(parent, "SinglePlayerModeScreen");
+            SceneCommon.Header(screen, "modes.title", "modes.subtitle");
+
+            var row = EditorUI.Rect(screen, "Modes").Place(new Vector2(0.5f, 0.5f), new Vector2(0, -30),
+                new Vector2(ModeCardSize.x * 3 + ModeCardGap * 2, ModeCardSize.y));
+            EditorUI.HLayout(row, ModeCardGap, null, TextAnchor.MiddleCenter, false, false, false, false);
+
+            var puzzles = ModeCard(row, "Puzzles", EditorUI.Check, SkinSlot.IconModePuzzles, "modes.puzzles", "modes.puzzles_desc", UIPalette.Gold, out var puzzlesProgress);
+            var endless = ModeCard(row, "Endless", EditorUI.Night, SkinSlot.IconModeEndless, "modes.endless", "modes.endless_desc", UIPalette.Teal, out var endlessBest);
+            var versus = ModeCard(row, "VersusAi", EditorUI.Action, SkinSlot.IconModeVersusAi, "modes.versus", "modes.versus_desc", UIPalette.Pink, out var versusNote);
+            versusNote.gameObject.SetActive(false);
+
+            var back = SceneCommon.BackButton(screen);
+
+            var view = screen.gameObject.AddComponent<SinglePlayerModeScreen>();
+            view.puzzlesButton = puzzles;
+            view.endlessButton = endless;
+            view.versusButton = versus;
+            view.backButton = back;
+            view.endlessBestLabel = endlessBest;
+            view.puzzlesProgressLabel = puzzlesProgress;
+            return view;
+        }
+
+        /// <summary>One big mode button: the skinnable card, its icon, a title, a short description and a progress line.</summary>
+        static Button ModeCard(Transform row, string name, Sprite icon, SkinSlot iconSlot, string titleKey, string descriptionKey, Color accent,
+            out TextMeshProUGUI progress)
+        {
+            var card = EditorUI.SkinShape(row, name, EditorUI.Rounded, UIPalette.Panel.WithAlpha(0.92f), SkinSlot.ModeButton, 1f, true);
+            card.type = Image.Type.Sliced;
+            card.rectTransform.sizeDelta = ModeCardSize;
+            EditorUI.Layout(card, ModeCardSize.x, ModeCardSize.y, 0, 0, ModeCardSize.x, ModeCardSize.y);
+
+            var button = card.gameObject.AddComponent<Button>();
+            button.targetGraphic = card;
+            var colors = button.colors;
+            colors.normalColor = new Color(0.94f, 0.94f, 0.94f, 1f);
+            colors.highlightedColor = Color.white;
+            colors.pressedColor = new Color(0.78f, 0.78f, 0.78f, 1f);
+            colors.selectedColor = new Color(0.94f, 0.94f, 0.94f, 1f);
+            colors.fadeDuration = 0.08f;
+            button.colors = colors;
+            EditorUI.NoNavigation(button);
+            card.gameObject.AddComponent<ButtonFeedback>();
+
+            var iconImage = EditorUI.Icon(card.transform, "Icon", icon, accent, iconSlot, ModeIconSize);
+            iconImage.rectTransform.Place(new Vector2(0.5f, 1), new Vector2(0, -48), new Vector2(ModeIconSize, ModeIconSize), new Vector2(0.5f, 1));
+
+            var title = EditorUI.Text(card.transform, "Title", titleKey, 46, accent, TextAlignmentOptions.Center, true, true, false);
+            title.rectTransform.TopBand(ModeIconSize + 70, 64, 24, 24);
+            var description = EditorUI.Text(card.transform, "Description", descriptionKey, 24, UIPalette.Text, TextAlignmentOptions.Top);
+            description.rectTransform.TopBand(ModeIconSize + 146, 150, 34, 34);
+            progress = EditorUI.Text(card.transform, "Progress", string.Empty, 22, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
+            progress.rectTransform.BottomBand(28, 36, 24, 24);
+            return button;
         }
 
         // ------------------------------------------------------------------ background
@@ -419,10 +491,16 @@ namespace DeckParty.EditorTools
             players.rectTransform.Box(new Vector2(0, 0), new Vector2(0, 1), new Vector2(60, 150), new Vector2(620, -200));
             var playerCount = EditorUI.Text(players.transform, "Header", "-", 30, UIPalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
             playerCount.rectTransform.TopBand(18, 40, 24, 24);
-            var list = EditorUI.Rect(players.transform, "List").Box(Vector2.zero, Vector2.one, new Vector2(16, 104), new Vector2(-16, -70));
+            var list = EditorUI.Rect(players.transform, "List").Box(Vector2.zero, Vector2.one, new Vector2(16, 16), new Vector2(-16, -70));
             EditorUI.VLayout(list, 10, EditorUI.Pad(0), TextAnchor.UpperCenter, true, true, true, false);
-            var streamerButton = EditorUI.Button(players.transform, "Streamer", "-", ButtonStyle.Secondary, 24, out var streamerLabel);
-            streamerButton.GetComponent<RectTransform>().BottomBand(16, 76, 16, 16);
+            // No Change Streamer button: streamers are picked after the lobby, once everyone is ready and the host starts.
+            // 2v2 only: move to the other team (its icon is the UI Skin's Switch Team entry).
+            var switchTeam = EditorUI.Button(players.transform, "SwitchTeam", "lobby.switch_team", ButtonStyle.Normal, 22, out var switchLabel);
+            switchTeam.GetComponent<RectTransform>().Place(new Vector2(1, 1), new Vector2(-16, -14), new Vector2(240, 50), new Vector2(1, 1));
+            var switchIcon = EditorUI.Icon(switchTeam.transform, "Icon", EditorUI.Audience, UIPalette.Text, SkinSlot.IconSwitchTeam, 30);
+            switchIcon.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(14, 0), new Vector2(30, 30), new Vector2(0, 0.5f));
+            switchLabel.rectTransform.Stretch(52, 4, 10, 4);
+            switchTeam.gameObject.SetActive(false);
 
             // Settings
             var settings = EditorUI.Panel(screen, "Settings");
@@ -490,8 +568,9 @@ namespace DeckParty.EditorTools
             view.timerSelector = timer;
             view.customTimerInput = customTimer;
             view.shopTimerSelector = shopTimer;
-            view.streamerButton = streamerButton;
-            view.streamerLabel = streamerLabel;
+            view.streamerButton = null;
+            view.streamerLabel = null;
+            view.switchTeamButton = switchTeam;
             view.settingsSummary = summary;
             view.readyButton = ready;
             view.readyLabel = readyLabel;

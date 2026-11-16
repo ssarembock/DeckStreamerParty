@@ -974,9 +974,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262532
-    m_Localized: 'Action (once per stream for all of them): every viewer in chat
-      drops to 0 {icon:cash} tonight, and you bank 1 {icon:influence} right now for
-      each Billionaire Benefactor in chat.'
+    m_Localized: 'Action (once per stream, shared by all of them): every viewer in
+      chat drops to 0 {icon:cash} this stream, and you bank 1 {icon:influence} right
+      away for each Billionaire Benefactor in chat.'
     m_Metadata:
       m_Items: []
   - m_Id: 416591587262533

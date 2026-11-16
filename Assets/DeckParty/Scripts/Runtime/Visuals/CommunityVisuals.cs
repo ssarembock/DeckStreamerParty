@@ -61,38 +61,35 @@ namespace DeckParty
         /// <summary>What the community does and how it scales, plus its score and current effect during a stream.</summary>
         public static string Tooltip(Community community, PlayerState state = null)
         {
-            var sb = new StringBuilder();
-            sb.Append("<b><size=115%>").Append(GameIcons.Tag(community)).Append(' ')
-              .Append(GuestVisuals.Colored(Name(community), Color(community))).Append("</size></b>\n");
-            sb.Append(Description(community));
+            // During a stream the title shows the community's points, and the body ends with what it gives right now.
+            bool live = state != null && state.Phase == GamePhase.Party;
+            int points = live ? PartyEngine.CommunityScore(state, community) : 0;
+            var tip = TipText.Titled(GameIcons.Tag(community) + " " + Name(community), live ? PointsText(community, points) : null);
+            tip.Line(Description(community));
+            if (!live) return tip;
 
-            if (state != null && state.Phase == GamePhase.Party)
+            string now = null;
+            // Gatekeepers act from 0 points (3 viewers); the others need a point first.
+            if (community == Community.Gatekeepers)
             {
-                int points = PartyEngine.CommunityScore(state, community);
-                sb.Append("\n\n").Append(GuestVisuals.Colored(PointsText(community, points), UIPalette.Gold));
-                // Gatekeepers act from 0 points (3 viewers); the others need a point first.
-                if (community == Community.Gatekeepers)
-                {
-                    int sent = Communities.GatekeeperSendBack(points);
-                    string now = sent == int.MaxValue ? Loc.Get("community.Gatekeepers.now_all") : Loc.Get("community.Gatekeepers.now", ("value", sent));
-                    sb.Append("\n").Append(GuestVisuals.Colored(now, UIPalette.Gold));
-                }
-                else if (points > 0)
-                {
-                    int value = Communities.Effect(community, points);
-                    // Extra action uses: how many are left right now.
-                    if (community == Community.Mods || community == Community.Marketers || community == Community.Voyeurs)
-                        value = PartyEngine.ExtraUsesLeft(state, community);
-                    // Troll Army: the Cash this stream's Risk would bring right now.
-                    else if (community == Community.Trolls)
-                        value = PartyEngine.TrollArmyCash(state);
-                    // Hype Men: spare seats still free.
-                    else if (community == Community.HypeMen)
-                        value = PartyEngine.FreeHypeSeats(state);
-                    sb.Append("\n").Append(GuestVisuals.Colored(Loc.Get($"community.{community}.now", ("value", value)), UIPalette.Gold));
-                }
+                int sent = Communities.GatekeeperSendBack(points);
+                now = sent == int.MaxValue ? Loc.Get("community.Gatekeepers.now_all") : Loc.Get("community.Gatekeepers.now", ("value", sent));
             }
-            return sb.ToString();
+            else if (points > 0)
+            {
+                int value = Communities.Effect(community, points);
+                // Extra action uses: how many are left right now.
+                if (community == Community.Mods || community == Community.Marketers || community == Community.Voyeurs)
+                    value = PartyEngine.ExtraUsesLeft(state, community);
+                // Troll Army: the Cash this stream's Risk would bring right now.
+                else if (community == Community.Trolls)
+                    value = PartyEngine.TrollArmyCash(state);
+                // Hype Men: spare seats still free.
+                else if (community == Community.HypeMen)
+                    value = PartyEngine.FreeHypeSeats(state);
+                now = Loc.Get($"community.{community}.now", ("value", value));
+            }
+            return tip.Section().Good(now);
         }
 
         /// <summary>"3 points" or, for capped communities, "3/9 points" (Boomers: "Level 1/2").</summary>

@@ -74,3 +74,16 @@ Key non-obvious decisions:
   - Shops: ScenarioCatalog.AlwaysInShop = Loyal Fan + Fish in every shop (Random Mix too). Their maxCopies are 8 / 6 (4 more than the starting copies). Sets retuned (see doc section 5).
   - Versions: GameDatabase.CommunityDefaultsRevision 7 (roster table). Protocol deckparty-17.
   - Calls flagged to the user: Bot Detector put in Mods (its block still had the old Gatekeepers wording). Distraught Cat is a Gatekeeper. The Millennials' "bonus increases per point" was read as the existing once-per-point rule. "Influencial" was spelled Influential. The Mods have no icon art yet.
+- Game modes (2026-11-16, additionalgamemodes.md; guide GameModesGuide.md in the repo root):
+  - Single Player opens SinglePlayerModeScreen (Puzzles / Endless / Versus the AI), then the character sets, then the streamer select LAST (fighting-game order; MainMenuController.PickStreamersAndStart).
+  - Endless = GameMode.Endless: 25 streams, Trophies banked (PlayerState.Trophies) and spent on Add a Stream / Add a Viewer to the Shop (2 then +1 each; 1 of 3 deterministic choices, PartyEngine.Modes.cs).
+  - Versus the AI: LocalGameSession runs a rival season with Core/SimpleAI after each human stream; not saved; ProgressStore keeps best Endless run and Versus wins/losses.
+  - Multiplayer MatchMode.TwoVsTwo (4 players) and CoopEndless (2): one PlayerState per team (Members = 2, GuestInstance.Owner, per-member queue/Sub Cap/copy limits, shared Cash/Influence/Trophies/shop/streamer), Free For All rounds, chat split by TeamDivider. The team's first lobby player picks the streamer.
+  - Streamer pick phase: MatchPhase.PickingStreamers, 30 s (MatchModes.StreamerPickSeconds), Random on timeout, a leaver cancels to the lobby.
+  - New SkinSlots 47-54 (ModeButton, IconModePuzzles/Endless/VersusAi, IconAddStream, IconAddShopViewer, TeamDivider, IconSwitchTeam); ShopButton.AddStream = 5 / AddShopViewer = 6.
+  - Versions: state format 12, protocol deckparty-18.
+- Hover pop-ups (2026-11-16, same guide section 7):
+  - One card for every tooltip: TooltipView has header + divider + label and sizes its width to the text (maxWidth 440 / minWidth 96); SceneCommon builds it with a 14 px radius and a 3 px border.
+  - Code builds tooltip text with Runtime/Visuals/TipText (Titled(title, note).Line/Detail/Good/Warn/Section; title and body are split by '\u001E'). A CSV tooltip whose first line starts with <b> gets that line as its title (TipText.TrySplit).
+  - Copy pass in all 5 languages: "tonight" -> "this stream" in reachable text (put-aside meme cards left alone); card tags in sentence case ("PLAY" -> "{icon:plays} Trophy"); proper plurals instead of "(s)"; shorter community rules and lobby mode texts.
+  - Shop tiles and their tooltips now count copies per team member (ShopItemView.Bind member, GuestVisuals.Tooltip shopMember).

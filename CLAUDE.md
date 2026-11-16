@@ -26,5 +26,5 @@ The project memory is kept in `.claude/memory/` and imported here, so every sess
   (or set `UnityData`) and the project opened in Unity once, so `Library/ScriptAssemblies` exists.
 - All player-facing text goes through `Assets/DeckParty/Resources/Localization/AudienceCapture_Strings.csv`
   (5 languages). Never name the real streaming sites the platforms parody.
-- Guides for the user live in the repo root (`INSTRUCTIONS.md`, `UIGuide.md`, `ShopCardPrefab_Guidelines.md`, `V1`-`V4Instructions.md`,
+- Guides for the user live in the repo root (`INSTRUCTIONS.md`, `UIGuide.md`, `ShopCardPrefab_Guidelines.md`, `GameModesGuide.md`, `V1`-`V4Instructions.md`,
   `NewUIGuidelines.md`).

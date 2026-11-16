@@ -284,8 +284,8 @@ namespace DeckParty.UI
                 turnTimer.Render(-1f, null, false);
                 return;
             }
-            string tip = Loc.Get(shop ? "timer.shop_tip" : "timer.stream_tip");
-            if (TakingTurns) tip += "\n" + (mine ? Loc.Get("timer.yours_tip") : Loc.Get("timer.theirs_tip", "player", NameOf(active)));
+            var tip = TipText.Titled(Loc.Get(shop ? "timer.shop_title" : "timer.stream_title")).Line(Loc.Get(shop ? "timer.shop_tip" : "timer.stream_tip"));
+            if (TakingTurns) tip.Line(mine ? Loc.Get("timer.yours_tip") : Loc.Get("timer.theirs_tip", "player", NameOf(active)));
             turnTimer.Render(m_Net.TurnSecondsLeft, tip, mine);
         }
     }

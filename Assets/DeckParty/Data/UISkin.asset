@@ -344,6 +344,62 @@ MonoBehaviour:
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  - name: ModeButton
+    slot: 47
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconModePuzzles
+    slot: 48
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconModeEndless
+    slot: 49
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconModeVersusAi
+    slot: 50
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconAddStream
+    slot: 51
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconAddShopViewer
+    slot: 52
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: TeamDivider
+    slot: 53
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconSwitchTeam
+    slot: 54
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
   siteColours:
     page: {r: 0.09019608, g: 0.09019608, b: 0.101960786, a: 1}
     panelFill: {r: 0.09019608, g: 0.09019608, b: 0.101960786, a: 1}
@@ -699,6 +755,22 @@ MonoBehaviour:
     missing: 0
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/StreamChat/Window/Fill/HouseArea/Scroll/Viewport/LeftSideName
+    label: House Area > Scroll > Left Side Name
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/StreamChat/Window/Fill/HouseArea/Scroll/Viewport/RightSideName
+    label: House Area > Scroll > Right Side Name
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
   - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Cursed/Label
     label: Community Beats > Cursed > Label
     group: Stream
@@ -957,6 +1029,38 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/RemoveViewer/Cost
     label: Toolbar > Remove Viewer > Cost
+    group: Shop
+    sample: 3
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/AddStream/Label
+    label: Toolbar > Add Stream > Label
+    group: Shop
+    sample: +1
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/AddStream/Cost
+    label: Toolbar > Add Stream > Cost
+    group: Shop
+    sample: 3
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/AddShopViewer/Label
+    label: Toolbar > Add Shop Viewer > Label
+    group: Shop
+    sample: +1
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Planning/Shop/Fill/Toolbar/AddShopViewer/Cost
+    label: Toolbar > Add Shop Viewer > Cost
     group: Shop
     sample: 3
     source: Game scene
@@ -1675,6 +1779,14 @@ MonoBehaviour:
     missing: 0
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/OverlayCanvas/Tooltip/Panel/Title
+    label: Tooltip > Panel > Title
+    group: 'Pop-ups: Tooltip'
+    sample: 
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
   - id: Game/OverlayCanvas/Tooltip/Panel/Label
     label: Tooltip > Panel > Label
     group: 'Pop-ups: Tooltip'
@@ -1790,6 +1902,52 @@ MonoBehaviour:
       fill:
         use: 1
         colour: {r: 0.09803922, g: 0.5568628, b: 0.07450981, a: 1}
+      border:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      borderWidth: -1
+      size: {x: 0, y: 0}
+      text: 0
+      customText: 
+      textColour:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      textSize: 0
+    - name: AddStream
+      button: 5
+      icon: {fileID: 0}
+      iconColour:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      iconSize: 0
+      shape: {fileID: 0}
+      shapeScale: 1
+      fill:
+        use: 0
+        colour: {r: 1, g: 1, b: 1, a: 1}
+      border:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      borderWidth: -1
+      size: {x: 0, y: 0}
+      text: 0
+      customText: 
+      textColour:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      textSize: 0
+    - name: AddShopViewer
+      button: 6
+      icon: {fileID: 0}
+      iconColour:
+        use: 0
+        colour: {r: 0, g: 0, b: 0, a: 1}
+      iconSize: 0
+      shape: {fileID: 0}
+      shapeScale: 1
+      fill:
+        use: 0
+        colour: {r: 1, g: 1, b: 1, a: 1}
       border:
         use: 0
         colour: {r: 0, g: 0, b: 0, a: 1}

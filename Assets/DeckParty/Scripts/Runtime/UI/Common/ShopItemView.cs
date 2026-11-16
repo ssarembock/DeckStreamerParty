@@ -165,7 +165,8 @@ namespace DeckParty.UI
 
         /// <param name="state">The player whose shop this is (their wallet, collection and copies left).</param>
         /// <param name="blocker">Why it can't be bought right now (already localized), or null.</param>
-        public void Bind(GuestType type, PlayerState state, string blocker)
+        /// <param name="member">Teams: which player of the team is shopping (their own copy limits).</param>
+        public void Bind(GuestType type, PlayerState state, string blocker, int member = 0)
         {
             Hook();
             Type = type;
@@ -218,7 +219,7 @@ namespace DeckParty.UI
                     : (look != null ? look.priceTooExpensive.Or(cannotColour) : cannotColour);
             }
 
-            int left = PartyEngine.ShopLeft(state, type);
+            int left = PartyEngine.ShopLeft(state, type, member);
             bool soldOut = left <= 0;
             SetStack(left, look);
             if (leftLabel != null)
@@ -251,13 +252,10 @@ namespace DeckParty.UI
             {
                 var shopState = state;
                 string why = blocker;
-                int copies = left;
+                int shopMember = member;
                 tooltip.Provider = () =>
                 {
-                    string text = GuestVisuals.Tooltip(type, null, null, shopState);
-                    // The tile shows "x3": the tooltip says what that means.
-                    if (siteStyle) text += "\n" + GuestVisuals.Colored(copies <= 0 ? Loc.Get("shop.sold_out")
-                        : copies == int.MaxValue ? Loc.Get("shop.left_unlimited") : Loc.Get("shop.left", "count", copies), UIPalette.TextDim);
+                    string text = GuestVisuals.Tooltip(type, null, null, shopState, shopMember);
                     return why != null ? text + "\n" + GuestVisuals.Colored(why, UIPalette.Orange) : text;
                 };
             }

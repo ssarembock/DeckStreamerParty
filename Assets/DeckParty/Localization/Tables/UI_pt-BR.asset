@@ -65,7 +65,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125578
-    m_Localized: Vagas ocupadas / seu limite do chat.
+    m_Localized: <b>Limite do chat</b>\nQuantos espectadores cabem no chat ao mesmo
+      tempo.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125579
@@ -100,11 +101,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125586
-    m_Localized: 'Do raid de um rival: +{count}'
+    m_Localized: 'Raid de um rival: +{count}'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125587
-    m_Localized: "Anulado desde o in\xEDcio: -{count}"
+    m_Localized: 'Ignorado nesta live: -{count}'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125588
@@ -154,11 +155,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125599
-    m_Localized: Guarde os {icon:cash} e a {icon:influence} de todo mundo no chat.
+    m_Localized: Encerre agora e guarde {payout}.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125600
-    m_Localized: (-{count} de taxas)
+    m_Localized: '(taxas: -{count})'
     m_Metadata:
       m_Items: []
   - m_Id: 1574125601
@@ -265,8 +266,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1574125626
-    m_Localized: "Um limite maior cabe mais espectadores ao mesmo tempo (e mais espa\xE7o
-      pra quem traz amigos)."
+    m_Localized: Cabe mais um espectador no chat ao mesmo tempo, em todas as lives.
     m_Metadata:
       m_Items: []
   - m_Id: 1574125627
@@ -427,7 +427,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514199
     m_Localized: "O {icon:risk} ficou alto demais e a live foi desplataformizada.
-      Ningu\xE9m recebe esta noite."
+      Ningu\xE9m recebe por ela."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514200
@@ -460,7 +460,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514207
-    m_Localized: "{viewer} est\xE1 de ban tempor\xE1rio esta noite."
+    m_Localized: "{viewer} est\xE1 de ban tempor\xE1rio nesta live."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514208
@@ -472,7 +472,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514210
-    m_Localized: "Espectadores escurecidos n\xE3o podem entrar esta noite. Passe
+    m_Localized: "Espectadores escurecidos n\xE3o podem entrar nesta live. Passe
       o mouse para ver detalhes."
     m_Metadata:
       m_Items: []
@@ -497,7 +497,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514216
-    m_Localized: Acabou por hoje
+    m_Localized: Live encerrada
     m_Metadata:
       m_Items: []
   - m_Id: 1582514217
@@ -849,8 +849,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514302
-    m_Localized: "N\xE3o tem ningu\xE9m no chat, ent\xE3o voc\xEA n\xE3o ganha nada
-      esta noite."
+    m_Localized: "N\xE3o tem ningu\xE9m no chat, ent\xE3o esta live n\xE3o rende
+      nada."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514303
@@ -1434,9 +1434,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514441
-    m_Localized: "a cada rodada os jogadores fazem live um depois do outro enquanto
-      os outros assistem ao vivo. A temporada acaba depois da primeira rodada em
-      que algu\xE9m junta {count} Trof\xE9us."
+    m_Localized: "a cada rodada os jogadores fazem live um de cada vez enquanto os
+      outros assistem ao vivo. A temporada acaba depois da primeira rodada em que
+      algu\xE9m junta {count} Trof\xE9us."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514442
@@ -1445,12 +1445,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514443
-    m_Localized: "todo mundo faz live ao mesmo tempo; clique num jogador pra assistir
-      a live dele ao vivo (s\xF3 olhar) e no seu nome pra voltar. Quando todas as
-      lives acabam e cada um clica em Ir pra loja, uma contagem 3-2-1 abre a loja
-      pra todos ao mesmo tempo: quem chegar primeiro leva. A primeira rodada em que
-      algu\xE9m junta {count} Trof\xE9us encerra a temporada. O \xFAnico modo pra
-      3 ou mais jogadores."
+    m_Localized: "todo mundo faz live ao mesmo tempo (clique num jogador pra assistir
+      e no seu nome pra voltar). Quando todas as lives acabam, a loja abre pra todos
+      juntos: quem chegar primeiro leva. A temporada acaba depois da primeira rodada
+      em que algu\xE9m junta {count} Trof\xE9us. O \xFAnico modo pra 3 ou mais jogadores."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514444
@@ -1539,8 +1537,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416593474699271
-    m_Localized: "Ainda d\xE1 pra recrutar {count} (o estoque da loja \xE9 dividido
-      entre todos)"
+    m_Localized: "D\xE1 pra recrutar mais {count}"
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087872
@@ -1548,16 +1545,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087873
-    m_Localized: Sua live foi desplataformizada. Sem pagamento esta noite
+    m_Localized: Sua live foi desplataformizada. Sem pagamento
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087874
-    m_Localized: A live de {player} foi desplataformizada. Sem pagamento esta noite
+    m_Localized: A live de {player} foi desplataformizada. Sem pagamento
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087875
-    m_Localized: '{filled} vagas ocupadas com limite de {cap}. Sem pagamento esta
-      noite'
+    m_Localized: '{filled} vagas ocupadas com limite de {cap}. Sem pagamento'
     m_Metadata:
       m_Items: []
   - m_Id: 416593483087876
@@ -1582,13 +1578,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675191463297024
-    m_Localized: "<b>Risco de desplataformiza\xE7\xE3o</b>\\nEspectadores com um
-      X vermelho trazem isso. Com {max} de risco l\xEDquido a live \xE9 desplataformizada:
-      sem pagamento esta noite."
+    m_Localized: "<b>{icon:risk} Risco de desplataformiza\xE7\xE3o</b>\\nEspectadores
+      com este \xEDcone trazem risco. Com {max} numa live voc\xEA \xE9 desplataformizado
+      e a live n\xE3o rende nada."
     m_Metadata:
       m_Items: []
   - m_Id: 675191551377408
-    m_Localized: "{icon:CoreFanbase} A Base de f\xE3s anula: -{count}"
+    m_Localized: "Anulado pela {icon:CoreFanbase} Base de f\xE3s: -{count}"
     m_Metadata:
       m_Items: []
   - m_Id: 675191551377409
@@ -1804,8 +1800,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 994296414289920
-    m_Localized: "<b>Trof\xE9us</b>\\nEspectadores com este \xEDcone s\xE3o Trof\xE9us.
-      Tenha {goal} no chat ao mesmo tempo e encerre bem a live pra vencer."
+    m_Localized: "<b>{icon:plays} Trof\xE9us</b>\\nEspectadores com este \xEDcone
+      s\xE3o Trof\xE9us. Encerre uma live com {goal} deles no chat pra vencer."
     m_Metadata:
       m_Items: []
   - m_Id: 1064940082913280
@@ -1937,9 +1933,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408013
-    m_Localized: "Tire de vez uma carta de espectador da sua audi\xEAncia. Cada remo\xE7\xE3o
-      custa 1 {icon:influence} a mais que a anterior. Sua audi\xEAncia fica com pelo
-      menos {min} espectadores."
+    m_Localized: "Tire de vez uma carta de espectador da sua Audi\xEAncia."
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408014
@@ -2203,13 +2197,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5322685007093760
-    m_Localized: <b>Grana</b>\nOs espectadores trazem grana durante a live. Gaste
-      na loja pra recrutar novos espectadores.
+    m_Localized: <b>{icon:cash} Grana</b>\nOs espectadores geram grana nas lives.
+      Gaste na loja com novos espectadores.
     m_Metadata:
       m_Items: []
   - m_Id: 5322685065814016
-    m_Localized: "<b>Influ\xEAncia</b>\\nAumenta seu limite do chat e paga o poder
-      ativo do seu streamer."
+    m_Localized: "<b>{icon:influence} Influ\xEAncia</b>\\nPaga um limite do chat
+      maior e o poder ativo do seu streamer."
     m_Metadata:
       m_Items: []
   - m_Id: 5322685065814017
@@ -2221,8 +2215,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5740695727464448
-    m_Localized: "<b>Lugar extra</b>\\nS\xF3 um espectador trazido por um {icon:HypeMen}
-      Animador pode sentar aqui, assim o servidor n\xE3o cai."
+    m_Localized: "<b>Lugar extra</b>\\nS\xF3 para um espectador trazido por um {icon:HypeMen}
+      Animador."
     m_Metadata:
       m_Items: []
   - m_Id: 5740695777796096
@@ -2235,6 +2229,401 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5740695966539776
     m_Localized: Lugar extra!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217921142784
+    m_Localized: Um jogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668736
+    m_Localized: "Como voc\xEA quer jogar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668737
+    m_Localized: Desafios
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668738
+    m_Localized: "Elencos feitos \xE0 m\xE3o, cada um com sua loja. Junte 4 Trof\xE9us
+      numa live para vencer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668739
+    m_Localized: "{count}/{total} conclu\xEDdos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668740
+    m_Localized: Infinito
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668741
+    m_Localized: "Sem vit\xF3ria, sem limite. Trof\xE9us compram mais lives e novos
+      espectadores para a loja. Quanto voc\xEA aguenta?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668742
+    m_Localized: 'Recorde: {count} {count:plural:live|lives}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668743
+    m_Localized: Nenhuma partida ainda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668744
+    m_Localized: Contra a IA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668745
+    m_Localized: "Escolha seu streamer e o do rival e dispute a mesma temporada com
+      a IA. Vence quem juntar primeiro 4 Trof\xE9us numa live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668746
+    m_Localized: Modo Infinito
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668747
+    m_Localized: "Come\xE7a com {count} {count:plural:live|lives}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668748
+    m_Localized: Contra {rival}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668749
+    m_Localized: "Placar: {wins}V \xB7 {losses}D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668750
+    m_Localized: "Infinito em {set}: aguente o m\xE1ximo que puder. Voc\xEA come\xE7a
+      com {nights} lives. Cada espectador Trof\xE9u numa live que pontua rende um
+      {icon:plays}; {cost} {icon:plays} compram mais uma live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668751
+    m_Localized: "Contra {rival}: vence quem juntar primeiro {count} Trof\xE9us numa
+      live. A IA joga cada live logo depois de voc\xEA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668752
+    m_Localized: '{rival} (IA)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668753
+    m_Localized: Duelo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668754
+    m_Localized: 'Live de {rival}: {values}, {count} {icon:plays} no chat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668755
+    m_Localized: "\xDAltima live: {values} \xB7 {trophies} {icon:plays}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668756
+    m_Localized: '{rival} foi desplataformizado.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668757
+    m_Localized: "\xDAltima live: desplataformizado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668758
+    m_Localized: O servidor de {rival} caiu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668759
+    m_Localized: "\xDAltima live: servidor caiu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668760
+    m_Localized: '{rival} recrutou {viewers}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668761
+    m_Localized: '{rival} usou {power}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668762
+    m_Localized: "{rival} juntou {count} Trof\xE9us numa live!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668763
+    m_Localized: '{rival} VENCE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668764
+    m_Localized: "{count} Trof\xE9us numa live, antes de voc\xEA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668765
+    m_Localized: +1 live ({total} nesta partida)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668766
+    m_Localized: '{viewer} entrou na loja.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668767
+    m_Localized: Seu lado terminou. A live pontua quando o parceiro encerrar o dele.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668768
+    m_Localized: Seu parceiro terminou. Encerre o seu lado para pontuar a live.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668769
+    m_Localized: "Voc\xEA: {you} \xB7 Parceiro: {partner}. Pontua quando os dois
+      encerrarem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668770
+    m_Localized: ao vivo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668771
+    m_Localized: encerrou
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668772
+    m_Localized: "Live <b>{night}</b>/{total} \xB7 faltam {left}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668773
+    m_Localized: Mais uma live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668774
+    m_Localized: "Mais uma live nesta partida. Compre antes da sua \xFAltima live
+      acabar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668775
+    m_Localized: "Adicionar um espectador \xE0 loja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668776
+    m_Localized: "Escolha 1 de {count} espectadores que a loja ainda n\xE3o vende.
+      Ele fica at\xE9 o fim da partida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668777
+    m_Localized: +Live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668778
+    m_Localized: +Espectador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668779
+    m_Localized: "Adicionar um espectador \xE0 loja ({cost})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668780
+    m_Localized: "Escolha um: ele entra na loja at\xE9 o fim da partida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668781
+    m_Localized: FIM DA PARTIDA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668782
+    m_Localized: "Voc\xEA aguentou {count} {count:plural:live|lives} ({bought} compradas
+      com Trof\xE9us)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668783
+    m_Localized: Novo recorde!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668784
+    m_Localized: "Trof\xE9us restantes: {trophies} \xB7 Lives compradas: {streams}
+      \xB7 Espectadores adicionados \xE0 loja: {viewers}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668785
+    m_Localized: "VOC\xCA VENCEU {rival}!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668786
+    m_Localized: '{rival} VENCE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668787
+    m_Localized: "{rival} juntou {count} Trof\xE9us numa live na live {night}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668788
+    m_Localized: "NINGU\xC9M VENCEU"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668789
+    m_Localized: 'Sua melhor live: {best}. A melhor de {rival}: {rival_best}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668790
+    m_Localized: FIM DA PARTIDA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668791
+    m_Localized: '{team} aguentaram {count} {count:plural:live|lives} juntos.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668792
+    m_Localized: SEU TIME VENCEU!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668793
+    m_Localized: '{team} VENCEM'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668794
+    m_Localized: Time A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668795
+    m_Localized: Time B
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668796
+    m_Localized: "{player} (voc\xEA)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668797
+    m_Localized: Trocar de time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668798
+    m_Localized: Este modo precisa de exatamente {count} jogadores.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668799
+    m_Localized: "dois times de dois fazendo live ao mesmo tempo. Os parceiros dividem
+      Grana, Influ\xEAncia e loja, mas cada um tem sua Audi\xEAncia e limite, e os
+      dois lados da live pontuam como um s\xF3. Vence o primeiro time com {count}
+      Trof\xE9us numa live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668800
+    m_Localized: "dois jogadores dividem uma partida Infinita: uma loja, um caixa
+      e duas audi\xEAncias. Voc\xEAs come\xE7am com {count} lives e Trof\xE9us compram
+      mais. Quanto aguentam juntos?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668801
+    m_Localized: 2x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668802
+    m_Localized: 2x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668803
+    m_Localized: Infinito cooperativo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217975668804
+    m_Localized: Coop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640256
+    m_Localized: 'Mais uma live ({cost}): {total} nesta partida.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640257
+    m_Localized: '{viewer} entra na loja ({cost}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640258
+    m_Localized: +{count} {icon:plays} guardados ({total} no total).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640259
+    m_Localized: Um parceiro encerrou o lado dele da live.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802217996640260
+    m_Localized: O rival venceu na live {night}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749120
+    m_Localized: 'Escolhendo streamers: faltam {count}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749121
+    m_Localized: "Seu parceiro est\xE1 escolhendo o streamer do time."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749122
+    m_Localized: "Audi\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749123
+    m_Localized: "{icon:risk} Risco de desplataformiza\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749124
+    m_Localized: "Com {max} {icon:risk} numa live voc\xEA \xE9 desplataformizado
+      e a live n\xE3o rende nada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749125
+    m_Localized: 'De espectadores: +{count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749126
+    m_Localized: 'Anulado: -{count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749127
+    m_Localized: "{icon:plays} Trof\xE9us"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749128
+    m_Localized: 'No chat: {count}/{goal}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749129
+    m_Localized: 'No chat: {count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749130
+    m_Localized: "Na sua Audi\xEAncia: {count}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749131
+    m_Localized: 'Melhor live: {count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749132
+    m_Localized: Encerre uma live com {goal} no chat pra vencer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749133
+    m_Localized: 'Guardados: {count}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749134
+    m_Localized: 'Gaste na loja: mais uma live custa {stream} {icon:plays} e um espectador
+      novo na loja, {viewer} {icon:plays}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749135
+    m_Localized: "Aumentar o limite: {from} \u2192 {to}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749136
+    m_Localized: Remover um espectador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749137
+    m_Localized: "Cada remo\xE7\xE3o custa 1 {icon:influence} a mais. Sua Audi\xEAncia
+      fica com pelo menos {min} espectadores."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802218063749138
+    m_Localized: 'Esta partida: {streams} lives, faltam {left}'
     m_Metadata:
       m_Items: []
   references:
