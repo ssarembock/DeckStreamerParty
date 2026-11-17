@@ -428,17 +428,19 @@ namespace DeckParty.Networking
         {
             if (!IsServer || Phase != MatchPhase.Lobby) return;
             settings.Nights = (byte)Mathf.Clamp(settings.Nights, 5, 40);
-            // More than two players: Free For All only.
-            if (!MatchModes.Allowed(settings.Mode, ConnectedCount)) settings.Mode = MatchMode.SyncNights;
+            // Race was removed (2026-11-17): a lobby still set to it plays Take Turns.
+            settings.Mode = MatchModes.Valid(settings.Mode);
+            // Too many players for the mode: Free For All (a co-op lobby stays co-op and waits for a player to leave).
+            if (settings.Mode != MatchMode.CoopEndless && !MatchModes.Allowed(settings.Mode, ConnectedCount)) settings.Mode = MatchMode.SyncNights;
             if (!settings.Equals(m_Settings.Value)) m_Settings.Value = settings;
         }
 
-        /// <summary>A third player joined a Take Turns or Race lobby: switch to Free For All (and say so).</summary>
+        /// <summary>A third player joined a Take Turns lobby: switch to Free For All (and say so). A co-op lobby stays co-op.</summary>
         void ServerEnforceModeForPlayerCount()
         {
             if (!IsServer || Phase != MatchPhase.Lobby) return;
             var settings = m_Settings.Value;
-            if (MatchModes.Allowed(settings.Mode, ConnectedCount)) return;
+            if (settings.Mode == MatchMode.CoopEndless || MatchModes.Allowed(settings.Mode, ConnectedCount)) return;
             settings.Mode = MatchMode.SyncNights;
             m_Settings.Value = settings;
             ServerHeadline(Core.Err.Of("mp.ffa_forced", MatchModes.MaxPlayersForAnyMode));
@@ -1319,9 +1321,7 @@ namespace DeckParty.Networking
                         ServerHeadline(Core.Err.Of("mp.team_won", TeamName(TeamOf(clientId)), GameRules.DiamondsToWin) + Core.Err.Separator + e.A);
                         break;
                     case GameEventType.Victory:
-                        ServerHeadline(Settings.Mode == MatchMode.Race
-                            ? Core.Err.Of("mp.won_race", name, GameRules.DiamondsToWin)
-                            : Core.Err.Of("mp.won_finishing", name, GameRules.DiamondsToWin) + Core.Err.Separator + e.A);
+                        ServerHeadline(Core.Err.Of("mp.won_finishing", name, GameRules.DiamondsToWin) + Core.Err.Separator + e.A);
                         break;
                 }
             }
@@ -1357,12 +1357,6 @@ namespace DeckParty.Networking
                 if (s.Phase != GamePhase.Planning) allFinishedNight = false;
                 if (s.Phase != GamePhase.Planning || !m_ReadyNextNight.Contains(kv.Key)) allReady = false;
                 if (s.Phase != GamePhase.Planning || !m_ReadyForShop.Contains(kv.Key)) allReadyForShop = false;
-            }
-
-            if (Settings.Mode == MatchMode.Race)
-            {
-                if (anyVictory || activePlayers == 0) ServerEndMatch();
-                return;
             }
 
             if (activePlayers == 0) { ServerEndMatch(); return; }

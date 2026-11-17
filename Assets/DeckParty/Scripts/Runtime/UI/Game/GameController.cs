@@ -110,6 +110,7 @@ namespace DeckParty.UI
         void Start()
         {
             HookViews();
+            SetupPad();
 
             bool networked = NetworkService.HasInstance && NetworkService.Instance.IsActive && DeckPartyNetSession.Instance != null;
             if (networked) StartNetwork(DeckPartyNetSession.Instance);
@@ -144,7 +145,8 @@ namespace DeckParty.UI
             SceneFlow.PendingLaunch = null;
 
             PlayerState state = null;
-            string venue = AppSettings.VenueId;
+            // Stream setups aren't picked any more (2026-11-17): the streamer's own setup, or the default.
+            string venue = AppSettings.VenueAuto;
 
             if (launch != null && launch.ContinueSave && SaveSystem.TryLoad(out var saved, out var savedVenue))
             {
@@ -172,20 +174,22 @@ namespace DeckParty.UI
             }
 
             m_VenueChoice = venue;
-            // Versus the AI isn't saved (the AI's season couldn't be resumed), so it leaves any saved season alone.
+            // Versus the AI and couch play aren't saved (the second season couldn't be resumed), so any saved season stays.
             bool versus = launch != null && launch.VersusAi && !launch.ContinueSave;
-            m_Local = new LocalGameSession(state, venue, !versus);
+            bool couch = launch != null && launch.Couch && !launch.ContinueSave;
+            m_Local = new LocalGameSession(state, venue, !versus && !couch);
             m_Session = m_Local;
             opponents.gameObject.SetActive(false);
             if (emotes != null) SetEmotesVisible(false);
             SetupRival(versus ? launch : null, state);
+            SetupCouch(couch ? launch : null, state);
         }
 
         void StartNetwork(DeckPartyNetSession net)
         {
             m_Net = net;
             m_Session = new NetworkGameSession(net);
-            m_VenueChoice = AppSettings.VenueId;
+            m_VenueChoice = AppSettings.VenueAuto;
             m_ViewId = net.LocalClientId;
             // Teams (2v2, co-op): your place in your team's season (your queue, Sub Cap and Audience).
             m_Member = net.MemberOf(net.LocalClientId);
@@ -337,6 +341,13 @@ namespace DeckParty.UI
             }
             var s = State;
             if (s == null || s.Phase != GamePhase.Party || s.House.Count > 0) return;
+            if (IsCouch)
+            {
+                // Couch play opens on Player 1's turn.
+                banner.Show(Loc.Get("couch.turn_title", "player", CouchName(m_Local.ActiveSeat)),
+                    Loc.Get("couch.turn_sub", "night", s.Night, "total", s.TotalNights), UIPalette.PlayerColor(m_Local.ActiveSeat), 1.4f);
+                return;
+            }
             banner.Show(Loc.Get("game.night_banner", "night", s.Night),
                 Loc.Get("game.night_sub", "set", ContentText.ScenarioName(s.ScenarioId), "count", s.NightsRemaining), UIPalette.Purple, 1.2f);
         }
@@ -368,7 +379,8 @@ namespace DeckParty.UI
             bool own = owner == LocalId;
             RecordRound(owner, s, events);
             TrackRecap(owner, s, events);
-            var lines = Describe(s, events, own ? null : NameOf(owner));
+            // Couch play: the log names whose turn it is ("Player 1 earns...").
+            var lines = Describe(s, events, own ? CouchWho : NameOf(owner));
             Remember(owner, lines);
             bool switched = false;
 
@@ -614,7 +626,12 @@ namespace DeckParty.UI
             effects.SetDanger(anxious ? 1f : 0f);
             if (anxiety != null) anxiety.Set(anxious, s.Streamer);
             if (overlay != null) overlay.Render(s);
-            if (facecam != null) facecam.Render(s, m_Net != null ? NameOf(m_ViewId) : null, ColorOf(m_ViewId), anxious);
+            if (facecam != null)
+            {
+                // Couch play: the facecam names whose turn it is.
+                if (IsCouch) facecam.Render(s, CouchName(m_Local.ActiveSeat), UIPalette.PlayerColor(m_Local.ActiveSeat), anxious);
+                else facecam.Render(s, m_Net != null ? NameOf(m_ViewId) : null, ColorOf(m_ViewId), anxious);
+            }
             if (viewerEmojis != null) viewerEmojis.Render(s, party && !m_Scoring);
 
             if (rolodex.IsOpen) rolodex.Refresh(s, ViewOwnerName);
@@ -622,6 +639,10 @@ namespace DeckParty.UI
             {
                 opponents.Render(m_Net, m_ViewId);
                 UpdateViewBar();
+            }
+            else if (IsCouch)
+            {
+                RenderCouchPanel();
             }
             else if (HasLocalRival)
             {
@@ -693,6 +714,8 @@ namespace DeckParty.UI
             {
                 // Versus the AI: rival powers hit the AI while its season is on.
                 ctx.RivalsAvailable = RivalsAvailableFor(LocalId);
+                // Couch play: Go Live ends your turn.
+                if (IsCouch) FillCouchPlanning(ref ctx);
                 return ctx;
             }
 
@@ -748,7 +771,8 @@ namespace DeckParty.UI
 
         void CheckGameOver(PlayerState s)
         {
-            bool over = s.IsGameOver || (m_Net != null && m_Net.Phase == MatchPhase.Results);
+            // Couch play: one player's season ending doesn't end the match (the other still has their turn).
+            bool over = IsCouch ? m_Local.CouchOver : s.IsGameOver || (m_Net != null && m_Net.Phase == MatchPhase.Results);
             if (!over) return;
 
             if (m_GameOverShown)
@@ -772,7 +796,8 @@ namespace DeckParty.UI
             pauseMenu.Close();
             if (roundSummary != null) roundSummary.Close();
 
-            if (m_Net == null) gameOver.ShowSingle(State, PlayAgain, () => SceneFlow.GoToMainMenu(), LocalRival, m_RivalName);
+            if (IsCouch) ShowCouchGameOver();
+            else if (m_Net == null) gameOver.ShowSingle(State, PlayAgain, () => SceneFlow.GoToMainMenu(), LocalRival, m_RivalName);
             else ShowMultiplayerResults();
         }
 
@@ -1322,16 +1347,21 @@ namespace DeckParty.UI
 
             if (m_Scoring)
             {
-                if (InputHelper.Pressed(HotKey.Space) || InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Escape) || PointerClicked()) SkipScoring();
+                PadNavigator.Paused = true;
+                if (InputHelper.Pressed(HotKey.Space) || InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Escape) || PointerClicked() || PadSkipPressed()) SkipScoring();
                 return;
             }
 
-            // The stream / shop summary: Space, Enter or Esc closes it (nothing else reacts meanwhile).
+            // The stream / shop summary: Space, Enter or Esc (or the pad's Confirm / Back) closes it (nothing else reacts meanwhile).
             if (RecapOpen)
             {
-                if (InputHelper.Pressed(HotKey.Space) || InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Escape)) recap.Close();
+                PadNavigator.Paused = true;
+                if (InputHelper.Pressed(HotKey.Space) || InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Escape) || PadSkipPressed()) recap.Close();
                 return;
             }
+
+            UpdateCouch();
+            if (UpdatePad()) return;
 
             if (InputHelper.Pressed(HotKey.Escape))
             {

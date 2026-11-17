@@ -513,6 +513,26 @@ MonoBehaviour:
     m_Localized: Confirmado. Esperando mais {count}...
     m_Metadata:
       m_Items: []
+  - m_Id: 6046007437123584
+    m_Localized: 'JOGADOR {player}: ESCOLHA SEU STREAMER'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900800
+    m_Localized: Primeiro escolhe o Jogador 1, depois o Jogador 2.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900801
+    m_Localized: 'Passe o controle: o Jogador 2 escolhe.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900802
+    m_Localized: Escolhido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900803
+    m_Localized: Escolhe em seguida.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

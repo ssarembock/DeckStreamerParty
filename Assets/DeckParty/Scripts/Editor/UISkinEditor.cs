@@ -130,6 +130,8 @@ namespace DeckParty.EditorTools
             EditorGUILayout.Space(6);
             DrawShop();
             EditorGUILayout.Space(6);
+            DrawPad();
+            EditorGUILayout.Space(6);
             if (coloursChanged)
             {
                 // Show the new colours in the Scene and Game views straight away.

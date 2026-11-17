@@ -71,6 +71,8 @@ namespace DeckParty.UI
         {
             rolodexButton.onClick.AddListener(() => RolodexClicked?.Invoke());
             menuButton.onClick.AddListener(() => MenuClicked?.Invoke());
+            PadShortcut.Bind(rolodexButton, PadAction.Audience);
+            PadShortcut.Bind(menuButton, PadAction.Menu);
             if (troubleTooltip != null) troubleTooltip.Provider = TroubleTooltip;
             if (starsTooltip != null) starsTooltip.Provider = DiamondsTooltip;
             if (nightTooltip != null) nightTooltip.Provider = NightTooltip;

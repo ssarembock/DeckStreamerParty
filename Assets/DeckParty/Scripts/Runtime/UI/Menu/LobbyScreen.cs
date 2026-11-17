@@ -54,7 +54,6 @@ namespace DeckParty.UI
         /// <summary>Each row's player's platform id (clicking a row opens their Steam profile).</summary>
         readonly List<ulong> m_RowPlatformIds = new List<ulong>();
         IOnlinePlatform m_AvatarPlatform;
-        List<(string id, string label)> m_VenueChoices;
         bool m_Applying;
 
         public void Init(MainMenuController menu) => m_Menu = menu;
@@ -69,7 +68,8 @@ namespace DeckParty.UI
             scenarioSelector.Changed += _ => PushSettings();
             modeSelector.Changed += _ => PushSettings();
             nightsSelector.Changed += _ => PushSettings();
-            venueSelector.Changed += OnVenueChanged;
+            // Stream setups are no longer picked (2026-11-17): scenes built before still have the selector, hidden.
+            if (venueSelector != null) venueSelector.gameObject.SetActive(false);
             if (timerSelector != null) timerSelector.Changed += _ => PushSettings();
             if (shopTimerSelector != null) shopTimerSelector.Changed += _ => PushSettings();
             if (customTimerInput != null) customTimerInput.onEndEdit.AddListener(_ => PushSettings());
@@ -99,8 +99,20 @@ namespace DeckParty.UI
             chat.SetTextInput(FxLibrary.Current.textChat);
             m_AvatarPlatform = OnlinePlatforms.Current;
             if (m_AvatarPlatform != null) m_AvatarPlatform.AvatarLoaded += OnAvatarLoaded;
+            // A host's new lobby starts in the section picked on the multiplayer mode screen (Competitive or Co-Op).
+            if (m_Session.IsServer && OnlineCategory.Of(m_Session.Settings.Mode) != OnlineCategory.Current)
+            {
+                var settings = m_Session.Settings;
+                settings.Mode = OnlineCategory.DefaultMode(OnlineCategory.Current);
+                m_Session.ServerSetSettings(settings);
+            }
             FillSelectors();
         }
+
+        /// <summary>The lobby's section (from its mode): Competitive or Co-Op. The mode selector offers only its modes.</summary>
+        int Category => m_Session != null ? OnlineCategory.Of(m_Session.Settings.Mode) : OnlineCategory.Current;
+
+        int m_FilledCategory = -1;
 
         void OnAvatarLoaded(ulong userId) => Refresh();
 
@@ -119,8 +131,7 @@ namespace DeckParty.UI
             scenarioSelector.SetTitle(Terms.CharacterSet);
             scenarioSelector.SetOptions(scenarioNames, 0);
 
-            modeSelector.SetTitle(Loc.Get("lobby.mode"));
-            modeSelector.SetOptions(MatchModes.Labels, 0);
+            FillModes();
 
             var nightNames = new List<string>();
             foreach (var n in s_NightOptions) nightNames.Add(Loc.Get("single.nights", "count", n));
@@ -138,18 +149,25 @@ namespace DeckParty.UI
                 shopTimerSelector.SetOptions(ShopTimers.Labels, 0);
             }
 
-            m_VenueChoices = GameDatabase.Instance.VenueChoices();
-            var venueNames = new List<string>();
-            int venueIndex = 0;
-            for (int i = 0; i < m_VenueChoices.Count; i++)
-            {
-                venueNames.Add(m_VenueChoices[i].label);
-                if (m_VenueChoices[i].id == AppSettings.VenueId) venueIndex = i;
-            }
-            venueSelector.SetTitle(Loc.Get("lobby.your_setup"));
-            venueSelector.SetOptions(venueNames, venueIndex);
-
             Refresh();
+        }
+
+        /// <summary>The mode selector's options: this section's modes only (Take Turns, Free For All, 2v2; or just co-op).</summary>
+        void FillModes()
+        {
+            int category = Category;
+            m_FilledCategory = category;
+            var labels = new List<string>();
+            foreach (var mode in MatchModes.ForCategory(category)) labels.Add(MatchModes.Name(mode));
+            modeSelector.SetTitle(Loc.Get("lobby.mode"));
+            modeSelector.SetOptions(labels, 0);
+        }
+
+        static int IndexInCategory(MatchMode mode, int category)
+        {
+            var modes = MatchModes.ForCategory(category);
+            int index = System.Array.IndexOf(modes, mode);
+            return index >= 0 ? index : 0;
         }
 
         protected override void OnHide()
@@ -244,9 +262,11 @@ namespace DeckParty.UI
 
             // Settings
             var settings = m_Session.Settings;
+            int category = Category;
             m_Applying = true;
+            if (category != m_FilledCategory) FillModes();
             scenarioSelector.SetIndex(IndexOfScenario(settings.ScenarioId));
-            modeSelector.SetIndex(MatchModes.IndexOf(settings.Mode));
+            modeSelector.SetIndex(IndexInCategory(settings.Mode, category));
             nightsSelector.SetIndex(IndexOfNights(settings.Nights));
             bool turns = settings.TimersApply;
             if (timerSelector != null)
@@ -269,22 +289,22 @@ namespace DeckParty.UI
                 if (!customTimerInput.isFocused) customTimerInput.text = settings.TurnSeconds > 0 ? settings.TurnSeconds.ToString() : string.Empty;
             }
             m_Applying = false;
-            // More than two players: Free For All is the only mode (the host switches automatically).
             // More than four players: Free For All is the only mode (the host switches automatically).
-            bool freeForAllOnly = m_Session.ConnectedCount > MatchModes.TwoVsTwoPlayers;
+            bool coop = category == OnlineCategory.Coop;
+            bool freeForAllOnly = !coop && m_Session.ConnectedCount > MatchModes.TwoVsTwoPlayers;
             scenarioSelector.Interactable = isHost;
+            // Co-Op Endless has one mode and its own number of streams: neither selector applies.
+            modeSelector.gameObject.SetActive(!coop);
             modeSelector.Interactable = isHost && !freeForAllOnly;
-            // Co-op is an Endless run: it starts with its own number of streams.
-            nightsSelector.Interactable = isHost && settings.Mode != MatchMode.CoopEndless;
+            nightsSelector.gameObject.SetActive(!coop);
+            nightsSelector.Interactable = isHost;
             if (switchTeamButton != null) switchTeamButton.gameObject.SetActive(settings.Mode == MatchMode.TwoVsTwo);
 
-            var summary = new StringBuilder();
-            summary.Append($"<b>{ContentText.ScenarioName(settings.ScenarioId)}</b> - {ContentText.ScenarioDescription(settings.ScenarioId)}\n");
-            summary.Append(ModeSummary(settings.Mode));
+            // One short line on the mode, plus a warning when the players don't fit it (the selectors say the rest).
+            var summary = new StringBuilder(ModeSummary(settings.Mode));
             if (freeForAllOnly) summary.Append("\n<color=#FF9A3D>").Append(Loc.Get("lobby.ffa_only", "count", MatchModes.TwoVsTwoPlayers)).Append("</color>");
             else if (MatchModes.RequiredPlayers(settings.Mode) > 0 && m_Session.ConnectedCount != MatchModes.RequiredPlayers(settings.Mode))
                 summary.Append("\n<color=#FF9A3D>").Append(Loc.Get("lobby.mode_needs", "count", MatchModes.RequiredPlayers(settings.Mode))).Append("</color>");
-            if (turns) summary.Append("\n").Append(Loc.Get("lobby.timer_summary", "timer", TurnTimers.Describe(settings.TurnSeconds), "shop", ShopTimers.Describe(settings.ShopSeconds)));
             settingsSummary.text = summary.ToString();
 
             // Buttons
@@ -316,20 +336,15 @@ namespace DeckParty.UI
             else statusLabel.text = Loc.Get(local.LobbyReady ? "lobby.waiting_host" : "lobby.press_ready");
         }
 
+        /// <summary>The mode in one short line ("Take turns streaming. First to 4 Trophies in one stream wins.").</summary>
         static string ModeSummary(MatchMode mode)
         {
             switch (mode)
             {
-                case MatchMode.Turns:
-                    return "<color=#FF4F8B>" + Loc.Get("mode.turns") + ":</color> " + Loc.Get("lobby.mode_turns", "count", GameRules.DiamondsToWin);
-                case MatchMode.TwoVsTwo:
-                    return "<color=#6BE38B>" + Loc.Get("mode.two_vs_two") + ":</color> " + Loc.Get("lobby.mode_two_vs_two", "count", GameRules.DiamondsToWin, "risk", GameRules.TeamRiskLimit);
-                case MatchMode.CoopEndless:
-                    return "<color=#FFC94A>" + Loc.Get("mode.coop_endless") + ":</color> " + Loc.Get("lobby.mode_coop", "count", GameRules.EndlessStartingStreams, "risk", GameRules.TeamRiskLimit);
-                case MatchMode.Race:
-                    return "<color=#FF9A3D>" + Loc.Get("mode.race") + ":</color> " + Loc.Get("lobby.mode_race", "count", GameRules.DiamondsToWin);
-                default:
-                    return "<color=#3DDBD9>" + Loc.Get("mode.sync") + ":</color> " + Loc.Get("lobby.mode_sync", "count", GameRules.DiamondsToWin);
+                case MatchMode.Turns: return Loc.Get("lobby.short_turns", "count", GameRules.DiamondsToWin);
+                case MatchMode.TwoVsTwo: return Loc.Get("lobby.short_two_vs_two", "count", GameRules.DiamondsToWin, "risk", GameRules.TeamRiskLimit);
+                case MatchMode.CoopEndless: return Loc.Get("lobby.short_coop", "count", GameRules.EndlessStartingStreams, "risk", GameRules.TeamRiskLimit);
+                default: return Loc.Get("lobby.short_sync", "count", GameRules.DiamondsToWin);
             }
         }
 
@@ -358,7 +373,7 @@ namespace DeckParty.UI
             m_Session.ServerSetSettings(new MatchSettings
             {
                 ScenarioId = ScenarioCatalog.All[Mathf.Clamp(scenarioSelector.Index, 0, ScenarioCatalog.All.Count - 1)].Id,
-                Mode = MatchModes.At(modeSelector.Index),
+                Mode = ModeAt(modeSelector.Index),
                 Nights = (byte)s_NightOptions[Mathf.Clamp(nightsSelector.Index, 0, s_NightOptions.Length - 1)],
                 TurnSeconds = (ushort)SelectedTimer(),
                 ShopSeconds = (ushort)(shopTimerSelector != null ? ShopTimers.Presets[Mathf.Clamp(shopTimerSelector.Index, 0, ShopTimers.Presets.Length - 1)] : 0),
@@ -377,10 +392,11 @@ namespace DeckParty.UI
             return seconds;
         }
 
-        void OnVenueChanged(int index)
+        /// <summary>The mode at a selector index within this lobby's section.</summary>
+        MatchMode ModeAt(int index)
         {
-            if (m_VenueChoices == null || index < 0 || index >= m_VenueChoices.Count) return;
-            AppSettings.VenueId = m_VenueChoices[index].id;
+            var modes = MatchModes.ForCategory(Category);
+            return modes[Mathf.Clamp(index, 0, modes.Length - 1)];
         }
 
         void ToggleReady()

@@ -58,7 +58,8 @@ namespace DeckParty.UI
                     case GameEventType.NightStarted:
                     {
                         string left = s.NightsRemaining > 0 ? Loc.Get("game.nights_left", "count", s.NightsRemaining) : Loc.Get("game.final_night");
-                        banner.Show(Loc.Get("game.night_banner", "night", e.A), who == null ? left : Loc.Get("game.whose_stream", "player", who) + "  -  " + left, UIPalette.Purple, 1.0f);
+                        string whose = who ?? CouchWho;
+                        banner.Show(Loc.Get("game.night_banner", "night", e.A), whose == null ? left : Loc.Get("game.whose_stream", "player", whose) + "  -  " + left, UIPalette.Purple, 1.0f);
                         Consider(Sfx.Notify, 1);
                         break;
                     }
@@ -333,7 +334,11 @@ namespace DeckParty.UI
                         Consider(Sfx.Coin, 6);
                         break;
                     case GameEventType.Victory:
-                        banner.Show(who == null ? Loc.Get("over.victory") : Loc.Get("over.player_wins", "player", who), Loc.Get("game.victory_sub", "count", GameRules.DiamondsToWin), UIPalette.Gold, 2.2f);
+                        // Couch play: a player hit 4 Trophies, but if they went first the other still gets their turn.
+                        if (who == null && IsCouch)
+                            banner.Show(Loc.Get("couch.reached_title", "player", CouchWho, "count", GameRules.DiamondsToWin),
+                                m_Local.ActiveSeat == 0 ? Loc.Get("couch.reached_sub", "player", CouchName(1)) : null, UIPalette.Gold, 2.2f);
+                        else banner.Show(who == null ? Loc.Get("over.victory") : Loc.Get("over.player_wins", "player", who), Loc.Get("game.victory_sub", "count", GameRules.DiamondsToWin), UIPalette.Gold, 2.2f);
                         effects.Confetti(140);
                         effects.Flash(UIPalette.Gold);
                         effects.Sparkles(banner.transform.position, UIPalette.Gold, 30);
@@ -343,7 +348,8 @@ namespace DeckParty.UI
                         Consider(Sfx.Victory, 10);
                         break;
                     case GameEventType.Defeat:
-                        banner.Show(Loc.Get("over.season_over"), who == null ? Loc.Get("game.defeat_sub", "count", GameRules.DiamondsToWin) : Loc.Get("game.defeat_sub_other", "player", who), UIPalette.TextDim, 2f);
+                        string loser = who ?? CouchWho;
+                        banner.Show(Loc.Get("over.season_over"), loser == null ? Loc.Get("game.defeat_sub", "count", GameRules.DiamondsToWin) : Loc.Get("game.defeat_sub_other", "player", loser), UIPalette.TextDim, 2f);
                         Fx.Play(FxCue.Defeat, banner.transform);
                         Consider(Sfx.Defeat, 10);
                         break;

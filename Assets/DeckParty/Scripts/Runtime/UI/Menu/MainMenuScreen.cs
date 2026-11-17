@@ -38,6 +38,9 @@ namespace DeckParty.UI
             howToPlayButton.onClick.AddListener(() => m_Menu.ShowHowToPlay());
             settingsButton.onClick.AddListener(() => m_Menu.ShowSettings());
             quitButton.onClick.AddListener(Quit);
+            // Gamepad: the selector starts on Continue when there is a season to continue, otherwise on Single Player.
+            PadDefaultFocus.Mark(continueButton, 2);
+            PadDefaultFocus.Mark(singlePlayerButton, 1);
         }
 
         protected override void OnShow()

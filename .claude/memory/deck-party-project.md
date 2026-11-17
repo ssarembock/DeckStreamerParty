@@ -108,3 +108,33 @@ Key non-obvious decisions:
   - Community Beats show different viewers in chat / the viewers needed for the top bonus:
     - PartyEngine.CommunityMembers; CommunityVisuals.MembersForMax and MembersText; strings community.members(_max).
     - The 10 community descriptions are worded in viewers ({first}, {maxv} placeholders). The How to Play text still uses points (flagged).
+- Controller, couch play and multiplayer menu (2026-11-17; guide ControllerAndMultiplayerGuide.md in the repo root):
+  - **Gamepad layer** (Runtime/Input):
+    - PadInput: any pad, presses consumed once per frame, navigation repeat, Active = pad in use.
+    - PadBindings: PadAction to PadButton, saved in PlayerPrefs "dp.pad.bindings.v1". Actions in different contexts (Stream/Shop) can share a button; overlapping ones swap on rebind.
+    - PadRunner: DontDestroyOnLoad, execution order -1000. It ticks input and the navigator, hides the cursor, and sets EventSystem.sendNavigationEvents = false.
+    - PadNavigator: a selectable counts when a raycast at its centre hits it (scroll views use the viewport). It moves spatially, presses via submitHandler, and fakes pointer enter/exit so tooltips show (InputHelper.PointerPosition follows the focus).
+    - PadFocusFrame: its own overlay canvas, sorting order 150.
+    - PadShortcut: pad button plus a corner glyph prompt on a button, bound at runtime in the views.
+    - PadDefaultFocus: priority markers. PadSelfNavigation: the streamer select drives itself via InputHelper.MenuPressed.
+    - GameController.Pad: Back closes the top layer, Menu closes pause, the selector pauses during scoring/recap, plus a DefaultProvider.
+  - **Settings > Controller:** ControllerSettingsScreen, built in MainMenuSceneBuilder.BuildControllerScreen.
+  - **UI Skin:**
+    - SkinSlots 55-70: PadFocus, 12 pad glyphs, and IconModeOnlineCompetitive / OnlineCoop / Couch.
+    - UISkin.pad = PadLook, with the UISkinEditor.Pad section.
+    - SkinSlotGuide has a new Area.Controller.
+  - **Multiplayer:**
+    - MultiplayerModeScreen offers Online Competitive (Turns / FFA / 2v2), Online Co-Op Endless (CoopEndless only; mode and nights selectors hidden) and Couch.
+    - OnlineCategory.Current is set by the mode screen; a host's lobby starts in it; MatchModes.Competitive / Coop / ForCategory.
+    - Race is removed from all lists; MatchModes.Valid coerces it to Turns; the enum value is kept.
+    - The lobby summary is one short line (lobby.short_*).
+    - Co-op lobbies don't switch to FFA.
+    - MultiplayerScreen Back goes to the mode screen.
+  - **Stream setup (venue) pickers removed** from the character sets, lobby and pause menu; new games use AppSettings.VenueAuto.
+  - **Couch Competitive** (SinglePlayerMode.Couch, SinglePlayerLaunch.Couch):
+    - LocalGameSession.Couch (partial): seats, ActiveSeat, TurnPending, PassTurn, EndCouch.
+    - End Turn doesn't run StartNextNight; the next stream starts when the turn comes back.
+    - A 4-Trophy round lets the second player match it (both = draw); after the last stream the best stream wins.
+    - GameController.Couch: hand-over ModalDialog, Players panel, banners and log name the player, GameOverView.ShowCouch.
+    - Not saved. StreamerSelectScreen.Couch titles.
+  - No protocol or state format change.

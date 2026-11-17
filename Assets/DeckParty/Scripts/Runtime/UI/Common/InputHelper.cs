@@ -30,6 +30,12 @@ namespace DeckParty.UI
         {
             get
             {
+                // While the gamepad selector is showing, the "pointer" is the highlighted thing (tooltips appear beside it).
+                if (PadNavigator.Showing)
+                {
+                    var rect = PadNavigator.FocusScreenRect;
+                    return new Vector2(rect.xMax - 6f, rect.yMax - rect.height * 0.2f);
+                }
 #if ENABLE_INPUT_SYSTEM
                 var mouse = Mouse.current;
                 if (mouse != null) return mouse.position.ReadValue();
@@ -81,6 +87,27 @@ namespace DeckParty.UI
             }
             return false;
 #endif
+        }
+
+        /// <summary>
+        /// <see cref="Pressed"/> for menus that also take the gamepad: Escape = Back, Enter and Space = Confirm, the arrows =
+        /// the D-pad / left stick (with repeat). The game screen reads its pad buttons itself.
+        /// </summary>
+        public static bool MenuPressed(HotKey key)
+        {
+            if (Pressed(key)) return true;
+            var nav = PadInput.Navigate;
+            switch (key)
+            {
+                case HotKey.Escape: return PadInput.Pressed(PadAction.Back);
+                case HotKey.Enter:
+                case HotKey.Space: return PadInput.Pressed(PadAction.Confirm);
+                case HotKey.Left: return nav.x < 0;
+                case HotKey.Right: return nav.x > 0;
+                case HotKey.Up: return nav.y > 0;
+                case HotKey.Down: return nav.y < 0;
+                default: return false;
+            }
         }
 
         /// <summary>Alt+Enter (the usual fullscreen toggle on PC).</summary>

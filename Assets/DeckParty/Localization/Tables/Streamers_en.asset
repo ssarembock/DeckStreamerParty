@@ -508,6 +508,26 @@ MonoBehaviour:
     m_Localized: Locked in. Waiting for {count} more...
     m_Metadata:
       m_Items: []
+  - m_Id: 6046007437123584
+    m_Localized: 'PLAYER {player}: SELECT YOUR STREAMER'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900800
+    m_Localized: Player 1 picks first, then Player 2.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900801
+    m_Localized: 'Pass the controls: Player 2''s pick.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900802
+    m_Localized: Locked in.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900803
+    m_Localized: Picks next.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

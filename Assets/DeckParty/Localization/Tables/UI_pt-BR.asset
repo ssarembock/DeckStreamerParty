@@ -2633,6 +2633,209 @@ MonoBehaviour:
       na loja."
     m_Metadata:
       m_Items: []
+  - m_Id: 6046009941123072
+    m_Localized: Selecionar / apertar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454720
+    m_Localized: Voltar / cancelar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454721
+    m_Localized: Menu do jogo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454722
+    m_Localized: "Audi\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454723
+    m_Localized: Deixar um espectador entrar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454724
+    m_Localized: Encerrar a live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454725
+    m_Localized: Entrar ao vivo / encerrar vez
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454726
+    m_Localized: Aumentar o limite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454727
+    m_Localized: Poder ativo do streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454728
+    m_Localized: Remover um espectador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454729
+    m_Localized: Mais uma live (Infinito)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454730
+    m_Localized: "Adicionar um espectador \xE0 loja (Infinito)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454731
+    m_Localized: "Bot\xE3o A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454732
+    m_Localized: "Bot\xE3o B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454733
+    m_Localized: "Bot\xE3o X"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454734
+    m_Localized: "Bot\xE3o Y"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454735
+    m_Localized: "Bot\xE3o superior esquerdo (LB)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454736
+    m_Localized: "Bot\xE3o superior direito (RB)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454737
+    m_Localized: Gatilho esquerdo (LT)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454738
+    m_Localized: Gatilho direito (RT)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454739
+    m_Localized: "Bot\xE3o Exibir"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454740
+    m_Localized: "Bot\xE3o Menu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454741
+    m_Localized: "Apertar anal\xF3gico esquerdo (LS)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454742
+    m_Localized: "Apertar anal\xF3gico direito (RS)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454743
+    m_Localized: "N\xE3o definido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454744
+    m_Localized: "Aperte um bot\xE3o\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454745
+    m_Localized: "Aperte o bot\xE3o do controle para {action} ({seconds} s). Esc
+      cancela."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454746
+    m_Localized: "Controle conectado. Escolha uma a\xE7\xE3o para trocar o bot\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454747
+    m_Localized: "Nenhum controle conectado. Voc\xEA ainda pode mudar os bot\xF5es."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454748
+    m_Localized: Em qualquer lugar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454749
+    m_Localized: Durante a live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454750
+    m_Localized: Na loja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454751
+    m_Localized: Controle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454752
+    m_Localized: "Escolha o que cada bot\xE3o faz. A\xE7\xF5es da live e da loja
+      podem dividir um bot\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454753
+    m_Localized: "Restaurar padr\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454754
+    m_Localized: Restaurar o controle?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454755
+    m_Localized: "Cada a\xE7\xE3o volta para o bot\xE3o original."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454756
+    m_Localized: Restaurar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454757
+    m_Localized: "Controle restaurado para os bot\xF5es padr\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454758
+    m_Localized: Controle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454759
+    m_Localized: Multijogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454760
+    m_Localized: "Como voc\xEA quer jogar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454761
+    m_Localized: Competitivo online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454762
+    m_Localized: 'Jogue online contra outros: em turnos, todos contra todos ou 2x2.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454763
+    m_Localized: Infinito cooperativo online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454764
+    m_Localized: Juntem-se online e vejam quantas lives aguentam juntos.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454765
+    m_Localized: Competitivo local
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454766
+    m_Localized: 1x1 neste computador, em turnos. Mouse e teclado, controles ou os
+      dois.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046010025009152
+    m_Localized: Competitivo local
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046010025009153
+    m_Localized: "Dois jogadores, uma tela. Os dois escolhem streamer depois de Come\xE7ar."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

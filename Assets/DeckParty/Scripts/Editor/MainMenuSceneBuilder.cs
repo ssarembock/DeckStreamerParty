@@ -30,10 +30,12 @@ namespace DeckParty.EditorTools
 
             var main = BuildMainScreen(screens);
             var modes = BuildSinglePlayerModeScreen(screens);
+            var multiModes = BuildMultiplayerModeScreen(screens);
             var single = BuildSinglePlayerScreen(screens, prefabs);
             var multi = BuildMultiplayerScreen(screens);
             var lobby = BuildLobbyScreen(screens, prefabs);
             var settings = BuildSettingsScreen(screens);
+            var controllerSettings = BuildControllerScreen(screens);
             var howTo = BuildHowToPlayScreen(screens, prefabs);
             var select = StreamerSelectBuilder.Build(screens);
             MarkBackdropText(screens);
@@ -51,6 +53,8 @@ namespace DeckParty.EditorTools
             controller.howToPlayScreen = howTo;
             controller.streamerSelectScreen = select;
             controller.singlePlayerModeScreen = modes;
+            controller.multiplayerModeScreen = multiModes;
+            controller.controllerScreen = controllerSettings;
 
             EditorSceneManager.SaveScene(scene, DeckPartyPaths.MainMenuScene);
         }
@@ -89,6 +93,91 @@ namespace DeckParty.EditorTools
             view.backButton = back;
             view.endlessBestLabel = endlessBest;
             view.puzzlesProgressLabel = puzzlesProgress;
+            return view;
+        }
+
+        /// <summary>
+        /// Multiplayer's first screen (2026-11-17): Online Competitive, Online Co-Op Endless and Couch Competitive, as three big
+        /// cards like the single-player mode screen (UI Skin: Mode Button background, its own icon entry per card).
+        /// </summary>
+        static MultiplayerModeScreen BuildMultiplayerModeScreen(Transform parent)
+        {
+            var screen = SceneCommon.Screen(parent, "MultiplayerModeScreen");
+            SceneCommon.Header(screen, "mpmodes.title", "mpmodes.subtitle");
+
+            var row = EditorUI.Rect(screen, "Modes").Place(new Vector2(0.5f, 0.5f), new Vector2(0, -30),
+                new Vector2(ModeCardSize.x * 3 + ModeCardGap * 2, ModeCardSize.y));
+            EditorUI.HLayout(row, ModeCardGap, null, TextAnchor.MiddleCenter, false, false, false, false);
+
+            var competitive = ModeCard(row, "OnlineCompetitive", EditorUI.Action, SkinSlot.IconModeOnlineCompetitive, "mpmodes.competitive", "mpmodes.competitive_desc", UIPalette.Pink, out var competitiveNote);
+            var coop = ModeCard(row, "OnlineCoop", EditorUI.Night, SkinSlot.IconModeOnlineCoop, "mpmodes.coop", "mpmodes.coop_desc", UIPalette.Teal, out var coopNote);
+            var couch = ModeCard(row, "Couch", EditorUI.Audience, SkinSlot.IconModeCouch, "mpmodes.couch", "mpmodes.couch_desc", UIPalette.Gold, out var couchNote);
+            competitiveNote.gameObject.SetActive(false);
+            coopNote.gameObject.SetActive(false);
+            couchNote.gameObject.SetActive(false);
+
+            var back = SceneCommon.BackButton(screen);
+
+            var view = screen.gameObject.AddComponent<MultiplayerModeScreen>();
+            view.competitiveButton = competitive;
+            view.coopButton = coop;
+            view.couchButton = couch;
+            view.backButton = back;
+            PadDefaultFocus.Mark(competitive, 1);
+            return view;
+        }
+
+        /// <summary>
+        /// Settings > Controller (2026-11-17): one row per gamepad action (its name, then a button showing the pad button it's
+        /// on: press it, then press the new pad button), grouped by where it works, with Reset and Back.
+        /// </summary>
+        static ControllerSettingsScreen BuildControllerScreen(Transform parent)
+        {
+            var screen = SceneCommon.Screen(parent, "ControllerScreen");
+            SceneCommon.Header(screen, "controller.title", "controller.subtitle");
+
+            var panel = EditorUI.Panel(screen, "Panel");
+            panel.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(0, -20), new Vector2(1100, 760));
+            var status = EditorUI.Text(panel.transform, "Status", "-", 24, UIPalette.TextDim, TextAlignmentOptions.Center, false, false, false);
+            status.rectTransform.TopBand(22, 40, 40, 40);
+            var scroll = EditorUI.Scroll(panel.transform, "Bindings", out var list, 8, EditorUI.Pad(20, 8));
+            scroll.GetComponent<RectTransform>().Box(Vector2.zero, Vector2.one, new Vector2(30, 120), new Vector2(-30, -76));
+
+            // A section title ("Everywhere", "In a stream", "In the shop").
+            var header = EditorUI.Text(list, "HeaderTemplate", "-", 26, UIPalette.Gold, TextAlignmentOptions.BottomLeft, true, true, false);
+            EditorUI.Layout(header, -1, 52);
+
+            // One action: its name on the left, the button it's on at the right (press to change).
+            var row = EditorUI.Image(list, "RowTemplate", UIPalette.PanelAlt, EditorUI.RoundedSmall, SkinSlot.PanelAlt);
+            row.type = Image.Type.Sliced;
+            EditorUI.Layout(row, -1, 72);
+            var label = EditorUI.Text(row.transform, "Label", "-", 28, UIPalette.Text, TextAlignmentOptions.MidlineLeft, false, false, false);
+            label.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(28, 0), new Vector2(-420, 0));
+            var binding = EditorUI.Button(row.transform, "Binding", "-", ButtonStyle.Secondary, 24, out var bindingText);
+            ((RectTransform)binding.transform).Place(new Vector2(1, 0.5f), new Vector2(-12, 0), new Vector2(380, 58), new Vector2(1, 0.5f));
+            bindingText.name = "Text";
+            bindingText.alignment = TextAlignmentOptions.MidlineLeft;
+            bindingText.rectTransform.Box(Vector2.zero, Vector2.one, new Vector2(74, 0), new Vector2(-14, 0));
+            var bindingLoc = bindingText.GetComponent<LocalizedLabel>();
+            if (bindingLoc != null) Object.DestroyImmediate(bindingLoc);
+            var glyph = EditorUI.Image(binding.transform, "Glyph", Color.white, EditorUI.Circle);
+            glyph.rectTransform.Place(new Vector2(0, 0.5f), new Vector2(14, 0), new Vector2(46, 46), new Vector2(0, 0.5f));
+            glyph.preserveAspect = true;
+            var glyphLabel = EditorUI.Text(glyph.transform, "Label", "A", 22, Color.white, TextAlignmentOptions.Center, true, false, false);
+            glyphLabel.rectTransform.Stretch();
+
+            var reset = EditorUI.Button(panel.transform, "Reset", "controller.reset", ButtonStyle.Danger, 26);
+            ((RectTransform)reset.transform).Place(new Vector2(0.5f, 0), new Vector2(0, 26), new Vector2(380, 72), new Vector2(0.5f, 0));
+
+            var back = SceneCommon.BackButton(screen);
+
+            var view = screen.gameObject.AddComponent<ControllerSettingsScreen>();
+            view.list = list;
+            view.rowTemplate = row.gameObject;
+            view.headerTemplate = header;
+            view.statusLabel = status;
+            view.resetButton = reset;
+            view.backButton = back;
             return view;
         }
 
@@ -255,13 +344,7 @@ namespace DeckParty.EditorTools
 
             var back = SceneCommon.BackButton(screen);
 
-            var venueSelector = EditorUI.Selector(screen, "VenueSelector", "pause.setup");
-            venueSelector.GetComponent<RectTransform>().Place(new Vector2(0, 0), new Vector2(320, 24), new Vector2(520, 100), new Vector2(0, 0));
-            var preview = EditorUI.Image(screen, "VenuePreview", UIPalette.PanelAlt, EditorUI.Rounded);
-            preview.rectTransform.Place(new Vector2(0, 0), new Vector2(862, 30), new Vector2(156, 88), new Vector2(0, 0));
-            preview.preserveAspect = false;
-            var venueDescription = EditorUI.Text(screen, "VenueDescription", string.Empty, 21, UIPalette.Text, TextAlignmentOptions.MidlineLeft);
-            venueDescription.rectTransform.Place(new Vector2(0, 0), new Vector2(1036, 26), new Vector2(460, 96), new Vector2(0, 0));
+            // Stream setups are no longer picked (2026-11-17): no selector, preview or description here.
 
             var start = EditorUI.Button(screen, "Start", "single.start", ButtonStyle.Primary, 34);
             start.GetComponent<RectTransform>().Place(new Vector2(1, 0), new Vector2(-60, 34), new Vector2(340, 88), new Vector2(1, 0));
@@ -276,9 +359,6 @@ namespace DeckParty.EditorTools
             view.shopHeader = shopHeader;
             view.shopList = shopList;
             view.guestRowPrefab = prefabs.GuestRow;
-            view.venueSelector = venueSelector;
-            view.venuePreview = preview;
-            view.venueDescription = venueDescription;
             view.startButton = start;
             view.backButton = back;
             return view;
@@ -526,12 +606,11 @@ namespace DeckParty.EditorTools
             var shopTimer = EditorUI.Selector(settings.transform, "ShopTimer", "lobby.shop_timer");
             EditorUI.Layout(shopTimer, -1, 96);
             var summary = EditorUI.Text(settings.transform, "Summary", string.Empty, 19, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
-            EditorUI.Layout(summary, -1, 110, -1, 1);
+            // One short line on the mode (and a warning when the players don't fit it).
+            EditorUI.Layout(summary, -1, 64, -1, 1);
             summary.enableAutoSizing = true;
             summary.fontSizeMin = 13;
             summary.fontSizeMax = 19;
-            var venue = EditorUI.Selector(settings.transform, "Venue", "lobby.your_setup");
-            EditorUI.Layout(venue, -1, 96);
 
             // Lobby news (joins, leaves, settings); the chat input only shows while text chat is on (FX Library).
             var chatPanel = EditorUI.Panel(screen, "Chat");
@@ -564,7 +643,6 @@ namespace DeckParty.EditorTools
             view.scenarioSelector = scenario;
             view.modeSelector = mode;
             view.nightsSelector = nights;
-            view.venueSelector = venue;
             view.timerSelector = timer;
             view.customTimerInput = customTimer;
             view.shopTimerSelector = shopTimer;
@@ -667,6 +745,9 @@ namespace DeckParty.EditorTools
 
             var spacer = EditorUI.Rect(panel.transform, "Spacer");
             EditorUI.Layout(spacer, -1, 10, -1, 1);
+            // Gamepad mapping (Settings > Controller).
+            var controllerButton = EditorUI.Button(panel.transform, "Controller", "settings.controller", ButtonStyle.Secondary, 28);
+            EditorUI.Layout(controllerButton, -1, 72);
             var reset = EditorUI.Button(panel.transform, "ResetProgress", "settings.reset_progress", ButtonStyle.Danger, 28);
             EditorUI.Layout(reset, -1, 72);
 
@@ -687,6 +768,7 @@ namespace DeckParty.EditorTools
             view.fastAnimationsToggle = fast;
             view.display = display;
             view.resetProgressButton = reset;
+            view.controllerButton = controllerButton;
             view.backButton = back;
             return view;
         }

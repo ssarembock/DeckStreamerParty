@@ -539,6 +539,26 @@ MonoBehaviour:
       o m\xE1ximo que puderem!"
     m_Metadata:
       m_Items: []
+  - m_Id: 6046006468239360
+    m_Localized: "Fa\xE7am live em turnos. Vence o primeiro com {count} Trof\xE9us
+      numa live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793792
+    m_Localized: "Todos fazem live ao mesmo tempo. Vence o primeiro com {count} Trof\xE9us
+      numa live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793793
+    m_Localized: "Dois times de dois dividem Grana, Influ\xEAncia, Trof\xE9us e Risco
+      (limite {risk}). Vence o primeiro com {count} Trof\xE9us."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793794
+    m_Localized: "Dois jogadores dividem uma partida Infinita ({count} lives, limite
+      de Risco {risk}). Aguentem o m\xE1ximo que puderem."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

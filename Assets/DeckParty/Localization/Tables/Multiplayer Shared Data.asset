@@ -511,6 +511,22 @@ MonoBehaviour:
     m_Key: mp.coop_begins
     m_Metadata:
       m_Items: []
+  - m_Id: 6046006468239360
+    m_Key: lobby.short_turns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793792
+    m_Key: lobby.short_sync
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793793
+    m_Key: lobby.short_two_vs_two
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793794
+    m_Key: lobby.short_coop
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

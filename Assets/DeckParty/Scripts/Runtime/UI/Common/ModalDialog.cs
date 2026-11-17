@@ -33,6 +33,8 @@ namespace DeckParty.UI
             root.SetActive(false);
             confirmButton.onClick.AddListener(() => Choose(0));
             cancelButton.onClick.AddListener(() => Close(false));
+            // Gamepad: a dialog opens with its main button highlighted (above anything on the screen under it).
+            PadDefaultFocus.Mark(confirmButton, 100);
         }
 
         void OnDestroy()

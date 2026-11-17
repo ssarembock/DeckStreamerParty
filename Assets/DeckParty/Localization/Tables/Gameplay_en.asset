@@ -2048,6 +2048,79 @@ MonoBehaviour:
     m_Localized: '{count}/{max} in chat'
     m_Metadata:
       m_Items: []
+  - m_Id: 6046008456339456
+    m_Localized: Player {number}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893888
+    m_Localized: '{player}: {streamer}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893889
+    m_Localized: '{first} and {second} take turns. First to {count} Trophies in one
+      stream wins.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893890
+    m_Localized: '{player}, you''re up!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893891
+    m_Localized: Pass the controls to {player}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893892
+    m_Localized: Start My Turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893893
+    m_Localized: '{player}''s turn: stream {night}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893894
+    m_Localized: '{player}''S TURN'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893895
+    m_Localized: Stream {night} of {total}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893896
+    m_Localized: Their turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893897
+    m_Localized: '{player}: {count} TROPHIES!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893898
+    m_Localized: '{player} gets one last turn to match it.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893899
+    m_Localized: '{player} got {count} Trophies in one stream on stream {night}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893900
+    m_Localized: 'Nobody got there: {player} had the best stream ({count} Trophies).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893901
+    m_Localized: IT'S A DRAW!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893902
+    m_Localized: Both players finished level.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893903
+    m_Localized: "Best stream: {first} {first_best} \xB7 {second} {second_best}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893904
+    m_Localized: Couch 1v1
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

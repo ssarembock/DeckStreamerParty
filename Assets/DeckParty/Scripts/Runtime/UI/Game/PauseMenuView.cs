@@ -26,7 +26,6 @@ namespace DeckParty.UI
         public event Action<string> VenueChosen;
         public event Action<bool> OpenChanged;
 
-        List<(string id, string label)> m_Venues;
         string m_VenueChoice;
         bool m_Multiplayer;
 
@@ -35,15 +34,14 @@ namespace DeckParty.UI
         void Awake()
         {
             resumeButton.onClick.AddListener(Close);
+            PadDefaultFocus.Mark(resumeButton, 50);
             quitButton.onClick.AddListener(() => QuitClicked?.Invoke());
             masterSlider.onValueChanged.AddListener(v => AppSettings.MasterVolume = v);
             musicSlider.onValueChanged.AddListener(v => AppSettings.MusicVolume = v);
             sfxSlider.onValueChanged.AddListener(v => AppSettings.SfxVolume = v);
             fastAnimationsToggle.Changed += v => AppSettings.FastAnimations = v;
-            venueSelector.Changed += index =>
-            {
-                if (m_Venues != null && index >= 0 && index < m_Venues.Count) VenueChosen?.Invoke(m_Venues[index].id);
-            };
+            // Stream setups are no longer picked (2026-11-17): scenes built before still have the selector, hidden.
+            if (venueSelector != null) venueSelector.gameObject.SetActive(false);
             Loc.Changed += OnLanguageChanged;
             root.SetActive(false);
         }
@@ -75,17 +73,6 @@ namespace DeckParty.UI
 
         void Fill()
         {
-            m_Venues = GameDatabase.Instance.VenueChoices();
-            var labels = new List<string>();
-            int index = 0;
-            for (int i = 0; i < m_Venues.Count; i++)
-            {
-                labels.Add(m_Venues[i].label);
-                if (m_Venues[i].id == m_VenueChoice) index = i;
-            }
-            venueSelector.SetTitle(Loc.Get("pause.setup"));
-            venueSelector.SetOptions(labels, index);
-
             rulesText.text = RulesText.Quick;
             titleLabel.text = m_Multiplayer ? Loc.Get("pause.title_mp") + $"  <size=60%><color=#B9AED6>{Loc.Get("pause.keeps_running")}</color></size>" : Loc.Get("pause.title");
             quitLabel.text = Loc.Get(m_Multiplayer ? "pause.leave" : "pause.save_quit");

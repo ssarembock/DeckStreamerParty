@@ -127,6 +127,17 @@ namespace DeckParty.UI
         public event Action AddShopViewerClicked;
 
         readonly List<ShopItemView> m_Items = new List<ShopItemView>();
+
+        /// <summary>The first viewer card on show (the gamepad selector starts here in the shop), or null.</summary>
+        public Selectable FirstTile
+        {
+            get
+            {
+                foreach (var item in m_Items)
+                    if (item != null && item.isActiveAndEnabled && item.button != null && item.button.isActiveAndEnabled) return item.button;
+                return null;
+            }
+        }
         PlayerState m_State;
         PlanningContext m_Context;
         float m_LastWidth = -1f;
@@ -149,6 +160,13 @@ namespace DeckParty.UI
             if (removeButton != null) removeButton.onClick.AddListener(() => RemoveClicked?.Invoke());
             if (rolodexButton != null) rolodexButton.onClick.AddListener(() => RolodexClicked?.Invoke());
             nextNightButton.onClick.AddListener(() => NextNightClicked?.Invoke());
+            // Gamepad: each shop button has its own pad button (Settings > Controller).
+            PadShortcut.Bind(expandButton, PadAction.RaiseSubCap);
+            PadShortcut.Bind(removeButton, PadAction.RemoveViewer);
+            PadShortcut.Bind(nextNightButton, PadAction.GoLive);
+            PadShortcut.Bind(addStreamButton, PadAction.AddStream);
+            PadShortcut.Bind(addViewerButton, PadAction.AddShopViewer);
+            PadShortcut.Bind(rolodexButton, PadAction.Audience);
             if (power != null) power.UseClicked += () => PowerClicked?.Invoke();
             if (gate != null) gate.ReadyClicked += () => ShopReadyClicked?.Invoke();
             if (addStreamButton != null) addStreamButton.onClick.AddListener(() => AddStreamClicked?.Invoke());

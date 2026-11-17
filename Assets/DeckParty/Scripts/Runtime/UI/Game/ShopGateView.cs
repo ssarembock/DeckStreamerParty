@@ -40,6 +40,8 @@ namespace DeckParty.UI
         void Awake()
         {
             if (readyButton != null) readyButton.onClick.AddListener(() => ReadyClicked?.Invoke());
+            // Free For All: Ready for the shop is on the same pad button as Go Live (it covers the shop until it opens).
+            PadShortcut.Bind(readyButton, PadAction.GoLive);
             if (columnTemplate != null) columnTemplate.gameObject.SetActive(false);
             if (dividerTemplate != null) dividerTemplate.SetActive(false);
             if (root != null) root.SetActive(false);

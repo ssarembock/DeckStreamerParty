@@ -1899,6 +1899,78 @@ MonoBehaviour:
     m_Key: community.members_max
     m_Metadata:
       m_Items: []
+  - m_Id: 6046008456339456
+    m_Key: couch.player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893888
+    m_Key: couch.player_streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893889
+    m_Key: couch.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893890
+    m_Key: couch.handover_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893891
+    m_Key: couch.handover_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893892
+    m_Key: couch.handover_go
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893893
+    m_Key: couch.turn_log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893894
+    m_Key: couch.turn_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893895
+    m_Key: couch.turn_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893896
+    m_Key: couch.their_turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893897
+    m_Key: couch.reached_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893898
+    m_Key: couch.reached_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893899
+    m_Key: couch.won_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893900
+    m_Key: couch.won_best_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893901
+    m_Key: couch.draw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893902
+    m_Key: couch.draw_detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893903
+    m_Key: couch.best_line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893904
+    m_Key: players.title_couch
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

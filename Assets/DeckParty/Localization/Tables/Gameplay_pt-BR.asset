@@ -2068,6 +2068,79 @@ MonoBehaviour:
     m_Localized: '{count}/{max} no chat'
     m_Metadata:
       m_Items: []
+  - m_Id: 6046008456339456
+    m_Localized: Jogador {number}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893888
+    m_Localized: '{player}: {streamer}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893889
+    m_Localized: "{first} e {second} jogam em turnos. Vence o primeiro com {count}
+      Trof\xE9us numa live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893890
+    m_Localized: '{player}, sua vez!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893891
+    m_Localized: Passe o controle para {player}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893892
+    m_Localized: "Come\xE7ar minha vez"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893893
+    m_Localized: 'Vez de {player}: live {night}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893894
+    m_Localized: VEZ DE {player}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893895
+    m_Localized: Live {night} de {total}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893896
+    m_Localized: Vez dele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893897
+    m_Localized: "{player}: {count} TROF\xC9US!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893898
+    m_Localized: "{player} tem uma \xFAltima vez para empatar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893899
+    m_Localized: "{player} juntou {count} Trof\xE9us numa live na live {night}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893900
+    m_Localized: "Ningu\xE9m chegou l\xE1: {player} teve a melhor live ({count} Trof\xE9us)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893901
+    m_Localized: EMPATE!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893902
+    m_Localized: Os dois terminaram empatados.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893903
+    m_Localized: "Melhor live: {first} {first_best} \xB7 {second} {second_best}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046008489893904
+    m_Localized: Local 1x1
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

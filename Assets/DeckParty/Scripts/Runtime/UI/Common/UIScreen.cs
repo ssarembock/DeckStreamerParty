@@ -20,6 +20,8 @@ namespace DeckParty.UI
             Group.interactable = true;
             Group.blocksRaycasts = true;
             OnShow();
+            // Gamepad: a new page, so the selector starts on its default button.
+            PadNavigator.RequestRefocus();
             UITween.Fade(this, Group, 1f, 0.2f);
         }
 

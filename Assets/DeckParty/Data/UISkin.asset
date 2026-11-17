@@ -400,6 +400,118 @@ MonoBehaviour:
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
     color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadFocus
+    slot: 55
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadSouth
+    slot: 56
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadEast
+    slot: 57
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadWest
+    slot: 58
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadNorth
+    slot: 59
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadLeftShoulder
+    slot: 60
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadRightShoulder
+    slot: 61
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadLeftTrigger
+    slot: 62
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadRightTrigger
+    slot: 63
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadSelect
+    slot: 64
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadStart
+    slot: 65
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadLeftStick
+    slot: 66
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: PadRightStick
+    slot: 67
+    sprite: {fileID: 0}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconModeOnlineCompetitive
+    slot: 68
+    sprite: {fileID: 5520584384953745227, guid: e23314ce5b92e4849ab371d9e993442e, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconModeOnlineCoop
+    slot: 69
+    sprite: {fileID: 1397571069668757145, guid: e23314ce5b92e4849ab371d9e993442e, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - name: IconModeCouch
+    slot: 70
+    sprite: {fileID: 8411459583413261410, guid: e23314ce5b92e4849ab371d9e993442e, type: 3}
+    imageType: 1
+    pixelsPerUnitMultiplier: 1
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
   siteColours:
     page: {r: 0.09019608, g: 0.09019608, b: 0.101960786, a: 1}
     panelFill: {r: 0.09019608, g: 0.09019608, b: 0.101960786, a: 1}
@@ -1427,38 +1539,6 @@ MonoBehaviour:
     missing: 0
     overrideColor: 0
     color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
-  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/Venue/Title
-    label: Settings > Venue > Title
-    group: 'Pop-ups: Pause Menu'
-    sample: Stream Setup
-    source: Game scene
-    missing: 0
-    overrideColor: 0
-    color: {r: 0.7254902, g: 0.68235296, b: 0.8392157, a: 1}
-  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/Venue/Row/Prev/Label
-    label: Row > Prev > Label
-    group: 'Pop-ups: Pause Menu'
-    sample: <
-    source: Game scene
-    missing: 0
-    overrideColor: 0
-    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
-  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/Venue/Row/Value/Label
-    label: Row > Value > Label
-    group: 'Pop-ups: Pause Menu'
-    sample: '-'
-    source: Game scene
-    missing: 0
-    overrideColor: 0
-    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
-  - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/Venue/Row/Next/Label
-    label: Row > Next > Label
-    group: 'Pop-ups: Pause Menu'
-    sample: '>'
-    source: Game scene
-    missing: 0
-    overrideColor: 0
-    color: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}
   - id: Game/OverlayCanvas/PauseMenu/Root/Panel/Settings/MasterRow/Label
     label: Settings > Master Row > Label
     group: 'Pop-ups: Pause Menu'
@@ -2001,3 +2081,14 @@ MonoBehaviour:
     cantBuyVeil:
       use: 0
       colour: {r: 1, g: 1, b: 1, a: 0.62}
+  pad:
+    focusPadding: 10
+    focusPulse: 0.04
+    focusPulseSpeed: 1.6
+    focusColour: {r: 0.54, g: 0.31, b: 1, a: 1}
+    focusGlide: 0.08
+    showPrompts: 1
+    promptSize: 44
+    promptCorner: 0
+    promptOverhang: 12
+    hideCursor: 1

@@ -14,6 +14,11 @@ namespace DeckParty.UI
         Endless = 1,
         /// <summary>A season against a simple AI streamer: the first to win wins.</summary>
         VersusAi = 2,
+        /// <summary>
+        /// Couch Competitive (2026-11-17, picked on the multiplayer mode screen): two players on this computer, 1v1, taking
+        /// turns. It shares the character set screen; the first to win wins.
+        /// </summary>
+        Couch = 3,
     }
 
     /// <summary>
@@ -40,6 +45,7 @@ namespace DeckParty.UI
             puzzlesButton.onClick.AddListener(() => m_Menu.StartSinglePlayerMode(SinglePlayerMode.Puzzles));
             endlessButton.onClick.AddListener(() => m_Menu.StartSinglePlayerMode(SinglePlayerMode.Endless));
             versusButton.onClick.AddListener(() => m_Menu.StartSinglePlayerMode(SinglePlayerMode.VersusAi));
+            PadDefaultFocus.Mark(puzzlesButton, 1);
             backButton.onClick.AddListener(() => m_Menu.ShowMain());
             Loc.Changed += () =>
             {
@@ -60,7 +66,7 @@ namespace DeckParty.UI
         void Update()
         {
             if (!IsVisible || InputHelper.IsTyping || ModalDialog.IsOpen) return;
-            if (InputHelper.Pressed(HotKey.Escape)) m_Menu.ShowMain();
+            if (InputHelper.MenuPressed(HotKey.Escape)) m_Menu.ShowMain();
         }
     }
 }

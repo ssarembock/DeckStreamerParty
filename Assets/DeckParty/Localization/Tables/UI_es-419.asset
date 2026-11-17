@@ -2641,6 +2641,211 @@ MonoBehaviour:
       en la tienda."
     m_Metadata:
       m_Items: []
+  - m_Id: 6046009941123072
+    m_Localized: Seleccionar / pulsar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454720
+    m_Localized: Volver / cancelar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454721
+    m_Localized: "Men\xFA del juego"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454722
+    m_Localized: Audiencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454723
+    m_Localized: Dejar entrar a un espectador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454724
+    m_Localized: Terminar el stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454725
+    m_Localized: Salir en vivo / terminar turno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454726
+    m_Localized: Subir el cupo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454727
+    m_Localized: Poder activo del streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454728
+    m_Localized: Quitar un espectador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454729
+    m_Localized: "A\xF1adir un stream (Infinito)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454730
+    m_Localized: "A\xF1adir un espectador a la tienda (Infinito)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454731
+    m_Localized: "Bot\xF3n A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454732
+    m_Localized: "Bot\xF3n B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454733
+    m_Localized: "Bot\xF3n X"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454734
+    m_Localized: "Bot\xF3n Y"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454735
+    m_Localized: "Bot\xF3n superior izquierdo (LB)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454736
+    m_Localized: "Bot\xF3n superior derecho (RB)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454737
+    m_Localized: Gatillo izquierdo (LT)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454738
+    m_Localized: Gatillo derecho (RT)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454739
+    m_Localized: "Bot\xF3n Vista"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454740
+    m_Localized: "Bot\xF3n Men\xFA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454741
+    m_Localized: Presionar stick izquierdo (LS)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454742
+    m_Localized: Presionar stick derecho (RS)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454743
+    m_Localized: Sin asignar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454744
+    m_Localized: "Pulsa un bot\xF3n\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454745
+    m_Localized: "Pulsa el bot\xF3n del control para {action} ({seconds} s). Esc
+      cancela."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454746
+    m_Localized: "Control conectado. Elige una acci\xF3n para cambiar su bot\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454747
+    m_Localized: No hay control conectado. Igual puedes cambiar los botones.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454748
+    m_Localized: En todas partes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454749
+    m_Localized: Durante el stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454750
+    m_Localized: En la tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454751
+    m_Localized: Control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454752
+    m_Localized: "Elige qu\xE9 hace cada bot\xF3n. Las acciones del stream y de la
+      tienda pueden compartir bot\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454753
+    m_Localized: Restablecer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454754
+    m_Localized: "\xBFRestablecer el control?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454755
+    m_Localized: "Cada acci\xF3n vuelve a su bot\xF3n original."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454756
+    m_Localized: Restablecer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454757
+    m_Localized: Control restablecido a sus botones originales.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454758
+    m_Localized: Control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454759
+    m_Localized: Multijugador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454760
+    m_Localized: "\xBFC\xF3mo quieres jugar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454761
+    m_Localized: "Competitivo en l\xEDnea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454762
+    m_Localized: "Juega en l\xEDnea contra otros: por turnos, todos contra todos
+      o 2 vs 2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454763
+    m_Localized: "Infinito cooperativo en l\xEDnea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454764
+    m_Localized: "\xDAnanse en l\xEDnea y vean cu\xE1ntos streams aguantan juntos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454765
+    m_Localized: Competitivo local
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454766
+    m_Localized: 1 vs 1 en esta computadora, por turnos. Teclado y mouse, controles
+      o ambos.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046010025009152
+    m_Localized: Competitivo local
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046010025009153
+    m_Localized: "Dos jugadores, una pantalla. Ambos eligen streamer despu\xE9s de
+      Empezar."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

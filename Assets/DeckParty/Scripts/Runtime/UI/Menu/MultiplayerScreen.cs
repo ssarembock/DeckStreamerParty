@@ -361,7 +361,7 @@ namespace DeckParty.UI
         {
             if (NetworkService.Instance.IsActive) NetworkService.Instance.Leave();
             SetBusy(false, string.Empty);
-            m_Menu.ShowStreamerSelect(StreamerSelectMode.Multiplayer);
+            m_Menu.BackFromConnect();
         }
     }
 }

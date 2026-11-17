@@ -28,7 +28,7 @@ namespace DeckParty.UI
             if (session == null || !session.IsSpawned) return;
             var players = session.PlayersSnapshot();
             var mode = session.Settings.Mode;
-            string modeColor = mode == MatchMode.Race ? "#FF9A3D" : mode == MatchMode.Turns ? "#FF4F8B" : "#B9AED6";
+            string modeColor = mode == MatchMode.Turns ? "#FF4F8B" : "#B9AED6";
             titleLabel.text = Loc.Get("players.title") + $"  <size=70%><color={modeColor}>{MatchModes.ShortName(mode)}</color></size>";
 
             for (int i = 0; i < players.Count; i++)
@@ -48,7 +48,7 @@ namespace DeckParty.UI
                 m_RowIds[i] = p.ClientId;
                 m_Rows[i].gameObject.SetActive(true);
                 m_Rows[i].Set(p.DisplayName, PanelLine(p), color,
-                    mode != MatchMode.Race && (p.ReadyNextNight || (MatchModes.UsesRounds(mode) && session.Stage != RoundStage.Shopping && p.ReadyForShop)),
+                    (p.ReadyNextNight || (MatchModes.UsesRounds(mode) && session.Stage != RoundStage.Shopping && p.ReadyForShop)),
                     session.IsHostPlayer(p.ClientId), p.Rank, p.ClientId == session.LocalClientId);
                 m_Rows[i].SetStreamer((StreamerType)p.Streamer);
                 m_Rows[i].SetViewed(p.ClientId == viewedId, color);

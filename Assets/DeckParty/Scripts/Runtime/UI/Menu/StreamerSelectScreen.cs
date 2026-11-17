@@ -95,6 +95,8 @@ namespace DeckParty.UI
         {
             if (confirmButton != null) confirmButton.onClick.AddListener(Confirm);
             if (backButton != null) backButton.onClick.AddListener(Back);
+            // The grid moves with the D-pad itself (MenuPressed), so the general selector stands aside here.
+            if (GetComponent<PadSelfNavigation>() == null) gameObject.AddComponent<PadSelfNavigation>();
             Loc.Changed += OnLanguageChanged;
         }
 
@@ -112,10 +114,16 @@ namespace DeckParty.UI
             Highlight(m_Index, false);
         }
 
-        /// <summary>Opens the select screen. <paramref name="onConfirmed"/> receives the pick (a real streamer or None).</summary>
         /// <summary>Versus the AI: the streamer you picked, shown on the right while you pick the AI's.</summary>
         public byte PlayerPick { get; set; }
 
+        /// <summary>
+        /// Couch Competitive (2026-11-17): the Versus the AI picks become Player 1's (<see cref="StreamerSelectMode.VersusAi"/>)
+        /// and Player 2's (<see cref="StreamerSelectMode.Opponent"/>), with titles to match.
+        /// </summary>
+        public bool Couch { get; set; }
+
+        /// <summary>Opens the select screen. <paramref name="onConfirmed"/> receives the pick (a real streamer or None).</summary>
         public void Open(StreamerSelectMode mode, Action<byte> onConfirmed, Action onBack)
         {
             m_Mode = mode;
@@ -168,6 +176,11 @@ namespace DeckParty.UI
 
         void ApplyStatic()
         {
+            if (Couch && (m_Mode == StreamerSelectMode.VersusAi || m_Mode == StreamerSelectMode.Opponent))
+            {
+                ApplyCouch(m_Mode == StreamerSelectMode.Opponent);
+                return;
+            }
             bool rivalPick = m_Mode == StreamerSelectMode.Opponent;
             if (titleLabel != null) titleLabel.text = Loc.Get(rivalPick ? "select.title_rival" : "select.title");
             string subtitle = m_Mode == StreamerSelectMode.SinglePlayer ? "select.subtitle_single"
@@ -198,6 +211,34 @@ namespace DeckParty.UI
             if (p2Sub != null) p2Sub.text = Loc.Get(versus ? "select.opponent_versus_sub" : single ? "select.opponent_algorithm_sub" : "select.opponent_unknown_sub");
             if (p2Initials != null) p2Initials.text = single || versus ? "A" : "?";
             if (p2Placeholder != null) p2Placeholder.color = single || versus ? UIPalette.Gold : UIPalette.TextDim;
+        }
+
+        /// <summary>Couch play: "PLAYER 1 / PLAYER 2: SELECT YOUR STREAMER", the other player on the right.</summary>
+        void ApplyCouch(bool second)
+        {
+            if (titleLabel != null) titleLabel.text = Loc.Get("select.title_couch", "player", second ? 2 : 1);
+            if (subtitleLabel != null) subtitleLabel.text = Loc.Get(second ? "select.subtitle_couch_second" : "select.subtitle_couch");
+            if (hintLabel != null) hintLabel.text = Loc.Get("select.hint");
+            if (vsLabel != null) vsLabel.text = Loc.Get("select.vs");
+            if (backButton != null) backButton.gameObject.SetActive(true);
+            if (confirmLabel != null) confirmLabel.text = Loc.Get("select.confirm");
+
+            if (second)
+            {
+                // Player 2 picks: Player 1 (already picked) stands on the right.
+                bool random = PlayerPick == StreamerCatalog.RandomPick;
+                var first = random ? StreamerType.None : (StreamerType)PlayerPick;
+                string name = random ? Loc.Get("streamer.Random.name") : StreamerVisuals.Name(first);
+                if (p2Name != null) p2Name.text = Loc.Get("couch.player_streamer", "player", Loc.Get("couch.player", "number", 1), "streamer", name);
+                if (p2Sub != null) p2Sub.text = Loc.Get("select.couch_p1_sub");
+                if (p2Initials != null) p2Initials.text = random ? "?" : StreamerVisuals.Initials(first);
+                if (p2Placeholder != null) p2Placeholder.color = random ? UIPalette.Purple : StreamerVisuals.Color(first);
+                return;
+            }
+            if (p2Name != null) p2Name.text = Loc.Get("couch.player", "number", 2);
+            if (p2Sub != null) p2Sub.text = Loc.Get("select.couch_p2_sub");
+            if (p2Initials != null) p2Initials.text = "2";
+            if (p2Placeholder != null) p2Placeholder.color = UIPalette.PlayerColor(1);
         }
 
         void Highlight(int index, bool feedback)
@@ -291,12 +332,12 @@ namespace DeckParty.UI
             if (timerLabel != null) timerLabel.text = Mathf.CeilToInt(m_Timer).ToString("00");
 
             if (m_Locked || InputHelper.IsTyping || ModalDialog.IsOpen) return;
-            if (InputHelper.Pressed(HotKey.Left)) Move(-1, 0);
-            else if (InputHelper.Pressed(HotKey.Right)) Move(1, 0);
-            else if (InputHelper.Pressed(HotKey.Up)) Move(0, -1);
-            else if (InputHelper.Pressed(HotKey.Down)) Move(0, 1);
-            else if (InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Space)) Confirm();
-            else if (InputHelper.Pressed(HotKey.Escape)) Back();
+            if (InputHelper.MenuPressed(HotKey.Left)) Move(-1, 0);
+            else if (InputHelper.MenuPressed(HotKey.Right)) Move(1, 0);
+            else if (InputHelper.MenuPressed(HotKey.Up)) Move(0, -1);
+            else if (InputHelper.MenuPressed(HotKey.Down)) Move(0, 1);
+            else if (InputHelper.MenuPressed(HotKey.Enter) || InputHelper.MenuPressed(HotKey.Space)) Confirm();
+            else if (InputHelper.MenuPressed(HotKey.Escape)) Back();
         }
 
         static Networking.DeckPartyNetSession Net => Networking.DeckPartyNetSession.Instance;
@@ -326,11 +367,11 @@ namespace DeckParty.UI
                 return;
             }
             if (InputHelper.IsTyping || ModalDialog.IsOpen) return;
-            if (InputHelper.Pressed(HotKey.Left)) Move(-1, 0);
-            else if (InputHelper.Pressed(HotKey.Right)) Move(1, 0);
-            else if (InputHelper.Pressed(HotKey.Up)) Move(0, -1);
-            else if (InputHelper.Pressed(HotKey.Down)) Move(0, 1);
-            else if (InputHelper.Pressed(HotKey.Enter) || InputHelper.Pressed(HotKey.Space)) Confirm();
+            if (InputHelper.MenuPressed(HotKey.Left)) Move(-1, 0);
+            else if (InputHelper.MenuPressed(HotKey.Right)) Move(1, 0);
+            else if (InputHelper.MenuPressed(HotKey.Up)) Move(0, -1);
+            else if (InputHelper.MenuPressed(HotKey.Down)) Move(0, 1);
+            else if (InputHelper.MenuPressed(HotKey.Enter) || InputHelper.MenuPressed(HotKey.Space)) Confirm();
             // No Esc: the match is starting.
         }
 

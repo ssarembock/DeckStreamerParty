@@ -15,6 +15,8 @@ namespace DeckParty.UI
         [SerializeField] internal ToggleSwitch fastAnimationsToggle;
         [SerializeField] internal DisplaySettingsView display;
         [SerializeField] internal Button resetProgressButton;
+        [Tooltip("Opens Settings > Controller (the gamepad mapping). Scenes built before 2026-11-17 have none.")]
+        [SerializeField] internal Button controllerButton;
         [SerializeField] internal Button backButton;
 
         MainMenuController m_Menu;
@@ -34,6 +36,7 @@ namespace DeckParty.UI
             if (fullscreenToggle != null) fullscreenToggle.Changed += v => AppSettings.Fullscreen = v;
             fastAnimationsToggle.Changed += v => AppSettings.FastAnimations = v;
             resetProgressButton.onClick.AddListener(ResetProgress);
+            if (controllerButton != null) controllerButton.onClick.AddListener(() => m_Menu.ShowControllerSettings());
             backButton.onClick.AddListener(() =>
             {
                 AppSettings.Save();

@@ -525,6 +525,25 @@ MonoBehaviour:
       together!'
     m_Metadata:
       m_Items: []
+  - m_Id: 6046006468239360
+    m_Localized: Take turns streaming. First to {count} Trophies in one stream wins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793792
+    m_Localized: Everyone streams at once. First to {count} Trophies in one stream
+      wins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793793
+    m_Localized: Two teams of two share Cash, Influence, Trophies and Risk (limit
+      {risk}). First team to {count} Trophies wins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793794
+    m_Localized: Two players share one Endless run ({count} streams, Risk limit {risk}).
+      Last as long as you can.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

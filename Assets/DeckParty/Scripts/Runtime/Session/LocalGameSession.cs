@@ -9,7 +9,7 @@ namespace DeckParty
     /// rival season played by <see cref="SimpleAI"/>: each time your stream ends, the AI plays the same stream number and
     /// its shop straight away (the first to win wins). Rival powers (Raid, Wealth Tax) hit the other side, both ways.
     /// </summary>
-    public sealed class LocalGameSession : IGameSession
+    public sealed partial class LocalGameSession : IGameSession
     {
         /// <summary>Most AI moves in one stream or shop visit (a safety net; a stream rarely needs a dozen).</summary>
         const int MaxAiMoves = 200;
@@ -23,14 +23,17 @@ namespace DeckParty
         /// <param name="persist">Autosave the season (Versus the AI isn't saved: the AI's season couldn't be resumed).</param>
         public LocalGameSession(PlayerState state, string venueChoice, bool persist = true)
         {
-            State = state ?? throw new ArgumentNullException(nameof(state));
+            m_Solo = state ?? throw new ArgumentNullException(nameof(state));
             m_VenueChoice = venueChoice;
             m_Persist = persist;
             if (m_Persist && !State.IsGameOver) SaveSystem.Save(State, m_VenueChoice);
         }
 
         public bool IsMultiplayer => false;
-        public PlayerState State { get; }
+        /// <summary>The season being played: yours, or in couch play the season of whoever's turn it is.</summary>
+        public PlayerState State => IsCouch ? m_Seats[ActiveSeat] : m_Solo;
+
+        readonly PlayerState m_Solo;
 
         public event Action<PlayerState, IReadOnlyList<GameEvent>> StateChanged;
         public event Action<string> CommandRejected;
@@ -38,7 +41,8 @@ namespace DeckParty
         // ------------------------------------------------------------------ Versus the AI
 
         /// <summary>Versus the AI: the AI's season (null in a normal single-player season).</summary>
-        public PlayerState Rival { get; private set; }
+        public PlayerState Rival => IsCouch ? m_Seats[1 - ActiveSeat] : m_Rival;
+        PlayerState m_Rival;
         public bool HasRival => Rival != null;
 
         /// <summary>The AI played (its stream and shop, or a rival power hit it): its state and what happened.</summary>
@@ -47,7 +51,7 @@ namespace DeckParty
         /// <summary>Versus the AI: the AI plays this season alongside yours.</summary>
         public void AttachRival(PlayerState rival, int aiSeed)
         {
-            Rival = rival;
+            m_Rival = rival;
             m_Ai = new SimpleAI(aiSeed);
         }
 
@@ -68,6 +72,11 @@ namespace DeckParty
 
         public void Submit(GameCommand command)
         {
+            if (IsCouch)
+            {
+                SubmitCouch(command);
+                return;
+            }
             bool wasOver = State.IsGameOver;
             bool wasStreaming = State.Phase == GamePhase.Party;
             m_Events.Clear();
@@ -168,6 +177,7 @@ namespace DeckParty
             StateChanged = null;
             CommandRejected = null;
             RivalChanged = null;
+            TurnChanged = null;
         }
     }
 }

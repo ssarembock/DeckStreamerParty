@@ -499,6 +499,26 @@ MonoBehaviour:
     m_Key: select.waiting_players
     m_Metadata:
       m_Items: []
+  - m_Id: 6046007437123584
+    m_Key: select.title_couch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900800
+    m_Key: select.subtitle_couch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900801
+    m_Key: select.subtitle_couch_second
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900802
+    m_Key: select.couch_p1_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046007453900803
+    m_Key: select.couch_p2_sub
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

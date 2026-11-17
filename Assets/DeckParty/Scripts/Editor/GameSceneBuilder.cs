@@ -1647,8 +1647,6 @@ namespace DeckParty.EditorTools
 
             var left = EditorUI.Rect(panel, "Settings").Box(new Vector2(0, 0), new Vector2(0.34f, 1), new Vector2(44, 140), new Vector2(-16, -116));
             EditorUI.VLayout(left, 14, EditorUI.Pad(0), TextAnchor.UpperCenter, true, true, true, false);
-            var venue = EditorUI.Selector(left, "Venue", "pause.setup");
-            EditorUI.Layout(venue, -1, 100);
             var master = MainMenuSceneBuilder.SliderRow(left, "Master", "settings.master", 200);
             var music = MainMenuSceneBuilder.SliderRow(left, "Music", "settings.music", 200);
             var sfx = MainMenuSceneBuilder.SliderRow(left, "Sfx", "settings.sfx", 200);
@@ -1678,7 +1676,6 @@ namespace DeckParty.EditorTools
             view.root = root;
             view.titleLabel = title;
             view.resumeButton = resume;
-            view.venueSelector = venue;
             view.masterSlider = master;
             view.musicSlider = music;
             view.sfxSlider = sfx;

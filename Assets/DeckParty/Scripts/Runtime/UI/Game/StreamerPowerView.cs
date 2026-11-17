@@ -47,6 +47,7 @@ namespace DeckParty.UI
         void Awake()
         {
             if (useButton != null) useButton.onClick.AddListener(() => UseClicked?.Invoke());
+            PadShortcut.Bind(useButton, PadAction.UseActive);
             if (infoTooltip != null) infoTooltip.Provider = InfoTooltip;
         }
 

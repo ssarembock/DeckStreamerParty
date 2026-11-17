@@ -2527,6 +2527,206 @@ MonoBehaviour:
     m_Key: hud.tip.plays_term_endless
     m_Metadata:
       m_Items: []
+  - m_Id: 6046009941123072
+    m_Key: pad.action.Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454720
+    m_Key: pad.action.Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454721
+    m_Key: pad.action.Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454722
+    m_Key: pad.action.Audience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454723
+    m_Key: pad.action.AddViewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454724
+    m_Key: pad.action.EndStream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454725
+    m_Key: pad.action.GoLive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454726
+    m_Key: pad.action.RaiseSubCap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454727
+    m_Key: pad.action.UseActive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454728
+    m_Key: pad.action.RemoveViewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454729
+    m_Key: pad.action.AddStream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454730
+    m_Key: pad.action.AddShopViewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454731
+    m_Key: controller.button.South
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454732
+    m_Key: controller.button.East
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454733
+    m_Key: controller.button.West
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454734
+    m_Key: controller.button.North
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454735
+    m_Key: controller.button.LeftShoulder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454736
+    m_Key: controller.button.RightShoulder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454737
+    m_Key: controller.button.LeftTrigger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454738
+    m_Key: controller.button.RightTrigger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454739
+    m_Key: controller.button.Select
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454740
+    m_Key: controller.button.Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454741
+    m_Key: controller.button.LeftStickPress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454742
+    m_Key: controller.button.RightStickPress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454743
+    m_Key: controller.unbound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454744
+    m_Key: controller.press_button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454745
+    m_Key: controller.listening
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454746
+    m_Key: controller.connected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454747
+    m_Key: controller.not_connected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454748
+    m_Key: controller.section.Everywhere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454749
+    m_Key: controller.section.Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454750
+    m_Key: controller.section.Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454751
+    m_Key: controller.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454752
+    m_Key: controller.subtitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454753
+    m_Key: controller.reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454754
+    m_Key: controller.reset_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454755
+    m_Key: controller.reset_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454756
+    m_Key: controller.reset_confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454757
+    m_Key: controller.reset_done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454758
+    m_Key: settings.controller
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454759
+    m_Key: mpmodes.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454760
+    m_Key: mpmodes.subtitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454761
+    m_Key: mpmodes.competitive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454762
+    m_Key: mpmodes.competitive_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454763
+    m_Key: mpmodes.coop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454764
+    m_Key: mpmodes.coop_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454765
+    m_Key: mpmodes.couch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046009991454766
+    m_Key: mpmodes.couch_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046010025009152
+    m_Key: modes.couch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046010025009153
+    m_Key: single.couch_line
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

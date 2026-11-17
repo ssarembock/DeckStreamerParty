@@ -21,6 +21,7 @@ namespace DeckParty.EditorTools
             Players,
             Cards,
             Menus,
+            Controller,
             NotShown,
         }
 
@@ -66,6 +67,7 @@ namespace DeckParty.EditorTools
             { Area.Players, ("Players", "Player rows in the lobby and in the Players panel (multiplayer).") },
             { Area.Cards, ("Viewer cards and placeholders", "The big viewer cards (Audience overview, viewer pickers, the Deplatformed screen) and the placeholder shown while a viewer has no art.") },
             { Area.Menus, ("Menus and dark pop-ups", "The dark menu look: main menu, character sets, multiplayer, lobby, settings, How to Play, streamer select, and in the game the pause menu and game over screen.") },
+            { Area.Controller, ("Controller (gamepad)", "The gamepad selector frame and the button glyphs shown on the stream and shop buttons (and in Settings > Controller) while a controller is in use. Their size, corner and pulse are in the Controller section above.") },
             { Area.NotShown, ("Not shown at the moment", "Nothing visible uses these right now. Changing them has no effect in the current UI.") },
         };
 
@@ -149,8 +151,8 @@ namespace DeckParty.EditorTools
             // --- Game modes ---
             new Info(SkinSlot.TeamDivider, Area.Stream, "Team divider (2v2 and co-op)", Kind.Frame,
                 "Team modes only: the vertical line between the two players' sides of the Stream Chat window. Override Colour sets its colour; art is stretched to the line."),
-            new Info(SkinSlot.ModeButton, Area.Menus, "Single-player mode buttons", Kind.Frame,
-                "The background of the three big buttons on the single-player mode screen (Puzzles, Endless, Versus the AI)."),
+            new Info(SkinSlot.ModeButton, Area.Menus, "Mode buttons (single player and multiplayer)", Kind.Frame,
+                "The background of the three big buttons on the single-player mode screen (Puzzles, Endless, Versus the AI) and on the multiplayer mode screen (Online Competitive, Online Co-Op Endless, Couch Competitive)."),
             new Info(SkinSlot.IconModePuzzles, Area.Menus, "Puzzles button icon", Kind.Icon,
                 "The icon on the Puzzles (character sets) button of the single-player mode screen."),
             new Info(SkinSlot.IconModeEndless, Area.Menus, "Endless button icon", Kind.Icon,
@@ -159,6 +161,40 @@ namespace DeckParty.EditorTools
                 "The icon on the Versus the AI button of the single-player mode screen."),
             new Info(SkinSlot.IconSwitchTeam, Area.Players, "Switch Team button icon (2v2)", Kind.Icon,
                 "2v2 lobbies only: the Switch Team button beside the player list."),
+            new Info(SkinSlot.IconModeOnlineCompetitive, Area.Menus, "Online Competitive button icon", Kind.Icon,
+                "The icon on the Online Competitive button of the multiplayer mode screen (the button uses the Mode Button background)."),
+            new Info(SkinSlot.IconModeOnlineCoop, Area.Menus, "Online Co-Op Endless button icon", Kind.Icon,
+                "The icon on the Online Co-Op Endless button of the multiplayer mode screen."),
+            new Info(SkinSlot.IconModeCouch, Area.Menus, "Couch Competitive button icon", Kind.Icon,
+                "The icon on the Couch Competitive button of the multiplayer mode screen."),
+
+            // --- Controller (gamepad) ---
+            new Info(SkinSlot.PadFocus, Area.Controller, "Selector frame", Kind.Frame,
+                "The frame drawn around whatever the controller has highlighted (menu buttons, shop cards, viewers in chat). Art: a 9-slice outline. Override Colour sets its colour (otherwise UI Skin > Controller > Focus Colour)."),
+            new Info(SkinSlot.PadSouth, Area.Controller, "A button (Cross)", Kind.Icon,
+                "The A button's glyph: on the buttons it presses while a controller is in use, and in Settings > Controller. Without art: a green circle with an A."),
+            new Info(SkinSlot.PadEast, Area.Controller, "B button (Circle)", Kind.Icon,
+                "The B button's glyph (Back by default). Without art: a red circle with a B."),
+            new Info(SkinSlot.PadWest, Area.Controller, "X button (Square)", Kind.Icon,
+                "The X button's glyph (Add Viewer and Raise Sub Cap by default). Without art: a blue circle with an X."),
+            new Info(SkinSlot.PadNorth, Area.Controller, "Y button (Triangle)", Kind.Icon,
+                "The Y button's glyph (End the Stream and Go Live by default). Without art: a yellow circle with a Y."),
+            new Info(SkinSlot.PadLeftShoulder, Area.Controller, "Left bumper", Kind.Icon,
+                "The left bumper's glyph (Remove a Viewer by default)."),
+            new Info(SkinSlot.PadRightShoulder, Area.Controller, "Right bumper", Kind.Icon,
+                "The right bumper's glyph (the streamer's active by default)."),
+            new Info(SkinSlot.PadLeftTrigger, Area.Controller, "Left trigger", Kind.Icon,
+                "The left trigger's glyph (Add a Stream in Endless by default)."),
+            new Info(SkinSlot.PadRightTrigger, Area.Controller, "Right trigger", Kind.Icon,
+                "The right trigger's glyph (Add a Viewer to the Shop in Endless by default)."),
+            new Info(SkinSlot.PadSelect, Area.Controller, "View button", Kind.Icon,
+                "The View / Back / Share button's glyph (the Audience by default)."),
+            new Info(SkinSlot.PadStart, Area.Controller, "Menu button", Kind.Icon,
+                "The Menu / Start / Options button's glyph (the game menu by default)."),
+            new Info(SkinSlot.PadLeftStick, Area.Controller, "Left stick press", Kind.Icon,
+                "The left stick press's glyph (unbound by default)."),
+            new Info(SkinSlot.PadRightStick, Area.Controller, "Right stick press", Kind.Icon,
+                "The right stick press's glyph (unbound by default)."),
 
             // --- Players ---
             new Info(SkinSlot.IconCrown, Area.Players, "Host crown", Kind.Icon,

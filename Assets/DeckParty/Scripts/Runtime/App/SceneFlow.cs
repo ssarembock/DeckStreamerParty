@@ -24,6 +24,11 @@ namespace DeckParty
         public bool VersusAi;
         /// <summary>Versus the AI: the AI's streamer (a StreamerType or the Random pick).</summary>
         public byte OpponentStreamer;
+        /// <summary>
+        /// Couch Competitive (2026-11-17): two players on this computer take turns (1v1). <see cref="Streamer"/> is Player 1's,
+        /// <see cref="OpponentStreamer"/> Player 2's. Not saved.
+        /// </summary>
+        public bool Couch;
     }
 
     /// <summary>Local (non-networked) scene transitions plus hand-off data between scenes.</summary>

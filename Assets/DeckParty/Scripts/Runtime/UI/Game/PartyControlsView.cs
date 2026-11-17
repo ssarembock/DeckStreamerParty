@@ -71,6 +71,9 @@ namespace DeckParty.UI
             endButton.onClick.AddListener(() => EndClicked?.Invoke());
             admitButton.onClick.AddListener(() => AdmitClicked?.Invoke());
             rejectButton.onClick.AddListener(() => RejectClicked?.Invoke());
+            // Gamepad: Add Viewer and End the Stream have their own pad buttons (Settings > Controller).
+            PadShortcut.Bind(doorButton, PadAction.AddViewer);
+            PadShortcut.Bind(endButton, PadAction.EndStream);
             // Add Viewer is always green and End the Stream always red, on every platform (scenes built before this had
             // platform colours on them: this fixes those too until they're rebuilt).
             Paint(doorButton, SitePalette.Go);

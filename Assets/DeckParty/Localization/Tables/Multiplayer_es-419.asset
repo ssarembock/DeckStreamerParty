@@ -542,6 +542,26 @@ MonoBehaviour:
       todo lo que puedan!"
     m_Metadata:
       m_Items: []
+  - m_Id: 6046006468239360
+    m_Localized: Transmitan por turnos. Gana el primero con {count} Trofeos en un
+      stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793792
+    m_Localized: Todos transmiten a la vez. Gana el primero con {count} Trofeos en
+      un stream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793793
+    m_Localized: "Dos equipos de dos comparten Plata, Influencia, Trofeos y Riesgo
+      (l\xEDmite {risk}). Gana el primero con {count} Trofeos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6046006501793794
+    m_Localized: "Dos jugadores comparten una partida Infinita ({count} streams,
+      l\xEDmite de Riesgo {risk}). Aguanten todo lo que puedan."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

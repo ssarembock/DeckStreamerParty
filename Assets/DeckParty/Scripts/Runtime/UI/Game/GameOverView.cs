@@ -34,6 +34,7 @@ namespace DeckParty.UI
         {
             primaryButton.onClick.AddListener(() => m_Primary?.Invoke());
             secondaryButton.onClick.AddListener(() => m_Secondary?.Invoke());
+            PadDefaultFocus.Mark(primaryButton, 60);
             root.SetActive(false);
         }
 
@@ -151,6 +152,38 @@ namespace DeckParty.UI
 
             waitingLabel.text = waiting ?? string.Empty;
             SetButtons(primaryText, primary, secondaryText, secondary);
+            Open();
+        }
+
+        /// <summary>
+        /// Couch Competitive: who won (or a draw), on which stream, and each player's best stream; the stats of the winner (or
+        /// Player 1 on a draw).
+        /// </summary>
+        public void ShowCouch(PlayerState first, PlayerState second, int winner, string firstName, string secondName, Action playAgain, Action mainMenu)
+        {
+            var players = new[] { first, second };
+            var names = new[] { firstName, secondName };
+            if (winner >= 0)
+            {
+                var won = players[winner];
+                titleLabel.text = Loc.Get("over.player_wins", "player", names[winner]);
+                titleLabel.color = UIPalette.PlayerColor(winner);
+                subtitleLabel.text = won.Phase == GamePhase.Victory
+                    ? Loc.Get("couch.won_detail", ("player", names[winner]), ("count", GameRules.DiamondsToWin), ("night", won.WinNight))
+                    : Loc.Get("couch.won_best_detail", ("player", names[winner]), ("count", won.BestDiamonds));
+            }
+            else
+            {
+                titleLabel.text = Loc.Get("couch.draw");
+                titleLabel.color = UIPalette.TextDim;
+                subtitleLabel.text = Loc.Get("couch.draw_detail");
+            }
+            subtitleLabel.text += "\n" + Loc.Get("couch.best_line", ("first", firstName), ("first_best", first.BestDiamonds), ("second", secondName), ("second_best", second.BestDiamonds));
+
+            statsLabel.text = Stats(players[Mathf.Max(0, winner)]);
+            rankingGroup.SetActive(false);
+            waitingLabel.text = string.Empty;
+            SetButtons(Loc.Get("over.play_again"), playAgain, Loc.Get("over.main_menu"), mainMenu);
             Open();
         }
 

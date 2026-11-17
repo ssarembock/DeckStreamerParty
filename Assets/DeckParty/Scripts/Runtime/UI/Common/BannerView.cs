@@ -20,6 +20,9 @@ namespace DeckParty.UI
 
         Coroutine m_Routine;
 
+        /// <summary>A callout is on screen (couch play waits for it before the hand-over).</summary>
+        public bool IsShowing => m_Routine != null && group != null && group.alpha > 0.01f;
+
         void Awake()
         {
             group.alpha = 0f;

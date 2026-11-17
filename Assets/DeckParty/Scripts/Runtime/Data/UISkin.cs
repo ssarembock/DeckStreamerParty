@@ -93,6 +93,27 @@ namespace DeckParty
         TeamDivider = 53,
         /// <summary>Lobby (2v2): the Switch Team button's icon.</summary>
         IconSwitchTeam = 54,
+
+        // --- Controller and multiplayer modes (2026-11-17) ---
+        /// <summary>The gamepad selector: the frame drawn around whatever the controller has highlighted.</summary>
+        PadFocus = 55,
+        /// <summary>Gamepad button glyphs, shown on buttons as prompts and in Settings > Controller (A / B / X / Y on an Xbox pad).</summary>
+        PadSouth = 56,
+        PadEast = 57,
+        PadWest = 58,
+        PadNorth = 59,
+        PadLeftShoulder = 60,
+        PadRightShoulder = 61,
+        PadLeftTrigger = 62,
+        PadRightTrigger = 63,
+        PadSelect = 64,
+        PadStart = 65,
+        PadLeftStick = 66,
+        PadRightStick = 67,
+        /// <summary>The multiplayer mode screen's three button icons (the buttons use the Mode Button background).</summary>
+        IconModeOnlineCompetitive = 68,
+        IconModeOnlineCoop = 69,
+        IconModeCouch = 70,
     }
 
     [Serializable]
@@ -163,6 +184,10 @@ namespace DeckParty
         [Tooltip("The shop: its toolbar buttons (icon, text, shape), the prices above them and the viewer cards (your own card " +
                  "prefab, sizes, piles, colours). Empty or zero values keep the built-in look.")]
         public ShopLook shop = new ShopLook();
+
+        [Tooltip("The gamepad: the selector frame's size and pulse, and the button prompts on the stream and shop buttons. The art " +
+                 "(selector frame, button glyphs) is in the Controller entries below.")]
+        public PadLook pad = new PadLook();
 
         [NonSerialized] Dictionary<SkinSlot, SkinEntry> m_Lookup;
         [NonSerialized] Dictionary<string, TextColourEntry> m_TextLookup;

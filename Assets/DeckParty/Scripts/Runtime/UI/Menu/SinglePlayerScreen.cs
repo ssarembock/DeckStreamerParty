@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 namespace DeckParty.UI
 {
+    /// <summary>
+    /// The character set screen: pick a set (its shop shows on the right), then Start. The streamers are picked after
+    /// Start. Used by Puzzles, Endless, Versus the AI and Couch Competitive (the mode line says which).
+    /// </summary>
     public sealed class SinglePlayerScreen : UIScreen
     {
         [SerializeField] internal RectTransform scenarioList;
@@ -18,6 +22,7 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text shopHeader;
         [SerializeField] internal RectTransform shopList;
         [SerializeField] internal GuestRowView guestRowPrefab;
+        [Tooltip("Stream setups are no longer picked (2026-11-17): scenes built before still have these, hidden.")]
         [SerializeField] internal OptionSelector venueSelector;
         [SerializeField] internal Image venuePreview;
         [SerializeField] internal TMP_Text venueDescription;
@@ -27,42 +32,37 @@ namespace DeckParty.UI
         MainMenuController m_Menu;
         readonly List<ScenarioItemView> m_Items = new List<ScenarioItemView>();
         readonly List<GuestRowView> m_Rows = new List<GuestRowView>();
-        List<(string id, string label)> m_VenueChoices;
         int m_Selected = -1;
 
         public void Init(MainMenuController menu) => m_Menu = menu;
 
-
-        /// <summary>Puzzles (the usual character sets), Endless or Versus the AI (picked on the mode screen).</summary>
+        /// <summary>Puzzles (the usual character sets), Endless, Versus the AI or Couch Competitive (picked on a mode screen).</summary>
         public SinglePlayerMode Mode { get; set; }
-
 
         void Awake()
         {
             startButton.onClick.AddListener(StartSeason);
             backButton.onClick.AddListener(() => m_Menu.ShowCharacterSetsBack());
-            venueSelector.Changed += OnVenueChanged;
+            HideStreamSetup();
+            PadDefaultFocus.Mark(startButton, 1);
             Loc.Changed += () =>
             {
                 if (IsVisible) OnShow();
             };
         }
 
+        /// <summary>The stream setup picker of older scenes (its preview and description) stays hidden.</summary>
+        void HideStreamSetup()
+        {
+            if (venueSelector != null) venueSelector.gameObject.SetActive(false);
+            if (venuePreview != null) venuePreview.gameObject.SetActive(false);
+            if (venueDescription != null) venueDescription.gameObject.SetActive(false);
+        }
+
         protected override void OnShow()
         {
             BuildScenarioList();
-
-            m_VenueChoices = GameDatabase.Instance.VenueChoices();
-            var labels = new List<string>();
-            int venueIndex = 0;
-            for (int i = 0; i < m_VenueChoices.Count; i++)
-            {
-                labels.Add(m_VenueChoices[i].label);
-                if (m_VenueChoices[i].id == AppSettings.VenueId) venueIndex = i;
-            }
-            venueSelector.SetTitle(Loc.Get("pause.setup"));
-            venueSelector.SetOptions(labels, venueIndex);
-
+            HideStreamSetup();
             Select(m_Selected >= 0 ? m_Selected : AppSettings.LastScenario);
         }
 
@@ -110,6 +110,12 @@ namespace DeckParty.UI
                 progress.Append($"<color=#FF4F8B>{Loc.Get("modes.versus")}</color>    ");
                 progress.Append(Loc.Get("single.versus_record", "wins", ProgressStore.VersusWins, "losses", ProgressStore.VersusLosses));
             }
+            else if (Mode == SinglePlayerMode.Couch)
+            {
+                // Two players on this computer: both streamers are picked after Start.
+                progress.Append($"<color=#6BE38B>{Loc.Get("modes.couch")}</color>    ");
+                progress.Append(Loc.Get("single.couch_line"));
+            }
             else if (scenario.IsPreset) progress.Append(ProgressStore.IsCleared(scenario.Id) ? $"<color=#6BE38B>{Loc.Get("single.cleared")}</color>" : $"<color=#B9AED6>{Loc.Get("single.not_cleared")}</color>");
             else if (scenario.IsRandom)
                 progress.Append(Loc.Get("single.streak", ("streak", $"<color=#3DDBD9>{ProgressStore.RandomStreak}</color>"), ("goal", ProgressStore.CherryStreak), ("best", ProgressStore.BestRandomStreak)));
@@ -135,36 +141,7 @@ namespace DeckParty.UI
                     row.Bind(shop[i], false);
                 }
             }
-
-            RefreshVenuePreview();
         }
-
-        void OnVenueChanged(int index)
-        {
-            if (m_VenueChoices == null || index < 0 || index >= m_VenueChoices.Count) return;
-            AppSettings.VenueId = m_VenueChoices[index].id;
-            RefreshVenuePreview();
-        }
-
-        void RefreshVenuePreview()
-        {
-            if (m_VenueChoices == null) return;
-            var choice = m_VenueChoices[Mathf.Clamp(venueSelector.Index, 0, m_VenueChoices.Count - 1)].id;
-            var preview = PartyEngine.CreateGame(m_Selected, 1, GameRules.DefaultNights, PreviewStreamer);
-            var venue = GameDatabase.Instance.ResolveVenue(choice, preview);
-            if (venue == null) return;
-
-            var sprite = venue.Preview;
-            venuePreview.sprite = sprite;
-            venuePreview.color = sprite != null ? Color.white : venue.skyBottom;
-
-            string note = choice == AppSettings.VenueEvolving ? " " + Loc.Get("single.evolving_note") : string.Empty;
-            venueDescription.text = $"<b>{GameDatabase.VenueName(venue)}</b>{note}\n<color=#B9AED6>{ContentText.VenueDescription(venue)}</color>";
-        }
-
-        /// <summary>The streamer is picked after Start, so the setup preview shows the setup chosen here (no streamer's own).</summary>
-        static StreamerType PreviewStreamer => StreamerType.None;
-
 
         void StartSeason()
         {
@@ -172,16 +149,17 @@ namespace DeckParty.UI
             {
                 ScenarioId = m_Selected,
                 Seed = (uint)Random.Range(1, int.MaxValue),
-                VenueChoice = AppSettings.VenueId,
+                // Stream setups aren't picked any more: the game uses the streamer's own setup, or the default.
+                VenueChoice = AppSettings.VenueAuto,
                 // The streamers are picked next (after Start), last thing before the season.
                 Mode = Mode == SinglePlayerMode.Endless ? GameMode.Endless : GameMode.Classic,
                 VersusAi = Mode == SinglePlayerMode.VersusAi,
-
+                Couch = Mode == SinglePlayerMode.Couch,
             };
             AppSettings.LastScenario = m_Selected;
 
-            // Versus the AI isn't saved, so an unfinished solo season stays where it is.
-            if (launch.VersusAi)
+            // Versus the AI and couch play aren't saved, so an unfinished solo season stays where it is.
+            if (launch.VersusAi || launch.Couch)
             {
                 m_Menu.PickStreamersAndStart(launch);
                 return;

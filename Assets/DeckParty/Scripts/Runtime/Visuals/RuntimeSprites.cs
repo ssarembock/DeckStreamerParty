@@ -36,6 +36,25 @@ namespace DeckParty
 
         public static Sprite Square => s_Square != null ? s_Square : (s_Square = Build("dp_square", 8, Vector4.zero, (x, y) => 1f));
 
+        static Sprite s_RoundedFrame;
+
+        /// <summary>
+        /// A rounded rectangle outline (9-sliced, 64 px with 22 px borders): the gamepad selector's frame until UI Skin >
+        /// Controller selector frame has art.
+        /// </summary>
+        public static Sprite RoundedFrame => s_RoundedFrame != null ? s_RoundedFrame : (s_RoundedFrame = Build("dp_rounded_frame", 64, new Vector4(22, 22, 22, 22), (x, y) =>
+        {
+            const float r = 0.6f;
+            const float thickness = 0.2f;
+            float qx = Mathf.Abs(x) - (1f - r);
+            float qy = Mathf.Abs(y) - (1f - r);
+            float outside = new Vector2(Mathf.Max(qx, 0f), Mathf.Max(qy, 0f)).magnitude + Mathf.Min(Mathf.Max(qx, qy), 0f) - r;
+            // Inside the shape and within the line's thickness of its edge.
+            float edge = Mathf.Clamp01(-outside * 32f);
+            float inner = Mathf.Clamp01((-outside - thickness) * 32f);
+            return edge - inner;
+        }));
+
         static Sprite s_Vignette;
 
         /// <summary>Transparent centre fading to opaque edges (the danger vignette).</summary>
