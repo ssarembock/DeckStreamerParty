@@ -218,13 +218,9 @@ namespace DeckParty.UI
             bool waitingForTurn = ctx.Turns && !ctx.MyTurn && !watching;
 
             bool gated = ctx.ShopGated && !watching;
+            // The shop's rules (shared stock, everyone shopping at once in Free For All) are in the rules, not on screen.
             if (headerLabel != null)
-            {
-                string header = watching ? Loc.Get("shop.header_other", "player", ctx.Owner) : Loc.Get("shop.header");
-                // Free For All: the stock is shared and everyone shops at once.
-                if (ctx.FreeForAll && !watching) header += $"  <size=60%><color=#FF9A3D>{Loc.Get("shop.first_come")}</color></size>";
-                headerLabel.text = header;
-            }
+                headerLabel.text = watching ? Loc.Get("shop.header_other", "player", ctx.Owner) : Loc.Get("shop.header");
 
             bool readyLocked = ctx.Multiplayer && ctx.SyncNights && ctx.LocalReady;
             bool locked = readyLocked || watching || waitingForTurn || gated;
@@ -383,7 +379,7 @@ namespace DeckParty.UI
                 string why = lockReason ?? (blocker != null ? Loc.Error(blocker) : null);
                 removeTooltip.Text = TipText.Titled(Loc.Get("shop.remove_viewer_title"), price)
                     .Line(Loc.Get("shop.remove_viewer_tip"))
-                    .Detail(Loc.Get("shop.remove_viewer_rule", "min", GameRules.MinAudience))
+                    .Detail(Loc.Get("shop.remove_viewer_rule", "min", GameRules.MinAudience, "step", GameRules.RemovalCostStep))
                     .Warn(why);
             }
         }
@@ -431,7 +427,8 @@ namespace DeckParty.UI
                 return;
             }
 
-            string notice = Loc.Get("gate.notice");
+            // No footer notice any more (it said the shop was first come, first served; that's in the rules now).
+            const string notice = null;
             if (ctx.Stage == RoundStage.Countdown)
             {
                 gate.Show(Loc.Get("gate.countdown_title"), Loc.Get("gate.countdown_body"), notice, null, ctx.StreamRecap);

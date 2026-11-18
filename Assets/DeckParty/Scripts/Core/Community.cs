@@ -79,7 +79,7 @@ namespace DeckParty.Core
     /// and every client agree. The communities in the game (2026-11-16, StreamersViewersCommunities.md):
     /// <list type="bullet">
     /// <item>Core Fanbase: 10% per point (max 5 points, 50%; 2026-11-18) that each Core Fanbase viewer scores twice (the scoring plays twice).</item>
-    /// <item>Staff: a flat +1 Influence per point (max 3) when the stream is scored.</item>
+    /// <item>Staff: a flat +1 Influence and +1 Cash per point (max 3) when the stream is scored (the Cash since 2026-11-18).</item>
     /// <item>Boomers (2026-11-18): every Boomer without an action of its own has Early Retirement: the whole chat scores right
     /// now (banked, the stream goes on), then the Boomer retires (leaves your Audience for good). The points (max 2) lower
     /// that chance: 100% / 50% / 25%. The old shop discount and the 10% retirement after scored streams are gone.</item>
@@ -119,6 +119,8 @@ namespace DeckParty.Core
         public const int CoreFanbaseMaxPoints = 5;
         /// <summary>Staff (2026-11-10): Influence the stream earns per point when scored (it used to be a chance to waive fees).</summary>
         public const int StaffInfluencePerPoint = 1;
+        /// <summary>Staff (2026-11-18, a slight boost): Cash the stream also earns per point when scored.</summary>
+        public const int StaffCashPerPoint = 1;
         public const int StaffMaxPoints = 3;
         public const int ContentPercentPerPoint = 30;
         public const int ContentMaxPoints = 3;
@@ -282,6 +284,9 @@ namespace DeckParty.Core
 
         /// <summary>Staff: the flat Influence a scored stream earns (+1 per point, up to the cap).</summary>
         public static int StaffInfluence(int points) => Clamp(points, StaffMaxPoints) * StaffInfluencePerPoint;
+
+        /// <summary>Staff: the flat Cash a scored stream also earns (+1 per point, up to the cap; 2026-11-18).</summary>
+        public static int StaffCash(int points) => Clamp(points, StaffMaxPoints) * StaffCashPerPoint;
 
         public static int ContentEncoreChance(int points) => Clamp(points, ContentMaxPoints) * ContentPercentPerPoint;
 

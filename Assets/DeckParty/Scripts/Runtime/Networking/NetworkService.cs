@@ -110,8 +110,10 @@ namespace DeckParty.Networking
         /// deckparty-26: community updates (2026-11-18): Boomers' Early Retirement (a new action and events 90-91), Boomers
         /// and Millennials capped at 2 points, Core Fanbase at 5, the Legacy Media Mogul (GuestType 92), Boomers with their own
         /// action moved out of the Boomers.
+        /// deckparty-27: small changes (2026-11-18): state format v17 (removed and retired viewers stay out of the shop),
+        /// Remove a Viewer 5 then +5, Staff also pays +1 Cash per point.
         /// </summary>
-        public const string ProtocolVersion = "deckparty-26";
+        public const string ProtocolVersion = "deckparty-27";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

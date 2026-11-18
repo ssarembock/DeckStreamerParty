@@ -149,14 +149,14 @@ namespace DeckParty.Core
 
         static int GroupStep(int[] table, int copies) => copies <= 0 ? 0 : table[Math.Min(copies, table.Length) - 1];
 
-        /// <summary>Remove a Viewer (shop): the first removal costs this much Influence (3 since 2026-11-18; it was 2).</summary>
-        public const int FirstRemovalCost = 3;
-        /// <summary>Remove a Viewer: every removal after the first costs this much more (2 since 2026-11-18; it was 1). No maximum.</summary>
-        public const int RemovalCostStep = 2;
+        /// <summary>Remove a Viewer (shop): the first removal costs this much Influence (5 since the small changes of 2026-11-18; it was 3, and 2 before that).</summary>
+        public const int FirstRemovalCost = 5;
+        /// <summary>Remove a Viewer: every removal after the first costs this much more (5 since the small changes of 2026-11-18; it was 2, and 1 before that). No maximum.</summary>
+        public const int RemovalCostStep = 5;
         /// <summary>Remove a Viewer can't take your Audience below this many viewer cards.</summary>
         public const int MinAudience = 5;
 
-        /// <summary>Remove a Viewer's price after <paramref name="removalsBought"/> removals: 3, 5, 7, 9... Influence.</summary>
+        /// <summary>Remove a Viewer's price after <paramref name="removalsBought"/> removals: 5, 10, 15, 20... Influence.</summary>
         public static int RemovalCost(int removalsBought) => FirstRemovalCost + RemovalCostStep * Math.Max(0, removalsBought);
 
         // --- Endless mode (2026-11-16, additionalgamemodes.md) ---

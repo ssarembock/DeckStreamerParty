@@ -21,9 +21,10 @@ namespace DeckParty.Core
         /// v13: each team member's own Remove a Viewer price (2026-11-17).
         /// v14: Subathon and Double or Nothing armed for this stream (the two streamers added 2026-11-18).
         /// v15: the season's Trophy goal (3 in competitive multiplayer). v16: each team member's own streamer, active uses,
-        /// cooldown and armed power (2026-11-18).
+        /// cooldown and armed power (2026-11-18). v17: cards gone for good per type (removed or retired viewers don't go
+        /// back to the shop, 2026-11-18).
         /// </summary>
-        const byte FormatVersion = 16;
+        const byte FormatVersion = 17;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -162,6 +163,10 @@ namespace DeckParty.Core
                 w.Write((short)Math.Min(short.MaxValue, Math.Max(0, s.PartnerPowerUses)));
                 w.Write((byte)Math.Min(255, Math.Max(0, s.PartnerPowerCooldown)));
                 w.Write(s.PartnerPowerArmed);
+
+                // v17: cards gone for good per type (they stay taken from the shop)
+                w.Write((ushort)s.GoneForGood.Length);
+                for (int i = 0; i < s.GoneForGood.Length; i++) w.Write((byte)Math.Min(255, Math.Max(0, s.GoneForGood[i])));
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -363,6 +368,17 @@ namespace DeckParty.Core
                     s.PartnerPowerUses = r.ReadInt16();
                     s.PartnerPowerCooldown = r.ReadByte();
                     s.PartnerPowerArmed = r.ReadBoolean();
+                }
+
+                // v16 and older: removed and retired cards went back to the shop (none counted as gone).
+                if (version >= 17)
+                {
+                    int types = ReadCount(r);
+                    for (int i = 0; i < types; i++)
+                    {
+                        int gone = r.ReadByte();
+                        if (i < s.GoneForGood.Length) s.GoneForGood[i] = gone;
+                    }
                 }
 
                 int eventCount = ReadCount(r);

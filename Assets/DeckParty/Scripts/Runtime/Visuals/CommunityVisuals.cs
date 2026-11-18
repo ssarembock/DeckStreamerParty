@@ -50,6 +50,9 @@ namespace DeckParty
                 ("retire", Communities.BoomerRetirePercent),
                 // Boomers (2026-11-18): Early Retirement's chance to retire the Boomer at 1 point. Millennials: the inheritance with no points.
                 ("r1", Communities.BoomerRetireChance(1)),
+                // Staff (2026-11-18): the Cash it also pays per point and at the top.
+                ("cashper", Communities.StaffCashPerPoint),
+                ("topcash", Communities.StaffCash(max)),
                 ("base", Communities.InheritanceCash),
                 ("t1", Communities.TechspertiseChance(1)),
                 ("t2", Communities.TechspertiseChance(2)),
@@ -99,7 +102,8 @@ namespace DeckParty
                 // Hype Men: spare seats still free.
                 else if (community == Community.HypeMen)
                     value = PartyEngine.FreeHypeSeats(state);
-                now = Loc.Get($"community.{community}.now", ("value", value));
+                // Staff also pays Cash ({cash}; 2026-11-18).
+                now = Loc.Get($"community.{community}.now", ("value", value), ("cash", community == Community.Staff ? Communities.StaffCash(points) : 0));
             }
             return tip.Section().Good(now);
         }
@@ -137,7 +141,8 @@ namespace DeckParty
             switch (community)
             {
                 // Per point while nobody's here, the stream's total once there are points.
-                case Community.Staff: return $"+{Communities.StaffInfluence(Mathf.Max(1, points))}{influence}";
+                case Community.Staff:
+                    return $"+{Communities.StaffInfluence(Mathf.Max(1, points))}{influence} +{Communities.StaffCash(Mathf.Max(1, points))}{cash}";
                 // Cash per point of Risk.
                 case Community.Trolls: return $"+{Communities.TrollArmyCashPerRisk}{cash}/{GameIcons.Tag(ResourceIcon.Risk)}";
                 // Cash per empty space (per point while nobody's here).

@@ -6,10 +6,11 @@ Isolationists, and Loyal Fan and Fish in every shop) and of 18 November (the **L
 variants**, section 3.4), two new streamers that start **locked** (Kai Sonnet and Train Wrex, section 2), and the
 minor changes (a risky viewer added to every set, Random Mix rules, 3 Trophies and 20 streams in competitive
 multiplayer, a 30-seat chat, no maximum prices) and the team fixes (every team player picks their own streamer, 40
-seats a player in a team, Remove a Viewer 3 Influence then 2 more each time), the UI updates (Sub Cap up to 40, 50 a
+seats a player in a team, Remove a Viewer now 5 Influence then 5 more each time), the UI updates (Sub Cap up to 40, 50 a
 player in a team, Endless 20 streams) and the **community updates** (every Boomer has the action **Early Retirement**,
 Boomers and Millennials score up to 2 points, Core Fanbase up to 5, Boomers with an action of their own left the
-Boomers, and a new Boomer, the **Legacy Media Mogul**). The
+Boomers, and a new Boomer, the **Legacy Media Mogul**), and the later small changes (removed and retired
+viewers are out of the game and don't go back to the shop, and Staff also pays +1 Cash per point). The
 communities are the built-in ones: the Game Database takes them once after the next
 Setup, and your edits there rule after that.
 
@@ -75,8 +76,11 @@ When you hand the file back, I compare it with this version to see exactly what 
 - **Shared stock (multiplayer).** The shop's stock is shared by every player. Each regular viewer's stack holds
   **2 copies per player**: 4 for two players, 6 for three, 8 for four, and so on. Group cards always have at least 5.
   Trophy viewers are unlimited. The number of different viewers in the shop doesn't change.
-- **Remove a Viewer** (shop): **3** Influence, then **2** more each use (3, 5, 7, 9...), with no maximum (since 18
-  November; it was 2, +1 each). It can't take your Audience below 5 viewers.
+- **Gone for good.** A card that leaves your Audience for good (Remove a Viewer, a retired Boomer, the This Is Fine
+  Dog) is out of the game for the rest of the season: its copy doesn't go back to the shop's stock (since the
+  small changes; it used to). Solo seasons too.
+- **Remove a Viewer** (shop): **5** Influence, then **5** more each use (5, 10, 15, 20...), with no maximum (since the
+  small changes; it was 3, +2, and 2, +1 before that). It can't take your Audience below 5 viewers.
 
 ### How communities score
 
@@ -664,9 +668,9 @@ kickers. The Mods' own old rule (a chance to cancel 1 Risk next stream) is gone.
   Billionaire.
 
 ### Staff · `Staff`
-- **Rule:** each point adds **+1 Influence** when the stream is scored. It's a flat reward, and it flies from the Staff chip
-  in Community Beats.
-- **Cap:** 3 points (+3 Influence).
+- **Rule:** each point adds **+1 Influence** and **+1 Cash** when the stream is scored (the Cash since the small changes). It's
+  a flat reward, and it flies from the Staff chip in Community Beats.
+- **Cap:** 3 points (+3 Influence and +3 Cash).
 - **Members (13):** Producer, Chat Admin, Cybersecurity Engineer, Junior PR Manager, Marketing Manager, Account
   Manager, PR Manager, Chat Arbitrator, Social Media Manager, Executive PR, Clippo The Clanker, Senior Marketing
   Manager, Data Broker.

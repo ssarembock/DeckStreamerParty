@@ -543,7 +543,7 @@ namespace DeckParty.Core
             }
             var scores = CommunityScores(s);
             Communities.FixedRewards(scores, out int communityCash, out int communityInfluence);
-            cash += communityCash + TrollArmyCash(s, scores) + LurkersCash(s, scores);
+            cash += communityCash + Communities.StaffCash(scores[(int)Community.Staff]) + TrollArmyCash(s, scores) + LurkersCash(s, scores);
             // Double or Nothing armed: a scored stream earns its Cash again (capped).
             if (s.PartyDoubleDown) cash += Math.Min(StreamerCatalog.DoubleDownMaxBonus, Math.Max(0, cash));
             influence += communityInfluence + Communities.StaffInfluence(scores[(int)Community.Staff]) + CheckoutCodesNow(s);
@@ -565,7 +565,7 @@ namespace DeckParty.Core
                 influence += influences[i];
             }
             var scores = CommunityScores(s);
-            cash += TrollArmyCash(s, scores) + LurkersCash(s, scores);
+            cash += Communities.StaffCash(scores[(int)Community.Staff]) + TrollArmyCash(s, scores) + LurkersCash(s, scores);
             influence += Communities.StaffInfluence(scores[(int)Community.Staff]);
         }
 
@@ -1026,9 +1026,21 @@ namespace DeckParty.Core
 
         /// <summary>
         /// Copies of a type this season took from the shop (everything beyond the starting Audience; a team counts both
-        /// members' starting Audiences).
+        /// members' starting Audiences). Cards that left the Audience for good (removed, retired) still count: they are out
+        /// of the game and never go back to the shop.
         /// </summary>
-        public static int TakenFromShop(PlayerState s, GuestType type) => Math.Max(0, s.CountOwned(type) - StartingCopies(type) * Math.Max(1, s.Members));
+        public static int TakenFromShop(PlayerState s, GuestType type)
+        {
+            int gone = (int)type < s.GoneForGood.Length ? s.GoneForGood[(int)type] : 0;
+            return Math.Max(0, s.CountOwned(type) + gone - StartingCopies(type) * Math.Max(1, s.Members));
+        }
+
+        /// <summary>A permanent card leaves the Audience for good: it's out of the game, so its copy stays taken from the shop.</summary>
+        static void MarkGoneForGood(PlayerState s, GuestInstance g)
+        {
+            if (g == null || g.Temporary || (int)g.Type >= s.GoneForGood.Length) return;
+            s.GoneForGood[(int)g.Type]++;
+        }
 
         /// <summary>
         /// Copies still in the shop for every player (the shop's stock is shared by the whole match). Diamonds are
@@ -1053,7 +1065,7 @@ namespace DeckParty.Core
             return Math.Max(0, Math.Min(info.MaxCopies - s.CountOwned(type, member), SharedLeft(s, type)));
         }
 
-        /// <summary>What Remove a Viewer costs right now (Influence): 2 for the first, 1 more for each one since. Teams: per player.</summary>
+        /// <summary>What Remove a Viewer costs right now (Influence): 5 for the first, 5 more for each one since. Teams: per player.</summary>
         public static int RemovalCost(PlayerState s, int member = 0) => GameRules.RemovalCost(s.RemovalsOf(member));
 
         /// <summary>Why Remove a Viewer can't be bought right now (null when it can). Doesn't check which viewer. Teams: per member's Audience.</summary>
@@ -1066,7 +1078,10 @@ namespace DeckParty.Core
             return null;
         }
 
-        /// <summary>Remove a Viewer: pays the Influence and takes one card out of the Audience for good (it goes back to the shop's stock).</summary>
+        /// <summary>
+        /// Remove a Viewer: pays the Influence and takes one card out of the Audience for good. It's out of the game: it doesn't
+        /// go back to the shop's stock (2026-11-18; it used to).
+        /// </summary>
         static CommandResult Dismiss(PlayerState s, int guestId, int member, List<GameEvent> ev)
         {
             var blocker = GetRemoveBlocker(s, member);
@@ -1080,6 +1095,7 @@ namespace DeckParty.Core
             if (s.IsTeam && member == 1) s.PartnerRemovals++;
             else s.Removals++;
             s.Rolodex.Remove(g);
+            MarkGoneForGood(s, g);
             if (s.BannedNextParty == guestId) s.BannedNextParty = -1;
             Emit(ev, GameEventType.GuestDismissed, g, cost);
             return CommandResult.Success;
@@ -1677,6 +1693,7 @@ namespace DeckParty.Core
                 RemoveFromParty(s, dog.Id, LeaveReason.Gone, -1, false, ev);
                 s.UsedAbilities.Remove(dog.Id);
                 s.Rolodex.Remove(dog);
+                MarkGoneForGood(s, dog);
                 if (NetTrouble(s) < RiskLimit(s)) return false;
             }
 
@@ -2337,7 +2354,8 @@ namespace DeckParty.Core
         }
 
         /// <summary>
-        /// A Boomer leaves chat and your Audience for good (a temporary copy just leaves). Then a random Millennial you own
+        /// A Boomer leaves chat and your Audience for good, and the game too: it doesn't go back to the shop (a temporary copy
+        /// just leaves). Then a random Millennial you own
         /// inherits +1 Cash for good, +1 more per Millennials point (<see cref="Communities.InheritanceAmount"/>, up to
         /// <see cref="GameRules.PermanentInfluenceCap"/> printed Cash). Without a Millennial nothing is inherited.
         /// </summary>
@@ -2348,6 +2366,7 @@ namespace DeckParty.Core
             s.UsedAbilities.Remove(id);
             s.Pool.Remove(id);
             s.Rolodex.Remove(boomer);
+            MarkGoneForGood(s, boomer);
             if (s.BannedNextParty == id) s.BannedNextParty = -1;
             Emit(ev, GameEventType.BoomerRetired, boomer);
 
@@ -2482,18 +2501,22 @@ namespace DeckParty.Core
 
         /// <summary>
         /// The stream-wide community rewards when a stream is scored (each flies from its Community Beats chip):
-        /// Staff pays a flat +1 Influence per point (2026-11-10, it used to waive Staff fees), Troll Army +2 Cash per point of
+        /// Staff pays a flat +1 Influence per point (2026-11-10, it used to waive Staff fees) and +1 Cash per point
+        /// (2026-11-18), Troll Army +2 Cash per point of
         /// Risk in the stream, cancelled Risk included (2026-11-10, it used to pay out when deplatformed), Lurkers +1 Cash per
         /// empty space per point (2026-11-18). The retired
         /// Zoomer still rolls (+6 Cash and -3 Influence, separately), though nobody is a Zoomer any more.
         /// </summary>
         static void ScoreCommunityRewards(PlayerState s, int[] scores, ref int cash, ref int influence, List<GameEvent> ev)
         {
+            // Staff: +1 Influence and (2026-11-18) +1 Cash per point.
             int staffInfluence = Communities.StaffInfluence(scores[(int)Community.Staff]);
-            if (staffInfluence > 0)
+            int staffCash = Communities.StaffCash(scores[(int)Community.Staff]);
+            if (staffInfluence > 0 || staffCash > 0)
             {
+                cash += staffCash;
                 influence += staffInfluence;
-                Emit(ev, GameEventType.CommunityReward, null, (int)Community.Staff, 0, staffInfluence);
+                Emit(ev, GameEventType.CommunityReward, null, (int)Community.Staff, staffCash, staffInfluence);
             }
 
             int trollCash = TrollArmyCash(s, scores);

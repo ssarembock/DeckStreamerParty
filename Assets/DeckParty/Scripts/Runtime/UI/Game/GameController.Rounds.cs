@@ -29,7 +29,7 @@ namespace DeckParty.UI
             if ((stage == RoundStage.Countdown || stage == RoundStage.Shopping) && !ViewingOwn) ShowBoard(LocalId);
             if (stage == RoundStage.Shopping && m_Net.Phase == MatchPhase.InGame && State != null && State.Phase == GamePhase.Planning)
             {
-                banner.Show(Loc.Get("game.shop_open"), Loc.Get("game.shop_open_sub"), UIPalette.Gold, 1.2f);
+                banner.Show(Loc.Get("game.shop_open"), null, UIPalette.Gold, 1.2f);
                 Fx.Play(FxCue.TurnBanner, banner.transform);
                 AudioService.Play(Sfx.Notify);
             }

@@ -748,3 +748,70 @@ The Boomers' discount still applies. Endless's Trophy prices never had a maximum
 6. **Trophy Boomers** (Big Boomer, Mainstream Celebrity) keep Early Retirement (they have no action of their own), so
    they can retire too.
 7. **The Legacy Media Mogul isn't in a preset set.** Monetization Meeting (Boomers and Millennials) would suit it.
+
+## 13. Small changes: no "first come, first served", level Deplatform warning, removed viewers stay out, Remove a Viewer 5 +5, Staff +1 Cash (2026-11-18)
+
+### Do this first in Unity
+
+1. Let the scripts compile.
+2. Run **Deck Party > Setup > Build Everything** once, which imports the changed strings. A Rebuild isn't needed.
+3. Multiplayer needs every player on this build: protocol `deckparty-27`, state format 17 (older saves still load).
+
+### What changed
+
+- **"First come, first served" is gone from the screen.** Free For All still works the same way (everyone shops at once,
+  and the stock is shared). Only the text is gone, so the rules can explain it:
+  - the orange tag beside the shop's title;
+  - the footer line on the shop gate;
+  - the subtitle of the **SHOP OPEN!** banner;
+  - the "shop is open" headline and bar, which now just say **The shop is open!**
+- **The Deplatform warning no longer sticks at a tilt.** The warning at the bottom of the chat when you're 1 Risk away
+  gets Feel shakes (a slam when it appears, a jolt every 2.6 s).
+  - **The cause:** those shakes start from wherever the panel is. One cut short (the warning hidden mid-wobble when the
+    Risk drops, then shown again) left it tilted, or slightly shifted, for good.
+  - **The fix:** the panel now has `FxRestPose`, the same guard the Risk pips got. It snaps the panel back when it hides,
+    and eases it level and back in place 1.2 s after the last shake.
+- **Removed and retired viewers are out of the game.** A card that leaves your Audience for good no longer goes back on
+  the shop's pile, in solo and multiplayer. That covers:
+  - **Remove a Viewer**;
+  - a Boomer retired by **Early Retirement**;
+  - the **This Is Fine Dog**.
+
+  If the pile runs out, that viewer is sold out for the rest of the season. Your own copy limit still counts only the
+  cards you own.
+- **Remove a Viewer costs 5 Influence, then 5 more each time** (5, 10, 15, 20...). It was 3, then +2.
+- **Staff is slightly stronger.** Each point now pays **+1 Influence and +1 Cash** when the stream is scored (it was +1
+  Influence only). That's +1 / +1, +2 / +2, then +3 / +3 at the cap of 3 points. The chip shows both, and both fly from
+  it.
+
+### Where it is in code
+
+- **Shop text:** `PlanningView` (the header and the gate notice), `ShopGateView` (hides an empty notice line) and
+  `GameController.Rounds.OnStageChanged` (the banner). The CSV rows `shop.first_come`, `gate.notice` and
+  `game.shop_open_sub` were deleted.
+- **Warning:** `StreamerAnxietyView.Build` calls `FxRestPose.Ensure(panel, position: true)`.
+  `FxRestPose.Ensure` now takes the rest pose at once and can also restore a RectTransform's anchored position.
+- **Out of the game:**
+  - `PlayerState.GoneForGood` (per viewer type), set by `PartyEngine.MarkGoneForGood` in `Dismiss`, `RetireBoomer`
+    and the This Is Fine Dog's save.
+  - `PartyEngine.TakenFromShop` counts these cards as taken, so `SharedLeft` and the host's shared-shop sync never
+    give them back.
+  - Saved in state format 17.
+- **Price:** `GameRules.FirstRemovalCost` 5 and `RemovalCostStep` 5. The tooltip line reads the step
+  (`shop.remove_viewer_rule` has `{step}`).
+- **Staff:** `Communities.StaffCashPerPoint` and `StaffCash`, paid in `PartyEngine.ScoreCommunityRewards` (the
+  `CommunityReward` event carries both amounts). Also counted in `ProjectScore` and `ProjectEarlyRetirement`.
+
+### Decisions I made (please check)
+
+1. **"Very slightly improve" Staff** became +1 Cash per point on top of the +1 Influence. One whole Influence more per
+   point would be a big jump at level 1 (twice as much). Cash is the cheaper resource (an unpaid fee costs 7 Cash per
+   Influence), so this is the smallest boost that helps every level. To change it, edit
+   `Communities.StaffCashPerPoint` (0 turns it off) or `StaffInfluencePerPoint`.
+2. **The shop gate's footer line was removed rather than reworded.** It also said that everyone goes in together and
+   that the stock is shared. The countdown already shows the first part, and the rules can say the rest.
+3. **The This Is Fine Dog counts as gone for good too.** It's the only other way a card leaves your Audience for good,
+   and it's put aside, so it doesn't happen in the current roster.
+4. **Removing one of your starting cards doesn't change the shop.** Those cards were never on the pile.
+5. **The removal texts now say the card leaves "the game"**, not just your Audience: the button's tooltip, the confirm
+   dialog and the money rules.

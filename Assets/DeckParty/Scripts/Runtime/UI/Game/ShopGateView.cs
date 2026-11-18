@@ -8,8 +8,8 @@ namespace DeckParty.UI
     /// <summary>
     /// Free For All: covers the shop until it opens for everyone. After your stream it says who is still streaming ("Waiting
     /// for other streamers"); once every stream is over it shows every player's stream summary (one column each) and holds
-    /// the Go to the Shop button (you're ready); once everyone is, it shows the 3-2-1 countdown. The shop is first come, first
-    /// served, so everyone goes in at the same moment.
+    /// the Go to the Shop button (you're ready); once everyone is, it shows the 3-2-1 countdown, so everyone goes in at the
+    /// same moment. The notice line under it is hidden while it has no text (nothing fills it since 2026-11-18).
     /// </summary>
     public sealed class ShopGateView : MonoBehaviour
     {
@@ -61,7 +61,11 @@ namespace DeckParty.UI
             if (root != null) root.SetActive(true);
             if (titleLabel != null) titleLabel.text = title;
             if (bodyLabel != null) bodyLabel.text = body;
-            if (noticeLabel != null) noticeLabel.text = notice;
+            if (noticeLabel != null)
+            {
+                noticeLabel.text = notice ?? string.Empty;
+                noticeLabel.gameObject.SetActive(!string.IsNullOrEmpty(notice));
+            }
             bool button = !string.IsNullOrEmpty(buttonText);
             if (readyButton != null) readyButton.gameObject.SetActive(button);
             if (button && readyLabel != null) readyLabel.text = buttonText;

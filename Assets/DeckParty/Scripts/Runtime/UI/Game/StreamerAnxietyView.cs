@@ -10,6 +10,7 @@ namespace DeckParty.UI
     /// When a stream is one Deplatform Risk from being deplatformed, the streamer drops in at the bottom of the Stream Chat looking
     /// anxious (their Anxious animation if they have one, otherwise a sweating, trembling portrait), with an
     /// intermittent Feel shake. The panel sits on this object's RectTransform (move or resize it in the Game scene).
+    /// <see cref="FxRestPose"/> keeps the panel level between the shakes.
     /// </summary>
     public sealed class StreamerAnxietyView : MonoBehaviour
     {
@@ -46,6 +47,10 @@ namespace DeckParty.UI
 
             m_Panel = UiFactory.Rect("Panel", m_Root);
             UiFactory.Stretch(m_Panel);
+            // The slam-in and the shakes are Feel effects that start from whatever pose the panel has. One cut short (the
+            // panel hidden mid-wobble when the Risk drops, then shown again) left the warning tilted for good: this puts it
+            // back level and in place once the effects stop.
+            FxRestPose.Ensure(m_Panel, position: true);
             var bg = UiFactory.Image("Background", m_Panel, new Color(0.35f, 0.04f, 0.08f, 0.92f), RuntimeSprites.Rounded, true);
             UiFactory.Stretch(bg.rectTransform);
             var outline = bg.gameObject.AddComponent<Outline>();

@@ -185,6 +185,13 @@ namespace DeckParty.Core
         public readonly int[] RivalTaken = new int[GuestCatalog.Count];
 
         /// <summary>
+        /// Per guest type: permanent cards that left this season's Audience for good (Remove a Viewer, a retired Boomer, the
+        /// This Is Fine Dog). They are out of the game: they still count as taken from the shop, so they never go back to its
+        /// stock (2026-11-18; state format v17).
+        /// </summary>
+        public readonly int[] GoneForGood = new int[GuestCatalog.Count];
+
+        /// <summary>
         /// Players in the match (1 in single player). Sets the size of the shared shop's stacks (<see cref="GameRules.SharedStock"/>);
         /// the host sets it when the match starts.
         /// </summary>
