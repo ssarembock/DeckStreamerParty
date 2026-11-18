@@ -81,6 +81,11 @@ namespace DeckParty.UI
         Action m_OnBack;
         int m_Index;
         bool m_Locked;
+        /// <summary>Multiplayer pick: the confirm callback, kept so a pick the host turns down (teammate took it) can be redone.</summary>
+        Action<byte> m_MatchConfirm;
+        /// <summary>Team modes: the streamer your teammate has locked in (you can't pick it), or None.</summary>
+        StreamerType m_Taken;
+        bool m_PickHooked;
         float m_Timer = 99f;
 
         // The quote is re-rolled each time a streamer is highlighted (avoiding the one they said last) and kept
@@ -128,6 +133,7 @@ namespace DeckParty.UI
         {
             m_Mode = mode;
             m_OnConfirmed = onConfirmed;
+            m_MatchConfirm = mode == StreamerSelectMode.MatchPick ? onConfirmed : null;
             m_OnBack = onBack;
             Show();
         }
@@ -135,6 +141,9 @@ namespace DeckParty.UI
         protected override void OnShow()
         {
             m_Locked = false;
+            m_Taken = StreamerType.None;
+            foreach (var tile in m_Tiles) tile.SetTaken(false);
+            HookPick(m_Mode == StreamerSelectMode.MatchPick);
             m_QuotePick = -1;
             BuildTiles();
             RefreshLocks();
@@ -212,6 +221,11 @@ namespace DeckParty.UI
                 tile.SetLocked(streamer && !Unlocks.IsStreamerUnlocked((StreamerType)tile.Pick));
             }
         }
+
+        /// <summary>A pick that can't be confirmed: still locked, or your teammate's streamer.</summary>
+        bool Unavailable(byte pick) => IsLockedPick(pick) || IsTakenPick(pick);
+
+        bool IsTakenPick(byte pick) => m_Taken != StreamerType.None && pick == (byte)m_Taken;
 
         static bool IsLockedPick(byte pick) =>
             pick != StreamerCatalog.RandomPick && pick != (byte)StreamerType.None && !Unlocks.IsStreamerUnlocked((StreamerType)pick);
@@ -353,8 +367,9 @@ namespace DeckParty.UI
             string warning = rivalWarning ? Loc.Get("select.rival_warning") : string.Empty;
             // Locked: what unlocks them (the power above still shows, as a teaser).
             if (IsLockedPick(pick)) warning = Loc.Get("select.locked_requirement", "requirement", Achievements.RequirementText(Unlocks.StreamerCondition(type)));
+            else if (IsTakenPick(pick)) warning = Loc.Get("select.taken_by", "player", Net != null ? Net.TeammateName(Net.LocalClientId) ?? string.Empty : string.Empty);
             Set(p1Warning, warning);
-            if (confirmButton != null) confirmButton.interactable = !IsLockedPick(pick);
+            if (confirmButton != null) confirmButton.interactable = !Unavailable(pick);
         }
 
         static void Set(TMP_Text label, string text)
@@ -391,6 +406,52 @@ namespace DeckParty.UI
         /// <summary>Team modes: this player picks the team's streamer (their teammate waits).</summary>
         bool TeamPick => Net != null && Net.IsTeamMode;
 
+        void HookPick(bool on)
+        {
+            var net = Net;
+            if (on == m_PickHooked || (on && net == null)) return;
+            m_PickHooked = on;
+            if (net == null) return;
+            if (on) net.StreamerPickTaken += OnPickTaken;
+            else net.StreamerPickTaken -= OnPickTaken;
+        }
+
+        protected override void OnHide() => HookPick(false);
+
+        protected override void OnUnloaded() => HookPick(false);
+
+        /// <summary>
+        /// Team modes: your teammate's locked-in streamer shows as taken. If they lock in the one you're on, the details
+        /// say so and Confirm stays off until you move.
+        /// </summary>
+        void RefreshTaken(Networking.DeckPartyNetSession net)
+        {
+            var taken = net.IsTeamMode ? net.TeammateLockedStreamer(net.LocalClientId) : StreamerType.None;
+            if (taken == m_Taken) return;
+            m_Taken = taken;
+            foreach (var tile in m_Tiles) tile.SetTaken(IsTakenPick(tile.Pick));
+            if (!m_Locked && m_Index >= 0 && m_Index < m_Tiles.Count) ShowPick(m_Tiles[m_Index].Pick);
+        }
+
+        /// <summary>The host turned your pick down: your teammate locked that streamer in first. Pick again.</summary>
+        void OnPickTaken(StreamerType streamer)
+        {
+            if (!IsVisible || m_Mode != StreamerSelectMode.MatchPick) return;
+            StopAllCoroutines();
+            if (flash != null) flash.gameObject.SetActive(false);
+            if (announcerLabel != null) announcerLabel.gameObject.SetActive(false);
+            m_Locked = false;
+            m_OnConfirmed = m_MatchConfirm;
+            m_Taken = StreamerType.None;
+            if (Net != null) RefreshTaken(Net);
+            if (m_Taken == StreamerType.None) m_Taken = streamer;
+            foreach (var tile in m_Tiles) tile.SetTaken(IsTakenPick(tile.Pick));
+            if (hintLabel != null) hintLabel.text = Loc.Get("select.hint_match");
+            if (m_Index >= 0 && m_Index < m_Tiles.Count) ShowPick(m_Tiles[m_Index].Pick);
+            AudioService.Play(Sfx.Error);
+            Fx.Play(FxCue.CounterPunch, p1Root);
+        }
+
         /// <summary>
         /// Multiplayer pick: the clock is the real pick timer (anyone not locked in when it runs out plays a random streamer);
         /// once you've locked in, the hint says how many players are still choosing. If the pick is called off (someone
@@ -407,6 +468,7 @@ namespace DeckParty.UI
                 return;
             }
             if (timerLabel != null) timerLabel.text = Mathf.CeilToInt(net.PickSecondsLeft).ToString("00");
+            RefreshTaken(net);
             if (m_Locked)
             {
                 if (hintLabel != null) hintLabel.text = Loc.Get("select.waiting_players", "count", net.PlayersStillPicking);
@@ -438,9 +500,9 @@ namespace DeckParty.UI
         {
             if (m_Locked || m_Tiles.Count == 0) return;
             byte pick = m_Tiles[m_Index].Pick;
-            if (IsLockedPick(pick))
+            if (Unavailable(pick))
             {
-                // Locked: say what unlocks them instead.
+                // Locked (or your teammate's): the details say why instead.
                 AudioService.Play(Sfx.Error);
                 Fx.Play(FxCue.CounterPunch, p1Root);
                 return;
@@ -449,6 +511,8 @@ namespace DeckParty.UI
             {
                 // Random only lands on streamers you've unlocked.
                 var pool = Unlocks.UnlockedRoster();
+                // Team modes: never your teammate's streamer.
+                if (m_Taken != StreamerType.None) pool.Remove(m_Taken);
                 pick = pool.Count > 0 ? (byte)pool[UnityEngine.Random.Range(0, pool.Count)] : (byte)StreamerType.None;
                 ShowPick(pick);
             }

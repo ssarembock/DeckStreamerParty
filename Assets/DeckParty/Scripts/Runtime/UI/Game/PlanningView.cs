@@ -238,7 +238,7 @@ namespace DeckParty.UI
             var expandBlocker = PartyEngine.GetExpandBlocker(s, member);
             expandButton.interactable = expandBlocker == null && !locked;
             int capacity = s.CapacityOf(member);
-            bool maxed = capacity >= GameRules.MaxCapacity;
+            bool maxed = capacity >= PartyEngine.MaxCapacity(s);
             string expandWords = maxed ? Loc.Get("shop.cap_maxed")
                 : Loc.Get("shop.raise_cap", ("from", capacity), ("to", capacity + 1), ("cost", GameIcons.Amount(ResourceIcon.Influence, PartyEngine.ExpansionCost(s, member))));
             // Boomers made upgrades cheaper for this shop.
@@ -296,7 +296,7 @@ namespace DeckParty.UI
                 else if (rolodexLabel != null) rolodexLabel.text = audienceWords + "  <color=#B9AED6>[R]</color>";
             }
 
-            if (power != null) power.Render(s, ctx.RivalsAvailable, locked ? lockReason : null, ctx.Owner);
+            if (power != null) power.Render(s, ctx.RivalsAvailable, locked ? lockReason : null, ctx.Owner, ctx.Member);
 
             RenderNextButton(s, ctx, watching);
 

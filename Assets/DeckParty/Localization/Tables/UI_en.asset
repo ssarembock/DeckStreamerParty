@@ -1222,8 +1222,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: 'Character set: <color=#FFC94A>12 random viewers + 3 random Trophies</color>,
-      rolled when the season starts.'
+    m_Localized: 'Character set: <color=#FFC94A>13 random viewers (at least 3 with
+      {icon:risk}) + 3 random Trophies</color>, rolled when the season starts.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514393
@@ -1253,7 +1253,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514399
     m_Localized: Up to 6 players. Same character set, separate streams. First stream
-      with 4 Trophies wins.
+      with 3 Trophies wins.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514400
@@ -1853,7 +1853,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960070
-    m_Localized: '{viewer} inherited +1 {icon:cash}'
+    m_Localized: '{viewer} inherited +{amount} {icon:cash}'
     m_Metadata:
       m_Items: []
   - m_Id: 2431125118607360
@@ -2597,7 +2597,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802218063749137
-    m_Localized: Each removal costs 1 {icon:influence} more. Your Audience keeps
+    m_Localized: Each removal costs 2 {icon:influence} more. Your Audience keeps
       at least {min} viewers.
     m_Metadata:
       m_Items: []
@@ -2920,6 +2920,40 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6388742169911309
     m_Localized: New emote unlocked!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704609419264
+    m_Localized: '{a} and {b}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704638779392
+    m_Localized: 'Audience: viewer cards gained or lost in the shop'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704638779393
+    m_Localized: Streamer actives used in the shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837318049792
+    m_Localized: Early Retirement!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409920
+    m_Localized: '{viewer} cashes out the whole chat'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409921
+    m_Localized: '{viewer} isn''t ready to retire yet'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409922
+    m_Localized: 'The whole chat scores right now (about {values}) and the stream
+      goes on. Then {viewer} retires and leaves your Audience for good: {chance}%
+      chance.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409923
+    m_Localized: Retire
     m_Metadata:
       m_Items: []
   references:

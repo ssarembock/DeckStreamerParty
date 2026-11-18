@@ -41,7 +41,12 @@ namespace DeckParty.EditorTools
             (SiteArea.CommunityBeats, "Community Beats", "The Community Beats panel beside the chat."),
             (SiteArea.Shop, "Shop", "The shop panel: its title, its toolbar and the space around the tiles."),
             (SiteArea.ShopTiles, "Shop tiles", "The viewer tiles in the shop and the card piles behind them."),
-            (SiteArea.SidePanel, "Side panel", "The cards on the left of the stream: Players, emotes and the shop recap (multiplayer)."),
+            (SiteArea.SidePanel, "Side panel", "The cards on the left of the stream (multiplayer): the shop recap, and the Players and " +
+                "emotes cards for any colour they don't set themselves below."),
+            (SiteArea.Players, "Players", "The Players card on the left (multiplayer): its inside, border and header. Unticked colours " +
+                "come from Side panel. The rows inside it are in Players and emotes further down."),
+            (SiteArea.Emotes, "Emotes", "The emotes card on the left (multiplayer). Unticked colours come from Side panel. The emote " +
+                "buttons inside it are in Players and emotes further down."),
             (SiteArea.PopUps, "Pop-ups and banners",
                 "The Audience overview, viewer pickers, stream and shop summaries, the shop gate, dialogs, the targeting bar, banners and toasts."),
             (SiteArea.Tooltips, "Tooltips", "The boxes that appear when you hover something."),
@@ -130,6 +135,8 @@ namespace DeckParty.EditorTools
             EditorGUILayout.Space(6);
             DrawShop();
             EditorGUILayout.Space(6);
+            DrawSidePanel();
+            EditorGUILayout.Space(6);
             DrawPad();
             EditorGUILayout.Space(6);
             if (coloursChanged)
@@ -197,12 +204,16 @@ namespace DeckParty.EditorTools
             foreach (var (area, _, _) in s_Areas)
             {
                 var element = FindAreaElement(areas, area);
+                var parentElement = FindAreaElement(areas, SiteColourSet.ParentOf(area));
                 if (element == null) continue;
-                bool ownFill = element.FindPropertyRelative("overrideFill").boolValue;
-                bool ownText = element.FindPropertyRelative("overrideText").boolValue;
+                // Players and Emotes take what they don't set from the Side panel.
+                var fillFrom = Setting(element, parentElement, "overrideFill");
+                var textFrom = Setting(element, parentElement, "overrideText");
+                bool ownFill = fillFrom != null;
+                bool ownText = textFrom != null;
                 if (!ownFill && !ownText) continue;
-                var fill = ownFill ? element.FindPropertyRelative("fill").colorValue : set.FindPropertyRelative("panelFill").colorValue;
-                var ink = ownText ? element.FindPropertyRelative("text").colorValue : set.FindPropertyRelative("text").colorValue;
+                var fill = ownFill ? fillFrom.FindPropertyRelative("fill").colorValue : set.FindPropertyRelative("panelFill").colorValue;
+                var ink = ownText ? textFrom.FindPropertyRelative("text").colorValue : set.FindPropertyRelative("text").colorValue;
                 areaContrast[area] = Contrast(fill, ink);
             }
 
@@ -228,7 +239,8 @@ namespace DeckParty.EditorTools
                                        "shared colour. A panel with its own inside or text colour also gets its dividers, soft fills " +
                                        "and secondary text worked out from those two.", s_Faint);
             foreach (var (area, name, where) in s_Areas)
-                DrawArea(set, FindAreaElement(areas, area), area, name, where, areaContrast.TryGetValue(area, out var c) ? c : (float?)null);
+                DrawArea(set, FindAreaElement(areas, area), FindAreaElement(areas, SiteColourSet.ParentOf(area)), area, name, where,
+                    areaContrast.TryGetValue(area, out var c) ? c : (float?)null);
 
             EditorGUILayout.Space(2);
             if (GUILayout.Button("Reset Site Colours to the built-in look")) ResetSiteColours();
@@ -237,8 +249,24 @@ namespace DeckParty.EditorTools
         /// <summary>Text needs at least this contrast with the panel behind it to read well.</summary>
         const float MinContrast = 4.5f;
 
+        /// <summary>The panel entry (or its parent panel's) that sets this colour itself, or null.</summary>
+        static SerializedProperty Setting(SerializedProperty element, SerializedProperty parent, string toggle)
+        {
+            if (element != null && element.FindPropertyRelative(toggle).boolValue) return element;
+            return parent != null && parent.FindPropertyRelative(toggle).boolValue ? parent : null;
+        }
+
+        /// <summary>What an unticked row says it uses: "side panel" when the parent panel sets that colour, else "shared".</summary>
+        static string FromWord(SerializedProperty parent, string toggle) =>
+            parent != null && parent.FindPropertyRelative(toggle).boolValue ? "side panel" : "shared";
+
+        /// <summary>The colour an unticked panel shows: its parent panel's own one (Players, Emotes: the Side panel's), else the shared one.</summary>
+        static SerializedProperty Fallback(SerializedProperty set, SerializedProperty parent, string toggle, string colour, string shared) =>
+            parent != null && parent.FindPropertyRelative(toggle).boolValue ? parent.FindPropertyRelative(colour) : set.FindPropertyRelative(shared);
+
         static SerializedProperty FindAreaElement(SerializedProperty areas, SiteArea area)
         {
+            if (area == SiteArea.None) return null;
             for (int i = 0; i < areas.arraySize; i++)
             {
                 var candidate = areas.GetArrayElementAtIndex(i);
@@ -267,7 +295,9 @@ namespace DeckParty.EditorTools
         }
 
         /// <param name="contrast">The text contrast to warn about (worked out before anything was drawn), or null for none.</param>
-        void DrawArea(SerializedProperty set, SerializedProperty element, SiteArea area, string name, string where, float? contrast)
+        /// <param name="parent">The parent panel's entry (Players and Emotes: Side panel), or null.</param>
+        void DrawArea(SerializedProperty set, SerializedProperty element, SerializedProperty parent, SiteArea area, string name, string where,
+            float? contrast)
         {
             if (element == null) return;
 
@@ -281,9 +311,9 @@ namespace DeckParty.EditorTools
                         FindArea(area, name);
                 }
                 GUILayout.Label(where, s_Wrap);
-                OverrideRow(element, "overrideFill", "fill", "Own inside", set.FindPropertyRelative("panelFill"));
-                OverrideRow(element, "overrideBorder", "border", "Own border", set.FindPropertyRelative("panelBorder"));
-                OverrideRow(element, "overrideText", "text", "Own text", set.FindPropertyRelative("text"));
+                OverrideRow(element, "overrideFill", "fill", "Own inside", Fallback(set, parent, "overrideFill", "fill", "panelFill"), FromWord(parent, "overrideFill"));
+                OverrideRow(element, "overrideBorder", "border", "Own border", Fallback(set, parent, "overrideBorder", "border", "panelBorder"), FromWord(parent, "overrideBorder"));
+                OverrideRow(element, "overrideText", "text", "Own text", Fallback(set, parent, "overrideText", "text", "text"), FromWord(parent, "overrideText"));
                 if (contrast.HasValue && contrast.Value < MinContrast) ContrastWarning(contrast.Value);
                 // Find results only appear after a button click, which Unity marks as used, so they can't break the layout.
                 if (m_AreaFound.TryGetValue(area, out var found)) EditorGUILayout.LabelField(found, s_Wrap);
@@ -294,7 +324,9 @@ namespace DeckParty.EditorTools
         /// A tick, a colour box and a hex box. The colour shown is the one in effect and can always be edited: picking or typing a
         /// colour gives the panel its own (ticks the box); unticking goes back to the shared colour. Saved straight away.
         /// </summary>
-        static void OverrideRow(SerializedProperty element, string toggleField, string colourField, string label, SerializedProperty shared)
+        /// <param name="sharedWord">What an unticked row says it uses ("shared", or "side panel" for the Players and Emotes cards).</param>
+        static void OverrideRow(SerializedProperty element, string toggleField, string colourField, string label, SerializedProperty shared,
+            string sharedWord = "shared")
         {
             var on = element.FindPropertyRelative(toggleField);
             var colour = element.FindPropertyRelative(colourField);
@@ -320,7 +352,7 @@ namespace DeckParty.EditorTools
                 var typed = shown;
                 if (HexField(ref typed)) Own(on, colour, typed);
                 // Always drawn (only the words change) so the row's layout never changes mid-click.
-                GUILayout.Label(on.boolValue ? "own" : "shared", s_Faint, GUILayout.Width(44));
+                GUILayout.Label(on.boolValue ? "own" : sharedWord, s_Faint, GUILayout.Width(sharedWord.Length > 6 ? 70 : 44));
             }
         }
 

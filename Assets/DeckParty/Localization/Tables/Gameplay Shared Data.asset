@@ -2015,6 +2015,22 @@ MonoBehaviour:
     m_Key: game.subathon_saved
     m_Metadata:
       m_Items: []
+  - m_Id: 6526835627745280
+    m_Key: ability.EarlyRetirement.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835720019968
+    m_Key: ability.EarlyRetirement.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835761963008
+    m_Key: log.early_retirement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835761963009
+    m_Key: log.boomer_stayed
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

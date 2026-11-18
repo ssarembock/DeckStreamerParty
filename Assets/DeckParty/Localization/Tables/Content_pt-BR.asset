@@ -96,8 +96,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274896
-    m_Localized: "F\xE3s de carteirinha, Peixinhos, doze espectadores aleat\xF3rios
-      e tr\xEAs Trof\xE9us aleat\xF3rios. Ven\xE7a cinco seguidas pra ganhar a Cereja."
+    m_Localized: "F\xE3s de carteirinha, Peixinhos, treze espectadores aleat\xF3rios
+      (pelo menos tr\xEAs com {icon:risk}) e tr\xEAs Trof\xE9us aleat\xF3rios. Ven\xE7a
+      cinco seguidas pra ganhar a Cereja."
     m_Metadata:
       m_Items: []
   - m_Id: 433274897

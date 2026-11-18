@@ -79,6 +79,11 @@ namespace DeckParty.EditorTools
         const float ChannelWidth = 370f;
         /// <summary>Space between the chat window's border and the avatars, left and right.</summary>
         const float ChatSidePadding = 44f;
+        /// <summary>
+        /// Space between the bottom row of avatars and the footer under them (2026-11-18: 32, it was 8): the chat no longer
+        /// scrolls, so a full chat's last row needs a little room above the warning and the Next Up faces.
+        /// </summary>
+        const float HouseBottomGap = 32f;
         /// <summary>The Community Beats panel's title band (just the icon, then a grey line).</summary>
         const float BeatsHeaderHeight = 136f;
         /// <summary>The Community Beats title icon (no words).</summary>
@@ -114,7 +119,8 @@ namespace DeckParty.EditorTools
             // The menu bar spans the whole screen (outside the 21:9 content frame), along the top edge.
             var hud = BuildHud(canvas);
 
-            var mainArea = EditorUI.Rect(root, "MainArea").Box(Vector2.zero, Vector2.one, new Vector2(456, Gap), new Vector2(-Gap, -ContentTop));
+            // ContentFrame sizes both at runtime (the side column is 315-390 wide since 2026-11-18; these are its starting values).
+            var mainArea = EditorUI.Rect(root, "MainArea").Box(Vector2.zero, Vector2.one, new Vector2(Gap + 315 + Gap, Gap), new Vector2(-Gap, -ContentTop));
             var partyRoot = EditorUI.Rect(mainArea, "Party").Stretch();
             var house = BuildStream(partyRoot, prefabs, out var links, out var viewerEmojis, out var controls, out var beats, out var facecam,
                 out var streamOverlay, out var anxiety, out var riskMeter, out var riskPips, out var riskTooltip);
@@ -128,7 +134,7 @@ namespace DeckParty.EditorTools
 
             // Players and emotes (multiplayer) and the optional Activity log, on the left of the Stream Chat. With none of them
             // showing (single player, log off) ContentFrame gives the stream the whole width.
-            var side = EditorUI.Rect(root, "SidePanel").Box(new Vector2(0, 0), new Vector2(0, 1), new Vector2(Gap, Gap), new Vector2(440, -ContentTop));
+            var side = EditorUI.Rect(root, "SidePanel").Box(new Vector2(0, 0), new Vector2(0, 1), new Vector2(Gap, Gap), new Vector2(Gap + 315, -ContentTop));
             EditorUI.VLayout(side, 12, EditorUI.Pad(0), TextAnchor.UpperCenter, true, true, true, false);
             var opponents = BuildOpponents(side, prefabs);
             var emotes = BuildEmoteBar(side);
@@ -451,13 +457,13 @@ namespace DeckParty.EditorTools
             titleLine.rectTransform.TopBand(ChatHeaderHeight, HDivider, DividerInset, DividerInset);
 
             // More room between the window's border and the avatars on both sides.
-            var area = EditorUI.Rect(inner.transform, "HouseArea").Box(Vector2.zero, Vector2.one, new Vector2(ChatSidePadding, ButtonsBand + FooterHeight + 8), new Vector2(-ChatSidePadding, -(ChatHeaderHeight + 14)));
+            var area = EditorUI.Rect(inner.transform, "HouseArea").Box(Vector2.zero, Vector2.one, new Vector2(ChatSidePadding, ButtonsBand + FooterHeight + HouseBottomGap), new Vector2(-ChatSidePadding, -(ChatHeaderHeight + 14)));
 
             // Link lines (pairs and chains of viewers) draw under the avatars.
             var linksRect = EditorUI.Rect(area, "LinkLines").Stretch();
             links = linksRect.gameObject.AddComponent<LinkLinesView>();
 
-            // Avatars shrink to fit down to HouseView.MinCardScale, then the chat scrolls.
+            // Avatars resize to fit (at most 10 to a row and 3 rows); the chat never scrolls (the ScrollRect stays off).
             var scrollRoot = EditorUI.Rect(area, "Scroll").Stretch();
             var scroll = scrollRoot.gameObject.AddComponent<ScrollRect>();
             scroll.horizontal = false;
@@ -1242,12 +1248,14 @@ namespace DeckParty.EditorTools
         /// A white card with a strong black border whose own Image is the border (so layout elements and views can sit on it
         /// directly): the white fill is its first child, and everything added afterwards draws on top.
         /// </summary>
-        static Image BorderedCard(Transform parent, string name)
+        /// <param name="area">Its panel in UI Skin > Site Colours: the Players and emotes cards have their own (2026-11-18), the
+        /// shop recap uses Side panel. Players and Emotes take any colour they don't set from Side panel.</param>
+        static Image BorderedCard(Transform parent, string name, SiteArea area = SiteArea.SidePanel)
         {
             var border = EditorUI.Image(parent, name, SitePalette.Outline, EditorUI.RoundedSmall, null, true);
             border.type = Image.Type.Sliced;
-            // The side panel's cards (Players, emotes, shop recap) share the Side panel colours in UI Skin > Site Colours.
-            EditorUI.TagArea(border, SiteArea.SidePanel);
+            // The side panel's cards: UI Skin > Site Colours > Players / Emotes / Side panel (the shop recap).
+            EditorUI.TagArea(border, area);
             var fill = EditorUI.Image(border.transform, "Fill", SitePalette.Surface, EditorUI.RoundedSmall);
             fill.type = Image.Type.Sliced;
             fill.rectTransform.Stretch(PanelBorder, PanelBorder, PanelBorder, PanelBorder);
@@ -1261,7 +1269,7 @@ namespace DeckParty.EditorTools
         {
             // A white card like the rest of the site (the player rows inside keep their dark cards).
             // It grows with the number of players (no scrolling): the card's height is its rows' height.
-            var panel = BorderedCard(side, "Players");
+            var panel = BorderedCard(side, "Players", SiteArea.Players);
             panel.transform.GetChild(0).gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
             EditorUI.VLayout(panel, 8, new RectOffset(14, 14, 12, 14), TextAnchor.UpperCenter, true, true, true, false);
             var title = EditorUI.Text(panel.transform, "Header", "-", 26, SitePalette.Text, TextAlignmentOptions.MidlineLeft, true, true, false);
@@ -1282,7 +1290,7 @@ namespace DeckParty.EditorTools
         /// </summary>
         static EmoteView BuildEmoteBar(RectTransform side)
         {
-            var panel = BorderedCard(side, GameController.EmoteBarName);
+            var panel = BorderedCard(side, GameController.EmoteBarName, SiteArea.Emotes);
             EditorUI.Layout(panel, -1, 200, -1, -1, -1, 130);
             var buttons = EditorUI.Rect(panel.transform, "Buttons").Stretch(12, 12, 12, 12);
             var emotes = buttons.gameObject.AddComponent<EmoteView>();

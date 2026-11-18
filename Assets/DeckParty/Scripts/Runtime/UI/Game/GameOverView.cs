@@ -64,22 +64,22 @@ namespace DeckParty.UI
                 titleLabel.text = won ? Loc.Get("over.versus_won", "rival", rivalName) : rivalWon ? Loc.Get("over.versus_lost", "rival", rivalName) : Loc.Get("over.versus_nobody");
                 titleLabel.color = won ? UIPalette.Gold : rivalWon ? UIPalette.Red : UIPalette.TextDim;
                 subtitleLabel.text = won
-                    ? Loc.Get("over.won_detail", ("count", GameRules.DiamondsToWin), ("night", s.WinNight), ("total", s.TotalNights), ("set", ContentText.ScenarioName(s.ScenarioId)))
+                    ? Loc.Get("over.won_detail", ("count", PartyEngine.TrophiesToWin(s)), ("night", s.WinNight), ("total", s.TotalNights), ("set", ContentText.ScenarioName(s.ScenarioId)))
                     : rivalWon
-                        ? Loc.Get("over.versus_lost_detail", ("rival", rivalName), ("count", GameRules.DiamondsToWin), ("night", rival.WinNight))
+                        ? Loc.Get("over.versus_lost_detail", ("rival", rivalName), ("count", PartyEngine.TrophiesToWin(s)), ("night", rival.WinNight))
                         : Loc.Get("over.versus_nobody_detail", ("best", Terms.DiamondCount(s.BestDiamonds)), ("rival", rivalName), ("rival_best", Terms.DiamondCount(rival.BestDiamonds)));
                 subtitleLabel.text += "\n" + Loc.Get("single.versus_record", "wins", ProgressStore.VersusWins, "losses", ProgressStore.VersusLosses);
             }
             else if (won)
             {
-                subtitleLabel.text = Loc.Get("over.won_detail", ("count", GameRules.DiamondsToWin), ("night", s.WinNight), ("total", s.TotalNights), ("set", ContentText.ScenarioName(s.ScenarioId)));
+                subtitleLabel.text = Loc.Get("over.won_detail", ("count", PartyEngine.TrophiesToWin(s)), ("night", s.WinNight), ("total", s.TotalNights), ("set", ContentText.ScenarioName(s.ScenarioId)));
                 if (scenario.IsRandom)
                     subtitleLabel.text += "\n" + Loc.Get("over.random_streak", "streak", ProgressStore.RandomStreak, "goal", ProgressStore.CherryStreak) +
                                           (ProgressStore.HasCherry ? $"  <color=#FF4F8B>{Loc.Get("over.cherry")}</color>" : string.Empty);
             }
             else
             {
-                subtitleLabel.text = Loc.Get("over.lost_detail", "count", GameRules.DiamondsToWin, "best", Terms.DiamondCount(s.BestDiamonds));
+                subtitleLabel.text = Loc.Get("over.lost_detail", "count", PartyEngine.TrophiesToWin(s), "best", Terms.DiamondCount(s.BestDiamonds));
             }
 
             statsLabel.text = Stats(s);
@@ -115,8 +115,8 @@ namespace DeckParty.UI
                 titleLabel.text = localWon ? Loc.Get("over.team_you_win") : Loc.Get("over.team_wins", "team", team);
                 titleLabel.color = localWon ? UIPalette.Gold : UIPalette.PlayerColor(winner.ColorIndex);
                 subtitleLabel.text = winner.Won
-                    ? Loc.Get("over.mp_won_detail", "count", GameRules.DiamondsToWin, "night", winner.WinNight)
-                    : Loc.Get("over.mp_nobody", "count", GameRules.DiamondsToWin, "best", winner.BestDiamonds);
+                    ? Loc.Get("over.mp_won_detail", "count", PartyEngine.TrophiesToWin(local), "night", winner.WinNight)
+                    : Loc.Get("over.mp_nobody", "count", PartyEngine.TrophiesToWin(local), "best", winner.BestDiamonds);
             }
             else if (matchOver && players.Count > 0)
             {
@@ -125,13 +125,13 @@ namespace DeckParty.UI
                 titleLabel.text = localWon ? Loc.Get("over.you_win") : Loc.Get("over.player_wins", "player", winner.DisplayName);
                 titleLabel.color = localWon ? UIPalette.Gold : UIPalette.PlayerColor(winner.ColorIndex);
                 subtitleLabel.text = winner.Won
-                    ? Loc.Get("over.mp_won_detail", "count", GameRules.DiamondsToWin, "night", winner.WinNight)
-                    : Loc.Get("over.mp_nobody", "count", GameRules.DiamondsToWin, "best", winner.BestDiamonds);
+                    ? Loc.Get("over.mp_won_detail", "count", PartyEngine.TrophiesToWin(local), "night", winner.WinNight)
+                    : Loc.Get("over.mp_nobody", "count", PartyEngine.TrophiesToWin(local), "best", winner.BestDiamonds);
             }
             else
             {
                 bool won = local != null && local.Phase == GamePhase.Victory;
-                titleLabel.text = won ? Loc.Get("over.diamond_stream", "count", GameRules.DiamondsToWin) : Loc.Get("over.your_season_over");
+                titleLabel.text = won ? Loc.Get("over.diamond_stream", "count", PartyEngine.TrophiesToWin(local)) : Loc.Get("over.your_season_over");
                 titleLabel.color = won ? UIPalette.Gold : UIPalette.TextDim;
                 subtitleLabel.text = Loc.Get("over.waiting_others");
             }
@@ -169,7 +169,7 @@ namespace DeckParty.UI
                 titleLabel.text = Loc.Get("over.player_wins", "player", names[winner]);
                 titleLabel.color = UIPalette.PlayerColor(winner);
                 subtitleLabel.text = won.Phase == GamePhase.Victory
-                    ? Loc.Get("couch.won_detail", ("player", names[winner]), ("count", GameRules.DiamondsToWin), ("night", won.WinNight))
+                    ? Loc.Get("couch.won_detail", ("player", names[winner]), ("count", PartyEngine.TrophiesToWin(won)), ("night", won.WinNight))
                     : Loc.Get("couch.won_best_detail", ("player", names[winner]), ("count", won.BestDiamonds));
             }
             else
@@ -194,8 +194,13 @@ namespace DeckParty.UI
                               ("diamonds", s.DiamondsOwned()), ("cap", s.TotalCapacity));
             if (s.IsEndless)
                 text += "\n" + Loc.Get("over.stats_endless", ("trophies", s.Trophies), ("streams", s.StreamsBought), ("viewers", s.ShopViewersBought));
-            if (s.Streamer != StreamerType.None)
-                text += "\n" + Loc.Get("over.stats_streamer", "streamer", StreamerVisuals.NameTag(s.Streamer), "uses", s.PowerUses);
+            // Teams: both streamers (each member plays their own since 2026-11-18).
+            for (int member = 0; member < (s.IsTeam ? 2 : 1); member++)
+            {
+                var streamer = s.StreamerOf(member);
+                if (streamer != StreamerType.None)
+                    text += "\n" + Loc.Get("over.stats_streamer", "streamer", StreamerVisuals.NameTag(streamer), "uses", s.PowerUsesOf(member));
+            }
             return text;
         }
 

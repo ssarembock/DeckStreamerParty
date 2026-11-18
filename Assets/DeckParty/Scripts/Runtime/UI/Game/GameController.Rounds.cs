@@ -95,10 +95,11 @@ namespace DeckParty.UI
             var own = State;
             if (m_Net == null || own == null) return null;
             var entries = new List<RecapEntry>();
-            foreach (var p in m_Net.PlayersSnapshot())
+            // One column per player, or per team (2v2, co-op: both players' names and streamers on it).
+            foreach (var key in RecapUnits())
             {
-                if (!p.Connected || !m_Recaps.TryGetValue(p.ClientId, out var r) || r.Stream == null || !r.Stream.Done || r.Stream.Night != own.Night) continue;
-                var entry = StreamEntry(p.ClientId, r.Stream);
+                if (!UnitConnected(key) || !m_Recaps.TryGetValue(key, out var r) || r.Stream == null || !r.Stream.Done || r.Stream.Night != own.Night) continue;
+                var entry = StreamEntry(key, r.Stream);
                 if (entry != null) entries.Add(entry);
             }
             return entries.Count > 0 ? entries : null;
@@ -249,7 +250,9 @@ namespace DeckParty.UI
                 if (s.IncomingHeat > 0) parts.Add(Loc.Get("summary.next_heat", "risk", GuestVisuals.RiskText(Mathf.Min(StreamerCatalog.MaxRaidHeat, s.IncomingHeat))));
                 if (s.IncomingDoom > 0) parts.Add(GameIcons.Tag(Community.Doomsdayers) + " " + Loc.Get("summary.next_doom", "value", Communities.DoomChance(s.IncomingDoom)));
                 if (s.IncomingBots > 0) parts.Add(GameIcons.Tag(Community.Bots) + " " + Loc.Get("summary.next_bots", "count", Mathf.Min(Communities.BotsMaxIncoming, s.IncomingBots)));
-                if (s.PowerArmed) parts.Add(Loc.Get("summary.next_power", "power", StreamerVisuals.PowerName(s.Streamer)));
+                // Teams: each member's own streamer can have an active armed.
+                for (int member = 0; member < (s.IsTeam ? 2 : 1); member++)
+                    if (s.PowerArmedOf(member)) parts.Add(Loc.Get("summary.next_power", "power", StreamerVisuals.PowerName(s.StreamerOf(member))));
                 if (parts.Count == 0) continue;
                 any = true;
                 sb.Append("    • ").Append(ColoredName(p.ClientId)).Append(": ").Append(string.Join(", ", parts)).Append('\n');

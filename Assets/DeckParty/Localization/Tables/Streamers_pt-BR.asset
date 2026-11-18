@@ -501,7 +501,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802215475863552
-    m_Localized: "Escolha o streamer do seu time. Seu parceiro joga com ele tamb\xE9m."
+    m_Localized: "Escolha o seu pr\xF3prio streamer. Seu parceiro escolhe o dele:
+      voc\xEAs n\xE3o podem usar o mesmo."
     m_Metadata:
       m_Items: []
   - m_Id: 5802215475863553
@@ -581,6 +582,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6388739582025729
     m_Localized: Bloqueado. {requirement}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478701950230528
+    m_Localized: PARCEIRO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478702021533696
+    m_Localized: "Seu parceiro {player} j\xE1 escolheu esse streamer. Escolha outro."
     m_Metadata:
       m_Items: []
   references:

@@ -53,7 +53,7 @@ namespace DeckParty.UI
 
             uint rivalSeed = state.Seed ^ 0x5A17u;
             var streamer = StreamerCatalog.Resolve(launch.OpponentStreamer, new System.Random((int)rivalSeed), Unlocks.StreamerMask());
-            var rival = PartyEngine.CreateGame(state.ScenarioId, rivalSeed, state.TotalNights, streamer);
+            var rival = PartyEngine.CreateGame(state.ScenarioId, rivalSeed, state.TotalNights, streamer, trophiesToWin: state.TrophiesToWin);
             // Same shop as yours (a Random Mix shop depends on the seed).
             rival.Shop.Clear();
             rival.Shop.AddRange(state.Shop);
@@ -62,7 +62,7 @@ namespace DeckParty.UI
 
             m_RivalName = streamer == StreamerType.None ? Loc.Get("select.opponent_algorithm") : StreamerVisuals.Name(streamer);
             opponents.gameObject.SetActive(true);
-            log.Add(Loc.Get("game.versus_intro", "rival", RivalTag, "count", GameRules.DiamondsToWin));
+            log.Add(Loc.Get("game.versus_intro", "rival", RivalTag, "count", PartyEngine.TrophiesToWin(state)));
         }
 
         string RivalTag => GuestVisuals.Colored(m_RivalName ?? Loc.Get("select.opponent_algorithm"), UIPalette.PlayerColor(1));
@@ -94,7 +94,7 @@ namespace DeckParty.UI
                         log.Add(Loc.Get("game.rival_power", "rival", RivalTag, "power", StreamerVisuals.PowerName((StreamerType)e.A)));
                         break;
                     case GameEventType.Victory:
-                        ToastView.Show(Loc.Get("game.rival_won_toast", "rival", RivalTag, "count", GameRules.DiamondsToWin), ToastKind.Warning);
+                        ToastView.Show(Loc.Get("game.rival_won_toast", "rival", RivalTag, "count", PartyEngine.TrophiesToWin(State)), ToastKind.Warning);
                         break;
                 }
             }
@@ -147,16 +147,21 @@ namespace DeckParty.UI
                 house.RightSideName = null;
                 return;
             }
+            house.LeftSideName = TeamMemberName(0);
+            house.RightSideName = TeamMemberName(1);
+        }
+
+        /// <summary>
+        /// Teams: the name of the on-screen team's member 0 (left) or 1 (right), "Ana (you)" for you; null outside team play.
+        /// Used over the two sides of the chat and the two columns of the Audience.
+        /// </summary>
+        string TeamMemberName(int member)
+        {
+            if (m_Net == null || !m_Net.IsTeamMode) return null;
             int team = m_Net.TeamOf(ViewingOwn ? LocalId : m_ViewId);
-            string left = null, right = null;
             foreach (var p in m_Net.TeamPlayers(team))
-            {
-                string name = p.ClientId == LocalId ? Loc.Get("team.you", "player", p.DisplayName) : p.DisplayName;
-                if (p.Member == 0) left = name;
-                else right = name;
-            }
-            house.LeftSideName = left;
-            house.RightSideName = right;
+                if (p.Member == member) return p.ClientId == LocalId ? Loc.Get("team.you", "player", p.DisplayName) : p.DisplayName.ToString();
+            return null;
         }
 
         // ================================================================== Endless: the shop's two Trophy buttons

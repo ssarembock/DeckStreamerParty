@@ -216,13 +216,13 @@ namespace DeckParty.UI
         }
 
         /// <summary>
-        /// The host started the match: everyone picks their streamer (with a countdown). A team's second player waits in the
-        /// lobby while their teammate picks for the team.
+        /// The host started the match: everyone picks their streamer (with a countdown). In the team modes each player picks
+        /// their own too (2026-11-18), and teammates can't pick the same one.
         /// </summary>
         public void ShowMatchPick()
         {
             var net = DeckPartyNetSession.Instance;
-            if (net == null || !net.PickingStreamers || streamerSelectScreen == null || !net.PicksStreamer(net.LocalClientId))
+            if (net == null || !net.PickingStreamers || streamerSelectScreen == null)
             {
                 ShowLobby();
                 return;

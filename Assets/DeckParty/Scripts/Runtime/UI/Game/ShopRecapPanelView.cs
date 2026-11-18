@@ -8,8 +8,9 @@ namespace DeckParty.UI
 {
     /// <summary>
     /// Multiplayer: the shop summary as a small panel at the bottom of the left column (under the players), instead of a
-    /// pop-up. One block per player (their name, then what they recruited, Sub Cap raises, actives and resource changes). It
-    /// stays up for <see cref="visibleSeconds"/> (the pointer over it holds it) and then fades away.
+    /// pop-up. One block per player or team: the name ("Ana and Bo" for a team), then four icons with what changed in the
+    /// shop (2026-11-18): Audience, Cash, Influence and actives used. It stays up for <see cref="visibleSeconds"/> (the
+    /// pointer over it holds it) and then fades away. Multiplayer notices (ToastView) stack just above it.
     /// </summary>
     public sealed class ShopRecapPanelView : MonoBehaviour
     {

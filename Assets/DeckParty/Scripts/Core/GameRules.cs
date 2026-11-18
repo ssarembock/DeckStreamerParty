@@ -10,10 +10,27 @@ namespace DeckParty.Core
         public const int DefaultNights = 25;
         /// <summary>Sub Cap every season starts with (6 since 2026-11-10, to speed the game up a little; it was 5).</summary>
         public const int StartingCapacity = 6;
-        public const int MaxCapacity = 34;
+        /// <summary>
+        /// The highest Sub Cap one player's chat can reach in a solo season (40 since the 2026-11-18 UI updates: the chat's 4
+        /// rows of 10; it was 30, and 34 before that). The Hype Men's spare seats come on top of it, in one extra row
+        /// (<see cref="HypeRowSeats"/>). Teams have <see cref="TeamMaxCapacity"/> a player. Use <see cref="MaxCapacityFor"/>
+        /// (or PartyEngine.MaxCapacity) for the limit that applies to a season.
+        /// </summary>
+        public const int MaxCapacity = HouseColumns * HouseMaxRows;
+
+        /// <summary>Teams (2v2, co-op): the highest Sub Cap one player's side of the chat can reach (50, 5 rows of 10; it was 40).</summary>
+        public const int TeamMaxCapacity = HouseColumns * TeamHouseMaxRows;
+
+        /// <summary>
+        /// The Hype Men's spare seats never count against <see cref="MaxCapacity"/> (2026-11-18): a chat at (or near) its
+        /// limit shows them in one extra row under the full ones, so a chat can briefly hold up to this many seats past it.
+        /// </summary>
+        public const int HypeRowSeats = HouseColumns;
+
+        /// <summary>The seat limit of one player's chat: <see cref="MaxCapacity"/> solo, <see cref="TeamMaxCapacity"/> a player in a team.</summary>
+        public static int MaxCapacityFor(bool team) => team ? TeamMaxCapacity : MaxCapacity;
 
         public const int FirstExpansionCost = 2;
-        public const int MaxExpansionCost = 12;
 
         /// <summary>Net Deplatform Risk at (or above) this value gets the stream deplatformed (internally: a raid).</summary>
         public const int RaidTroubleThreshold = 3;
@@ -27,8 +44,15 @@ namespace DeckParty.Core
         /// <summary>The most Risk pips any season shows (the team limit).</summary>
         public const int MaxRiskLimit = TeamRiskLimit;
 
-        /// <summary>Diamonds that must attend one successful party to win.</summary>
+        /// <summary>Trophies that must be in one scored stream to win: single player (Puzzles, Versus the AI). Each season
+        /// keeps its own goal (<see cref="PlayerState.TrophiesToWin"/>, read through <see cref="PartyEngine.TrophiesToWin"/>).</summary>
         public const int DiamondsToWin = 4;
+
+        /// <summary>Competitive multiplayer (online and couch) wins with this many Trophies in one stream (2026-11-18).</summary>
+        public const int CompetitiveTrophiesToWin = 3;
+
+        /// <summary>Streams a competitive multiplayer match lasts by default (online lobbies and couch play; 2026-11-18).</summary>
+        public const int CompetitiveStreams = 20;
 
         /// <summary>
         /// Copy limit per player for non-Diamond guest types (Diamonds are unlimited). Starting viewers count, except for
@@ -59,8 +83,17 @@ namespace DeckParty.Core
         /// <summary>Cash lost for every Influence a party cannot pay.</summary>
         public const int InfluenceShortfallCashPenalty = 7;
 
-        /// <summary>Most viewer cards in one chat row: past this the chat starts a new row (more only once cards hit their minimum size).</summary>
-        public const int HouseColumns = 8;
+        /// <summary>Most viewers in one chat row (2026-11-18: 10, it was 8). The chat never scrolls: the avatars shrink to fit.</summary>
+        public const int HouseColumns = 10;
+
+        /// <summary>Most rows of Sub Cap seats in one player's chat (with <see cref="HouseColumns"/>: 40 seats, <see cref="MaxCapacity"/>; it was 3).</summary>
+        public const int HouseMaxRows = 4;
+
+        /// <summary>Teams: most rows of Sub Cap seats on one player's side of the chat (with <see cref="HouseColumns"/>: 50 seats, <see cref="TeamMaxCapacity"/>; it was 4).</summary>
+        public const int TeamHouseMaxRows = 5;
+
+        /// <summary>Most rows of Sub Cap seats in one player's chat (or side of a team's chat). The Hype Men's spare seats can add one more.</summary>
+        public static int HouseMaxRowsFor(bool team) => team ? TeamHouseMaxRows : HouseMaxRows;
 
         // --- Meme guest tuning ---
         public const int DogeMaxBonus = 5;
@@ -116,17 +149,19 @@ namespace DeckParty.Core
 
         static int GroupStep(int[] table, int copies) => copies <= 0 ? 0 : table[Math.Min(copies, table.Length) - 1];
 
-        /// <summary>Remove a Viewer (shop): the first removal costs this much Influence, every one after costs 1 more, up to the max.</summary>
-        public const int FirstRemovalCost = 2;
-        public const int MaxRemovalCost = 12;
+        /// <summary>Remove a Viewer (shop): the first removal costs this much Influence (3 since 2026-11-18; it was 2).</summary>
+        public const int FirstRemovalCost = 3;
+        /// <summary>Remove a Viewer: every removal after the first costs this much more (2 since 2026-11-18; it was 1). No maximum.</summary>
+        public const int RemovalCostStep = 2;
         /// <summary>Remove a Viewer can't take your Audience below this many viewer cards.</summary>
         public const int MinAudience = 5;
 
-        public static int RemovalCost(int removalsBought) => Math.Min(FirstRemovalCost + Math.Max(0, removalsBought), MaxRemovalCost);
+        /// <summary>Remove a Viewer's price after <paramref name="removalsBought"/> removals: 3, 5, 7, 9... Influence.</summary>
+        public static int RemovalCost(int removalsBought) => FirstRemovalCost + RemovalCostStep * Math.Max(0, removalsBought);
 
         // --- Endless mode (2026-11-16, additionalgamemodes.md) ---
-        /// <summary>Endless: streams a run starts with (Trophies buy more).</summary>
-        public const int EndlessStartingStreams = 25;
+        /// <summary>Endless: streams a run starts with (Trophies buy more). 20 since 2026-11-18, for a harder run; it was 25.</summary>
+        public const int EndlessStartingStreams = 20;
         /// <summary>Endless: Trophies the first extra stream (and the first extra shop viewer) costs; each one after costs this much more.</summary>
         public const int EndlessFirstTrophyCost = 2;
         public const int EndlessTrophyCostStep = 1;
@@ -146,9 +181,10 @@ namespace DeckParty.Core
         /// </summary>
         public static readonly bool FeesDrawFromBank = true;
 
+        /// <summary>Raising the Sub Cap: 2 Influence, then 1 more each time, with no maximum (2026-11-18; it stopped at 12).</summary>
         public static int ExpansionCost(int expansionsBought)
         {
-            return Math.Min(FirstExpansionCost + Math.Max(0, expansionsBought), MaxExpansionCost);
+            return FirstExpansionCost + Math.Max(0, expansionsBought);
         }
     }
 }

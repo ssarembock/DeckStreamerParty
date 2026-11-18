@@ -38,6 +38,9 @@ namespace DeckParty
         const string InfluenceId = "influence";
         const string RiskId = "risk";
         const string PlaysId = "plays";
+        // UI Skin buttons used as inline icons (2026-11-18, the multiplayer shop summary): the Audience and a streamer's active.
+        const string AudienceId = "audience";
+        const string ActiveId = "active";
 
         static TMP_SpriteAsset s_Asset;
         static bool s_Hooked;
@@ -166,6 +169,20 @@ namespace DeckParty
         /// <summary>A resource amount for prices and wallets: the icon, then the number ("[icon] 5").</summary>
         public static string Amount(ResourceIcon icon, int value) => Tag(icon) + " " + value;
 
+        /// <summary>The Audience button's icon (UI Skin: Icon Audience) as an inline tag.</summary>
+        public static string AudienceTag => Tag(AudienceId, SlotTint(SkinSlot.IconAudience, SitePalette.Text));
+
+        /// <summary>The streamer active's icon (UI Skin: Icon Action) as an inline tag.</summary>
+        public static string ActiveTag => Tag(ActiveId, SlotTint(SkinSlot.IconAction, UIPalette.Pink));
+
+        /// <summary>A UI Skin slot's sprite for the inline icons (a circle until the skin has one).</summary>
+        static Sprite SkinSprite(SkinSlot slot)
+        {
+            var skin = GameDatabase.Instance.skin;
+            var sprite = skin != null ? skin.GetSprite(slot) : null;
+            return sprite != null ? sprite : RuntimeSprites.Circle;
+        }
+
         /// <summary>Expands an icon token's name ("cash", "influence", "risk", "plays" or a community name) into its tag, or null if unknown.</summary>
         public static string TagFor(string id)
         {
@@ -177,6 +194,8 @@ namespace DeckParty
                 case "gifted_subs":
                 case "cash_banked": return Tag(ResourceIcon.Cash);
                 case InfluenceId: return Tag(ResourceIcon.Influence);
+                case AudienceId: return AudienceTag;
+                case ActiveId: return ActiveTag;
                 case RiskId: return Tag(ResourceIcon.Risk);
                 case PlaysId:
                 case "play":
@@ -200,8 +219,10 @@ namespace DeckParty
             {
                 case CashId: return Loc.Get("hud.tip.cash_banked");
                 case InfluenceId: return Loc.Get("hud.tip.influence");
+                case AudienceId: return Loc.Get("recap.tip.audience");
+                case ActiveId: return Loc.Get("recap.tip.active");
                 case RiskId: return Loc.Get("hud.tip.risk_term", "max", PartyEngine.RiskLimit(state));
-                case PlaysId: return state != null && state.IsEndless ? Loc.Get("hud.tip.plays_term_endless") : Loc.Get("hud.tip.plays_term", "goal", GameRules.DiamondsToWin);
+                case PlaysId: return state != null && state.IsEndless ? Loc.Get("hud.tip.plays_term_endless") : Loc.Get("hud.tip.plays_term", "goal", PartyEngine.TrophiesToWin(state));
             }
             return Enum.TryParse(id, false, out Community community) && Enum.IsDefined(typeof(Community), community)
                 ? CommunityVisuals.Tooltip(community, state)
@@ -241,6 +262,8 @@ namespace DeckParty
                 (InfluenceId, Sprite(ResourceIcon.Influence)),
                 (RiskId, Sprite(ResourceIcon.Risk)),
                 (PlaysId, Sprite(ResourceIcon.Plays)),
+                (AudienceId, SkinSprite(SkinSlot.IconAudience)),
+                (ActiveId, SkinSprite(SkinSlot.IconAction)),
             };
             foreach (var community in Communities.Every) entries.Add((Id(community), Sprite(community)));
 

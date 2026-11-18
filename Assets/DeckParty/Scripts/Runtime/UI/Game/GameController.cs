@@ -124,7 +124,7 @@ namespace DeckParty.UI
             UpdateFeedVisibility();
 
             // Re-read the platform each game (its logo may have been edited in the Game Database since the last one).
-            SiteTheme.Apply(State != null ? StreamerVisuals.Platform(State.Streamer) : SiteTheme.Platform, true);
+            SiteTheme.Apply(State != null ? StreamerVisuals.Platform(State.StreamerOf(m_Member)) : SiteTheme.Platform, true);
 
             if (State != null)
             {
@@ -163,12 +163,16 @@ namespace DeckParty.UI
                 byte pick = launch != null ? launch.Streamer : AppSettings.LastStreamer;
                 var streamer = StreamerCatalog.Resolve(pick, new System.Random((int)seed), Unlocks.StreamerMask());
                 var mode = launch != null ? launch.Mode : GameMode.Classic;
-                int streams = mode == GameMode.Endless ? GameRules.EndlessStartingStreams : GameRules.DefaultNights;
-                state = PartyEngine.CreateGame(scenarioId, seed, streams, streamer, mode);
+                // Couch play is competitive multiplayer: 20 streams and 3 Trophies to win, like an online match (2026-11-18).
+                bool couchMatch = launch != null && launch.Couch;
+                int streams = mode == GameMode.Endless ? GameRules.EndlessStartingStreams
+                    : couchMatch ? GameRules.CompetitiveStreams : GameRules.DefaultNights;
+                int goal = couchMatch ? GameRules.CompetitiveTrophiesToWin : GameRules.DiamondsToWin;
+                state = PartyEngine.CreateGame(scenarioId, seed, streams, streamer, mode, trophiesToWin: goal);
                 log.Add(mode == GameMode.Endless
                     ? Loc.Get("game.endless_welcome", ("set", $"<b>{ContentText.ScenarioName(scenarioId)}</b>"), ("nights", state.TotalNights),
                         ("cost", GameRules.EndlessFirstTrophyCost))
-                    : Loc.Get("game.welcome", ("set", $"<b>{ContentText.ScenarioName(scenarioId)}</b>"), ("count", GameRules.DiamondsToWin), ("nights", state.TotalNights)));
+                    : Loc.Get("game.welcome", ("set", $"<b>{ContentText.ScenarioName(scenarioId)}</b>"), ("count", PartyEngine.TrophiesToWin(state)), ("nights", state.TotalNights)));
                 if (streamer != StreamerType.None)
                     log.Add(Loc.Get("game.streamer_intro", "streamer", StreamerVisuals.NameTag(streamer), "power", StreamerVisuals.PowerName(streamer)));
             }
@@ -197,18 +201,22 @@ namespace DeckParty.UI
             if (net.TakingTurns && net.ActivePlayer != DeckPartyNetSession.NoPlayer) m_ViewId = net.ActivePlayer;
 
             opponents.gameObject.SetActive(true);
+            DockNotices();
             // Text chat is switched off (players talk with emotes); it still works if FX Library > Text Chat is turned on.
             if (TextChatOn) chat.Bind(net);
             if (feed != null) feed.MarkRead(SideTabsView.Tab.Chat);
             opponents.PlayerClicked += ShowBoard;
+            // Teams: the Audience shows each player's cards in their own column, named.
+            rolodex.MemberName = TeamMemberName;
             opponents.IsMuted = id => m_Muted.Contains(id);
             opponents.MuteToggled += ToggleMute;
             opponents.PresenceLine = PresenceLine;
             EventText.PlayerName = index => ColoredName(net.ClientAtIndex(index));
             EventText.Multiplayer = true;
 
-            var panel = targetingBanner != null && targetingBanner.root != null ? targetingBanner.root.GetComponent<Image>() : null;
-            m_ViewBar = ViewBarView.Create(partyRoot.transform.parent as RectTransform, hud.menuButton, hud.nightLabel, panel);
+            // The strip of text above the stream (whose stream, whose turn, Watch / Back buttons) is gone (2026-11-18): the
+            // Players panel switches boards (click a name; your own brings you back) and Free For All's stream recaps are on
+            // the shop gate. m_ViewBar stays null, so UpdateViewBar does nothing.
 
             net.PlayersChanged += OnPlayersChanged;
             net.PhaseChanged += OnMatchPhaseChanged;
@@ -369,6 +377,8 @@ namespace DeckParty.UI
 
         void OnPlayerState(ulong owner, PlayerState s, IReadOnlyList<GameEvent> events)
         {
+            // Whoever's command produced this snapshot (teams: maybe your teammate).
+            ulong actor = owner;
             // Teams share a season and it comes in under whoever acted: your partner's moves are your board's, and a watched
             // team's board is the same whichever of them acted.
             if (m_Net != null && m_Net.IsTeamMode)
@@ -377,19 +387,26 @@ namespace DeckParty.UI
                 else if (m_Net.SameTeam(owner, m_ViewId)) owner = m_ViewId;
             }
             bool own = owner == LocalId;
+            // Your teammate acted on your shared season (2026-11-18 fix): your board updates, but what you have open (the
+            // Remove a Viewer picker, a target choice...) stays open, and their purchases and actives don't play your feedback.
+            bool partner = own && actor != LocalId && m_Net != null && m_Net.SameTeam(actor, LocalId);
+            // Recaps are kept per team (both players' names and streamers on one column), so key them by the team.
+            ulong recapKey = RecapKey(owner);
             RecordRound(owner, s, events);
-            TrackRecap(owner, s, events);
-            // Couch play: the log names whose turn it is ("Player 1 earns...").
-            var lines = Describe(s, events, own ? CouchWho : NameOf(owner));
+            TrackRecap(recapKey, s, events);
+            // Couch play: the log names whose turn it is ("Player 1 earns..."). Teams: your teammate's moves name them.
+            var lines = Describe(s, events, partner ? NameOf(actor) : own ? CouchWho : NameOf(owner));
             Remember(owner, lines);
             bool switched = false;
 
             if (own)
             {
-                m_AttractionSubmitted = false;
+                if (!partner) m_AttractionSubmitted = false;
                 if (m_TargetActor >= 0 && (s.Phase != GamePhase.Party || PartyEngine.GetAbilityBlocker(s, m_TargetActor) != null)) CancelTargeting(false);
                 if (m_AttractionChoice >= 0 && (!s.AttractionPending || !s.AttractionCandidates.Contains(m_AttractionChoice))) CancelTargeting(false);
-                if (picker.IsOpen && s.Phase != GamePhase.Party) picker.Close();
+                // Only a change of phase (the stream ended, the next one began) closes the picker; your teammate buying,
+                // removing or using an active in the same shop doesn't.
+                if (picker.IsOpen && s.Phase != picker.OpenedPhase) picker.Close();
 
                 // Synchronized / Race: when your next night starts, come back from watching someone else.
                 if (!ViewingOwn && !TakingTurns && HasEvent(events, GameEventType.NightStarted))
@@ -413,7 +430,7 @@ namespace DeckParty.UI
             if (TryStartScoring(s, events)) return;
 
             ApplyVenue(false);
-            ProcessEvents(s, events, own ? null : NameOf(owner));
+            ProcessEvents(s, events, own ? null : NameOf(owner), partner ? NameOf(actor) : null);
             RenderAll();
             PlayCardAnimations(s, events);
         }
@@ -589,10 +606,12 @@ namespace DeckParty.UI
             // Community icons show live scores for the stream on screen.
             CommunityVisuals.LiveState = s;
             // The menu bar shows the on-screen streamer's platform logo (the only thing that changes per platform).
-            SiteTheme.Apply(StreamerVisuals.Platform(s.Streamer));
+            SiteTheme.Apply(StreamerVisuals.Platform(s.StreamerOf(ViewMember)));
 
             // Teams: your queue and Sub Cap on your own team's board (member 0's when watching another team).
             int member = ViewMember;
+            // Outside a scoring sequence the menu bar always shows the real totals (a sequence cut short leaves no running count).
+            hud.EndTally();
             hud.Render(s, member);
 
             bool party = s.Phase == GamePhase.Party;
@@ -624,13 +643,13 @@ namespace DeckParty.UI
             background.SetEnergy(party ? s.Occupancy / (float)Mathf.Max(1, s.Capacity) : 0.2f);
             background.SetRisk(party ? trouble / (float)(riskLimit - 1) : 0f);
             effects.SetDanger(anxious ? 1f : 0f);
-            if (anxiety != null) anxiety.Set(anxious, s.Streamer);
+            if (anxiety != null) anxiety.Set(anxious, s.StreamerOf(member));
             if (overlay != null) overlay.Render(s);
             if (facecam != null)
             {
                 // Couch play: the facecam names whose turn it is.
                 if (IsCouch) facecam.Render(s, CouchName(m_Local.ActiveSeat), UIPalette.PlayerColor(m_Local.ActiveSeat), anxious);
-                else facecam.Render(s, m_Net != null ? NameOf(m_ViewId) : null, ColorOf(m_ViewId), anxious);
+                else facecam.Render(s, m_Net != null ? NameOf(ViewingOwn ? LocalId : m_ViewId) : null, ColorOf(ViewingOwn ? LocalId : m_ViewId), anxious, member);
             }
             if (viewerEmojis != null) viewerEmojis.Render(s, party && !m_Scoring);
 
@@ -751,7 +770,7 @@ namespace DeckParty.UI
         {
             var s = View;
             string choice = ViewingOwn ? m_VenueChoice : AppSettings.VenueAuto;
-            var venue = GameDatabase.Instance.ResolveVenue(choice, s);
+            var venue = GameDatabase.Instance.ResolveVenue(choice, s, ViewMember);
             if (venue != null) background.Apply(venue, force);
             if (chatBubble != null) chatBubble.Apply(venue);
         }
@@ -926,28 +945,32 @@ namespace DeckParty.UI
             var s = State;
             if (s == null || !CanAct) return;
             bool rivals = RivalsAvailableFor(LocalId);
-            var blocker = PartyEngine.GetPowerBlocker(s, rivals);
+            // Teams: your own streamer's active (each member plays their own since 2026-11-18).
+            var blocker = PartyEngine.GetPowerBlocker(s, rivals, m_Member);
             if (blocker != null)
             {
                 OnCommandRejected(blocker);
                 return;
             }
 
-            if (!s.StreamerInfo.NeedsRival || m_Net == null)
+            if (!s.StreamerInfoOf(m_Member).NeedsRival || m_Net == null)
             {
                 Submit(GameCommand.UsePower());
                 return;
             }
 
-            // Rival powers: choose who to hit when there's more than one rival.
+            // Rival powers: choose who to hit when there's more than one rival (a team counts once, and never your own).
             var options = new List<string>();
             var indexes = new List<int>();
             var players = m_Net.PlayersSnapshot();
+            var teamsListed = new HashSet<int>();
             for (int i = 0; i < players.Count; i++)
             {
                 var p = players[i];
-                if (p.ClientId == LocalId || !p.Connected || p.Finished) continue;
-                options.Add(Loc.Get("power.rival_option", "player", p.DisplayName, "influence", p.Influence));
+                if (p.ClientId == LocalId || !p.Connected || p.Finished || m_Net.SameTeam(p.ClientId, LocalId)) continue;
+                if (m_Net.IsTeamMode && !teamsListed.Add(p.Team)) continue;
+                string who = m_Net.IsTeamMode ? m_Net.TeamName(p.Team) : p.DisplayName.ToString();
+                options.Add(Loc.Get("power.rival_option", "player", who, "influence", p.Influence));
                 indexes.Add(i);
             }
             if (options.Count <= 1)
@@ -956,7 +979,7 @@ namespace DeckParty.UI
                 return;
             }
             m_ChoosingRival = true;
-            ModalDialog.ShowChoice(Loc.Get("power.pick_rival_title", "power", StreamerVisuals.PowerName(s.Streamer)), Loc.Get("power.pick_rival_body"), options,
+            ModalDialog.ShowChoice(Loc.Get("power.pick_rival_title", "power", StreamerVisuals.PowerName(s.StreamerOf(m_Member))), Loc.Get("power.pick_rival_body"), options,
                 pick =>
                 {
                     m_ChoosingRival = false;
@@ -1092,6 +1115,12 @@ namespace DeckParty.UI
             switch (info.Target)
             {
                 case TargetMode.None:
+                    // Early Retirement can cost the card for good (and a click on the avatar uses it): ask first.
+                    if (info.Ability == AbilityKind.EarlyRetirement)
+                    {
+                        ConfirmEarlyRetirement(s, guest, title, () => Submit(GameCommand.UseAbility(actorId, option: option)));
+                        break;
+                    }
                     Submit(GameCommand.UseAbility(actorId, option: option));
                     break;
 
@@ -1122,6 +1151,19 @@ namespace DeckParty.UI
                     RenderAll();
                     break;
             }
+        }
+
+        /// <summary>
+        /// A Boomer's Early Retirement: what the chat would bank now and the chance the Boomer retires for good, with Retire /
+        /// Cancel. The numbers leave out random rolls (Core Fanbase scoring twice).
+        /// </summary>
+        void ConfirmEarlyRetirement(PlayerState s, GuestInstance boomer, string title, System.Action submit)
+        {
+            PartyEngine.ProjectEarlyRetirement(s, out int cash, out int influence);
+            string values = GuestVisuals.CashText(cash) + "  " + GuestVisuals.InfluenceText(influence);
+            int chance = PartyEngine.EarlyRetirementChance(s);
+            string body = Loc.Get("confirm.early_retirement_body", ("values", values), ("viewer", GuestVisuals.NameTag(boomer.Kind)), ("chance", chance));
+            ModalDialog.Show(title, body, submit, Loc.Get("confirm.early_retirement"), Loc.Get("common.cancel"));
         }
 
         /// <summary>Grumpy Cat: deny one of the next viewers, then choose who comes next.</summary>
@@ -1319,7 +1361,7 @@ namespace DeckParty.UI
         void OpenPause()
         {
             if (gameOver.IsOpen) return;
-            pauseMenu.Open(m_VenueChoice, m_Net != null);
+            pauseMenu.Open(m_VenueChoice, m_Net != null, PartyEngine.TrophiesToWin(State));
         }
 
         void ChangeVenue(string choice)

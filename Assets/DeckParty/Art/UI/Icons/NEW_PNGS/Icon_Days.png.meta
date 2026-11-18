@@ -55,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -112,10 +112,10 @@ TextureImporter:
       name: Icon_Days_0
       rect:
         serializedVersion: 2
-        x: 13
-        y: 44
-        width: 49
-        height: 15
+        x: 0
+        y: 0
+        width: 75
+        height: 75
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -126,72 +126,6 @@ TextureImporter:
       bones: []
       spriteID: 22710b99df65fccf0800000000000000
       internalID: -229869408767437022
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icon_Days_1
-      rect:
-        serializedVersion: 2
-        x: 21
-        y: 50
-        width: 7
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 789623f1ad1b30bb0800000000000000
-      internalID: -4970934013302511225
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icon_Days_2
-      rect:
-        serializedVersion: 2
-        x: 46
-        y: 50
-        width: 8
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fdabfc8653e170d60800000000000000
-      internalID: 7856281289711663839
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icon_Days_3
-      rect:
-        serializedVersion: 2
-        x: 13
-        y: 10
-        width: 49
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0e9e323bc97a385f0800000000000000
-      internalID: -755576021005899296
       vertices: []
       indices: 
       edges: []
@@ -209,7 +143,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Icon_Days_0: -229869408767437022
+      Icon_Days_1: -4970934013302511225
+      Icon_Days_2: 7856281289711663839
+      Icon_Days_3: -755576021005899296
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -153,7 +153,7 @@ namespace DeckParty.UI
             int penalty = PartyEngine.ProjectPenalty(s, influence);
             int diamonds = PartyEngine.DiamondsPresent(s);
             // Endless has no win: the button never says WIN (and doesn't flash gold).
-            m_WinReady = !s.IsEndless && diamonds >= GameRules.DiamondsToWin && endBlocker == null;
+            m_WinReady = !s.IsEndless && diamonds >= PartyEngine.TrophiesToWin(s) && endBlocker == null;
             if (endLabel != null) endLabel.text = Loc.Get(m_WinReady ? "controls.end_win" : "controls.end");
             var sub = $"{GuestVisuals.CashText(cash)}  {GuestVisuals.InfluenceText(influence)}";
             if (penalty > 0) sub += $"  <color=#FF5A5A>-{penalty}</color>";

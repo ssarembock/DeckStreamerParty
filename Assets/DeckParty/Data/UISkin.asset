@@ -108,7 +108,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconStar
     slot: 13
-    sprite: {fileID: 21300000, guid: 66fff6e1d7c5f8f42a372255876bd66a, type: 3}
+    sprite: {fileID: 9197050228399363396, guid: 907d044914a5e3e49af9591c316d8bb6, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconGoLive
     slot: 30
-    sprite: {fileID: -2861935906149516205, guid: f96969a581cfc6b4bbf5e6a9669ca516, type: 3}
+    sprite: {fileID: -6800405758771077582, guid: 5954b06d154cfd64b9adacb73c1b2ab8, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   - name: IconNight
     slot: 32
-    sprite: {fileID: 21300000, guid: 1dbd0d328faf5ff4fbef7e73d6012f6f, type: 3}
+    sprite: {fileID: -229869408767437022, guid: 1dbd0d328faf5ff4fbef7e73d6012f6f, type: 3}
     imageType: 0
     pixelsPerUnitMultiplier: 1
     overrideColor: 0
@@ -594,6 +594,22 @@ MonoBehaviour:
       border: {r: 0, g: 0, b: 0, a: 1}
       overrideText: 1
       text: {r: 1, g: 1, b: 1, a: 1}
+    - name: Players
+      area: 10
+      overrideFill: 0
+      fill: {r: 1, g: 1, b: 1, a: 1}
+      overrideBorder: 0
+      border: {r: 0, g: 0, b: 0, a: 1}
+      overrideText: 0
+      text: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
+    - name: Emotes
+      area: 11
+      overrideFill: 0
+      fill: {r: 1, g: 1, b: 1, a: 1}
+      overrideBorder: 0
+      border: {r: 0, g: 0, b: 0, a: 1}
+      overrideText: 0
+      text: {r: 0.05490196, g: 0.05490196, b: 0.0627451, a: 1}
   textColours:
   - id: GuestCard/Visual/Anim/Content/PortraitBg/Placeholder/Initials
     label: Portrait Bg > Placeholder > Initials
@@ -2109,3 +2125,25 @@ MonoBehaviour:
     promptCorner: 0
     promptOverhang: 12
     hideCursor: 1
+  sidePanel:
+    rowColour: {r: 0.07058824, g: 0.07058824, b: 0.078431375, a: 1}
+    ownRowTint: 0.15
+    ownRowColour:
+      use: 1
+      colour: {r: 0.07058824, g: 0.07058824, b: 0.078431375, a: 1}
+    watchedRowTint: 0.3
+    watchedRowColour:
+      use: 1
+      colour: {r: 0.07058824, g: 0.07058824, b: 0.078431375, a: 1}
+    watchedOutline: 1
+    watchedOutlineColour:
+      use: 1
+      colour: {r: 0.07058824, g: 0.07058824, b: 0.078431375, a: 1}
+    rowHoverTint: {r: 0.7337255, g: 0.9505882, b: 0.94784313, a: 1}
+    rowPressedTint: {r: 0.5435294, g: 0.9152941, b: 0.91058826, a: 1}
+    emoteColour: {r: 0.07058824, g: 0.07058824, b: 0.078431375, a: 1}
+    emoteHoverTint: {r: 1, g: 0.7584314, b: 0.8407843, a: 1}
+    emotePressedTint: {r: 1, g: 0.58588237, b: 0.7270588, a: 1}
+    lockedEmoteAlpha: 0.35
+    emoteArtTint: {r: 1, g: 1, b: 1, a: 1}
+    emoteTextColour: {r: 0.96862745, g: 0.94509804, b: 1, a: 1}

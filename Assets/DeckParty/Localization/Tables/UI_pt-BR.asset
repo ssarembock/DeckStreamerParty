@@ -1233,8 +1233,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: "Elenco: <color=#FFC94A>12 espectadores aleat\xF3rios + 3 Trof\xE9us
-      aleat\xF3rios</color>, sorteados quando a temporada come\xE7a."
+    m_Localized: "Elenco: <color=#FFC94A>13 espectadores aleat\xF3rios (pelo menos
+      3 com {icon:risk}) + 3 Trof\xE9us aleat\xF3rios</color>, sorteados quando a
+      temporada come\xE7a."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514393
@@ -1264,7 +1265,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514399
     m_Localized: "At\xE9 6 jogadores. Mesmo elenco, lives separadas. Vence a primeira
-      live de 4 Trof\xE9us."
+      live de 3 Trof\xE9us."
     m_Metadata:
       m_Items: []
   - m_Id: 1582514400
@@ -1873,7 +1874,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960070
-    m_Localized: '{viewer} herdou +1 {icon:cash}'
+    m_Localized: '{viewer} herdou +{amount} {icon:cash}'
     m_Metadata:
       m_Items: []
   - m_Id: 2431125118607360
@@ -2619,7 +2620,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802218063749137
-    m_Localized: "Cada remo\xE7\xE3o custa 1 {icon:influence} a mais. Sua Audi\xEAncia
+    m_Localized: "Cada remo\xE7\xE3o custa 2 {icon:influence} a mais. Sua Audi\xEAncia
       fica com pelo menos {min} espectadores."
     m_Metadata:
       m_Items: []
@@ -2945,6 +2946,39 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6388742169911309
     m_Localized: Novo emote desbloqueado!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704609419264
+    m_Localized: '{a} e {b}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704638779392
+    m_Localized: "Audi\xEAncia: cartas de espectador ganhas ou perdidas na loja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704638779393
+    m_Localized: Ativas de streamer usadas na loja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837318049792
+    m_Localized: Aposentadoria antecipada!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409920
+    m_Localized: '{viewer} embolsa o chat inteiro'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409921
+    m_Localized: "{viewer} ainda n\xE3o quer se aposentar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409922
+    m_Localized: "O chat inteiro pontua na hora (uns {values}) e a live continua.
+      Depois {viewer} se aposenta e deixa sua audi\xEAncia de vez: {chance}% de chance."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409923
+    m_Localized: Aposentar
     m_Metadata:
       m_Items: []
   references:

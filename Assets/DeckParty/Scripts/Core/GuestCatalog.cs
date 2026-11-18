@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DeckParty.Core
 {
     /// <summary>
-    /// Every guest type: the 91 viewer cards (the 55 of the current roster plus the ones put aside, see <see cref="IsPutAside"/>)
+    /// Every guest type: the 92 viewer cards (the 56 of the current roster plus the ones put aside, see <see cref="IsPutAside"/>)
     /// and the Bot token. The English names and descriptions here are fallbacks: players see the localized text from the
     /// strings CSV (keys char.&lt;GuestType&gt;.name / .desc / .action).
     /// </summary>
@@ -152,7 +152,9 @@ namespace DeckParty.Core
         /// uses) are called Mods, and Gatekeepers are the random kickers (PR Manager, Distraught Cat). Content, Full Stream,
         /// Marketers, Shop Control and Saboteurs left the game, so nobody carries them. 2026-11-18: the Lurkers (the two
         /// Isolationists, Forever Alone, Risky Orbiter and two of the risky variants); each risky variant has its original's
-        /// communities.
+        /// communities. 2026-11-18 community updates: Boomers with an action of their own left the Boomers
+        /// (<see cref="WithoutActionBoomers"/>: Billionaire Benefactor joined the Core Fanbase, Platform Owner is only a Mod),
+        /// and the Legacy Media Mogul is a new Boomer.
         /// </summary>
         static readonly Dictionary<GuestType, CommunityMask> s_RosterCommunities = new Dictionary<GuestType, CommunityMask>
         {
@@ -186,7 +188,7 @@ namespace DeckParty.Core
             { GuestType.BotDetector, Mods },
             { GuestType.SocialMediaManager, Staff | Voyeurs },
             { GuestType.MasterOfCurrency, Boomer | Trolls },
-            { GuestType.BillionaireBenefactor, Boomer },
+            { GuestType.BillionaireBenefactor, Core },
             { GuestType.TechAdmin, Mods },
             { GuestType.OnlineJournalist, HypeMen },
             { GuestType.ExecutivePr, Staff | Boomer },
@@ -195,7 +197,7 @@ namespace DeckParty.Core
             { GuestType.ClippoTheClanker, Staff },
             { GuestType.BiggerStar, HypeMen },
             { GuestType.PrecociousYouth, GenZ },
-            { GuestType.PlatformOwner, Boomer | Mods },
+            { GuestType.PlatformOwner, Mods },
             { GuestType.MainstreamCelebrity, Boomer },
             { GuestType.SeniorMarketingManager, Staff | Millennial },
             { GuestType.Evangelist, HypeMen },
@@ -209,6 +211,8 @@ namespace DeckParty.Core
             { GuestType.PowerTrippingMod, Mods },
             { GuestType.DataBroker, Staff | Voyeurs },
             { GuestType.TabloidReporter, HypeMen },
+            // Community updates (2026-11-18): the new strong Boomer.
+            { GuestType.LegacyMediaMogul, Boomer },
         };
 
         /// <summary>The communities the put-aside cards had when they left the roster, ready for when they come back.</summary>
@@ -244,7 +248,7 @@ namespace DeckParty.Core
             { GuestType.BallerinaCappuccina, Content | Zoomer },
             { GuestType.SkibidiToilet, Trolls | Zoomer },
             { GuestType.SigmaMale, Finance | Zoomer },
-            { GuestType.Karen, Trolls | Boomer | Armchair },
+            { GuestType.Karen, Trolls | Armchair },
             { GuestType.Rickroll, Trolls | Millennial },
             { GuestType.DistractedBoyfriend, Content | Millennial },
             { GuestType.Drakeposting, Content | Millennial },
@@ -268,6 +272,34 @@ namespace DeckParty.Core
         }
 
         public static bool InCommunity(GuestType type, Community community) => Communities.Has(CommunitiesOf(type), community);
+
+        // ------------------------------------------------------------------ community actions (2026-11-18)
+
+        /// <summary>
+        /// The action a viewer's community gives a card that has none of its own (<see cref="GuestInfo.Ability"/>): every
+        /// Boomer has Early Retirement. None for everyone else.
+        /// </summary>
+        public static AbilityKind CommunityAbility(GuestType type) =>
+            InCommunity(type, Community.Boomer) ? AbilityKind.EarlyRetirement : AbilityKind.None;
+
+        /// <summary>The English name of a community's action (players see the CSV's ability.&lt;kind&gt;.name).</summary>
+        public static string CommunityAbilityName(AbilityKind kind) => kind == AbilityKind.EarlyRetirement ? "Early Retirement" : kind.ToString();
+
+        /// <summary>
+        /// The 2026-11-18 Boomers rule for a card's communities: a Boomer with an action of its own (which would hide Early
+        /// Retirement) leaves the Boomers, and if that leaves it in no community it joins the Core Fanbase, unless it's a
+        /// Trophy viewer. Other masks come back unchanged. The Game Database runs it once over your edits
+        /// (CommunityDefaultsRevision 9).
+        /// </summary>
+        public static CommunityMask WithoutActionBoomers(GuestType type, CommunityMask mask)
+        {
+            if (!IsValid(type) || !Communities.Has(mask, Community.Boomer)) return mask;
+            var info = Get(type);
+            if (info.OwnAbility == AbilityKind.None) return mask;
+            mask &= ~CommunityMask.Boomer;
+            if ((mask & Communities.ActiveMask) == CommunityMask.None && !info.IsDiamond) mask |= CommunityMask.CoreFanbase;
+            return mask;
+        }
 
         public static CommunityMask DefaultCommunitiesOf(GuestType type)
         {
@@ -564,6 +596,10 @@ namespace DeckParty.Core
                     cash: 3, influence: -1, trouble: true, ability: AbilityKind.Peek, abilityName: "Harvest Data"),
                 new GuestInfo(GuestType.TabloidReporter, "Tabloid Reporter", 11 - VariantDiscount, Tbd,
                     "Exclusive Scoop: brings two random viewers along when joining. Can push chat over the Sub Cap.", cash: 2, influence: 3, trouble: true, brings: 2),
+
+                // --- Community updates (2026-11-18): a strong Boomer (its action, Early Retirement, comes from the Boomers) ---
+                new GuestInfo(GuestType.LegacyMediaMogul, "Legacy Media Mogul", 12, Tbd,
+                    "Bought a streaming channel to stay relevant. Big numbers; its Early Retirement cashes out a whole stream.", cash: 4, influence: 3),
             };
 
             // Guard against an entry being out of order relative to the enum.

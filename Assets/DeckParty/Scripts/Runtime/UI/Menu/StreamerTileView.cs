@@ -67,16 +67,33 @@ namespace DeckParty.UI
             if (frame != null) frame.color = selected ? UIPalette.Gold : UIPalette.Border;
         }
 
+        /// <summary>Team modes: your teammate has locked in this streamer, so you can't pick it (teammates play different streamers).</summary>
+        public bool Taken { get; private set; }
+
         /// <summary>Shows or hides the lock: the tile darkens and says LOCKED (the select screen names what unlocks it).</summary>
         public void SetLocked(bool locked)
         {
             Locked = locked;
-            if (locked) EnsureLockOverlay();
-            if (m_LockOverlay != null) m_LockOverlay.SetActive(locked);
-            if (m_LockLabel != null) m_LockLabel.text = Loc.Get("select.locked");
-            var tint = locked ? new Color(0.45f, 0.45f, 0.45f, 1f) : Color.white;
+            RefreshOverlay();
+        }
+
+        /// <summary>Team modes (2026-11-18): shows the tile as taken by your teammate (darkened, TEAMMATE), or clears it.</summary>
+        public void SetTaken(bool taken)
+        {
+            if (Taken == taken) return;
+            Taken = taken;
+            RefreshOverlay();
+        }
+
+        void RefreshOverlay()
+        {
+            bool covered = Locked || Taken;
+            if (covered) EnsureLockOverlay();
+            if (m_LockOverlay != null) m_LockOverlay.SetActive(covered);
+            if (m_LockLabel != null) m_LockLabel.text = Loc.Get(Locked ? "select.locked" : "select.taken");
+            var tint = covered ? new Color(0.45f, 0.45f, 0.45f, 1f) : Color.white;
             if (portrait != null) portrait.color = tint;
-            if (initialsLabel != null) initialsLabel.alpha = locked ? 0.4f : 1f;
+            if (initialsLabel != null) initialsLabel.alpha = covered ? 0.4f : 1f;
         }
 
         void EnsureLockOverlay()

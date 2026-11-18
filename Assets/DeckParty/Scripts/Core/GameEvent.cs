@@ -95,7 +95,7 @@ namespace DeckParty.Core
 
         // V5 communities
         ActionRefreshed = 68,  // Mods / Marketers / Voyeurs: the action can be used again. Guest = actor, A = Community, B = extra uses left
-        BoomerRetired = 69,    // A Boomer left your Audience for good after the stream. Guest = the Boomer (no longer owned)
+        BoomerRetired = 69,    // A Boomer left your Audience for good (since 2026-11-18 after its Early Retirement, during the stream). Guest = the Boomer (no longer owned)
         Inheritance = 70,      // Millennials: a Millennial inherited from a Boomer. Guest = Millennial, A = Cash gained, B = new permanent Cash bonus (Influence until 2026-11-16)
         GenZGrowth = 71,       // Gen-Z: a viewer grew for good. Guest, A = Cash gained, B = Influence gained
         ModsShield = 72,       // Retired 2026-11-16 (the Mods' old rule): A = 1: your next stream will start with 1 Risk cancelled (B = chance %); A = 2: applied as this stream starts
@@ -118,6 +118,9 @@ namespace DeckParty.Core
         DoubleDownReady = 87,  // Double or Nothing is on for this stream. A = most extra Cash, B = Influence at stake
         DoubleDownPaid = 88,   // Double or Nothing paid off: the scored stream earned A extra Cash
         DoubleDownLost = 89,   // Double or Nothing: the stream failed and A Influence was lost
+        // --- Community updates (2026-11-18) ---
+        EarlyRetirement = 90,  // A Boomer's Early Retirement scored the whole chat right now (banked; the GuestScored events before it are that scoring). Guest = the Boomer, A = Cash, B = Influence
+        BoomerStayed = 91,     // Early Retirement: the Boomer didn't retire this time (the Boomers' points saved it). Guest = the Boomer, A = the chance it had to retire (%)
     }
 
     public struct GameEvent

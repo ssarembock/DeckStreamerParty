@@ -1205,13 +1205,13 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606640
     m_Localized: "Aumentar o limite custa 2 {icon:influence}, e 1 a mais a cada vez
-      (m\xE1x. 12 por vaga, at\xE9 34). Alguns espectadores cobram taxas ({icon:influence}
-      negativa). As taxas s\xE3o pagas com a sua {icon:influence}; o que faltar custa
-      <b>7 {icon:cash} por cada 1 {icon:influence}</b>.\\nO estoque da loja \xE9
-      <b>dividido entre todos os jogadores</b>: cada espectador normal tem 4 c\xF3pias
-      pra partida inteira e voc\xEA pode ter no m\xE1ximo 4 de cada; Trof\xE9us s\xE3o
-      ilimitados. Voc\xEA n\xE3o pode tirar espectadores da sua Audi\xEAncia, ent\xE3o
-      cada recrutamento muda as suas chances."
+      (sem pre\xE7o m\xE1ximo, at\xE9 40; 50 por jogador em equipe). Alguns espectadores
+      cobram taxas ({icon:influence} negativa). As taxas s\xE3o pagas com a sua {icon:influence};
+      o que faltar custa <b>7 {icon:cash} por cada 1 {icon:influence}</b>.\\nO estoque
+      da loja \xE9 <b>dividido entre todos os jogadores</b>: cada espectador normal
+      tem 4 c\xF3pias pra partida inteira e voc\xEA pode ter no m\xE1ximo 4 de cada;
+      Trof\xE9us s\xE3o ilimitados. <b>Remover um espectador</b> na loja tira uma
+      carta da sua Audi\xEAncia de vez: 3 {icon:influence}, e 2 a mais a cada vez."
     m_Metadata:
       m_Items: []
   - m_Id: 483606641
@@ -1261,15 +1261,15 @@ MonoBehaviour:
       pra ver o tabuleiro dele ao vivo. No modo <b>Em turnos</b> (o padr\xE3o) os
       jogadores fazem live um depois do outro a cada noite enquanto os outros veem
       o que ele aponta, escolhe e compra; a temporada acaba depois da primeira noite
-      em que algu\xE9m faz uma live de 4 Trof\xE9us. O host pode ativar um cron\xF4metro
+      em que algu\xE9m faz uma live de 3 Trof\xE9us. O host pode ativar um cron\xF4metro
       de turno. Em <b>Noites sincronizadas</b> todos jogam a mesma noite ao mesmo
       tempo e a pr\xF3xima come\xE7a quando todo mundo estiver pronto. Em <b>Corrida</b>
-      cada um joga no seu ritmo e a primeira live de 4 Trof\xE9us vence na hora.
+      cada um joga no seu ritmo e a primeira live de 3 Trof\xE9us vence na hora.
       Se ningu\xE9m vencer, leva quem teve mais Trof\xE9us numa live bem-sucedida."
     m_Metadata:
       m_Items: []
   - m_Id: 483606649
-    m_Localized: "<b>Vit\xF3ria:</b> 4 Trof\xE9us numa live bem-sucedida.\\n<b>\xCDcones:</b>
+    m_Localized: "<b>Vit\xF3ria:</b> {count} Trof\xE9us numa live bem-sucedida.\\n<b>\xCDcones:</b>
       {icon:cash} Grana   {icon:influence} Influ\xEAncia   {icon:risk} Risco de desplataformiza\xE7\xE3o  
       {icon:plays} Trof\xE9us (passe o mouse sobre qualquer \xEDcone pra ver o que
       \xE9).\\n<b>Adicionar espectador:</b> o pr\xF3ximo da fila entra no chat. 
@@ -1535,16 +1535,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091286
-    m_Localized: "Dinheiro velho, opini\xF5es velhas. {l1} Boomers diferentes no
-      chat d\xE3o o n\xEDvel 1 e {l2} o n\xEDvel {max}. Cada n\xEDvel tira {per}
-      {icon:influence} do aumento de limite e do poder ativo do seu streamer na pr\xF3xima
-      loja. Depois de uma live que pontua, cada Boomer no chat tem {retire}% de chance
-      de sair de vez."
+    m_Localized: "Dinheiro velho, opini\xF5es velhas. Cada Boomer tem a a\xE7\xE3o
+      <b>Aposentadoria antecipada</b>: o chat inteiro pontua na hora e a live continua;
+      depois o Boomer sai de vez. Sozinho, ele sempre se aposenta; com {first} Boomers
+      diferentes no chat, s\xF3 em {r1}% das vezes, e com {maxv}, em {top}%."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
-    m_Localized: "Agora: -{value} {icon:influence} no aumento de limite e no seu
-      poder ativo na pr\xF3xima loja."
+    m_Localized: 'Agora: a Aposentadoria antecipada aposenta o Boomer em {value}%
+      das vezes.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091288
@@ -1552,15 +1551,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091289
-    m_Localized: "Sempre online, esperando a heran\xE7a. Quando um Boomer deixa sua
-      Audi\xEAncia, um Millennial seu aleat\xF3rio ganha +1 {icon:cash} de vez: uma
-      vez por cada Millennial diferente no chat depois do primeiro (pelo menos uma
-      vez)."
+    m_Localized: "Sempre online, esperando a heran\xE7a. Sempre que um Boomer se
+      aposenta, um Millennial seu aleat\xF3rio ganha +{base} {icon:cash} pra sempre.
+      Com {first} Millennials diferentes no chat \xE9 +{per} a mais, +{per} por cada
+      um extra (+{top} com {maxv})."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
-    m_Localized: "Agora: {value} {value:plural:heran\xE7a|heran\xE7as} por cada Boomer
-      que sai."
+    m_Localized: 'Agora: um Boomer que se aposenta deixa +{value} {icon:cash} pra
+      um Millennial.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091291
@@ -1662,25 +1661,25 @@ MonoBehaviour:
       que sai leva o ponto junto. Cada ponto aumenta o b\xF4nus. Fique de olho no
       <b>Ritmo das comunidades</b> ao lado do chat e passe o mouse sobre qualquer
       \xEDcone de comunidade pra ver o que ela faz:\\n{icon:CoreFanbase} <b>Base
-      de f\xE3s</b>: 10% por ponto (at\xE9 30%) de um espectador da Base de f\xE3s
+      de f\xE3s</b>: 10% por ponto (at\xE9 50%) de um espectador da Base de f\xE3s
       pontuar duas vezes.\\n{icon:Staff} <b>Equipe</b>: +1 {icon:influence} por ponto
-      (at\xE9 3) quando a live pontua.\\n{icon:Boomer} <b>Boomers</b>: n\xEDvel 1
-      com 2 Boomers diferentes, n\xEDvel 2 com 4; na sua pr\xF3xima loja aumentar
-      o limite e o poder ativo do seu streamer custam 1 {icon:influence} a menos
-      por n\xEDvel; depois de uma live cada Boomer tem 10% de chance de deixar sua
-      audi\xEAncia de vez.\\n{icon:Millennial} <b>Millennials</b>: quando um Boomer
-      sai, um Millennial seu aleat\xF3rio ganha +1 {icon:cash} pra sempre, uma vez
-      por ponto.\\n{icon:GenZ} <b>Gera\xE7\xE3o Z</b>: depois de uma live, cada espectador
-      da Gera\xE7\xE3o Z cresce +1 {icon:cash} ou {icon:influence} pra sempre por
-      ponto (at\xE9 2).\\n{icon:Mods} <b>Mods</b>: mais uma expuls\xE3o por ponto
-      nesta live.\\n{icon:Gatekeepers} <b>Porteiros</b>: a a\xE7\xE3o de um Porteiro
-      manda 3 espectadores aleat\xF3rios de volta pra fila, 6 com 1 ponto e todos
-      os outros com 2.\\n{icon:HypeMen} <b>Animadores</b>: 1 lugar extra acima do
-      limite por ponto (at\xE9 2) pros espectadores que eles trazem.\\n{icon:Lurkers}
-      <b>Fantasmas</b>: quando a live pontua, +1 {icon:cash} por vaga livre por ponto
-      (at\xE9 2).\\n{icon:Trolls} <b>Ex\xE9rcito troll</b>: quando a live pontua,
-      +2 {icon:cash} por cada ponto de {icon:risk} nela ({icon:risk} anulado conta).\\n{icon:Voyeurs}
-      <b>Bisbilhoteiros</b>: mais uma espiada por ponto nesta live (at\xE9 1)."
+      (at\xE9 3) quando a live pontua.\\n{icon:Boomer} <b>Boomers</b>: cada Boomer
+      tem a a\xE7\xE3o <b>Aposentadoria antecipada</b>: o chat inteiro pontua na
+      hora e a live continua; depois o Boomer deixa sua audi\xEAncia de vez. Sozinho,
+      ele sempre se aposenta; com 1 ponto, s\xF3 em 50% das vezes, e com 2, em 25%.\\n{icon:Millennial}
+      <b>Millennials</b>: quando um Boomer se aposenta, um Millennial seu aleat\xF3rio
+      ganha +1 {icon:cash} pra sempre, +1 a mais por ponto (at\xE9 +3).\\n{icon:GenZ}
+      <b>Gera\xE7\xE3o Z</b>: depois de uma live, cada espectador da Gera\xE7\xE3o
+      Z cresce +1 {icon:cash} ou {icon:influence} pra sempre por ponto (at\xE9 2).\\n{icon:Mods}
+      <b>Mods</b>: mais uma expuls\xE3o por ponto nesta live.\\n{icon:Gatekeepers}
+      <b>Porteiros</b>: a a\xE7\xE3o de um Porteiro manda 3 espectadores aleat\xF3rios
+      de volta pra fila, 6 com 1 ponto e todos os outros com 2.\\n{icon:HypeMen}
+      <b>Animadores</b>: 1 lugar extra acima do limite por ponto (at\xE9 2) pros
+      espectadores que eles trazem.\\n{icon:Lurkers} <b>Fantasmas</b>: quando a live
+      pontua, +1 {icon:cash} por vaga livre por ponto (at\xE9 2).\\n{icon:Trolls}
+      <b>Ex\xE9rcito troll</b>: quando a live pontua, +2 {icon:cash} por cada ponto
+      de {icon:risk} nela ({icon:risk} anulado conta).\\n{icon:Voyeurs} <b>Bisbilhoteiros</b>:
+      mais uma espiada por ponto nesta live (at\xE9 1)."
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656
@@ -2188,6 +2187,24 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6388740555104260
     m_Localized: SUBATHON!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835627745280
+    m_Localized: Aposentadoria antecipada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835720019968
+    m_Localized: "O chat inteiro pontua na hora e a live continua. Depois este Boomer
+      se aposenta (deixa sua audi\xEAncia de vez): sozinho, sempre; com {m1} Boomers
+      diferentes no chat, em {r1}% das vezes; com {m2}, em {r2}%."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835761963008
+    m_Localized: '{viewer} se aposentou cedo: o chat pontuou {values} na hora.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835761963009
+    m_Localized: '{viewer} mudou de ideia e fica ({chance}% de chance de se aposentar).'
     m_Metadata:
       m_Items: []
   references:

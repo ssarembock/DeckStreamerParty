@@ -119,7 +119,7 @@ Two players share one computer, using the mouse and keyboard, controllers, or bo
 6. **The Players panel** lists both players and whose turn it is.
 
 **How a match ends:**
-- **4 Trophies in one stream:** if Player 1 gets there, Player 2 still plays that stream ("one last turn to match it").
+- **3 Trophies in one stream** (4 until 18 November; couch matches also default to 20 streams): if Player 1 gets there, Player 2 still plays that stream ("one last turn to match it").
   - If only one player made it, they win.
   - If both made it, it's a **draw**.
 - **After the last stream:** the best single stream wins (equal is a draw).
@@ -157,11 +157,11 @@ Couch matches aren't saved and don't change your single-player records.
 2. **The D-pad and left stick always move the selector** and can't be remapped. Only the face buttons, bumpers, triggers, View, Menu and stick presses can.
 3. **B never opens the game menu.** Only Menu does, and Menu also closes it again.
 4. **Couch play: any pad or the keyboard and mouse controls whoever's turn it is.** Pads aren't assigned to a player.
-5. **Couch ties:** both players hitting 4 Trophies in the same round is a draw, and so is an equal best stream after the last stream.
+5. **Couch ties:** both players hitting 3 Trophies in the same round is a draw, and so is an equal best stream after the last stream.
 6. **Couch timing:** a Raid or Wealth Tax lands on the other player's next stream, which starts when their turn comes round.
 7. **Quick Match / Find Games (Steam)** can still find a lobby from the other section, for example a co-op lobby while you're in Competitive. Tell me if they should be filtered.
 8. **Gamepad typing:** text fields (player name, join code) still need a keyboard.
 9. **Nothing has been run in Unity.** Please test:
    - a real pad in the menus, the stream, the shop and the dialogs;
    - remapping;
-   - a full couch match, including the last stream and a 4-Trophy finish.
+   - a full couch match, including the last stream and a 3-Trophy finish.

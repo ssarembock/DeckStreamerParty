@@ -43,6 +43,8 @@ namespace DeckParty.UI
         string m_Owner;
         PlayerState m_State;
         bool m_Rivals;
+        /// <summary>Teams: whose active this button is (each team member plays their own streamer since 2026-11-18).</summary>
+        int m_Member;
 
         void Awake()
         {
@@ -57,12 +59,12 @@ namespace DeckParty.UI
         TipText Info()
         {
             if (m_State == null) return null;
-            var type = m_State.Streamer;
+            var type = m_State.StreamerOf(m_Member);
             if (type == StreamerType.None) return TipText.Titled(Loc.Get("power.none"));
             var info = StreamerCatalog.Get(type);
             var tip = TipText.Titled(StreamerVisuals.Name(type), StreamerVisuals.KindLabel(type));
             tip.Line(TipText.Bold(GuestVisuals.Colored(StreamerVisuals.PowerName(type), UIPalette.Pink)) + "  " + StreamerVisuals.PowerDescription(type));
-            tip.Section().Line(info.IsPassive ? GuestVisuals.Colored(Loc.Get("power.passive"), UIPalette.Teal) : Status(m_State, info, m_Rivals, false));
+            tip.Section().Line(info.IsPassive ? GuestVisuals.Colored(Loc.Get("power.passive"), UIPalette.Teal) : Status(m_State, m_Member, info, m_Rivals, false));
             if (!info.IsPassive) tip.Detail(StreamerVisuals.CostRules(type));
             return tip;
         }
@@ -81,7 +83,8 @@ namespace DeckParty.UI
 
         /// <param name="owner">Whose shop this is (null for your own); switching to another player's board resets the card's pose.</param>
         /// <param name="lockReason">Why the button can't be pressed right now (watching, not your turn...), or null.</param>
-        public void Render(PlayerState s, bool rivalsAvailable, string lockReason, string owner = null)
+        /// <param name="member">Teams: whose streamer the button shows (the member on screen; 0 for a solo season).</param>
+        public void Render(PlayerState s, bool rivalsAvailable, string lockReason, string owner = null, int member = 0)
         {
             if (owner != m_Owner)
             {
@@ -91,14 +94,17 @@ namespace DeckParty.UI
 
             m_State = s;
             m_Rivals = rivalsAvailable;
-            var type = s.Streamer;
+            m_Member = s.IsTeam ? member : 0;
+            var type = s.StreamerOf(m_Member);
+            int cooldown = s.PowerCooldownOf(m_Member);
+            bool armed = s.PowerArmedOf(m_Member);
             var info = StreamerCatalog.Get(type);
             bool hasStreamer = type != StreamerType.None;
             if (emptyState != null) emptyState.SetActive(!hasStreamer);
             if (content != null) content.SetActive(hasStreamer);
-            if (cooldownBadge != null) cooldownBadge.SetActive(hasStreamer && info.IsActive && s.PowerCooldown > 0 && !s.PowerArmed);
-            if (cooldownLabel != null) cooldownLabel.text = s.PowerCooldown.ToString();
-            if (armedBadge != null) armedBadge.SetActive(hasStreamer && s.PowerArmed);
+            if (cooldownBadge != null) cooldownBadge.SetActive(hasStreamer && info.IsActive && cooldown > 0 && !armed);
+            if (cooldownLabel != null) cooldownLabel.text = cooldown.ToString();
+            if (armedBadge != null) armedBadge.SetActive(hasStreamer && armed);
             if (!hasStreamer)
             {
                 if (useButton != null) useButton.gameObject.SetActive(false);
@@ -129,17 +135,17 @@ namespace DeckParty.UI
                 return;
             }
 
-            string blocker = PartyEngine.GetPowerBlocker(s, rivalsAvailable);
-            if (statusLabel != null) statusLabel.text = Status(s, info, rivalsAvailable);
+            string blocker = PartyEngine.GetPowerBlocker(s, rivalsAvailable, m_Member);
+            if (statusLabel != null) statusLabel.text = Status(s, m_Member, info, rivalsAvailable);
 
             if (useButton == null) return;
             useButton.gameObject.SetActive(true);
-            string useWords = Loc.Get("power.use", "cost", StreamerVisuals.CostText(StreamerCatalog.Cost(s)));
+            string useWords = Loc.Get("power.use", "cost", StreamerVisuals.CostText(StreamerCatalog.Cost(s, m_Member)));
             // Boomers made the active cheaper for this shop (as they do Sub Cap upgrades).
-            if (s.ExpansionDiscount > 0 && StreamerCatalog.BaseCost(s) > 0)
+            if (s.ExpansionDiscount > 0 && StreamerCatalog.BaseCost(s, m_Member) > 0)
                 useWords += "\n" + GameIcons.Tag(Community.Boomer) + " " + Loc.Get("log.perk_boomer", "value", s.ExpansionDiscount);
             // Icon button: just the price next to the icon; the words are in the tooltip.
-            int cost = StreamerCatalog.Cost(s);
+            int cost = StreamerCatalog.Cost(s, m_Member);
             bool skinned = useButton.TryGetComponent<ShopButtonSkin>(out var useSkin);
             if (skinned)
             {
@@ -170,13 +176,14 @@ namespace DeckParty.UI
         }
 
         /// <param name="withRules">False for the pop-up, which shows the price rules on a line of their own.</param>
-        static string Status(PlayerState s, StreamerInfo info, bool rivalsAvailable, bool withRules = true)
+        static string Status(PlayerState s, int member, StreamerInfo info, bool rivalsAvailable, bool withRules = true)
         {
             if (info.NeedsRival && !rivalsAvailable) return GuestVisuals.Colored(Loc.Get("power.single_player"), UIPalette.TextDim);
-            if (s.PowerArmed) return GuestVisuals.Colored(Loc.Get("power.armed"), UIPalette.Gold);
-            if (s.PowerCooldown > 0) return GuestVisuals.Colored(Loc.Get("power.cooldown", "count", s.PowerCooldown), UIPalette.Orange);
+            if (s.PowerArmedOf(member)) return GuestVisuals.Colored(Loc.Get("power.armed"), UIPalette.Gold);
+            int cooldown = s.PowerCooldownOf(member);
+            if (cooldown > 0) return GuestVisuals.Colored(Loc.Get("power.cooldown", "count", cooldown), UIPalette.Orange);
             string ready = GuestVisuals.Colored(Loc.Get("power.ready"), UIPalette.Green);
-            return withRules ? ready + "   " + GuestVisuals.Colored(StreamerVisuals.CostRules(s.Streamer), UIPalette.TextDim) : ready;
+            return withRules ? ready + "   " + GuestVisuals.Colored(StreamerVisuals.CostRules(s.StreamerOf(member)), UIPalette.TextDim) : ready;
         }
     }
 }

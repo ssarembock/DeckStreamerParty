@@ -220,7 +220,7 @@ namespace DeckParty.Networking
         public static MatchSettings Default => new MatchSettings
         {
             ScenarioId = 0,
-            Nights = GameRules.DefaultNights,
+            Nights = GameRules.CompetitiveStreams,
             Mode = MatchMode.Turns,
             TurnSeconds = 0,
         };

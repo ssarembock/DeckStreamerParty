@@ -1250,6 +1250,15 @@ MonoBehaviour:
       junto. Pode fazer o chat passar do limite."
     m_Metadata:
       m_Items: []
+  - m_Id: 6526835229286400
+    m_Localized: "Magnata da m\xEDdia tradicional"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835241869312
+    m_Localized: "Comprou um canal pra continuar relevante. N\xFAmeros altos, e a
+      Aposentadoria antecipada dele embolsa uma live inteira."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -14,7 +14,28 @@ namespace DeckParty
 
         public static string Description(GuestType type) => Loc.RawOr($"char.{type}.desc", GuestCatalog.Get(type).Description);
 
-        public static string ActionName(GuestType type) => Loc.RawOr($"char.{type}.action", GuestCatalog.Get(type).AbilityName);
+        /// <summary>The viewer's action name: its own (char.&lt;type&gt;.action), or its community's (ability.&lt;kind&gt;.name: a Boomer's Early Retirement).</summary>
+        public static string ActionName(GuestType type)
+        {
+            var info = GuestCatalog.Get(type);
+            return info.HasCommunityAbility
+                ? Loc.RawOr($"ability.{info.Ability}.name", info.AbilityName)
+                : Loc.RawOr($"char.{type}.action", info.AbilityName);
+        }
+
+        /// <summary>
+        /// What a community's action does (tooltips), or null for a card's own action (its description says it). Early
+        /// Retirement lists its chance to retire the Boomer by how many different Boomers are in chat.
+        /// </summary>
+        public static string CommunityActionText(GuestInfo info)
+        {
+            if (info == null || !info.HasCommunityAbility) return null;
+            if (info.Ability != AbilityKind.EarlyRetirement) return null;
+            return Loc.Get("ability.EarlyRetirement.desc",
+                ("m1", Communities.MembersForPoint(Community.Boomer, 1)), ("r1", Communities.BoomerRetireChance(1)),
+                ("m2", Communities.MembersForPoint(Community.Boomer, Communities.BoomerMaxPoints)),
+                ("r2", Communities.BoomerRetireChance(Communities.BoomerMaxPoints)));
+        }
 
         /// <summary>The localized labels of an action's choices (Pepe's moods, Stonks' investments...), or null.</summary>
         public static string[] Options(GuestType type)
@@ -229,6 +250,9 @@ namespace DeckParty
                 string action = Colored(Loc.Get("card.tag.action", "action", ActionName(type)), UIPalette.Purple);
                 string kind = ActionTypeName(info.ActionCategory);
                 tip.Line(TipText.Small(kind.Length > 0 ? TipText.Join(action, TipText.Faint(kind)) : action));
+                // A community's action (a Boomer's Early Retirement) isn't in the card's own description: say what it does.
+                string communityAction = CommunityActionText(info);
+                if (communityAction != null) tip.Line(TipText.Small(communityAction));
             }
 
             // In the shop: how it scores (the three resource icons), how many you own and how many are left (the tile's "x3").

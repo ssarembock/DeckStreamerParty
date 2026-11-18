@@ -1204,12 +1204,13 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 483606640
     m_Localized: 'Raising your Sub Cap costs 2 {icon:influence}, then 1 more each
-      time (max 12 per space, up to 34). Some viewers charge fees (negative {icon:influence}).
-      Fees are paid from your {icon:influence}; any unpaid amount costs <b>7 {icon:cash}
-      per {icon:influence}</b>.\nThe shop''s stock is <b>shared by every player</b>:
-      each normal viewer has 4 copies for the whole match, and you can own at most
-      4 of each; Trophies are unlimited. You can''t remove viewers from your Audience,
-      so every recruit changes your odds.'
+      time (no maximum price; up to 40 spaces, 50 a player in a team). Some viewers
+      charge fees (negative {icon:influence}). Fees are paid from your {icon:influence};
+      any unpaid amount costs <b>7 {icon:cash} per {icon:influence}</b>.\nThe shop''s
+      stock is <b>shared by every player</b>: each normal viewer has 4 copies for
+      the whole match, and you can own at most 4 of each; Trophies are unlimited.
+      <b>Remove a Viewer</b> in the shop takes a card out of your Audience for good:
+      3 {icon:influence}, then 2 more each time.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606641
@@ -1258,15 +1259,15 @@ MonoBehaviour:
       see their board live. In <b>Take Turns</b> mode (the default) players stream
       one after another each night while everyone else watches what they point at,
       pick and buy, and the season ends after the first night someone pulls off a
-      stream with 4 Trophies. The host can set a turn timer. In <b>Synchronized Nights</b>
+      stream with 3 Trophies. The host can set a turn timer. In <b>Synchronized Nights</b>
       mode everyone plays the same night at once and the next night starts when every
       player is ready. In <b>Race</b> mode everyone plays at their own pace and the
-      first stream with 4 Trophies wins instantly. If nobody wins, the best Trophy
+      first stream with 3 Trophies wins instantly. If nobody wins, the best Trophy
       count in a successful stream takes it.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606649
-    m_Localized: <b>Win:</b> 4 {icon:plays} Trophies in one successful stream.\n<b>Icons:</b>
+    m_Localized: <b>Win:</b> {count} {icon:plays} Trophies in one successful stream.\n<b>Icons:</b>
       {icon:cash} Cash   {icon:influence} Influence   {icon:risk} Deplatform Risk  
       {icon:plays} Trophies (hover any icon to see what it is).\n<b>Add Viewer:</b>
       the next viewer in the queue joins chat.  <b>End the Stream:</b> banks everyone's
@@ -1532,15 +1533,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091286
-    m_Localized: Old money, old opinions. {l1} different Boomers in chat make level
-      1, {l2} make level {max}. Each level takes {per} {icon:influence} off Sub Cap
-      upgrades and your streamer's active in the next shop. After a scored stream,
-      each Boomer in chat has a {retire}% chance to log off for good.
+    m_Localized: 'Old money, old opinions. Every Boomer has the action <b>Early Retirement</b>:
+      the whole chat scores right now and the stream goes on, then the Boomer logs
+      off for good. Alone it always retires; with {first} different Boomers in chat
+      only {r1}% of the time, with {maxv} only {top}%.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091287
-    m_Localized: 'Now: -{value} {icon:influence} on Sub Cap upgrades and your active
-      in the next shop.'
+    m_Localized: 'Now: Early Retirement retires the Boomer {value}% of the time.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091288
@@ -1548,14 +1548,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091289
-    m_Localized: 'Very online, waiting on the inheritance. Whenever a Boomer leaves
-      your Audience, a random Millennial you own gains +1 {icon:cash} for good: once
-      for each different Millennial in chat after the first (at least once).'
+    m_Localized: Very online, waiting on the inheritance. Whenever a Boomer retires,
+      a random Millennial you own gains +{base} {icon:cash} for good. With {first}
+      different Millennials in chat it's +{per} more, +{per} for every extra one
+      (+{top} with {maxv}).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091290
-    m_Localized: 'Now: {value} {value:plural:inheritance|inheritances} per Boomer
-      who leaves.'
+    m_Localized: 'Now: a retiring Boomer leaves a Millennial +{value} {icon:cash}.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091291
@@ -1656,24 +1656,24 @@ MonoBehaviour:
       copies of the same card count once, and a viewer who leaves takes their point
       with them. Every point makes the bonus bigger. Watch the <b>Community Beats</b>
       beside the chat and hover any community icon to see exactly what it does:\n{icon:CoreFanbase}
-      <b>Core Fanbase</b>: 10% per point (up to 30%) that a Core Fanbase viewer scores
+      <b>Core Fanbase</b>: 10% per point (up to 50%) that a Core Fanbase viewer scores
       twice.\n{icon:Staff} <b>Staff</b>: +1 {icon:influence} per point (up to 3)
-      when the stream is scored.\n{icon:Boomer} <b>Boomers</b>: level 1 with 2 different
-      Boomers, level 2 with 4; Sub Cap upgrades and your streamer''s active cost
-      1 {icon:influence} less per level in your next shop; after a stream each Boomer
-      has a 10% chance to leave your Audience for good.\n{icon:Millennial} <b>Millennials</b>:
-      when a Boomer leaves, a random Millennial you own earns +1 {icon:cash} for
-      good, once per point.\n{icon:GenZ} <b>Gen-Z</b>: after a stream, each Gen-Z
-      viewer grows +1 {icon:cash} or {icon:influence} for good per point (up to 2).\n{icon:Mods}
-      <b>Mods</b>: one more removal per point this stream.\n{icon:Gatekeepers} <b>Gatekeepers</b>:
-      a Gatekeeper''s action sends 3 random viewers back to the queue, 6 at 1 point,
-      everyone else at 2.\n{icon:HypeMen} <b>Hype Men</b>: 1 spare seat past the
-      Sub Cap per point (up to 2) for the viewers they bring in.\n{icon:Lurkers}
-      <b>Lurkers</b>: when the stream is scored, +1 {icon:cash} per empty space per
-      point (up to 2).\n{icon:Trolls} <b>Troll Army</b>: when the stream is scored,
-      +2 {icon:cash} for every point of {icon:risk} in it (cancelled {icon:risk}
-      counts).\n{icon:Voyeurs} <b>Voyeurs</b>: one more peek per point this stream
-      (up to 1).'
+      when the stream is scored.\n{icon:Boomer} <b>Boomers</b>: each Boomer has the
+      action <b>Early Retirement</b>: the whole chat scores right now and the stream
+      goes on, then the Boomer leaves your Audience for good. Alone it always retires;
+      at 1 point only 50% of the time, at 2 points 25%.\n{icon:Millennial} <b>Millennials</b>:
+      when a Boomer retires, a random Millennial you own earns +1 {icon:cash} for
+      good, +1 more per point (up to +3).\n{icon:GenZ} <b>Gen-Z</b>: after a stream,
+      each Gen-Z viewer grows +1 {icon:cash} or {icon:influence} for good per point
+      (up to 2).\n{icon:Mods} <b>Mods</b>: one more removal per point this stream.\n{icon:Gatekeepers}
+      <b>Gatekeepers</b>: a Gatekeeper''s action sends 3 random viewers back to the
+      queue, 6 at 1 point, everyone else at 2.\n{icon:HypeMen} <b>Hype Men</b>: 1
+      spare seat past the Sub Cap per point (up to 2) for the viewers they bring
+      in.\n{icon:Lurkers} <b>Lurkers</b>: when the stream is scored, +1 {icon:cash}
+      per empty space per point (up to 2).\n{icon:Trolls} <b>Troll Army</b>: when
+      the stream is scored, +2 {icon:cash} for every point of {icon:risk} in it (cancelled
+      {icon:risk} counts).\n{icon:Voyeurs} <b>Voyeurs</b>: one more peek per point
+      this stream (up to 1).'
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656
@@ -2169,6 +2169,25 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6388740555104260
     m_Localized: SUBATHON!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835627745280
+    m_Localized: Early Retirement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835720019968
+    m_Localized: 'The whole chat scores right now and the stream goes on. Then this
+      Boomer retires (leaves your Audience for good): always alone, {r1}% of the
+      time with {m1} different Boomers in chat, {r2}% with {m2}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835761963008
+    m_Localized: '{viewer} took Early Retirement: the chat scored {values} right
+      away.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835761963009
+    m_Localized: '{viewer} changed their mind and stays ({chance}% chance to retire).'
     m_Metadata:
       m_Items: []
   references:

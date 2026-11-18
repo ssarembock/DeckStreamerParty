@@ -33,11 +33,70 @@ namespace DeckParty.UI
             public int Capacity;
             public int PowerUses;
             public StreamerType Streamer;
+            /// <summary>Teams: member 1's own streamer and active uses (None / 0 for a solo season).</summary>
+            public StreamerType Partner;
+            public int PartnerPowerUses;
+            /// <summary>Viewer cards in the Audience (a team: both players' together).</summary>
+            public int Audience;
 
             public static RecapSnap Of(PlayerState s) => new RecapSnap
             {
-                Phase = s.Phase, Night = s.Night, Cash = s.Cash, Influence = s.Influence, Capacity = s.Capacity, PowerUses = s.PowerUses, Streamer = s.Streamer,
+                Phase = s.Phase, Night = s.Night, Cash = s.Cash, Influence = s.Influence, Capacity = s.TotalCapacity, PowerUses = s.PowerUses, Streamer = s.Streamer,
+                Partner = s.IsTeam ? s.PartnerStreamer : StreamerType.None, PartnerPowerUses = s.IsTeam ? s.PartnerPowerUses : 0,
+                Audience = s.PermanentCount,
             };
+
+            /// <summary>Actives used by everyone in this season (a team: both players).</summary>
+            public int AllPowerUses => PowerUses + PartnerPowerUses;
+        }
+
+        /// <summary>
+        /// Teams (2026-11-18): one summary per team, filed under its member 0, whoever of the two acted, so the column shows
+        /// both players. Everyone else: their own id.
+        /// </summary>
+        ulong RecapKey(ulong clientId)
+        {
+            if (m_Net == null || !m_Net.IsTeamMode || !m_Net.TryGetPlayer(clientId, out var player)) return clientId;
+            foreach (var mate in m_Net.TeamPlayers(player.Team))
+                if (mate.Member == 0) return mate.ClientId;
+            return clientId;
+        }
+
+        /// <summary>
+        /// Multiplayer (online and couch, 2026-11-18): notices sit at the bottom of the left column, where the shop summary
+        /// appears (and just above it while it shows), instead of over the menu bar.
+        /// </summary>
+        void DockNotices()
+        {
+            var column = opponents != null ? opponents.transform.parent as RectTransform : null;
+            ToastView.DockTo(column, shopRecapPanel != null ? (RectTransform)shopRecapPanel.transform : null);
+        }
+
+        /// <summary>The summaries to show, one per player or (teams) one per team, in lobby order.</summary>
+        List<ulong> RecapUnits()
+        {
+            var units = new List<ulong>();
+            foreach (var p in m_Net.PlayersSnapshot())
+            {
+                ulong key = RecapKey(p.ClientId);
+                if (!units.Contains(key)) units.Add(key);
+            }
+            return units;
+        }
+
+        /// <summary>Teams: the two players of the team filed under <paramref name="key"/>, member 0 first.</summary>
+        bool TeamPair(ulong key, out NetPlayer first, out NetPlayer second)
+        {
+            first = default;
+            second = default;
+            if (m_Net == null || !m_Net.IsTeamMode || !m_Net.TryGetPlayer(key, out var player)) return false;
+            int found = 0;
+            foreach (var mate in m_Net.TeamPlayers(player.Team))
+            {
+                if (mate.Member == 0 && (found & 1) == 0) { first = mate; found |= 1; }
+                else if ((found & 2) == 0) { second = mate; found |= 2; }
+            }
+            return found == 3;
         }
 
         sealed class StreamRecord
@@ -53,6 +112,8 @@ namespace DeckParty.UI
             public int BotsSent;
             public readonly List<GuestType> Retired = new List<GuestType>();
             public readonly List<GuestType> Heirs = new List<GuestType>();
+            /// <summary>The Cash each heir inherited (Millennials: +1 to +3 since 2026-11-18), in the order of <see cref="Heirs"/>.</summary>
+            public readonly List<int> HeirAmounts = new List<int>();
             public bool ModsReady;
         }
 
@@ -161,7 +222,11 @@ namespace DeckParty.UI
                             if (r.Stream != null && !r.Stream.Done) r.Stream.Retired.Add(e.Guest);
                             break;
                         case GameEventType.Inheritance:
-                            if (r.Stream != null && !r.Stream.Done) r.Stream.Heirs.Add(e.Guest);
+                            if (r.Stream != null && !r.Stream.Done)
+                            {
+                                r.Stream.Heirs.Add(e.Guest);
+                                r.Stream.HeirAmounts.Add(e.A);
+                            }
                             break;
                         case GameEventType.ModsShield:
                             if (r.Stream != null && !r.Stream.Done && e.A == 1) r.Stream.ModsReady = true;
@@ -251,21 +316,22 @@ namespace DeckParty.UI
             if (kind == RecapKind.Stream && m_RecapStreamNight == night) return;
             if (kind == RecapKind.Shop && m_RecapShopNight == night) return;
 
+            // One summary per player, or per team (both teammates' moves are filed under the team).
             var owners = new List<ulong>();
-            foreach (var p in m_Net.PlayersSnapshot())
+            foreach (var key in RecapUnits())
             {
-                if (!p.Connected) continue;
-                bool has = m_Recaps.TryGetValue(p.ClientId, out var r);
+                if (!m_Net.TryGetPlayer(key, out var p) || !UnitConnected(key)) continue;
+                bool has = m_Recaps.TryGetValue(key, out var r);
                 bool done = has && (kind == RecapKind.Stream
                     ? r.Stream != null && r.Stream.Night == night && r.Stream.Done
                     : r.Shop != null && r.Shop.Night == night && r.Shop.Done);
                 if (done)
                 {
-                    owners.Add(p.ClientId);
+                    owners.Add(key);
                     continue;
                 }
                 // Out of the season (won, lost or deplatformed for good): nobody waits for them.
-                var s = m_Net.GetState(p.ClientId);
+                var s = m_Net.GetState(key);
                 if (p.Finished || (s != null && s.IsGameOver)) continue;
                 return;
             }
@@ -273,6 +339,14 @@ namespace DeckParty.UI
             if (kind == RecapKind.Stream) m_RecapStreamNight = night;
             else m_RecapShopNight = night;
             QueueRecap(kind, night, owners.ToArray());
+        }
+
+        /// <summary>Whether anyone in this summary's player or team is still connected.</summary>
+        bool UnitConnected(ulong key)
+        {
+            foreach (var p in m_Net.PlayersSnapshot())
+                if (p.Connected && RecapKey(p.ClientId) == key) return true;
+            return false;
         }
 
         void QueueRecap(RecapKind kind, int night, params ulong[] owners)
@@ -308,7 +382,7 @@ namespace DeckParty.UI
             {
                 var shops = new List<RecapEntry>();
                 foreach (var owner in pending.Owners)
-                    if (m_Recaps.TryGetValue(owner, out var shopRecord) && ShopEntry(owner, shopRecord.Shop) is RecapEntry shop) shops.Add(shop);
+                    if (m_Recaps.TryGetValue(owner, out var shopRecord) && CompactShopEntry(owner, shopRecord.Shop) is RecapEntry shop) shops.Add(shop);
                 var state = View ?? State;
                 string when = state != null ? Loc.Get("game.night_of", "night", pending.Night, "total", state.TotalNights) : null;
                 if (shops.Count > 0) shopRecapPanel.Show(Loc.Get("recap.shop_title") + (when != null ? $"  <size=70%><color=#53535F>{when}</color></size>" : string.Empty), shops);
@@ -369,24 +443,44 @@ namespace DeckParty.UI
 
         // ------------------------------------------------------------------ the columns
 
-        RecapEntry BaseEntry(ulong owner, StreamerType streamer)
+        /// <summary>
+        /// A column's head: the player's streamer, name and streamer name. Teams (2026-11-18): both players' streamers side by
+        /// side and "Ana and Bo" (member 0 first, each in their colour), whoever of them acted.
+        /// </summary>
+        RecapEntry BaseEntry(ulong owner, RecapSnap snap)
         {
             bool multiplayer = m_Net != null;
-            var name = multiplayer ? NameOf(owner) : Loc.Get("common.you");
-            return new RecapEntry
+            var streamer = snap.Streamer;
+            var entry = new RecapEntry
             {
                 portrait = StreamerVisuals.Portrait(streamer),
-                color = streamer == StreamerType.None ? UIPalette.Purple : StreamerVisuals.Color(streamer),
+                color = StreamerColour(streamer),
                 initials = StreamerVisuals.Initials(streamer),
-                name = multiplayer ? GuestVisuals.Colored(name, ColorOf(owner)) : name,
                 streamer = StreamerVisuals.Name(streamer),
             };
+            if (TeamPair(owner, out var first, out var second))
+            {
+                var partner = snap.Partner;
+                entry.name = Loc.Get("recap.team_names", "a", GuestVisuals.Colored(NameOf(first.ClientId), ColorOf(first.ClientId)),
+                    "b", GuestVisuals.Colored(NameOf(second.ClientId), ColorOf(second.ClientId)));
+                entry.hasSecond = true;
+                entry.portrait2 = StreamerVisuals.Portrait(partner);
+                entry.color2 = StreamerColour(partner);
+                entry.initials2 = StreamerVisuals.Initials(partner);
+                entry.streamer = Loc.Get("recap.team_names", "a", StreamerVisuals.Name(streamer), "b", StreamerVisuals.Name(partner));
+                return entry;
+            }
+            var name = multiplayer ? NameOf(owner) : Loc.Get("common.you");
+            entry.name = multiplayer ? GuestVisuals.Colored(name, ColorOf(owner)) : name;
+            return entry;
         }
+
+        static Color StreamerColour(StreamerType streamer) => streamer == StreamerType.None ? UIPalette.Purple : StreamerVisuals.Color(streamer);
 
         RecapEntry StreamEntry(ulong owner, StreamRecord stream)
         {
             if (stream == null || !stream.Done) return null;
-            var entry = BaseEntry(owner, stream.End.Streamer);
+            var entry = BaseEntry(owner, stream.End);
             entry.headline = OutcomeTitle(stream.Outcome, out var color);
             entry.headline = GuestVisuals.Colored(entry.headline, color);
 
@@ -400,8 +494,12 @@ namespace DeckParty.UI
             if (stream.BotsSent > 0) sb.Append(GameIcons.Tag(Community.Bots)).Append(' ').Append(Loc.Get("recap.bots_sent", "count", stream.BotsSent)).Append('\n');
             foreach (var boomer in stream.Retired)
                 sb.Append(GameIcons.Tag(Community.Boomer)).Append(' ').Append(Loc.Get("recap.boomer_retired", "viewer", GuestVisuals.NameTag(boomer))).Append('\n');
-            foreach (var heir in stream.Heirs)
-                sb.Append(GameIcons.Tag(Community.Millennial)).Append(' ').Append(Loc.Get("recap.inheritance", "viewer", GuestVisuals.NameTag(heir))).Append('\n');
+            for (int h = 0; h < stream.Heirs.Count; h++)
+            {
+                int amount = h < stream.HeirAmounts.Count ? stream.HeirAmounts[h] : Communities.InheritanceCash;
+                sb.Append(GameIcons.Tag(Community.Millennial)).Append(' ')
+                    .Append(Loc.Get("recap.inheritance", "viewer", GuestVisuals.NameTag(stream.Heirs[h]), "amount", amount)).Append('\n');
+            }
             if (stream.ModsReady) sb.Append(GameIcons.Tag(Community.Mods)).Append(' ').Append(Loc.Get("game.mods_ready")).Append('\n');
             entry.body = sb.ToString().TrimEnd('\n');
             return entry;
@@ -410,7 +508,7 @@ namespace DeckParty.UI
         RecapEntry ShopEntry(ulong owner, ShopRecord shop)
         {
             if (shop == null || !shop.Done) return null;
-            var entry = BaseEntry(owner, shop.End.Streamer);
+            var entry = BaseEntry(owner, shop.End);
             var sb = new StringBuilder();
 
             // Recruits, grouped: "+ Loyal Fan ×2".
@@ -444,14 +542,43 @@ namespace DeckParty.UI
             foreach (var removed in shop.Removed) sb.Append(Loc.Get("recap.removed", "viewer", GuestVisuals.DisplayName(removed))).Append('\n');
             int raised = shop.End.Capacity - shop.Start.Capacity;
             if (raised > 0) sb.Append(Loc.Get("recap.sub_cap", ("from", shop.Start.Capacity), ("to", shop.End.Capacity), ("count", raised))).Append('\n');
-            int powers = Mathf.Max(shop.PowersUsed, shop.End.PowerUses - shop.Start.PowerUses);
+            // Each streamer's active (a team has two streamers since 2026-11-18).
+            int powers = shop.End.PowerUses - shop.Start.PowerUses;
+            int partnerPowers = shop.End.PartnerPowerUses - shop.Start.PartnerPowerUses;
+            if (shop.End.Partner == StreamerType.None) powers = Mathf.Max(shop.PowersUsed, powers);
             if (powers > 0 && shop.End.Streamer != StreamerType.None)
                 sb.Append(Loc.Get("recap.active_used", "power", StreamerVisuals.PowerName(shop.End.Streamer), "count", powers)).Append('\n');
+            if (partnerPowers > 0 && shop.End.Partner != StreamerType.None)
+                sb.Append(Loc.Get("recap.active_used", "power", StreamerVisuals.PowerName(shop.End.Partner), "count", partnerPowers)).Append('\n');
 
             Line(sb, GameIcons.Tag(ResourceIcon.Cash), Signed(shop.End.Cash - shop.Start.Cash), Loc.Get("term.cash_banked"));
             Line(sb, GameIcons.Tag(ResourceIcon.Influence), Signed(shop.End.Influence - shop.Start.Influence), Loc.Get("term.influence"));
             entry.body = sb.ToString().TrimEnd('\n');
             return entry;
+        }
+
+        /// <summary>
+        /// The multiplayer shop summary panel (2026-11-18): per player or team, just their name and four icons with what
+        /// changed: Audience (viewer cards gained or lost), Cash, Influence, and actives used.
+        /// </summary>
+        RecapEntry CompactShopEntry(ulong owner, ShopRecord shop)
+        {
+            if (shop == null || !shop.Done) return null;
+            var entry = BaseEntry(owner, shop.End);
+            entry.streamer = null;
+            int actives = Mathf.Max(shop.End.Partner == StreamerType.None ? shop.PowersUsed : 0, shop.End.AllPowerUses - shop.Start.AllPowerUses);
+            entry.body = CompactChange(GameIcons.AudienceTag, shop.End.Audience - shop.Start.Audience, true) + "   " +
+                         CompactChange(GameIcons.Tag(ResourceIcon.Cash), shop.End.Cash - shop.Start.Cash, true) + "   " +
+                         CompactChange(GameIcons.Tag(ResourceIcon.Influence), shop.End.Influence - shop.Start.Influence, true) + "   " +
+                         CompactChange(GameIcons.ActiveTag, actives, false);
+            return entry;
+        }
+
+        /// <summary>"[icon] +2" kept together on one line; nothing changed shows a grey 0.</summary>
+        static string CompactChange(string icon, int value, bool signed)
+        {
+            string number = value == 0 ? "<color=#8A8A96>0</color>" : signed ? Signed(value) : value.ToString();
+            return "<nobr><size=125%>" + icon + "</size> <b>" + number + "</b></nobr>";
         }
 
         static void Line(StringBuilder sb, string icon, string value, string label)

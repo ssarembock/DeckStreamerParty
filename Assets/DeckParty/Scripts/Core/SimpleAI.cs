@@ -80,7 +80,7 @@ namespace DeckParty.Core
             double chance = 0.08 + 0.35 * fill * fill;
             if (risk >= PartyEngine.RiskLimit(s) - 1) chance += 0.55;
             else if (risk > 0) chance += 0.1 * risk;
-            if (PartyEngine.DiamondsPresent(s) >= GameRules.DiamondsToWin) chance = 1.0;
+            if (PartyEngine.DiamondsPresent(s) >= PartyEngine.TrophiesToWin(s)) chance = 1.0;
             return Math.Min(1.0, chance);
         }
 
@@ -89,7 +89,7 @@ namespace DeckParty.Core
         {
             var actors = new List<int>();
             foreach (var id in s.House)
-                if (PartyEngine.GetAbilityBlocker(s, id) == null) actors.Add(id);
+                if (PartyEngine.GetAbilityBlocker(s, id) == null && !WastesEarlyRetirement(s, id)) actors.Add(id);
 
             for (int attempt = 0; attempt < 3 && actors.Count > 0; attempt++)
             {
@@ -100,6 +100,19 @@ namespace DeckParty.Core
                 if (command.HasValue && PartyEngine.ValidateCommand(s, command.Value) == null) return command;
             }
             return null;
+        }
+
+        /// <summary>
+        /// A Boomer's Early Retirement the AI leaves alone: on a Trophy viewer (it could lose the card for good), or while the
+        /// chat would bank little (under half the chat's seats in Cash).
+        /// </summary>
+        static bool WastesEarlyRetirement(PlayerState s, int actorId)
+        {
+            var actor = s.Find(actorId);
+            if (actor == null || actor.Info.Ability != AbilityKind.EarlyRetirement) return false;
+            if (actor.Info.IsDiamond) return true;
+            PartyEngine.ProjectEarlyRetirement(s, out int cash, out _);
+            return cash < Math.Max(4, s.Capacity / 2);
         }
 
         GameCommand? BuildAction(PlayerState s, int actorId)

@@ -38,7 +38,9 @@ namespace DeckParty.Core
         /// <summary>Preset character sets (ids 0-4; 5 and 6 are Random Mix and Open Lobby).</summary>
         public const int PresetCount = 5;
 
-        const int RandomRegularGuests = 12;
+        /// <summary>Random Mix: regular viewers drawn (13 since 2026-11-18, it was 12), at least <see cref="RandomRiskyGuests"/> of them carrying Risk.</summary>
+        const int RandomRegularGuests = 13;
+        const int RandomRiskyGuests = 3;
         const int RandomDiamondGuests = 3;
 
         // V5: five preset sets, one per Party House scenario (Alien Invitation, High or Low, Best Wishes, Money Management,
@@ -50,6 +52,10 @@ namespace DeckParty.Core
         // new communities: Going Live gives the Precocious Youth a Gen-Z partner, Clickbait Roulette and Brand Deal Wishlist
         // get the Boomer Troll, Brand Deal Wishlist a third Hype Man, Monetization Meeting a second Boomer, and Algorithm
         // Magic is about kicking (Mods, Gatekeepers) and the empty seats it leaves (both Isolationists, Forever Alone).
+        // 2026-11-18: one more viewer carrying Risk in each set, picked for its theme. Risky variants whose original is already
+        // in a set are left out (they share its art for now): Going Live gets the Data Broker (cheap staff), Clickbait Roulette
+        // the Tabloid Reporter, Brand Deal Wishlist a Paid Sponsorship, Monetization Meeting a Mildly Risky Collaborator (a
+        // Boomer whose log-off feeds the Millennials) and Algorithm Magic, which had no Risk at all, the Risky Orbiter (Lurkers).
         // Ids are kept (progress is stored per id); the old sets 7-9 are gone.
         static readonly ScenarioDefinition[] s_All =
         {
@@ -60,6 +66,7 @@ namespace DeckParty.Core
                     GuestType.Producer, GuestType.ChatAdmin, GuestType.Normie, GuestType.JuniorPrManager, GuestType.PaidSponsorship,
                     GuestType.MildlyRiskyCollaborator, GuestType.MarketingManager, GuestType.PromoCodeUser, GuestType.DancingJen,
                     GuestType.BillionaireBenefactor, GuestType.InfluentialTroll, GuestType.Whale,
+                    GuestType.DataBroker,
                     GuestType.PrecociousYouth,
                 }),
             new ScenarioDefinition(1, "Clickbait Roulette", "Big risks, bigger numbers",
@@ -69,6 +76,7 @@ namespace DeckParty.Core
                     GuestType.RiskyOrbiter, GuestType.DieHardFan, GuestType.SocialMediaManager, GuestType.JuniorPrManager, GuestType.CybersecurityEngineer,
                     GuestType.MasterOfCurrency, GuestType.GenZWithJob, GuestType.BoomerTroll, GuestType.HighlyRiskyCollaborator,
                     GuestType.HateWatcher, GuestType.InfluentialTroll, GuestType.Doomer,
+                    GuestType.TabloidReporter,
                     GuestType.MainstreamCelebrity, GuestType.BiggerStar,
                 }),
             new ScenarioDefinition(2, "Brand Deal Wishlist", "Be careful what you wish for",
@@ -78,6 +86,7 @@ namespace DeckParty.Core
                     GuestType.MildlyRiskyCollaborator, GuestType.Affiliate, GuestType.ChatArbitrator, GuestType.PrManager, GuestType.CryptoEnthusiast,
                     GuestType.BingeBunny, GuestType.OnlineJournalist, GuestType.ExecutivePr, GuestType.Normie,
                     GuestType.GenerousDonator, GuestType.BoomerTroll, GuestType.DegenDog,
+                    GuestType.PaidSponsorship,
                     GuestType.Evangelist, GuestType.BigBoomer,
                 }),
             new ScenarioDefinition(3, "Monetization Meeting", "Every cent accounted for",
@@ -87,6 +96,7 @@ namespace DeckParty.Core
                     GuestType.SocialMediaManager, GuestType.PrManager, GuestType.ChatAdmin, GuestType.Affiliate, GuestType.CryptoEnthusiast,
                     GuestType.CybersecurityEngineer, GuestType.DieHardFan, GuestType.AccountManager, GuestType.PaidSponsorship,
                     GuestType.HighlyRiskyCollaborator, GuestType.BillionaireIsolationist, GuestType.Whale,
+                    GuestType.MildlyRiskyCollaborator,
                     GuestType.ClippoTheClanker, GuestType.SeniorMarketingManager,
                 }),
             new ScenarioDefinition(4, "Algorithm Magic", "One perfect stream",
@@ -96,10 +106,11 @@ namespace DeckParty.Core
                     GuestType.BillionaireBenefactor, GuestType.OnlineJournalist, GuestType.GenerousDonator, GuestType.BotDetector, GuestType.InfluentialIsolationist,
                     GuestType.BillionaireIsolationist, GuestType.PrManager, GuestType.DieHardFan, GuestType.ChatAdmin,
                     GuestType.TechAdmin, GuestType.DistraughtCat, GuestType.ForeverAlone,
+                    GuestType.RiskyOrbiter,
                     GuestType.PlatformOwner, GuestType.InternetStarpower,
                 }),
             new ScenarioDefinition(RandomScenarioId, "Random Mix", "A fresh character set every time",
-                "Loyal Fans, Fish, twelve random viewers and three random Trophy viewers. Win five in a row to earn the Cherry.",
+                "Loyal Fans, Fish, thirteen random viewers (at least three carrying Risk) and three random Trophy viewers. Win five in a row to earn the Cherry.",
                 "metaverse", null, isRandom: true),
             new ScenarioDefinition(SandboxScenarioId, "Open Lobby", "Everyone's invited (sandbox)",
                 "Every recruitable guest is in the shop. Great for experimenting; does not count toward progress.",
@@ -108,7 +119,7 @@ namespace DeckParty.Core
 
         /// <summary>
         /// Sold in every shop, whatever the set (2026-11-16): the two buyable starting viewers, like the original game's Old
-        /// Friend and Rich Pal. Random Mix sells them on top of its twelve random viewers.
+        /// Friend and Rich Pal. Random Mix sells them on top of its thirteen random viewers.
         /// </summary>
         public static readonly GuestType[] AlwaysInShop = { GuestType.LoyalFan, GuestType.Fish };
 
@@ -146,7 +157,12 @@ namespace DeckParty.Core
                 }
 
                 ulong rng = DeterministicRandom.Seed(seed ^ 0x5EEDu);
-                PickInto(regulars, RandomRegularGuests, shop, ref rng);
+                // At least three viewers carrying Risk, then the rest from everyone left (more risky ones can still come up).
+                var risky = regulars.FindAll(type => GuestCatalog.Get(type).Trouble);
+                int before = shop.Count;
+                PickInto(risky, RandomRiskyGuests, shop, ref rng);
+                for (int i = before; i < shop.Count; i++) regulars.Remove(shop[i]);
+                PickInto(regulars, RandomRegularGuests - (shop.Count - before), shop, ref rng);
                 PickInto(diamonds, RandomDiamondGuests, shop, ref rng);
             }
             else

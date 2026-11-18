@@ -189,6 +189,10 @@ namespace DeckParty
                  "(selector frame, button glyphs) is in the Controller entries below.")]
         public PadLook pad = new PadLook();
 
+        [Tooltip("Multiplayer's left column (2026-11-18): the player rows (normal, yours, the stream on screen, hover) and the " +
+                 "emote buttons (background, hover, locked, picture tint). The cards around them are Site Colours > Players and Emotes.")]
+        public SidePanelLook sidePanel = new SidePanelLook();
+
         [NonSerialized] Dictionary<SkinSlot, SkinEntry> m_Lookup;
         [NonSerialized] Dictionary<string, TextColourEntry> m_TextLookup;
 
@@ -251,6 +255,7 @@ namespace DeckParty
             if (textColours == null) textColours = new List<TextColourEntry>();
             if (shop == null) shop = new ShopLook();
             shop.EnsureAll();
+            if (sidePanel == null) sidePanel = new SidePanelLook();
             m_Lookup = null;
             m_TextLookup = null;
         }

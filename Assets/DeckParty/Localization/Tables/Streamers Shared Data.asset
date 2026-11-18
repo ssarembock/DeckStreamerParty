@@ -567,6 +567,14 @@ MonoBehaviour:
     m_Key: select.locked_requirement
     m_Metadata:
       m_Items: []
+  - m_Id: 6478701950230528
+    m_Key: select.taken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478702021533696
+    m_Key: select.taken_by
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

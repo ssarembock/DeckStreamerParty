@@ -496,7 +496,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802215475863552
-    m_Localized: Pick your team's streamer. Your teammate plays it too.
+    m_Localized: 'Pick your own streamer. Your teammate picks theirs: you can''t
+      both play the same one.'
     m_Metadata:
       m_Items: []
   - m_Id: 5802215475863553
@@ -576,6 +577,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6388739582025729
     m_Localized: Locked. {requirement}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478701950230528
+    m_Localized: TEAMMATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478702021533696
+    m_Localized: Your teammate {player} picked this streamer. Choose another.
     m_Metadata:
       m_Items: []
   references:

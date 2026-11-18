@@ -22,12 +22,16 @@ namespace DeckParty.Core
 
         // ================================================================== setup
 
-        /// <param name="mode">Classic (win with 4 Trophies) or Endless (last as many streams as you can).</param>
+        /// <param name="mode">Classic (win with <paramref name="trophiesToWin"/> Trophies) or Endless (last as many streams as you can).</param>
         /// <param name="members">1, or 2 for a team (2v2, co-op): each member gets the starting Audience and their own Sub Cap.</param>
+        /// <param name="trophiesToWin">Trophies in one scored stream that win: 4 in single player, 3 in competitive multiplayer.</param>
+        /// <param name="partnerStreamer">Teams: member 1's own streamer (member 0 plays <paramref name="streamer"/>). Never the same one.</param>
         public static PlayerState CreateGame(int scenarioId, uint seed, int nights = GameRules.DefaultNights, StreamerType streamer = StreamerType.None,
-            GameMode mode = GameMode.Classic, int members = 1)
+            GameMode mode = GameMode.Classic, int members = 1, int trophiesToWin = GameRules.DiamondsToWin,
+            StreamerType partnerStreamer = StreamerType.None)
         {
             if (!StreamerCatalog.IsValid(streamer)) streamer = StreamerType.None;
+            if (!StreamerCatalog.IsValid(partnerStreamer) || partnerStreamer == streamer) partnerStreamer = StreamerType.None;
             members = Math.Max(1, Math.Min(GameRules.TeamSize, members));
             var s = new PlayerState
             {
@@ -41,6 +45,8 @@ namespace DeckParty.Core
                 Streamer = streamer,
                 Mode = mode,
                 Members = members,
+                TrophiesToWin = Math.Max(1, trophiesToWin),
+                PartnerStreamer = members > 1 ? partnerStreamer : StreamerType.None,
             };
             s.Shop.AddRange(ScenarioCatalog.BuildShop(scenarioId, seed));
 
@@ -51,6 +57,15 @@ namespace DeckParty.Core
             BeginParty(s, null);
             return s;
         }
+
+        /// <summary>Trophies in one scored stream that win this season (4 in single player, 3 in competitive multiplayer).</summary>
+        public static int TrophiesToWin(PlayerState s) => s != null && s.TrophiesToWin > 0 ? s.TrophiesToWin : GameRules.DiamondsToWin;
+
+        /// <summary>
+        /// The highest Sub Cap one player's chat can reach in this season: 40 solo (4 rows of 10), 50 a player in a team (5 rows
+        /// of 10 on each side; 2026-11-18 UI updates). The Hype Men's spare seats come on top, in one extra row.
+        /// </summary>
+        public static int MaxCapacity(PlayerState s) => GameRules.MaxCapacityFor(s != null && s.IsTeam);
 
         /// <summary>How many copies of this type every season starts with.</summary>
         public static int StartingCopies(GuestType type)
@@ -313,9 +328,10 @@ namespace DeckParty.Core
                 int influence = baseInfluence;
 
                 ApplyPassive(g, i, ctx, ref cash, ref influence);
-                cash += s.PartyViewerBonus;
-                // Bark at Chat (IRunFast, armed for this stream): viewers carrying Risk earn extra.
-                if (s.PartyBark > 0 && GuestTrouble(s, g) > 0) cash += s.PartyBark;
+                // Giveaway (Mr Shark) and Bark at Chat (IRunFast), armed for this stream. In a team they pay the viewers on
+                // the side of the player whose streamer it is (each member plays their own streamer since 2026-11-18).
+                if (s.PartyViewerBonus > 0 && s.OnSideOf(g, StreamerType.MrShark)) cash += s.PartyViewerBonus;
+                if (s.PartyBark > 0 && GuestTrouble(s, g) > 0 && s.OnSideOf(g, StreamerType.IRunFast)) cash += s.PartyBark;
                 cash += g.PartyCash;
                 influence += g.PartyInfluence;
                 if (g.Infected) cash += InfectionCash;
@@ -533,6 +549,29 @@ namespace DeckParty.Core
             influence += communityInfluence + Communities.StaffInfluence(scores[(int)Community.Staff]) + CheckoutCodesNow(s);
         }
 
+        /// <summary>
+        /// What a Boomer's Early Retirement would bank right now (before fee shortfalls): the chat's viewers and the
+        /// stream-wide community rewards (Staff, Troll Army, Lurkers). The pot, investments, Double or Nothing and Checkout
+        /// Codes wait for the end of the stream, and random rolls (Core Fanbase scoring twice) aren't included.
+        /// </summary>
+        public static void ProjectEarlyRetirement(PlayerState s, out int cash, out int influence)
+        {
+            cash = 0;
+            influence = 0;
+            ScoreHouse(s, out var cashes, out var influences);
+            for (int i = 0; i < cashes.Length; i++)
+            {
+                cash += cashes[i];
+                influence += influences[i];
+            }
+            var scores = CommunityScores(s);
+            cash += TrollArmyCash(s, scores) + LurkersCash(s, scores);
+            influence += Communities.StaffInfluence(scores[(int)Community.Staff]);
+        }
+
+        /// <summary>The chance (%) that a Boomer's Early Retirement retires it right now, from the Boomers' points in chat.</summary>
+        public static int EarlyRetirementChance(PlayerState s) => Communities.BoomerRetireChance(CommunityScore(s, Community.Boomer));
+
         /// <summary>Troll Army's Cash if the stream were scored now: +2 per point of Risk, cancelled Risk included.</summary>
         public static int TrollArmyCash(PlayerState s, int[] scores = null)
         {
@@ -631,9 +670,23 @@ namespace DeckParty.Core
 
         // ================================================================== queries: Hype Men's spare seats
 
-        /// <summary>Hype Men: spare seats past the Sub Cap right now (1 per point, at most 2), for viewers a Hype Man brings in.</summary>
-        public static int HypeSeats(PlayerState s) =>
-            s.Phase == GamePhase.Party ? Communities.HypeSeats(CommunityScore(s, Community.HypeMen)) : 0;
+        /// <summary>
+        /// Hype Men: spare seats past the Sub Cap right now (1 per point, at most 2), for viewers a Hype Man brings in. Since
+        /// the 2026-11-18 UI updates they never count against the Sub Cap's limit (<see cref="MaxCapacity"/>, 40 or 50 a
+        /// player in a team): a chat at or near it shows them in one extra row.
+        /// </summary>
+        public static int HypeSeats(PlayerState s)
+        {
+            if (s.Phase != GamePhase.Party) return 0;
+            return Math.Min(Communities.HypeSeats(CommunityScore(s, Community.HypeMen)), GameRules.HypeRowSeats);
+        }
+
+        /// <summary>
+        /// Whether this side of the chat (a solo season: the whole chat) can take one more spare seat: the spare seats have
+        /// their own row past the Sub Cap's limit (<see cref="GameRules.HypeRowSeats"/>), so only that row can run out.
+        /// </summary>
+        public static bool HypeRoom(PlayerState s, int side) =>
+            s.CapacityOf(side) + HypeSeated(s, s.IsTeam ? side : -1) < MaxCapacity(s) + GameRules.HypeRowSeats;
 
         /// <summary>Viewers in chat sitting in a Hype Men spare seat (on one member's side, or -1 for everyone).</summary>
         public static int HypeSeated(PlayerState s, int member = -1)
@@ -724,7 +777,7 @@ namespace DeckParty.Core
                     // From the actor's own queue (a team member's queue holds their Audience), onto their side of the chat.
                     if (s.NextInPool(actor.Owner) < 0) return Err.Of("err.queue_empty");
                     // A Hype Man (the Evangelist) may still bring someone into a free spare seat.
-                    if (s.SideFull(actor.Owner) && !(IsHypeMan(actor) && FreeHypeSeats(s) > 0)) return Err.Of("err.sub_cap");
+                    if (s.SideFull(actor.Owner) && !(IsHypeMan(actor) && FreeHypeSeats(s) > 0 && HypeRoom(s, actor.Owner))) return Err.Of("err.sub_cap");
                     break;
                 case AbilityKind.Inspect:
                     if (s.Pool.Count < 2) return Err.Of("err.needs_two_queued");
@@ -1036,7 +1089,7 @@ namespace DeckParty.Core
         public static string GetExpandBlocker(PlayerState s, int member = 0)
         {
             if (s.Phase != GamePhase.Planning) return Err.Of("err.upgrade_between");
-            if (s.CapacityOf(member) >= GameRules.MaxCapacity) return Err.Of("err.sub_cap_maxed");
+            if (s.CapacityOf(member) >= MaxCapacity(s)) return Err.Of("err.sub_cap_maxed");
             int cost = ExpansionCost(s, member);
             if (s.Influence < cost) return Err.Of("err.needs_influence", cost);
             return null;
@@ -1101,12 +1154,8 @@ namespace DeckParty.Core
             s.PartyViewerBonus = 0;
             s.PartyFreeActions = 0;
             s.PartyXRay = false;
-            // Three-Hour Episode's extra seat was for that stream only (a team had it on both sides).
-            if (s.PartySeats > 0)
-            {
-                s.Capacity = Math.Max(1, s.Capacity - s.PartySeats);
-                if (s.IsTeam) s.PartnerCapacity = Math.Max(1, s.PartnerCapacity - s.PartySeats);
-            }
+            // Three-Hour Episode's extra seat was for that stream only (in a team, on the Bro Jogan player's side).
+            if (s.PartySeats > 0) AddSeats(s, EpisodeMember(s), -s.PartySeats);
             s.PartySeats = 0;
             s.StreamDone = 0;
             s.PartyBark = 0;
@@ -1195,7 +1244,7 @@ namespace DeckParty.Core
             if (s.OccupancyOf(side) > s.CapacityOf(side) + HypeSeated(s, s.IsTeam ? side : -1))
             {
                 // Hype Men: a viewer a Hype Man brought in takes a free spare seat instead of crashing the server.
-                if (IsHypeMan(s.Find(sourceId)) && FreeHypeSeats(s) > 0)
+                if (IsHypeMan(s.Find(sourceId)) && FreeHypeSeats(s) > 0 && HypeRoom(s, side))
                 {
                     g.HypeSeat = true;
                     Emit(ev, GameEventType.HypeSeatTaken, g, sourceId, HypeSeats(s) - HypeSeated(s));
@@ -2019,6 +2068,10 @@ namespace DeckParty.Core
                     break;
                 }
 
+                case AbilityKind.EarlyRetirement:
+                    EarlyRetirement(s, actor, ev);
+                    break;
+
                 case AbilityKind.Style:
                 {
                     var target = s.Find(a);
@@ -2147,12 +2200,7 @@ namespace DeckParty.Core
             int bots = RollBots(s, scores, ev);
             int penalty = 0;
             CommunityAftermath(s, scores, ev);
-            var boomers = new List<int>();
-            foreach (var id in s.House)
-            {
-                var g = s.Find(id);
-                if (g != null && !g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Boomer)) boomers.Add(id);
-            }
+            // Boomers no longer retire by chance after a scored stream (2026-11-18): their Early Retirement does it.
 
             // Great streams in a row: Manim Maketh Man's Beautiful Sequence cashes it in from the shop.
             s.Streak++;
@@ -2201,7 +2249,7 @@ namespace DeckParty.Core
                     Emit(ev, GameEventType.TrophiesBanked, null, diamonds, s.Trophies);
                 }
             }
-            else if (diamonds >= GameRules.DiamondsToWin)
+            else if (diamonds >= TrophiesToWin(s))
             {
                 s.Phase = GamePhase.Victory;
                 s.WinNight = s.Night;
@@ -2209,7 +2257,6 @@ namespace DeckParty.Core
                 return;
             }
 
-            RetireBoomers(s, boomers, scores[(int)Community.Millennial], ev);
             AfterParty(s, ev);
         }
 
@@ -2251,9 +2298,9 @@ namespace DeckParty.Core
 
             // The Mods' old rule (a chance to cancel 1 Risk next stream) retired on 2026-11-16: Mods give extra removal uses now.
 
-            // Boomers: Sub Cap upgrades and the streamer's active cost less in the coming shop.
-            s.ExpansionDiscount = Communities.BoomerDiscount(scores[(int)Community.Boomer]);
-            if (s.ExpansionDiscount > 0) Emit(ev, GameEventType.ShopPerk, null, (int)Community.Boomer, s.ExpansionDiscount);
+            // The Boomers' shop discount (Sub Cap upgrades and the active) retired on 2026-11-18: their points lower the
+            // chance that Early Retirement retires them instead.
+            s.ExpansionDiscount = 0;
             s.RecruitDiscount = Communities.ShopControlDiscount(scores[(int)Community.ShopControl]);
             if (s.RecruitDiscount > 0) Emit(ev, GameEventType.ShopPerk, null, (int)Community.ShopControl, s.RecruitDiscount);
             s.SabotageOut = Communities.SabotageAmount(scores[(int)Community.Saboteurs]);
@@ -2261,33 +2308,58 @@ namespace DeckParty.Core
         }
 
         /// <summary>
-        /// Boomers: each one who was in the scored stream has a chance to leave your Audience for good. Every time one does,
-        /// a random Millennial you own inherits +1 Cash for good (Influence until 2026-11-16), once per Millennials point (at
-        /// least once). Without a Millennial nothing is inherited.
+        /// Boomers' Early Retirement (2026-11-18): the whole chat scores right now, as if the stream ended here: every viewer
+        /// in joining order with the community rolls (Core Fanbase encores...), then the stream-wide community rewards
+        /// (Staff, Troll Army, Lurkers). It's banked at once (fees included, as at the end of a stream), and the stream goes
+        /// on, to be scored again when it ends. Trophies, the stream's pot, investments and end-of-stream effects (Gen-Z
+        /// growth, streaks, a win) wait for the real end. Then the Boomer retires (leaves your Audience for good) with the
+        /// Boomers' chance from before it acted (<see cref="Communities.BoomerRetireChance"/>: 100% / 50% / 25%), and a
+        /// retiring Boomer leaves a Millennial an inheritance.
         /// </summary>
-        static void RetireBoomers(PlayerState s, List<int> boomers, int millennialPoints, List<GameEvent> ev)
+        static void EarlyRetirement(PlayerState s, GuestInstance boomer, List<GameEvent> ev)
         {
-            foreach (var id in boomers)
-            {
-                var boomer = s.Find(id);
-                if (boomer == null || !Roll(s, Communities.BoomerRetirePercent)) continue;
-                s.Rolodex.Remove(boomer);
-                if (s.BannedNextParty == id) s.BannedNextParty = -1;
-                Emit(ev, GameEventType.BoomerRetired, boomer);
+            var scores = CommunityScores(s);
+            int retireChance = Communities.BoomerRetireChance(scores[(int)Community.Boomer]);
+            int millennialPoints = scores[(int)Community.Millennial];
 
-                int times = Communities.Inheritances(millennialPoints);
-                for (int k = 0; k < times; k++)
-                {
-                    var heirs = new List<GuestInstance>();
-                    foreach (var g in s.Rolodex)
-                        if (!g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Millennial) && g.BaseInfo.Cash + g.BonusCash < GameRules.PermanentInfluenceCap)
-                            heirs.Add(g);
-                    if (heirs.Count == 0) break;
-                    var heir = heirs[DeterministicRandom.Range(ref s.RngState, heirs.Count)];
-                    heir.BonusCash += Communities.InheritanceCash;
-                    Emit(ev, GameEventType.Inheritance, heir, Communities.InheritanceCash, heir.BonusCash);
-                }
+            ScoreChat(s, scores, false, out int cash, out int influence, ev);
+            Bank(s, cash, influence, ev);
+            Emit(ev, GameEventType.EarlyRetirement, boomer, cash, influence);
+
+            if (!Roll(s, retireChance))
+            {
+                Emit(ev, GameEventType.BoomerStayed, boomer, retireChance);
+                return;
             }
+            RetireBoomer(s, boomer, millennialPoints, ev);
+            // A Boomer that cancelled Risk takes its cancel with it.
+            CheckRaid(s, ev);
+        }
+
+        /// <summary>
+        /// A Boomer leaves chat and your Audience for good (a temporary copy just leaves). Then a random Millennial you own
+        /// inherits +1 Cash for good, +1 more per Millennials point (<see cref="Communities.InheritanceAmount"/>, up to
+        /// <see cref="GameRules.PermanentInfluenceCap"/> printed Cash). Without a Millennial nothing is inherited.
+        /// </summary>
+        static void RetireBoomer(PlayerState s, GuestInstance boomer, int millennialPoints, List<GameEvent> ev)
+        {
+            int id = boomer.Id;
+            if (s.House.Contains(id)) RemoveFromParty(s, id, LeaveReason.Gone, -1, false, ev);
+            s.UsedAbilities.Remove(id);
+            s.Pool.Remove(id);
+            s.Rolodex.Remove(boomer);
+            if (s.BannedNextParty == id) s.BannedNextParty = -1;
+            Emit(ev, GameEventType.BoomerRetired, boomer);
+
+            var heirs = new List<GuestInstance>();
+            foreach (var g in s.Rolodex)
+                if (!g.Temporary && GuestCatalog.InCommunity(g.Type, Community.Millennial) && g.BaseInfo.Cash + g.BonusCash < GameRules.PermanentInfluenceCap)
+                    heirs.Add(g);
+            if (heirs.Count == 0) return;
+            var heir = heirs[DeterministicRandom.Range(ref s.RngState, heirs.Count)];
+            int amount = Math.Min(Communities.InheritanceAmount(millennialPoints), GameRules.PermanentInfluenceCap - (heir.BaseInfo.Cash + heir.BonusCash));
+            heir.BonusCash += amount;
+            Emit(ev, GameEventType.Inheritance, heir, amount, heir.BonusCash);
         }
 
         /// <summary>GuestScored C for the second scoring of a viewer who scores twice (Core Fanbase), so it plays again.</summary>
@@ -2581,34 +2653,46 @@ namespace DeckParty.Core
 
         // ================================================================== streamer powers
 
-        /// <summary>Null when the streamer's active power can be used now. Rival powers also need a rival to hit.</summary>
-        public static string GetPowerBlocker(PlayerState s, bool rivalsAvailable = false)
+        // Teams (2026-11-18): each member plays their own streamer, so every active has its owner. Its price, cooldown and
+        // armed state are that member's (PlayerState.StreamerOf / PowerUsesOf / PowerCooldownOf / PowerArmedOf), and the
+        // effects that touch viewers or seats apply to that member's side of the chat:
+        //  - their side: Giveaway, Bark at Chat, Double Move, X-Ray Vision, Three-Hour Episode, Pal Sphere;
+        //  - the whole team: Smoke Bomb (one shared Risk count), Soft Landing, Subathon, Double or Nothing, Beautiful Sequence
+        //    (the team's streak) and the rival powers.
+        // A team's two streamers are never the same one, so a streamer type names its member (MemberWithStreamer).
+
+        /// <summary>Null when a member's streamer active can be used now. Rival powers also need a rival to hit.</summary>
+        /// <param name="member">Teams: whose active (0 for a solo season).</param>
+        public static string GetPowerBlocker(PlayerState s, bool rivalsAvailable = false, int member = 0)
         {
-            var info = s.StreamerInfo;
-            if (s.Streamer == StreamerType.None || info.Kind == PowerKind.None) return Err.Of("err.power_none");
+            var streamer = s.StreamerOf(member);
+            var info = StreamerCatalog.Get(streamer);
+            if (streamer == StreamerType.None || info.Kind == PowerKind.None) return Err.Of("err.power_none");
             if (info.IsPassive) return Err.Of("err.power_passive");
             if (s.IsGameOver) return Err.Of("err.season_over");
             if (s.Phase != GamePhase.Planning) return Err.Of("err.power_shop_only");
             if (info.NeedsRival && !rivalsAvailable) return Err.Of("err.power_needs_rival");
-            if (s.PowerCooldown > 0) return Err.Of("err.power_cooldown", s.PowerCooldown);
+            int cooldown = s.PowerCooldownOf(member);
+            if (cooldown > 0) return Err.Of("err.power_cooldown", cooldown);
             if (info.Kind == PowerKind.NextStream)
             {
-                if (s.PowerArmed) return Err.Of("err.power_armed");
+                if (s.PowerArmedOf(member)) return Err.Of("err.power_armed");
                 if (s.IsFinalNight) return Err.Of("err.power_no_next");
             }
-            if (s.Streamer == StreamerType.Palmane && PalSphereChoices(s).Count == 0) return Err.Of("err.power_no_pals");
-            if (s.Streamer == StreamerType.ManimMakethMan && s.Streak <= 0) return Err.Of("err.power_no_streak");
+            if (streamer == StreamerType.Palmane && PalSphereChoices(s).Count == 0) return Err.Of("err.power_no_pals");
+            if (streamer == StreamerType.ManimMakethMan && s.Streak <= 0) return Err.Of("err.power_no_streak");
+            if (streamer == StreamerType.BroJogan && EpisodeRoom(s, member) <= 0) return Err.Of("err.sub_cap_maxed");
 
-            int cost = StreamerCatalog.Cost(s);
+            int cost = StreamerCatalog.Cost(s, member);
             if (s.Influence < cost) return Err.Of("err.needs_influence", cost);
             return null;
         }
 
-        /// <summary>Null when <paramref name="target"/> can be hit by the actor's rival power.</summary>
-        public static string GetRivalTargetBlocker(PlayerState actor, PlayerState target)
+        /// <summary>Null when <paramref name="target"/> can be hit by the actor's (member's) rival power.</summary>
+        public static string GetRivalTargetBlocker(PlayerState actor, PlayerState target, int actorMember = 0)
         {
             if (target == null || target == actor || target.IsGameOver) return Err.Of("err.power_no_rival");
-            if (actor.Streamer == StreamerType.EthicalFboi && target.Influence <= 0) return Err.Of("err.power_rival_broke");
+            if (actor.StreamerOf(actorMember) == StreamerType.EthicalFboi && target.Influence <= 0) return Err.Of("err.power_rival_broke");
             return null;
         }
 
@@ -2629,22 +2713,24 @@ namespace DeckParty.Core
 
         static CommandResult UsePower(PlayerState s, int member, List<GameEvent> ev)
         {
-            var blocker = GetPowerBlocker(s);
+            member = s.IsTeam ? Math.Max(0, Math.Min(1, member)) : 0;
+            var blocker = GetPowerBlocker(s, false, member);
             if (blocker != null) return CommandResult.Fail(blocker);
 
-            PayForPower(s, ev);
-            if (s.StreamerInfo.Kind == PowerKind.NextStream)
+            var streamer = s.StreamerOf(member);
+            PayForPower(s, member, ev);
+            if (StreamerCatalog.Get(streamer).Kind == PowerKind.NextStream)
             {
-                s.PowerArmed = true;
+                SetPowerArmed(s, member, true);
             }
-            else if (s.Streamer == StreamerType.Palmane)
+            else if (streamer == StreamerType.Palmane)
             {
                 var choices = PalSphereChoices(s);
                 var type = choices[DeterministicRandom.Range(ref s.RngState, choices.Count)];
                 var g = AddGuest(s, type, false, member);
                 Emit(ev, GameEventType.PalCaught, g);
             }
-            else if (s.Streamer == StreamerType.ManimMakethMan)
+            else if (streamer == StreamerType.ManimMakethMan)
             {
                 // Beautiful Sequence: +1 Cash for each great stream in a row (the streak itself carries on).
                 int bonus = Math.Min(StreamerCatalog.StreakMaxBonus, s.Streak);
@@ -2659,15 +2745,17 @@ namespace DeckParty.Core
         /// A rival power (Fate's Raid, Ethical F**kboi's Wealth Tax). The host calls this with both players' states, since
         /// the rules engine only ever sees one player at a time. Indexes are the players' positions, used for the log.
         /// </summary>
+        /// <param name="actorMember">Teams: the member whose streamer's power it is.</param>
         public static CommandResult UseRivalPower(PlayerState actor, int actorIndex, PlayerState target, int targetIndex,
-            List<GameEvent> actorEvents, List<GameEvent> targetEvents)
+            List<GameEvent> actorEvents, List<GameEvent> targetEvents, int actorMember = 0)
         {
             if (actor == null) return CommandResult.Fail(Err.Of("err.no_game"));
-            var blocker = GetPowerBlocker(actor, true) ?? GetRivalTargetBlocker(actor, target);
+            actorMember = actor.IsTeam ? Math.Max(0, Math.Min(1, actorMember)) : 0;
+            var blocker = GetPowerBlocker(actor, true, actorMember) ?? GetRivalTargetBlocker(actor, target, actorMember);
             if (blocker != null) return CommandResult.Fail(blocker);
 
-            PayForPower(actor, actorEvents);
-            switch (actor.Streamer)
+            PayForPower(actor, actorMember, actorEvents);
+            switch (actor.StreamerOf(actorMember))
             {
                 case StreamerType.Fate:
                     target.IncomingHeat += StreamerCatalog.RaidHeat;
@@ -2686,22 +2774,41 @@ namespace DeckParty.Core
             return CommandResult.Success;
         }
 
-        /// <summary>Actives are paid in Influence; every use makes the next one cost more (see <see cref="StreamerCatalog.Cost"/>).</summary>
-        static void PayForPower(PlayerState s, List<GameEvent> ev)
+        /// <summary>
+        /// Actives are paid in Influence (from the team's shared wallet); every use makes that member's next one cost more (see
+        /// <see cref="StreamerCatalog.Cost"/>). The event says whose: A = the streamer, B = the price, C = the member.
+        /// </summary>
+        static void PayForPower(PlayerState s, int member, List<GameEvent> ev)
         {
-            int cost = StreamerCatalog.Cost(s);
+            int cost = StreamerCatalog.Cost(s, member);
             s.Influence -= cost;
-            s.PowerUses++;
-            int cooldown = s.StreamerInfo.Cooldown;
+            int cooldown = s.StreamerInfoOf(member).Cooldown;
             // Stored one higher: it counts down as the next stream starts, so "2" means two turns without it.
-            s.PowerCooldown = cooldown > 0 ? cooldown + 1 : 0;
-            Emit(ev, GameEventType.PowerUsed, null, (int)s.Streamer, cost);
+            int stored = cooldown > 0 ? cooldown + 1 : 0;
+            if (s.IsTeam && member == 1)
+            {
+                s.PartnerPowerUses++;
+                s.PartnerPowerCooldown = stored;
+            }
+            else
+            {
+                s.PowerUses++;
+                s.PowerCooldown = stored;
+            }
+            Emit(ev, GameEventType.PowerUsed, null, (int)s.StreamerOf(member), cost, member);
         }
 
-        /// <summary>Applies armed powers and rivals' raids as a stream starts, and ticks the cooldown.</summary>
+        static void SetPowerArmed(PlayerState s, int member, bool armed)
+        {
+            if (s.IsTeam && member == 1) s.PartnerPowerArmed = armed;
+            else s.PowerArmed = armed;
+        }
+
+        /// <summary>Applies armed powers and rivals' raids as a stream starts, and ticks the cooldowns (each member's, in a team).</summary>
         static void ApplyStreamerEffects(PlayerState s, List<GameEvent> ev)
         {
             if (s.PowerCooldown > 0) s.PowerCooldown--;
+            if (s.IsTeam && s.PartnerPowerCooldown > 0) s.PartnerPowerCooldown--;
 
             if (s.IncomingHeat > 0)
             {
@@ -2719,48 +2826,58 @@ namespace DeckParty.Core
                 Emit(ev, GameEventType.DoomApplied, null, s.PartyDoom, Communities.DoomChance(s.PartyDoom));
             }
 
-            if (!s.PowerArmed) return;
-            s.PowerArmed = false;
-            switch (s.Streamer)
+            for (int member = 0; member < (s.IsTeam ? 2 : 1); member++)
+            {
+                if (!s.PowerArmedOf(member)) continue;
+                SetPowerArmed(s, member, false);
+                ApplyArmedPower(s, s.StreamerOf(member), member, ev);
+            }
+        }
+
+        /// <summary>A next-stream active bought in the last shop takes effect as the stream starts (C = the member it's for).</summary>
+        static void ApplyArmedPower(PlayerState s, StreamerType streamer, int member, List<GameEvent> ev)
+        {
+            switch (streamer)
             {
                 case StreamerType.Shinobi:
                     s.PartyShield = StreamerCatalog.SmokeBombShield;
-                    Emit(ev, GameEventType.ShieldApplied, null, s.PartyShield);
+                    Emit(ev, GameEventType.ShieldApplied, null, s.PartyShield, 0, member);
                     break;
                 case StreamerType.MrShark:
                     s.PartyViewerBonus = StreamerCatalog.GiveawayBonus;
-                    Emit(ev, GameEventType.GiveawayActive, null, s.PartyViewerBonus);
+                    Emit(ev, GameEventType.GiveawayActive, null, s.PartyViewerBonus, 0, member);
                     break;
                 case StreamerType.StrategicAbomination:
                     s.PartyFreeActions = 1;
-                    Emit(ev, GameEventType.DoubleMoveActive, null, s.PartyFreeActions);
+                    Emit(ev, GameEventType.DoubleMoveActive, null, s.PartyFreeActions, 0, member);
                     break;
                 case StreamerType.RudeRadiologist:
                     s.PartyXRay = true;
-                    Emit(ev, GameEventType.XRayActive, null, StreamerCatalog.XRayCount);
+                    Emit(ev, GameEventType.XRayActive, null, StreamerCatalog.XRayCount, 0, member);
                     break;
                 case StreamerType.BroJogan:
-                    // Taken back off in ClearParty when the stream ends, however it ends.
-                    s.PartySeats = StreamerCatalog.EpisodeSeats;
-                    s.Capacity += s.PartySeats;
-                    if (s.IsTeam) s.PartnerCapacity += s.PartySeats;
-                    Emit(ev, GameEventType.ExtraSeatActive, null, s.PartySeats);
+                    // Taken back off in ClearParty when the stream ends, however it ends. Never past the seat limit (30, or
+                    // 40 on the Bro Jogan player's side of a team's chat; only that side gets the seat).
+                    s.PartySeats = Math.Min(StreamerCatalog.EpisodeSeats, EpisodeRoom(s, member));
+                    if (s.PartySeats <= 0) { s.PartySeats = 0; break; }
+                    AddSeats(s, member, s.PartySeats);
+                    Emit(ev, GameEventType.ExtraSeatActive, null, s.PartySeats, 0, member);
                     break;
                 case StreamerType.IRunFast:
                     s.PartyBark = StreamerCatalog.BarkBonus;
-                    Emit(ev, GameEventType.BarkActive, null, s.PartyBark);
+                    Emit(ev, GameEventType.BarkActive, null, s.PartyBark, 0, member);
                     break;
                 case StreamerType.SoftHardBodyMan:
                     s.PartySoftLanding = true;
-                    Emit(ev, GameEventType.SoftLandingReady, null);
+                    Emit(ev, GameEventType.SoftLandingReady, null, 0, 0, member);
                     break;
                 case StreamerType.KaiSonnet:
                     s.PartySubathon = true;
-                    Emit(ev, GameEventType.SubathonReady, null);
+                    Emit(ev, GameEventType.SubathonReady, null, 0, 0, member);
                     break;
                 case StreamerType.TrainWrex:
                     s.PartyDoubleDown = true;
-                    Emit(ev, GameEventType.DoubleDownReady, null, StreamerCatalog.DoubleDownMaxBonus, StreamerCatalog.DoubleDownLoss);
+                    Emit(ev, GameEventType.DoubleDownReady, null, StreamerCatalog.DoubleDownMaxBonus, StreamerCatalog.DoubleDownLoss, member);
                     break;
             }
         }
@@ -2785,10 +2902,29 @@ namespace DeckParty.Core
             Emit(ev, GameEventType.DoubleDownLost, null, lost);
         }
 
-        /// <summary>Strategic Abomination's Double Move: the first action used this stream can be used again.</summary>
+        /// <summary>Three-Hour Episode: Sub Cap a member's next stream can still gain before their chat reaches its seat limit.</summary>
+        static int EpisodeRoom(PlayerState s, int member) =>
+            MaxCapacity(s) - s.CapacityOf(member);
+
+        /// <summary>The member whose Sub Cap holds this stream's Three-Hour Episode seat (the Bro Jogan player; 0 if nobody is).</summary>
+        static int EpisodeMember(PlayerState s) => Math.Max(0, s.MemberWithStreamer(StreamerType.BroJogan));
+
+        /// <summary>Adds (or, negative, takes back) Sub Cap on one member's side; never below 1.</summary>
+        static void AddSeats(PlayerState s, int member, int seats)
+        {
+            if (s.IsTeam && member == 1) s.PartnerCapacity = Math.Max(1, s.PartnerCapacity + seats);
+            else s.Capacity = Math.Max(1, s.Capacity + seats);
+        }
+
+        /// <summary>
+        /// Strategic Abomination's Double Move: the first action used this stream can be used again (in a team, the first one
+        /// used on the Strategic Abomination player's side).
+        /// </summary>
         static void RefreshFreeAction(PlayerState s, int actorId, List<GameEvent> ev)
         {
-            if (s.PartyFreeActions <= 0 || s.Phase != GamePhase.Party || !s.UsedAbilities.Remove(actorId)) return;
+            if (s.PartyFreeActions <= 0 || s.Phase != GamePhase.Party) return;
+            if (!s.OnSideOf(s.Find(actorId), StreamerType.StrategicAbomination) && s.MemberWithStreamer(StreamerType.StrategicAbomination) >= 0) return;
+            if (!s.UsedAbilities.Remove(actorId)) return;
             s.PartyFreeActions--;
             Emit(ev, GameEventType.FreeActionUsed, s.Find(actorId));
         }
@@ -2805,11 +2941,16 @@ namespace DeckParty.Core
             Emit(ev, GameEventType.SoftLanding, null, banked);
         }
 
-        /// <summary>The next viewers in the queue that X-Ray Vision reveals this stream (empty without it).</summary>
+        /// <summary>
+        /// The next viewers in the queue that X-Ray Vision reveals this stream (empty without it). In a team only the Rude
+        /// Radiologist player's queue shows.
+        /// </summary>
         public static List<int> XRayQueue(PlayerState s, int member = 0)
         {
             var result = new List<int>();
             if (!s.PartyXRay || s.Phase != GamePhase.Party) return result;
+            int owner = s.MemberWithStreamer(StreamerType.RudeRadiologist);
+            if (s.IsTeam && owner >= 0 && owner != member) return result;
             for (int i = 0; i < s.Pool.Count && result.Count < StreamerCatalog.XRayCount; i++)
                 if (s.Owns(s.Find(s.Pool[i]), member)) result.Add(s.Pool[i]);
             return result;

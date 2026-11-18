@@ -38,7 +38,7 @@ namespace DeckParty.UI
 
             uint seed = first.Seed ^ 0xC0C4u;
             var streamer = StreamerCatalog.Resolve(launch.OpponentStreamer, new System.Random((int)seed), Unlocks.StreamerMask());
-            var second = PartyEngine.CreateGame(first.ScenarioId, seed, first.TotalNights, streamer);
+            var second = PartyEngine.CreateGame(first.ScenarioId, seed, first.TotalNights, streamer, trophiesToWin: first.TrophiesToWin);
             second.Shop.Clear();
             second.Shop.AddRange(first.Shop);
             m_Local.AttachCouch(second);
@@ -46,7 +46,8 @@ namespace DeckParty.UI
             m_Local.RivalChanged += (_, __) => RenderAll();
 
             opponents.gameObject.SetActive(true);
-            log.Add(Loc.Get("couch.intro", ("first", CouchTag(0)), ("second", CouchTag(1)), ("count", GameRules.DiamondsToWin)));
+            DockNotices();
+            log.Add(Loc.Get("couch.intro", ("first", CouchTag(0)), ("second", CouchTag(1)), ("count", PartyEngine.TrophiesToWin(first))));
         }
 
         /// <summary>

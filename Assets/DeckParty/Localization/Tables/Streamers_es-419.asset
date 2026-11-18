@@ -499,7 +499,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802215475863552
-    m_Localized: "Elige el streamer de tu equipo. Tu compa\xF1ero tambi\xE9n lo usa."
+    m_Localized: "Elige tu propio streamer. Tu compa\xF1ero elige el suyo: no pueden
+      usar el mismo."
     m_Metadata:
       m_Items: []
   - m_Id: 5802215475863553
@@ -579,6 +580,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6388739582025729
     m_Localized: Bloqueado. {requirement}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478701950230528
+    m_Localized: "COMPA\xD1ERO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478702021533696
+    m_Localized: "Tu compa\xF1ero {player} ya eligi\xF3 a este streamer. Elige otro."
     m_Metadata:
       m_Items: []
   references:

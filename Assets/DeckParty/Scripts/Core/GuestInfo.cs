@@ -19,9 +19,23 @@ namespace DeckParty.Core
         public readonly int Brings;
         /// <summary>House spaces this guest takes up (Big Chungus takes 3).</summary>
         public readonly int Size;
-        public readonly AbilityKind Ability;
-        public readonly string AbilityName;
+        /// <summary>The action printed on the card itself (None for most viewers). <see cref="Ability"/> adds the community's.</summary>
+        public readonly AbilityKind OwnAbility;
+        readonly string m_OwnAbilityName;
         public readonly string Description;
+
+        /// <summary>
+        /// The viewer's action: the card's own, or else the one its community gives (2026-11-18: every Boomer without an
+        /// action of its own has Early Retirement, <see cref="GuestCatalog.CommunityAbility"/>). Read live, so a Game
+        /// Database community edit changes it.
+        /// </summary>
+        public AbilityKind Ability => OwnAbility != AbilityKind.None ? OwnAbility : GuestCatalog.CommunityAbility(Type);
+
+        /// <summary>Whether <see cref="Ability"/> comes from the viewer's community rather than the card (Early Retirement).</summary>
+        public bool HasCommunityAbility => OwnAbility == AbilityKind.None && Ability != AbilityKind.None;
+
+        /// <summary>The action's English name (players see char.&lt;type&gt;.action, or ability.&lt;kind&gt;.name for a community's action).</summary>
+        public string AbilityName => HasCommunityAbility ? GuestCatalog.CommunityAbilityName(Ability) : m_OwnAbilityName;
 
         public GuestInfo(
             GuestType type,
@@ -53,8 +67,8 @@ namespace DeckParty.Core
             CancelsTrouble = cancels;
             Brings = brings;
             Size = size < 1 ? 1 : size;
-            Ability = ability;
-            AbilityName = abilityName ?? ability.ToString();
+            OwnAbility = ability;
+            m_OwnAbilityName = abilityName ?? ability.ToString();
             Purchasable = purchasable;
             m_MaxCopies = maxCopies;
         }
@@ -135,7 +149,8 @@ namespace DeckParty.Core
                 case AbilityKind.Peek: return ActionCategory.Scout;
                 case AbilityKind.Invest:
                 case AbilityKind.Photograph:
-                case AbilityKind.Interview: return ActionCategory.Economy;
+                case AbilityKind.Interview:
+                case AbilityKind.EarlyRetirement: return ActionCategory.Economy;
                 default: return ActionCategory.None;
             }
         }

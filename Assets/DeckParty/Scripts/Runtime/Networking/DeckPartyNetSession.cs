@@ -84,6 +84,11 @@ namespace DeckParty.Networking
         public event Action<ulong, ulong, StreamerType> RivalPowerUsed;
         /// <summary>Free For All: the round moved on (streaming, the countdown, the shop open).</summary>
         public event Action<RoundStage> StageChanged;
+        /// <summary>
+        /// Team modes, streamer pick: the host turned down your pick because your teammate locked in that streamer first
+        /// (teammates never play the same one). Pick again.
+        /// </summary>
+        public event Action<StreamerType> StreamerPickTaken;
 
         public NetworkList<NetPlayer> Players => m_Players;
         public MatchSettings Settings => m_Settings.Value;
@@ -127,21 +132,43 @@ namespace DeckParty.Networking
         }
 
         /// <summary>
-        /// Team modes: the player who picks the team's streamer (the team's first player in the lobby). Their teammate waits.
-        /// Everyone picks for themselves outside the team modes.
+        /// The players who pick alongside this one and can't share their streamer: in 2v2 their teammate, in co-op the other
+        /// player (both are one team). None outside the team modes. Works in the lobby and the pick, before teams are final.
         /// </summary>
-        public bool PicksStreamer(ulong clientId)
+        List<NetPlayer> PickMates(ulong clientId)
         {
-            if (!IsTeamMode) return true;
-            int team = Settings.Mode == MatchMode.CoopEndless ? -1 : TeamOf(clientId);
+            var mates = new List<NetPlayer>();
+            if (!IsTeamMode || !TryGetPlayer(clientId, out var me)) return mates;
+            bool coop = Settings.Mode == MatchMode.CoopEndless;
             for (int i = 0; i < m_Players.Count; i++)
             {
                 var p = m_Players[i];
-                if (!p.Connected || (team >= 0 && p.Team != team)) continue;
-                return p.ClientId == clientId;
+                if (p.ClientId == clientId || !p.Connected || (!coop && p.Team != me.Team)) continue;
+                mates.Add(p);
             }
-            return true;
+            return mates;
         }
+
+        /// <summary>
+        /// Team modes (2026-11-18: every player picks their own streamer): the streamer a teammate has already locked in, which
+        /// this player can't pick too, or None (no teammate, or they haven't locked in a real streamer yet).
+        /// </summary>
+        public StreamerType TeammateLockedStreamer(ulong clientId)
+        {
+            foreach (var mate in PickMates(clientId))
+                if (mate.StreamerLocked && IsRealPick(mate.Streamer)) return (StreamerType)mate.Streamer;
+            return StreamerType.None;
+        }
+
+        /// <summary>The teammate's name, for "Ana picked them" on the select screen (null without one).</summary>
+        public string TeammateName(ulong clientId)
+        {
+            var mates = PickMates(clientId);
+            return mates.Count > 0 ? mates[0].DisplayName.ToString() : null;
+        }
+
+        /// <summary>A pick naming one streamer (not Random, not No Streamer).</summary>
+        static bool IsRealPick(byte pick) => pick != StreamerCatalog.RandomPick && pick != (byte)StreamerType.None && StreamerCatalog.IsValid((StreamerType)pick);
 
         public float ShopCountdownLeft
         {
@@ -341,6 +368,9 @@ namespace DeckParty.Networking
         /// <summary>Team modes: players share a season in teams of two.</summary>
         public bool IsTeamMode => MatchModes.IsTeam(Settings.Mode);
 
+        /// <summary>Trophies in one stream that win an online match: 3 in every competitive mode (2026-11-18; single player keeps 4).</summary>
+        public static int MatchTrophiesToWin => GameRules.CompetitiveTrophiesToWin;
+
         /// <summary>A player's team (0 or 1) in a team mode; 0 otherwise.</summary>
         public int TeamOf(ulong clientId) => TryGetPlayer(clientId, out var p) ? p.Team : 0;
 
@@ -490,8 +520,9 @@ namespace DeckParty.Networking
         }
 
         /// <summary>
-        /// The host pressed Start: everyone picks their streamer now, last thing before the match (2026-11-16). Team modes: the
-        /// team's first player picks for the team. The match starts once everyone has locked in or the timer runs out.
+        /// The host pressed Start: everyone picks their streamer now, last thing before the match (2026-11-16). Team modes
+        /// too (2026-11-18): each player picks their own, and teammates can't pick the same one (first to lock it in keeps
+        /// it). The match starts once everyone has locked in or the timer runs out.
         /// </summary>
         public void ServerBeginStreamerPick()
         {
@@ -500,8 +531,7 @@ namespace DeckParty.Networking
             for (int i = 0; i < m_Players.Count; i++)
             {
                 var p = m_Players[i];
-                // Team modes: the teammate who doesn't pick is locked in already (the team plays its picker's streamer).
-                p.StreamerLocked = p.Connected && !PicksStreamer(p.ClientId);
+                p.StreamerLocked = false;
                 m_Players[i] = p;
             }
             m_PickDeadline.Value = NetworkManager.ServerTime.Time + MatchModes.StreamerPickSeconds;
@@ -517,13 +547,27 @@ namespace DeckParty.Networking
             if (streamer != StreamerCatalog.RandomPick && !StreamerCatalog.IsValid((StreamerType)streamer)) return;
             ulong sender = rpcParams.Receive.SenderClientId;
             int index = IndexOfPlayer(sender);
-            if (index < 0 || !PicksStreamer(sender)) return;
+            if (index < 0) return;
             var p = m_Players[index];
             if (p.StreamerLocked) return;
-            p.Streamer = UnlockedPick(streamer, p.StreamerMask);
+            byte pick = UnlockedPick(streamer, p.StreamerMask);
+            // Teammates play different streamers: whoever locks one in first keeps it, the other picks again.
+            var taken = TeammateLockedStreamer(sender);
+            if (taken != StreamerType.None && pick == (byte)taken)
+            {
+                StreamerTakenRpc((byte)taken, RpcTarget.Single(sender, RpcTargetUse.Temp));
+                return;
+            }
+            p.Streamer = pick;
             p.StreamerLocked = true;
             m_Players[index] = p;
             ServerCheckPickDone();
+        }
+
+        [Rpc(SendTo.SpecifiedInParams)]
+        void StreamerTakenRpc(byte streamer, RpcParams rpcParams)
+        {
+            Raise(StreamerPickTaken, (StreamerType)streamer);
         }
 
         /// <summary>A pick of a streamer the player hasn't unlocked becomes Random (among the ones they have).</summary>
@@ -596,7 +640,7 @@ namespace DeckParty.Networking
                     if (!p.Connected) continue;
                     var streamer = StreamerCatalog.Resolve(p.Streamer, random, p.StreamerMask);
                     p.Streamer = (byte)streamer;
-                    m_Games[p.ClientId] = PartyEngine.CreateGame(settings.ScenarioId, seed, settings.Nights, streamer);
+                    m_Games[p.ClientId] = PartyEngine.CreateGame(settings.ScenarioId, seed, settings.Nights, streamer, trophiesToWin: MatchTrophiesToWin);
                     p.Rank = 0;
                     p.ReadyNextNight = false;
                     p.Member = 0;
@@ -616,13 +660,14 @@ namespace DeckParty.Networking
             // Co-op Endless has no win: its opening line says how many streams the run starts with instead.
             ServerHeadline(settings.Mode == MatchMode.CoopEndless
                 ? Core.Err.Of("mp.coop_begins", "@s" + settings.ScenarioId, GameRules.EndlessStartingStreams)
-                : Core.Err.Of("mp.season_begins", "@s" + settings.ScenarioId, settings.Nights) + Core.Err.Separator + GameRules.DiamondsToWin);
+                : Core.Err.Of("mp.season_begins", "@s" + settings.ScenarioId, settings.Nights) + Core.Err.Separator + MatchTrophiesToWin);
             NetworkManager.SceneManager.LoadScene(SceneNames.Game, LoadSceneMode.Single);
         }
 
         /// <summary>
         /// Team modes: one season per team, shared by its two players (Cash, Influence, the stream and the shop), each with
-        /// their own Audience and Sub Cap (member 0 and 1, in lobby order). The team plays as its first player's streamer.
+        /// their own Audience and Sub Cap (member 0 and 1, in lobby order). Each player plays their own streamer (2026-11-18),
+        /// never the same one as their teammate: a Random pick avoids the teammate's streamer.
         /// 2v2 is a Classic season per team; co-op is one Endless run for both.
         /// </summary>
         void ServerCreateTeamGames(MatchSettings settings, uint seed, System.Random random)
@@ -644,14 +689,20 @@ namespace DeckParty.Networking
             foreach (var kv in teams)
             {
                 var members = kv.Value;
-                var streamer = StreamerCatalog.Resolve(m_Players[members[0]].Streamer, random, m_Players[members[0]].StreamerMask);
-                var state = PartyEngine.CreateGame(settings.ScenarioId, seed, nights, streamer, mode, Mathf.Min(members.Count, GameRules.TeamSize));
+                int count = Mathf.Min(members.Count, GameRules.TeamSize);
+                // Member 0 first, keeping clear of member 1's own pick when it names a streamer; then member 1, keeping clear
+                // of whatever member 0 ended up with.
+                var first = m_Players[members[0]];
+                byte secondPick = count > 1 ? m_Players[members[1]].Streamer : (byte)StreamerType.None;
+                var streamer = ResolveDistinct(first.Streamer, first.StreamerMask, IsRealPick(secondPick) ? (StreamerType)secondPick : StreamerType.None, random);
+                var partner = count > 1 ? ResolveDistinct(secondPick, m_Players[members[1]].StreamerMask, streamer, random) : StreamerType.None;
+                var state = PartyEngine.CreateGame(settings.ScenarioId, seed, nights, streamer, mode, count, MatchTrophiesToWin, partner);
                 for (int k = 0; k < members.Count; k++)
                 {
                     var p = m_Players[members[k]];
                     p.Team = (byte)kv.Key;
                     p.Member = (byte)Mathf.Min(k, GameRules.TeamSize - 1);
-                    p.Streamer = (byte)streamer;
+                    p.Streamer = (byte)state.StreamerOf(p.Member);
                     p.Rank = 0;
                     p.ReadyNextNight = false;
                     m_Players[members[k]] = p;
@@ -659,6 +710,23 @@ namespace DeckParty.Networking
                 }
                 foreach (var index in members) ServerUpdateSummary(m_Players[index].ClientId);
             }
+        }
+
+        /// <summary>
+        /// A team member's pick turned into a real streamer that isn't <paramref name="taken"/> (their teammate's): a pick of
+        /// the taken streamer, or Random, lands on another unlocked one.
+        /// </summary>
+        static StreamerType ResolveDistinct(byte pick, uint unlockedMask, StreamerType taken, System.Random random)
+        {
+            if (unlockedMask == 0) unlockedMask = StreamerCatalog.AllUnlocked;
+            if (taken != StreamerType.None)
+            {
+                if (pick == (byte)taken) pick = StreamerCatalog.RandomPick;
+                uint without = unlockedMask & ~StreamerCatalog.MaskOf(taken);
+                if (without != 0) unlockedMask = without;
+            }
+            var resolved = StreamerCatalog.Resolve(pick, random, unlockedMask);
+            return taken != StreamerType.None && resolved == taken ? StreamerType.None : resolved;
         }
 
         public void ServerReturnToLobby()
@@ -828,9 +896,9 @@ namespace DeckParty.Networking
             }
 
             // Rival powers touch two players' seasons, so the host resolves them here.
-            if (cmd.Type == CommandType.UseStreamerPower && state.StreamerInfo.NeedsRival)
+            if (cmd.Type == CommandType.UseStreamerPower && state.StreamerInfoOf(cmd.Member).NeedsRival)
             {
-                ServerUseRivalPower(sender, state, cmd.TargetA);
+                ServerUseRivalPower(sender, state, cmd.Member, cmd.TargetA);
                 return;
             }
 
@@ -1204,11 +1272,11 @@ namespace DeckParty.Networking
         }
 
         /// <summary>Fate's Raid / Ethical F**kboi's Wealth Tax: picks the rival (or uses the one chosen) and applies the power to both seasons.</summary>
-        void ServerUseRivalPower(ulong sender, PlayerState state, int requestedIndex)
+        void ServerUseRivalPower(ulong sender, PlayerState state, int member, int requestedIndex)
         {
             ulong target = ClientAtIndex(requestedIndex);
             // A teammate is never a rival (2v2: the power hits the other team's season).
-            if (target == sender || SameTeam(target, sender) || !IsConnectedPlayer(target) || !m_Games.ContainsKey(target)) target = AutoRivalFor(sender, state);
+            if (target == sender || SameTeam(target, sender) || !IsConnectedPlayer(target) || !m_Games.ContainsKey(target)) target = AutoRivalFor(sender, state.StreamerOf(member));
             if (target == NoPlayer || !m_Games.TryGetValue(target, out var targetState))
             {
                 ServerReject(sender, "err.power_no_rival");
@@ -1217,7 +1285,7 @@ namespace DeckParty.Networking
 
             var actorEvents = new List<GameEvent>();
             var targetEvents = new List<GameEvent>();
-            var result = PartyEngine.UseRivalPower(state, IndexOfPlayer(sender), targetState, IndexOfPlayer(target), actorEvents, targetEvents);
+            var result = PartyEngine.UseRivalPower(state, IndexOfPlayer(sender), targetState, IndexOfPlayer(target), actorEvents, targetEvents, member);
             if (!result.Ok)
             {
                 ServerReject(sender, result.Error);
@@ -1228,12 +1296,12 @@ namespace DeckParty.Networking
             ServerBroadcastState(target, targetEvents);
             ServerUpdateSummary(sender);
             ServerUpdateSummary(target);
-            RivalPowerRpc(sender, target, (byte)state.Streamer);
-            ServerHeadline(Core.Err.Of(state.Streamer == StreamerType.Fate ? "mp.raided" : "mp.taxed", PlayerName(sender), PlayerName(target)));
+            RivalPowerRpc(sender, target, (byte)state.StreamerOf(member));
+            ServerHeadline(Core.Err.Of(state.StreamerOf(member) == StreamerType.Fate ? "mp.raided" : "mp.taxed", PlayerName(sender), PlayerName(target)));
         }
 
         /// <summary>Raid hits whoever plays next (in Take Turns) or the leader; Wealth Tax hits the richest rival.</summary>
-        ulong AutoRivalFor(ulong sender, PlayerState state)
+        ulong AutoRivalFor(ulong sender, StreamerType streamer)
         {
             ulong best = NoPlayer;
             int bestScore = int.MinValue;
@@ -1243,7 +1311,7 @@ namespace DeckParty.Networking
                 var p = m_Players[i];
                 if (p.ClientId == sender || SameTeam(p.ClientId, sender) || !p.Connected || !m_Games.TryGetValue(p.ClientId, out var s) || s.IsGameOver) continue;
                 int score;
-                if (state.Streamer == StreamerType.EthicalFboi) score = s.Influence * 1000 - i;
+                if (streamer == StreamerType.EthicalFboi) score = s.Influence * 1000 - i;
                 else if (TakingTurns) score = -((i - senderIndex + m_Players.Count) % m_Players.Count);
                 else score = s.BestDiamonds * 1000 + s.TotalCashEarned;
                 if (score > bestScore)
@@ -1321,7 +1389,7 @@ namespace DeckParty.Networking
                         break;
                     case GameEventType.PartyEnded:
                         // Endless (co-op) has no win, so nobody is ever "one Trophy away".
-                        if (e.C == GameRules.DiamondsToWin - 1 && Settings.Mode != MatchMode.CoopEndless) ServerHeadline(Core.Err.Of("mp.one_more", name, e.C));
+                        if (e.C == MatchTrophiesToWin - 1 && Settings.Mode != MatchMode.CoopEndless) ServerHeadline(Core.Err.Of("mp.one_more", name, e.C));
                         break;
                     case GameEventType.GuestPurchased:
                         if (GuestCatalog.Get(e.Guest).IsDiamond) ServerHeadline(Core.Err.Of("mp.signed", name, Core.Err.Guest(e.Guest)));
@@ -1330,10 +1398,10 @@ namespace DeckParty.Networking
                         if (!StreamerCatalog.Get((StreamerType)e.A).NeedsRival) ServerHeadline(Core.Err.Of("mp.power", name, "@t" + e.A) + Core.Err.Separator + "@w" + e.A);
                         break;
                     case GameEventType.Victory when IsTeamMode:
-                        ServerHeadline(Core.Err.Of("mp.team_won", TeamName(TeamOf(clientId)), GameRules.DiamondsToWin) + Core.Err.Separator + e.A);
+                        ServerHeadline(Core.Err.Of("mp.team_won", TeamName(TeamOf(clientId)), MatchTrophiesToWin) + Core.Err.Separator + e.A);
                         break;
                     case GameEventType.Victory:
-                        ServerHeadline(Core.Err.Of("mp.won_finishing", name, GameRules.DiamondsToWin) + Core.Err.Separator + e.A);
+                        ServerHeadline(Core.Err.Of("mp.won_finishing", name, MatchTrophiesToWin) + Core.Err.Separator + e.A);
                         break;
                 }
             }
@@ -1696,15 +1764,15 @@ namespace DeckParty.Networking
             {
                 var winner = snapshot[order[0]];
                 ServerHeadline(winner.Won
-                    ? Core.Err.Of("mp.team_won", TeamName(winner.Team), GameRules.DiamondsToWin) + Core.Err.Separator + winner.WinNight
-                    : Core.Err.Of("mp.team_best", TeamName(winner.Team), GameRules.DiamondsToWin) + Core.Err.Separator + winner.BestDiamonds);
+                    ? Core.Err.Of("mp.team_won", TeamName(winner.Team), MatchTrophiesToWin) + Core.Err.Separator + winner.WinNight
+                    : Core.Err.Of("mp.team_best", TeamName(winner.Team), MatchTrophiesToWin) + Core.Err.Separator + winner.BestDiamonds);
             }
             else if (order.Count > 0)
             {
                 var winner = snapshot[order[0]];
                 ServerHeadline(winner.Won
-                    ? Core.Err.Of("mp.season_won", winner.DisplayName, GameRules.DiamondsToWin) + Core.Err.Separator + winner.WinNight
-                    : Core.Err.Of("mp.season_best", winner.DisplayName, GameRules.DiamondsToWin) + Core.Err.Separator + winner.BestDiamonds);
+                    ? Core.Err.Of("mp.season_won", winner.DisplayName, MatchTrophiesToWin) + Core.Err.Separator + winner.WinNight
+                    : Core.Err.Of("mp.season_best", winner.DisplayName, MatchTrophiesToWin) + Core.Err.Separator + winner.BestDiamonds);
             }
         }
 

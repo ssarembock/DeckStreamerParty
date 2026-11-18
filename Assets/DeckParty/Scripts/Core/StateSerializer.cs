@@ -20,8 +20,10 @@ namespace DeckParty.Core
         /// v12: game modes and teams (Endless Trophies and purchases, team members, their Sub Caps, whose card is whose).
         /// v13: each team member's own Remove a Viewer price (2026-11-17).
         /// v14: Subathon and Double or Nothing armed for this stream (the two streamers added 2026-11-18).
+        /// v15: the season's Trophy goal (3 in competitive multiplayer). v16: each team member's own streamer, active uses,
+        /// cooldown and armed power (2026-11-18).
         /// </summary>
-        const byte FormatVersion = 14;
+        const byte FormatVersion = 16;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -151,6 +153,15 @@ namespace DeckParty.Core
                 // v14: Kai Sonnet's Subathon and Train Wrex's Double or Nothing (armed for this stream)
                 w.Write(s.PartySubathon);
                 w.Write(s.PartyDoubleDown);
+
+                // v15: the season's Trophy goal (3 in competitive multiplayer since 2026-11-18)
+                w.Write((byte)Math.Min(255, Math.Max(1, s.TrophiesToWin)));
+
+                // v16: the second team member's streamer and its active (teams play two streamers since 2026-11-18)
+                w.Write((byte)s.PartnerStreamer);
+                w.Write((short)Math.Min(short.MaxValue, Math.Max(0, s.PartnerPowerUses)));
+                w.Write((byte)Math.Min(255, Math.Max(0, s.PartnerPowerCooldown)));
+                w.Write(s.PartnerPowerArmed);
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -339,6 +350,19 @@ namespace DeckParty.Core
                 {
                     s.PartySubathon = r.ReadBoolean();
                     s.PartyDoubleDown = r.ReadBoolean();
+                }
+
+                // v14 and older: every season won with 4 Trophies.
+                s.TrophiesToWin = version >= 15 ? r.ReadByte() : GameRules.DiamondsToWin;
+
+                // v15 and older: a team played one streamer (member 1 had none of their own).
+                if (version >= 16)
+                {
+                    var partner = (StreamerType)r.ReadByte();
+                    s.PartnerStreamer = StreamerCatalog.IsValid(partner) ? partner : StreamerType.None;
+                    s.PartnerPowerUses = r.ReadInt16();
+                    s.PartnerPowerCooldown = r.ReadByte();
+                    s.PartnerPowerArmed = r.ReadBoolean();
                 }
 
                 int eventCount = ReadCount(r);

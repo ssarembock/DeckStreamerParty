@@ -52,10 +52,11 @@ namespace DeckParty.UI
         }
 
         /// <param name="playerName">The board owner's name (multiplayer), or null.</param>
-        public void Render(PlayerState s, string playerName, Color playerColor, bool anxious)
+        /// <param name="member">Teams: whose streamer the facecam shows (each team member plays their own since 2026-11-18).</param>
+        public void Render(PlayerState s, string playerName, Color playerColor, bool anxious, int member = 0)
         {
             if (s == null) return;
-            var type = s.Streamer;
+            var type = s.StreamerOf(member);
             bool none = type == StreamerType.None;
             if (type != m_Streamer)
             {

@@ -20,8 +20,14 @@ namespace DeckParty.UI
         public bool sideOnLeft;
         [Tooltip("Optional main area that ends where the side panel starts.")]
         public RectTransform mainArea;
-        public float minSideWidth = 420f;
-        public float maxSideWidth = 520f;
+        [Tooltip("The side panel's width on narrow (16:9) screens. 2026-11-18: 315, three quarters of the old 420, so the stream gets more room.")]
+        public float minSideWidth = 315f;
+        [Tooltip("The side panel's width on wide (21:9) screens. 2026-11-18: 390, three quarters of the old 520.")]
+        public float maxSideWidth = 390f;
+        /// <summary>Scenes saved with the old widths (420 / 520) take three quarters of them once (2026-11-18), with no Rebuild.</summary>
+        [SerializeField, HideInInspector] int widthRevision;
+        const int WidthRevision = 1;
+        const float NarrowerSide = 0.75f;
         [Tooltip("Gap between the main area and the side panel, and the screen edge margin.")]
         public float gap = 16f;
 
@@ -63,6 +69,15 @@ namespace DeckParty.UI
             m_Rect.offsetMax = new Vector2(-margin, 0f);
 
             if (sidePanel == null) return;
+            if (widthRevision < WidthRevision)
+            {
+                widthRevision = WidthRevision;
+                if (Mathf.Approximately(minSideWidth, 420f) && Mathf.Approximately(maxSideWidth, 520f))
+                {
+                    minSideWidth *= NarrowerSide;
+                    maxSideWidth *= NarrowerSide;
+                }
+            }
             float side = Mathf.Lerp(minSideWidth, maxSideWidth, Mathf.InverseLerp(1700f, 2520f, width));
             m_LastSideUsed = SideUsed();
             if (sideOnLeft)

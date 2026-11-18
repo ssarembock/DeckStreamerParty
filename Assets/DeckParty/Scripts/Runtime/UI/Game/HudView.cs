@@ -214,11 +214,11 @@ namespace DeckParty.UI
                     if (starPips[i] != null) starPips[i].color = GameIcons.PipColor(ResourceIcon.Plays, i < diamonds, SitePalette.Gold, SitePalette.Off);
             // Endless: Trophies are banked like the other resources (no "/4": there's no win), with the ones in chat beside them.
             if (starsLabel != null && s.IsEndless)
-                starsLabel.text = diamonds > 0 ? $"{s.Trophies}<size=70%><color={faint}> +{diamonds}</color></size>" : s.Trophies.ToString();
+                starsLabel.text = EndlessTrophies(s.Trophies, diamonds, faint);
             else if (starsLabel != null)
                 starsLabel.text = starsIcon != null
-                    ? $"{diamonds}<size=70%><color={faint}>/{GameRules.DiamondsToWin}</color></size>"
-                    : Loc.Get("hud.diamonds", "count", diamonds, "max", GameRules.DiamondsToWin);
+                    ? $"{diamonds}<size=70%><color={faint}>/{PartyEngine.TrophiesToWin(m_State)}</color></size>"
+                    : Loc.Get("hud.diamonds", "count", diamonds, "max", PartyEngine.TrophiesToWin(m_State));
 
             if (m_LastTrouble >= 0 && trouble > m_LastTrouble) UITween.Punch(this, RiskAnchor, 0.3f);
             if (m_LastDiamonds >= 0 && diamonds > m_LastDiamonds) UITween.Punch(this, PlaysAnchor, 0.3f);
@@ -226,6 +226,90 @@ namespace DeckParty.UI
             m_LastBanked = s.IsEndless ? s.Trophies : -1;
             m_LastTrouble = trouble;
             m_LastDiamonds = diamonds;
+
+            // A render in the middle of a scoring sequence (the language changed): keep the running totals on screen.
+            if (m_Tallying) ShowTally(false, false, false);
+        }
+
+        static string EndlessTrophies(int banked, int inChat, string faint) =>
+            inChat > 0 ? $"{banked}<size=70%><color={faint}> +{inChat}</color></size>" : banked.ToString();
+
+        // ------------------------------------------------------------------ the scoring sequence's running totals
+
+        bool m_Tallying;
+        int m_TallyRun;
+        int m_TallyCash;
+        int m_TallyInfluence;
+        int m_TallyBanked;
+        int m_TallyInChat;
+
+        /// <summary>
+        /// The end-of-stream scoring sequence (2026-11-18): the menu bar counts the stream's take up as each chip lands, from
+        /// the numbers it showed during the stream (<paramref name="before"/>, the last live state). Returns this run's number,
+        /// which every chip hands back to <see cref="Tally"/>, so a chip still in the air after the sequence (skipped) changes
+        /// nothing. <see cref="EndTally"/> and the next <see cref="Render"/> show the real totals, which also hold what didn't
+        /// fly (fees the bank couldn't pay, streak bonuses, the party pot...).
+        /// </summary>
+        public int BeginTally(PlayerState before)
+        {
+            m_TallyRun++;
+            if (before == null) return m_TallyRun;
+            m_Tallying = true;
+            m_TallyCash = before.Cash;
+            m_TallyInfluence = before.Influence;
+            m_TallyBanked = before.Trophies;
+            m_TallyInChat = before.Phase == GamePhase.Party ? PartyEngine.DiamondsPresent(before) : 0;
+            ShowTally(false, false, false);
+            return m_TallyRun;
+        }
+
+        /// <summary>
+        /// One chip of the scoring sequence landed: adds its amount to the menu bar's number and punches it. A Trophy chip
+        /// banks a Trophy in Endless (one fewer in chat); otherwise it only punches the Trophies count, which already counts it.
+        /// </summary>
+        public void Tally(int run, int cash, int influence, int trophies)
+        {
+            if (!m_Tallying || run != m_TallyRun) return;
+            m_TallyCash += cash;
+            m_TallyInfluence += influence;
+            if (trophies != 0 && m_State != null && m_State.IsEndless)
+            {
+                int moved = Mathf.Min(trophies, m_TallyInChat);
+                m_TallyBanked += trophies;
+                m_TallyInChat -= moved;
+            }
+            ShowTally(cash != 0, influence != 0, trophies != 0);
+        }
+
+        /// <summary>The scoring sequence is over: the next <see cref="Render"/> shows the real totals.</summary>
+        public void EndTally() => m_Tallying = false;
+
+        /// <summary>
+        /// The running totals on the labels. Cash and Influence never show below zero (the engine settles fees against the
+        /// whole stream's Influence at the end, and Cash never goes negative).
+        /// </summary>
+        void ShowTally(bool punchCash, bool punchInfluence, bool punchTrophies)
+        {
+            int cash = Mathf.Max(0, m_TallyCash);
+            int influence = Mathf.Max(0, m_TallyInfluence);
+            cashLabel.text = cash.ToString();
+            influenceLabel.text = influence.ToString();
+            // The last numbers shown, so the final render only punches what changed after the chips.
+            m_LastCash = cash;
+            m_LastInfluence = influence;
+            if (punchCash) UITween.Punch(this, cashLabel.transform, 0.25f);
+            if (punchInfluence) UITween.Punch(this, influenceLabel.transform, 0.25f);
+
+            if (m_State != null && m_State.IsEndless)
+            {
+                if (starsLabel != null)
+                {
+                    string faint = "#" + ColorUtility.ToHtmlStringRGB(SiteColours.Get(SiteColourRole.FaintText, transform));
+                    starsLabel.text = EndlessTrophies(m_TallyBanked, m_TallyInChat, faint);
+                }
+                m_LastBanked = m_TallyBanked;
+            }
+            if (punchTrophies) UITween.Punch(this, PlaysAnchor, 0.3f);
         }
 
         /// <summary>
@@ -326,10 +410,10 @@ namespace DeckParty.UI
                 if (m_State.Phase == GamePhase.Party) tip.Line(Loc.Get("hud.tip.trophies_in_chat", "count", now));
                 return tip.Section().Detail(Loc.Get("hud.tip.trophies_endless_rule", "stream", PartyEngine.ExtraStreamCost(m_State), "viewer", PartyEngine.ShopViewerCost(m_State)));
             }
-            if (m_State.Phase == GamePhase.Party) tip.Line(Loc.Get("hud.tip.trophies_in_chat_goal", "count", now, "goal", GameRules.DiamondsToWin));
+            if (m_State.Phase == GamePhase.Party) tip.Line(Loc.Get("hud.tip.trophies_in_chat_goal", "count", now, "goal", PartyEngine.TrophiesToWin(m_State)));
             tip.Line(Loc.Get("hud.tip.trophies_owned", "count", m_State.DiamondsOwned()));
             if (m_State.BestDiamonds > 0) tip.Line(Loc.Get("hud.tip.trophies_best", "count", m_State.BestDiamonds));
-            return tip.Section().Detail(Loc.Get("hud.tip.trophies_rule", "goal", GameRules.DiamondsToWin));
+            return tip.Section().Detail(Loc.Get("hud.tip.trophies_rule", "goal", PartyEngine.TrophiesToWin(m_State)));
         }
     }
 }

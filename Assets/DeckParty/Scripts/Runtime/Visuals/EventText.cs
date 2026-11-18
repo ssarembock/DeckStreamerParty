@@ -86,8 +86,8 @@ namespace DeckParty
 
                 case GameEventType.Victory:
                     return GuestVisuals.Colored(mine
-                        ? Loc.Get("log.victory_you", "count", GameRules.DiamondsToWin)
-                        : Loc.Get("log.victory_other", "count", GameRules.DiamondsToWin, "player", owner), UIPalette.Gold);
+                        ? Loc.Get("log.victory_you", "count", PartyEngine.TrophiesToWin(state))
+                        : Loc.Get("log.victory_other", "count", PartyEngine.TrophiesToWin(state), "player", owner), UIPalette.Gold);
 
                 case GameEventType.Defeat:
                     return GuestVisuals.Colored(Loc.Get("log.defeat"), UIPalette.TextDim);
@@ -310,6 +310,10 @@ namespace DeckParty
                     return GameIcons.Tag(Community.Boomer) + " " + GuestVisuals.Colored(Loc.Get("log.boomer_retired", "viewer", GuestVisuals.NameTag(e.Guest)), UIPalette.Orange);
                 case GameEventType.Inheritance:
                     return GameIcons.Tag(Community.Millennial) + " " + Loc.Get("log.inheritance", "viewer", GuestVisuals.NameTag(e.Guest), "amount", GuestVisuals.CashText(e.A));
+                case GameEventType.EarlyRetirement:
+                    return GameIcons.Tag(Community.Boomer) + " " + Loc.Get("log.early_retirement", "viewer", GuestVisuals.NameTag(e.Guest), "values", Values(e.A, e.B));
+                case GameEventType.BoomerStayed:
+                    return GameIcons.Tag(Community.Boomer) + " " + Loc.Get("log.boomer_stayed", "viewer", GuestVisuals.NameTag(e.Guest), "chance", e.A);
                 case GameEventType.TrollsPaid:
                     return GameIcons.Tag(Community.Trolls) + " " + GuestVisuals.Colored(Loc.Get("log.trolls_paid", "values", Amounts(e.A, e.B)), UIPalette.Orange);
                 case GameEventType.DoomApplied:

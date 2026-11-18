@@ -30,27 +30,52 @@ namespace DeckParty.UI
 
         void Awake()
         {
+            // Scenes built before 2026-11-18 tagged the emotes card as the Side panel: it has its own Site Colours entry now.
+            var tag = GetComponentInParent<SiteAreaTag>();
+            if (tag != null && tag.Area == SiteArea.SidePanel) tag.Area = SiteArea.Emotes;
             Build();
             Unlocks.EmoteUnlocked += OnEmoteUnlocked;
+            UISkin.SkinChanged += OnSkinChanged;
         }
 
-        void OnDestroy() => Unlocks.EmoteUnlocked -= OnEmoteUnlocked;
+        void OnDestroy()
+        {
+            Unlocks.EmoteUnlocked -= OnEmoteUnlocked;
+            UISkin.SkinChanged -= OnSkinChanged;
+        }
+
+        /// <summary>UI Skin > Players and emotes changed (edited live while playing): the buttons take the new colours.</summary>
+        void OnSkinChanged() => ApplyLocks();
 
         void OnEnable() => ApplyLocks();
 
         void OnEmoteUnlocked(int index) => ApplyLocks();
 
-        /// <summary>Locked emotes (their unlock achievement not earned yet) stay on the grid, dimmed; pressing one says what unlocks it.</summary>
+        /// <summary>
+        /// Colours the buttons from UI Skin > Players and emotes (background, hover and press tints, picture tint, text colour).
+        /// Locked emotes (their unlock achievement not earned yet) stay on the grid, dimmed; pressing one says what unlocks it.
+        /// </summary>
         public void ApplyLocks()
         {
+            var look = SidePanelLook.OrDefault;
             for (int i = 0; i < m_Backgrounds.Count; i++)
             {
                 bool locked = !Unlocks.IsEmoteUnlocked(i);
-                if (m_Backgrounds[i] != null) m_Backgrounds[i].color = locked ? UIPalette.PanelAlt.WithAlpha(0.35f) : UIPalette.PanelAlt;
+                if (m_Backgrounds[i] != null)
+                {
+                    m_Backgrounds[i].color = locked ? look.emoteColour.WithAlpha(look.emoteColour.a * look.lockedEmoteAlpha) : look.emoteColour;
+                    if (m_Backgrounds[i].TryGetComponent<Button>(out var button))
+                    {
+                        var colors = button.colors;
+                        colors.highlightedColor = look.emoteHoverTint;
+                        colors.pressedColor = look.emotePressedTint;
+                        button.colors = colors;
+                    }
+                }
                 if (i < m_Contents.Count && m_Contents[i] != null)
                 {
-                    var color = m_Contents[i].color;
-                    color.a = locked ? 0.3f : 1f;
+                    var color = m_Contents[i] is TMP_Text ? look.emoteTextColour : look.emoteArtTint;
+                    color.a *= locked ? look.lockedEmoteAlpha : 1f;
                     m_Contents[i].color = color;
                 }
             }

@@ -42,6 +42,10 @@ namespace DeckParty
         SidePanel = 7,
         PopUps = 8,
         Tooltips = 9,
+        /// <summary>The Players card on the left (multiplayer). Unset colours come from <see cref="SidePanel"/> (2026-11-18).</summary>
+        Players = 10,
+        /// <summary>The emotes card on the left (multiplayer). Unset colours come from <see cref="SidePanel"/> (2026-11-18).</summary>
+        Emotes = 11,
     }
 
     /// <summary>One named panel's own colours. Unticked colours use the shared ones.</summary>
@@ -76,19 +80,46 @@ namespace DeckParty
         public Color faintText = SitePalette.TextFaint;
         public List<SiteAreaColours> areas = new List<SiteAreaColours>();
 
-        /// <summary>The colour for a role inside a named panel (its own colour when it overrides it, else the shared one).</summary>
+        /// <summary>
+        /// A panel inside another named panel: the Players and emotes cards are part of the side panel, so a colour they don't
+        /// set themselves comes from the Side panel entry (then the shared colours). None for the others.
+        /// </summary>
+        public static SiteArea ParentOf(SiteArea area) =>
+            area == SiteArea.Players || area == SiteArea.Emotes ? SiteArea.SidePanel : SiteArea.None;
+
+        enum Part { Fill, Border, Text }
+
+        /// <summary>The nearest entry (this panel, then its parent panel) that sets its own <paramref name="part"/>, or null.</summary>
+        SiteAreaColours Setting(SiteArea area, Part part)
+        {
+            for (var current = area; current != SiteArea.None; current = ParentOf(current))
+            {
+                var entry = Find(current);
+                if (entry == null) continue;
+                bool sets = part == Part.Fill ? entry.overrideFill : part == Part.Border ? entry.overrideBorder : entry.overrideText;
+                if (sets) return entry;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// The colour for a role inside a named panel: its own colour when it overrides it, else its parent panel's (Players
+        /// and Emotes: the Side panel), else the shared one.
+        /// </summary>
         public Color Get(SiteColourRole role, SiteArea area)
         {
-            var own = Find(area);
-            bool ownFill = own != null && own.overrideFill;
-            bool ownText = own != null && own.overrideText;
-            var fill = ownFill ? own.fill : panelFill;
-            var ink = ownText ? own.text : text;
+            var fillFrom = Setting(area, Part.Fill);
+            var textFrom = Setting(area, Part.Text);
+            var borderFrom = Setting(area, Part.Border);
+            bool ownFill = fillFrom != null;
+            bool ownText = textFrom != null;
+            var fill = ownFill ? fillFrom.fill : panelFill;
+            var ink = ownText ? textFrom.text : text;
             switch (role)
             {
                 case SiteColourRole.Page: return page;
                 case SiteColourRole.PanelFill: return fill;
-                case SiteColourRole.PanelBorder: return own != null && own.overrideBorder ? own.border : panelBorder;
+                case SiteColourRole.PanelBorder: return borderFrom != null ? borderFrom.border : panelBorder;
                 case SiteColourRole.Divider: return ownFill ? Mix(fill, ink, 0.11f) : divider;
                 case SiteColourRole.SoftFill: return ownFill ? Mix(fill, ink, 0.065f) : softFill;
                 case SiteColourRole.SecondaryText: return ownText ? Mix(ink, fill, 0.3f) : secondaryText;

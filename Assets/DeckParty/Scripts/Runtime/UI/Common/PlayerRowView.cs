@@ -51,6 +51,12 @@ namespace DeckParty.UI
         StreamerType m_Streamer;
         string m_Presence;
 
+        /// <summary>
+        /// The in-game Players panel (2026-11-18): the row takes its colours from UI Skin > Players and emotes (row, your row,
+        /// the stream on screen, hover). The lobby and results rows keep the built-in dark look.
+        /// </summary>
+        public bool UseSkinColours { get; set; }
+
         public void Set(string playerName, string status, Color color, bool ready, bool host, int rank = 0, bool isLocal = false)
         {
             m_Name = playerName;
@@ -63,7 +69,10 @@ namespace DeckParty.UI
             hostIcon.SetActive(host);
             rankLabel.gameObject.SetActive(rank > 0);
             rankLabel.text = rank > 0 ? "#" + rank : string.Empty;
-            if (background != null) background.color = isLocal ? Color.Lerp(UIPalette.PanelAlt, color, 0.15f) : UIPalette.PanelAlt;
+            if (background != null)
+                background.color = UseSkinColours ? SidePanelLook.OrDefault.RowColour(color, isLocal, false)
+                    : isLocal ? Color.Lerp(UIPalette.PanelAlt, color, 0.15f) : UIPalette.PanelAlt;
+            ApplyButtonTints();
         }
 
         /// <summary>Shows the player's streamer (portrait if the row has one, otherwise after the name).</summary>
@@ -126,14 +135,27 @@ namespace DeckParty.UI
             background.raycastTarget = true;
             m_Button.targetGraphic = background;
             var colors = m_Button.colors;
-            colors.highlightedColor = Color.Lerp(Color.white, UIPalette.Teal, 0.35f);
-            colors.pressedColor = Color.Lerp(Color.white, UIPalette.Teal, 0.6f);
+            var look = UseSkinColours ? SidePanelLook.OrDefault : null;
+            colors.highlightedColor = look != null ? look.rowHoverTint : Color.Lerp(Color.white, UIPalette.Teal, 0.35f);
+            colors.pressedColor = look != null ? look.rowPressedTint : Color.Lerp(Color.white, UIPalette.Teal, 0.6f);
             colors.selectedColor = Color.white;
             m_Button.colors = colors;
             var navigation = m_Button.navigation;
             navigation.mode = Navigation.Mode.None;
             m_Button.navigation = navigation;
             m_Button.onClick.AddListener(() => Clicked?.Invoke());
+        }
+
+        /// <summary>The in-game rows follow UI Skin > Players and emotes for their hover and press tints (live while playing).</summary>
+        void ApplyButtonTints()
+        {
+            if (m_Button == null || !UseSkinColours) return;
+            var look = SidePanelLook.OrDefault;
+            var colors = m_Button.colors;
+            if (colors.highlightedColor == look.rowHoverTint && colors.pressedColor == look.rowPressedTint) return;
+            colors.highlightedColor = look.rowHoverTint;
+            colors.pressedColor = look.rowPressedTint;
+            m_Button.colors = colors;
         }
 
         bool m_MuteHooked;
@@ -156,6 +178,82 @@ namespace DeckParty.UI
             if (muteTooltip != null) muteTooltip.Text = Loc.Get(muted ? "players.unmute" : "players.mute", "player", m_Name ?? string.Empty);
         }
 
+        /// <summary>
+        /// The in-game Players panel (narrower since 2026-11-18, three quarters of its old width): packs the row from both
+        /// ends so the name and status get every pixel the visible pieces leave. Left: the rank (only when shown), a smaller
+        /// colour dot and the streamer; right: the mute button, the ready tick and the host crown, only those showing.
+        /// Call after <see cref="Set"/>, <see cref="SetStreamer"/> and <see cref="SetMute"/>.
+        /// </summary>
+        public void FitCompact()
+        {
+            const float edge = 8f;
+            const float gap = 6f;
+            float left = edge;
+            if (rankLabel != null && rankLabel.gameObject.activeSelf)
+            {
+                PlaceLeft(rankLabel.rectTransform, left, 40f, 40f);
+                left += 40f + gap;
+            }
+            if (colorSwatch != null)
+            {
+                PlaceLeft(colorSwatch.rectTransform, left, 18f, 18f);
+                left += 18f + gap;
+            }
+            var streamerFrame = streamerPortrait != null ? streamerPortrait.transform.parent as RectTransform : null;
+            if (streamerFrame != null && streamerFrame.gameObject.activeSelf)
+            {
+                PlaceLeft(streamerFrame, left, 46f, 46f);
+                left += 46f + gap + 2f;
+            }
+
+            float right = edge;
+            if (muteButton != null && muteButton.gameObject.activeSelf)
+            {
+                PlaceRight((RectTransform)muteButton.transform, right, 38f);
+                right += 38f + gap;
+            }
+            if (readyIcon != null && readyIcon.activeSelf)
+            {
+                PlaceRight((RectTransform)readyIcon.transform, right, 30f);
+                right += 30f + gap;
+            }
+            if (hostIcon != null && hostIcon.activeSelf)
+            {
+                PlaceRight((RectTransform)hostIcon.transform, right, 28f);
+                right += 28f + gap;
+            }
+
+            if (nameLabel != null)
+            {
+                nameLabel.rectTransform.offsetMin = new Vector2(left, nameLabel.rectTransform.offsetMin.y);
+                nameLabel.rectTransform.offsetMax = new Vector2(-right, nameLabel.rectTransform.offsetMax.y);
+                nameLabel.enableAutoSizing = true;
+                nameLabel.fontSizeMin = 16f;
+                nameLabel.fontSizeMax = 24f;
+            }
+            if (statusLabel != null)
+            {
+                statusLabel.rectTransform.offsetMin = new Vector2(left, statusLabel.rectTransform.offsetMin.y);
+                statusLabel.rectTransform.offsetMax = new Vector2(-right, statusLabel.rectTransform.offsetMax.y);
+            }
+        }
+
+        static void PlaceLeft(RectTransform rect, float x, float width, float height)
+        {
+            rect.anchorMin = rect.anchorMax = new Vector2(0f, 0.5f);
+            rect.pivot = new Vector2(0f, 0.5f);
+            rect.sizeDelta = new Vector2(width, height);
+            rect.anchoredPosition = new Vector2(x, 0f);
+        }
+
+        static void PlaceRight(RectTransform rect, float inset, float size)
+        {
+            rect.anchorMin = rect.anchorMax = new Vector2(1f, 0.5f);
+            rect.pivot = new Vector2(1f, 0.5f);
+            rect.sizeDelta = new Vector2(size, size);
+            rect.anchoredPosition = new Vector2(-inset, 0f);
+        }
+
         /// <summary>Outlines the row whose stream is on screen. Call after <see cref="Set"/>.</summary>
         public void SetViewed(bool viewed, Color color)
         {
@@ -166,9 +264,10 @@ namespace DeckParty.UI
                 if (!TryGetComponent(out m_Outline)) m_Outline = gameObject.AddComponent<Outline>();
                 m_Outline.effectDistance = new Vector2(3f, -3f);
             }
-            m_Outline.enabled = viewed;
-            m_Outline.effectColor = color;
-            if (viewed) background.color = Color.Lerp(UIPalette.PanelAlt, color, 0.3f);
+            var skin = UseSkinColours ? SidePanelLook.OrDefault : null;
+            m_Outline.enabled = viewed && (skin == null || skin.watchedOutline);
+            m_Outline.effectColor = skin != null && skin.watchedOutlineColour.use ? skin.watchedOutlineColour.colour : color;
+            if (viewed) background.color = skin != null ? skin.RowColour(color, m_IsLocal, true) : Color.Lerp(UIPalette.PanelAlt, color, 0.3f);
         }
     }
 }

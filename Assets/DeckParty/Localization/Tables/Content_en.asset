@@ -96,8 +96,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274896
-    m_Localized: Loyal Fans, Fish, twelve random viewers and three random Trophies.
-      Win five in a row to earn the Cherry.
+    m_Localized: Loyal Fans, Fish, thirteen random viewers (at least three carrying
+      {icon:risk}) and three random Trophies. Win five in a row to earn the Cherry.
     m_Metadata:
       m_Items: []
   - m_Id: 433274897

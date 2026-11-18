@@ -501,7 +501,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802215475863552
-    m_Localized: "\u4E3A\u4F60\u7684\u961F\u4F0D\u9009\u62E9\u4E3B\u64AD\uFF0C\u961F\u53CB\u4E5F\u7528\u8FD9\u4F4D\u4E3B\u64AD\u3002"
+    m_Localized: "\u9009\u62E9\u4F60\u81EA\u5DF1\u7684\u4E3B\u64AD\u3002\u961F\u53CB\u9009\u62E9\u4ED6\u4EEC\u7684\uFF0C\u4F60\u4EEC\u4E0D\u80FD\u9009\u540C\u4E00\u4F4D\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 5802215475863553
@@ -582,6 +582,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6388739582025729
     m_Localized: "\u672A\u89E3\u9501\u3002{requirement}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478701950230528
+    m_Localized: "\u961F\u53CB"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478702021533696
+    m_Localized: "\u961F\u53CB {player} \u5DF2\u9009\u62E9\u8FD9\u4F4D\u4E3B\u64AD\uFF0C\u8BF7\u6362\u4E00\u4F4D\u3002"
     m_Metadata:
       m_Items: []
   references:

@@ -18,6 +18,12 @@ namespace DeckParty.UI
         public string headline;
         /// <summary>The summary lines (icons and numbers), already formatted.</summary>
         public string body;
+
+        /// <summary>Teams (2026-11-18): a second streamer shown beside the first (the team's other player).</summary>
+        public bool hasSecond;
+        public Sprite portrait2;
+        public Color color2 = Color.white;
+        public string initials2;
     }
 
     /// <summary>One player's column in the stream / shop summary pop-up: the streamer avatar, name, streamer and summary.</summary>
@@ -32,21 +38,19 @@ namespace DeckParty.UI
         [SerializeField] internal TMP_Text headlineLabel;
         [SerializeField] internal TMP_Text bodyLabel;
 
+        // Teams: a copy of the avatar frame for the second streamer, made the first time it's needed (no Rebuild needed).
+        RectTransform m_Frame;
+        Vector2 m_FramePosition;
+        RectTransform m_Frame2;
+        Image m_Portrait2;
+        Image m_Placeholder2;
+        TMP_Text m_Initials2;
+
         public void Bind(RecapEntry entry)
         {
-            bool art = entry.portrait != null;
-            if (portrait != null)
-            {
-                portrait.sprite = entry.portrait;
-                portrait.enabled = art;
-                portrait.preserveAspect = true;
-            }
-            if (placeholder != null)
-            {
-                placeholder.gameObject.SetActive(!art);
-                placeholder.color = entry.color;
-            }
-            if (initialsLabel != null) initialsLabel.text = entry.initials ?? "?";
+            ShowAvatar(portrait, placeholder, initialsLabel, entry.portrait, entry.color, entry.initials);
+            ArrangeAvatars(entry.hasSecond);
+            if (entry.hasSecond && m_Frame2 != null) ShowAvatar(m_Portrait2, m_Placeholder2, m_Initials2, entry.portrait2, entry.color2, entry.initials2);
             if (nameLabel != null) nameLabel.text = entry.name ?? string.Empty;
             if (streamerLabel != null)
             {
@@ -59,6 +63,54 @@ namespace DeckParty.UI
                 headlineLabel.gameObject.SetActive(!string.IsNullOrEmpty(entry.headline));
             }
             if (bodyLabel != null) bodyLabel.text = LightText.AdaptOn(bodyLabel.transform, entry.body ?? string.Empty);
+        }
+
+        static void ShowAvatar(Image art, Image fallback, TMP_Text initials, Sprite sprite, Color color, string letters)
+        {
+            bool has = sprite != null;
+            if (art != null)
+            {
+                art.sprite = sprite;
+                art.enabled = has;
+                art.preserveAspect = true;
+            }
+            if (fallback != null)
+            {
+                fallback.gameObject.SetActive(!has);
+                fallback.color = color;
+            }
+            if (initials != null) initials.text = letters ?? "?";
+        }
+
+        /// <summary>
+        /// One avatar in the middle, or (teams) two overlapping a little, side by side. The frame is the avatar's ring holder
+        /// (Frame > Mask > Art in the built column); the copy is made from it once.
+        /// </summary>
+        void ArrangeAvatars(bool two)
+        {
+            if (m_Frame == null)
+            {
+                var mask = portrait != null ? portrait.transform.parent : null;
+                m_Frame = mask != null ? mask.parent as RectTransform : null;
+                if (m_Frame == null) return;
+                m_FramePosition = m_Frame.anchoredPosition;
+            }
+            if (two && m_Frame2 == null)
+            {
+                m_Frame2 = Instantiate(m_Frame, m_Frame.parent);
+                m_Frame2.name = m_Frame.name + "2";
+                foreach (var image in m_Frame2.GetComponentsInChildren<Image>(true))
+                {
+                    if (image.name == portrait.name) m_Portrait2 = image;
+                    else if (placeholder != null && image.name == placeholder.name) m_Placeholder2 = image;
+                }
+                m_Initials2 = m_Frame2.GetComponentInChildren<TMP_Text>(true);
+            }
+            float shift = two ? m_Frame.rect.width * 0.45f : 0f;
+            m_Frame.anchoredPosition = m_FramePosition - new Vector2(shift, 0f);
+            if (m_Frame2 == null) return;
+            m_Frame2.gameObject.SetActive(two);
+            m_Frame2.anchoredPosition = m_FramePosition + new Vector2(shift, 0f);
         }
     }
 }

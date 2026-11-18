@@ -41,7 +41,7 @@ namespace DeckParty.Core
 
     /// <summary>
     /// Rule data for one streamer. Names and descriptions are localized on the Unity side (keys "streamer.&lt;Type&gt;.*").
-    /// Actives are paid in Influence, and like raising the Sub Cap each use costs more (up to <see cref="StreamerCatalog.MaxPowerCost"/>).
+    /// Actives are paid in Influence, and like raising the Sub Cap each use costs more (no maximum).
     /// </summary>
     public sealed class StreamerInfo
     {
@@ -78,8 +78,6 @@ namespace DeckParty.Core
         public const int RaidHeat = 1;
         /// <summary>Raids alone can't push a solo stream past this much Deplatform Risk (a team's: <see cref="PartyEngine.RiskLimit"/> - 1).</summary>
         public const int MaxRaidHeat = GameRules.RaidTroubleThreshold - 1;
-        /// <summary>An active never costs more than this per use (the same ceiling as raising the Sub Cap).</summary>
-        public const int MaxPowerCost = GameRules.MaxExpansionCost;
         public const int SmokeBombShield = 1;
         public const int GiveawayBonus = 1;
         public const int WealthTaxAmount = 2;
@@ -164,22 +162,23 @@ namespace DeckParty.Core
         public static bool InMask(StreamerType type, uint mask) => (mask & MaskOf(type)) != 0;
 
         /// <summary>
-        /// The Influence the next use costs: it grows with every use, like raising the Sub Cap, up to <see cref="MaxPowerCost"/>.
+        /// The Influence the next use costs: it grows with every use, like raising the Sub Cap, with no maximum (2026-11-18).
         /// The Boomers' discount for this shop comes off (never below 0), as it does for Sub Cap upgrades.
         /// </summary>
-        public static int Cost(PlayerState s)
+        /// <param name="member">Teams: whose active (each member plays their own streamer, with their own price).</param>
+        public static int Cost(PlayerState s, int member = 0)
         {
-            var info = Get(s.Streamer);
+            var info = Get(s.StreamerOf(member));
             if (!info.IsActive) return 0;
-            return Math.Max(0, BaseCost(s) - Math.Max(0, s.ExpansionDiscount));
+            return Math.Max(0, BaseCost(s, member) - Math.Max(0, s.ExpansionDiscount));
         }
 
         /// <summary>The next use's price before the Boomers' discount.</summary>
-        public static int BaseCost(PlayerState s)
+        public static int BaseCost(PlayerState s, int member = 0)
         {
-            var info = Get(s.Streamer);
+            var info = Get(s.StreamerOf(member));
             if (!info.IsActive) return 0;
-            return Math.Min(MaxPowerCost, info.InfluenceCost + info.InfluenceStep * Math.Max(0, s.PowerUses));
+            return info.InfluenceCost + info.InfluenceStep * Math.Max(0, s.PowerUsesOf(member));
         }
     }
 }

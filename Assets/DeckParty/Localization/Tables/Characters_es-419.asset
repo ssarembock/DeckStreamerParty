@@ -1249,6 +1249,15 @@ MonoBehaviour:
       que el chat pase el cupo.'
     m_Metadata:
       m_Items: []
+  - m_Id: 6526835229286400
+    m_Localized: Magnate de los medios tradicionales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835241869312
+    m_Localized: "Compr\xF3 un canal para seguir siendo relevante. N\xFAmeros grandes,
+      y su Jubilaci\xF3n anticipada cobra un stream entero."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

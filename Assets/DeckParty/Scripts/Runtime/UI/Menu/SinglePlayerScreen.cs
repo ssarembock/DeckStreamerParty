@@ -120,7 +120,8 @@ namespace DeckParty.UI
             else if (scenario.IsRandom)
                 progress.Append(Loc.Get("single.streak", ("streak", $"<color=#3DDBD9>{ProgressStore.RandomStreak}</color>"), ("goal", ProgressStore.CherryStreak), ("best", ProgressStore.BestRandomStreak)));
             else progress.Append($"<color=#B9AED6>{Loc.Get("single.sandbox")}</color>");
-            progress.Append("    ").Append(Loc.Get(Mode == SinglePlayerMode.Endless ? "single.endless_streams" : "single.nights", "count", GameRules.DefaultNights));
+            progress.Append("    ").Append(Loc.Get(Mode == SinglePlayerMode.Endless ? "single.endless_streams" : "single.nights", "count",
+                Mode == SinglePlayerMode.Couch ? GameRules.CompetitiveStreams : GameRules.DefaultNights));
             // The streamer is picked last, after Start (like a fighting game), so it isn't shown here.
             progressLabel.text = progress.ToString();
 

@@ -8,27 +8,36 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// The live chat: one card slot per Sub Cap space, in rows of at most <see cref="GameRules.HouseColumns"/>, so the chat
-    /// grows as a rectangle and starts a new row each time one fills. Cards shrink to fit, but never below
-    /// <see cref="MinCardScale"/>: then rows may get longer, and past that the area scrolls. The cards keep clear of
-    /// <see cref="avoid"/> (the facecam in the stream's bottom-right corner).
+    /// The live chat: one seat per Sub Cap space (plus the Hype Men's spare seats), at most <see cref="Columns"/> (10) to a
+    /// row and <see cref="MaxRows"/> (4) rows, so a player's chat holds up to 40 Sub Cap seats (2026-11-18). The chat never scrolls:
+    /// the seats resize to fit, in the row length that gives the biggest seats. Teams split the chat in two, with up to 50
+    /// seats (5 rows of 10, <see cref="TeamMaxRows"/>) on each side. The Hype Men's spare seats past a full (or nearly full)
+    /// chat go in one extra row under the full ones. The cards keep clear of <see cref="avoid"/> (when set).
     /// </summary>
     public sealed class HouseView : MonoBehaviour
     {
-        /// <summary>Cards never get smaller than this (as a fraction of the 200x290 design size); the chat scrolls instead.</summary>
+        /// <summary>
+        /// The smallest seat size the effects are tuned for (emoji sizes; a fraction of the design size). Seats can get smaller
+        /// than this in a very full chat, since the chat no longer scrolls.
+        /// </summary>
         public const float MinCardScale = 0.62f;
         /// <summary>Cards never get bigger than this.</summary>
         public const float MaxCardScale = 1.15f;
-        /// <summary>Most columns at 16:9; wider screens get proportionally more, up to <see cref="MaxColumns"/>.</summary>
-        public const int BaseColumns = GameRules.HouseColumns;
-        public const int MaxColumns = 12;
+        /// <summary>Most seats in one row (<see cref="GameRules.HouseColumns"/>).</summary>
+        public const int Columns = GameRules.HouseColumns;
+        /// <summary>Most rows in one player's chat (<see cref="GameRules.HouseMaxRows"/>). Only the viewer who crashes a full chat's server shows in a row past it, for a moment.</summary>
+        public const int MaxRows = GameRules.HouseMaxRows;
+        /// <summary>Teams: most rows on each player's side (<see cref="GameRules.TeamHouseMaxRows"/>, 5 since the 2026-11-18 UI updates: 50 seats a player).</summary>
+        public const int TeamMaxRows = GameRules.TeamHouseMaxRows;
+        /// <summary>A layout with more rows is only picked when it makes the seats at least this much bigger (one tidy row beats two ragged ones).</summary>
+        const float MoreRowsGain = 1.08f;
 
         [SerializeField] internal RectTransform area;
         [SerializeField] internal GridLayoutGroup grid;
         [SerializeField] internal GuestCardView cardPrefab;
         [SerializeField] internal TMP_Text headerLabel;
         [SerializeField] internal TMP_Text hintLabel;
-        [Tooltip("Optional: lets the chat scroll when cards hit their minimum size.")]
+        [Tooltip("Optional: the chat's ScrollRect (scenes built before 2026-11-18). The chat no longer scrolls; it stays switched off.")]
         [SerializeField] internal ScrollRect scroll;
         [Tooltip("Optional: a rect overlapping the chat that the cards keep clear of (the facecam).")]
         [SerializeField] internal RectTransform avoid;
@@ -136,8 +145,8 @@ namespace DeckParty.UI
             if (hintLabel != null)
             {
                 int trouble = PartyEngine.NetTrouble(s);
-                if (!s.IsEndless && PartyEngine.DiamondsPresent(s) >= GameRules.DiamondsToWin)
-                    hintLabel.text = $"<color=#FFC94A><b>{Loc.Get("chat.hint.win", "count", GameRules.DiamondsToWin)}</b></color>";
+                if (!s.IsEndless && PartyEngine.DiamondsPresent(s) >= PartyEngine.TrophiesToWin(s))
+                    hintLabel.text = $"<color=#FFC94A><b>{Loc.Get("chat.hint.win", "count", PartyEngine.TrophiesToWin(s))}</b></color>";
                 else if (trouble >= PartyEngine.RiskLimit(s) - 1)
                     hintLabel.text = $"<color=#FF5A5A>{Loc.Get("chat.hint.risk")}</color>";
                 else if (s.EmptySpaces == 0)
@@ -186,7 +195,7 @@ namespace DeckParty.UI
         /// Teams: the chat split down the middle. Member 0's viewers and seats on the left, member 1's on the right, with one
         /// line between them. Each side lists its viewers in joining order, then its empty seats; the Hype Men's free spare
         /// seats go on the side of the first Hype Man in chat. Both sides always use the same seat size and fit inside the chat
-        /// like the solo layout: seats shrink and wrap into more rows, and only past the minimum size does the chat scroll.
+        /// like the solo layout: up to 10 to a row and 5 rows a side (50 seats per player), plus a row for the Hype Men's spare seats, resized to fit, never scrolling.
         /// </summary>
         void RenderTeam(PlayerState s)
         {
@@ -213,7 +222,12 @@ namespace DeckParty.UI
                 int empty = Math.Max(0, s.CapacityOf(side) - (s.OccupancyOf(side) - PartyEngine.HypeSeated(s, side)));
                 for (int k = 0; k < empty; k++) cells.Add(new Cell { Kind = CellKind.Empty });
                 if (side == spareSide)
-                    for (int k = Math.Max(0, spare - seated); k > 0; k--) cells.Add(new Cell { Kind = CellKind.Spare });
+                {
+                    // The spare seats never count against the side's 50 Sub Cap seats: past them they take the extra row.
+                    int free = Math.Min(Math.Max(0, spare - seated),
+                        Math.Max(0, GameRules.TeamMaxCapacity + GameRules.HypeRowSeats - s.CapacityOf(side) - PartyEngine.HypeSeated(s, side)));
+                    for (int k = free; k > 0; k--) cells.Add(new Cell { Kind = CellKind.Spare });
+                }
             }
 
             EnterTeamLayout();
@@ -315,10 +329,8 @@ namespace DeckParty.UI
 
         /// <summary>
         /// Teams: sizes and places both sides. Each side gets half the chat's width (less the divider's gap) and the same
-        /// number of columns, picked like the solo chat: rows of at most half the solo row, more columns only when the seats
-        /// would otherwise get too small, and the biggest seats that fit both the width and the height. Below the minimum
-        /// seat size the columns are cut to what fits the width at that size and the chat scrolls down instead, so nothing
-        /// ever hangs over the sides.
+        /// number of columns, picked like the solo chat (<see cref="BestColumns"/>): at most 10 to a row and 5 rows a side (one more for spare seats), the
+        /// biggest seats that fit both the width and the height. The chat never scrolls.
         /// </summary>
         void LayoutTeam()
         {
@@ -327,56 +339,26 @@ namespace DeckParty.UI
 
             int widest = Mathf.Max(1, Mathf.Max(m_SideCounts[0], m_SideCounts[1]));
             int total = m_SideCounts[0] + m_SideCounts[1];
-            float spacing = Mathf.Lerp(18f, 8f, Mathf.InverseLerp(5, GameRules.MaxCapacity, total));
+            float spacing = Spacing(total, 2 * GameRules.TeamMaxCapacity);
             var padding = grid.padding;
             int top = m_SoloTopPadding + TeamLabelBand;
             float middle = DividerWidth + 2f * DividerGap;
             float sideWidth = Mathf.Max(1f, (m_LastAreaSize.x - padding.horizontal - middle) * 0.5f);
             float height = Mathf.Max(1f, m_LastAreaSize.y - top - padding.bottom);
 
-            // Wider chats allow longer rows when the seats would otherwise get too small (as in the solo chat).
-            int baseColumns = Mathf.Max(1, BaseColumns / 2);
-            int maxColumns = Mathf.Max(baseColumns, MaxColumns / 2);
-            int columns = Mathf.Clamp(widest, 1, baseColumns);
-            float scale = TeamScale(widest, columns, sideWidth, height, spacing);
-            if (scale < MinCardScale)
-            {
-                for (int c = columns + 1; c <= Mathf.Min(widest, maxColumns); c++)
-                {
-                    float candidate = TeamScale(widest, c, sideWidth, height, spacing);
-                    if (candidate > scale + 0.001f)
-                    {
-                        scale = candidate;
-                        columns = c;
-                    }
-                }
-            }
-
-            float finalScale = Mathf.Min(scale, MaxCardScale);
-            bool scrolling = false;
-            if (finalScale < MinCardScale)
-            {
-                // Too many seats to stay readable: the minimum size, as many columns as fit the width, then scrolling. A side
-                // too narrow for even one seat at the minimum gets smaller seats instead of spilling over the edge.
-                finalScale = Mathf.Min(MinCardScale, CardScaleFor(sideWidth, 1, spacing, true));
-                float cellWidth = Design.x * finalScale;
-                columns = Mathf.Clamp(Mathf.FloorToInt((sideWidth + spacing) / (cellWidth + spacing)), 1, Mathf.Max(1, widest));
-                int neededRows = Mathf.CeilToInt(widest / (float)columns);
-                scrolling = neededRows * Design.y * finalScale + (neededRows - 1) * spacing > height + 0.5f;
-            }
-
+            int columns = BestColumns(widest, sideWidth, height, spacing, TeamMaxRows, out float finalScale);
             int rows = Mathf.Max(1, Mathf.CeilToInt(widest / (float)columns));
             var cell = CellAt(finalScale);
             CardScale = finalScale;
             grid.spacing = new Vector2(spacing, spacing);
             grid.cellSize = cell;
-            if (scroll != null) scroll.vertical = scrolling;
+            StopScrolling();
 
             // The content: the name band, the rows, the bottom padding. Centred in the chat like the solo grid.
             float rowsHeight = rows * cell.y + (rows - 1) * spacing;
             var gridRect = (RectTransform)grid.transform;
             gridRect.sizeDelta = new Vector2(0f, top + rowsHeight + padding.bottom);
-            gridRect.anchoredPosition = new Vector2(0f, scrolling ? gridRect.anchoredPosition.y : 0f);
+            gridRect.anchoredPosition = Vector2.zero;
 
             // Each side's block hugs the divider; its rows fill outwards from there, left to right as usual.
             float blockWidth = columns * cell.x + (columns - 1) * spacing;
@@ -409,11 +391,50 @@ namespace DeckParty.UI
             }
         }
 
-        /// <summary>Teams: the seat scale that fits <paramref name="seats"/> seats per side in rows of <paramref name="columns"/>.</summary>
-        float TeamScale(int seats, int columns, float sideWidth, float height, float spacing)
+        /// <summary>
+        /// The row length for <paramref name="seats"/> seats in a width x height space, and the seat scale it gives: at most
+        /// <see cref="Columns"/> (10) to a row and <paramref name="maxRows"/> rows (4 solo, 5 a side in a team; a chat over its
+        /// limit for a moment gets the rows it needs), the biggest seats that fit. More rows only win when they make the seats clearly bigger
+        /// (<see cref="MoreRowsGain"/>), so a short chat stays on one row.
+        /// </summary>
+        int BestColumns(int seats, float width, float height, float spacing, int maxRows, out float scale)
         {
-            int rows = Mathf.CeilToInt(seats / (float)columns);
-            return Mathf.Min(CardScaleFor(sideWidth, columns, spacing, true), CardScaleFor(height, rows, spacing, false));
+            seats = Mathf.Max(1, seats);
+            if (seats > maxRows * Columns)
+            {
+                // Past the full rows (the Hype Men's spare seats on a chat at or near its limit, or the viewer crashing a full
+                // chat's server): every row stays 10 long, so the extra seats read as their own row under the full ones.
+                scale = Mathf.Max(0.05f, Mathf.Min(ScaleFor(seats, Columns, width, height, spacing), MaxCardScale));
+                return Columns;
+            }
+            int most = Mathf.Min(seats, Columns);
+            int rowsAllowed = Mathf.Max(maxRows, Mathf.CeilToInt(seats / (float)Columns));
+            int fewest = Mathf.Clamp(Mathf.CeilToInt(seats / (float)rowsAllowed), 1, most);
+
+            int best = most;
+            scale = Mathf.Min(ScaleFor(seats, most, width, height, spacing), MaxCardScale);
+            for (int columns = most - 1; columns >= fewest; columns--)
+            {
+                float candidate = Mathf.Min(ScaleFor(seats, columns, width, height, spacing), MaxCardScale);
+                if (candidate <= scale * MoreRowsGain) continue;
+                scale = candidate;
+                best = columns;
+            }
+            // Never zero or negative (a tiny chat area while the screen lays out).
+            scale = Mathf.Max(0.05f, scale);
+            return best;
+        }
+
+        /// <summary>The gap between seats: roomy in a small chat, tighter as it fills (<paramref name="most"/> seats = the tightest).</summary>
+        static float Spacing(int seats, int most) => Mathf.Lerp(18f, 8f, Mathf.InverseLerp(5, most, seats));
+
+        /// <summary>The chat never scrolls (2026-11-18): the ScrollRect older scenes have stays off, with its content at rest.</summary>
+        void StopScrolling()
+        {
+            if (scroll == null) return;
+            scroll.vertical = false;
+            scroll.horizontal = false;
+            scroll.velocity = Vector2.zero;
         }
 
         void EnsureCards(int capacity)
@@ -439,57 +460,27 @@ namespace DeckParty.UI
             m_LastObstacle = Obstacle();
             if (m_LastAreaSize.x <= 1f || m_LastAreaSize.y <= 1f) return;
 
-            float spacing = Mathf.Lerp(18f, 8f, Mathf.InverseLerp(5, GameRules.MaxCapacity, capacity));
+            float spacing = Spacing(capacity, GameRules.MaxCapacity);
             grid.spacing = new Vector2(spacing, spacing);
             var padding = grid.padding;
             float width = m_LastAreaSize.x - padding.horizontal;
             float height = m_LastAreaSize.y - padding.vertical;
 
-            // Wider screens allow longer rows when the cards would otherwise get too small (16:9 -> 9, 21:9 -> 11...).
-            float aspect = m_LastAreaSize.x / Mathf.Max(1f, m_LastAreaSize.y);
-            const float referenceAspect = 1464f / 790f; // the chat area's shape on a 1920x1080 screen
-            int maxColumns = Mathf.Clamp(Mathf.RoundToInt(BaseColumns * aspect / referenceAspect), BaseColumns, MaxColumns);
-
-            // Rows of at most HouseColumns: the chat is a rectangle that gains a row each time one fills up.
-            int columns = Mathf.Clamp(capacity, 1, BaseColumns);
-            float scale = ScaleFor(capacity, columns, width, height, spacing);
-
-            if (scale < MinCardScale)
-            {
-                // Too many rows to stay readable: longer rows (the biggest cards that fit), then scrolling.
-                for (int c = columns + 1; c <= Mathf.Min(capacity, maxColumns); c++)
-                {
-                    float candidate = ScaleFor(capacity, c, width, height, spacing);
-                    if (candidate > scale + 0.001f)
-                    {
-                        scale = candidate;
-                        columns = c;
-                    }
-                }
-            }
-
-            float finalScale = Mathf.Min(scale, MaxCardScale);
-            int finalColumns = columns;
-            bool scrolling = finalScale < MinCardScale;
-            if (scrolling)
-            {
-                finalScale = MinCardScale;
-                float cellW = Design.x * finalScale;
-                finalColumns = Mathf.Clamp(Mathf.FloorToInt((width + spacing) / (cellW + spacing)), 1, maxColumns);
-            }
+            // At most 10 to a row and 4 rows (40 seats) plus the spare seats' row, resized to fit: the chat never scrolls.
+            int columns = BestColumns(capacity, width, height, spacing, MaxRows, out float finalScale);
 
             // Keep the cards clear of the facecam: slide the rectangle left, or narrow it when there's no room to slide.
             float shift = 0f;
-            if (!scrolling && m_LastObstacle.x > 0f && m_LastObstacle.y > 0f)
-                shift = AvoidObstacle(capacity, finalColumns, ref finalScale, width, height, spacing);
+            if (m_LastObstacle.x > 0f && m_LastObstacle.y > 0f)
+                shift = AvoidObstacle(capacity, columns, ref finalScale, width, height, spacing);
 
             CardScale = finalScale;
             grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            grid.constraintCount = finalColumns;
+            grid.constraintCount = columns;
             grid.cellSize = CellAt(finalScale);
-            if (scroll != null) scroll.vertical = scrolling;
+            StopScrolling();
             var gridRect = (RectTransform)grid.transform;
-            gridRect.anchoredPosition = new Vector2(shift, gridRect.anchoredPosition.y);
+            gridRect.anchoredPosition = new Vector2(shift, 0f);
 
             foreach (var card in m_Cards) card.SetScale(finalScale);
         }
@@ -534,7 +525,7 @@ namespace DeckParty.UI
 
             // No room to slide: fit the rectangle to the width left of the facecam and centre it there.
             float room = Mathf.Max(1f, obstacleLeft);
-            scale = Mathf.Max(MinCardScale, Mathf.Min(scale, CardScaleFor(room, columns, spacing, true)));
+            scale = Mathf.Max(0.05f, Mathf.Min(scale, CardScaleFor(room, columns, spacing, true)));
             float narrowW = columns * Design.x * scale + (columns - 1) * spacing;
             return Mathf.Min(0f, (room - narrowW) * 0.5f - (width - narrowW) * 0.5f);
         }

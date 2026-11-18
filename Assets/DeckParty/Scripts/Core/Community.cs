@@ -78,13 +78,13 @@ namespace DeckParty.Core
     /// Community rules and tuning. Chances are whole percentages, rolled with the season's deterministic RNG, so the host
     /// and every client agree. The communities in the game (2026-11-16, StreamersViewersCommunities.md):
     /// <list type="bullet">
-    /// <item>Core Fanbase: 10% per point (max 3 points, 30%) that each Core Fanbase viewer scores twice (the scoring plays twice).</item>
+    /// <item>Core Fanbase: 10% per point (max 5 points, 50%; 2026-11-18) that each Core Fanbase viewer scores twice (the scoring plays twice).</item>
     /// <item>Staff: a flat +1 Influence per point (max 3) when the stream is scored.</item>
-    /// <item>Boomers: levels instead of points (level 1 at 2 different Boomers in chat, level 2 at 4). Each level makes Sub Cap
-    /// upgrades and the streamer's active 1 Influence cheaper in your next shop (never below 0). After a scored stream each
-    /// Boomer in chat has a 10% chance to leave your Audience for good (and a Millennial inherits).</item>
-    /// <item>Millennials: each time a Boomer leaves your Audience, a random Millennial you own permanently earns +1 Cash,
-    /// once per point (at least once).</item>
+    /// <item>Boomers (2026-11-18): every Boomer without an action of its own has Early Retirement: the whole chat scores right
+    /// now (banked, the stream goes on), then the Boomer retires (leaves your Audience for good). The points (max 2) lower
+    /// that chance: 100% / 50% / 25%. The old shop discount and the 10% retirement after scored streams are gone.</item>
+    /// <item>Millennials: each time a Boomer retires, a random Millennial you own permanently earns +1 Cash, +1 more per point
+    /// (max 2 points, +3; 2026-11-18).</item>
     /// <item>Gen-Z: after a scored stream, each Gen-Z viewer in chat permanently gains +1 Cash or +1 Influence (random) per point.</item>
     /// <item>Gatekeepers: a Gatekeeper's action sends random other viewers back to the queue: 3 at 0 points, 6 at 1 point,
     /// everyone else at 2 points.</item>
@@ -114,22 +114,30 @@ namespace DeckParty.Core
         // --- V5 communities ---
         // Viewer card edits (2026-11-08, Communities.csv): Core Fanbase 20% a point up to 4, Staff and Content 30% up to 3.
         // 2026-11-10 (user request): Core Fanbase 10% a point up to 30% (was 20% up to 80%).
+        // 2026-11-18 (community updates): up to 5 points, 50% (6 different Core Fanbase viewers in chat).
         public const int CoreFanbasePercentPerPoint = 10;
-        public const int CoreFanbaseMaxPoints = 3;
+        public const int CoreFanbaseMaxPoints = 5;
         /// <summary>Staff (2026-11-10): Influence the stream earns per point when scored (it used to be a chance to waive fees).</summary>
         public const int StaffInfluencePerPoint = 1;
         public const int StaffMaxPoints = 3;
         public const int ContentPercentPerPoint = 30;
         public const int ContentMaxPoints = 3;
-        /// <summary>Boomers: Influence off each Sub Cap upgrade and each use of the streamer's active in the next shop, per level.</summary>
+        /// <summary>
+        /// The Boomers' old shop discount (Influence off Sub Cap upgrades and the active, per level). Retired on 2026-11-18:
+        /// the Boomers' points now lower the chance that Early Retirement retires the Boomer.
+        /// </summary>
         public const int BoomerDiscountPerPoint = 1;
-        /// <summary>Boomers (2026-11-16): different Boomers in chat for level 1 and level 2 (the most). Not the usual "members - 1".</summary>
-        static readonly int[] s_BoomerLevelMembers = { 2, 4 };
+        /// <summary>Boomers (2026-11-18): the usual points (different Boomers in chat - 1), at most 2 (3 Boomers in chat).</summary>
         public const int BoomerMaxPoints = 2;
-        /// <summary>Boomers: chance (%) that each Boomer in chat leaves the Audience for good after a scored stream.</summary>
+        /// <summary>Boomers (2026-11-18): the chance (%) that Early Retirement retires the Boomer, at 0, 1 and 2 points.</summary>
+        static readonly int[] s_BoomerRetirePercent = { 100, 50, 25 };
+        /// <summary>The old chance (%) that each Boomer in a scored stream retired. Retired on 2026-11-18 (Early Retirement does it now).</summary>
         public const int BoomerRetirePercent = 10;
-        /// <summary>Millennials (2026-11-16: Cash, it was Influence): Cash a Millennial inherits each time.</summary>
+        /// <summary>Millennials (2026-11-16: Cash, it was Influence): Cash a Millennial inherits when a Boomer retires, before the Millennials' points.</summary>
         public const int InheritanceCash = 1;
+        /// <summary>Millennials (2026-11-18): each point adds this much Cash to the inheritance, up to <see cref="MillennialMaxPoints"/> (+3 in all).</summary>
+        public const int InheritanceCashPerPoint = 1;
+        public const int MillennialMaxPoints = 2;
         public const int GenZMaxPoints = 2;
         /// <summary>Hype Men (2026-11-16): spare seats past the Sub Cap per point, for viewers a Hype Man brings in.</summary>
         public const int HypeMenSeatsPerPoint = 1;
@@ -223,25 +231,13 @@ namespace DeckParty.Core
 
         /// <summary>
         /// A community's score from the number of <b>different</b> members in chat: one point for every member after the
-        /// first (<see cref="MembersForFirstPoint"/>), except the Boomers, who have levels (2 members for level 1, 4 for
-        /// level 2, the most). Other caps are applied by the rules (<see cref="Capped"/>), so the score can pass them.
+        /// first (<see cref="MembersForFirstPoint"/>). Caps are applied by the rules (<see cref="Capped"/>), so the score can
+        /// pass them. (The Boomers had levels at 2 and 4 members from 2026-11-16 until the 2026-11-18 community updates.)
         /// </summary>
-        public static int PointsFromMembers(Community community, int members)
-        {
-            if (community == Community.Boomer)
-            {
-                int level = 0;
-                while (level < s_BoomerLevelMembers.Length && members >= s_BoomerLevelMembers[level]) level++;
-                return level;
-            }
-            return Math.Max(0, members - MembersForFirstPoint + 1);
-        }
+        public static int PointsFromMembers(Community community, int members) => Math.Max(0, members - MembersForFirstPoint + 1);
 
-        /// <summary>Different members in chat a community needs for this point (or Boomers level).</summary>
-        public static int MembersForPoint(Community community, int point) =>
-            community == Community.Boomer
-                ? s_BoomerLevelMembers[Math.Max(0, Math.Min(s_BoomerLevelMembers.Length, point) - 1)]
-                : MembersForFirstPoint + Math.Max(1, point) - 1;
+        /// <summary>Different members in chat a community needs for this point.</summary>
+        public static int MembersForPoint(Community community, int point) => MembersForFirstPoint + Math.Max(1, point) - 1;
 
         /// <summary>The highest score that still changes anything (0 = no cap: every point keeps adding).</summary>
         public static int MaxPoints(Community community)
@@ -252,6 +248,7 @@ namespace DeckParty.Core
                 case Community.Staff: return StaffMaxPoints;
                 case Community.Content: return ContentMaxPoints;
                 case Community.Boomer: return BoomerMaxPoints;
+                case Community.Millennial: return MillennialMaxPoints;
                 case Community.GenZ: return GenZMaxPoints;
                 case Community.HypeMen: return HypeMenMaxPoints;
                 case Community.Gatekeepers: return GatekeepersMaxPoints;
@@ -288,11 +285,23 @@ namespace DeckParty.Core
 
         public static int ContentEncoreChance(int points) => Clamp(points, ContentMaxPoints) * ContentPercentPerPoint;
 
-        /// <summary>Boomers: Influence off each Sub Cap upgrade and each use of the streamer's active in the next shop (at most 2).</summary>
+        /// <summary>The Boomers' old shop discount (retired on 2026-11-18; nothing applies it any more).</summary>
         public static int BoomerDiscount(int level) => Clamp(level, BoomerMaxPoints) * BoomerDiscountPerPoint;
 
-        /// <summary>How many times a Millennial inherits when one Boomer leaves (once per point, at least once).</summary>
-        public static int Inheritances(int millennialPoints) => Math.Max(1, millennialPoints);
+        /// <summary>
+        /// Boomers (2026-11-18): the chance (%) that a Boomer's Early Retirement retires it: 100% at 0 points (one Boomer in
+        /// chat), 50% at 1 (two different Boomers), 25% at 2 (three or more).
+        /// </summary>
+        public static int BoomerRetireChance(int points) => s_BoomerRetirePercent[Clamp(points, BoomerMaxPoints)];
+
+        /// <summary>
+        /// Millennials (2026-11-18): the Cash a random Millennial you own inherits when a Boomer retires: +1, plus 1 per
+        /// Millennials point (at most 2), so +1 / +2 / +3.
+        /// </summary>
+        public static int InheritanceAmount(int millennialPoints) => InheritanceCash + Clamp(millennialPoints, MillennialMaxPoints) * InheritanceCashPerPoint;
+
+        /// <summary>How many times a Millennial inherits when one Boomer leaves. Once since 2026-11-18 (the points raise the amount, <see cref="InheritanceAmount"/>).</summary>
+        public static int Inheritances(int millennialPoints) => 1;
 
         public static int GenZGrowth(int points) => Clamp(points, GenZMaxPoints);
 
@@ -376,8 +385,8 @@ namespace DeckParty.Core
                 case Community.CoreFanbase: return CoreFanbaseEncoreChance(points);
                 case Community.Staff: return StaffInfluence(points);
                 case Community.Content: return ContentEncoreChance(points);
-                case Community.Boomer: return BoomerDiscount(points);
-                case Community.Millennial: return points > 0 ? Inheritances(points) : 0;
+                case Community.Boomer: return BoomerRetireChance(points);
+                case Community.Millennial: return InheritanceAmount(points);
                 case Community.GenZ: return GenZGrowth(points);
                 case Community.Mods:
                 case Community.Marketers:
@@ -412,6 +421,7 @@ namespace DeckParty.Core
             switch (community)
             {
                 case Community.CoreFanbase:
+                case Community.Boomer:
                 case Community.Content:
                 case Community.Techspertise:
                 case Community.FinanceBros:

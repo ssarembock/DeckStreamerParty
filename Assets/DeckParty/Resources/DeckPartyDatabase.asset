@@ -595,7 +595,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 1184
+    communities: 1056
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -791,7 +791,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 131200
+    communities: 131072
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -1029,7 +1029,7 @@ MonoBehaviour:
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
-    communities: 128
+    communities: 1
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -1296,6 +1296,20 @@ MonoBehaviour:
     avatarOffset: {x: 0, y: -0.32}
     tint: {r: 1, g: 1, b: 1, a: 0}
     communities: 65536
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    framingZoom: 1
+    framingOffset: {x: 0, y: 0}
+    displayNameOverride: 
+  - name: Legacy Media Mogul
+    key: LegacyMediaMogul
+    type: 92
+    portrait: {fileID: 0}
+    avatar: {fileID: 0}
+    avatarZoom: 1.8
+    avatarOffset: {x: 0, y: -0.32}
+    tint: {r: 1, g: 1, b: 1, a: 0}
+    communities: 128
     characterPrefab: {fileID: 0}
     animatorController: {fileID: 0}
     framingZoom: 1
@@ -1630,7 +1644,7 @@ MonoBehaviour:
     icon: {fileID: 2267109590465053618, guid: 180753495d9036c4d8568959ae8a21a1, type: 3}
   - name: Mods
     community: 17
-    icon: {fileID: 0}
+    icon: {fileID: -6250395033892785777, guid: b67d896619786f546894acf1b088008c, type: 3}
   - name: FullStream
     community: 18
     icon: {fileID: 0}
@@ -1767,4 +1781,4 @@ MonoBehaviour:
     group: 7
     icon: {fileID: 0}
   communitiesSeeded: 1
-  communitiesRevision: 8
+  communitiesRevision: 9

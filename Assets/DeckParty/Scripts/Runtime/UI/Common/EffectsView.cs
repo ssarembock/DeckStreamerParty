@@ -128,16 +128,22 @@ namespace DeckParty.UI
         }
 
         /// <summary>A "+3" chip that flies from one point to another (a card to the HUD counter).</summary>
-        public void FlyChip(string richText, Vector3 from, Vector3 to, float delay = 0f)
+        /// <param name="landed">Optional: called when the chip reaches <paramref name="to"/> (the menu bar adds the amount then).
+        /// Called straight away when no chip can fly (the effects layer is off).</param>
+        public void FlyChip(string richText, Vector3 from, Vector3 to, float delay = 0f, System.Action landed = null)
         {
-            if (particleRoot == null || !isActiveAndEnabled) return;
+            if (particleRoot == null || !isActiveAndEnabled)
+            {
+                landed?.Invoke();
+                return;
+            }
             var rect = NewText("Chip", richText, 40f, Color.white, out var label);
             rect.position = from;
             label.alpha = 0f;
-            StartCoroutine(ChipRoutine(rect, label, from, to, delay));
+            StartCoroutine(ChipRoutine(rect, label, from, to, delay, landed));
         }
 
-        IEnumerator ChipRoutine(RectTransform rect, TMP_Text label, Vector3 from, Vector3 to, float delay)
+        IEnumerator ChipRoutine(RectTransform rect, TMP_Text label, Vector3 from, Vector3 to, float delay, System.Action landed)
         {
             if (delay > 0f) yield return new WaitForSecondsRealtime(delay);
             var control = Vector3.Lerp(from, to, 0.5f) + Vector3.up * Mathf.Max(80f, Vector3.Distance(from, to) * 0.35f);
@@ -150,6 +156,12 @@ namespace DeckParty.UI
                 label.alpha = t < 0.1f ? t / 0.1f : 1f;
             });
             if (rect != null) Destroy(rect.gameObject);
+            if (landed != null)
+            {
+                // A listener that throws must not leave the chip's coroutine (and the effects after it) broken.
+                try { landed(); }
+                catch (System.Exception e) { Debug.LogException(e); }
+            }
         }
 
         /// <summary>A small burst of sparkles (Diamonds, victories).</summary>

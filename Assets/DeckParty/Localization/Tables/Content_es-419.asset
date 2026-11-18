@@ -96,8 +96,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 433274896
-    m_Localized: Fans incondicionales, Pececitos, doce espectadores al azar y tres
-      Trofeos al azar. Gana cinco seguidas para conseguir la Cereza.
+    m_Localized: Fans incondicionales, Pececitos, trece espectadores al azar (al
+      menos tres con {icon:risk}) y tres Trofeos al azar. Gana cinco seguidas para
+      conseguir la Cereza.
     m_Metadata:
       m_Items: []
   - m_Id: 433274897

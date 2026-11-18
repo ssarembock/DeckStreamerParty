@@ -233,9 +233,11 @@ namespace DeckParty
         /// (StreamersViewersCommunities.md: the old Gatekeepers are Mods, new Gatekeepers, Boomer Troll and the Isolationists,
         /// several cards moved); every roster card takes the new table once. 8: the Lurkers (2026-11-18) are merged into the
         /// cards that have them by default (the Isolationists, Forever Alone, Risky Orbiter and two risky variants); your other
-        /// edits are kept.
+        /// edits are kept. 9: the community updates of 2026-11-18 (Boomers get Early Retirement): every card with an action of
+        /// its own leaves the Boomers, and one left in no community joins the Core Fanbase unless it's a Trophy viewer
+        /// (<see cref="GuestCatalog.WithoutActionBoomers"/>, run on your edits; nothing else changes).
         /// </summary>
-        public const int CommunityDefaultsRevision = 8;
+        public const int CommunityDefaultsRevision = 9;
 
         /// <summary>Whether a revision's built-in communities replace a roster card's (instead of merging into them).</summary>
         static bool IsRosterTableRevision(int revision) => revision == 3 || revision == 4 || revision == 6 || revision == 7;
@@ -266,6 +268,11 @@ namespace DeckParty
                 if (ResetsCard(revision, art.type))
                 {
                     mask = GuestCatalog.DefaultCommunitiesOf(art.type);
+                    continue;
+                }
+                if (revision == 9)
+                {
+                    mask = GuestCatalog.WithoutActionBoomers(art.type, mask);
                     continue;
                 }
                 if (IsRosterTableRevision(revision))
@@ -481,14 +488,16 @@ namespace DeckParty
         }
 
         /// <summary>Resolves a stream setup choice ("auto", "evolving" or an id) for the given game.</summary>
-        public VenueDefinition ResolveVenue(string choice, PlayerState state)
+        /// <param name="member">Teams: whose streamer's own setup "auto" uses (each member plays their own streamer).</param>
+        public VenueDefinition ResolveVenue(string choice, PlayerState state, int member = 0)
         {
             if (string.IsNullOrEmpty(choice) || choice == AppSettings.VenueAuto)
             {
                 // A streamer brings their own setup.
-                if (state != null && state.Streamer != StreamerType.None)
+                var streamer = state != null ? state.StreamerOf(member) : StreamerType.None;
+                if (streamer != StreamerType.None)
                 {
-                    var own = GetStreamerArt(state.Streamer)?.venue ?? FindVenue(VenuePresets.StreamerStageId(state.Streamer));
+                    var own = GetStreamerArt(streamer)?.venue ?? FindVenue(VenuePresets.StreamerStageId(streamer));
                     if (own != null) return own;
                 }
                 var scenario = ScenarioCatalog.Get(state != null ? state.ScenarioId : 0);

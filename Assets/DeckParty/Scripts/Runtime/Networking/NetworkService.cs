@@ -100,8 +100,18 @@ namespace DeckParty.Networking
         /// string platform id (NetPlayer), the approval payload has five parts.
         /// deckparty-22: achievements and unlocks (2026-11-18): players carry the streamers they've unlocked (a sixth payload
         /// part, NetPlayer.StreamerMask); Kai Sonnet and Train Wrex (StreamerType 12-13); state format v14.
+        /// deckparty-23: minor changes (2026-11-18): competitive matches win with 3 Trophies (PlayerState.TrophiesToWin, state
+        /// format v15), 20 streams by default, Sub Cap and chat seats at most 30, no maximum price in the shop, a risky viewer
+        /// added to every character set and Random Mix (13 viewers, at least 3 carrying Risk).
+        /// deckparty-24: team fixes (2026-11-18): each team member plays their own streamer (PlayerState.PartnerStreamer and its
+        /// active, state format v16; a pick-taken reply in the streamer pick), 40 seats a player in a team, Remove a Viewer 3 +2.
+        /// deckparty-25: UI updates (2026-11-18): Sub Cap up to 40 (50 a player in a team), the Hype Men's spare seats past it in
+        /// their own row, Co-op Endless starts with 20 streams.
+        /// deckparty-26: community updates (2026-11-18): Boomers' Early Retirement (a new action and events 90-91), Boomers
+        /// and Millennials capped at 2 points, Core Fanbase at 5, the Legacy Media Mogul (GuestType 92), Boomers with their own
+        /// action moved out of the Boomers.
         /// </summary>
-        public const string ProtocolVersion = "deckparty-22";
+        public const string ProtocolVersion = "deckparty-26";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

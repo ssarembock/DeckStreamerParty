@@ -1242,6 +1242,15 @@ MonoBehaviour:
       Can push chat over the Sub Cap.'
     m_Metadata:
       m_Items: []
+  - m_Id: 6526835229286400
+    m_Localized: Legacy Media Mogul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835241869312
+    m_Localized: Bought a channel to stay relevant. Big numbers, and its Early Retirement
+      cashes out a whole stream.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

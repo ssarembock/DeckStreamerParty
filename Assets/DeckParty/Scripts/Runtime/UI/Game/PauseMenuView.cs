@@ -28,6 +28,8 @@ namespace DeckParty.UI
 
         string m_VenueChoice;
         bool m_Multiplayer;
+        /// <summary>Trophies that win the season on screen (the quick rules say it): 4 in single player, 3 in competitive multiplayer.</summary>
+        int m_TrophiesToWin = Core.GameRules.DiamondsToWin;
 
         public bool IsOpen => root.activeSelf;
 
@@ -53,8 +55,9 @@ namespace DeckParty.UI
             if (IsOpen) Fill();
         }
 
-        public void Open(string venueChoice, bool multiplayer)
+        public void Open(string venueChoice, bool multiplayer, int trophiesToWin = Core.GameRules.DiamondsToWin)
         {
+            m_TrophiesToWin = trophiesToWin;
             m_VenueChoice = venueChoice;
             m_Multiplayer = multiplayer;
             Fill();
@@ -73,7 +76,7 @@ namespace DeckParty.UI
 
         void Fill()
         {
-            rulesText.text = RulesText.Quick;
+            rulesText.text = RulesText.QuickFor(m_TrophiesToWin);
             titleLabel.text = m_Multiplayer ? Loc.Get("pause.title_mp") + $"  <size=60%><color=#B9AED6>{Loc.Get("pause.keeps_running")}</color></size>" : Loc.Get("pause.title");
             quitLabel.text = Loc.Get(m_Multiplayer ? "pause.leave" : "pause.save_quit");
         }

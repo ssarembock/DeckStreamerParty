@@ -1143,6 +1143,14 @@ MonoBehaviour:
     m_Key: char.TabloidReporter.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 6526835229286400
+    m_Key: char.LegacyMediaMogul.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526835241869312
+    m_Key: char.LegacyMediaMogul.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

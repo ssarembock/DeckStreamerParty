@@ -47,6 +47,8 @@ namespace DeckParty.UI
         [SerializeField] internal FriendsInviteView friendsPanel;
 
         static readonly int[] s_NightOptions = { 10, 15, 20, 25, 30 };
+        /// <summary>The streams option a new lobby starts on: <see cref="GameRules.CompetitiveStreams"/> (20).</summary>
+        static int DefaultNightsIndex => System.Math.Max(0, System.Array.IndexOf(s_NightOptions, GameRules.CompetitiveStreams));
 
         MainMenuController m_Menu;
         DeckPartyNetSession m_Session;
@@ -139,7 +141,7 @@ namespace DeckParty.UI
             var nightNames = new List<string>();
             foreach (var n in s_NightOptions) nightNames.Add(Loc.Get("single.nights", "count", n));
             nightsSelector.SetTitle(Loc.Get("lobby.season_length"));
-            nightsSelector.SetOptions(nightNames, 3);
+            nightsSelector.SetOptions(nightNames, DefaultNightsIndex);
 
             if (timerSelector != null)
             {
@@ -338,10 +340,8 @@ namespace DeckParty.UI
             startButton.interactable = isHost && canStart;
             if (m_Session.PickingStreamers)
             {
-                // A team's second player waits here while their teammate picks the team's streamer.
-                statusLabel.text = m_Session.PicksStreamer(m_Session.LocalClientId)
-                    ? Loc.Get("lobby.picking", "count", m_Session.PlayersStillPicking)
-                    : Loc.Get("lobby.teammate_picking", "count", m_Session.PlayersStillPicking);
+                // Everyone picks their own streamer (team modes too, since 2026-11-18).
+                statusLabel.text = Loc.Get("lobby.picking", "count", m_Session.PlayersStillPicking);
                 startButton.interactable = false;
                 readyButton.interactable = false;
                 return;
@@ -356,10 +356,10 @@ namespace DeckParty.UI
         {
             switch (mode)
             {
-                case MatchMode.Turns: return Loc.Get("lobby.short_turns", "count", GameRules.DiamondsToWin);
-                case MatchMode.TwoVsTwo: return Loc.Get("lobby.short_two_vs_two", "count", GameRules.DiamondsToWin, "risk", GameRules.TeamRiskLimit);
+                case MatchMode.Turns: return Loc.Get("lobby.short_turns", "count", GameRules.CompetitiveTrophiesToWin);
+                case MatchMode.TwoVsTwo: return Loc.Get("lobby.short_two_vs_two", "count", GameRules.CompetitiveTrophiesToWin, "risk", GameRules.TeamRiskLimit);
                 case MatchMode.CoopEndless: return Loc.Get("lobby.short_coop", "count", GameRules.EndlessStartingStreams, "risk", GameRules.TeamRiskLimit);
-                default: return Loc.Get("lobby.short_sync", "count", GameRules.DiamondsToWin);
+                default: return Loc.Get("lobby.short_sync", "count", GameRules.CompetitiveTrophiesToWin);
             }
         }
 
@@ -379,7 +379,7 @@ namespace DeckParty.UI
         {
             for (int i = 0; i < s_NightOptions.Length; i++)
                 if (s_NightOptions[i] == nights) return i;
-            return 3;
+            return DefaultNightsIndex;
         }
 
         void PushSettings()

@@ -133,6 +133,10 @@ namespace DeckParty.Core
         DataBroker = 90,
         /// <summary>Online Journalist with Risk.</summary>
         TabloidReporter = 91,
+
+        // --- Community updates (2026-11-18) ---
+        /// <summary>A strong Boomer: old media buying its way into streaming (+4 Cash, +3 Influence). Its action is Early Retirement.</summary>
+        LegacyMediaMogul = 92,
     }
 
     /// <summary>
@@ -183,6 +187,7 @@ namespace DeckParty.Core
         Interview,  // Billionaire Benefactor: everyone's Cash drop to 0; bank 1 Influence per Billionaire Benefactor.
         Style,      // Affiliate: a guest permanently earns +1 Influence.
         SendBack,   // Junior PR Manager (1, 2, 3... random viewers, growing per use) / Gatekeepers like the PR Manager (3, 6 or all, by the community's level): random viewers back to the queue.
+        EarlyRetirement, // Every Boomer without an action of its own (2026-11-18): the whole chat scores now (banked, the stream goes on), then the Boomer may retire for good.
     }
 
     /// <summary>Effect families for actions. Dancing Baby rewards two in a row from the same family.</summary>

@@ -23,9 +23,34 @@ namespace DeckParty.UI
         readonly List<PlayerRowView> m_Rows = new List<PlayerRowView>();
         readonly List<ulong> m_RowIds = new List<ulong>();
 
+        // The last render, repeated when the UI Skin changes (row colours are edited live while playing).
+        DeckPartyNetSession m_LastSession;
+        ulong m_LastViewed = DeckPartyNetSession.NoPlayer;
+        string m_LastTitle;
+        IReadOnlyList<LocalRow> m_LastRows;
+
+        void Awake()
+        {
+            // Scenes built before 2026-11-18 tagged this card as the Side panel: it has its own Site Colours entry now
+            // (Players, which takes anything it doesn't set from the Side panel).
+            if (TryGetComponent<SiteAreaTag>(out var tag) && tag.Area == SiteArea.SidePanel) tag.Area = SiteArea.Players;
+        }
+
+        void OnEnable() => UISkin.SkinChanged += OnSkinChanged;
+
+        void OnDisable() => UISkin.SkinChanged -= OnSkinChanged;
+
+        void OnSkinChanged()
+        {
+            if (m_LastSession != null) Render(m_LastSession, m_LastViewed);
+            else if (m_LastRows != null) RenderLocal(m_LastTitle, m_LastRows);
+        }
+
         public void Render(DeckPartyNetSession session, ulong viewedId = DeckPartyNetSession.NoPlayer)
         {
             if (session == null || !session.IsSpawned) return;
+            m_LastSession = session;
+            m_LastViewed = viewedId;
             var players = session.PlayersSnapshot();
             var mode = session.Settings.Mode;
             string modeColor = mode == MatchMode.Turns ? "#FF4F8B" : "#B9AED6";
@@ -36,6 +61,7 @@ namespace DeckParty.UI
                 if (i >= m_Rows.Count)
                 {
                     var row = Instantiate(rowPrefab, list);
+                    row.UseSkinColours = true;
                     int index = m_Rows.Count;
                     row.MakeClickable();
                     row.Clicked += () => OnRowClicked(index);
@@ -55,6 +81,7 @@ namespace DeckParty.UI
                 m_Rows[i].SetPresence(PresenceLine != null ? PresenceLine(p.ClientId) : null);
                 bool other = p.ClientId != session.LocalClientId && p.Connected;
                 m_Rows[i].SetMute(other, other && IsMuted != null && IsMuted(p.ClientId));
+                m_Rows[i].FitCompact();
             }
             for (int i = players.Count; i < m_Rows.Count; i++) m_Rows[i].gameObject.SetActive(false);
         }
@@ -77,12 +104,16 @@ namespace DeckParty.UI
         /// <summary>Versus the AI (2026-11-16): the panel lists you and the AI from local states (no network session).</summary>
         public void RenderLocal(string title, IReadOnlyList<LocalRow> rows)
         {
+            m_LastTitle = title;
+            m_LastRows = rows;
             titleLabel.text = title;
             for (int i = 0; i < rows.Count; i++)
             {
                 if (i >= m_Rows.Count)
                 {
-                    m_Rows.Add(Instantiate(rowPrefab, list));
+                    var created = Instantiate(rowPrefab, list);
+                    created.UseSkinColours = true;
+                    m_Rows.Add(created);
                     m_RowIds.Add(0);
                 }
                 var row = rows[i];
@@ -92,6 +123,7 @@ namespace DeckParty.UI
                 m_Rows[i].SetViewed(row.IsLocal, row.Color);
                 m_Rows[i].SetPresence(null);
                 m_Rows[i].SetMute(false, false);
+                m_Rows[i].FitCompact();
             }
             for (int i = rows.Count; i < m_Rows.Count; i++) m_Rows[i].gameObject.SetActive(false);
         }

@@ -136,6 +136,11 @@ namespace DeckParty.Core
         public int ScenarioId;
         public uint Seed;
         public int TotalNights = GameRules.DefaultNights;
+        /// <summary>
+        /// Trophies needed in one scored stream to win this season: 4 in single player, 3 in competitive multiplayer (online
+        /// and couch, 2026-11-18). Read it through <see cref="PartyEngine.TrophiesToWin"/>.
+        /// </summary>
+        public int TrophiesToWin = GameRules.DiamondsToWin;
         public readonly List<GuestType> Shop = new List<GuestType>();
 
         // Economy
@@ -272,6 +277,14 @@ namespace DeckParty.Core
         public int PartnerRemovals;
         /// <summary>Teams: one bit per member who has ended their side of this stream. It's scored once every member has.</summary>
         public int StreamDone;
+
+        // Teams (2026-11-18): each member plays their own streamer, with their own active, price, cooldown and armed power.
+        // Member 0 uses Streamer / PowerUses / PowerCooldown / PowerArmed, member 1 these. A team's two streamers are never
+        // the same one (the host keeps them apart), so a streamer type names the member it belongs to (MemberWithStreamer).
+        public StreamerType PartnerStreamer;
+        public int PartnerPowerUses;
+        public int PartnerPowerCooldown;
+        public bool PartnerPowerArmed;
 
         // Stats
         public int BestDiamonds;
@@ -447,6 +460,41 @@ namespace DeckParty.Core
         }
 
         public StreamerInfo StreamerInfo => StreamerCatalog.Get(Streamer);
+
+        // ------------------------------------------------------------------ streamers per member (teams, 2026-11-18)
+
+        /// <summary>A member's streamer (member 0, or a solo season: <see cref="Streamer"/>).</summary>
+        public StreamerType StreamerOf(int member) => IsTeam && member == 1 ? PartnerStreamer : Streamer;
+
+        public StreamerInfo StreamerInfoOf(int member) => StreamerCatalog.Get(StreamerOf(member));
+
+        /// <summary>Times a member has used their streamer's active (sets its next price).</summary>
+        public int PowerUsesOf(int member) => IsTeam && member == 1 ? PartnerPowerUses : PowerUses;
+
+        /// <summary>Streams until a member's active can be used again.</summary>
+        public int PowerCooldownOf(int member) => IsTeam && member == 1 ? PartnerPowerCooldown : PowerCooldown;
+
+        /// <summary>A member's next-stream active is bought and waiting for the next stream.</summary>
+        public bool PowerArmedOf(int member) => IsTeam && member == 1 ? PartnerPowerArmed : PowerArmed;
+
+        /// <summary>
+        /// The member playing this streamer: 0 (always 0 in a solo season playing it), 1, or -1 when nobody in this season plays
+        /// it. Side effects of an active (Giveaway, Bark at Chat, X-Ray Vision...) apply to that member's viewers.
+        /// </summary>
+        public int MemberWithStreamer(StreamerType type)
+        {
+            if (type == StreamerType.None) return -1;
+            if (Streamer == type) return 0;
+            return IsTeam && PartnerStreamer == type ? 1 : -1;
+        }
+
+        /// <summary>Whether this viewer is on the side of the member playing <paramref name="type"/> (a solo season: whenever it's yours).</summary>
+        public bool OnSideOf(GuestInstance g, StreamerType type)
+        {
+            int member = MemberWithStreamer(type);
+            if (member < 0 || g == null) return false;
+            return !IsTeam || g.Owner == member;
+        }
 
         public PlayerState Clone() => StateSerializer.Deserialize(StateSerializer.Serialize(this));
     }

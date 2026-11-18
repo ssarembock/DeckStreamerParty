@@ -28,7 +28,7 @@ namespace DeckParty
                 case Community.Content: per = Communities.ContentPercentPerPoint; break;
                 case Community.HypeMen: per = Communities.HypeMenSeatsPerPoint; break;
                 case Community.Lurkers: per = Communities.LurkersCashPerSpace; break;
-                case Community.Boomer: per = Communities.BoomerDiscountPerPoint; break;
+                case Community.Millennial: per = Communities.InheritanceCashPerPoint; break;
                 // Retired.
                 case Community.FinanceBros: per = Communities.FinancePercentPerPoint; break;
                 case Community.Doomsdayers: per = Communities.DoomPercentPerPoint; break;
@@ -48,6 +48,9 @@ namespace DeckParty
                 ("first", Communities.MembersForFirstPoint),
                 ("top", Communities.Effect(community, max)),
                 ("retire", Communities.BoomerRetirePercent),
+                // Boomers (2026-11-18): Early Retirement's chance to retire the Boomer at 1 point. Millennials: the inheritance with no points.
+                ("r1", Communities.BoomerRetireChance(1)),
+                ("base", Communities.InheritanceCash),
                 ("t1", Communities.TechspertiseChance(1)),
                 ("t2", Communities.TechspertiseChance(2)),
                 ("t3", Communities.TechspertiseChance(3)),
@@ -121,7 +124,10 @@ namespace DeckParty
             return needed > 0 ? Loc.Get("community.members_max", "count", members, "max", needed) : Loc.Get("community.members", "count", members);
         }
 
-        /// <summary>The compact effect under a Community Beats chip: "30%", "+2", "-1 [influence]"...</summary>
+        /// <summary>
+        /// The compact effect under a Community Beats chip: "30%", "+2", "+1 [cash]"... Boomers show the chance that Early
+        /// Retirement retires the Boomer (100% / 50% / 25%).
+        /// </summary>
         public static string ChipEffect(Community community, int points)
         {
             int effect = Communities.Effect(community, points);
@@ -131,7 +137,6 @@ namespace DeckParty
             switch (community)
             {
                 // Per point while nobody's here, the stream's total once there are points.
-                case Community.Boomer: return $"-{Communities.BoomerDiscount(Mathf.Max(1, points))}{influence}";
                 case Community.Staff: return $"+{Communities.StaffInfluence(Mathf.Max(1, points))}{influence}";
                 // Cash per point of Risk.
                 case Community.Trolls: return $"+{Communities.TrollArmyCashPerRisk}{cash}/{GameIcons.Tag(ResourceIcon.Risk)}";
@@ -139,7 +144,8 @@ namespace DeckParty
                 case Community.Lurkers: return $"+{Communities.LurkersPerSpace(Mathf.Max(1, points))}{cash}" + Loc.Get("beats.per_space");
                 case Community.ShopControl: return $"-{Communities.ShopControlDiscount(Mathf.Max(1, points))}{cash}";
                 case Community.Saboteurs: return $"+{Communities.SabotageAmount(Mathf.Max(1, points))}{cash}";
-                case Community.Millennial: return $"x{Communities.Inheritances(points)}";
+                // The Cash a retiring Boomer leaves a Millennial (+1, +2, +3).
+                case Community.Millennial: return $"+{Communities.InheritanceAmount(points)}{cash}";
                 // Viewers a Gatekeeper sends back now: 3, 6 or everyone.
                 case Community.Gatekeepers:
                 {

@@ -304,3 +304,447 @@ They're in **Open Lobby** and can come up in **Random Mix**. They're not in any 
      - Power-Tripping Mod: 滥权房管 / Мод-самодур / Mod tirano / Mod tirano.
      - Data Broker: 数据贩子 / Торговец данными / Vendedor de datos / Corretor de dados.
      - Tabloid Reporter: 八卦小报记者 / Репортёр жёлтой прессы / Reportero sensacionalista / Repórter de fofoca.
+
+## 9. Minor changes: risky viewers in every set, competitive defaults, 30-seat chat, no maximum prices (2026-11-18)
+
+### Do this first in Unity
+
+1. Let the scripts compile.
+2. Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs**. This:
+   - leaves more room under the viewers in the Stream Chat window (32 px instead of 8);
+   - re-imports the strings.
+
+   The new grid works in an old scene too; only the extra room needs the Rebuild.
+3. Multiplayer needs every player on this build (protocol `deckparty-23`). Saves still load: state format 15 reads
+   older saves, and those keep 4 Trophies to win.
+
+### Character sets
+
+Each preset set gets one more viewer carrying Risk:
+
+| Set | Added | Why |
+|---|---|---|
+| Going Live | Data Broker | Cheap staff, which fits the set's "staff to run the room". |
+| Clickbait Roulette | Tabloid Reporter | Clickbait journalism. |
+| Brand Deal Wishlist | Paid Sponsorship | The brand deal itself, and another Boomer. |
+| Monetization Meeting | Mildly Risky Collaborator | A third Boomer; when one logs off, a Millennial inherits. |
+| Algorithm Magic | Risky Orbiter | The set had no Risk at all; this adds a fourth Lurker. |
+
+I didn't put a risky variant in a set that already has its original. Until the variants get their own art they look
+exactly like the original, and names are hidden on cards. That ruled out:
+- Data Broker in Monetization Meeting (it has the Social Media Manager);
+- Power-Tripping Mod in Algorithm Magic (it has the Tech Admin).
+
+**Random Mix** now draws **13** regular viewers (it was 12). At least **3** of them carry Risk: three are drawn from the
+risky viewers first, then the rest from everyone left. The Hate-Watcher can still come up, but it doesn't count toward
+the three, because its Risk only comes every other time it joins.
+
+### Competitive multiplayer: 3 Trophies, 20 streams
+
+| | Single player (Puzzles, Versus the AI) | Competitive multiplayer (online Take Turns, Free For All, 2v2, and Couch Competitive) |
+|---|---|---|
+| Trophies to win | 4 (unchanged) | **3** |
+| Streams | 25 | **20** by default (online lobbies still offer 10 to 30) |
+
+- **Where the goal lives:** every season stores its own goal (`PlayerState.TrophiesToWin`).
+- **Where it shows:** every line that mentions it uses the season's own number: the menu bar's "n/3", the win hint,
+  the WIN button, banners, the log, the game-over screen and the pause menu's quick rules.
+- **Fixed texts:** the lobby summary, the multiplayer screen subtitle and the multiplayer rules page now say 3.
+- **Co-op Endless** has no win, so nothing changes there.
+- **Versus the AI** stays at 4 Trophies. It's single player, even though it's competitive.
+
+### The stream chat: 3 rows of 10, no scrolling
+
+- **Seats per player:** a player's chat holds at most **30** seats (3 rows of 10). The chat never scrolls: the avatars
+  resize to fit.
+- **Teams (2v2, co-op):** each player has their own 30 seats on their half of the chat, so 60 in all.
+- **Layout:** the game picks the row length that gives the biggest avatars, up to 10 to a row and 3 rows. For example,
+  10 seats show as 2 rows of 5 rather than 1 small row of 10. A layout with more rows is only used when it makes the
+  avatars at least 8% bigger, so a short chat stays on one row.
+- **The 30-seat limit in the rules:**
+  - The Sub Cap now stops at **30** (it was 34).
+  - The Hype Men's spare seats only appear while the chat is under 30 seats. At a Sub Cap of 29 there is 1 spare seat;
+    at 30 there are none.
+  - Bro Jogan's Three-Hour Episode can't be used at a Sub Cap of 30 ("Your Sub Cap is maxed out.").
+- **One brief exception:** the viewer who crashes a full chat's server shows for a moment in a fourth row before the
+  stream ends.
+
+### No maximum prices
+
+Every shop price that grew with use now grows without end:
+- **Raise Sub Cap:** 2, 3, 4... Influence (it stopped at 12).
+- **Streamer actives:** +1 Influence per use (they stopped at 12).
+- **Remove a Viewer:** 2, 3, 4... Influence (it stopped at 12).
+
+The Boomers' discount still applies. Endless's Trophy prices never had a maximum.
+
+### Where things are
+
+- **Sets:** `ScenarioCatalog` (`s_All`). Random Mix: `RandomRegularGuests` (13) and `RandomRiskyGuests` (3), in
+  `BuildShop`.
+- **Trophies and streams:**
+  - `GameRules.CompetitiveTrophiesToWin` (3) and `GameRules.CompetitiveStreams` (20); `GameRules.DiamondsToWin`
+    (4, single player).
+  - `PartyEngine.TrophiesToWin(state)` reads a season's goal.
+  - `DeckPartyNetSession.MatchTrophiesToWin` is the online goal.
+  - The lobby's default streams option is `LobbyScreen.DefaultNightsIndex`.
+- **Seats:**
+  - `GameRules.HouseColumns` (10), `HouseMaxRows` (3) and `MaxCapacity` (their product, 30).
+  - `PartyEngine.HypeSeats` / `HypeRoom` (spare seats) and `EpisodeRoom` (Three-Hour Episode).
+  - The layout is `HouseView.BestColumns`; the room under the viewers is `GameSceneBuilder.HouseBottomGap`.
+- **Prices:** `GameRules.ExpansionCost`, `GameRules.RemovalCost`, `StreamerCatalog.BaseCost`.
+
+### Decisions I made (please check)
+
+1. **The five additions** are the ones in the table above. Swap any of them in `ScenarioCatalog`.
+2. **"Carrying Risk"** means a card with a printed +1 Risk. The Hate-Watcher doesn't count toward Random Mix's three.
+3. **Couch Competitive** counts as competitive multiplayer (3 Trophies, 20 streams). Versus the AI keeps 4 Trophies and
+   25 streams.
+4. **There's no lobby setting for the Trophy goal.** Every competitive match uses 3. A setting (3 / 4 / 5) is easy to add
+   if you want one.
+5. **The 30-seat limit is part of the rules,** not just the layout. Without it the Sub Cap upgrades, the Hype Men and
+   Three-Hour Episode could go past 3 rows.
+6. **Room under the stream:** "a little more vertical space below" was read as 24 px more between the last row of
+   avatars and the footer (the near-deplatform warning and the Next Up faces). Change `HouseBottomGap` if you want more.
+
+## 10. Team fixes, shop summary, notices, narrower left column, 40-seat team chat, Remove a Viewer 3 +2 (2026-11-18)
+
+### Do this first in Unity
+
+1. Let the scripts compile.
+2. Run **Deck Party > Setup > Build Everything** (or **Rebuild Scenes and UI Prefabs**) once, so the new strings are
+   imported. Nothing else needs a Rebuild: the Audience columns, the second avatar on team summaries, the notices' new
+   place, the narrower left column and the removed bar all happen at runtime in the current scenes.
+3. Multiplayer needs every player on this build (protocol `deckparty-24`, state format 16).
+
+### Teams: each player has their own streamer
+
+- **The pick:** in 2v2 and Co-op every player picks their own streamer. It used to be one streamer per team, picked by
+  the team's first player.
+- **No doubles:** teammates can't play the same streamer.
+  - Once your teammate locks one in, its tile shows **TEAMMATE** and Confirm stays off on it. The details under the
+    portrait say who picked it.
+  - If you both confirm the same one at the same moment, the first to reach the host keeps it. The other player gets an
+    error sound and picks again; their timer keeps running.
+  - **Random**, and the timer running out, never land on your teammate's streamer.
+- **Your own active:** its own price ladder, cooldown and armed state, paid from the team's shared Influence. The shop's
+  active button shows your streamer; when you watch another player, it shows theirs.
+- **Your own face:** on your board the facecam, the anxiety footer, the menu bar's platform logo and the automatic stream
+  setup follow your own streamer. The Players panel shows each player's streamer, and so does the game over screen.
+- **What each active touches in a team:**
+
+| Your side of the chat | The whole team |
+|---|---|
+| Giveaway (your viewers earn the extra Cash) | Smoke Bomb (the team has one Risk count) |
+| Bark at Chat (your viewers carrying Risk) | Soft Landing |
+| Double Move (the first action used on your side) | Subathon (any Server Down ends the shared stream) |
+| X-Ray Vision (your queue) | Double or Nothing (the stream's Cash is shared) |
+| Three-Hour Episode (+1 on your Sub Cap only) | Beautiful Sequence (the team's streak) |
+| Pal Sphere (the catch joins your Audience) | Raid and Wealth Tax (they hit another team) |
+
+- **Rival powers in 2v2:** the "who do you hit" choice lists each other team once, by both names, and never your own
+  teammate (it listed everyone before, teammate included).
+
+### Teams: your teammate's moves no longer close your panels
+
+- **Pickers:** the viewer picker (Remove a Viewer, Fetch and the others) now closes only when the season moves to
+  another phase, such as the stream ending. Before, any state update from your teammate closed it.
+- **Your own feedback:** your teammate's purchases, removals, Sub Cap raises and actives no longer fly a "+1" to your
+  Audience button, punch your Raise Sub Cap or active button, or say "You removed...". The active's banner still shows,
+  so you see what they used.
+- **The log:** the Activity log names your teammate for their moves instead of saying "you".
+
+### Audience window in team games
+
+- **Two columns:** each player's viewer cards are in their own column with their name and card count on top, split by a
+  grey line. Your column says "(you)".
+- **Streamers:** the summary above the columns lists both players' streamers.
+- **Solo seasons:** they keep the single grid.
+
+### Summaries in team games: both players
+
+- **Names and faces:** stream and shop summaries now show one column per team. It reads **"Ana and Bo"** (member 0 first,
+  each name in its player colour), with both streamers' faces side by side and "Streamer A and Streamer B" under the
+  names.
+- **The old problem:** before, a team's summary was filed under whichever teammate had acted, so it showed one player.
+  The shop summary could also wait for the "other" teammate and never show.
+
+### Multiplayer shop summary: four icons
+
+- **What the panel shows:** the panel at the bottom of the left column now has, per player or team, only the name and
+  one row of four icons:
+
+| Icon | Shows |
+|---|---|
+| Audience (UI Skin: Icon Audience) | Viewer cards gained or lost in the shop: recruits and Pal Sphere catches are +, removals are - |
+| Cash | The Cash change |
+| Influence | The Influence change |
+| Active (UI Skin: Icon Action) | Actives used in that shop (both players' in a team) |
+
+- **Nothing changed:** a value that didn't change shows a grey 0.
+- **Hovering:** hover an icon to name it.
+- **Where the icons come from:** the same UI Skin slots as the buttons, so your button art shows here too.
+
+### Notices at the bottom left
+
+- **Where they show:** in multiplayer (online and Couch Competitive) the notices that used to drop over the menu bar
+  appear at the bottom of the left column instead. This covers headlines such as "Ana raided Bo" and the messages when
+  the game turns a move down.
+- **With the shop summary:** while the shop summary shows, they sit just above it.
+- **Size:** they are as wide as the column and grow taller for longer text.
+- **Single player:** Versus the AI included, the notices stay at the top.
+
+### Narrower left column
+
+- **The width:** the left column (Players, emotes, Activity, shop summary) is three quarters of its old width, 315 to 390
+  px instead of 420 to 520. The Stream Chat gets the space.
+- **Old scenes:** current scenes switch to the new width by themselves (`ContentFrame.widthRevision`).
+- **The players' rows:** they pack themselves for the narrower column (`PlayerRowView.FitCompact`). Rank, colour dot and
+  streamer are on the left; mute, ready and host on the right, only those showing. The name auto-sizes.
+
+### The bar above the stream is gone
+
+- **What was removed:** the strip of text between the menu bar and the Stream Chat in multiplayer ("Your stream",
+  "Watching Ana", "Ana's turn", the Free For All round status, and its buttons).
+- **Switching boards:** click a name in the Players panel; your own name brings you back.
+- **The Round Summary button:** it lived on that bar, so the round summary pop-up is no longer reachable. Free For All's
+  stream recaps are on the shop gate. `RoundSummaryView` is still in the scene, unused.
+
+### Team chat: 40 seats a player, 4 rows of 10
+
+- **The limit:** in 2v2 and Co-op each player's Sub Cap can reach **40**, and their side of the chat takes up to 4 rows
+  of 10. Solo chats stay at 30 in 3 rows.
+- **Spare seats:** the Hype Men spare seats and Three-Hour Episode's extra seat respect the 40 too.
+
+### Remove a Viewer: 3, 5, 7, 9...
+
+- **The price:** the first removal costs **3** Influence, and each one after it costs **2** more. It was 2, then +1.
+- **Still the same:** no maximum, a separate ladder for each team player, and the Audience can't go below 5 cards.
+- **The texts:** the hover text and the How to Play money page say so (the money page also no longer claims you can't
+  remove viewers).
+
+### Where things are
+
+- **Team streamers:**
+  - The state: `PlayerState.PartnerStreamer` / `PartnerPowerUses` / `PartnerPowerCooldown` / `PartnerPowerArmed`, read
+    through `StreamerOf(member)`, `PowerUsesOf`, `PowerCooldownOf`, `PowerArmedOf` and `MemberWithStreamer`.
+  - The rules: `PartyEngine.GetPowerBlocker(s, rivals, member)`, `UsePower`, `UseRivalPower(..., actorMember)`,
+    `ApplyArmedPower`, and `StreamerCatalog.Cost(s, member)`.
+- **The pick:**
+  - The host: `DeckPartyNetSession.TeammateLockedStreamer`, `StreamerTakenRpc` / `StreamerPickTaken`, and
+    `ResolveDistinct`.
+  - The screen: `StreamerSelectScreen` (`RefreshTaken`, `OnPickTaken`) and `StreamerTileView.SetTaken`.
+- **Teammate moves:** `GameController.OnPlayerState` (`partner`), `GuestPickerView.OpenedPhase`, and
+  `ProcessEvents(..., partner)`.
+- **Audience columns:** `RolodexView` (`SetTeamLayout`, `MemberName`).
+- **Summaries:**
+  - The logic: `GameController.Recap.cs` (`RecapKey`, `RecapUnits`, `TeamPair`, `BaseEntry`, `CompactShopEntry`).
+  - The columns: `RecapColumnView` (the second avatar).
+  - The inline icons: `GameIcons.AudienceTag` / `ActiveTag`.
+- **Notices:** `ToastView.DockTo`, called from `GameController.DockNotices`.
+- **The left column:** `ContentFrame` (`minSideWidth` 315, `maxSideWidth` 390) and `PlayerRowView.FitCompact`.
+- **Seats:** `GameRules.TeamMaxCapacity` (40), `TeamHouseMaxRows` (4) and `MaxCapacityFor(team)`; `PartyEngine.MaxCapacity(s)`;
+  `HouseView.TeamMaxRows`.
+- **Removal price:** `GameRules.FirstRemovalCost` (3) and `RemovalCostStep` (2).
+
+### Decisions I made (please check)
+
+1. **Active effects in a team:** see the table above. Effects on viewers or seats belong to their owner's side; effects on
+   the shared stream, Risk or wallet belong to the team.
+2. **First to lock in keeps a streamer;** the other teammate picks again.
+3. **The Round Summary pop-up** went with the bar (the request said the bar wasn't needed). Say if you want its button
+   back somewhere else, for example in the pause menu.
+4. **Notices move in Couch Competitive too** (it's local multiplayer). Single player and Versus the AI keep them at the top.
+5. **The shop summary's Audience number** counts viewer cards in the Audience, so a Pal Sphere catch counts +1, like a
+   recruit.
+6. **The "Player N" fallback** names a team column only if a player's name can't be found (it reuses the couch string).
+
+## 11. Bigger chats, the Hype Men's row, live menu-bar totals, 20-stream Endless (2026-11-18)
+
+### Do this first in Unity
+
+1. Let the scripts compile.
+2. Run **Deck Party > Setup > Build Everything** once, so the updated rules text is imported. No Rebuild is needed: the
+   chat lays out its rows at runtime.
+3. Multiplayer needs every player on this build (protocol `deckparty-25`; the state format is still 16, so saves load).
+
+### Seat limits
+
+| Mode | Sub Cap limit | Rows of 10 |
+|---|---|---|
+| Single player, Versus the AI, Take Turns, Free For All, Couch | **40** (was 30) | 4 |
+| 2v2 and Co-op Endless | **50 a player** (was 40) | 5 on each side |
+
+- **Raise Sub Cap** stops at the limit, and so does Three-Hour Episode's extra seat.
+- The chat still never scrolls: the avatars shrink to fit the extra rows.
+
+### The Hype Men's row
+
+- The Hype Men's spare seats (up to 2) no longer count against the limit. Before, a Sub Cap at the limit left no spare
+  seats, and one seat short of it left only one.
+- When the Sub Cap is at the limit, or one short of it, the spare seats show in **one extra row** under the full rows.
+  The extra row keeps the 10-seat column grid, so it lines up with the rows above. In a team it goes on the side of the
+  first Hype Man in chat, as the spare seats did before.
+- The same row also holds the viewer who crashes a full chat's server, for the moment before Server Down.
+
+### The menu bar counts up during the scoring
+
+- In the end-of-stream scoring sequence, each chip adds its amount to the menu bar **when it lands**:
+  - a Cash chip adds to Cash;
+  - an Influence chip adds to Influence (or takes off a fee);
+  - a community reward chip (Staff, Troll Army, Lurkers...) adds its own amounts.
+  The number punches each time.
+- **Trophies:** in Endless a Trophy chip banks its Trophy as it lands (one fewer "+n in chat", one more banked). In the
+  other modes the Trophy count already counts the viewers in chat, so the landing only punches it.
+- The final totals appear after the last chip lands (the sequence waits up to 1.5 s for it). They also include what
+  never flies:
+  - fees the bank couldn't pay, and their Cash penalty;
+  - Double or Nothing's bonus;
+  - what the stream's pot collected during the stream.
+  Only the numbers that differ from the running count punch again.
+- During the count, Cash and Influence never show below 0. Fees are settled against the whole stream's Influence at
+  the end, as before.
+- **Skipping** the sequence (click or Space) shows the final totals at once; chips still in the air change nothing.
+- Money banked during a stream (Crypto Guy, Generous Donator) is unchanged: the menu bar updates at once and the chip
+  flies after.
+
+### Endless
+
+- A run starts with **20 streams** (was 25), in single player and in Co-op Endless. The lobby summary and the opening
+  headline read the new number.
+
+### Where it is in code
+
+- **Limits:**
+  - `GameRules.HouseMaxRows` (4), `TeamHouseMaxRows` (5), `MaxCapacity` (40), `TeamMaxCapacity` (50);
+  - `GameRules.HypeRowSeats` (10), the room past the limit for spare seats;
+  - `PartyEngine.HypeSeats` (no longer capped by the limit) and `HypeRoom`.
+- **The extra row:** `HouseView.BestColumns` keeps 10 to a row once the seats pass the full rows.
+- **Live totals:**
+  - `HudView.BeginTally` / `Tally` / `EndTally`;
+  - `GameController.FlyResources(..., tally)` with `Landing`, and `m_ChipsInFlight`;
+  - `EffectsView.FlyChip(..., landed)`.
+- **Endless:** `GameRules.EndlessStartingStreams` (20).
+
+### Decisions I made (please check)
+
+1. **Spare seats only past the limit.** Below the limit they work as before. Each spare seat past it is one more avatar,
+   so a full solo chat can show 42 seats for a moment.
+2. **The extra row isn't only for spare seats.** Viewers keep their joining order, so a viewer sitting in a spare seat
+   can be in an earlier row, with the last normal viewer in the extra row. It's the same number of seats either way.
+3. **Mid-stream banking** (Crypto Guy, Generous Donator) still updates the number at once. The request was about the
+   end-of-stream scoring; say if you want those to count up on landing too.
+
+## 12. Community updates: Boomers' Early Retirement, Millennials, Core Fanbase, Legacy Media Mogul (2026-11-18)
+
+### Do this first in Unity
+
+1. Let the scripts compile.
+2. Run **Deck Party > Setup > Build Everything** once. It imports the new strings and adds the Legacy Media Mogul to
+   the Game Database (no portrait yet: give it one under Viewers). It also saves the Boomer change below into the
+   database. A Rebuild isn't needed.
+3. Multiplayer needs every player on this build (protocol `deckparty-26`; the state format is unchanged, so saves load).
+
+### Boomers: Early Retirement
+
+- **The action:** every Boomer has the action **Early Retirement**, unless it has an action of its own.
+- **What it does:**
+  - The whole chat scores right now, as if the stream ended: every viewer, the community rolls (Core Fanbase scoring
+    twice), then Staff, Troll Army and Lurkers.
+  - The money is banked at once (fees too), with the same scoring animation; the menu bar counts up as the chips land.
+  - **The stream goes on**, and scores again when it ends.
+  - Trophies, the stream's pot, investments, Double or Nothing and Checkout Codes wait for the real end.
+- **Then the Boomer retires** (leaves your Audience for good). The Boomers' points lower the chance:
+
+  | Different Boomers in chat | Points | Chance it retires |
+  |---|---|---|
+  | 1 | 0 | 100% |
+  | 2 | 1 | 50% |
+  | 3 or more | 2 (the cap) | 25% |
+
+  A Boomer that stays shows "isn't ready to retire yet". It has still used its action for this stream.
+- **Confirmation:** using it asks first, because clicking a chat avatar uses its action. The dialog shows what the chat
+  would bank (without the random rolls) and the chance to retire.
+- **Removed:**
+  - the Boomer levels (2 and 4 Boomers); Boomers score like every other community now;
+  - the 10% chance to retire after every scored stream;
+  - the shop discount on Sub Cap upgrades and the streamer's active.
+- **Community Beats:** the Boomers chip shows the current chance to retire (100% / 50% / 25%).
+
+### Which viewers are Boomers now
+
+- **Left the Boomers** (they have their own action, which would hide Early Retirement):
+  - **Billionaire Benefactor** now has no other community and isn't a Trophy viewer, so it joined the **Core Fanbase**.
+  - **Platform Owner** stays a **Mod**. (Had it been left with no community, it still wouldn't have joined the Core
+    Fanbase, because it's a Trophy viewer.)
+  - **Karen** (put aside) is now Troll Army and Armchair Activists.
+- **Your Game Database:** the same rule runs once over your community edits (Game Database communities revision 9).
+  Any card you made a Boomer that has its own action leaves the Boomers too. Nothing else in your edits changes.
+- **Boomers now** (10): Paid Sponsorship, Mildly Risky Collaborator, Billionaire Isolationist, Master of Currency,
+  Executive PR, Boomer Troll, **Legacy Media Mogul** (new), Big Boomer, Mainstream Celebrity, Bunker Billionaire.
+- **Later edits:** making a card without an action a Boomer in the Game Database gives it Early Retirement. A card
+  with its own action keeps that action, even as a Boomer.
+
+### The new Boomer: Legacy Media Mogul
+
+- **Card:** cost **12**, scores **+4 Cash and +3 Influence**, no Risk, community **Boomers**.
+- **Its action:** Early Retirement, like every Boomer.
+- **Why it's "strong":** big printed numbers, which its Early Retirement cashes out twice in one stream.
+- **Where it shows up:** it isn't in any preset set (Open Lobby and Random Mix only).
+- **Identity:** `GuestType.LegacyMediaMogul` = 92, with the strings `char.LegacyMediaMogul.*`.
+
+### Millennials
+
+- **Inheritance:** when a Boomer retires, a random Millennial you own permanently earns **+1 Cash, +1 more per
+  Millennials point**.
+- **Cap:** 2 points, so +3 at most, with 3 different Millennials in chat at the moment the Boomer retires.
+- **Unchanged:** the heir comes from your whole Audience, and printed Cash stops growing at 9.
+- **Before:** +1 for each point.
+- **Display:** the Millennials chip shows the inheritance (+1 / +2 / +3), and the stream summary names the amount.
+
+### Core Fanbase
+
+- **Cap:** up to **5 points: a 50% chance** that each Core Fanbase viewer scores twice. That takes 6 different Core
+  Fanbase viewers in chat.
+- **Before:** 3 points, 30%.
+
+### Where it is in code
+
+- **The action:**
+  - `AbilityKind.EarlyRetirement`.
+  - `GuestInfo.Ability` is now a property: the card's own action (`OwnAbility`), or else the community's
+    (`GuestCatalog.CommunityAbility`). `GuestInfo.HasCommunityAbility` tells which.
+  - Text: `GuestVisuals.ActionName` / `CommunityActionText` (strings `ability.EarlyRetirement.name` / `.desc`).
+- **The rules:**
+  - `PartyEngine.EarlyRetirement` and `RetireBoomer`.
+  - `PartyEngine.ProjectEarlyRetirement` and `EarlyRetirementChance` (used by the dialog).
+  - `Communities.BoomerRetireChance`, `InheritanceAmount`, `BoomerMaxPoints` 2, `MillennialMaxPoints` 2,
+    `CoreFanbaseMaxPoints` 5.
+- **Events:** `GameEventType.EarlyRetirement` (90) and `BoomerStayed` (91). `BoomerRetired` now happens mid-stream.
+- **Screen:**
+  - `GameController.ConfirmEarlyRetirement`.
+  - `TryStartScoring` / `ScoringSequence(..., retirement)`.
+- **Who's a Boomer:**
+  - `GuestCatalog.WithoutActionBoomers` (the rule above).
+  - `GameDatabase.CommunityDefaultsRevision` 9.
+- **Versus the AI:** the AI never uses Early Retirement on a Trophy viewer, nor while the chat would bank little
+  (`SimpleAI.WastesEarlyRetirement`).
+
+### Decisions I made (please check)
+
+1. **"Scores the entire stream as is"** was read as scoring the chat now while the stream goes on. Ending the stream
+   early would do nothing End the Stream doesn't already do, and would still cost the Boomer. So a Boomer
+   cashes the chat out an extra time.
+2. **What that scoring includes:**
+   - In: viewers, community rolls and the Staff / Troll Army / Lurkers rewards.
+   - Out: Trophies (no win, no Endless banking), the pot, investments, Double or Nothing and Checkout Codes. Otherwise
+     one stream could bank Trophies or permanent bonuses twice.
+3. **The Boomers' shop discount is gone.** The request described the Boomers' community power as the retire chance
+   only. It's one line to bring the discount back (`PartyEngine.CommunityAftermath`).
+4. **Millennials' "increases the reward by the score":** the reward is one inheritance of 1 + points (+1 / +2 / +3),
+   not several +1s.
+5. **The retire chance uses the Boomers in chat when the action is used**, counting the Boomer that uses it: one Boomer
+   alone (or two copies of the same card) always retires.
+6. **Trophy Boomers** (Big Boomer, Mainstream Celebrity) keep Early Retirement (they have no action of their own), so
+   they can retire too.
+7. **The Legacy Media Mogul isn't in a preset set.** Monetization Meeting (Boomers and Millennials) would suit it.

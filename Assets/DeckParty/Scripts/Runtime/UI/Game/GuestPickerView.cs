@@ -28,6 +28,12 @@ namespace DeckParty.UI
         TMP_Text m_CancelLabel;
 
         public bool IsOpen => root.activeSelf;
+
+        /// <summary>
+        /// The phase the picker was opened in (a stream's pickers in Party, Remove a Viewer in the shop). It closes when the
+        /// season moves on to another phase, not on every update: a teammate's move doesn't close yours.
+        /// </summary>
+        public GamePhase OpenedPhase { get; private set; }
         /// <summary>A card in the picker was hovered (viewer id) or left (-1). Used for multiplayer presence.</summary>
         public event Action<int> CardHovered;
 
@@ -54,6 +60,7 @@ namespace DeckParty.UI
         {
             m_OnPick = onPick;
             m_OnCancel = onCancel;
+            OpenedPhase = s != null ? s.Phase : GamePhase.Planning;
             titleLabel.text = title;
             hintLabel.text = hint;
             if (m_CancelLabel != null) m_CancelLabel.text = string.IsNullOrEmpty(cancelLabel) ? Loc.Get("common.cancel_esc") : cancelLabel;

@@ -34,6 +34,9 @@ namespace DeckParty.UI
             }
         }
 
-        public static string Quick => Loc.Get("rules.quick");
+        public static string Quick => QuickFor(Core.GameRules.DiamondsToWin);
+
+        /// <summary>The quick rules with the season's Trophy goal (4 in single player, 3 in competitive multiplayer).</summary>
+        public static string QuickFor(int trophiesToWin) => Loc.Get("rules.quick", "count", trophiesToWin);
     }
 }

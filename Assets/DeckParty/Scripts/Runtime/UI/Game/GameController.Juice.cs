@@ -32,7 +32,9 @@ namespace DeckParty.UI
         }
 
         /// <summary>Banners, sounds and effects for events on the board being shown. <paramref name="who"/> is null for your own stream.</summary>
-        void ProcessEvents(PlayerState s, IReadOnlyList<GameEvent> events, string who)
+        /// <param name="partner">Teams: your teammate's name when the events come from their move on your shared season (null otherwise).
+        /// Their purchases, removals, Sub Cap raises and actives then skip the feedback meant for your own buttons.</param>
+        void ProcessEvents(PlayerState s, IReadOnlyList<GameEvent> events, string who, string partner = null)
         {
             m_Arrivals.Clear();
             m_Pulses.Clear();
@@ -237,6 +239,24 @@ namespace DeckParty.UI
                         }
                         Consider(Sfx.Defeat, 6);
                         break;
+                    case GameEventType.EarlyRetirement:
+                        // A Boomer cashed out the chat. With the scoring sequence it already played; without it, a banner and the chips.
+                        if (!m_AfterSequence)
+                        {
+                            banner.Show(Loc.Get("game.early_retirement"), Loc.Get("game.scored_total", "cash", GuestVisuals.CashText(e.A), "influence", GuestVisuals.InfluenceText(e.B)),
+                                CommunityVisuals.Color(Community.Boomer), 1.4f);
+                            var boomerCard = house.FindCard(e.GuestId);
+                            FlyResources(boomerCard != null ? boomerCard.AnimRoot.position : partyRoot.transform.position, e.A, e.B, false, GameIcons.Tag(Community.Boomer));
+                        }
+                        Consider(Sfx.PartySuccess, 7);
+                        break;
+                    case GameEventType.BoomerStayed:
+                        // The other Boomers talked it out of retiring: it stays (its action is used for this stream).
+                        effects.FloatText(GameIcons.Tag(Community.Boomer) + " " + GuestVisuals.Colored(Loc.Get("game.boomer_stayed", "viewer", GuestVisuals.NameTag(e.Guest)),
+                            CommunityVisuals.Color(Community.Boomer)), new Vector2(0f, -120f), 40f);
+                        m_Pulses.Add(e.GuestId);
+                        Consider(Sfx.Notify, 5);
+                        break;
                     case GameEventType.Inheritance:
                         if (who == null)
                         {
@@ -257,19 +277,21 @@ namespace DeckParty.UI
                         break;
                     case GameEventType.GuestPurchased:
                         Consider(Sfx.Purchase, 4);
-                        PurchaseFlourish(e.Guest);
+                        if (partner == null) PurchaseFlourish(e.Guest);
                         break;
                     case GameEventType.GuestDismissed:
-                        if (who == null) ToastView.Show(Loc.Get("game.removed_you", "viewer", GuestVisuals.NameTag(e.Guest)), ToastKind.Info);
+                        if (who == null && partner == null) ToastView.Show(Loc.Get("game.removed_you", "viewer", GuestVisuals.NameTag(e.Guest)), ToastKind.Info);
                         Consider(Sfx.Boot, 4);
                         break;
                     case GameEventType.PalCaught:
                         Consider(Sfx.Purchase, 5);
-                        PurchaseFlourish(e.Guest);
+                        if (partner == null) PurchaseFlourish(e.Guest);
                         break;
                     case GameEventType.HouseExpanded:
                         Consider(Sfx.Expand, 4);
                         // The menu bar no longer shows the Sub Cap: punch the shop's Raise Sub Cap button (or the old counter).
+                        // A teammate raised their own Sub Cap: not yours to punch.
+                        if (partner != null) break;
                         if (hud.capacityLabel != null) Fx.Play(FxCue.CounterPunch, hud.capacityLabel.transform);
                         else if (planning != null && planning.expandButton != null) Fx.Play(FxCue.CounterPunch, planning.ExpandButtonRect);
                         break;
@@ -277,6 +299,8 @@ namespace DeckParty.UI
                     {
                         var streamer = (StreamerType)e.A;
                         banner.Show(StreamerVisuals.PowerName(streamer), StreamerVisuals.Name(streamer), StreamerVisuals.Color(streamer), 1.2f);
+                        // Your teammate's active: the banner says so; your own active button and facecam stay still.
+                        if (partner != null) { Consider(Sfx.Ability, 6); break; }
                         if (planning.power != null) Fx.Play(FxCue.PowerUsed, planning.power.transform);
                         if (facecam != null) facecam.React(CharacterState.Select);
                         Consider(Sfx.Ability, 6);
@@ -320,7 +344,7 @@ namespace DeckParty.UI
                         Consider(Sfx.Notify, 4);
                         break;
                     case GameEventType.RivalVictory:
-                        banner.Show(Loc.Get("game.rival_won_banner", "rival", m_RivalName ?? string.Empty), Loc.Get("game.rival_won_sub", "count", GameRules.DiamondsToWin),
+                        banner.Show(Loc.Get("game.rival_won_banner", "rival", m_RivalName ?? string.Empty), Loc.Get("game.rival_won_sub", "count", PartyEngine.TrophiesToWin(s)),
                             UIPalette.Red, 2f);
                         Consider(Sfx.Defeat, 9);
                         break;
@@ -350,9 +374,9 @@ namespace DeckParty.UI
                     case GameEventType.Victory:
                         // Couch play: a player hit 4 Trophies, but if they went first the other still gets their turn.
                         if (who == null && IsCouch)
-                            banner.Show(Loc.Get("couch.reached_title", "player", CouchWho, "count", GameRules.DiamondsToWin),
+                            banner.Show(Loc.Get("couch.reached_title", "player", CouchWho, "count", PartyEngine.TrophiesToWin(s)),
                                 m_Local.ActiveSeat == 0 ? Loc.Get("couch.reached_sub", "player", CouchName(1)) : null, UIPalette.Gold, 2.2f);
-                        else banner.Show(who == null ? Loc.Get("over.victory") : Loc.Get("over.player_wins", "player", who), Loc.Get("game.victory_sub", "count", GameRules.DiamondsToWin), UIPalette.Gold, 2.2f);
+                        else banner.Show(who == null ? Loc.Get("over.victory") : Loc.Get("over.player_wins", "player", who), Loc.Get("game.victory_sub", "count", PartyEngine.TrophiesToWin(s)), UIPalette.Gold, 2.2f);
                         effects.Confetti(140);
                         effects.Flash(UIPalette.Gold);
                         effects.Sparkles(banner.transform.position, UIPalette.Gold, 30);
@@ -363,7 +387,7 @@ namespace DeckParty.UI
                         break;
                     case GameEventType.Defeat:
                         string loser = who ?? CouchWho;
-                        banner.Show(Loc.Get("over.season_over"), loser == null ? Loc.Get("game.defeat_sub", "count", GameRules.DiamondsToWin) : Loc.Get("game.defeat_sub_other", "player", loser), UIPalette.TextDim, 2f);
+                        banner.Show(Loc.Get("over.season_over"), loser == null ? Loc.Get("game.defeat_sub", "count", PartyEngine.TrophiesToWin(s)) : Loc.Get("game.defeat_sub_other", "player", loser), UIPalette.TextDim, 2f);
                         Fx.Play(FxCue.Defeat, banner.transform);
                         Consider(Sfx.Defeat, 10);
                         break;
@@ -481,25 +505,31 @@ namespace DeckParty.UI
             bool ended = false;
             bool restored = false;
             int restoreChance = 0;
+            GameEvent? retirement = null;
             foreach (var e in events)
             {
                 if (e.Type == GameEventType.GuestScored && e.C != 0) scored.Add(e);
                 if (e.Type == GameEventType.PartyEnded) ended = true;
+                // A Boomer's Early Retirement scores the chat in the middle of the stream: the same sequence plays.
+                if (e.Type == GameEventType.EarlyRetirement) retirement = e;
                 if (e.Type == GameEventType.ServerRestored)
                 {
                     restored = true;
                     restoreChance = e.A;
                 }
             }
-            if (!ended || scored.Count == 0) return false;
+            if ((!ended && !retirement.HasValue) || scored.Count == 0) return false;
             // Techspertise saved a downed server: say so before the chat scores.
             if (restored) banner.Show(Loc.Get("game.server_restored"), Loc.Get("game.server_restored_sub", "value", restoreChance), UIPalette.Teal, 1.4f);
-            StartCoroutine(ScoringSequence(m_LastLive, s, events, scored));
+            StartCoroutine(ScoringSequence(m_LastLive, s, events, scored, ended ? null : retirement));
             m_LastLive = null;
             return true;
         }
 
-        IEnumerator ScoringSequence(PlayerState before, PlayerState after, IReadOnlyList<GameEvent> events, List<GameEvent> scored)
+        /// <param name="retirement">A Boomer's Early Retirement (the chat scored in the middle of the stream, which goes on);
+        /// null for the end of a stream.</param>
+        IEnumerator ScoringSequence(PlayerState before, PlayerState after, IReadOnlyList<GameEvent> events, List<GameEvent> scored,
+            GameEvent? retirement = null)
         {
             m_Scoring = true;
             m_SkipScoring = false;
@@ -512,8 +542,29 @@ namespace DeckParty.UI
             house.Render(before);
             partyControls.Render(before, false, false);
 
+            if (retirement.HasValue)
+            {
+                // The Boomer cashes out: a banner and a stamp on its card, then the chat scores as at the end of a stream.
+                var boomer = retirement.Value;
+                var color = CommunityVisuals.Color(Community.Boomer);
+                banner.Show(Loc.Get("game.early_retirement"), Loc.Get("game.early_retirement_sub", "viewer", GuestVisuals.NameTag(boomer.Guest)), color, 1.2f);
+                Fx.Play(FxCue.BannerSlam, banner.transform);
+                var card = house.FindCard(boomer.GuestId);
+                if (card != null)
+                {
+                    card.PlayActive();
+                    if (card.Fx != null) card.Fx.Pulse(CardPulse.Shine);
+                }
+                if (facecam != null) facecam.React(CharacterState.Celebrate);
+                AudioService.Play(Sfx.Ability);
+                yield return Wait(0.6f * AppSettings.AnimationTimeScale);
+            }
+
             float step = Mathf.Clamp(3f / scored.Count, 0.12f, 0.28f) * AppSettings.AnimationTimeScale;
             int i = 0;
+            // The menu bar counts up as each chip lands (2026-11-18), from the numbers it showed during the stream.
+            m_ChipsInFlight = 0;
+            int tally = hud.BeginTally(before);
             // In engine order: each viewer's take, then the stream-wide community rewards, and the same again if the Memetics
             // Division made the stream score twice.
             foreach (var e in events)
@@ -533,7 +584,7 @@ namespace DeckParty.UI
                     // Boomer, Millennial and Zoomer fly from their Community Beats chips.
                     var community = (Community)e.A;
                     var from = communityBeats != null ? communityBeats.ChipPosition(community) : null;
-                    FlyResources(from ?? partyRoot.transform.position, e.B, e.C, false, GameIcons.Tag(community));
+                    FlyResources(from ?? partyRoot.transform.position, e.B, e.C, false, GameIcons.Tag(community), tally);
                     AudioService.PlayPitched(Sfx.Coin, 1.3f, 0.8f);
                     yield return Wait(step);
                     continue;
@@ -554,21 +605,36 @@ namespace DeckParty.UI
                     string tags = CommunityTags(events, e.GuestId, pass, encore);
                     var scorer = State != null ? View?.Find(e.GuestId) : null;
                     bool trophy = scorer != null ? scorer.Info.IsDiamond : GuestCatalog.Get(e.Guest).IsDiamond;
-                    FlyResources(card.AnimRoot.position, e.A, e.B, trophy && e.C == 1, tags.Length > 0 ? tags : null);
+                    FlyResources(card.AnimRoot.position, e.A, e.B, trophy && e.C == 1, tags.Length > 0 ? tags : null, tally);
                     if (tags.Length > 0 && card.Fx != null) card.Fx.Pulse(CardPulse.Shine);
                 }
+                else hud.Tally(tally, e.A, e.B, 0);
                 AudioService.PlayPitched(Sfx.Coin, 1f + i * 0.06f, 0.8f);
                 i++;
                 yield return Wait(step);
             }
 
             if (!m_SkipScoring) yield return Wait(0.35f * AppSettings.AnimationTimeScale);
+            // The last chips are still in the air: let them land (and count) before the final totals replace the running ones.
+            for (float t = 0f; m_ChipsInFlight > 0 && !m_SkipScoring && t < ChipLandingWait; t += Time.unscaledDeltaTime) yield return null;
 
             m_Scoring = false;
+            hud.EndTally();
             ApplyVenue(false);
             m_AfterSequence = true;
             try { ProcessEvents(after, events, ViewingOwn ? null : NameOf(m_ViewId)); }
             finally { m_AfterSequence = false; }
+            if (retirement.HasValue)
+            {
+                // Early Retirement: what the chat banked; the stream goes on (unless the Boomer's exit got it deplatformed).
+                if (after.Phase == GamePhase.Party)
+                    banner.Show(Loc.Get("game.early_retirement"), Loc.Get("game.scored_total", "cash", GuestVisuals.CashText(retirement.Value.A),
+                        "influence", GuestVisuals.InfluenceText(retirement.Value.B)), CommunityVisuals.Color(Community.Boomer), 1.4f);
+                RenderAll();
+                // Back to the live stream: the card animations, and the next scoring starts from this chat.
+                PlayCardAnimations(after, events);
+                yield break;
+            }
             // When the stream summary is about to open it says this (with the numbers), so the banner would only repeat it.
             if (!StreamRecapPending)
             {
@@ -578,12 +644,20 @@ namespace DeckParty.UI
             RenderAll();
         }
 
+        /// <summary>Chips of the scoring sequence still flying to the menu bar (it waits for them before the final totals).</summary>
+        int m_ChipsInFlight;
+
+        /// <summary>The longest the scoring sequence waits for its last chips to land (they take about 0.8 s).</summary>
+        const float ChipLandingWait = 1.5f;
+
         /// <summary>
         /// Sends a take up to the menu bar, each resource to its own icon: Cash to the Cash icon, Influence to the Influence icon and a
         /// Trophy (a Trophy viewer scoring) to the Trophies count. <paramref name="prefix"/> (community tags or icon) rides on the
         /// first chip. Zero amounts don't fly; with nothing at all, a "+0" goes to Cash so the viewer still visibly scores.
         /// </summary>
-        void FlyResources(Vector3 from, int cash, int influence, bool trophy, string prefix)
+        /// <param name="tally">The scoring sequence's run (<see cref="HudView.BeginTally"/>): each chip adds its amount to the
+        /// menu bar's number as it lands. 0 = the numbers are already up to date (money banked mid-stream).</param>
+        void FlyResources(Vector3 from, int cash, int influence, bool trophy, string prefix, int tally = 0)
         {
             var cashTarget = hud.cashIcon != null ? hud.cashIcon.transform.position : hud.cashLabel.transform.position;
             var influenceTarget = hud.influenceIcon != null ? hud.influenceIcon.transform.position : hud.influenceLabel.transform.position;
@@ -593,18 +667,32 @@ namespace DeckParty.UI
             // Fanned slightly so chips from the same viewer don't stack on top of each other.
             if (cash != 0 || (influence == 0 && !trophy))
             {
-                effects.FlyChip(lead + GuestVisuals.CashText(cash), from, cashTarget);
+                effects.FlyChip(lead + GuestVisuals.CashText(cash), from, cashTarget, 0f, Landing(tally, cash, 0, 0));
                 lead = string.Empty;
                 any = true;
             }
             if (influence != 0)
             {
-                effects.FlyChip(lead + GuestVisuals.InfluenceText(influence), from + new Vector3(0f, any ? -34f : 0f, 0f), influenceTarget, any ? 0.06f : 0f);
+                effects.FlyChip(lead + GuestVisuals.InfluenceText(influence), from + new Vector3(0f, any ? -34f : 0f, 0f), influenceTarget, any ? 0.06f : 0f,
+                    Landing(tally, 0, influence, 0));
                 lead = string.Empty;
                 any = true;
             }
             if (trophy)
-                effects.FlyChip(lead + "+1 " + GameIcons.Tag(ResourceIcon.Plays), from + new Vector3(0f, any ? 34f : 0f, 0f), trophyTarget, any ? 0.12f : 0f);
+                effects.FlyChip(lead + "+1 " + GameIcons.Tag(ResourceIcon.Plays), from + new Vector3(0f, any ? 34f : 0f, 0f), trophyTarget, any ? 0.12f : 0f,
+                    Landing(tally, 0, 0, 1));
+        }
+
+        /// <summary>What a scoring-sequence chip does when it lands: adds its amount to the menu bar. Null outside a sequence.</summary>
+        System.Action Landing(int tally, int cash, int influence, int trophies)
+        {
+            if (tally <= 0) return null;
+            m_ChipsInFlight++;
+            return () =>
+            {
+                m_ChipsInFlight = Mathf.Max(0, m_ChipsInFlight - 1);
+                hud.Tally(tally, cash, influence, trophies);
+            };
         }
 
         /// <summary>

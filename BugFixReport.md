@@ -226,7 +226,7 @@ The pips should wobble and always come back straight.
 
 ## Decisions to check
 
-1. **Teams still share one streamer.** Your list of shared things (Cash, Influence, Trophies, Risk) doesn't mention it, so I left it as it was. Say if each player should pick their own.
+1. **Teams still share one streamer.** Your list of shared things (Cash, Influence, Trophies, Risk) doesn't mention it, so I left it as it was. Say if each player should pick their own. *(Done 18 November: each player picks their own; see ChangeSummaryAndGuideLines.md section 10.)*
 2. **Endless only:** the near-win notices are gone in Endless, not in 2v2 (section 4).
 3. **Remove a Viewer price is now per player in teams** (section 3). Before, it was shared.
 4. **The Raid in team games:**

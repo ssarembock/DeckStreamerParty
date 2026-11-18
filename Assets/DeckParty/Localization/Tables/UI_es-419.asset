@@ -1236,8 +1236,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1582514392
-    m_Localized: 'Elenco: <color=#FFC94A>12 espectadores al azar + 3 Trofeos al azar</color>,
-      sorteados al empezar la temporada.'
+    m_Localized: 'Elenco: <color=#FFC94A>13 espectadores al azar (al menos 3 con
+      {icon:risk}) + 3 Trofeos al azar</color>, sorteados al empezar la temporada.'
     m_Metadata:
       m_Items: []
   - m_Id: 1582514393
@@ -1268,7 +1268,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1582514399
     m_Localized: Hasta 6 jugadores. Mismo elenco, streams separados. Gana el primer
-      stream de 4 Trofeos.
+      stream de 3 Trofeos.
     m_Metadata:
       m_Items: []
   - m_Id: 1582514400
@@ -1880,7 +1880,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1670124655960070
-    m_Localized: "{viewer} hered\xF3 +1 {icon:cash}"
+    m_Localized: "{viewer} hered\xF3 +{amount} {icon:cash}"
     m_Metadata:
       m_Items: []
   - m_Id: 2431125118607360
@@ -2627,7 +2627,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802218063749137
-    m_Localized: "Cada vez cuesta 1 {icon:influence} m\xE1s. Tu Audiencia conserva
+    m_Localized: "Cada vez cuesta 2 {icon:influence} m\xE1s. Tu Audiencia conserva
       al menos {min} espectadores."
     m_Metadata:
       m_Items: []
@@ -2956,6 +2956,39 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6388742169911309
     m_Localized: "\xA1Nuevo emote desbloqueado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704609419264
+    m_Localized: '{a} y {b}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704638779392
+    m_Localized: 'Audiencia: cartas de espectador ganadas o perdidas en la tienda'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704638779393
+    m_Localized: Activas de streamer usadas en la tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837318049792
+    m_Localized: "\xA1Jubilaci\xF3n anticipada!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409920
+    m_Localized: '{viewer} cobra todo el chat'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409921
+    m_Localized: "{viewer} todav\xEDa no se quiere jubilar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409922
+    m_Localized: "Todo el chat punt\xFAa en el acto (unos {values}) y el stream sigue.
+      Luego {viewer} se jubila y deja tu audiencia para siempre: {chance}% de probabilidad."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409923
+    m_Localized: Jubilar
     m_Metadata:
       m_Items: []
   references:

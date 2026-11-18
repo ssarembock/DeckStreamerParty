@@ -34,7 +34,7 @@ Each button then goes to the character set screen as before. **Start** opens the
 
 ## 3. Endless
 
-- A run starts with **25 streams** (`GameRules.EndlessStartingStreams`). There is no win; the goal is to last.
+- A run starts with **20 streams** (`GameRules.EndlessStartingStreams`; it was 25 until 18 November). There is no win; the goal is to last.
 - **Trophies are a currency.** Each Trophy viewer in a scored stream banks one Trophy.
   - The menu bar shows the banked total, with no "/4".
   - Hover it for the prices.
@@ -63,18 +63,23 @@ Pick the mode in the lobby.
 
 | Mode | Players | Goal |
 |---|---|---|
-| **2v2** | Exactly 4: two teams of two | The first team to 4 Trophies in one stream wins. |
+| **2v2** | Exactly 4: two teams of two | The first team to 3 Trophies in one stream wins (4 until 18 November). |
 | **Co-op Endless** | Exactly 2: one team | The Endless rules (section 3): see how many streams you last together. |
 
 ### Teams in the lobby
 
 - Players are split into two teams. **Switch Team** moves you to the other side if it has room.
-- In both modes, a team's first player in the lobby picks the team's streamer.
+- In both modes every player picks their own streamer (since 18 November; before, the team's first player picked one
+  for both). Teammates can't pick the same streamer (section 6).
 
 ### How a team plays
 
-- **Shared:** Cash, Influence, Trophies, the shop and the streamer.
-- **Your own:** each player has their own Audience (deck), queue and Sub Cap. Copy limits also count per player (for example, 8 Loyal Fans each).
+- **Shared:** Cash, Influence, Trophies and the shop.
+- **Your own streamer** (since 18 November): your own active, with its own price, cooldown and armed state, paid
+  from the team's shared Influence. Actives that touch viewers or seats work on your side of the chat; the rest work
+  for the whole team (see ChangeSummaryAndGuideLines.md section 10).
+- **Your own:** each player has their own Audience (deck), queue and Sub Cap (up to 50 seats each, 5 rows of 10 a side,
+  since 18 November). Copy limits also count per player (for example, 8 Loyal Fans each).
 - **The stream:** a vertical divider splits the chat. Player 1 is on the left, player 2 on the right, with names over each side.
   - Each player adds viewers from their own queue to their own side.
   - Your actions can target viewers on **either** side.
@@ -91,7 +96,11 @@ The streamer is now picked last, like choosing a fighter.
   2. A **30-second** countdown runs (`MatchModes.StreamerPickSeconds`).
   3. Lock in with Enter or a click. When time runs out, **Random** is picked for you.
   4. The match starts as soon as everyone has locked in.
-- **Team modes:** only the team's first player picks. Their teammate waits in the lobby with a note.
+- **Team modes** (since 18 November): every player picks their own streamer. Teammates can't share one:
+  - once your teammate locks a streamer in, its tile says **TEAMMATE** and can't be confirmed;
+  - if you both confirm the same one at the same moment, the first to reach the host keeps it and the other is told
+    to pick again;
+  - **Random**, and the timer running out, never land on your teammate's streamer.
 - **Someone leaves during the pick:** everyone goes back to the lobby with a message.
 
 ## 7. Hover pop-ups
@@ -175,7 +184,8 @@ The two Endless buttons are also in **UI Skin > Shop**, as **Add Stream** and **
 
 ## 10. Calls I made (check these)
 
-1. **Team streamer:** the team's first player picks it, and the teammate doesn't pick.
+1. **Team streamers:** each player picks their own, and teammates can't pick the same one (18 November; it was one
+   streamer per team, picked by the team's first player).
 2. **Team actions:** you use your own viewers' actions, but they can target either side. Fetch-style actions draw from the acting player's own queue.
 3. **Hype Men spare seats in teams:** free spare seats show on the first Hype Man's side.
 4. **Copy limits in teams** apply to each player's own Audience. The shop stock is shared by the team.

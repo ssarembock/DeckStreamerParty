@@ -2835,6 +2835,38 @@ MonoBehaviour:
     m_Key: unlock.emote
     m_Metadata:
       m_Items: []
+  - m_Id: 6478704609419264
+    m_Key: recap.team_names
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704638779392
+    m_Key: recap.tip.audience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6478704638779393
+    m_Key: recap.tip.active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837318049792
+    m_Key: game.early_retirement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409920
+    m_Key: game.early_retirement_sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409921
+    m_Key: game.boomer_stayed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409922
+    m_Key: confirm.early_retirement_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6526837347409923
+    m_Key: confirm.early_retirement
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
