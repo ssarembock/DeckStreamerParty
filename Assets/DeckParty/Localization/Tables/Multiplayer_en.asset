@@ -334,7 +334,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736680635219970
-    m_Localized: 'The shop is open: first come, first served!'
+    m_Localized: The shop is open!
     m_Metadata:
       m_Items: []
   - m_Id: 736680635219971

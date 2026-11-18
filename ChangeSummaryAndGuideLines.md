@@ -815,3 +815,48 @@ The Boomers' discount still applies. Endless's Trophy prices never had a maximum
 4. **Removing one of your starting cards doesn't change the shop.** Those cards were never on the pile.
 5. **The removal texts now say the card leaves "the game"**, not just your Audience: the button's tooltip, the confirm
    dialog and the money rules.
+
+## 14. Smaller chat seats in team games, Endless stream prices along the Fibonacci numbers (2026-11-18)
+
+### Do this first in Unity
+
+1. Let the scripts compile. No Build Everything or Rebuild is needed.
+2. Multiplayer needs every player on this build (protocol `deckparty-28`; the state format is still 17).
+
+### Some chat seats were smaller than the others (2v2 and co-op)
+
+**What you saw:** a few seats in a team chat were smaller than the rest, now and then, near the start of a game.
+
+**Why**
+- The seat sizes themselves were right: the team layout gives every seat the same size on every render.
+- Inside each seat, the effects scale an inner part of the card (`animRoot`):
+  - the arrival pop when a viewer joins grows from 35% to full size;
+  - the score tick, counter pulse and action punches add a short bump to the size.
+- Feel's bumps are *additive*: each one starts from the size the seat has at that moment and returns to that size. One that
+  started while an arrival pop was still small ended small, and the seat stayed that size. Only switching the seat off
+  reset it.
+- Teams made this likely. When one player's side gains a seat, every seat on the other side is redrawn by a different card,
+  so an effect still playing carries over to another seat. Early in a game many viewers arrive close together.
+
+**Fix**
+- Every chat seat now eases back to full size, and level, once no effect has touched it for 1.2 seconds. It's the same
+  quiet-time rule as the Risk pips and the Deplatform warning (`FxRestPose`). Empty seats are included, because a seat
+  keeps its card when its viewer leaves.
+- A viewer whose arrival is deliberately delayed (hidden until its pop) is left alone until the pop plays.
+
+**Files:** `Runtime/UI/Common/GuestCardView.cs` (`SettleAfterEffects`) and `Runtime/Fx/FxRestPose.cs` (`IsQuiet`, `Hold`,
+`Forget`).
+
+**Check in Unity:** start a 2v2 or co-op game and add viewers quickly on both sides, also using actions while viewers
+arrive. A seat may still pop or bump, but it should always end at the same size as its neighbours.
+
+### Endless: Add a Stream costs 1, 2, 3, 5, 8, 13... Trophies
+
+- Each extra stream costs the next Fibonacci number, without the first 1: **1, 2, 3, 5, 8, 13, 21...** It was 2, then 1
+  more each time.
+- Compared with before (2, 3, 4, 5, 6, 7...): the first three extra streams are 1 Trophy cheaper each, the fourth costs the
+  same (5), and from the fifth on it's dearer (8 instead of 6, then 13 instead of 7) and climbs quickly.
+- **Add a Viewer to the Shop is unchanged** (2, then 1 more each time). The request named only the rounds.
+- Applies to solo Endless and Co-op Endless. The price above the button, its tooltip and the Trophy tooltip all read the
+  new price.
+- **Code:** `GameRules.EndlessStreamCost`, used by `PartyEngine.ExtraStreamCost`.

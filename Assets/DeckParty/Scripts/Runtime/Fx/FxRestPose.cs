@@ -52,6 +52,28 @@ namespace DeckParty
             if (target != null) s_LastTouched[target] = Time.unscaledTime;
         }
 
+        /// <summary>
+        /// Something will animate <paramref name="target"/> after <paramref name="seconds"/> (a delayed entrance that hides it
+        /// until then): count it as busy until that moment, plus the usual quiet time.
+        /// </summary>
+        public static void Hold(Transform target, float seconds)
+        {
+            if (target != null) s_LastTouched[target] = Time.unscaledTime + Mathf.Max(0f, seconds);
+        }
+
+        /// <summary>
+        /// No effect or tween has touched <paramref name="target"/> for <see cref="SettleAfter"/> seconds. Elements that settle
+        /// themselves back at rest (chat seats) use this instead of the component.
+        /// </summary>
+        public static bool IsQuiet(Transform target) =>
+            target == null || !s_LastTouched.TryGetValue(target, out float touched) || Time.unscaledTime - touched >= SettleAfter;
+
+        /// <summary>Drops <paramref name="target"/>'s timestamp (it's being destroyed).</summary>
+        public static void Forget(Transform target)
+        {
+            if (target != null) s_LastTouched.Remove(target);
+        }
+
         void Awake() => Capture();
 
         void Capture()
@@ -78,7 +100,7 @@ namespace DeckParty
 
         void LateUpdate()
         {
-            if (s_LastTouched.TryGetValue(transform, out float touched) && Time.unscaledTime - touched < SettleAfter) return;
+            if (!IsQuiet(transform)) return;
             var rotation = transform.localRotation;
             if (rotation != m_Rotation) transform.localRotation = Quaternion.RotateTowards(rotation, m_Rotation, TurnSpeed * Time.unscaledDeltaTime);
             var scale = transform.localScale;

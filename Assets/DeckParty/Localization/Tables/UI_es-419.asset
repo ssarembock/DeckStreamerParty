@@ -1744,7 +1744,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 736683852251160
     m_Localized: "<b>Todos contra todos</b>  <color=#FF9A3D>\xA1La tienda est\xE1
-      abierta: el que llega primero, se lo lleva!</color>"
+      abierta!</color>"
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251161
@@ -1940,7 +1940,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408013
-    m_Localized: Saca para siempre una carta de espectador de tu Audiencia.
+    m_Localized: Saca para siempre una carta de espectador de tu Audiencia y de la
+      partida.
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408014
@@ -1957,7 +1958,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408017
-    m_Localized: '{viewer} deja tu audiencia para siempre. Cuesta {cost}.'
+    m_Localized: '{viewer} deja tu audiencia y la partida para siempre. Cuesta {cost}.'
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408018
@@ -2627,7 +2628,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802218063749137
-    m_Localized: "Cada vez cuesta 2 {icon:influence} m\xE1s. Tu Audiencia conserva
+    m_Localized: "Cada vez cuesta {step} {icon:influence} m\xE1s. Tu Audiencia conserva
       al menos {min} espectadores."
     m_Metadata:
       m_Items: []

@@ -162,14 +162,35 @@ namespace DeckParty.Core
         // --- Endless mode (2026-11-16, additionalgamemodes.md) ---
         /// <summary>Endless: streams a run starts with (Trophies buy more). 20 since 2026-11-18, for a harder run; it was 25.</summary>
         public const int EndlessStartingStreams = 20;
-        /// <summary>Endless: Trophies the first extra stream (and the first extra shop viewer) costs; each one after costs this much more.</summary>
+        /// <summary>
+        /// Endless: Trophies the first extra shop viewer costs; each one after costs this much more. (Extra streams used
+        /// the same prices until 2026-11-18; they follow <see cref="EndlessStreamCost"/> now.)
+        /// </summary>
         public const int EndlessFirstTrophyCost = 2;
         public const int EndlessTrophyCostStep = 1;
         /// <summary>Endless: viewers offered when adding a viewer to the shop (pick one).</summary>
         public const int EndlessViewerChoices = 3;
 
-        /// <summary>Endless: Trophies the next purchase costs after <paramref name="bought"/> of the same kind.</summary>
+        /// <summary>Endless: Trophies the next shop viewer costs after <paramref name="bought"/> of them (2, 3, 4...).</summary>
         public static int EndlessTrophyCost(int bought) => EndlessFirstTrophyCost + EndlessTrophyCostStep * Math.Max(0, bought);
+
+        /// <summary>
+        /// Endless: Trophies the next extra stream costs after <paramref name="bought"/> of them, along the Fibonacci numbers
+        /// without the first 1: 1, 2, 3, 5, 8, 13, 21... (2026-11-18, user request; it was 2, then 1 more each time).
+        /// </summary>
+        public static int EndlessStreamCost(int bought)
+        {
+            int previous = 1, cost = 1;
+            for (int i = 0; i < bought; i++)
+            {
+                int next = previous + cost;
+                // Far past anything a run can afford: stop before int overflows.
+                if (next < cost || next > 1_000_000_000) return 1_000_000_000;
+                previous = cost;
+                cost = next;
+            }
+            return cost;
+        }
 
         // --- Teams (2v2, co-op) ---
         /// <summary>Players in a team (2v2 and co-op).</summary>

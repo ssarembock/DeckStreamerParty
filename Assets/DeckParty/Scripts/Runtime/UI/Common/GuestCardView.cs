@@ -109,6 +109,9 @@ namespace DeckParty.UI
         /// <summary>Seconds between an unused-action avatar's wiggles.</summary>
         const float WiggleInterval = 2.6f;
         const float WiggleLength = 0.5f;
+        /// <summary>How fast a seat left off-size or tilted by cut-short effects eases back (scale per second, degrees per second).</summary>
+        const float SettleScaleSpeed = 2.5f;
+        const float SettleTurnSpeed = 200f;
 
         void Awake()
         {
@@ -181,6 +184,7 @@ namespace DeckParty.UI
                 c.a = 0.55f + 0.45f * Mathf.Sin(Time.unscaledTime * 6f);
                 highlight.color = c;
             }
+            SettleAfterEffects();
             UpdateMotion();
             if (avatarMode) UpdateActionCue();
         }
@@ -210,6 +214,30 @@ namespace DeckParty.UI
             float bump = k < 1f ? 1f + 0.05f * Mathf.Sin(k * Mathf.PI) : 1f;
             faceRoot.localRotation = Quaternion.Euler(0f, 0f, angle);
             faceRoot.localScale = new Vector3(bump, bump, 1f);
+        }
+
+        /// <summary>
+        /// Puts the seat back at full size and level once no effect has moved it for a moment (<see cref="FxRestPose.SettleAfter"/>).
+        /// Feel's punches add to the scale the seat has when they start, so a score tick or counter pulse that began while a
+        /// viewer's arrival pop was still small ended small and the seat stayed that way. Teams made it likely: when one
+        /// side gains a seat, every seat on the other side is redrawn by a different card, mid-effect. Runs for empty seats
+        /// too (a seat keeps its card when its viewer leaves).
+        /// </summary>
+        void SettleAfterEffects()
+        {
+            if (animRoot == null || !FxRestPose.IsQuiet(animRoot)) return;
+            float dt = Time.unscaledDeltaTime;
+            var scale = animRoot.localScale;
+            if (scale != Vector3.one) animRoot.localScale = Vector3.MoveTowards(scale, Vector3.one, SettleScaleSpeed * dt);
+            // Only the effects' spin (z): the hover tilt (x, y) is UpdateMotion's.
+            var euler = animRoot.localEulerAngles;
+            if (Mathf.Abs(Mathf.DeltaAngle(euler.z, 0f)) > 0.01f)
+                animRoot.localRotation = Quaternion.Euler(euler.x, euler.y, Mathf.MoveTowardsAngle(euler.z, 0f, SettleTurnSpeed * dt));
+        }
+
+        void OnDestroy()
+        {
+            if (animRoot != null) FxRestPose.Forget(animRoot);
         }
 
         /// <summary>Hover lift (spring), tilt toward the cursor (N7) and idle breathing for static portraits (N8).</summary>
@@ -577,6 +605,8 @@ namespace DeckParty.UI
         System.Collections.IEnumerator ArriveLater(float delay, bool diamond)
         {
             AnimRoot.localScale = Vector3.one * 0.01f;
+            // Hidden on purpose until the pop: don't let the seat settle back to full size while it waits.
+            FxRestPose.Hold(AnimRoot, delay * DeckParty.Fx.DurationScale);
             yield return new WaitForSecondsRealtime(delay * DeckParty.Fx.DurationScale);
             DoArrive(diamond);
         }

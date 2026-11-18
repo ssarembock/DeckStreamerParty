@@ -38,9 +38,11 @@ Each button then goes to the character set screen as before. **Start** opens the
 - **Trophies are a currency.** Each Trophy viewer in a scored stream banks one Trophy.
   - The menu bar shows the banked total, with no "/4".
   - Hover it for the prices.
-- Two extra shop buttons sit next to the others. Each costs **2 Trophies, then 1 more per use** (`EndlessFirstTrophyCost`, `EndlessTrophyCostStep`), and the price shows above the button.
+- Two extra shop buttons sit next to the others. The price shows above each button.
   - **Add a Stream:** one more stream for this run. Buy it before your last stream ends.
+    - It costs **1, 2, 3, 5, 8, 13, 21...** Trophies: the Fibonacci numbers without the first 1 (`GameRules.EndlessStreamCost`; since 18 November, it was 2, then 1 more per use).
   - **Add a Viewer to the Shop:** opens the viewer picker with **3 viewers the shop doesn't sell yet** (`EndlessViewerChoices`). The one you click stays in the shop for the rest of the run.
+    - It costs **2 Trophies, then 1 more per use** (`EndlessFirstTrophyCost`, `EndlessTrophyCostStep`).
     - The offer is fixed until you buy, so it can't be rerolled.
 - The run ends when the streams run out. Game over shows how many streams you lasted, and a new best is recorded.
 

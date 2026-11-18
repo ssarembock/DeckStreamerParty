@@ -1209,8 +1209,8 @@ MonoBehaviour:
       any unpaid amount costs <b>7 {icon:cash} per {icon:influence}</b>.\nThe shop''s
       stock is <b>shared by every player</b>: each normal viewer has 4 copies for
       the whole match, and you can own at most 4 of each; Trophies are unlimited.
-      <b>Remove a Viewer</b> in the shop takes a card out of your Audience for good:
-      3 {icon:influence}, then 2 more each time.'
+      <b>Remove a Viewer</b> in the shop takes a card out of the game for good (it
+      doesn''t go back to the shop): 5 {icon:influence}, then 5 more each time.'
     m_Metadata:
       m_Items: []
   - m_Id: 483606641
@@ -1451,12 +1451,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091268
     m_Localized: On the payroll. With {first} different Staff viewers in chat, a
-      scored stream earns +{per} {icon:influence}, +{per} more for every extra one
-      (+{top} with {maxv}).
+      scored stream earns +{per} {icon:influence} and +{cashper} {icon:cash}, and
+      the same again for every extra one (+{top} {icon:influence} and +{topcash}
+      {icon:cash} with {maxv}).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091269
-    m_Localized: 'Now: +{value} {icon:influence} when the stream is scored.'
+    m_Localized: 'Now: +{value} {icon:influence} and +{cash} {icon:cash} when the
+      stream is scored.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091270
@@ -1657,23 +1659,23 @@ MonoBehaviour:
       with them. Every point makes the bonus bigger. Watch the <b>Community Beats</b>
       beside the chat and hover any community icon to see exactly what it does:\n{icon:CoreFanbase}
       <b>Core Fanbase</b>: 10% per point (up to 50%) that a Core Fanbase viewer scores
-      twice.\n{icon:Staff} <b>Staff</b>: +1 {icon:influence} per point (up to 3)
-      when the stream is scored.\n{icon:Boomer} <b>Boomers</b>: each Boomer has the
-      action <b>Early Retirement</b>: the whole chat scores right now and the stream
-      goes on, then the Boomer leaves your Audience for good. Alone it always retires;
-      at 1 point only 50% of the time, at 2 points 25%.\n{icon:Millennial} <b>Millennials</b>:
-      when a Boomer retires, a random Millennial you own earns +1 {icon:cash} for
-      good, +1 more per point (up to +3).\n{icon:GenZ} <b>Gen-Z</b>: after a stream,
-      each Gen-Z viewer grows +1 {icon:cash} or {icon:influence} for good per point
-      (up to 2).\n{icon:Mods} <b>Mods</b>: one more removal per point this stream.\n{icon:Gatekeepers}
-      <b>Gatekeepers</b>: a Gatekeeper''s action sends 3 random viewers back to the
-      queue, 6 at 1 point, everyone else at 2.\n{icon:HypeMen} <b>Hype Men</b>: 1
-      spare seat past the Sub Cap per point (up to 2) for the viewers they bring
-      in.\n{icon:Lurkers} <b>Lurkers</b>: when the stream is scored, +1 {icon:cash}
-      per empty space per point (up to 2).\n{icon:Trolls} <b>Troll Army</b>: when
-      the stream is scored, +2 {icon:cash} for every point of {icon:risk} in it (cancelled
-      {icon:risk} counts).\n{icon:Voyeurs} <b>Voyeurs</b>: one more peek per point
-      this stream (up to 1).'
+      twice.\n{icon:Staff} <b>Staff</b>: +1 {icon:influence} and +1 {icon:cash} per
+      point (up to 3) when the stream is scored.\n{icon:Boomer} <b>Boomers</b>: each
+      Boomer has the action <b>Early Retirement</b>: the whole chat scores right
+      now and the stream goes on, then the Boomer leaves your Audience for good.
+      Alone it always retires; at 1 point only 50% of the time, at 2 points 25%.\n{icon:Millennial}
+      <b>Millennials</b>: when a Boomer retires, a random Millennial you own earns
+      +1 {icon:cash} for good, +1 more per point (up to +3).\n{icon:GenZ} <b>Gen-Z</b>:
+      after a stream, each Gen-Z viewer grows +1 {icon:cash} or {icon:influence}
+      for good per point (up to 2).\n{icon:Mods} <b>Mods</b>: one more removal per
+      point this stream.\n{icon:Gatekeepers} <b>Gatekeepers</b>: a Gatekeeper''s
+      action sends 3 random viewers back to the queue, 6 at 1 point, everyone else
+      at 2.\n{icon:HypeMen} <b>Hype Men</b>: 1 spare seat past the Sub Cap per point
+      (up to 2) for the viewers they bring in.\n{icon:Lurkers} <b>Lurkers</b>: when
+      the stream is scored, +1 {icon:cash} per empty space per point (up to 2).\n{icon:Trolls}
+      <b>Troll Army</b>: when the stream is scored, +2 {icon:cash} for every point
+      of {icon:risk} in it (cancelled {icon:risk} counts).\n{icon:Voyeurs} <b>Voyeurs</b>:
+      one more peek per point this stream (up to 1).'
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656

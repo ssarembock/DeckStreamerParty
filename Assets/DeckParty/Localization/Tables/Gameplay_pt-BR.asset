@@ -1211,7 +1211,8 @@ MonoBehaviour:
       da loja \xE9 <b>dividido entre todos os jogadores</b>: cada espectador normal
       tem 4 c\xF3pias pra partida inteira e voc\xEA pode ter no m\xE1ximo 4 de cada;
       Trof\xE9us s\xE3o ilimitados. <b>Remover um espectador</b> na loja tira uma
-      carta da sua Audi\xEAncia de vez: 3 {icon:influence}, e 2 a mais a cada vez."
+      carta da partida de vez (ela n\xE3o volta pra loja): 5 {icon:influence}, e
+      5 a mais a cada vez."
     m_Metadata:
       m_Items: []
   - m_Id: 483606641
@@ -1454,12 +1455,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091268
     m_Localized: Na folha de pagamento. Com {first} espectadores diferentes da Equipe
-      no chat, a live que pontua ganha +{per} {icon:influence}, +{per} por cada um
-      a mais (+{top} com {maxv}).
+      no chat, a live que pontua ganha +{per} {icon:influence} e +{cashper} {icon:cash},
+      e o mesmo por cada um a mais (+{top} {icon:influence} e +{topcash} {icon:cash}
+      com {maxv}).
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091269
-    m_Localized: 'Agora: +{value} {icon:influence} quando a live pontuar.'
+    m_Localized: 'Agora: +{value} {icon:influence} e +{cash} {icon:cash} quando a
+      live pontuar.'
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091270
@@ -1662,24 +1665,24 @@ MonoBehaviour:
       <b>Ritmo das comunidades</b> ao lado do chat e passe o mouse sobre qualquer
       \xEDcone de comunidade pra ver o que ela faz:\\n{icon:CoreFanbase} <b>Base
       de f\xE3s</b>: 10% por ponto (at\xE9 50%) de um espectador da Base de f\xE3s
-      pontuar duas vezes.\\n{icon:Staff} <b>Equipe</b>: +1 {icon:influence} por ponto
-      (at\xE9 3) quando a live pontua.\\n{icon:Boomer} <b>Boomers</b>: cada Boomer
-      tem a a\xE7\xE3o <b>Aposentadoria antecipada</b>: o chat inteiro pontua na
-      hora e a live continua; depois o Boomer deixa sua audi\xEAncia de vez. Sozinho,
-      ele sempre se aposenta; com 1 ponto, s\xF3 em 50% das vezes, e com 2, em 25%.\\n{icon:Millennial}
-      <b>Millennials</b>: quando um Boomer se aposenta, um Millennial seu aleat\xF3rio
-      ganha +1 {icon:cash} pra sempre, +1 a mais por ponto (at\xE9 +3).\\n{icon:GenZ}
-      <b>Gera\xE7\xE3o Z</b>: depois de uma live, cada espectador da Gera\xE7\xE3o
-      Z cresce +1 {icon:cash} ou {icon:influence} pra sempre por ponto (at\xE9 2).\\n{icon:Mods}
-      <b>Mods</b>: mais uma expuls\xE3o por ponto nesta live.\\n{icon:Gatekeepers}
-      <b>Porteiros</b>: a a\xE7\xE3o de um Porteiro manda 3 espectadores aleat\xF3rios
-      de volta pra fila, 6 com 1 ponto e todos os outros com 2.\\n{icon:HypeMen}
-      <b>Animadores</b>: 1 lugar extra acima do limite por ponto (at\xE9 2) pros
-      espectadores que eles trazem.\\n{icon:Lurkers} <b>Fantasmas</b>: quando a live
-      pontua, +1 {icon:cash} por vaga livre por ponto (at\xE9 2).\\n{icon:Trolls}
-      <b>Ex\xE9rcito troll</b>: quando a live pontua, +2 {icon:cash} por cada ponto
-      de {icon:risk} nela ({icon:risk} anulado conta).\\n{icon:Voyeurs} <b>Bisbilhoteiros</b>:
-      mais uma espiada por ponto nesta live (at\xE9 1)."
+      pontuar duas vezes.\\n{icon:Staff} <b>Equipe</b>: +1 {icon:influence} e +1
+      {icon:cash} por ponto (at\xE9 3) quando a live pontua.\\n{icon:Boomer} <b>Boomers</b>:
+      cada Boomer tem a a\xE7\xE3o <b>Aposentadoria antecipada</b>: o chat inteiro
+      pontua na hora e a live continua; depois o Boomer deixa sua audi\xEAncia de
+      vez. Sozinho, ele sempre se aposenta; com 1 ponto, s\xF3 em 50% das vezes,
+      e com 2, em 25%.\\n{icon:Millennial} <b>Millennials</b>: quando um Boomer se
+      aposenta, um Millennial seu aleat\xF3rio ganha +1 {icon:cash} pra sempre, +1
+      a mais por ponto (at\xE9 +3).\\n{icon:GenZ} <b>Gera\xE7\xE3o Z</b>: depois
+      de uma live, cada espectador da Gera\xE7\xE3o Z cresce +1 {icon:cash} ou {icon:influence}
+      pra sempre por ponto (at\xE9 2).\\n{icon:Mods} <b>Mods</b>: mais uma expuls\xE3o
+      por ponto nesta live.\\n{icon:Gatekeepers} <b>Porteiros</b>: a a\xE7\xE3o de
+      um Porteiro manda 3 espectadores aleat\xF3rios de volta pra fila, 6 com 1 ponto
+      e todos os outros com 2.\\n{icon:HypeMen} <b>Animadores</b>: 1 lugar extra
+      acima do limite por ponto (at\xE9 2) pros espectadores que eles trazem.\\n{icon:Lurkers}
+      <b>Fantasmas</b>: quando a live pontua, +1 {icon:cash} por vaga livre por ponto
+      (at\xE9 2).\\n{icon:Trolls} <b>Ex\xE9rcito troll</b>: quando a live pontua,
+      +2 {icon:cash} por cada ponto de {icon:risk} nela ({icon:risk} anulado conta).\\n{icon:Voyeurs}
+      <b>Bisbilhoteiros</b>: mais uma espiada por ponto nesta live (at\xE9 1)."
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656

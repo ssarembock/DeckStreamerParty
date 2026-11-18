@@ -1738,8 +1738,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251160
-    m_Localized: "<b>Todos contra todos</b>  <color=#FF9A3D>A loja est\xE1 aberta:
-      quem chegar primeiro leva!</color>"
+    m_Localized: "<b>Todos contra todos</b>  <color=#FF9A3D>A loja est\xE1 aberta!</color>"
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251161
@@ -1934,7 +1933,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408013
-    m_Localized: "Tire de vez uma carta de espectador da sua Audi\xEAncia."
+    m_Localized: "Tire de vez uma carta de espectador da sua Audi\xEAncia e da partida."
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408014
@@ -1951,7 +1950,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408017
-    m_Localized: "{viewer} sai da sua audi\xEAncia de vez. Custa {cost}."
+    m_Localized: "{viewer} sai da sua audi\xEAncia e da partida de vez. Custa {cost}."
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408018
@@ -2620,7 +2619,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802218063749137
-    m_Localized: "Cada remo\xE7\xE3o custa 2 {icon:influence} a mais. Sua Audi\xEAncia
+    m_Localized: "Cada remo\xE7\xE3o custa {step} {icon:influence} a mais. Sua Audi\xEAncia
       fica com pelo menos {min} espectadores."
     m_Metadata:
       m_Items: []

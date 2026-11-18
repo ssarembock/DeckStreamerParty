@@ -1718,8 +1718,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251160
-    m_Localized: '<b>Free For All</b>  <color=#FF9A3D>The shop is open: first come,
-      first served!</color>'
+    m_Localized: <b>Free For All</b>  <color=#FF9A3D>The shop is open!</color>
     m_Metadata:
       m_Items: []
   - m_Id: 736683852251161
@@ -1913,7 +1912,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408013
-    m_Localized: Take one viewer card out of your Audience for good.
+    m_Localized: Take one viewer card out of your Audience and the game for good.
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408014
@@ -1930,7 +1929,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408017
-    m_Localized: '{viewer} leaves your Audience for good. This costs {cost}.'
+    m_Localized: '{viewer} leaves your Audience and the game for good. This costs
+      {cost}.'
     m_Metadata:
       m_Items: []
   - m_Id: 2431125265408018
@@ -2597,7 +2597,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5802218063749137
-    m_Localized: Each removal costs 2 {icon:influence} more. Your Audience keeps
+    m_Localized: Each removal costs {step} {icon:influence} more. Your Audience keeps
       at least {min} viewers.
     m_Metadata:
       m_Items: []

@@ -112,8 +112,9 @@ namespace DeckParty.Networking
         /// action moved out of the Boomers.
         /// deckparty-27: small changes (2026-11-18): state format v17 (removed and retired viewers stay out of the shop),
         /// Remove a Viewer 5 then +5, Staff also pays +1 Cash per point.
+        /// deckparty-28: Endless extra streams cost 1, 2, 3, 5, 8... Trophies (2026-11-18).
         /// </summary>
-        public const string ProtocolVersion = "deckparty-27";
+        public const string ProtocolVersion = "deckparty-28";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";

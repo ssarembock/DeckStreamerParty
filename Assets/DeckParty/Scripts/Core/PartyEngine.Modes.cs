@@ -12,8 +12,8 @@ namespace DeckParty.Core
     {
         // ================================================================== Endless: extra streams
 
-        /// <summary>Trophies the next extra stream costs (2, then 1 more each time).</summary>
-        public static int ExtraStreamCost(PlayerState s) => GameRules.EndlessTrophyCost(s.StreamsBought);
+        /// <summary>Trophies the next extra stream costs: 1, 2, 3, 5, 8, 13... (<see cref="GameRules.EndlessStreamCost"/>).</summary>
+        public static int ExtraStreamCost(PlayerState s) => GameRules.EndlessStreamCost(s.StreamsBought);
 
         /// <summary>Why another stream can't be bought right now (null when it can).</summary>
         public static string GetExtraStreamBlocker(PlayerState s)

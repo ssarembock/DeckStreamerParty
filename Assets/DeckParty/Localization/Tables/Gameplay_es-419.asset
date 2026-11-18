@@ -1213,8 +1213,8 @@ MonoBehaviour:
       stock de la tienda es <b>compartido entre todos los jugadores</b>: cada espectador
       normal tiene 4 copias para toda la partida y puedes tener como m\xE1ximo 4
       de cada uno; los Trofeos son ilimitados. <b>Quitar un espectador</b> en la
-      tienda saca una carta de tu Audiencia para siempre: 3 {icon:influence}, y 2
-      m\xE1s cada vez."
+      tienda saca una carta de la partida para siempre (no vuelve a la tienda): 5
+      {icon:influence}, y 5 m\xE1s cada vez."
     m_Metadata:
       m_Items: []
   - m_Id: 483606641
@@ -1458,12 +1458,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 675190142091268
     m_Localized: "En n\xF3mina. Con {first} espectadores distintos del Staff en el
-      chat, el stream que punt\xFAa gana +{per} {icon:influence}, +{per} m\xE1s por
-      cada uno extra (+{top} con {maxv})."
+      chat, el stream que punt\xFAa gana +{per} {icon:influence} y +{cashper} {icon:cash},
+      y lo mismo por cada uno extra (+{top} {icon:influence} y +{topcash} {icon:cash}
+      con {maxv})."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091269
-    m_Localized: "Ahora: +{value} {icon:influence} cuando el stream punt\xFAe."
+    m_Localized: "Ahora: +{value} {icon:influence} y +{cash} {icon:cash} cuando el
+      stream punt\xFAe."
     m_Metadata:
       m_Items: []
   - m_Id: 675190142091270
@@ -1668,16 +1670,16 @@ MonoBehaviour:
       <b>Ritmo de comunidades</b> junto al chat y pasa el mouse sobre cualquier \xEDcono
       de comunidad para ver qu\xE9 hace:\\n{icon:CoreFanbase} <b>N\xFAcleo de fans</b>:
       10% por punto (hasta 50%) de que un espectador del N\xFAcleo de fans punt\xFAe
-      dos veces.\\n{icon:Staff} <b>Staff</b>: +1 {icon:influence} por punto (hasta
-      3) cuando el stream punt\xFAa.\\n{icon:Boomer} <b>Boomers</b>: cada Boomer
-      tiene la acci\xF3n <b>Jubilaci\xF3n anticipada</b>: todo el chat punt\xFAa
-      en el acto y el stream sigue; luego el Boomer deja tu audiencia para siempre.
-      Solo, siempre se jubila; con 1 punto, solo el 50% de las veces, y con 2, el
-      25%.\\n{icon:Millennial} <b>Millennials</b>: cuando un Boomer se jubila, un
-      Millennial tuyo al azar gana +1 {icon:cash} para siempre, +1 m\xE1s por punto
-      (hasta +3).\\n{icon:GenZ} <b>Gen Z</b>: tras un stream, cada espectador Gen
-      Z crece +1 {icon:cash} o {icon:influence} para siempre por punto (hasta 2).\\n{icon:Mods}
-      <b>Mods</b>: una expulsi\xF3n m\xE1s por punto en este stream.\\n{icon:Gatekeepers}
+      dos veces.\\n{icon:Staff} <b>Staff</b>: +1 {icon:influence} y +1 {icon:cash}
+      por punto (hasta 3) cuando el stream punt\xFAa.\\n{icon:Boomer} <b>Boomers</b>:
+      cada Boomer tiene la acci\xF3n <b>Jubilaci\xF3n anticipada</b>: todo el chat
+      punt\xFAa en el acto y el stream sigue; luego el Boomer deja tu audiencia para
+      siempre. Solo, siempre se jubila; con 1 punto, solo el 50% de las veces, y
+      con 2, el 25%.\\n{icon:Millennial} <b>Millennials</b>: cuando un Boomer se
+      jubila, un Millennial tuyo al azar gana +1 {icon:cash} para siempre, +1 m\xE1s
+      por punto (hasta +3).\\n{icon:GenZ} <b>Gen Z</b>: tras un stream, cada espectador
+      Gen Z crece +1 {icon:cash} o {icon:influence} para siempre por punto (hasta
+      2).\\n{icon:Mods} <b>Mods</b>: una expulsi\xF3n m\xE1s por punto en este stream.\\n{icon:Gatekeepers}
       <b>Guardianes</b>: la acci\xF3n de un Guardi\xE1n manda a 3 espectadores al
       azar de vuelta a la fila, a 6 con 1 punto y a todos los dem\xE1s con 2.\\n{icon:HypeMen}
       <b>Animadores</b>: 1 asiento extra por encima del cupo por punto (hasta 2)
