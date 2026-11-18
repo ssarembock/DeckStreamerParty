@@ -590,6 +590,10 @@ MonoBehaviour:
     m_Localized: 'Epic lobby error: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 6388738646695936
+    m_Localized: That emote is locked. {requirement}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

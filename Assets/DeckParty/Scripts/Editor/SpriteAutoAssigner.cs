@@ -30,6 +30,7 @@ namespace DeckParty.EditorTools
             ("ethicalfkboi", StreamerType.EthicalFboi), ("ethicalfuckboi", StreamerType.EthicalFboi), ("ethicalfboy", StreamerType.EthicalFboi),
             ("softhardbody", StreamerType.SoftHardBodyMan), ("abomination", StreamerType.StrategicAbomination),
             ("manim", StreamerType.ManimMakethMan), ("radiologist", StreamerType.RudeRadiologist), ("jogan", StreamerType.BroJogan),
+            ("sonnet", StreamerType.KaiSonnet), ("wrex", StreamerType.TrainWrex),
         };
 
         /// <summary>Short names people are likely to use for files, on top of the full names and enum names.</summary>

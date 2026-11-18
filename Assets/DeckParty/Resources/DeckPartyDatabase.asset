@@ -1314,6 +1314,8 @@ MonoBehaviour:
     quotes:
     - Debate me, bro.
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
   - name: BroJogan
     type: 2
     portrait: {fileID: -1581881588, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
@@ -1326,6 +1328,8 @@ MonoBehaviour:
     quotes:
     - Jamie, pull that up.
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
   - name: Shinobi
     type: 3
     portrait: {fileID: 345372882, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
@@ -1338,6 +1342,8 @@ MonoBehaviour:
     quotes:
     - You didn't see that. Nobody did.
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
   - name: IRunFast
     type: 4
     portrait: {fileID: 530116710, guid: af58419dfba16a343a30c74215ab9f5d, type: 3}
@@ -1350,6 +1356,8 @@ MonoBehaviour:
     quotes:
     - SIUUUUUUU!
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
   - name: MrShark
     type: 5
     portrait: {fileID: -7370818230038034924, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
@@ -1362,6 +1370,8 @@ MonoBehaviour:
     quotes:
     - Last viewer to leave chat wins!
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
   - name: EthicalFboi
     type: 6
     portrait: {fileID: 2010778748, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
@@ -1374,6 +1384,8 @@ MonoBehaviour:
     quotes:
     - Eat the rich. Not me, though.
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
   - name: SoftHardBodyMan
     type: 7
     portrait: {fileID: 862293246, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
@@ -1386,6 +1398,8 @@ MonoBehaviour:
     quotes:
     - REFORMED. And a little bit squishy.
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
   - name: StrategicAbomination
     type: 8
     portrait: {fileID: -2112622103, guid: 51f17463cbdae8e42a6eeb36b407cd1d, type: 3}
@@ -1398,6 +1412,8 @@ MonoBehaviour:
     quotes:
     - The rook! THE ROOK!
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
   - name: Palmane
     type: 9
     portrait: {fileID: -6066641247672683931, guid: 76f9156630a8aec4f98759a0773065ce, type: 3}
@@ -1410,6 +1426,8 @@ MonoBehaviour:
     quotes:
     - Hiii chat, who wants to be my pal?
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
   - name: ManimMakethMan
     type: 10
     portrait: {fileID: -6216498727382737166, guid: 4840cbe81dc6bcb49a4382169e07ac35, type: 3}
@@ -1422,6 +1440,8 @@ MonoBehaviour:
     quotes:
     - Let's visualize that.
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
   - name: RudeRadiologist
     type: 11
     portrait: {fileID: -127041018, guid: 4840cbe81dc6bcb49a4382169e07ac35, type: 3}
@@ -1434,6 +1454,36 @@ MonoBehaviour:
     quotes:
     - Violence. Speed. Radiology.
     quotesSeeded: 1
+    unlockAchievement: 
+    unlockSeeded: 1
+  - name: KaiSonnet
+    type: 12
+    portrait: {fileID: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    platform: 1
+    platformSeeded: 1
+    venue: {fileID: 11400000, guid: f31af2f67c02ad44ca2c09337c6c08a6, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - We are NOT ending stream, chat.
+    quotesSeeded: 1
+    unlockAchievement: first_endless
+    unlockSeeded: 1
+  - name: TrainWrex
+    type: 13
+    portrait: {fileID: 0}
+    characterPrefab: {fileID: 0}
+    animatorController: {fileID: 0}
+    platform: 3
+    platformSeeded: 1
+    venue: {fileID: 11400000, guid: 559f40e46dca75649abc856828dcc186, type: 2}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    quotes:
+    - Let it ride, chat.
+    quotesSeeded: 1
+    unlockAchievement: first_single_player
+    unlockSeeded: 1
   venues:
   - {fileID: 11400000, guid: 9002b8f75c284d545a1546e75e1faf38, type: 2}
   - {fileID: 11400000, guid: 57a97ba0bf6f2014090485abfa1141c0, type: 2}
@@ -1453,6 +1503,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b77b850d9976d4b44a3699a982190195, type: 2}
   - {fileID: 11400000, guid: a4314b960d66b6b4a882979bcc16f8f3, type: 2}
   - {fileID: 11400000, guid: 672b7d3c34c954f4689f74de010f836b, type: 2}
+  - {fileID: 11400000, guid: f31af2f67c02ad44ca2c09337c6c08a6, type: 2}
+  - {fileID: 11400000, guid: 559f40e46dca75649abc856828dcc186, type: 2}
   evolvingVenue:
   - minCapacity: 0
     venue: {fileID: 11400000, guid: 9002b8f75c284d545a1546e75e1faf38, type: 2}
@@ -1512,6 +1564,15 @@ MonoBehaviour:
   - {fileID: -1079751589794765733, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
   - {fileID: -3807700631403515124, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
   - {fileID: 1521659264739580947, guid: d5a26606629cb514e9853dfb3f5d3cc9, type: 3}
+  emoteUnlocks:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   deplatformImage: {fileID: 21300000, guid: f558a3637bc663e4a8ea3135008f9b9f, type: 3}
   serverDownImage: {fileID: 21300000, guid: f558a3637bc663e4a8ea3135008f9b9f, type: 3}
   chatFooterImage: {fileID: 0}

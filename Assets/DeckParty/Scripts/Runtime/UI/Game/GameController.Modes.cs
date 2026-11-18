@@ -52,7 +52,7 @@ namespace DeckParty.UI
             if (!m_LaunchVersus) return;
 
             uint rivalSeed = state.Seed ^ 0x5A17u;
-            var streamer = StreamerCatalog.Resolve(launch.OpponentStreamer, new System.Random((int)rivalSeed));
+            var streamer = StreamerCatalog.Resolve(launch.OpponentStreamer, new System.Random((int)rivalSeed), Unlocks.StreamerMask());
             var rival = PartyEngine.CreateGame(state.ScenarioId, rivalSeed, state.TotalNights, streamer);
             // Same shop as yours (a Random Mix shop depends on the seed).
             rival.Shop.Clear();

@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00d96e5337cdf22439020e132ec0c441, type: 3}
+  m_Name: AchievementLibrary
+  m_EditorClassIdentifier: 
+  achievements:
+  - id: first_single_player
+    stat: 1
+    target: 1
+    fallbackName: Going Live
+    fallbackDescription: Finish your first single-player game.
+    icon: {fileID: 0}
+    hidden: 0
+    platformIds:
+      steam: FIRST_SINGLE_PLAYER
+      epic: FIRST_SINGLE_PLAYER
+      xbox: 
+      playStation: 
+      nintendoSwitch: 
+      appleGameCenter: 
+      googlePlayGames: 
+  - id: first_multiplayer
+    stat: 2
+    target: 1
+    fallbackName: Collab Stream
+    fallbackDescription: Finish your first multiplayer game.
+    icon: {fileID: 0}
+    hidden: 0
+    platformIds:
+      steam: FIRST_MULTIPLAYER
+      epic: FIRST_MULTIPLAYER
+      xbox: 
+      playStation: 
+      nintendoSwitch: 
+      appleGameCenter: 
+      googlePlayGames: 
+  - id: first_endless
+    stat: 3
+    target: 1
+    fallbackName: 24/7 Stream
+    fallbackDescription: Finish your first Endless run.
+    icon: {fileID: 0}
+    hidden: 0
+    platformIds:
+      steam: FIRST_ENDLESS
+      epic: FIRST_ENDLESS
+      xbox: 
+      playStation: 
+      nintendoSwitch: 
+      appleGameCenter: 
+      googlePlayGames: 
+  - id: first_streamer_unlock
+    stat: 4
+    target: 1
+    fallbackName: New Talent
+    fallbackDescription: Unlock your first streamer.
+    icon: {fileID: 0}
+    hidden: 0
+    platformIds:
+      steam: FIRST_STREAMER_UNLOCK
+      epic: FIRST_STREAMER_UNLOCK
+      xbox: 
+      playStation: 
+      nintendoSwitch: 
+      appleGameCenter: 
+      googlePlayGames: 
+  - id: first_emote_unlock
+    stat: 5
+    target: 1
+    fallbackName: Emote-Only Mode
+    fallbackDescription: Unlock your first emote.
+    icon: {fileID: 0}
+    hidden: 0
+    platformIds:
+      steam: FIRST_EMOTE_UNLOCK
+      epic: FIRST_EMOTE_UNLOCK
+      xbox: 
+      playStation: 
+      nintendoSwitch: 
+      appleGameCenter: 
+      googlePlayGames: 

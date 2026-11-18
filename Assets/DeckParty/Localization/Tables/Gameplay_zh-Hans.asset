@@ -2147,6 +2147,32 @@ MonoBehaviour:
     m_Localized: "\u5F53\u524D\uFF1A\u76F4\u64AD\u7ED3\u7B97\u65F6 +{value} {icon:cash}\u3002"
     m_Metadata:
       m_Items: []
+  - m_Id: 6388740542521344
+    m_Localized: "\u8BA2\u9605\u9A6C\u62C9\u677E\u5DF2\u5F00\u542F\uFF1A\u7B2C\u4E00\u4E2A\u4F1A\u8BA9\u670D\u52A1\u5668\u5D29\u6E83\u7684\u89C2\u4F17\u4F1A\u88AB\u9001\u56DE\u6392\u961F\u533A\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104256
+    m_Localized: "\u8BA2\u9605\u9A6C\u62C9\u677E\uFF01{viewer} \u88AB\u9001\u56DE\u6392\u961F\u533A\uFF0C\u670D\u52A1\u5668\u7A33\u4F4F\u4E86\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104257
+    m_Localized: "\u52A0\u500D\u6216\u5F52\u96F6\uFF1A\u5982\u679C\u8FD9\u573A\u76F4\u64AD\u6210\u529F\u7ED3\u7B97\uFF0C\u5B83\u7684
+      {icon:cash} \u4F1A\u518D\u4ED8\u4E00\u6B21\uFF08\u6700\u591A +{bonus}\uFF09\u3002\u5982\u679C\u5931\u8D25\uFF0C\u4F60\u5931\u53BB
+      {loss} {icon:influence}\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104258
+    m_Localized: "\u52A0\u500D\u6210\u529F\uFF1A+{value} {icon:cash}\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104259
+    m_Localized: "\u52A0\u500D\u5931\u8D25\uFF1A-{value} {icon:influence}\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104260
+    m_Localized: "\u8BA2\u9605\u9A6C\u62C9\u677E\uFF01"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

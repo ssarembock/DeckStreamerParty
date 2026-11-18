@@ -2164,6 +2164,32 @@ MonoBehaviour:
     m_Localized: 'Agora: +{value} {icon:cash} se a live pontuar.'
     m_Metadata:
       m_Items: []
+  - m_Id: 6388740542521344
+    m_Localized: 'Subathon ativada: o primeiro espectador que derrubaria o servidor
+      volta pra fila.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104256
+    m_Localized: Subathon! {viewer} volta pra fila e o servidor aguenta.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104257
+    m_Localized: "Dobro ou nada: se esta live pagar, os {icon:cash} dela pagam de
+      novo (m\xE1x. +{bonus}). Se fracassar, voc\xEA perde {loss} {icon:influence}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104258
+    m_Localized: 'Dobro ou nada pagou: +{value} {icon:cash}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104259
+    m_Localized: 'Dobro ou nada deu ruim: -{value} {icon:influence}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104260
+    m_Localized: SUBATHON!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

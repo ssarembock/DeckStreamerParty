@@ -2171,6 +2171,32 @@ MonoBehaviour:
     m_Localized: "Ahora: +{value} {icon:cash} si el stream punt\xFAa."
     m_Metadata:
       m_Items: []
+  - m_Id: 6388740542521344
+    m_Localized: "Subat\xF3n activado: el primer espectador que tirar\xEDa el servidor
+      vuelve a la fila."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104256
+    m_Localized: "\xA1Subat\xF3n! {viewer} vuelve a la fila y el servidor aguanta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104257
+    m_Localized: "Doble o nada: si este stream paga, su {icon:cash} se paga otra
+      vez (m\xE1x. +{bonus}). Si fracasa, pierdes {loss} {icon:influence}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104258
+    m_Localized: "\xA1Doble o nada paga: +{value} {icon:cash}!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104259
+    m_Localized: 'Doble o nada falla: -{value} {icon:influence}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104260
+    m_Localized: "\xA1SUBAT\xD3N!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

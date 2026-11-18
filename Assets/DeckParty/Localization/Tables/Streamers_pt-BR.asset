@@ -533,6 +533,56 @@ MonoBehaviour:
     m_Localized: Escolhe em seguida.
     m_Metadata:
       m_Items: []
+  - m_Id: 6388739422642176
+    m_Localized: Kai Sonnet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779520
+    m_Localized: O Rei da Subathon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779521
+    m_Localized: Subathon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779522
+    m_Localized: "Na sua pr\xF3xima live, o primeiro espectador que derrubaria o
+      servidor volta pra fila."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779523
+    m_Localized: "A gente N\xC3O vai encerrar a live, chat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779524
+    m_Localized: Train Wrex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779525
+    m_Localized: O Apostador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779526
+    m_Localized: Dobro ou nada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779527
+    m_Localized: "Dobro ou nada na sua pr\xF3xima live: se ela pagar, voc\xEA ganha
+      os {icon:cash} dela de novo (m\xE1x. +10). Se fracassar, voc\xEA perde 2 {icon:influence}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779528
+    m_Localized: Vai tudo, chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739582025728
+    m_Localized: BLOQUEADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739582025729
+    m_Localized: Bloqueado. {requirement}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

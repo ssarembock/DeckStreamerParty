@@ -218,6 +218,16 @@ namespace DeckParty
                     return GuestVisuals.Colored(Loc.Get("log.bark", "count", e.A), UIPalette.Orange);
                 case GameEventType.SoftLandingReady:
                     return GuestVisuals.Colored(Loc.Get("log.soft_landing_ready"), UIPalette.Pink);
+                case GameEventType.SubathonReady:
+                    return GuestVisuals.Colored(Loc.Get("log.subathon_ready"), UIPalette.Gold);
+                case GameEventType.SubathonSaved:
+                    return GuestVisuals.Colored(Loc.Get("log.subathon_saved", "viewer", viewer), UIPalette.Gold);
+                case GameEventType.DoubleDownReady:
+                    return GuestVisuals.Colored(Loc.Get("log.double_down_ready", "bonus", e.A, "loss", e.B), UIPalette.Green);
+                case GameEventType.DoubleDownPaid:
+                    return GuestVisuals.Colored(Loc.Get("log.double_down_paid", "value", e.A), UIPalette.Green);
+                case GameEventType.DoubleDownLost:
+                    return GuestVisuals.Colored(Loc.Get("log.double_down_lost", "value", e.A), UIPalette.Red);
                 // --- Game modes (2026-11-16) ---
                 case GameEventType.StreamBought:
                     return GuestVisuals.Colored(Loc.Get("log.stream_bought", "cost", GameIcons.Amount(ResourceIcon.Plays, e.A), "total", e.B), UIPalette.Teal);

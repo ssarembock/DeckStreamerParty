@@ -137,6 +137,7 @@ namespace DeckParty.UI
             m_Locked = false;
             m_QuotePick = -1;
             BuildTiles();
+            RefreshLocks();
             ApplyStatic();
             if (announcerLabel != null) announcerLabel.gameObject.SetActive(false);
             if (flash != null) flash.gameObject.SetActive(false);
@@ -172,7 +173,48 @@ namespace DeckParty.UI
                 };
                 m_Tiles.Add(tile);
             }
+            FitGrid();
         }
+
+        /// <summary>
+        /// Two rows, however many streamers there are: scenes built for 13 tiles (7 a row) widen to 8 a row for the 15 of
+        /// 2026-11-18, narrowing the tiles to fit.
+        /// </summary>
+        void FitGrid()
+        {
+            var layout = grid != null ? grid.GetComponent<GridLayoutGroup>() : null;
+            if (layout == null || layout.constraint != GridLayoutGroup.Constraint.FixedColumnCount) return;
+            int needed = Mathf.CeilToInt(m_Tiles.Count / 2f);
+            if (layout.constraintCount >= needed) return;
+            float width = grid.rect.width - layout.padding.horizontal;
+            if (width <= 0f) width = layout.constraintCount * layout.cellSize.x + (layout.constraintCount - 1) * layout.spacing.x;
+            float cell = Mathf.Floor((width - (needed - 1) * layout.spacing.x) / needed);
+            layout.constraintCount = needed;
+            layout.cellSize = new Vector2(Mathf.Min(layout.cellSize.x, cell), layout.cellSize.y);
+        }
+
+        /// <summary>Columns in the roster grid (for moving up and down with the arrows).</summary>
+        int GridColumns
+        {
+            get
+            {
+                var layout = grid != null ? grid.GetComponent<GridLayoutGroup>() : null;
+                return layout != null && layout.constraint == GridLayoutGroup.Constraint.FixedColumnCount ? Mathf.Max(1, layout.constraintCount) : Columns;
+            }
+        }
+
+        /// <summary>Streamers still locked (their unlock achievement not earned) show a lock; Random and No Streamer never do.</summary>
+        void RefreshLocks()
+        {
+            foreach (var tile in m_Tiles)
+            {
+                bool streamer = tile.Pick != StreamerCatalog.RandomPick && tile.Pick != (byte)StreamerType.None;
+                tile.SetLocked(streamer && !Unlocks.IsStreamerUnlocked((StreamerType)tile.Pick));
+            }
+        }
+
+        static bool IsLockedPick(byte pick) =>
+            pick != StreamerCatalog.RandomPick && pick != (byte)StreamerType.None && !Unlocks.IsStreamerUnlocked((StreamerType)pick);
 
         void ApplyStatic()
         {
@@ -308,7 +350,11 @@ namespace DeckParty.UI
             bool noRival = m_Mode == StreamerSelectMode.SinglePlayer ||
                            (m_Mode == StreamerSelectMode.MatchPick && Net != null && Net.Settings.Mode == Networking.MatchMode.CoopEndless);
             bool rivalWarning = !random && noRival && StreamerCatalog.Get(type).NeedsRival;
-            Set(p1Warning, rivalWarning ? Loc.Get("select.rival_warning") : string.Empty);
+            string warning = rivalWarning ? Loc.Get("select.rival_warning") : string.Empty;
+            // Locked: what unlocks them (the power above still shows, as a teaser).
+            if (IsLockedPick(pick)) warning = Loc.Get("select.locked_requirement", "requirement", Achievements.RequirementText(Unlocks.StreamerCondition(type)));
+            Set(p1Warning, warning);
+            if (confirmButton != null) confirmButton.interactable = !IsLockedPick(pick);
         }
 
         static void Set(TMP_Text label, string text)
@@ -382,7 +428,7 @@ namespace DeckParty.UI
             if (dx != 0) index = (index + dx + count) % count;
             if (dy != 0)
             {
-                index += dy * Columns;
+                index += dy * GridColumns;
                 if (index < 0 || index >= count) index = m_Index;
             }
             Highlight(index, true);
@@ -392,9 +438,18 @@ namespace DeckParty.UI
         {
             if (m_Locked || m_Tiles.Count == 0) return;
             byte pick = m_Tiles[m_Index].Pick;
+            if (IsLockedPick(pick))
+            {
+                // Locked: say what unlocks them instead.
+                AudioService.Play(Sfx.Error);
+                Fx.Play(FxCue.CounterPunch, p1Root);
+                return;
+            }
             if (pick == StreamerCatalog.RandomPick)
             {
-                pick = (byte)StreamerCatalog.Roster[UnityEngine.Random.Range(0, StreamerCatalog.Roster.Length)];
+                // Random only lands on streamers you've unlocked.
+                var pool = Unlocks.UnlockedRoster();
+                pick = pool.Count > 0 ? (byte)pool[UnityEngine.Random.Range(0, pool.Count)] : (byte)StreamerType.None;
                 ShowPick(pick);
             }
             // The AI's pick isn't remembered as yours.

@@ -76,6 +76,8 @@ namespace DeckParty
                 case StreamerType.Palmane: return new Color32(255, 122, 198, 255);
                 case StreamerType.ManimMakethMan: return new Color32(76, 142, 234, 255);
                 case StreamerType.RudeRadiologist: return new Color32(210, 30, 50, 255);
+                case StreamerType.KaiSonnet: return new Color32(255, 176, 32, 255);
+                case StreamerType.TrainWrex: return new Color32(46, 204, 113, 255);
                 default: return UIPalette.TextDim;
             }
         }
@@ -97,6 +99,8 @@ namespace DeckParty
                 case StreamerType.Palmane: return "PM";
                 case StreamerType.ManimMakethMan: return "MM";
                 case StreamerType.RudeRadiologist: return "RR";
+                case StreamerType.KaiSonnet: return "KS";
+                case StreamerType.TrainWrex: return "TW";
                 default: return "?";
             }
         }
@@ -152,6 +156,7 @@ namespace DeckParty
                     return StreamPlatform.Tunes;
                 case StreamerType.RudeRadiologist:
                 case StreamerType.EthicalFboi:
+                case StreamerType.TrainWrex:
                     return StreamPlatform.Stomp;
                 case StreamerType.ManimMakethMan:
                 case StreamerType.StrategicAbomination:

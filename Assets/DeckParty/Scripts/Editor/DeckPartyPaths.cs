@@ -17,6 +17,8 @@ namespace DeckParty.EditorTools
         public const string Audio = Root + "/Audio";
 
         public const string Database = Resources + "/DeckPartyDatabase.asset";
+        /// <summary>Every achievement (Resources, so the game loads it).</summary>
+        public const string AchievementLibrary = Resources + "/AchievementLibrary.asset";
         public const string Skin = Data + "/UISkin.asset";
         public const string AudioLibrary = Data + "/AudioLibrary.asset";
         public const string NetworkSessionPrefab = NetworkResources + "/DeckPartyNetSession.prefab";

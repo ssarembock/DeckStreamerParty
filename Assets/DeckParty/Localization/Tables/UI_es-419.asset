@@ -2898,6 +2898,66 @@ MonoBehaviour:
     m_Localized: "C\xF3digo o ID del lobby"
     m_Metadata:
       m_Items: []
+  - m_Id: 6388742148939776
+    m_Localized: Primer directo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911296
+    m_Localized: Termina tu primera partida de un jugador.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911297
+    m_Localized: Stream colaborativo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911298
+    m_Localized: Termina tu primera partida multijugador.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911299
+    m_Localized: Stream 24/7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911300
+    m_Localized: Termina tu primera partida en Modo Infinito.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911301
+    m_Localized: Nuevo talento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911302
+    m_Localized: Desbloquea tu primer streamer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911303
+    m_Localized: Modo solo emotes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911304
+    m_Localized: Desbloquea tu primer emote.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911305
+    m_Localized: 'Logro secreto: sigue jugando para descubrirlo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911306
+    m_Localized: 'Logro desbloqueado: {name}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911307
+    m_Localized: 'Se desbloquea con <b>{name}</b>: {desc}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911308
+    m_Localized: "\xA1Nuevo streamer desbloqueado: {name}!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911309
+    m_Localized: "\xA1Nuevo emote desbloqueado!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

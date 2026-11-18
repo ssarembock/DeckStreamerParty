@@ -112,6 +112,12 @@ namespace DeckParty.Core
         TrophiesBanked = 82,   // Endless: a scored stream banked Trophies. A = Trophies gained, B = Trophies banked now
         MemberStreamEnded = 83,// Teams: a member ended their side of the stream (it's scored when every member has). A = member
         RivalVictory = 84,     // Versus the AI: the rival won, so this season is lost. A = the rival's winning stream
+        // --- Streamers added 2026-11-18 ---
+        SubathonReady = 85,    // Subathon is on for this stream (the first viewer who would crash the server goes back to the queue)
+        SubathonSaved = 86,    // Subathon: this viewer would have crashed the server and went back to the queue. Guest = viewer
+        DoubleDownReady = 87,  // Double or Nothing is on for this stream. A = most extra Cash, B = Influence at stake
+        DoubleDownPaid = 88,   // Double or Nothing paid off: the scored stream earned A extra Cash
+        DoubleDownLost = 89,   // Double or Nothing: the stream failed and A Influence was lost
     }
 
     public struct GameEvent

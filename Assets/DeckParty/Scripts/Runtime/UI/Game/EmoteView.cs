@@ -24,8 +24,37 @@ namespace DeckParty.UI
 
         bool m_Built;
         float m_LastSent;
+        // Each button's background and picture or label, to dim the locked ones.
+        readonly System.Collections.Generic.List<Image> m_Backgrounds = new System.Collections.Generic.List<Image>();
+        readonly System.Collections.Generic.List<Graphic> m_Contents = new System.Collections.Generic.List<Graphic>();
 
-        void Awake() => Build();
+        void Awake()
+        {
+            Build();
+            Unlocks.EmoteUnlocked += OnEmoteUnlocked;
+        }
+
+        void OnDestroy() => Unlocks.EmoteUnlocked -= OnEmoteUnlocked;
+
+        void OnEnable() => ApplyLocks();
+
+        void OnEmoteUnlocked(int index) => ApplyLocks();
+
+        /// <summary>Locked emotes (their unlock achievement not earned yet) stay on the grid, dimmed; pressing one says what unlocks it.</summary>
+        public void ApplyLocks()
+        {
+            for (int i = 0; i < m_Backgrounds.Count; i++)
+            {
+                bool locked = !Unlocks.IsEmoteUnlocked(i);
+                if (m_Backgrounds[i] != null) m_Backgrounds[i].color = locked ? UIPalette.PanelAlt.WithAlpha(0.35f) : UIPalette.PanelAlt;
+                if (i < m_Contents.Count && m_Contents[i] != null)
+                {
+                    var color = m_Contents[i].color;
+                    color.a = locked ? 0.3f : 1f;
+                    m_Contents[i].color = color;
+                }
+            }
+        }
 
         void Build()
         {
@@ -59,11 +88,13 @@ namespace DeckParty.UI
                 feedback.hoverScale = 1.08f;
 
                 var sprite = Emotes.SpriteAt(i);
+                Graphic content;
                 if (sprite != null)
                 {
                     var icon = UiFactory.Image("Icon", bg.transform, Color.white, sprite);
                     UiFactory.Stretch(icon.rectTransform, 5f);
                     icon.preserveAspect = true;
+                    content = icon;
                 }
                 else
                 {
@@ -71,9 +102,13 @@ namespace DeckParty.UI
                     UiFactory.Stretch(label.rectTransform, 3f);
                     label.text = Emotes.TextAt(i);
                     label.fontStyle = FontStyles.Bold;
+                    content = label;
                 }
+                m_Backgrounds.Add(bg);
+                m_Contents.Add(content);
             }
             if (floatArea == null) floatArea = (RectTransform)transform.root;
+            ApplyLocks();
         }
 
         /// <summary>Your recent emote times: the same anti-spam limit the host applies (<see cref="Emotes.Allowed"/>).</summary>
@@ -83,6 +118,13 @@ namespace DeckParty.UI
 
         void Send(int index)
         {
+            if (!Unlocks.IsEmoteUnlocked(index))
+            {
+                // Locked: what unlocks it.
+                AudioService.Play(Sfx.Error);
+                ToastView.Show(Loc.Get("emote.locked", "requirement", Achievements.RequirementText(Unlocks.EmoteCondition(index))), ToastKind.Warning);
+                return;
+            }
             float now = Time.unscaledTime;
             if (!Emotes.Allowed(m_Recent, now))
             {

@@ -2862,6 +2862,66 @@ MonoBehaviour:
     m_Localized: Join code or lobby ID
     m_Metadata:
       m_Items: []
+  - m_Id: 6388742148939776
+    m_Localized: Going Live
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911296
+    m_Localized: Finish your first single-player game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911297
+    m_Localized: Collab Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911298
+    m_Localized: Finish your first multiplayer game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911299
+    m_Localized: 24/7 Stream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911300
+    m_Localized: Finish your first Endless run.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911301
+    m_Localized: New Talent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911302
+    m_Localized: Unlock your first streamer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911303
+    m_Localized: Emote-Only Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911304
+    m_Localized: Unlock your first emote.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911305
+    m_Localized: 'Secret achievement: keep playing to find out.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911306
+    m_Localized: 'Achievement unlocked: {name}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911307
+    m_Localized: 'Unlocks with <b>{name}</b>: {desc}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911308
+    m_Localized: 'New streamer unlocked: {name}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911309
+    m_Localized: New emote unlocked!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

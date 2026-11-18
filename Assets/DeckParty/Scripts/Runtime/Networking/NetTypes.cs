@@ -277,6 +277,8 @@ namespace DeckParty.Networking
         /// off-platform. Only meaningful on <see cref="PlatformKind"/>: a match can mix platforms (join codes).
         /// </summary>
         public FixedString64Bytes PlatformUserId;
+        /// <summary>Streamers this player has unlocked (one bit per StreamerType): Random only lands on these (2026-11-18).</summary>
+        public uint StreamerMask;
         /// <summary>The platform the player's id belongs to (an OnlinePlatformKind; 0 = none).</summary>
         public byte PlatformKind;
         /// <summary>Team modes (2v2, co-op): the player's team (0 or 1). Picked in the lobby (2v2), always 0 in co-op.</summary>
@@ -342,6 +344,7 @@ namespace DeckParty.Networking
             serializer.SerializeValue(ref Watchers);
             serializer.SerializeValue(ref PlatformUserId);
             serializer.SerializeValue(ref PlatformKind);
+            serializer.SerializeValue(ref StreamerMask);
             serializer.SerializeValue(ref Team);
             serializer.SerializeValue(ref Member);
             serializer.SerializeValue(ref Trophies);
@@ -355,7 +358,7 @@ namespace DeckParty.Networking
                    Cash == o.Cash && Influence == o.Influence && Capacity == o.Capacity && Guests == o.Guests && DiamondsOwned == o.DiamondsOwned &&
                    DiamondsInHouse == o.DiamondsInHouse && BestDiamonds == o.BestDiamonds && Trouble == o.Trouble && TotalCash == o.TotalCash &&
                    WinNight == o.WinNight && Rank == o.Rank && LastOutcome == o.LastOutcome && Watchers == o.Watchers &&
-                   PlatformUserId.Equals(o.PlatformUserId) && PlatformKind == o.PlatformKind && Team == o.Team && Member == o.Member && Trophies == o.Trophies && StreamerLocked == o.StreamerLocked;
+                   PlatformUserId.Equals(o.PlatformUserId) && PlatformKind == o.PlatformKind && StreamerMask == o.StreamerMask && Team == o.Team && Member == o.Member && Trophies == o.Trophies && StreamerLocked == o.StreamerLocked;
         }
 
         public override bool Equals(object obj) => obj is NetPlayer other && Equals(other);

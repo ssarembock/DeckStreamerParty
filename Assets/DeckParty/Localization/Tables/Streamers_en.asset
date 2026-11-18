@@ -528,6 +528,56 @@ MonoBehaviour:
     m_Localized: Picks next.
     m_Metadata:
       m_Items: []
+  - m_Id: 6388739422642176
+    m_Localized: Kai Sonnet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779520
+    m_Localized: The Subathon King
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779521
+    m_Localized: Subathon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779522
+    m_Localized: In your next stream, the first viewer who would bring the server
+      down goes back to the queue instead.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779523
+    m_Localized: We are NOT ending stream, chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779524
+    m_Localized: Train Wrex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779525
+    m_Localized: The High Roller
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779526
+    m_Localized: Double or Nothing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779527
+    m_Localized: 'Double or nothing on your next stream: if it pays out, you earn
+      its {icon:cash} again (max +10). If it fails, you lose 2 {icon:influence}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779528
+    m_Localized: Let it ride, chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739582025728
+    m_Localized: LOCKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739582025729
+    m_Localized: Locked. {requirement}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

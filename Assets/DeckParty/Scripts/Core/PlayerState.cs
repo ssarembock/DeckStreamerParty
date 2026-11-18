@@ -250,6 +250,8 @@ namespace DeckParty.Core
         public int PartySeats;         // Extra Sub Cap for this stream only (Three-Hour Episode); taken back off Capacity when it ends.
         public int PartyBark;          // Extra Cash for each viewer carrying Risk (Bark at Chat).
         public bool PartySoftLanding;  // A deplatformed stream still banks half its Cash (Soft Landing).
+        public bool PartySubathon;     // The first viewer who would crash the server goes back to the queue instead (Subathon).
+        public bool PartyDoubleDown;   // Scored: Cash again (capped); failed: lose Influence (Double or Nothing).
 
         // Game mode (2026-11-16)
         public GameMode Mode;

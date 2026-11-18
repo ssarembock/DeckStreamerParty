@@ -1991,6 +1991,30 @@ MonoBehaviour:
     m_Key: community.Lurkers.now
     m_Metadata:
       m_Items: []
+  - m_Id: 6388740542521344
+    m_Key: log.subathon_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104256
+    m_Key: log.subathon_saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104257
+    m_Key: log.double_down_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104258
+    m_Key: log.double_down_paid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104259
+    m_Key: log.double_down_lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104260
+    m_Key: game.subathon_saved
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

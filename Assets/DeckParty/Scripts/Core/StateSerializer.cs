@@ -19,8 +19,9 @@ namespace DeckParty.Core
         /// v11: who sits in a Hype Men spare seat (2026-11-16).
         /// v12: game modes and teams (Endless Trophies and purchases, team members, their Sub Caps, whose card is whose).
         /// v13: each team member's own Remove a Viewer price (2026-11-17).
+        /// v14: Subathon and Double or Nothing armed for this stream (the two streamers added 2026-11-18).
         /// </summary>
-        const byte FormatVersion = 13;
+        const byte FormatVersion = 14;
         const byte OldestReadableVersion = 2;
         const int MaxListLength = 4096;
 
@@ -146,6 +147,10 @@ namespace DeckParty.Core
 
                 // v13: the second team member's removals (their own Remove a Viewer price)
                 w.Write((short)Math.Min(short.MaxValue, Math.Max(0, s.PartnerRemovals)));
+
+                // v14: Kai Sonnet's Subathon and Train Wrex's Double or Nothing (armed for this stream)
+                w.Write(s.PartySubathon);
+                w.Write(s.PartyDoubleDown);
 
                 int eventCount = events != null ? events.Count : 0;
                 w.Write((ushort)eventCount);
@@ -328,6 +333,13 @@ namespace DeckParty.Core
 
                 // v12 and older: the team shared one removal count (it stays with member 0).
                 if (version >= 13) s.PartnerRemovals = r.ReadInt16();
+
+                // v13 and older saves predate Subathon and Double or Nothing (nothing armed).
+                if (version >= 14)
+                {
+                    s.PartySubathon = r.ReadBoolean();
+                    s.PartyDoubleDown = r.ReadBoolean();
+                }
 
                 int eventCount = ReadCount(r);
                 for (int i = 0; i < eventCount; i++)

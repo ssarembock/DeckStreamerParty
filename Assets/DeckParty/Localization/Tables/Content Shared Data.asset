@@ -279,6 +279,22 @@ MonoBehaviour:
     m_Key: scenario.9.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 6388738986434560
+    m_Key: venue.stage_kaisonnet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406080
+    m_Key: venue.stage_kaisonnet.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406081
+    m_Key: venue.stage_trainwrex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406082
+    m_Key: venue.stage_trainwrex.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

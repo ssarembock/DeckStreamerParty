@@ -67,6 +67,10 @@ namespace DeckParty
                 Style = VenueStyle.Space, SkyTop = 0x05070F, SkyBottom = 0x14203A, Wall = 0x0C1224, Floor = 0x1A1E2A, AccentA = 0x4C8EEA, AccentB = 0xC8A26B },
             new Preset { Id = "stage_ruderadiologist", Name = "Champions Club Arena", Description = "Smoke, lasers, a lightbox of X-rays and a very large trophy.",
                 Style = VenueStyle.Disco, SkyTop = 0x140406, SkyBottom = 0x4A0A12, Wall = 0x22060A, Floor = 0x120608, AccentA = 0xD21E32, AccentB = 0x2EC5FF },
+            new Preset { Id = "stage_kaisonnet", Name = "Subathon Bedroom", Description = "A bed, a mini fridge, forty energy drinks and a timer that only goes up.",
+                Style = VenueStyle.Apartment, SkyTop = 0x1A0F04, SkyBottom = 0x5A3A0E, Wall = 0x2E1E0A, Floor = 0x241A10, AccentA = 0xFFB020, AccentB = 0x9146FF },
+            new Preset { Id = "stage_trainwrex", Name = "High Roller Lounge", Description = "Neon slot machines, a velvet rope and a very understanding accountant.",
+                Style = VenueStyle.Disco, SkyTop = 0x041A0C, SkyBottom = 0x0E4A24, Wall = 0x082A14, Floor = 0x10200F, AccentA = 0x2ECC71, AccentB = 0xFFC94A },
         };
 
         /// <summary>The stage preset id for a streamer ("stage_fate"...), or null for no streamer.</summary>

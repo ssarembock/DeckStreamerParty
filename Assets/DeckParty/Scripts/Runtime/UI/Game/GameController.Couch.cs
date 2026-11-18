@@ -37,7 +37,7 @@ namespace DeckParty.UI
             m_CouchStreamer2 = launch.OpponentStreamer;
 
             uint seed = first.Seed ^ 0xC0C4u;
-            var streamer = StreamerCatalog.Resolve(launch.OpponentStreamer, new System.Random((int)seed));
+            var streamer = StreamerCatalog.Resolve(launch.OpponentStreamer, new System.Random((int)seed), Unlocks.StreamerMask());
             var second = PartyEngine.CreateGame(first.ScenarioId, seed, first.TotalNights, streamer);
             second.Shop.Clear();
             second.Shop.AddRange(first.Shop);

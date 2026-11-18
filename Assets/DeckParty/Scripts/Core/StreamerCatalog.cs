@@ -18,6 +18,12 @@ namespace DeckParty.Core
         Palmane = 9,
         ManimMakethMan = 10,
         RudeRadiologist = 11,
+
+        // --- 2026-11-18: locked until their unlock achievement (Game Database > Streamers > Unlock Condition) ---
+        /// <summary>The Subathon King (parody of a subathon streamer): Subathon saves the first Server Down.</summary>
+        KaiSonnet = 12,
+        /// <summary>The High Roller (parody of a gambling streamer): Double or Nothing.</summary>
+        TrainWrex = 13,
     }
 
     public enum PowerKind : byte
@@ -85,6 +91,10 @@ namespace DeckParty.Core
         public const int EpisodeSeats = 1;
         /// <summary>Bark at Chat (IRunFast): extra Cash for each viewer carrying Risk in the next stream.</summary>
         public const int BarkBonus = 2;
+        /// <summary>Double or Nothing (Train Wrex): a scored stream earns its Cash again, up to this much extra.</summary>
+        public const int DoubleDownMaxBonus = 10;
+        /// <summary>Double or Nothing: Influence lost when the stream fails (deplatformed or Server Down).</summary>
+        public const int DoubleDownLoss = 2;
 
         static readonly StreamerInfo[] s_All =
         {
@@ -100,6 +110,8 @@ namespace DeckParty.Core
             new StreamerInfo(StreamerType.Palmane, PowerKind.Instant, influence: 2, influenceStep: 1, cooldown: 3),
             new StreamerInfo(StreamerType.ManimMakethMan, PowerKind.Instant, influence: 1, influenceStep: 1, cooldown: 2),
             new StreamerInfo(StreamerType.RudeRadiologist, PowerKind.NextStream, influence: 1, influenceStep: 1),
+            new StreamerInfo(StreamerType.KaiSonnet, PowerKind.NextStream, influence: 2, influenceStep: 1, cooldown: 2),
+            new StreamerInfo(StreamerType.TrainWrex, PowerKind.NextStream, influence: 1, influenceStep: 1, cooldown: 2),
         };
 
         /// <summary>Real streamers in select-screen order (None and Random are extra tiles).</summary>
@@ -107,7 +119,7 @@ namespace DeckParty.Core
         {
             StreamerType.Fate, StreamerType.BroJogan, StreamerType.Shinobi, StreamerType.IRunFast,
             StreamerType.MrShark, StreamerType.EthicalFboi, StreamerType.SoftHardBodyMan, StreamerType.StrategicAbomination,
-            StreamerType.Palmane, StreamerType.ManimMakethMan, StreamerType.RudeRadiologist,
+            StreamerType.Palmane, StreamerType.ManimMakethMan, StreamerType.RudeRadiologist, StreamerType.KaiSonnet, StreamerType.TrainWrex,
         };
 
         public static IReadOnlyList<StreamerInfo> All => s_All;
@@ -117,12 +129,39 @@ namespace DeckParty.Core
         public static StreamerInfo Get(StreamerType type) => IsValid(type) ? s_All[(int)type] : s_All[0];
 
         /// <summary>Turns a select-screen pick (which may be <see cref="RandomPick"/>) into a real streamer.</summary>
-        public static StreamerType Resolve(byte pick, Random random)
+        public static StreamerType Resolve(byte pick, Random random) => Resolve(pick, random, AllUnlocked);
+
+        /// <summary>
+        /// Turns a pick into a real streamer for a player with these streamers unlocked (one bit per <see cref="StreamerType"/>,
+        /// see <see cref="MaskOf"/>). Random only lands on unlocked streamers, and a locked pick becomes a random one.
+        /// </summary>
+        public static StreamerType Resolve(byte pick, Random random, uint unlockedMask)
         {
-            if (pick == RandomPick) return Roster[random.Next(Roster.Length)];
+            if (unlockedMask == 0) unlockedMask = AllUnlocked;
             var type = (StreamerType)pick;
-            return IsValid(type) ? type : StreamerType.None;
+            if (pick != RandomPick && IsValid(type) && (type == StreamerType.None || InMask(type, unlockedMask))) return type;
+            if (pick != RandomPick && !IsValid(type)) return StreamerType.None;
+
+            var pool = new List<StreamerType>();
+            foreach (var candidate in Roster)
+                if (InMask(candidate, unlockedMask)) pool.Add(candidate);
+            return pool.Count > 0 ? pool[random.Next(pool.Count)] : StreamerType.None;
         }
+
+        /// <summary>Every streamer unlocked (a player whose unlocks aren't known, and the AI's own rules).</summary>
+        public static uint AllUnlocked
+        {
+            get
+            {
+                uint mask = 0;
+                foreach (var type in Roster) mask |= MaskOf(type);
+                return mask;
+            }
+        }
+
+        public static uint MaskOf(StreamerType type) => (int)type > 0 && (int)type < 32 ? 1u << (int)type : 0u;
+
+        public static bool InMask(StreamerType type, uint mask) => (mask & MaskOf(type)) != 0;
 
         /// <summary>
         /// The Influence the next use costs: it grows with every use, like raising the Sub Cap, up to <see cref="MaxPowerCost"/>.

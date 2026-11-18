@@ -308,6 +308,24 @@ MonoBehaviour:
       os {icon:Bots} Bots de Clippo, o Lataria spammarem o pr\xF3ximo streamer."
     m_Metadata:
       m_Items: []
+  - m_Id: 6388738986434560
+    m_Localized: Quarto da Subathon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406080
+    m_Localized: "Uma cama, um frigobar, quarenta energ\xE9ticos e um cron\xF4metro
+      que s\xF3 sobe."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406081
+    m_Localized: Lounge VIP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406082
+    m_Localized: "Ca\xE7a-n\xEDqueis de neon, uma corda de veludo e um contador muito
+      compreensivo."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

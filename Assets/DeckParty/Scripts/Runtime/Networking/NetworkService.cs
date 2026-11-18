@@ -98,8 +98,10 @@ namespace DeckParty.Networking
         /// deckparty-20: the Lurkers community and five risky variant viewers (2026-11-18, GuestType 87-91).
         /// deckparty-21: Epic Online Services and cross-platform join codes (2026-11-18): players carry a platform kind and a
         /// string platform id (NetPlayer), the approval payload has five parts.
+        /// deckparty-22: achievements and unlocks (2026-11-18): players carry the streamers they've unlocked (a sixth payload
+        /// part, NetPlayer.StreamerMask); Kai Sonnet and Train Wrex (StreamerType 12-13); state format v14.
         /// </summary>
-        public const string ProtocolVersion = "deckparty-21";
+        public const string ProtocolVersion = "deckparty-22";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";
@@ -112,6 +114,7 @@ namespace DeckParty.Networking
         readonly Dictionary<ulong, string> m_PendingNames = new Dictionary<ulong, string>();
         readonly Dictionary<ulong, byte> m_PendingStreamers = new Dictionary<ulong, byte>();
         readonly Dictionary<ulong, (byte Kind, string Id)> m_PendingPlatformIds = new Dictionary<ulong, (byte Kind, string Id)>();
+        readonly Dictionary<ulong, uint> m_PendingStreamerMasks = new Dictionary<ulong, uint>();
 
         /// <summary>The online platform's transport (Steam, Epic), added to the NetworkManager's object the first time it's needed.</summary>
         NetworkTransport m_PlatformTransport;
@@ -308,9 +311,10 @@ namespace DeckParty.Networking
         }
 
         /// <summary>
-        /// The approval payload: "protocol|name|streamer|platformKind|platformUserId". Whatever the connection (platform,
-        /// join code, Direct IP), a player signed in to a platform sends who they are there, so players on the same platform
-        /// see each other's avatars and names even in a mixed match.
+        /// The approval payload: "protocol|name|streamer|platformKind|platformUserId|streamerMask". Whatever the connection
+        /// (platform, join code, Direct IP), a player signed in to a platform sends who they are there, so players on the same
+        /// platform see each other's avatars and names even in a mixed match. The mask is the streamers this player has
+        /// unlocked: the host's Random picks only land on those.
         /// </summary>
         void PrepareConnection(string playerName)
         {
@@ -318,13 +322,14 @@ namespace DeckParty.Networking
             string id = platform != null ? PlatformIds.Clean(platform.LocalUser.Id) : string.Empty;
             int kind = platform != null && id.Length > 0 ? (int)platform.Kind : 0;
             Manager.NetworkConfig.ConnectionData = Encoding.UTF8.GetBytes(
-                ProtocolVersion + "|" + AppSettings.SanitizeName(playerName) + "|" + LocalStreamer + "|" + kind + "|" + id);
+                ProtocolVersion + "|" + AppSettings.SanitizeName(playerName) + "|" + LocalStreamer + "|" + kind + "|" + id + "|" + Unlocks.StreamerMask());
             m_LeavingOnPurpose = false;
             m_WasConnected = false;
             m_LastDisconnectReason = null;
             m_PendingNames.Clear();
             m_PendingStreamers.Clear();
             m_PendingPlatformIds.Clear();
+            m_PendingStreamerMasks.Clear();
         }
 
         void SpawnSession()
@@ -810,6 +815,14 @@ namespace DeckParty.Networking
             return id;
         }
 
+        /// <summary>Server: the streamers a connecting client has unlocked (0 when unknown: every streamer).</summary>
+        public uint TakePendingStreamerMask(ulong clientId)
+        {
+            if (!m_PendingStreamerMasks.TryGetValue(clientId, out var mask)) return 0;
+            m_PendingStreamerMasks.Remove(clientId);
+            return mask;
+        }
+
         /// <summary>Someone connected (or connecting) is already signed in as this account: one account, one seat.</summary>
         bool PlatformIdInUse(byte kind, string platformId)
         {
@@ -866,6 +879,7 @@ namespace DeckParty.Networking
             byte streamer = parts.Length > 2 && byte.TryParse(parts[2], out var parsed) ? parsed : (byte)0;
             byte kind = parts.Length > 3 && byte.TryParse(parts[3], out var parsedKind) ? parsedKind : (byte)0;
             string platformId = parts.Length > 4 ? PlatformIds.Clean(parts[4]) : string.Empty;
+            uint streamerMask = parts.Length > 5 && uint.TryParse(parts[5], out var parsedMask) ? parsedMask : 0u;
             if (kind == 0 || platformId.Length == 0)
             {
                 kind = 0;
@@ -892,6 +906,7 @@ namespace DeckParty.Networking
                 m_PendingNames[request.ClientNetworkId] = name;
                 m_PendingStreamers[request.ClientNetworkId] = streamer;
                 m_PendingPlatformIds[request.ClientNetworkId] = (kind, platformId);
+                m_PendingStreamerMasks[request.ClientNetworkId] = streamerMask;
                 response.Approved = true;
                 return;
             }
@@ -940,6 +955,7 @@ namespace DeckParty.Networking
             m_PendingNames[request.ClientNetworkId] = name;
             m_PendingStreamers[request.ClientNetworkId] = streamer;
             m_PendingPlatformIds[request.ClientNetworkId] = (kind, platformId);
+            m_PendingStreamerMasks[request.ClientNetworkId] = streamerMask;
             response.Approved = true;
         }
 
@@ -993,6 +1009,7 @@ namespace DeckParty.Networking
             m_PendingNames.Clear();
             m_PendingStreamers.Clear();
             m_PendingPlatformIds.Clear();
+            m_PendingStreamerMasks.Clear();
 
             if (Mode == ConnectionMode.Platform)
             {

@@ -302,6 +302,23 @@ MonoBehaviour:
       The Clanker''s {icon:Bots} Bots spam the next streamer.'
     m_Metadata:
       m_Items: []
+  - m_Id: 6388738986434560
+    m_Localized: Subathon Bedroom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406080
+    m_Localized: A bed, a mini fridge, forty energy drinks and a timer that only
+      goes up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406081
+    m_Localized: High Roller Lounge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406082
+    m_Localized: Neon slot machines, a velvet rope and a very understanding accountant.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

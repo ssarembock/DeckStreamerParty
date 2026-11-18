@@ -205,6 +205,11 @@ namespace DeckParty.UI
                 case GameEventType.ExtraSeatActive:
                 case GameEventType.BarkActive:
                 case GameEventType.SoftLandingReady:
+                case GameEventType.SubathonReady:
+                case GameEventType.SubathonSaved:
+                case GameEventType.DoubleDownReady:
+                case GameEventType.DoubleDownPaid:
+                case GameEventType.DoubleDownLost:
                 case GameEventType.Victory:
                 case GameEventType.Defeat:
                     return true;

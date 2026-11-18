@@ -92,16 +92,16 @@ namespace DeckParty.EditorTools
             var p2Sub = EditorUI.Text(p2, "Sub", "-", 22, UIPalette.TextDim, TextAlignmentOptions.MidlineRight, false, false, false);
             p2Sub.rectTransform.Box(new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 0), new Vector2(0, 40));
 
-            // --- Roster grid (2 rows of 7)
+            // --- Roster grid (2 rows of 8: 13 streamers, Random and No Streamer)
             var rosterPanel = EditorUI.Panel(screen, "Roster", UIPalette.PanelDeep.WithAlpha(0.88f));
             rosterPanel.rectTransform.Place(new Vector2(0.5f, 0), new Vector2(0, 118), new Vector2(1300, 300), new Vector2(0.5f, 0));
             var grid = EditorUI.Rect(rosterPanel.transform, "Grid").Stretch(20, 16, 20, 16);
             var layout = grid.gameObject.AddComponent<GridLayoutGroup>();
-            layout.cellSize = new Vector2(166, 128);
+            layout.cellSize = new Vector2(146, 128);
             layout.spacing = new Vector2(10, 12);
             layout.childAlignment = TextAnchor.MiddleCenter;
             layout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            layout.constraintCount = 7;
+            layout.constraintCount = 8;
 
             var tile = BuildTile(screen);
 

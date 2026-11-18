@@ -93,6 +93,28 @@ namespace DeckParty.EditorTools
 
         // ------------------------------------------------------------------ data
 
+        /// <summary>
+        /// Resources/AchievementLibrary.asset, created with the starter achievements; any starter that went missing is put back
+        /// (your edits and the achievements you added are kept).
+        /// </summary>
+        public static AchievementLibrary EnsureAchievementLibrary()
+        {
+            var library = AssetDatabase.LoadAssetAtPath<AchievementLibrary>(DeckPartyPaths.AchievementLibrary);
+            if (library == null)
+            {
+                if (!AssetDatabase.IsValidFolder(DeckPartyPaths.Resources)) AssetDatabase.CreateFolder(DeckPartyPaths.Root, "Resources");
+                library = ScriptableObject.CreateInstance<AchievementLibrary>();
+                library.EnsureStarters();
+                AssetDatabase.CreateAsset(library, DeckPartyPaths.AchievementLibrary);
+                AchievementLibrary.ClearCache();
+            }
+            else if (library.EnsureStarters())
+            {
+                EditorUtility.SetDirty(library);
+            }
+            return library;
+        }
+
         public static GameDatabase EnsureDataAssets()
         {
             var venues = new List<VenueDefinition>();
@@ -138,6 +160,9 @@ namespace DeckParty.EditorTools
             var audio = LoadOrCreate<AudioLibrary>(DeckPartyPaths.AudioLibrary);
             audio.EnsureAllSlots();
             EditorUtility.SetDirty(audio);
+
+            // Achievements (2026-11-18): the library with the starters; achievements you add are kept.
+            EnsureAchievementLibrary();
 
             var db = LoadOrCreate<GameDatabase>(DeckPartyPaths.Database);
             int reset = db.EnsureAllGuests();

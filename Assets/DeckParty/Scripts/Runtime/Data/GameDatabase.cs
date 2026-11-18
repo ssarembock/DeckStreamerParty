@@ -72,6 +72,12 @@ namespace DeckParty
         /// <summary>Set once the original catchphrase has been copied into <see cref="quotes"/>, so deleting it stays deleted.</summary>
         [HideInInspector] public bool quotesSeeded;
 
+        [Tooltip("The achievement that unlocks this streamer. None = unlocked from the start. Locked streamers show on the select " +
+                 "screen with what unlocks them, and can't be picked (Random never lands on them).")]
+        [AchievementId] public string unlockAchievement = "";
+        /// <summary>Set once the built-in condition (Unlocks.DefaultStreamerCondition) has been copied in, so your choice is kept afterwards.</summary>
+        [HideInInspector] public bool unlockSeeded;
+
         public bool IsAnimated => characterPrefab != null || animatorController != null;
     }
 
@@ -177,6 +183,10 @@ namespace DeckParty
         [Tooltip("One sprite per emote button (slice your emote sheet and drag the slices here, in button order). Pressing one makes it pop up " +
                  "from your avatar on every player's screen. Leave empty to use the built-in text emotes. Up to 16.")]
         public List<Sprite> emotes = new List<Sprite>();
+
+        [Tooltip("Each emote's unlock condition, in the same order as the emotes above (or the built-in text emotes while there are " +
+                 "no sprites). None = players have it from the start; an achievement = it's locked until that unlocks.")]
+        [AchievementId] public List<string> emoteUnlocks = new List<string>();
 
         [Header("Stream endings")]
         [Tooltip("Shown full-screen when Deplatform Risk goes over the limit and the stream ends (the streamer gets deplatformed).")]
@@ -554,9 +564,27 @@ namespace DeckParty
                     string original = Loc.EnglishRaw(StreamerVisuals.OriginalQuoteKey(type));
                     if (existing.quotes.Count == 0 && !string.IsNullOrEmpty(original)) existing.quotes.Add(original);
                 }
+                // Unlock conditions: the built-in one is copied in once (Kai Sonnet and Train Wrex start locked); yours rule after.
+                if (!existing.unlockSeeded)
+                {
+                    existing.unlockSeeded = true;
+                    existing.unlockAchievement = Unlocks.DefaultStreamerCondition(type);
+                }
+                if (existing.unlockAchievement == null) existing.unlockAchievement = string.Empty;
             }
             streamers.Sort((a, b) => a.type.CompareTo(b.type));
             m_StreamerLookup = null;
+            EnsureEmoteUnlocks();
+        }
+
+        /// <summary>One unlock condition per emote (sprites, or the built-in text emotes while there are none).</summary>
+        public void EnsureEmoteUnlocks()
+        {
+            if (emoteUnlocks == null) emoteUnlocks = new List<string>();
+            int count = Networking.Emotes.Count;
+            while (emoteUnlocks.Count < count) emoteUnlocks.Add(string.Empty);
+            for (int i = 0; i < emoteUnlocks.Count; i++)
+                if (emoteUnlocks[i] == null) emoteUnlocks[i] = string.Empty;
         }
 
         /// <summary>

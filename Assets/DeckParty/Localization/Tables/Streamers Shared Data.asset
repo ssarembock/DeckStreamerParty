@@ -519,6 +519,54 @@ MonoBehaviour:
     m_Key: select.couch_p2_sub
     m_Metadata:
       m_Items: []
+  - m_Id: 6388739422642176
+    m_Key: streamer.KaiSonnet.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779520
+    m_Key: streamer.KaiSonnet.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779521
+    m_Key: streamer.KaiSonnet.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779522
+    m_Key: streamer.KaiSonnet.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779523
+    m_Key: streamer.KaiSonnet.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779524
+    m_Key: streamer.TrainWrex.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779525
+    m_Key: streamer.TrainWrex.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779526
+    m_Key: streamer.TrainWrex.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779527
+    m_Key: streamer.TrainWrex.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779528
+    m_Key: streamer.TrainWrex.quote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739582025728
+    m_Key: select.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739582025729
+    m_Key: select.locked_requirement
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -608,6 +608,10 @@ MonoBehaviour:
     m_Localized: 'Erro no lobby da Epic: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 6388738646695936
+    m_Localized: "Esse emote est\xE1 bloqueado. {requirement}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

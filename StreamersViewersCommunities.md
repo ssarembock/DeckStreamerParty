@@ -3,7 +3,8 @@
 **Current rules (18 November 2026).** Everything below is what the game does today, including the card edits of 16
 November (Mods and the new Gatekeepers, Hype Men spare seats, Boomer levels, the Boomer Troll and the two
 Isolationists, and Loyal Fan and Fish in every shop) and of 18 November (the **Lurkers** community and five **risky
-variants**, section 3.4). The communities are the built-in ones: the Game Database takes them once after the next
+variants**, section 3.4), and two new streamers that start **locked** (Kai Sonnet and Train Wrex, section 2). The
+communities are the built-in ones: the Game Database takes them once after the next
 Setup, and your edits there rule after that.
 
 **Changing it:**
@@ -93,6 +94,10 @@ Man had passives until then; their actives below are first drafts, so change the
 
 The platform only changes the animated logo in the menu bar.
 
+**Locked streamers** (since 18 November 2026): a streamer can need an achievement first. Set it in the Game
+Database > Streamers > **Unlock Condition** (None = unlocked from the start; see AchievementsAndUnlocks_Guide.md).
+Kai Sonnet and Train Wrex start locked; every other streamer starts unlocked.
+
 ### Fate · `Fate`
 - **Title:** The Debate Lord · **Platform:** Lookout
 - **Power: Raid** (active, rival, multiplayer only). Costs 1 Influence (+1 per use), cooldown 2.
@@ -167,6 +172,23 @@ The platform only changes the animated logo in the menu bar.
 - **Rule:** in your next stream, you see the next 3 viewers in your queue.
 - **Quote:** "Violence. Speed. Radiology."
 
+### Kai Sonnet · `KaiSonnet` (NEW 18 November, locked)
+- **Title:** The Subathon King · **Platform:** Lookout
+- **Unlock:** finish your first Endless run (achievement `first_endless`, "24/7 Stream").
+- **Power: Subathon** (active, next stream). Costs 2 Influence (+1 per use), cooldown 2.
+- **Rule:** in your next stream, the first viewer who would cause a Server Down goes back to the queue instead and
+  the stream goes on (once). Hype Men spare seats are used first. Whoever that viewer would have brought stays in
+  the queue.
+- **Quote:** "We are NOT ending stream, chat."
+
+### Train Wrex · `TrainWrex` (NEW 18 November, locked)
+- **Title:** The High Roller · **Platform:** Stomp
+- **Unlock:** finish your first single-player game (achievement `first_single_player`, "Going Live").
+- **Power: Double or Nothing** (active, next stream). Costs 1 Influence (+1 per use), cooldown 2.
+- **Rule:** if your next stream pays out, its Cash is paid a second time (up to +10). If it fails (deplatformed or
+  Server Down), you lose 2 Influence (never below 0).
+- **Quote:** "Let it ride, chat."
+
 ### No Streamer · `None`
 - **Title:** Classic rules
 - **Power:** none. The power slot stays empty.
@@ -174,7 +196,8 @@ The platform only changes the animated logo in the menu bar.
 
 ### Random · `Random`
 - **Title:** Let chat decide
-- **Rule:** one of the 11 streamers above is picked at random when the match starts.
+- **Rule:** one of the streamers above is picked at random when the match starts, from the ones the player has
+  unlocked (in multiplayer the host picks from each player's own unlocks).
 
 ---
 

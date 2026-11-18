@@ -531,6 +531,56 @@ MonoBehaviour:
     m_Localized: "Elige despu\xE9s."
     m_Metadata:
       m_Items: []
+  - m_Id: 6388739422642176
+    m_Localized: Kai Sonnet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779520
+    m_Localized: "El Rey del Subat\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779521
+    m_Localized: "Subat\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779522
+    m_Localized: "En tu pr\xF3ximo stream, el primer espectador que tirar\xEDa el
+      servidor vuelve a la fila."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779523
+    m_Localized: NO vamos a terminar el stream, chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779524
+    m_Localized: Train Wrex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779525
+    m_Localized: El Apostador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779526
+    m_Localized: Doble o nada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779527
+    m_Localized: "Doble o nada en tu pr\xF3ximo stream: si paga, ganas su {icon:cash}
+      otra vez (m\xE1x. +10). Si fracasa, pierdes 2 {icon:influence}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739468779528
+    m_Localized: Va todo, chat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739582025728
+    m_Localized: BLOQUEADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739582025729
+    m_Localized: Bloqueado. {requirement}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

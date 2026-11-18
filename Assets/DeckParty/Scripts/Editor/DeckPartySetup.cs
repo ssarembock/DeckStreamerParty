@@ -83,6 +83,9 @@ namespace DeckParty.EditorTools
         [MenuItem("Deck Party/Open Epic Online Services Guidelines (Epic, join codes)", priority = 67)]
         public static void OpenEpicGuidelines() => OpenDoc("EpicOnlineServices_Guidelines.md");
 
+        [MenuItem("Deck Party/Open Achievements and Unlocks Guide", priority = 68)]
+        public static void OpenAchievementsGuide() => OpenDoc("AchievementsAndUnlocks_Guide.md");
+
         static void OpenDoc(string fileName)
         {
             var path = Path.GetFullPath(Path.Combine(Application.dataPath, "..", fileName));

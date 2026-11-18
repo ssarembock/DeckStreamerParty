@@ -528,6 +528,8 @@ namespace DeckParty.Core
             var scores = CommunityScores(s);
             Communities.FixedRewards(scores, out int communityCash, out int communityInfluence);
             cash += communityCash + TrollArmyCash(s, scores) + LurkersCash(s, scores);
+            // Double or Nothing armed: a scored stream earns its Cash again (capped).
+            if (s.PartyDoubleDown) cash += Math.Min(StreamerCatalog.DoubleDownMaxBonus, Math.Max(0, cash));
             influence += communityInfluence + Communities.StaffInfluence(scores[(int)Community.Staff]) + CheckoutCodesNow(s);
         }
 
@@ -1109,6 +1111,8 @@ namespace DeckParty.Core
             s.StreamDone = 0;
             s.PartyBark = 0;
             s.PartySoftLanding = false;
+            s.PartySubathon = false;
+            s.PartyDoubleDown = false;
             s.PartyInterviewUsed = false;
             s.PartyDoom = 0;
             s.PartyExtraEvictions = 0;
@@ -1195,6 +1199,15 @@ namespace DeckParty.Core
                 {
                     g.HypeSeat = true;
                     Emit(ev, GameEventType.HypeSeatTaken, g, sourceId, HypeSeats(s) - HypeSeated(s));
+                }
+                else if (s.PartySubathon)
+                {
+                    // Subathon (Kai Sonnet): the stream never ends. The viewer who would crash the server goes back to the
+                    // queue instead (they can join again), once per armed stream; whoever they'd bring stays in the queue.
+                    s.PartySubathon = false;
+                    RemoveFromParty(s, id, LeaveReason.SentOutside, -1, false, ev, false);
+                    Emit(ev, GameEventType.SubathonSaved, g);
+                    return true;
                 }
                 else
                 {
@@ -1620,6 +1633,7 @@ namespace DeckParty.Core
 
             int trouble = NetTrouble(s);
             SoftLanding(s, ev);
+            DoubleDownLoss(s, ev);
             s.Streak = 0;
             s.RaidSuspects.Clear();
             foreach (var id in s.House)
@@ -1657,6 +1671,7 @@ namespace DeckParty.Core
         {
             int occupancy = s.Occupancy;
             s.FireMarshals++;
+            DoubleDownLoss(s, ev);
             s.Streak = 0;
             RecordOutcome(s, PartyOutcome.FireMarshal, 0, 0, DiamondsPresent(s), 0);
             Emit(ev, GameEventType.FireMarshal, null, occupancy, s.Capacity);
@@ -2124,6 +2139,8 @@ namespace DeckParty.Core
                 Emit(ev, GameEventType.InvestmentPaid, null, s.InvestCash * GameRules.StonksMultiplier, s.InvestInfluence * GameRules.StonksMultiplier);
             cash += s.PartyCash + s.InvestCash * GameRules.StonksMultiplier;
             influence += s.PartyInfluence + s.InvestInfluence * GameRules.StonksMultiplier;
+            // Double or Nothing (Train Wrex): the stream's Cash again, up to a cap.
+            cash += DoubleDownBonus(s, cash, ev);
 
             int diamonds = DiamondsPresent(s);
             int doom = Math.Min(Communities.DoomMaxPoints, scores[(int)Community.Doomsdayers]);
@@ -2737,7 +2754,35 @@ namespace DeckParty.Core
                     s.PartySoftLanding = true;
                     Emit(ev, GameEventType.SoftLandingReady, null);
                     break;
+                case StreamerType.KaiSonnet:
+                    s.PartySubathon = true;
+                    Emit(ev, GameEventType.SubathonReady, null);
+                    break;
+                case StreamerType.TrainWrex:
+                    s.PartyDoubleDown = true;
+                    Emit(ev, GameEventType.DoubleDownReady, null, StreamerCatalog.DoubleDownMaxBonus, StreamerCatalog.DoubleDownLoss);
+                    break;
             }
+        }
+
+        /// <summary>Double or Nothing (Train Wrex, armed for this stream) when it's scored: the stream's Cash again, capped.</summary>
+        static int DoubleDownBonus(PlayerState s, int cash, List<GameEvent> ev)
+        {
+            if (!s.PartyDoubleDown) return 0;
+            s.PartyDoubleDown = false;
+            int bonus = Math.Min(StreamerCatalog.DoubleDownMaxBonus, Math.Max(0, cash));
+            Emit(ev, GameEventType.DoubleDownPaid, null, bonus);
+            return bonus;
+        }
+
+        /// <summary>Double or Nothing when the stream fails (deplatformed or Server Down): Influence lost too.</summary>
+        static void DoubleDownLoss(PlayerState s, List<GameEvent> ev)
+        {
+            if (!s.PartyDoubleDown) return;
+            s.PartyDoubleDown = false;
+            int lost = Math.Min(StreamerCatalog.DoubleDownLoss, Math.Max(0, s.Influence));
+            s.Influence -= lost;
+            Emit(ev, GameEventType.DoubleDownLost, null, lost);
         }
 
         /// <summary>Strategic Abomination's Double Move: the first action used this stream can be used again.</summary>

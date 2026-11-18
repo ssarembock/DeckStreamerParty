@@ -161,7 +161,7 @@ namespace DeckParty.UI
                 uint seed = launch != null && launch.Seed != 0 ? launch.Seed : NewSeed();
                 if (launch != null && !string.IsNullOrEmpty(launch.VenueChoice)) venue = launch.VenueChoice;
                 byte pick = launch != null ? launch.Streamer : AppSettings.LastStreamer;
-                var streamer = StreamerCatalog.Resolve(pick, new System.Random((int)seed));
+                var streamer = StreamerCatalog.Resolve(pick, new System.Random((int)seed), Unlocks.StreamerMask());
                 var mode = launch != null ? launch.Mode : GameMode.Classic;
                 int streams = mode == GameMode.Endless ? GameRules.EndlessStartingStreams : GameRules.DefaultNights;
                 state = PartyEngine.CreateGame(scenarioId, seed, streams, streamer, mode);
@@ -782,7 +782,22 @@ namespace DeckParty.UI
             }
             if (m_GameOverScheduled) return;
             m_GameOverScheduled = true;
+            ReportGameFinished(s);
             StartCoroutine(ShowGameOverAfter(s.IsGameOver ? 2.0f : 0.4f));
+        }
+
+        bool m_GameReported;
+
+        /// <summary>
+        /// Achievements: this game reached its end screen (once per game). Online matches and couch play count as
+        /// multiplayer, everything else as single player; solo and co-op Endless runs also count as Endless.
+        /// </summary>
+        void ReportGameFinished(PlayerState s)
+        {
+            if (m_GameReported || s == null) return;
+            m_GameReported = true;
+            bool multiplayer = m_Net != null || IsCouch;
+            Achievements.ReportGameFinished(multiplayer, s.IsEndless);
         }
 
         IEnumerator ShowGameOverAfter(float delay)

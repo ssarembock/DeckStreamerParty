@@ -2775,6 +2775,66 @@ MonoBehaviour:
     m_Key: mp.code_placeholder_any
     m_Metadata:
       m_Items: []
+  - m_Id: 6388742148939776
+    m_Key: achievement.first_single_player.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911296
+    m_Key: achievement.first_single_player.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911297
+    m_Key: achievement.first_multiplayer.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911298
+    m_Key: achievement.first_multiplayer.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911299
+    m_Key: achievement.first_endless.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911300
+    m_Key: achievement.first_endless.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911301
+    m_Key: achievement.first_streamer_unlock.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911302
+    m_Key: achievement.first_streamer_unlock.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911303
+    m_Key: achievement.first_emote_unlock.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911304
+    m_Key: achievement.first_emote_unlock.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911305
+    m_Key: achievement.hidden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911306
+    m_Key: achievement.unlocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911307
+    m_Key: unlock.requirement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911308
+    m_Key: unlock.streamer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388742169911309
+    m_Key: unlock.emote
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

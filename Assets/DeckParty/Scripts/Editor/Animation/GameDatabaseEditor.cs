@@ -35,6 +35,8 @@ namespace DeckParty.EditorTools
             "mainMenuBackgrounds", "mainMenuBackgroundSeconds", "mainMenuBackgroundDim",
             // The chat footer picture was removed (the footer band now only holds the near-deplatform warning).
             "chatFooterImage",
+            // Drawn next to each emote in Stream Art.
+            "emoteUnlocks",
         };
 
         string m_Search = string.Empty;
@@ -161,6 +163,46 @@ namespace DeckParty.EditorTools
                     if (property == null) continue;
                     if (name == "communityIcons") DrawCommunityIcons(property);
                     else EditorGUILayout.PropertyField(property, true);
+                    if (name == "emotes") DrawEmoteUnlocks();
+                }
+            }
+        }
+
+        bool m_ShowEmoteUnlocks = true;
+
+        /// <summary>
+        /// Each emote's unlock condition, next to its picture (or its text while there are no sprites): None = players have it
+        /// from the start, an achievement = locked until it unlocks.
+        /// </summary>
+        void DrawEmoteUnlocks()
+        {
+            var db = (GameDatabase)target;
+            int count = Networking.Emotes.Count;
+            var list = serializedObject.FindProperty("emoteUnlocks");
+            if (list == null) return;
+            if (list.arraySize < count)
+            {
+                serializedObject.ApplyModifiedProperties();
+                Undo.RecordObject(db, "Emote unlock conditions");
+                db.EnsureEmoteUnlocks();
+                EditorUtility.SetDirty(db);
+                serializedObject.Update();
+                list = serializedObject.FindProperty("emoteUnlocks");
+            }
+
+            m_ShowEmoteUnlocks = EditorGUILayout.Foldout(m_ShowEmoteUnlocks, $"Emote Unlock Conditions ({count})", true);
+            if (!m_ShowEmoteUnlocks) return;
+            EditorGUILayout.LabelField("None = every player has it. An achievement = locked (dimmed in the emote bar) until it unlocks.", EditorStyles.miniLabel);
+            for (int i = 0; i < count && i < list.arraySize; i++)
+            {
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    var sprite = Networking.Emotes.SpriteAt(i);
+                    var preview = sprite != null ? AssetPreview.GetAssetPreview(sprite) : null;
+                    if (preview != null) GUILayout.Label(preview, GUILayout.Width(24), GUILayout.Height(24));
+                    else GUILayout.Label(Networking.Emotes.TextAt(i), GUILayout.Width(60));
+                    var rect = EditorGUILayout.GetControlRect();
+                    AchievementIdDrawer.Popup(rect, list.GetArrayElementAtIndex(i), new GUIContent($"Emote {i + 1}"));
                 }
             }
         }
@@ -336,9 +378,26 @@ namespace DeckParty.EditorTools
                 EditorGUILayout.HelpBox("No streamers yet. Run Deck Party > Setup > Build Everything to add one entry per streamer.", MessageType.Warning);
                 return;
             }
+            // New streamers (and unlock conditions, 2026-11-18) get their entries straight away, so edits here always apply.
+            bool missing = false;
+            foreach (var type in StreamerCatalog.Roster)
+            {
+                var art = db.GetStreamerArt(type);
+                if (art == null || !art.unlockSeeded) missing = true;
+            }
+            if (missing)
+            {
+                serializedObject.ApplyModifiedProperties();
+                Undo.RecordObject(db, "Add streamers");
+                db.EnsureAllStreamers();
+                EditorUtility.SetDirty(db);
+                serializedObject.Update();
+            }
+
             EditorGUILayout.HelpBox(
                 "Quotes show under the streamer on the Select Your Streamer screen: one is picked at random each time they're highlighted. " +
-                "Use + to add lines; they appear exactly as typed in every language.", MessageType.None);
+                "Use + to add lines; they appear exactly as typed in every language. Unlock Condition: None = playable from the start; an " +
+                "achievement = locked until it's earned (Deck Party > Achievements and Unlocks Tester lets you try it).", MessageType.None);
 
             var streamers = serializedObject.FindProperty("streamers");
             for (int i = 0; i < streamers.arraySize && i < db.streamers.Count; i++)
@@ -362,9 +421,11 @@ namespace DeckParty.EditorTools
                     {
                         var info = StreamerCatalog.Get(art.type);
                         string badge = art.IsAnimated ? "  [animated]" : art.portrait != null ? "  [sprite]" : "  [placeholder]";
+                        if (!string.IsNullOrEmpty(art.unlockAchievement)) badge += "  [locked]";
                         int quoteCount = art.quotes != null ? art.quotes.FindAll(q => !string.IsNullOrWhiteSpace(q)).Count : 0;
                         EditorGUILayout.LabelField(art.name + badge, $"{info.Kind} power  -  {quoteCount} quote{(quoteCount == 1 ? "" : "s")}", EditorStyles.boldLabel);
                         EditorGUILayout.PropertyField(element.FindPropertyRelative("portrait"), new GUIContent("Portrait"));
+                        EditorGUILayout.PropertyField(element.FindPropertyRelative("unlockAchievement"), new GUIContent("Unlock Condition"));
                         EditorGUILayout.PropertyField(element.FindPropertyRelative("platform"), new GUIContent("Platform (logo, buttons)"));
                     }
                     if (GUILayout.Button(m_ExpandedStreamer == index ? "Less" : "More...", GUILayout.Width(90), GUILayout.Height(38)))

@@ -294,6 +294,8 @@ namespace DeckParty.UI
                     case GameEventType.ExtraSeatActive:
                     case GameEventType.BarkActive:
                     case GameEventType.SoftLandingReady:
+                    case GameEventType.SubathonReady:
+                    case GameEventType.DoubleDownReady:
                         Consider(Sfx.Notify, 4);
                         break;
                     // --- Game modes (2026-11-16) ---
@@ -332,6 +334,18 @@ namespace DeckParty.UI
                     case GameEventType.StreakBonus:
                         Fx.Play(FxCue.CounterPunch, hud.cashLabel.transform, 1.3f);
                         Consider(Sfx.Coin, 6);
+                        break;
+                    case GameEventType.SubathonSaved:
+                        // Subathon: the viewer who would have crashed the server went back to the queue.
+                        if (who == null) effects.FloatText(GuestVisuals.Colored(Loc.Get("game.subathon_saved"), StreamerVisuals.Color(Core.StreamerType.KaiSonnet)), new Vector2(0f, -120f), 40f);
+                        Consider(Sfx.Notify, 6);
+                        break;
+                    case GameEventType.DoubleDownPaid:
+                        Fx.Play(FxCue.CounterPunch, hud.cashLabel.transform, 1.4f);
+                        Consider(Sfx.Coin, 7);
+                        break;
+                    case GameEventType.DoubleDownLost:
+                        Consider(Sfx.Error, 6);
                         break;
                     case GameEventType.Victory:
                         // Couch play: a player hit 4 Trophies, but if they went first the other still gets their turn.

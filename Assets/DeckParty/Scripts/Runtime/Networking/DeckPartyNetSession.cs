@@ -520,10 +520,17 @@ namespace DeckParty.Networking
             if (index < 0 || !PicksStreamer(sender)) return;
             var p = m_Players[index];
             if (p.StreamerLocked) return;
-            p.Streamer = streamer;
+            p.Streamer = UnlockedPick(streamer, p.StreamerMask);
             p.StreamerLocked = true;
             m_Players[index] = p;
             ServerCheckPickDone();
+        }
+
+        /// <summary>A pick of a streamer the player hasn't unlocked becomes Random (among the ones they have).</summary>
+        static byte UnlockedPick(byte pick, uint mask)
+        {
+            if (pick == StreamerCatalog.RandomPick || pick == (byte)StreamerType.None || mask == 0) return pick;
+            return StreamerCatalog.InMask((StreamerType)pick, mask) ? pick : StreamerCatalog.RandomPick;
         }
 
         /// <summary>Everyone has locked in their streamer: the match starts.</summary>
@@ -587,7 +594,7 @@ namespace DeckParty.Networking
                 {
                     var p = m_Players[i];
                     if (!p.Connected) continue;
-                    var streamer = StreamerCatalog.Resolve(p.Streamer, random);
+                    var streamer = StreamerCatalog.Resolve(p.Streamer, random, p.StreamerMask);
                     p.Streamer = (byte)streamer;
                     m_Games[p.ClientId] = PartyEngine.CreateGame(settings.ScenarioId, seed, settings.Nights, streamer);
                     p.Rank = 0;
@@ -637,7 +644,7 @@ namespace DeckParty.Networking
             foreach (var kv in teams)
             {
                 var members = kv.Value;
-                var streamer = StreamerCatalog.Resolve(m_Players[members[0]].Streamer, random);
+                var streamer = StreamerCatalog.Resolve(m_Players[members[0]].Streamer, random, m_Players[members[0]].StreamerMask);
                 var state = PartyEngine.CreateGame(settings.ScenarioId, seed, nights, streamer, mode, Mathf.Min(members.Count, GameRules.TeamSize));
                 for (int k = 0; k < members.Count; k++)
                 {
@@ -674,6 +681,7 @@ namespace DeckParty.Networking
                     continue;
                 }
                 var fresh = NetPlayer.Create(p.ClientId, p.DisplayName, p.ColorIndex, p.Streamer, p.PlatformKind, p.PlatformId);
+                fresh.StreamerMask = p.StreamerMask;
                 fresh.Team = p.Team;
                 m_Players[i] = fresh;
             }
@@ -722,6 +730,7 @@ namespace DeckParty.Networking
             int index = IndexOfPlayer(rpcParams.Receive.SenderClientId);
             if (index < 0) return;
             var p = m_Players[index];
+            streamer = UnlockedPick(streamer, p.StreamerMask);
             if (p.Streamer == streamer) return;
             p.Streamer = streamer;
             m_Players[index] = p;
@@ -972,10 +981,13 @@ namespace DeckParty.Networking
             string name = NetworkService.HasInstance ? NetworkService.Instance.TakePendingName(clientId) : null;
             byte streamer = NetworkService.HasInstance ? NetworkService.Instance.TakePendingStreamer(clientId) : (byte)0;
             var platformUser = NetworkService.HasInstance ? NetworkService.Instance.TakePendingPlatformId(clientId) : default;
+            uint streamerMask = NetworkService.HasInstance ? NetworkService.Instance.TakePendingStreamerMask(clientId) : 0u;
             if (string.IsNullOrEmpty(name)) name = "Player " + (m_Players.Count + 1);
             name = UniqueName(name);
 
             var player = NetPlayer.Create(clientId, name, NextColorIndex(), streamer, platformUser.Kind, platformUser.Id);
+            // The streamers this player has unlocked (from their approval payload; the host sends its own the same way).
+            player.StreamerMask = streamerMask != 0 ? streamerMask : StreamerCatalog.AllUnlocked;
             // 2v2: newcomers join the smaller team (it can be changed in the lobby with Switch Team).
             player.Team = (byte)(CountTeam(0) <= CountTeam(1) ? 0 : 1);
             m_Players.Add(player);

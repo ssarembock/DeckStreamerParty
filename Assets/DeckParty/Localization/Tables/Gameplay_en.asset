@@ -2145,6 +2145,32 @@ MonoBehaviour:
     m_Localized: 'Now: +{value} {icon:cash} if the stream is scored.'
     m_Metadata:
       m_Items: []
+  - m_Id: 6388740542521344
+    m_Localized: 'Subathon is on: the first viewer who would bring the server down
+      goes back to the queue.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104256
+    m_Localized: Subathon! {viewer} goes back to the queue and the server stays up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104257
+    m_Localized: 'Double or Nothing: if this stream pays out, its {icon:cash} pays
+      again (max +{bonus}). If it fails, you lose {loss} {icon:influence}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104258
+    m_Localized: 'Double or Nothing pays: +{value} {icon:cash}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104259
+    m_Localized: 'Double or Nothing busts: -{value} {icon:influence}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388740555104260
+    m_Localized: SUBATHON!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

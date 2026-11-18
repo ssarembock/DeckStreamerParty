@@ -308,6 +308,24 @@ MonoBehaviour:
       Bots de Clippo el Chatarra spameen al siguiente streamer."
     m_Metadata:
       m_Items: []
+  - m_Id: 6388738986434560
+    m_Localized: "Cuarto del Subat\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406080
+    m_Localized: "Una cama, un minibar, cuarenta bebidas energ\xE9ticas y un contador
+      que solo sube."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406081
+    m_Localized: "Sal\xF3n VIP"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6388739007406082
+    m_Localized: "Tragamonedas de ne\xF3n, un cord\xF3n de terciopelo y un contador
+      muy comprensivo."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
