@@ -2836,6 +2836,30 @@ MonoBehaviour:
     m_Localized: "Dois jogadores, uma tela. Os dois escolhem streamer depois de Come\xE7ar."
     m_Metadata:
       m_Items: []
+  - m_Id: 6080838975971328
+    m_Localized: Mostrar atalhos (segurar)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691584
+    m_Localized: "Indica\xE7\xF5es de bot\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691585
+    m_Localized: Mostrar atalhos do controle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691586
+    m_Localized: Ao segurar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691587
+    m_Localized: Sempre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691588
+    m_Localized: Nunca
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

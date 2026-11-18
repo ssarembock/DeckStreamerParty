@@ -2812,6 +2812,30 @@ MonoBehaviour:
     m_Localized: Two players, one screen. Both pick a streamer after Start.
     m_Metadata:
       m_Items: []
+  - m_Id: 6080838975971328
+    m_Localized: Show shortcuts (hold)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691584
+    m_Localized: Button prompts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691585
+    m_Localized: Show controller shortcuts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691586
+    m_Localized: Hold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691587
+    m_Localized: Always
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691588
+    m_Localized: Never
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

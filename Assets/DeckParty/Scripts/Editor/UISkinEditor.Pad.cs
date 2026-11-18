@@ -12,7 +12,8 @@ namespace DeckParty.EditorTools
         const string PadHelp =
             "How the gamepad selector and the button prompts look while a controller is in use. The art is in the Controller " +
             "(gamepad) entries below: the selector frame and one glyph per pad button (without art the prompts are coloured " +
-            "circles with the button's name). Players change which pad button does what in Settings > Controller.";
+            "circles with the button's name). Players change which pad button does what, and when the prompts show " +
+            "(Hold / Always / Never), in Settings > Controller.";
 
         bool m_ShowPad;
 
@@ -29,11 +30,13 @@ namespace DeckParty.EditorTools
             Field(pad, "focusColour", "Colour", "Used when the Selector frame entry has no Override Colour.");
             Field(pad, "focusPulse", "Breathing", "How much the frame grows and shrinks (0 = still).");
             Field(pad, "focusPulseSpeed", "Breaths per second", null);
-            Field(pad, "focusGlide", "Glide time", "Seconds the frame takes to move to the next thing (0 = jump).");
+            Field(pad, "focusMoveTime", "Move time (seconds)", "How long the frame takes to move to the next thing: bigger is slower, 0 jumps straight there.");
+            Field(pad, "focusMoveEase", "Move easing", "Linear (constant speed), Smooth (slows into place), Ease In Out (speeds up, then slows) or Overshoot (springs a little past and settles).");
 
             EditorGUILayout.Space(4);
             EditorGUILayout.LabelField("Button prompts", EditorStyles.boldLabel);
-            Field(pad, "showPrompts", "Show prompts", "The bound pad button on the stream and shop buttons.");
+            Field(pad, "showPrompts", "Show prompts", "The bound pad button on the stream and shop buttons. Off hides them for everyone; " +
+                "players also choose Hold / Always / Never in Settings > Controller (Hold = only while the Show shortcuts button, LB by default, is held).");
             Field(pad, "promptSize", "Size", "In pixels.");
             Field(pad, "promptCorner", "Corner", "Which corner of the button the prompt sits on.");
             Field(pad, "promptOverhang", "Overhang", "How far the prompt hangs over the button's edge, in pixels.");

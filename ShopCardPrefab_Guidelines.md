@@ -213,6 +213,60 @@ Select the ActionOutline object in the prefab editor to adjust it. Changes show 
 The outline is drawn over whatever is below it in the hierarchy, so keep the object above the card's content. Several
 outlines on one card all follow the same rule (for example a second one set to Always).
 
+### Colour swipe (a band or wipe of colour across the card)
+
+A swipe of colour across the card, from a **Colour Swipe** component (its own shader, `DeckParty/UI/Colour Swipe`). It
+has two styles:
+
+- **Band:** a stripe crosses the card, like a shine passing over it.
+- **Wipe:** the colour sweeps across and fills the card, holds, then fades.
+
+You choose which cards it's on (**Show When**) and when it plays (**Play Mode**).
+
+- **Add one:** select the prefab and choose **Deck Party > Shop > Add Colour Swipe**, or press **Add a colour swipe**
+  under the Card prefab field in UI Skin > Shop. It makes an `ActionSwipe` object over your Frame, above the content and
+  under the can't-buy veil. You can add several (say a slow wipe and a quick shine).
+- **By hand:** add an object covering the card (or only the part to swipe, such as the name banner) above the content,
+  and give it **Add Component > Deck Party > Colour Swipe**.
+
+While you edit the prefab it loops so you can see it, whatever its Play Mode. As with the outline, turn on **Always
+Refresh** in the Scene view to watch it move.
+
+| Setting | What it does |
+|---|---|
+| **Show When** | **Viewer Has Action** (shop cards: only on viewers with an action) or **Always** (every card). |
+| **Play Mode** | When it plays. **Loop:** again and again, with Repeat Delay between swipes. **Once When Shown:** one swipe when the card shows a viewer it's on. **On Hover:** one swipe each time the mouse, or the controller selector, moves onto the card. **Loop While Hovered:** loops while it's on the card. |
+| **Swipe Time** | Seconds one swipe takes to cross the card. Bigger is slower. |
+| **Repeat Delay** | Loops: seconds of rest between one swipe ending and the next. |
+| **Start Delay** | Once When Shown and On Hover: seconds to wait before the swipe starts. |
+| **Stagger Cards** | Loop: each card starts at a different moment, so the shop's cards don't all swipe together. |
+| **Preview In Editor** | Keeps it looping while you edit. It doesn't affect the game. |
+| **Fade Time** | Seconds to fade in or out when it turns on or off. |
+| **Style** | **Band** or **Wipe** (see above). |
+| **Colour** | The swipe's colour. Its alpha is how strong it is, and it's an HDR colour, so raise the intensity above 1 for a brighter swipe. |
+| **Use Second Colour / Second Colour** | Blends from Second Colour to Colour: across the band (Second Colour on its trailing edge), or across the card for a wipe (Second Colour where it starts). |
+| **Add Light** | On: the swipe adds light, like a shine (best on dark or coloured cards). Off: it paints its colour over the card (use this on white cards). |
+| **Angle** | The direction it travels, in degrees: 0 left to right, 90 bottom to top, 180 right to left, -90 top to bottom. 30 is a slight diagonal. |
+| **Band Width** | Band: how wide the stripe is. Wipe: how soft its moving front is. A share of the card: 0.25 is a quarter. |
+| **Softness** | Band only. 0: a hard-edged stripe. 1: it fades out from its centre. |
+| **Ease In Out** | Speeds up at the start and slows at the end of each swipe. Off: constant speed. |
+| **Wipe Hold / Wipe Fade Out** | Wipe only: seconds the colour stays on the whole card, then seconds it takes to fade. |
+| **Opacity** | The strength of the whole effect. |
+| **Inset / Corner Radius** | Keep the swipe inside the card's rounded shape, in card pixels. Match them to your frame art (like the outline's). |
+| **Color** | Tints the whole effect (white keeps Colour as it is). |
+
+### Action colour (a text or image that changes colour on viewers with an action)
+
+Add **Add Component > Deck Party > Action Colour** to any text or image on the card. On viewers with an action, that
+text or image turns **Colour** (white unless you change it), fading over **Fade Time**. On other viewers it keeps its own
+colour.
+
+- Only the colour changes; its transparency stays as it is.
+- It shows in play only: while you edit the prefab, the text keeps the colour you gave it.
+
+Your card (`Prefabs/Custom/ShopCardTemplate`) has one on its **Name** text, so the name turns white on viewers with an
+action. New templates don't have one, because the template's name sits on a white card.
+
 ### Tips
 
 - **Animated viewers** work in the Portrait part as they do on the built-in card. Give the Portrait image a square-ish

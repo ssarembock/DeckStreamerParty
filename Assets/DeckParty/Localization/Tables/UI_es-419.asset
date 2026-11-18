@@ -2846,6 +2846,30 @@ MonoBehaviour:
       Empezar."
     m_Metadata:
       m_Items: []
+  - m_Id: 6080838975971328
+    m_Localized: Mostrar atajos (mantener)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691584
+    m_Localized: Indicaciones de botones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691585
+    m_Localized: Mostrar atajos del control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691586
+    m_Localized: Al mantener
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691587
+    m_Localized: Siempre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691588
+    m_Localized: Nunca
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

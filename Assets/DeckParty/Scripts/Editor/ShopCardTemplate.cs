@@ -210,11 +210,20 @@ namespace DeckParty.EditorTools
         public static bool AddActionOutline(GameObject card)
         {
             if (card == null || HasActionOutline(card)) return false;
+            return EditCard(card, AddOutline);
+        }
+
+        /// <summary>
+        /// Makes <paramref name="change"/> on a card prefab: in Prefab Mode if it's open there (undoable; save the prefab),
+        /// otherwise on the prefab asset, which is then saved.
+        /// </summary>
+        static bool EditCard(GameObject card, System.Func<GameObject, bool, bool> change)
+        {
             var stage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
             string path = AssetDatabase.GetAssetPath(card);
             if (stage != null && (card.scene == stage.scene || (!string.IsNullOrEmpty(path) && stage.assetPath == path)))
             {
-                if (!AddOutline(stage.prefabContentsRoot, true)) return false;
+                if (!change(stage.prefabContentsRoot, true)) return false;
                 UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(stage.scene);
                 return true;
             }
@@ -222,7 +231,7 @@ namespace DeckParty.EditorTools
             var root = PrefabUtility.LoadPrefabContents(path);
             try
             {
-                if (!AddOutline(root, false)) return false;
+                if (!change(root, false)) return false;
                 PrefabUtility.SaveAsPrefabAsset(root, path);
                 return true;
             }
@@ -235,11 +244,22 @@ namespace DeckParty.EditorTools
         static bool AddOutline(GameObject root, bool undo)
         {
             if (HasActionOutline(root)) return false;
-            var body = ShopItemView.FindPart<RectTransform>(root, ShopCardPart.Part.AnimRoot);
-            Transform parent = body != null ? body : root.transform;
+            var parent = OverlayParent(root);
             var outline = MakeActionOutline(parent, undo);
-            var rect = outline.rectTransform;
+            PlaceOverlay(root, parent, outline.rectTransform);
+            return true;
+        }
 
+        /// <summary>Where a card-covering effect goes: the part that bounces (or the card's root).</summary>
+        static Transform OverlayParent(GameObject root)
+        {
+            var body = ShopItemView.FindPart<RectTransform>(root, ShopCardPart.Part.AnimRoot);
+            return body != null ? body : root.transform;
+        }
+
+        /// <summary>Puts a card-covering effect over the frame (or the whole card), above the content and under the veil.</summary>
+        static void PlaceOverlay(GameObject root, Transform parent, RectTransform rect)
+        {
             // Follow the frame's edges when the frame sits in the same place.
             var frame = ShopItemView.FindPart<RectTransform>(root, ShopCardPart.Part.Frame);
             if (frame != null && frame.parent == parent)
@@ -258,7 +278,62 @@ namespace DeckParty.EditorTools
             if (soldOut != null && soldOut.parent == parent && (under == null || soldOut.GetSiblingIndex() < under.GetSiblingIndex())) under = soldOut;
             if (under != null) rect.SetSiblingIndex(under.GetSiblingIndex());
             else rect.SetAsLastSibling();
-            return true;
+        }
+
+        // ------------------------------------------------------------------ the colour swipe
+
+        const string SwipeMenu = "Deck Party/Shop/Add Colour Swipe";
+
+        /// <summary>
+        /// An "ActionSwipe" object covering <paramref name="parent"/> with a <see cref="ColourSwipe"/>: a see-through band in the
+        /// site's accent colour, painted over the card (it shows on white cards), looping on viewers with an action, just
+        /// inside a 3 px frame border, rounded corners.
+        /// </summary>
+        static ColourSwipe MakeColourSwipe(Transform parent, bool undo)
+        {
+            var rect = EditorUI.Rect(parent, "ActionSwipe").Stretch();
+            if (undo) Undo.RegisterCreatedObjectUndo(rect.gameObject, "Add Colour Swipe");
+            var swipe = rect.gameObject.AddComponent<ColourSwipe>();
+            swipe.SwipeShader = Shader.Find(ColourSwipe.ShaderName);
+            swipe.raycastTarget = false;
+            swipe.showWhen = ColourSwipe.ShowWhen.ViewerHasAction;
+            var accent = SitePalette.Accent;
+            swipe.colour = new Color(accent.r, accent.g, accent.b, 0.45f);
+            swipe.addLight = false;
+            return swipe;
+        }
+
+        /// <summary>How many colour swipes a card has.</summary>
+        public static int ColourSwipeCount(GameObject card) => card != null ? card.GetComponentsInChildren<ColourSwipe>(true).Length : 0;
+
+        [MenuItem(SwipeMenu, priority = 43)]
+        static void AddSwipeToSelected()
+        {
+            int done = 0;
+            foreach (var go in Selection.gameObjects)
+                if (AddColourSwipe(go)) done++;
+            if (done == 0)
+                EditorUtility.DisplayDialog("Add Colour Swipe", "Select a shop card prefab in the Project window (or open it in Prefab " +
+                                                                 "Mode), then try again.", "OK");
+        }
+
+        [MenuItem(SwipeMenu, true)]
+        static bool CanAddSwipeToSelected() => Selection.gameObjects.Length > 0;
+
+        /// <summary>
+        /// Adds a colour swipe to a card prefab (another one if it has some already): an "ActionSwipe" object over the card's
+        /// frame (or the whole card), above the content and under the can't-buy veil.
+        /// </summary>
+        public static bool AddColourSwipe(GameObject card)
+        {
+            if (card == null) return false;
+            return EditCard(card, (root, undo) =>
+            {
+                var parent = OverlayParent(root);
+                var swipe = MakeColourSwipe(parent, undo);
+                PlaceOverlay(root, parent, swipe.rectTransform);
+                return true;
+            });
         }
 
         // ------------------------------------------------------------------ cards made from an older template

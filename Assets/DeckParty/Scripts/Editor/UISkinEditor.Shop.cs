@@ -250,6 +250,12 @@ namespace DeckParty.EditorTools
                 if (GUILayout.Button("Add the action outline"))
                     EditorApplication.delayCall += () => ShopCardTemplate.AddActionOutline(card);
             }
+            int swipes = ShopCardTemplate.ColourSwipeCount(card);
+            EditorGUILayout.LabelField(swipes > 0
+                ? $"Colour swipe: {swipes}. Open the prefab and select its Colour Swipe object to adjust it (colour, style, when it plays)."
+                : "Colour swipe: none. A band or wipe of colour across the card, on viewers with an action or on every card.", s_Wrap);
+            if (GUILayout.Button(swipes > 0 ? "Add another colour swipe" : "Add a colour swipe"))
+                EditorApplication.delayCall += () => ShopCardTemplate.AddColourSwipe(card);
             if (!parts[ShopCardPart.Part.Background])
                 EditorGUILayout.HelpBox("No Background (and no Image on the card's root): the card can't be clicked. Mark an Image as Background.", MessageType.Error);
             if (!parts[ShopCardPart.Part.Portrait])

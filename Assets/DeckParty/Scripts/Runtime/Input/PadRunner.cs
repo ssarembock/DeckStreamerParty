@@ -40,6 +40,7 @@ namespace DeckParty.UI
         static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             PadNavigator.Release();
+            PadNavigator.Wake();
             PadNavigator.DefaultProvider = null;
             PadNavigator.Paused = false;
         }

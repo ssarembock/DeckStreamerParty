@@ -38,6 +38,9 @@ namespace DeckParty.UI
         MainMenuController m_Menu;
         readonly List<Row> m_Rows = new List<Row>();
         readonly List<TMP_Text> m_Headers = new List<TMP_Text>();
+        /// <summary>The Show controller shortcuts row (Hold / Always / Never) above the bindings, and its section title.</summary>
+        Row m_PromptRow;
+        TMP_Text m_PromptHeader;
         int m_Listening = -1;
         float m_ListenUntil;
         bool m_Built;
@@ -61,7 +64,8 @@ namespace DeckParty.UI
             Build();
             StopListening();
             Refresh();
-            if (m_Rows.Count > 0) PadNavigator.SetFocus(m_Rows[0].binding);
+            if (m_PromptRow != null && m_PromptRow.binding != null) PadNavigator.SetFocus(m_PromptRow.binding);
+            else if (m_Rows.Count > 0) PadNavigator.SetFocus(m_Rows[0].binding);
         }
 
         protected override void OnHide() => StopListening();
@@ -70,6 +74,17 @@ namespace DeckParty.UI
         {
             if (m_Built || rowTemplate == null) return;
             m_Built = true;
+
+            // First: when the button prompts show (a row like the others; pressing it steps Hold > Always > Never).
+            if (headerTemplate != null)
+            {
+                m_PromptHeader = Instantiate(headerTemplate, list);
+                m_PromptHeader.gameObject.SetActive(true);
+                m_PromptHeader.name = "Header Prompts";
+            }
+            m_PromptRow = MakeRow("Row ShowPrompts", PadAction.ShowShortcuts);
+            if (m_PromptRow.binding != null) m_PromptRow.binding.onClick.AddListener(NextPromptMode);
+
             var context = (PadContext)(-1);
             foreach (var action in PadBindings.All)
             {
@@ -83,25 +98,56 @@ namespace DeckParty.UI
                     m_Headers.Add(header);
                 }
 
-                var go = Instantiate(rowTemplate, list);
-                go.SetActive(true);
-                go.name = "Row " + action;
-                var row = new Row
-                {
-                    action = action,
-                    label = Find<TMP_Text>(go.transform, "Label"),
-                    binding = Find<Button>(go.transform, "Binding"),
-                };
+                var row = MakeRow("Row " + action, action);
                 if (row.binding != null)
                 {
-                    row.glyph = Find<Image>(row.binding.transform, "Glyph");
-                    row.glyphLabel = row.glyph != null ? row.glyph.GetComponentInChildren<TMP_Text>(true) : null;
-                    row.bindingText = Find<TMP_Text>(row.binding.transform, "Text");
                     int index = m_Rows.Count;
                     row.binding.onClick.AddListener(() => StartListening(index));
                 }
                 m_Rows.Add(row);
             }
+        }
+
+        /// <summary>A copy of the row template: its Label, and the Binding button with its Glyph and Text.</summary>
+        Row MakeRow(string name, PadAction action)
+        {
+            var go = Instantiate(rowTemplate, list);
+            go.SetActive(true);
+            go.name = name;
+            var row = new Row
+            {
+                action = action,
+                label = Find<TMP_Text>(go.transform, "Label"),
+                binding = Find<Button>(go.transform, "Binding"),
+            };
+            if (row.binding != null)
+            {
+                row.glyph = Find<Image>(row.binding.transform, "Glyph");
+                row.glyphLabel = row.glyph != null ? row.glyph.GetComponentInChildren<TMP_Text>(true) : null;
+                row.bindingText = Find<TMP_Text>(row.binding.transform, "Text");
+            }
+            return row;
+        }
+
+        /// <summary>Show controller shortcuts: Hold > Always > Never > Hold.</summary>
+        void NextPromptMode()
+        {
+            if (Listening) return;
+            AppSettings.PadPrompts = (PadPromptMode)(((int)AppSettings.PadPrompts + 1) % 3);
+            AudioService.Play(Sfx.Click);
+            Refresh();
+        }
+
+        /// <summary>The prompt row: its name, and the current choice (Hold shows the button to hold).</summary>
+        void RefreshPromptRow()
+        {
+            if (m_PromptHeader != null) m_PromptHeader.text = Loc.Get("controller.section.prompts");
+            var row = m_PromptRow;
+            if (row == null) return;
+            var mode = AppSettings.PadPrompts;
+            if (row.label != null) row.label.text = Loc.Get("controller.prompts");
+            if (row.bindingText != null) row.bindingText.text = $"{Loc.Get("controller.prompts." + mode)}  <color=#8A8A99>></color>";
+            ApplyGlyph(row, mode == PadPromptMode.Hold ? PadBindings.Get(PadAction.ShowShortcuts) : PadButton.None);
         }
 
         static T Find<T>(Transform root, string name) where T : Component
@@ -113,6 +159,7 @@ namespace DeckParty.UI
 
         void Refresh()
         {
+            RefreshPromptRow();
             int header = 0;
             var context = (PadContext)(-1);
             foreach (var action in PadBindings.All)

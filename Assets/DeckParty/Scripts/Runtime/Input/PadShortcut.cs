@@ -7,8 +7,8 @@ namespace DeckParty.UI
     /// <summary>
     /// Gives a button its own gamepad button (Add Viewer, End the Stream, Raise Sub Cap, Go Live...): pressing it presses
     /// the button, as long as the button could be clicked right now. While a pad is in use the bound button's glyph shows
-    /// on a corner of the button (UI Skin > Controller sets its size, corner and art). Settings > Controller changes the
-    /// binding.
+    /// on a corner of the button (UI Skin > Controller sets its size, corner and art) when the player's Show controller
+    /// shortcuts setting says so (Hold: while LB is held, Always, Never). Settings > Controller changes both.
     /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Selectable))]
@@ -50,11 +50,28 @@ namespace DeckParty.UI
 
         void Redraw() => m_ShownButton = (PadButton)255;
 
+        /// <summary>
+        /// The player's Show controller shortcuts setting (Settings > Controller): Always, Never, or Hold = only while the
+        /// Show Shortcuts pad button (LB by default) is held. Only the prompts follow it; the shortcuts always work.
+        /// </summary>
+        public static bool PromptsWanted
+        {
+            get
+            {
+                switch (AppSettings.PadPrompts)
+                {
+                    case PadPromptMode.Always: return true;
+                    case PadPromptMode.Never: return false;
+                    default: return PadInput.Held(PadAction.ShowShortcuts);
+                }
+            }
+        }
+
         void Update()
         {
             if (!PadInput.Active || m_Selectable == null) return;
             if (!PadInput.Pressed(action) || InputHelper.IsTyping) return;
-            if (!m_Selectable.IsInteractable() || !PadNavigator.Usable(m_Selectable)) return;
+            if (!m_Selectable.IsInteractable() || !PadNavigator.Reachable(m_Selectable)) return;
             PadInput.Consume(action);
             if (m_Selectable is Button button) button.onClick.Invoke();
             else if (m_Selectable is Toggle toggle) toggle.isOn = !toggle.isOn;
@@ -65,7 +82,7 @@ namespace DeckParty.UI
         {
             var look = PadLook.OrDefault;
             var button = PadBindings.Get(action);
-            bool show = PadInput.Active && look.showPrompts && button != PadButton.None && m_Selectable != null && m_Selectable.IsActive();
+            bool show = PadInput.Active && look.showPrompts && PromptsWanted && button != PadButton.None && m_Selectable != null && m_Selectable.IsActive();
             if (!show)
             {
                 if (m_Prompt != null && m_Prompt.gameObject.activeSelf) m_Prompt.gameObject.SetActive(false);

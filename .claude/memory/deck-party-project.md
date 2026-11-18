@@ -138,3 +138,21 @@ Key non-obvious decisions:
     - GameController.Couch: hand-over ModalDialog, Players panel, banners and log name the player, GameOverView.ShowCouch.
     - Not saved. StreamerSelectScreen.Couch titles.
   - No protocol or state format change.
+  - Pad follow-up (same day, user request; guide updated):
+    - PadSelectorSkip marker: the selector skips Add Viewer / End Stream (shortcut only) and GuestCardView.abilityButton (Confirm on the viewer uses the action). PadShortcut checks PadNavigator.Reachable, the selector Usable (= Reachable minus skip).
+    - PadNavigator.Dormant (Sleep/Wake): each stream starts with the selector hidden; the first direction press shows it on the default. GameController.Pad sleeps on the phase change to Party, wakes in the shop and when PadOverlayOpen (targeting, dialogs, picker, Audience, pause, round summary, raid blame, peek Approve/Deny; peek defaults to Approve). Scene load wakes.
+    - PadLook.focusMoveTime (0-1 s, default 0.2) + focusMoveEase (PadFocusEase Linear/Smooth/EaseInOut/Overshoot) replaced focusGlide; PadFocusFrame tweens per new target and appears in place.
+    - PadAction.ShowShortcuts = 12 (Everywhere, LB). AppSettings.PadPrompts (PadPromptMode Hold/Always/Never, "dp.padPrompts", default Hold) via PadShortcut.PromptsWanted; set on the top row of Settings > Controller (built at runtime from the row template, no Rebuild).
+    - New defaults: Remove a Viewer LT, Add a Stream RT, Add a Viewer to the Shop RS. Bindings key "dp.pad.bindings.v2"; v1 is migrated once (bindings still on the old default take the new one; conflicts move to a free button).
+- Shop card action effects (2026-11-17, user request; guide ShopCardPrefab_Guidelines.md section 5):
+  - IActionEffect (Runtime/UI/Common): ShopItemView.ShowActionEffects finds every IActionEffect in the card and calls SetViewerHasAction(hasAction, instant). InnerOutline, ColourSwipe and ActionColour implement it.
+  - ColourSwipe: a MaskableGraphic with the shader Shaders/UIColourSwipe.shader ("DeckParty/UI/Colour Swipe").
+    - Styles Band / Wipe; ShowWhen Always / ViewerHasAction; PlayMode Loop / OnceWhenShown / OnHover / LoopWhileHovered.
+    - Loop runs on the shader clock (_Driven 0, _Offset staggers cards). The other modes drive _LocalTime from the component.
+    - Hover uses InputHelper.PointerPosition, so the pad selector counts.
+    - Output is premultiplied with output alpha 0 for "Add Light".
+    - The editor preview always loops.
+  - Deck Party > Shop > Add Colour Swipe (ShopCardTemplate.AddColourSwipe, EditCard/OverlayParent/PlaceOverlay helpers) and a UI Skin > Shop button.
+  - ActionColour (DefaultExecutionOrder 100, runtime only): lerps a Graphic's RGB to a colour on action viewers.
+    - The user's card prefab (Prefabs/Custom/ShopCardTemplate.prefab = UI Skin card prefab) has one on Name, colour white, added by hand in the YAML.
+    - ActionColour.cs.meta guid is fixed: 1186bb46e3ba4da0addcedd2fc053a21.

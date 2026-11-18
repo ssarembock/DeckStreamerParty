@@ -16,6 +16,12 @@ namespace DeckParty.UI
         Vector2 m_Position;
         Vector2 m_Size;
         bool m_Visible;
+        bool m_Appear = true;
+        bool m_Moving;
+        Selectable m_Target;
+        Vector2 m_FromPosition;
+        Vector2 m_FromSize;
+        float m_MoveStart;
 
         /// <summary>Builds the overlay canvas and the frame under <paramref name="parent"/>.</summary>
         internal static PadFocusFrame Create(Transform parent)
@@ -66,7 +72,11 @@ namespace DeckParty.UI
             {
                 m_Visible = show;
                 m_Frame.gameObject.SetActive(show);
-                if (show) ApplySkin();
+                if (show)
+                {
+                    ApplySkin();
+                    m_Appear = true;
+                }
             }
             if (!show) return;
 
@@ -77,10 +87,40 @@ namespace DeckParty.UI
             var targetPosition = (min + max) * 0.5f;
             var targetSize = (max - min) + Vector2.one * (look.focusPadding * 2f);
 
-            // Glide to a new target; snap when it jumped across the screen from nothing.
-            float t = look.focusGlide <= 0.001f || m_Size == Vector2.zero ? 1f : 1f - Mathf.Exp(-Time.unscaledDeltaTime / look.focusGlide);
-            m_Position = Vector2.Lerp(m_Position, targetPosition, t);
-            m_Size = Vector2.Lerp(m_Size, targetSize, t);
+            // A new target: move there over the UI Skin's move time, eased. The frame appears in place (no move from where it
+            // last was), and it follows a target that moves (a scrolling list, a card lifting).
+            var focus = PadNavigator.Focus;
+            if (m_Appear)
+            {
+                m_Appear = false;
+                m_Target = focus;
+                m_Moving = false;
+            }
+            else if (focus != m_Target)
+            {
+                m_Target = focus;
+                m_FromPosition = m_Position;
+                m_FromSize = m_Size;
+                m_MoveStart = Time.unscaledTime;
+                m_Moving = look.focusMoveTime > 0.001f;
+            }
+
+            if (m_Moving)
+            {
+                float progress = (Time.unscaledTime - m_MoveStart) / look.focusMoveTime;
+                if (progress >= 1f) m_Moving = false;
+                else
+                {
+                    float eased = look.Ease(progress);
+                    m_Position = Vector2.LerpUnclamped(m_FromPosition, targetPosition, eased);
+                    m_Size = Vector2.Max(Vector2.zero, Vector2.LerpUnclamped(m_FromSize, targetSize, eased));
+                }
+            }
+            if (!m_Moving)
+            {
+                m_Position = targetPosition;
+                m_Size = targetSize;
+            }
 
             float pulse = 1f + Mathf.Sin(Time.unscaledTime * Mathf.PI * 2f * look.focusPulseSpeed) * look.focusPulse;
             m_Frame.anchoredPosition = m_Position;

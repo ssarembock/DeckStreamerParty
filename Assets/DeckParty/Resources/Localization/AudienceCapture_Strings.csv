@@ -1499,6 +1499,7 @@ UI,pad.action.UseActive,Controller action name (shop),Streamer's active,主播�
 UI,pad.action.RemoveViewer,Controller action name (shop),Remove a Viewer,移除一位观众,Убрать зрителя,Quitar un espectador,Remover um espectador,draft
 UI,pad.action.AddStream,"Controller action name (shop, Endless)",Add a Stream (Endless),加一场直播（无尽）,Ещё один стрим (бесконечный),Añadir un stream (Infinito),Mais uma live (Infinito),draft
 UI,pad.action.AddShopViewer,"Controller action name (shop, Endless)",Add a Viewer to the Shop (Endless),向商店加一位观众（无尽）,Новый зритель в магазин (бесконечный),Añadir un espectador a la tienda (Infinito),Adicionar um espectador à loja (Infinito),draft
+UI,pad.action.ShowShortcuts,Controller action name (hold to show the button prompts),Show shortcuts (hold),显示快捷键（按住）,Показать подсказки кнопок (удерживать),Mostrar atajos (mantener),Mostrar atalhos (segurar),draft
 UI,controller.button.South,Gamepad button name,A button,A 键,Кнопка A,Botón A,Botão A,draft
 UI,controller.button.East,Gamepad button name,B button,B 键,Кнопка B,Botón B,Botão B,draft
 UI,controller.button.West,Gamepad button name,X button,X 键,Кнопка X,Botón X,Botão X,draft
@@ -1519,6 +1520,11 @@ UI,controller.not_connected,Settings > Controller status,No controller connected
 UI,controller.section.Everywhere,Settings > Controller section,Everywhere,通用,Везде,En todas partes,Em qualquer lugar,draft
 UI,controller.section.Stream,Settings > Controller section,In a stream,直播中,Во время стрима,Durante el stream,Durante a live,draft
 UI,controller.section.Shop,Settings > Controller section,In the shop,商店中,В магазине,En la tienda,Na loja,draft
+UI,controller.section.prompts,Settings > Controller section,Button prompts,按键提示,Подсказки кнопок,Indicaciones de botones,Indicações de botões,draft
+UI,controller.prompts,Settings > Controller: when the pad button prompts show,Show controller shortcuts,显示手柄快捷键,Показывать кнопки геймпада,Mostrar atajos del control,Mostrar atalhos do controle,draft
+UI,controller.prompts.Hold,Show controller shortcuts: only while the Show shortcuts button is held,Hold,按住时,При удержании,Al mantener,Ao segurar,draft
+UI,controller.prompts.Always,Show controller shortcuts,Always,始终,Всегда,Siempre,Sempre,draft
+UI,controller.prompts.Never,Show controller shortcuts,Never,从不,Никогда,Nunca,Nunca,draft
 UI,controller.title,Settings > Controller title,Controller,手柄,Геймпад,Control,Controle,draft
 UI,controller.subtitle,Settings > Controller subtitle,Choose which button does what. Actions in a stream and in the shop can share a button.,设置每个按键的功能。直播中和商店中的操作可以共用一个键。,"Выберите, какая кнопка что делает. Действия стрима и магазина могут делить одну кнопку.",Elige qué hace cada botón. Las acciones del stream y de la tienda pueden compartir botón.,Escolha o que cada botão faz. Ações da live e da loja podem dividir um botão.,draft
 UI,controller.reset,Settings > Controller button,Reset to Default,恢复默认,Сбросить,Restablecer,Restaurar padrão,draft

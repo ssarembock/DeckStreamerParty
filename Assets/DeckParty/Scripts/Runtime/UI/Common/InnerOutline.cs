@@ -12,7 +12,7 @@ namespace DeckParty.UI
     [ExecuteAlways]
     [RequireComponent(typeof(CanvasRenderer))]
     [AddComponentMenu("Deck Party/Inner Outline")]
-    public sealed class InnerOutline : MaskableGraphic
+    public sealed class InnerOutline : MaskableGraphic, IActionEffect
     {
         public const string ShaderName = "DeckParty/UI/Inner Outline";
 
@@ -113,6 +113,12 @@ namespace DeckParty.UI
                 if (m_Instance != null) m_Instance.shader = value;
                 SetMaterialDirty();
             }
+        }
+
+        /// <summary>Shop cards: lights it on viewers with an action (when Show When is Viewer Has Action).</summary>
+        public void SetViewerHasAction(bool hasAction, bool instant)
+        {
+            if (showWhen == ShowWhen.ViewerHasAction) SetShown(hasAction, instant);
         }
 
         /// <summary>Lights the outline (or turns it off), fading unless <paramref name="instant"/>.</summary>

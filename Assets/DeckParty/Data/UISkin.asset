@@ -2084,9 +2084,10 @@ MonoBehaviour:
   pad:
     focusPadding: 10
     focusPulse: 0.04
-    focusPulseSpeed: 1.6
-    focusColour: {r: 0.54, g: 0.31, b: 1, a: 1}
-    focusGlide: 0.08
+    focusPulseSpeed: 0.75
+    focusColour: {r: 1, g: 1, b: 1, a: 1}
+    focusMoveTime: 0
+    focusMoveEase: 1
     showPrompts: 1
     promptSize: 44
     promptCorner: 0

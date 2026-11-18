@@ -83,7 +83,7 @@ namespace DeckParty.UI
         Vector2[] m_StackOffsets;
         readonly List<(Image image, Sprite sprite)> m_PileImages = new List<(Image, Sprite)>();
         /// <summary>Inner outlines on the card that light up when the viewer has an action (found once, see <see cref="InnerOutline"/>).</summary>
-        InnerOutline[] m_ActionOutlines;
+        IActionEffect[] m_ActionEffects;
         GuestType m_OutlineType;
         bool m_OutlineBound;
 
@@ -192,7 +192,7 @@ namespace DeckParty.UI
             if (riskBadge != null) riskBadge.SetActive(info.Trouble);
             if (shieldBadge != null) shieldBadge.SetActive(info.CancelsTrouble);
             if (actionBadge != null) actionBadge.SetActive(info.HasAbility);
-            ShowActionOutlines(type, info.HasAbility);
+            ShowActionEffects(type, info.HasAbility);
 
             if (groupIcon != null) groupIcon.gameObject.SetActive(false);
             if (communities != null) communities.Bind(type);
@@ -262,17 +262,17 @@ namespace DeckParty.UI
         }
 
         /// <summary>
-        /// Lights the card's inner outlines that are set to "Viewer has an action" (see <see cref="InnerOutline"/>) on viewers
-        /// with an action. Straight away when the card shows a different viewer, with a fade otherwise.
+        /// Tells the card's action effects (<see cref="IActionEffect"/>: Inner Outline, Colour Swipe, Action Colour) whether
+        /// this viewer has an action. Straight away when the card shows a different viewer, with a fade otherwise.
         /// </summary>
-        void ShowActionOutlines(GuestType type, bool hasAction)
+        void ShowActionEffects(GuestType type, bool hasAction)
         {
-            if (m_ActionOutlines == null) m_ActionOutlines = GetComponentsInChildren<InnerOutline>(true);
+            if (m_ActionEffects == null) m_ActionEffects = GetComponentsInChildren<IActionEffect>(true);
             bool instant = !m_OutlineBound || type != m_OutlineType;
             m_OutlineBound = true;
             m_OutlineType = type;
-            foreach (var outline in m_ActionOutlines)
-                if (outline != null && outline.showWhen == InnerOutline.ShowWhen.ViewerHasAction) outline.SetShown(hasAction, instant);
+            foreach (var effect in m_ActionEffects)
+                if (effect is UnityEngine.Object unityObject && unityObject != null) effect.SetViewerHasAction(hasAction, instant);
         }
 
         /// <summary>UI Skin > Shop on this card: hover growth, and on the built-in card its shape, border and pile step.</summary>
@@ -366,7 +366,7 @@ namespace DeckParty.UI
             // The fields are set now: hook them up (Awake ran before, when nothing was wired yet).
             m_Captured = false;
             m_PileImages.Clear();
-            m_ActionOutlines = null;
+            m_ActionEffects = null;
             Hook();
         }
 

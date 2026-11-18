@@ -34,8 +34,33 @@ namespace DeckParty.UI
         /// <summary>Where the highlighted thing is on screen (pixels), for the frame and the tooltip.</summary>
         public static Rect FocusScreenRect { get; private set; }
 
-        /// <summary>The selector is showing (pad in use, something highlighted, not switched off).</summary>
-        public static bool Showing => PadInput.Active && !Suppressed && !Paused && Focus != null;
+        /// <summary>The selector is showing (pad in use, something highlighted, not switched off or asleep).</summary>
+        public static bool Showing => PadInput.Active && !Suppressed && !Paused && !Dormant && Focus != null;
+
+        /// <summary>
+        /// Asleep: nothing is highlighted or pressed until the player presses a direction, which wakes it on the screen's
+        /// default thing. Each stream starts like this (the stream's buttons have their own pad buttons); the shop and the
+        /// menus show the selector straight away.
+        /// </summary>
+        public static bool Dormant { get; private set; }
+
+        /// <summary>Hides the selector until the next direction press (see <see cref="Dormant"/>).</summary>
+        public static void Sleep()
+        {
+            if (Dormant) return;
+            Dormant = true;
+            ClearHover();
+            s_Focus = null;
+            s_Refocus = true;
+        }
+
+        /// <summary>Shows the selector again on the screen's default thing.</summary>
+        public static void Wake()
+        {
+            if (!Dormant) return;
+            Dormant = false;
+            s_Refocus = true;
+        }
 
         /// <summary>A screen that drives the pad itself is open (<see cref="PadSelfNavigation"/>).</summary>
         public static bool Suppressed => s_SelfNavigation > 0;
@@ -97,6 +122,17 @@ namespace DeckParty.UI
                 return;
             }
 
+            // Asleep: the first direction press shows the selector on the default thing (it doesn't move yet).
+            if (Dormant)
+            {
+                if (PadInput.Navigate == Vector2Int.zero) return;
+                Dormant = false;
+                s_Refocus = false;
+                MoveTo(PickDefault());
+                if (s_Focus != null) AudioService.PlayPitched(Sfx.Click, 1.3f, 0.35f);
+                return;
+            }
+
             if (s_Refocus || !Usable(s_Focus))
             {
                 s_Refocus = false;
@@ -133,8 +169,15 @@ namespace DeckParty.UI
 
         // ------------------------------------------------------------------ what counts
 
-        /// <summary>Active, not a scrollbar, and clickable at its centre (or inside a scroll view that is).</summary>
-        internal static bool Usable(Selectable selectable)
+        /// <summary>The selector can land on it: <see cref="Reachable"/> and not marked <see cref="PadSelectorSkip"/>.</summary>
+        internal static bool Usable(Selectable selectable) =>
+            Reachable(selectable) && !selectable.TryGetComponent<PadSelectorSkip>(out _);
+
+        /// <summary>
+        /// Active, not a scrollbar, and clickable at its centre (or inside a scroll view that is). Pad shortcuts use this too,
+        /// so a button the selector skips still works from its own pad button.
+        /// </summary>
+        internal static bool Reachable(Selectable selectable)
         {
             if (selectable == null || !selectable.isActiveAndEnabled || !selectable.gameObject.activeInHierarchy) return false;
             if (selectable is Scrollbar) return false;

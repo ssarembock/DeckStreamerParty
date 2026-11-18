@@ -2727,6 +2727,30 @@ MonoBehaviour:
     m_Key: single.couch_line
     m_Metadata:
       m_Items: []
+  - m_Id: 6080838975971328
+    m_Key: pad.action.ShowShortcuts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691584
+    m_Key: controller.section.prompts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691585
+    m_Key: controller.prompts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691586
+    m_Key: controller.prompts.Hold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691587
+    m_Key: controller.prompts.Always
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6080839034691588
+    m_Key: controller.prompts.Never
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

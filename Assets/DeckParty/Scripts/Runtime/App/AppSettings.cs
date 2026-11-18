@@ -3,6 +3,15 @@ using UnityEngine;
 
 namespace DeckParty
 {
+    /// <summary>When the gamepad button prompts show (Settings > Controller). Saved as a number: only append.</summary>
+    public enum PadPromptMode
+    {
+        /// <summary>Only while the Show Shortcuts pad button is held.</summary>
+        Hold = 0,
+        Always = 1,
+        Never = 2,
+    }
+
     /// <summary>Player preferences persisted in PlayerPrefs.</summary>
     public static class AppSettings
     {
@@ -22,6 +31,17 @@ namespace DeckParty
         const string KeyStreamer = "dp.streamer";
         const string KeyTurnTimer = "dp.turnTimer";
         const string KeyLobbyVisibility = "dp.lobbyVisibility";
+        const string KeyPadPrompts = "dp.padPrompts";
+
+        /// <summary>
+        /// Settings > Controller > Show controller shortcuts: when the pad button prompts show on the stream and shop
+        /// buttons. Hold (the default) = only while the Show Shortcuts pad button (LB) is held. The shortcuts work either way.
+        /// </summary>
+        public static PadPromptMode PadPrompts
+        {
+            get => (PadPromptMode)Mathf.Clamp(PlayerPrefs.GetInt(KeyPadPrompts, (int)PadPromptMode.Hold), 0, 2);
+            set { PlayerPrefs.SetInt(KeyPadPrompts, (int)value); Notify(); }
+        }
 
         public const string VenueAuto = "auto";
         public const string VenueEvolving = "evolving";

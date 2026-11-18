@@ -94,6 +94,23 @@ namespace DeckParty.UI
             return false;
         }
 
+        /// <summary>The action's button is held down on any pad (Show Shortcuts).</summary>
+        public static bool Held(PadAction action) => Held(PadBindings.Get(action));
+
+        public static bool Held(PadButton button)
+        {
+#if ENABLE_INPUT_SYSTEM
+            if (button == PadButton.None) return false;
+            var pads = Gamepad.all;
+            for (int i = 0; i < pads.Count; i++)
+            {
+                var control = Control(pads[i], button);
+                if (control != null && control.isPressed) return true;
+            }
+#endif
+            return false;
+        }
+
         /// <summary>The first bindable button that went down this frame (Settings > Controller listens with it), or None.</summary>
         public static PadButton AnyButtonPressed()
         {

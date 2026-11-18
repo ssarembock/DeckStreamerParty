@@ -27,6 +27,8 @@ namespace DeckParty.UI
         RemoveViewer = 9,
         AddStream = 10,
         AddShopViewer = 11,
+        /// <summary>Held: shows the pad button prompts (when Settings > Controller > Show controller shortcuts is Hold).</summary>
+        ShowShortcuts = 12,
     }
 
     /// <summary>When an action works: everywhere, during a stream or in the shop. Actions of different phases may share a button.</summary>
@@ -70,11 +72,13 @@ namespace DeckParty.UI
     /// </summary>
     public static class PadBindings
     {
-        const string PrefsKey = "dp.pad.bindings.v1";
+        const string PrefsKey = "dp.pad.bindings.v2";
+        /// <summary>The first mapping (2026-11-17, before Show Shortcuts took LB): read once and moved to <see cref="PrefsKey"/>.</summary>
+        const string PrefsKeyV1 = "dp.pad.bindings.v1";
 
         public static readonly PadAction[] All =
         {
-            PadAction.Confirm, PadAction.Back, PadAction.Menu, PadAction.Audience,
+            PadAction.Confirm, PadAction.Back, PadAction.Menu, PadAction.Audience, PadAction.ShowShortcuts,
             PadAction.AddViewer, PadAction.EndStream,
             PadAction.GoLive, PadAction.RaiseSubCap, PadAction.UseActive, PadAction.RemoveViewer, PadAction.AddStream, PadAction.AddShopViewer,
         };
@@ -104,10 +108,23 @@ namespace DeckParty.UI
                 case PadAction.GoLive: return PadButton.North;
                 case PadAction.RaiseSubCap: return PadButton.West;
                 case PadAction.UseActive: return PadButton.RightShoulder;
+                case PadAction.RemoveViewer: return PadButton.LeftTrigger;
+                case PadAction.AddStream: return PadButton.RightTrigger;
+                case PadAction.AddShopViewer: return PadButton.RightStickPress;
+                case PadAction.ShowShortcuts: return PadButton.LeftShoulder;
+                default: return PadButton.None;
+            }
+        }
+
+        /// <summary>The defaults of the first mapping (v1), where they differ: a v1 binding still on its old default takes the new one.</summary>
+        static PadButton DefaultV1(PadAction action)
+        {
+            switch (action)
+            {
                 case PadAction.RemoveViewer: return PadButton.LeftShoulder;
                 case PadAction.AddStream: return PadButton.LeftTrigger;
                 case PadAction.AddShopViewer: return PadButton.RightTrigger;
-                default: return PadButton.None;
+                default: return Default(action);
             }
         }
 
@@ -178,16 +195,57 @@ namespace DeckParty.UI
             s_Bindings = new PadButton[size];
             foreach (var action in All) s_Bindings[(int)action] = Default(action);
 
+            bool fromV1 = false;
             string saved = PlayerPrefs.GetString(PrefsKey, string.Empty);
+            if (string.IsNullOrEmpty(saved))
+            {
+                saved = PlayerPrefs.GetString(PrefsKeyV1, string.Empty);
+                fromV1 = !string.IsNullOrEmpty(saved);
+            }
             if (string.IsNullOrEmpty(saved)) return;
+
             // "action:button,action:button..." so actions added later keep their defaults.
+            var loaded = new bool[size];
             foreach (var pair in saved.Split(','))
             {
                 var parts = pair.Split(':');
                 if (parts.Length != 2 || !int.TryParse(parts[0], out int a) || !int.TryParse(parts[1], out int b)) continue;
-                if (a < 0 || a >= s_Bindings.Length || !Enum.IsDefined(typeof(PadButton), (byte)b)) continue;
+                if (a < 0 || a >= s_Bindings.Length || b < 0 || b > byte.MaxValue || !Enum.IsDefined(typeof(PadButton), (byte)b)) continue;
+                // A v1 binding still on the old default moves to the new default.
+                if (fromV1 && (PadButton)b == DefaultV1((PadAction)a)) continue;
                 s_Bindings[a] = (PadButton)b;
+                loaded[a] = true;
             }
+
+            // An action added since the save keeps its default; a saved action on the same button moves to a free one.
+            foreach (var added in All)
+            {
+                if (loaded[(int)added] || s_Bindings[(int)added] == PadButton.None) continue;
+                foreach (var other in All)
+                    if (other != added && loaded[(int)other] && s_Bindings[(int)other] == s_Bindings[(int)added] && Overlap(added, other))
+                        s_Bindings[(int)other] = FreeButtonFor(other);
+            }
+
+            if (fromV1)
+            {
+                Save();
+                PlayerPrefs.DeleteKey(PrefsKeyV1);
+            }
+        }
+
+        /// <summary>The action's default button if nothing that overlaps it uses it, else the first such free button, else None.</summary>
+        static PadButton FreeButtonFor(PadAction action)
+        {
+            bool Taken(PadButton button)
+            {
+                foreach (var other in All)
+                    if (other != action && s_Bindings[(int)other] == button && Overlap(action, other)) return true;
+                return false;
+            }
+            if (!Taken(Default(action))) return Default(action);
+            foreach (var button in Buttons)
+                if (!Taken(button)) return button;
+            return PadButton.None;
         }
 
         static void Save()
