@@ -6,8 +6,8 @@ namespace DeckParty.Platforms
     /// <summary>
     /// Which online service runs multiplayer (picked in Project Settings > Deck Party > Online Platform).
     /// <see cref="Default"/> is the original setup: Unity Relay join codes plus Direct IP / LAN.
-    /// Only Steam is implemented; the others are reserved so a store build can be added later without moving anything.
-    /// Stored in <see cref="OnlinePlatformSettings"/>: only append, never renumber.
+    /// Steam and Epic are implemented; the others are reserved so a store build can be added later without moving anything.
+    /// Stored in <see cref="OnlinePlatformSettings"/> and sent over the network (players carry theirs): only append, never renumber.
     /// </summary>
     public enum OnlinePlatformKind
     {
@@ -15,7 +15,7 @@ namespace DeckParty.Platforms
         Default = 0,
         /// <summary>Steamworks: Steam friends, invites, the Steam overlay, lobby search and quick match, Steam Datagram Relay.</summary>
         Steam = 1,
-        /// <summary>Placeholder: Epic Online Services (EOS lobbies, friends, P2P).</summary>
+        /// <summary>Epic Online Services (EOS Plugin for Unity): Epic friends, invites, the Epic overlay, EOS lobbies and EOS P2P.</summary>
         Epic = 2,
         /// <summary>Placeholder: iOS Game Center.</summary>
         AppleGameCenter = 3,
@@ -96,25 +96,46 @@ namespace DeckParty.Platforms
         InThisGame,
     }
 
-    /// <summary>A signed-in platform user.</summary>
+    /// <summary>
+    /// A signed-in platform user. Ids are strings so every platform fits: a SteamID ("76561198..."), an Epic product user
+    /// id (32 hex characters)... They only mean something on their own platform (see <see cref="PlatformIds"/>).
+    /// </summary>
     public readonly struct PlatformUser
     {
-        public readonly ulong Id;
+        public readonly string Id;
         public readonly string Name;
 
-        public PlatformUser(ulong id, string name)
+        public PlatformUser(string id, string name)
         {
-            Id = id;
+            Id = id ?? string.Empty;
             Name = name ?? string.Empty;
         }
 
-        public bool IsValid => Id != 0;
+        public bool IsValid => !string.IsNullOrEmpty(Id);
+    }
+
+    /// <summary>Helpers for platform user ids (strings, empty = none).</summary>
+    public static class PlatformIds
+    {
+        /// <summary>Longest id a player can carry over the network (NetPlayer keeps it in 64 bytes).</summary>
+        public const int MaxLength = 60;
+
+        public static bool IsSet(string id) => !string.IsNullOrEmpty(id);
+
+        /// <summary>The id cleaned up for the network: no separators, no whitespace, at most <see cref="MaxLength"/> characters.</summary>
+        public static string Clean(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return string.Empty;
+            id = id.Trim().Replace("|", string.Empty);
+            return id.Length > MaxLength ? id.Substring(0, MaxLength) : id;
+        }
     }
 
     /// <summary>A friend in the Invite Friends panel.</summary>
     public sealed class PlatformFriend
     {
-        public ulong Id;
+        /// <summary>The friend's id on the platform (for Epic: their Epic account id).</summary>
+        public string Id;
         public string Name;
         public PlatformFriendStatus Status;
         /// <summary>Already in your lobby.</summary>
@@ -124,7 +145,7 @@ namespace DeckParty.Platforms
     /// <summary>One lobby in Find Games.</summary>
     public sealed class LobbyListing
     {
-        /// <summary>The platform's lobby id (a Steam lobby id as a number string).</summary>
+        /// <summary>The platform's lobby id (a Steam lobby id as a number string, an EOS lobby id...).</summary>
         public string Id;
         public string HostName;
         public int Members;
@@ -152,7 +173,7 @@ namespace DeckParty.Platforms
     {
         public string Id;
         /// <summary>The platform user id of the player hosting the match (connect the transport to them).</summary>
-        public ulong HostUserId;
+        public string HostUserId;
         public int MaxMembers;
         public LobbyVisibility Visibility;
         public readonly Dictionary<string, string> Data = new Dictionary<string, string>();

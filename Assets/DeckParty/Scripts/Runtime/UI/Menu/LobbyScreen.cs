@@ -51,10 +51,13 @@ namespace DeckParty.UI
         MainMenuController m_Menu;
         DeckPartyNetSession m_Session;
         readonly List<PlayerRowView> m_Rows = new List<PlayerRowView>();
-        /// <summary>Each row's player's platform id (clicking a row opens their Steam profile).</summary>
-        readonly List<ulong> m_RowPlatformIds = new List<ulong>();
+        /// <summary>Each row's player's id on our platform, or null (clicking a row opens their Steam profile).</summary>
+        readonly List<string> m_RowPlatformIds = new List<string>();
         IOnlinePlatform m_AvatarPlatform;
         bool m_Applying;
+        /// <summary>Where the builder put the Invite button (it moves left of Copy when both show).</summary>
+        Vector2 m_InviteHome;
+        bool m_InviteHomeKnown;
 
         public void Init(MainMenuController menu) => m_Menu = menu;
 
@@ -114,7 +117,7 @@ namespace DeckParty.UI
 
         int m_FilledCategory = -1;
 
-        void OnAvatarLoaded(ulong userId) => Refresh();
+        void OnAvatarLoaded(string userId) => Refresh();
 
         /// <summary>Esc: closes Invite Friends. Returns true when it did.</summary>
         public bool CloseOverlay()
@@ -209,14 +212,23 @@ namespace DeckParty.UI
 
             titleLabel.text = Loc.Get(isHost ? "lobby.title_host" : "lobby.title");
             var platform = service.IsPlatformSession ? OnlinePlatforms.Current : null;
-            if (platform != null)
+            bool canInvite = platform != null && (platform.Features & (PlatformFeatures.Friends | PlatformFeatures.InviteOverlay)) != 0;
+            if (platform != null && service.HasCrossPlatformCode)
             {
-                // A Steam lobby: friends come in through invites and the friends list, so show who can join and the Invite button.
+                // A Steam or Epic lobby with a join code: friends come in through invites, anyone else (any platform) types the code.
+                codeLabel.text = service.JoinCode;
+                codeHintLabel.text = Loc.Get(isHost ? "lobby.code_hint_platform_host" : "lobby.code_hint_platform",
+                    "platform", platform.DisplayName, "visibility", MultiplayerScreen.VisibilityLabel(service.PlatformVisibility));
+                copyCodeButton.gameObject.SetActive(true);
+                ShowInvite(canInvite, besideCopy: true);
+            }
+            else if (platform != null)
+            {
+                // A Steam or Epic lobby without a code (Unity Relay isn't set up): friends come in through invites and the friends list.
                 codeLabel.text = MultiplayerScreen.VisibilityLabel(service.PlatformVisibility);
                 codeHintLabel.text = Loc.Get("lobby.platform_hint", "platform", platform.DisplayName);
                 copyCodeButton.gameObject.SetActive(false);
-                if (inviteButton != null)
-                    inviteButton.gameObject.SetActive((platform.Features & (PlatformFeatures.Friends | PlatformFeatures.InviteOverlay)) != 0);
+                ShowInvite(canInvite, besideCopy: false);
             }
             else
             {
@@ -225,7 +237,7 @@ namespace DeckParty.UI
                     ? Loc.Get(isHost ? "lobby.code_hint_host" : "lobby.code_hint")
                     : Loc.Get(isHost ? "lobby.ip_hint_host" : "lobby.ip_hint");
                 copyCodeButton.gameObject.SetActive(true);
-                if (inviteButton != null) inviteButton.gameObject.SetActive(false);
+                ShowInvite(false, besideCopy: false);
             }
 
             // Players
@@ -237,7 +249,7 @@ namespace DeckParty.UI
                     int index = i;
                     var row = Instantiate(playerRowPrefab, playerList);
                     m_Rows.Add(row);
-                    m_RowPlatformIds.Add(0);
+                    m_RowPlatformIds.Add(null);
                     row.Clicked += () => OpenProfile(index);
                 }
                 var p = players[i];
@@ -252,10 +264,13 @@ namespace DeckParty.UI
                 // Streamers are picked after the lobby (once everyone is ready and the host starts), so none show here.
                 m_Rows[i].SetStreamer(StreamerType.None);
 
-                // Steam: the player's avatar, and their profile on click.
-                m_RowPlatformIds[i] = platform != null ? p.PlatformUserId : 0;
-                m_Rows[i].SetPlatformAvatar(platform != null && p.PlatformUserId != 0 ? platform.GetAvatar(p.PlatformUserId) : null);
-                if (platform != null && p.PlatformUserId != 0 && (platform.Features & PlatformFeatures.Profiles) != 0) m_Rows[i].MakeClickable();
+                // Players on our platform (Steam, Epic): their avatar, and their profile on click. Players who joined with the
+                // code from another platform (or none) keep the plain row.
+                var ours = OnlinePlatforms.Current;
+                string ourId = ours != null && p.IsOn((byte)ours.Kind) ? p.PlatformId : null;
+                m_RowPlatformIds[i] = ourId;
+                m_Rows[i].SetPlatformAvatar(ourId != null ? ours.GetAvatar(ourId) : null);
+                if (ourId != null && (ours.Features & PlatformFeatures.Profiles) != 0) m_Rows[i].MakeClickable();
             }
             for (int i = players.Count; i < m_Rows.Count; i++) m_Rows[i].gameObject.SetActive(false);
             playerCountLabel.text = Loc.Get("lobby.players", "count", players.Count, "max", NetworkService.MaxPlayers);
@@ -422,8 +437,23 @@ namespace DeckParty.UI
         {
             var platform = OnlinePlatforms.Current;
             if (platform == null || rowIndex < 0 || rowIndex >= m_RowPlatformIds.Count) return;
-            ulong id = m_RowPlatformIds[rowIndex];
-            if (id != 0) platform.OpenProfile(id);
+            string id = m_RowPlatformIds[rowIndex];
+            if (!string.IsNullOrEmpty(id)) platform.OpenProfile(id);
+        }
+
+        /// <summary>Invite Friends: in Copy's place when there's no code, just left of Copy when there is.</summary>
+        void ShowInvite(bool show, bool besideCopy)
+        {
+            if (inviteButton == null) return;
+            inviteButton.gameObject.SetActive(show);
+            var rect = (RectTransform)inviteButton.transform;
+            if (!m_InviteHomeKnown)
+            {
+                m_InviteHome = rect.anchoredPosition;
+                m_InviteHomeKnown = true;
+            }
+            float copyWidth = copyCodeButton != null ? ((RectTransform)copyCodeButton.transform).rect.width : 150f;
+            rect.anchoredPosition = besideCopy ? m_InviteHome - new Vector2(copyWidth + 12f, 0f) : m_InviteHome;
         }
 
         void CopyCode()

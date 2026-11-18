@@ -1161,6 +1161,56 @@ MonoBehaviour:
     m_Localized: "{icon:cash}\u5F88\u591A\uFF0C\u4F46\u9EBB\u70E6\u4E5F\u8DDF\u7740\u6765\u3002"
     m_Metadata:
       m_Items: []
+  - m_Id: 6380295349166080
+    m_Localized: "\u5730\u5821\u5BCC\u8C6A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943296
+    m_Localized: "\u672B\u65E5\u5730\u5821\uFF1A\u7ED3\u7B97\u65F6\u76F4\u64AD\u95F4\u6BCF\u6709\u4E00\u4E2A\u7A7A\u4F4D
+      +1 {icon:cash}\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943297
+    m_Localized: "\u7F51\u763E\u665A\u671F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943298
+    m_Localized: "\u6C38\u4E0D\u4E0B\u7EBF\uFF1A\u5982\u679C\u76F4\u64AD\u7ED3\u675F\u65F6\u76F4\u64AD\u95F4\u53EA\u6709\u8FD9\u4E00\u4F4D\u89C2\u4F17\uFF0C+10
+      {icon:cash}\u3002\u5426\u5219\u6BCF\u4E2A\u7A7A\u4F4D +1 {icon:cash}\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943299
+    m_Localized: "\u6EE5\u6743\u623F\u7BA1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943300
+    m_Localized: "\u6280\u80FD\uFF1A\u628A\u4E00\u4F4D\u89C2\u4F17\u79FB\u8D70\u76F4\u5230\u672C\u573A\u7ED3\u675F\uFF08\u5305\u62EC\u6EE5\u6743\u623F\u7BA1\u81EA\u5DF1\uFF09\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943301
+    m_Localized: "\u5C01\u7981\u4E4B\u9524"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943302
+    m_Localized: "\u6570\u636E\u8D29\u5B50"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943303
+    m_Localized: "\u6280\u80FD\uFF1A\u67E5\u770B\u6392\u961F\u533A\u7684\u4E0B\u4E00\u4F4D\u89C2\u4F17\uFF0C\u7136\u540E\u653E\u4ED6\u8FDB\u6765\u6216\u62D2\u7EDD\u4ED6\u76F4\u5230\u672C\u573A\u7ED3\u675F\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943304
+    m_Localized: "\u6536\u5272\u6570\u636E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943305
+    m_Localized: "\u516B\u5366\u5C0F\u62A5\u8BB0\u8005"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943306
+    m_Localized: "\u72EC\u5BB6\u7206\u6599\uFF1A\u8FDB\u573A\u65F6\u4F1A\u5E26\u4E24\u4F4D\u968F\u673A\u89C2\u4F17\u8FDB\u6765\u3002\u53EF\u80FD\u8BA9\u76F4\u64AD\u95F4\u8D85\u8FC7\u4EBA\u6570\u4E0A\u9650\u3002"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

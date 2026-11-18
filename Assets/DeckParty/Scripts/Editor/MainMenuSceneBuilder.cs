@@ -421,23 +421,31 @@ namespace DeckParty.EditorTools
             var joinLan = EditorUI.Button(ipRow, "JoinLan", "mp.join_online", ButtonStyle.Secondary, 30);
             EditorUI.Layout(joinLan, 150, 76, 0);
 
-            // Online platform card (Steam): sits where the join-code card is and replaces it while a platform runs multiplayer.
+            // Online platform card (Steam, Epic): sits where the join-code card is and replaces it while a platform runs
+            // multiplayer. The last row joins any lobby by its code (every online lobby has one, whatever platform made it).
             var platform = EditorUI.Panel(screen, "PlatformCard");
             platform.rectTransform.Place(new Vector2(0.5f, 0.5f), new Vector2(-410, -40), new Vector2(780, 540));
-            EditorUI.VLayout(platform, 16, EditorUI.Pad(36, 30), TextAnchor.UpperCenter, true, true, true, false);
+            EditorUI.VLayout(platform, 12, EditorUI.Pad(36, 30), TextAnchor.UpperCenter, true, true, true, false);
             var platformTitle = EditorUI.Text(platform.transform, "Title", "-", 38, UIPalette.Teal, TextAlignmentOptions.MidlineLeft, true, true, false);
-            EditorUI.Layout(platformTitle, -1, 52);
+            EditorUI.Layout(platformTitle, -1, 48);
             var platformNote = EditorUI.Text(platform.transform, "Note", "-", 22, UIPalette.TextDim, TextAlignmentOptions.TopLeft);
-            EditorUI.Layout(platformNote, -1, 62);
+            EditorUI.Layout(platformNote, -1, 56);
             var visibility = EditorUI.Selector(platform.transform, "Visibility", "mp.visibility");
-            EditorUI.Layout(visibility, -1, 96);
+            EditorUI.Layout(visibility, -1, 94);
             var hostPlatform = EditorUI.Button(platform.transform, "HostPlatform", "mp.host_platform", ButtonStyle.Primary, 32);
-            EditorUI.Layout(hostPlatform, -1, 88);
+            EditorUI.Layout(hostPlatform, -1, 76);
             var findRow = EditorUI.Rect(platform.transform, "FindRow");
-            EditorUI.Layout(findRow, -1, 76);
+            EditorUI.Layout(findRow, -1, 64);
             EditorUI.HLayout(findRow, 12, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, true, true);
             var quickMatch = EditorUI.Button(findRow, "QuickMatch", "mp.quick_match", ButtonStyle.Secondary, 28);
             var findGames = EditorUI.Button(findRow, "FindGames", "mp.find_games", ButtonStyle.Normal, 28);
+            var platformCodeRow = EditorUI.Rect(platform.transform, "CodeRow");
+            EditorUI.Layout(platformCodeRow, -1, 64);
+            EditorUI.HLayout(platformCodeRow, 12, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, false, true);
+            var platformCodeInput = EditorUI.Input(platformCodeRow, "CodeInput", "mp.code_placeholder_any", 28, 64);
+            EditorUI.Layout(platformCodeInput, -1, 64, 1);
+            var platformJoinCode = EditorUI.Button(platformCodeRow, "JoinCode", "mp.join_online", ButtonStyle.Secondary, 28);
+            EditorUI.Layout(platformJoinCode, 200, 64, 0);
             platform.gameObject.SetActive(false);
 
             var status = EditorUI.Text(screen, "Status", string.Empty, 26, UIPalette.Text, TextAlignmentOptions.Center);
@@ -468,6 +476,9 @@ namespace DeckParty.EditorTools
             view.hostPlatformButton = hostPlatform;
             view.quickMatchButton = quickMatch;
             view.findGamesButton = findGames;
+            view.platformCodeRow = platformCodeRow.gameObject;
+            view.platformCodeInput = platformCodeInput;
+            view.platformJoinCodeButton = platformJoinCode;
             view.lobbyBrowser = browser;
             return view;
         }
@@ -520,7 +531,8 @@ namespace DeckParty.EditorTools
             // Bottom: join by lobby id, refresh, close.
             var bottom = EditorUI.Rect(panel, "Bottom").BottomBand(30, 76, 32, 32);
             EditorUI.HLayout(bottom, 12, EditorUI.Pad(0), TextAnchor.MiddleCenter, true, true, false, true);
-            var idInput = EditorUI.Input(bottom, "LobbyIdInput", "platform.lobby_id_placeholder", 24, 24);
+            // 64 characters: EOS lobby ids are 32, and join codes work here too.
+            var idInput = EditorUI.Input(bottom, "LobbyIdInput", "platform.lobby_id_placeholder", 24, 64);
             idInput.contentType = TMP_InputField.ContentType.IntegerNumber;
             EditorUI.Layout(idInput, -1, 76, 1);
             var joinId = EditorUI.Button(bottom, "JoinId", "mp.join_online", ButtonStyle.Secondary, 26);

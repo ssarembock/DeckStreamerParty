@@ -1,9 +1,10 @@
 # Audience Capture: Streamers, Viewers and Communities
 
-**Current rules (16 November 2026).** Everything below is what the game does today, including the card edits of 16
-November: Mods and the new Gatekeepers, Hype Men spare seats, Boomer levels, the Boomer Troll and the two
-Isolationists, and Loyal Fan and Fish in every shop. The communities are the built-in ones: the Game Database takes
-them once after the next Setup, and your edits there rule after that.
+**Current rules (18 November 2026).** Everything below is what the game does today, including the card edits of 16
+November (Mods and the new Gatekeepers, Hype Men spare seats, Boomer levels, the Boomer Troll and the two
+Isolationists, and Loyal Fan and Fish in every shop) and of 18 November (the **Lurkers** community and five **risky
+variants**, section 3.4). The communities are the built-in ones: the Game Database takes them once after the next
+Setup, and your edits there rule after that.
 
 **Changing it:**
 - Rewrite any rule, number, community list or name directly.
@@ -177,7 +178,7 @@ The platform only changes the animated logo in the menu bar.
 
 ---
 
-## 3. Viewers (50 cards in the game)
+## 3. Viewers (55 cards in the game)
 
 Each block lists:
 
@@ -261,14 +262,14 @@ Every viewer also appears in **Open Lobby**, and every buyable one can appear in
 #### Influential Isolationist · `InfluentialIsolationist`
 - **Cost** 7 · **Scores** +1 Influence
 - **Effect · You Shall Not Watch!:** +1 Influence for every empty seat in chat when scored.
-- **Communities:** Core Fanbase
+- **Communities:** Core Fanbase, Lurkers
 - **Sets:** Algorithm Magic
 - Called **Gatekeeper** until 16 November (it keeps that card's art); the Gatekeepers are now a community.
 
 #### Billionaire Isolationist · `BillionaireIsolationist`
 - **Cost** 6 · **Scores** +1 Cash
 - **Effect · You Shall Not Watch!:** +1 Cash for every empty seat in chat when scored. (New on 16 November.)
-- **Communities:** Core Fanbase, Boomers
+- **Communities:** Core Fanbase, Boomers, Lurkers
 - **Sets:** Monetization Meeting, Algorithm Magic
 
 #### Mildly Risky Collaborator · `MildlyRiskyCollaborator`
@@ -356,7 +357,7 @@ Every viewer also appears in **Open Lobby**, and every buyable one can appear in
 
 #### Risky Orbiter · `RiskyOrbiter`
 - **Cost** 7 · **Scores** +2 Cash, +3 Influence · **Risk** 1
-- **Communities:** none
+- **Communities:** Lurkers (since 18 November)
 - **Sets:** Clickbait Roulette
 
 #### Distraught Cat · `DistraughtCat`
@@ -422,7 +423,7 @@ Every viewer also appears in **Open Lobby**, and every buyable one can appear in
 #### Forever Alone · `ForeverAlone`
 - **Cost** 8 · **Scores** +1 Cash
 - **Effect · Table for One:** +10 Cash if he's the only viewer in chat when scored. Otherwise +1 Cash per empty seat.
-- **Communities:** Millennials
+- **Communities:** Millennials, Lurkers
 - **Sets:** Algorithm Magic
 
 #### Billionaire Benefactor · `BillionaireBenefactor`
@@ -518,9 +519,55 @@ them.
 - **Communities:** Hype Men
 - **Sets:** Brand Deal Wishlist
 
+### 3.4 Risky variants (new on 18 November)
+
+Each one copies an existing card that has no Risk. It has a new name, **Risk 1** and costs **3 less**, and it keeps the
+original's stats, rules (effect or action) and communities. In code, `GuestCatalog.VariantOf` names the original
+and the engine scores the variant as that card. A variant shows its original's art until you give it its own in the
+Game Database. It isn't in any preset set yet: it shows up in **Open Lobby** and can come up in **Random Mix**.
+
+#### Bunker Billionaire · `BunkerBillionaire`
+- **Variant of** Billionaire Isolationist
+- **Cost** 3 · **Scores** +1 Cash · **Risk** 1
+- **Effect · Doomsday Bunker:** +1 Cash for every empty seat in chat when scored.
+- **Communities:** Core Fanbase, Boomers, Lurkers
+- **Sets:** none (Open Lobby, Random Mix)
+
+#### Terminally Online · `TerminallyOnline`
+- **Variant of** Forever Alone
+- **Cost** 5 · **Scores** +1 Cash · **Risk** 1
+- **Effect · Never Logs Off:** +10 Cash if they're the only viewer in chat when scored. Otherwise +1 Cash per empty
+  seat.
+- **Communities:** Millennials, Lurkers
+- **Sets:** none (Open Lobby, Random Mix)
+
+#### Power-Tripping Mod · `PowerTrippingMod`
+- **Variant of** Tech Admin
+- **Cost** 6 · **Scores** +2 Cash · **Risk** 1
+- **Action · Ban Hammer:** remove one viewer from chat for the rest of the stream (it can remove itself, taking its Risk
+  with it).
+- **Communities:** Mods (Mods points give extra uses)
+- **Sets:** none (Open Lobby, Random Mix)
+
+#### Data Broker · `DataBroker`
+- **Variant of** Social Media Manager
+- **Cost** 5 · **Scores** +3 Cash, −1 Influence · **Risk** 1
+- **Action · Harvest Data:** look at the next viewer in the queue, then let them in or keep them out for the rest of
+  the stream.
+- **Communities:** Staff, Voyeurs (Voyeurs points give extra uses)
+- **Sets:** none (Open Lobby, Random Mix)
+
+#### Tabloid Reporter · `TabloidReporter`
+- **Variant of** Online Journalist
+- **Cost** 8 · **Scores** +2 Cash, +3 Influence · **Risk** 1
+- **Effect · Exclusive Scoop:** brings the next two viewers from the queue along when joining. This can push chat over
+  the Sub Cap, unless they can take Hype Men spare seats.
+- **Communities:** Hype Men
+- **Sets:** none (Open Lobby, Random Mix)
+
 ---
 
-## 4. Communities (10 in the game)
+## 4. Communities (11 in the game)
 
 **Points:** the number of different members in chat, minus 1, up to the cap. The Boomers count levels instead (see
 below).
@@ -535,16 +582,16 @@ kickers. The Mods' own old rule (a chance to cancel 1 Risk next stream) is gone.
 - **Rule:** each point gives every Core Fanbase viewer a **10% chance to score twice** when the stream ends. A viewer
   who scores twice plays its scoring animation twice.
 - **Cap:** 3 points (30%).
-- **Members (10):** Loyal Fan, Fish, Whale, Ineffective Troll, Normie, Influential Isolationist, Billionaire
-  Isolationist, Promo Code User, Binge Bunny, Die Hard Fan.
+- **Members (11):** Loyal Fan, Fish, Whale, Ineffective Troll, Normie, Influential Isolationist, Billionaire
+  Isolationist, Promo Code User, Binge Bunny, Die Hard Fan, Bunker Billionaire.
 
 ### Staff · `Staff`
 - **Rule:** each point adds **+1 Influence** when the stream is scored. It's a flat reward, and it flies from the Staff chip
   in Community Beats.
 - **Cap:** 3 points (+3 Influence).
-- **Members (12):** Producer, Chat Admin, Cybersecurity Engineer, Junior PR Manager, Marketing Manager, Account
+- **Members (13):** Producer, Chat Admin, Cybersecurity Engineer, Junior PR Manager, Marketing Manager, Account
   Manager, PR Manager, Chat Arbitrator, Social Media Manager, Executive PR, Clippo The Clanker, Senior Marketing
-  Manager.
+  Manager, Data Broker.
 
 ### Boomers · `Boomer`
 - **Levels, not points:** **2** different Boomers in chat make **level 1**, **4** make **level 2** (the most).
@@ -553,16 +600,17 @@ kickers. The Mods' own old rule (a chance to cancel 1 Risk next stream) is gone.
 - **Retirement:** after a scored stream, each Boomer that was in chat has a **10% chance to leave your Audience for
   good**.
 - **Cap:** level 2.
-- **Members (10):** Paid Sponsorship, Mildly Risky Collaborator, Billionaire Isolationist, Master of Currency,
-  Billionaire Benefactor, Executive PR, Boomer Troll, Big Boomer, Platform Owner, Mainstream Celebrity.
+- **Members (11):** Paid Sponsorship, Mildly Risky Collaborator, Billionaire Isolationist, Master of Currency,
+  Billionaire Benefactor, Executive PR, Boomer Troll, Big Boomer, Platform Owner, Mainstream Celebrity, Bunker
+  Billionaire.
 
 ### Millennials · `Millennial`
 - **Rule:** each time a Boomer leaves your Audience, a random Millennial you own **permanently earns +1 Cash** (it was
   +1 Influence until 16 November).
 - **How often:** once per point, and at least once even with 0 points, so the bonus grows with the points. You need a
   Millennial in your Audience; they don't have to be in chat. Printed Cash stops growing at 9.
-- **Members (6):** Crypto Enthusiast, Highly Risky Collaborator, Dancing Jen, Doomer, Forever Alone, Senior Marketing
-  Manager.
+- **Members (7):** Crypto Enthusiast, Highly Risky Collaborator, Dancing Jen, Doomer, Forever Alone, Senior Marketing
+  Manager, Terminally Online.
 
 ### Gen-Z · `GenZ`
 - **Rule:** after a scored stream, each Gen-Z viewer in chat **permanently gains +1 Cash or +1 Influence** (at random),
@@ -573,10 +621,10 @@ kickers. The Mods' own old rule (a chance to cancel 1 Risk next stream) is gone.
 ### Mods · `Mods`
 - **Rule:** each point gives **one more use of a Mod's removal action** this stream. The extra uses are shared between
   all Mods in chat. (This was the Gatekeepers' rule until 16 November.)
-- **Which actions count:** Remove From Chat, Admin Rights, Free The Speech!, Bot Removal (and sending viewers back, if
-  a Mod ever has that action).
+- **Which actions count:** Remove From Chat, Admin Rights, Ban Hammer, Free The Speech!, Bot Removal (and sending
+  viewers back, if a Mod ever has that action).
 - **Cap:** none.
-- **Members (4):** Chat Admin, Bot Detector, Tech Admin, Platform Owner.
+- **Members (5):** Chat Admin, Bot Detector, Tech Admin, Platform Owner, Power-Tripping Mod.
 
 ### Gatekeepers · `Gatekeepers`
 - **Rule:** a Gatekeeper's action sends **random** other viewers in chat back to the queue (Mods pick who to kick;
@@ -589,15 +637,23 @@ kickers. The Mods' own old rule (a chance to cancel 1 Risk next stream) is gone.
 ### Hype Men · `HypeMen`
 - **Rule:** each point gives **1 spare seat past the Sub Cap** for this stream. Only a viewer **a Hype Man brings in**
   can take one, so the Hype Men's guests don't crash the server.
-- **What counts as "brought in by a Hype Man":** the viewers Online Journalist and Bigger Star bring along, the viewer
-  Generous Donator brings in, and the viewer the Evangelist's 2-for-1! fetches (it still works in a full chat while a
-  spare seat is free).
+- **What counts as "brought in by a Hype Man":** the viewers Online Journalist, Tabloid Reporter and Bigger Star bring
+  along, the viewer Generous Donator brings in, and the viewer the Evangelist's 2-for-1! fetches (it still works in a
+  full chat while a spare seat is free).
 - **What it doesn't change:** once the Sub Cap is full you can't Add Viewer yourself, even with spare seats free, and
   anyone else pushing chat over the Sub Cap (a Marketing Manager's guest, say) still crashes the server.
 - **How they look:** a free spare seat is a grey dotted circle after the normal seats, and a viewer sitting in one has a
   grey dotted ring. When a normal seat frees up, a viewer in a spare seat moves into it.
 - **Cap:** 2 points (2 spare seats).
-- **Members (4):** Generous Donator, Online Journalist, Bigger Star, Evangelist.
+- **Members (5):** Generous Donator, Online Journalist, Bigger Star, Evangelist, Tabloid Reporter.
+
+### Lurkers · `Lurkers` (new on 18 November)
+- **Rule:** when the stream is scored, each point earns **+1 Cash for every empty seat** in chat (the same empty seats
+  the Isolationists count; both halves of a team chat). It flies from the Lurkers chip in Community Beats.
+- **Example:** Sub Cap 8, 5 viewers in chat (3 empty seats), 3 different Lurkers among them (2 points): +6 Cash.
+- **Cap:** 2 points (+2 Cash per empty seat).
+- **Members (6):** Influential Isolationist, Billionaire Isolationist, Risky Orbiter, Forever Alone, Bunker
+  Billionaire, Terminally Online.
 
 ### Troll Army · `Trolls`
 - **Rule:** once the community has at least 1 point, a scored stream earns **+2 Cash for every point of Risk** in it.
@@ -607,12 +663,12 @@ kickers. The Mods' own old rule (a chance to cancel 1 Risk next stream) is gone.
 - **Members (6):** Ineffective Troll, Influential Troll, Boomer Troll, Hate-Watcher, Master of Currency, Doomer.
 
 ### Voyeurs · `Voyeurs`
-- **Rule:** each point gives **one more use of a Voyeur's peek action** this stream (shared): Read Access and Sneak
-  Peek.
+- **Rule:** each point gives **one more use of a Voyeur's peek action** this stream (shared): Read Access, Sneak
+  Peek and Harvest Data.
 - **Cap:** 1 point.
-- **Members (2):** Cybersecurity Engineer, Social Media Manager.
+- **Members (3):** Cybersecurity Engineer, Social Media Manager, Data Broker.
 
-**No community:** Risky Orbiter, Affiliate, Degen Dog, Internet Starpower.
+**No community:** Affiliate, Degen Dog, Internet Starpower.
 
 ### Retired communities (in the code, nobody belongs to them)
 
@@ -739,7 +795,7 @@ Trolls from the starting Audience count too):
 | Clickbait Roulette | Troll Army, Boomers (level 1), Millennials, Gen-Z (1 point), Voyeurs, Staff |
 | Brand Deal Wishlist | Boomers (level 2), Hype Men (2 spare seats), Staff, Core Fanbase, Troll Army |
 | Monetization Meeting | Staff, Millennials, Boomers (level 1), Voyeurs, Core Fanbase |
-| Algorithm Magic | Mods (3 points), Gatekeepers (1 point), Hype Men (1 spare seat), Boomers (level 1), Core Fanbase |
+| Algorithm Magic | Mods (3 points), Gatekeepers (1 point), Hype Men (1 spare seat), Lurkers (2 points), Boomers (level 1), Core Fanbase |
 
 ---
 
@@ -752,7 +808,7 @@ These are how the game behaves today. They look unintended or unfinished:
 2. **Gatekeepers** have only two members (PR Manager, Distraught Cat), so they top out at 1 point: the PR Manager
    sends 3 or 6 viewers back, never "everyone else". A third Gatekeeper would unlock that.
 3. **Troll Army** only needs 1 point; more points don't add more Cash. Say so if you want it to scale with points.
-4. **Staff** stops at 3 points (+3 Influence), as before. It has 12 members, so the cap is easy to reach.
+4. **Staff** stops at 3 points (+3 Influence), as before. It has 13 members, so the cap is easy to reach.
 5. **Distraught Cat** is a Gatekeeper but has no action. It only adds to the Gatekeepers' points (and gains from the
    PR Manager's send-back).
 6. **Producer's Shoutout** can already pull Trophy viewers from the queue, the same as the Evangelist's action, which
@@ -764,6 +820,13 @@ These are how the game behaves today. They look unintended or unfinished:
    (see section 2). The description could say "a rival you pick" instead.
 10. **The Mods have no icon yet.** The Gatekeepers icon stays on the Gatekeepers (the new random kickers). Give the
     Mods one in Game Database > Communities; until then they show a placeholder.
+11. **The Lurkers have no icon yet** (the placeholder is two eyes peeking over a wall). Give them one in Game Database >
+    Communities.
+12. **The five risky variants** (section 3.4) aren't in any preset set, so only Open Lobby and Random Mix offer them.
+    They show their original's art until you give them their own in the Game Database, so in chat (where names are
+    hidden) only the Risk badge tells them apart.
+13. **Algorithm Magic** already holds three Lurkers (both Isolationists and Forever Alone), so the Lurkers reach 2
+    points there without any new card.
 
 ---
 

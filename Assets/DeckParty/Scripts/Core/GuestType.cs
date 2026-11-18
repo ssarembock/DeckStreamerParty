@@ -120,6 +120,19 @@ namespace DeckParty.Core
         BoomerTroll = 85,
         /// <summary>The Cash twin of the Influential Isolationist (+1 Cash per empty seat).</summary>
         BillionaireIsolationist = 86,
+
+        // --- Risky variants (2026-11-18): an existing card with +1 Risk, 3 cheaper, its communities and its rules
+        //     (GuestCatalog.VariantOf names the original; the engine scores them as it) ---
+        /// <summary>Billionaire Isolationist with Risk (a Lurker).</summary>
+        BunkerBillionaire = 87,
+        /// <summary>Forever Alone with Risk (a Lurker).</summary>
+        TerminallyOnline = 88,
+        /// <summary>Tech Admin with Risk.</summary>
+        PowerTrippingMod = 89,
+        /// <summary>Social Media Manager with Risk.</summary>
+        DataBroker = 90,
+        /// <summary>Online Journalist with Risk.</summary>
+        TabloidReporter = 91,
     }
 
     /// <summary>

@@ -34,6 +34,7 @@ namespace DeckParty.Platforms.Steam
         bool m_Ready;
         bool m_FinalFailure;
         PlatformUser m_LocalUser;
+        ulong m_LocalSteamId;
         SteamCallbackPump m_Pump;
         string m_LaunchJoin;
         bool m_FriendsDirty;
@@ -63,12 +64,35 @@ namespace DeckParty.Platforms.Steam
             PlatformFeatures.InviteOverlay | PlatformFeatures.Avatars | PlatformFeatures.RichPresence | PlatformFeatures.Profiles;
 
         public bool IsReady => m_Ready && Running;
+        /// <summary>Steam signs in with the Steam client, at once: never in between.</summary>
+        public bool IsSigningIn => false;
+        public string LastError => null;
         public bool InitFailureIsFinal => m_FinalFailure;
         public PlatformUser LocalUser => m_LocalUser;
 
         public event Action FriendsChanged;
-        public event Action<ulong> AvatarLoaded;
+        public event Action<string> AvatarLoaded;
         public event Action<string> JoinRequested;
+
+        /// <summary>Steam is ready as soon as Initialize returns, so this never fires.</summary>
+        public event Action ReadyChanged
+        {
+            add { }
+            remove { }
+        }
+
+        // ================================================================== string ids (IOnlinePlatform) to SteamIDs
+
+        static bool TryParseSteamId(string id, out ulong steamId) => ulong.TryParse((id ?? string.Empty).Trim(), out steamId) && steamId != 0;
+
+        public bool IsLobbyMember(string userId) => TryParseSteamId(userId, out var id) && IsLobbyMember(id);
+        public string GetUserName(string userId) => TryParseSteamId(userId, out var id) ? GetUserName(id) : string.Empty;
+        public bool InviteToLobby(string friendId) => TryParseSteamId(friendId, out var id) && InviteToLobby(id);
+        public bool OpenProfile(string userId) => TryParseSteamId(userId, out var id) && OpenProfile(id);
+        public Texture2D GetAvatar(string userId) => TryParseSteamId(userId, out var id) ? GetAvatar(id) : null;
+
+        /// <summary>A Steam lobby id: a number that Steam says is a lobby.</summary>
+        public bool LooksLikeLobbyId(string text) => TryParseSteamId(text, out var id) && new CSteamID(id).IsLobby();
 
         // ================================================================== start-up and shutdown
 
@@ -147,7 +171,8 @@ namespace DeckParty.Platforms.Steam
                 SteamClient.SetWarningMessageHook(s_WarningHook);
             }
 
-            m_LocalUser = new PlatformUser(SteamUser.GetSteamID().m_SteamID, SteamFriends.GetPersonaName());
+            m_LocalSteamId = SteamUser.GetSteamID().m_SteamID;
+            m_LocalUser = new PlatformUser(m_LocalSteamId.ToString(), SteamFriends.GetPersonaName());
             m_Pump = SteamCallbackPump.Create(this);
             RegisterCallbacks();
 
@@ -362,9 +387,9 @@ namespace DeckParty.Platforms.Steam
             if (transport is SteamNetworkingTransport steam) steam.ConfigureHost(IsLobbyMember);
         }
 
-        public void PrepareClientTransport(Unity.Netcode.NetworkTransport transport, ulong hostUserId)
+        public void PrepareClientTransport(Unity.Netcode.NetworkTransport transport, string hostUserId)
         {
-            if (transport is SteamNetworkingTransport steam) steam.ConfigureClient(hostUserId);
+            if (transport is SteamNetworkingTransport steam) steam.ConfigureClient(TryParseSteamId(hostUserId, out var id) ? id : 0);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace DeckParty.EditorTools
         };
 
         static bool s_ShowSteam = true;
+        static bool s_ShowEpic = true;
         static bool s_ShowPlaceholders;
 
         GUIStyle m_Wrap;
@@ -33,6 +34,8 @@ namespace DeckParty.EditorTools
             EditorGUILayout.LabelField(
                 "Which service runs multiplayer in builds of this project. <b>Default</b> is the original setup: Unity Relay join codes " +
                 "and Direct IP. <b>Steam</b> adds Steam lobbies, friends, invites, the overlay, Find Games and Quick Match, over Steam's relay network. " +
+                "<b>Epic Games</b> does the same with Epic Online Services (EOS lobbies, Epic friends and overlay, EOS P2P). " +
+                "With <b>Cross-Platform Join Codes</b> on, every Steam or Epic lobby also gets a short code anyone can type in, from any platform. " +
                 "The others are reserved for later and use Default until they're built.", m_Wrap);
             EditorGUILayout.Space(4);
 
@@ -43,20 +46,24 @@ namespace DeckParty.EditorTools
             EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(OnlinePlatformSettings.fallbackToDefault)), new GUIContent("Fall Back to Default"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(OnlinePlatformSettings.editorUsesDefault)), new GUIContent("Editor Uses Default"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(OnlinePlatformSettings.keepDirectIp)), new GUIContent("Keep Direct IP / LAN"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(OnlinePlatformSettings.crossPlatformCodes)), new GUIContent("Cross-Platform Join Codes"));
 
             EditorGUILayout.Space(8);
             s_ShowSteam = EditorGUILayout.BeginFoldoutHeaderGroup(s_ShowSteam, "Steam");
             if (s_ShowSteam) DrawSteam(settings);
             EditorGUILayout.EndFoldoutHeaderGroup();
 
-            s_ShowPlaceholders = EditorGUILayout.BeginFoldoutHeaderGroup(s_ShowPlaceholders, "Epic, Game Center, Google Play (placeholders)");
+            s_ShowEpic = EditorGUILayout.BeginFoldoutHeaderGroup(s_ShowEpic, "Epic Games (Epic Online Services)");
+            if (s_ShowEpic) DrawEpic(settings);
+            EditorGUILayout.EndFoldoutHeaderGroup();
+
+            s_ShowPlaceholders = EditorGUILayout.BeginFoldoutHeaderGroup(s_ShowPlaceholders, "Game Center, Google Play (placeholders)");
             if (s_ShowPlaceholders)
             {
                 EditorGUILayout.HelpBox("Not implemented yet. These hold the values each platform will need, so the settings are ready when one is added " +
                                         "(see Streamworks_Guidelines.md, \"Adding another platform\").", MessageType.None);
                 using (new EditorGUI.DisabledScope(true))
                 {
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(OnlinePlatformSettings.epic)), new GUIContent("Epic Online Services"), true);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(OnlinePlatformSettings.appleGameCenter)), new GUIContent("Game Center (iOS)"), true);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(OnlinePlatformSettings.googlePlayGames)), new GUIContent("Google Play Games (Android)"), true);
                 }
@@ -65,8 +72,8 @@ namespace DeckParty.EditorTools
 
             EditorGUILayout.Space(8);
             EditorGUILayout.LabelField(
-                "Any build can be switched on the command line: <b>-onlineplatform default</b> or <b>-onlineplatform steam</b>. " +
-                "Guide: Streamworks_Guidelines.md in the project folder.", m_Wrap);
+                "Any build can be switched on the command line: <b>-onlineplatform default</b>, <b>-onlineplatform steam</b> or <b>-onlineplatform epic</b>. " +
+                "Guides: Streamworks_Guidelines.md (Steam) and EpicOnlineServices_Guidelines.md (Epic, join codes) in the project folder.", m_Wrap);
 
             if (serializedObject.ApplyModifiedProperties())
             {
@@ -83,7 +90,7 @@ namespace DeckParty.EditorTools
             {
                 var kind = s_Kinds[i];
                 string label = kind == OnlinePlatformKind.Default ? "Default (Unity Relay + Direct IP)" : OnlinePlatforms.DisplayName(kind);
-                if (kind != OnlinePlatformKind.Default && kind != OnlinePlatformKind.Steam) label += "  (not implemented)";
+                if (kind != OnlinePlatformKind.Default && kind != OnlinePlatformKind.Steam && kind != OnlinePlatformKind.Epic) label += "  (not implemented)";
                 labels.Add(label);
                 if (kind == settings.platform) index = i;
             }
@@ -103,6 +110,9 @@ namespace DeckParty.EditorTools
                     return;
                 case OnlinePlatformKind.Steam:
                     DrawSteamStatus(settings);
+                    return;
+                case OnlinePlatformKind.Epic:
+                    DrawEpicStatus();
                     return;
                 default:
                     EditorGUILayout.HelpBox($"{OnlinePlatforms.DisplayName(settings.platform)} isn't implemented yet, so builds use the Default multiplayer " +
@@ -168,6 +178,68 @@ namespace DeckParty.EditorTools
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Steamworks Partner Site")) Application.OpenURL("https://partner.steamgames.com/apps");
             if (GUILayout.Button("Steamworks.NET Docs")) Application.OpenURL("https://steamworks.github.io/");
+            EditorGUILayout.EndHorizontal();
+        }
+
+        // ------------------------------------------------------------------ Epic
+
+        void DrawEpicStatus()
+        {
+            if (!OnlinePlatformSetup.EosInstalled)
+            {
+                EditorGUILayout.HelpBox("The EOS Plugin for Unity isn't installed, so Epic can't run: the game uses the Default multiplayer. " +
+                                        "Install it (Unity downloads it from GitHub; Git and Git LFS must be installed).", MessageType.Error);
+                using (new EditorGUI.DisabledScope(OnlinePlatformSetup.Installing))
+                    if (GUILayout.Button(OnlinePlatformSetup.Installing ? "Installing..." : "Install the EOS Plugin for Unity"))
+                        OnlinePlatformSetup.InstallEos();
+                return;
+            }
+
+            var package = OnlinePlatformSetup.EosPackageInfo;
+            string version = package != null ? package.version : "imported into Assets";
+            if (!OnlinePlatformSetup.StandaloneTarget)
+            {
+                EditorGUILayout.HelpBox($"The EOS plugin {version} is installed, but the build target is {EditorUserBuildSettings.activeBuildTarget}. " +
+                                        "Epic only runs in Windows, macOS and Linux builds here: switch the build target to use it. Other targets use the Default multiplayer.",
+                    MessageType.Warning);
+                return;
+            }
+            if (!OnlinePlatformSetup.EpicSupportCompiled)
+            {
+                EditorGUILayout.HelpBox($"The EOS plugin {version} is installed but DeckParty.Epic hasn't compiled yet. Wait for Unity to finish " +
+                                        "compiling; if this stays, check the Console for errors.", MessageType.Warning);
+                return;
+            }
+            EditorGUILayout.HelpBox($"Epic is ready to run: EOS plugin {version}. Fill in the product's ids and client credentials in " +
+                                    "EOS Plugin > EOS Configuration (from the Epic Developer Portal) if you haven't. Play Mode signs in with the " +
+                                    "Developer Authentication Tool when it's set below; otherwise the Multiplayer screen opens Epic's login window.",
+                MessageType.Info);
+            if (GUILayout.Button("Open EOS Configuration") && !OnlinePlatformSetup.OpenEosConfiguration())
+                Debug.LogWarning($"[DeckParty] Couldn't open {OnlinePlatformSetup.EosConfigurationMenu}; find the EOS plugin's configuration window in the menu bar.");
+        }
+
+        void DrawEpic(OnlinePlatformSettings settings)
+        {
+            var epic = serializedObject.FindProperty(nameof(OnlinePlatformSettings.epic));
+            EditorGUILayout.LabelField("The product's ids and client credentials live in the plugin's own window (EOS Plugin > EOS Configuration).", m_Wrap);
+            EditorGUI.indentLevel++;
+            EditorGUILayout.LabelField("Signing in", EditorStyles.miniBoldLabel);
+            EditorGUILayout.PropertyField(epic.FindPropertyRelative(nameof(EpicPlatformSettings.useExchangeCode)), new GUIContent("Launcher Exchange Code"));
+            EditorGUILayout.PropertyField(epic.FindPropertyRelative(nameof(EpicPlatformSettings.usePersistentLogin)), new GUIContent("Remember Login"));
+            EditorGUILayout.PropertyField(epic.FindPropertyRelative(nameof(EpicPlatformSettings.useAccountPortal)), new GUIContent("Login Window"));
+            EditorGUILayout.PropertyField(epic.FindPropertyRelative(nameof(EpicPlatformSettings.devAuthHost)), new GUIContent("Dev Auth Tool Host"));
+            EditorGUILayout.PropertyField(epic.FindPropertyRelative(nameof(EpicPlatformSettings.devAuthCredential)), new GUIContent("Dev Auth Credential"));
+            EditorGUILayout.PropertyField(epic.FindPropertyRelative(nameof(EpicPlatformSettings.allowDeviceIdFallback)), new GUIContent("Device ID Fallback"));
+            EditorGUILayout.LabelField("Lobbies", EditorStyles.miniBoldLabel);
+            EditorGUILayout.PropertyField(epic.FindPropertyRelative(nameof(EpicPlatformSettings.defaultVisibility)), new GUIContent("Default Lobby Visibility"));
+            EditorGUILayout.PropertyField(epic.FindPropertyRelative(nameof(EpicPlatformSettings.useEpicNames)), new GUIContent("Use Epic Names"));
+            EditorGUILayout.PropertyField(epic.FindPropertyRelative(nameof(EpicPlatformSettings.lobbyBucket)), new GUIContent("Lobby Bucket"));
+            EditorGUI.indentLevel--;
+
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("Epic Developer Portal")) Application.OpenURL("https://dev.epicgames.com/portal");
+            if (GUILayout.Button("Developer Auth Tool")) Application.OpenURL("https://dev.epicgames.com/docs/epic-account-services/developer-authentication-tool");
+            if (GUILayout.Button("EOS Plugin Docs")) Application.OpenURL("https://github.com/EOS-Contrib/eos_plugin_for_unity");
             EditorGUILayout.EndHorizontal();
         }
     }

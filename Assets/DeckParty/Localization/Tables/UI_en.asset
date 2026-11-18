@@ -1999,7 +1999,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3193502843887624
-    m_Localized: Lobby ID
+    m_Localized: Lobby ID or join code
     m_Metadata:
       m_Items: []
   - m_Id: 3193502843887625
@@ -2834,6 +2834,32 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6080839034691588
     m_Localized: Never
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296867504128
+    m_Localized: /space
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380297966411776
+    m_Localized: Signing in to {platform}... Join codes already work.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380297966411777
+    m_Localized: 'Signed in as {name}. Host a lobby: {platform} friends join by invite,
+      anyone else with its code.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380297966411778
+    m_Localized: '{platform} lobby ({visibility}). Invite friends, or share this
+      code: it works on any platform.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380297966411779
+    m_Localized: 'Share this code with anyone: it works on any platform.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380297966411780
+    m_Localized: Join code or lobby ID
     m_Metadata:
       m_Items: []
   references:

@@ -400,8 +400,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3193499362615297
-    m_Localized: "Steam \u76EE\u524D\u4E0D\u53EF\u7528\u3002\u8BF7\u786E\u8BA4 Steam
-      \u6B63\u5728\u8FD0\u884C\u4E14\u5DF2\u767B\u5F55\u3002"
+    m_Localized: "\u5728\u7EBF\u5E73\u53F0\u76EE\u524D\u4E0D\u53EF\u7528\u3002\u8BF7\u786E\u8BA4\u5DF2\u767B\u5F55\u5E76\u8054\u7F51\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 3193499362615298
@@ -547,6 +546,50 @@ MonoBehaviour:
   - m_Id: 6046006501793794
     m_Localized: "\u4E24\u540D\u73A9\u5BB6\u5171\u4EAB\u4E00\u5C40\u65E0\u5C3D\u6A21\u5F0F\uFF08{count}
       \u573A\u76F4\u64AD\uFF0C\u98CE\u9669\u4E0A\u9650 {risk}\uFF09\u3002\u5C3D\u91CF\u6491\u4E45\u4E00\u70B9\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294443196416
+    m_Localized: "\u6B64\u7248\u672C\u672A\u8BBE\u7F6E Epic \u5728\u7EBF\u670D\u52A1\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973632
+    m_Localized: "Epic \u5728\u7EBF\u670D\u52A1\u7EC4\u4EF6\u7F3A\u5931\u6216\u4E0E\u6B64\u7248\u672C\u4E0D\u5339\u914D\u3002\u8BF7\u91CD\u65B0\u5B89\u88C5\u6E38\u620F\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973633
+    m_Localized: "\u5C1A\u672A\u767B\u5F55 Epic\u3002\u6253\u5F00\u591A\u4EBA\u6E38\u620F\u5373\u53EF\u767B\u5F55\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973634
+    m_Localized: "\u65E0\u6CD5\u767B\u5F55 Epic\u3002\u8BF7\u68C0\u67E5\u7F51\u7EDC\u8FDE\u63A5\u540E\u91CD\u8BD5\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362240
+    m_Localized: "\u5DF2\u767B\u5F55 Epic\uFF0C\u4F46\u5176\u5728\u7EBF\u670D\u52A1\u6CA1\u6709\u54CD\u5E94\u3002\u8BF7\u7A0D\u540E\u91CD\u8BD5\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362241
+    m_Localized: "\u4F60\u5DF2\u9000\u51FA Epic \u767B\u5F55\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362242
+    m_Localized: "\u65E0\u6CD5\u8FDE\u63A5 Epic \u5728\u7EBF\u670D\u52A1\u3002\u8BF7\u68C0\u67E5\u4F60\u7684\u7F51\u7EDC\u8FDE\u63A5\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362243
+    m_Localized: "\u90A3\u4E2A\u5927\u5385\u5DF2\u7ECF\u4E0D\u5B58\u5728\u4E86\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362244
+    m_Localized: "\u4F60\u65E0\u6CD5\u52A0\u5165\u90A3\u4E2A\u5927\u5385\uFF08\u5B83\u53EF\u80FD\u4EC5\u9650\u9080\u8BF7\uFF09\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362245
+    m_Localized: "Epic \u6B63\u5FD9\u3002\u8BF7\u7A0D\u7B49\u540E\u91CD\u8BD5\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362246
+    m_Localized: "Epic \u5927\u5385\u9519\u8BEF\uFF1A{0}"
     m_Metadata:
       m_Items: []
   references:

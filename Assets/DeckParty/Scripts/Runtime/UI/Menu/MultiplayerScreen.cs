@@ -8,9 +8,10 @@ using UnityEngine.UI;
 namespace DeckParty.UI
 {
     /// <summary>
-    /// Host or join a game. With an online platform running (Steam), the platform card replaces the join-code card:
-    /// host a Steam lobby (friends only, public or invite only), Quick Match, or Find Games. Otherwise online play
-    /// uses Unity Relay join codes. Direct IP / LAN is always there (unless the platform settings hide it).
+    /// Host or join a game. With an online platform running (Steam, Epic), the platform card replaces the join-code card:
+    /// host a lobby (friends only, public or invite only), Quick Match, Find Games, or join any lobby by its code (every
+    /// online lobby has one, whatever platform made it). Otherwise online play uses Unity Relay join codes. Direct IP / LAN
+    /// is always there (unless the platform settings hide it). While Epic is still signing in, the platform card says so.
     /// </summary>
     public sealed class MultiplayerScreen : UIScreen
     {
@@ -42,6 +43,12 @@ namespace DeckParty.UI
         [SerializeField] internal Button findGamesButton;
         [SerializeField] internal LobbyBrowserView lobbyBrowser;
 
+        [Header("Join codes on the platform card (2026-11-18)")]
+        [Tooltip("Join any lobby by its code (Unity Relay), from any platform. Optional in scenes built before 2026-11-18.")]
+        [SerializeField] internal GameObject platformCodeRow;
+        [SerializeField] internal TMP_InputField platformCodeInput;
+        [SerializeField] internal Button platformJoinCodeButton;
+
         static readonly LobbyVisibility[] s_Visibilities = { LobbyVisibility.FriendsOnly, LobbyVisibility.Public, LobbyVisibility.InviteOnly };
 
         MainMenuController m_Menu;
@@ -66,6 +73,8 @@ namespace DeckParty.UI
             if (findGamesButton != null) findGamesButton.onClick.AddListener(() => lobbyBrowser?.Open());
             if (lobbyBrowser != null) lobbyBrowser.JoinRequested += JoinPlatformLobby;
             if (visibilitySelector != null) visibilitySelector.Changed += index => AppSettings.LastLobbyVisibility = (int)VisibilityAt(index);
+            if (platformJoinCodeButton != null) platformJoinCodeButton.onClick.AddListener(() => JoinByCode(platformCodeInput));
+            if (platformCodeInput != null) platformCodeInput.onSubmit.AddListener(_ => JoinByCode(platformCodeInput));
             Loc.Changed += OnLanguageChanged;
         }
 
@@ -84,6 +93,7 @@ namespace DeckParty.UI
         {
             nameInput.text = AppSettings.PlayerName;
             codeInput.text = AppSettings.LastJoinCode;
+            if (platformCodeInput != null) platformCodeInput.text = AppSettings.LastJoinCode;
             ipInput.text = AppSettings.LastIp;
             portInput.text = AppSettings.LastPort.ToString();
 
@@ -117,13 +127,16 @@ namespace DeckParty.UI
             return true;
         }
 
-        /// <summary>Shows the platform card (Steam) or the join-code card, and the notes that go with them.</summary>
+        /// <summary>Shows the platform card (Steam, Epic) or the join-code card, and the notes that go with them.</summary>
         void ApplyPlatform()
         {
             var platform = OnlinePlatforms.Current;
+            bool signingIn = OnlinePlatforms.SigningIn && platformCard != null;
             bool blocked = OnlinePlatforms.OnlineBlocked;
-            bool usePlatform = platform != null && platformCard != null;
+            bool usePlatform = (platform != null || signingIn) && platformCard != null;
             var settings = OnlinePlatformSettings.Current;
+            // Every online lobby has a Relay join code, so the platform card can join any of them, whoever hosts.
+            if (platformCodeRow != null) platformCodeRow.SetActive(usePlatform && NetworkService.RelaySupported);
 
             if (platformCard != null) platformCard.SetActive(usePlatform || (blocked && platformCard != null));
             if (onlineCard != null) onlineCard.SetActive(!usePlatform && !blocked);
@@ -143,11 +156,24 @@ namespace DeckParty.UI
                 rect.anchoredPosition = showLan ? m_PlatformCardHome : new Vector2(0f, m_PlatformCardHome.y);
             }
 
-            if (usePlatform)
+            if (usePlatform && platform == null)
+            {
+                // Epic is still signing the player in (maybe in a browser window): say so; join codes already work.
+                string name = OnlinePlatforms.Pending != null ? OnlinePlatforms.Pending.DisplayName : OnlinePlatforms.DisplayName(OnlinePlatforms.Selected);
+                if (platformTitle != null) platformTitle.text = Loc.Get("mp.platform_header", "platform", name);
+                if (platformNote != null) platformNote.text = Loc.Get("platform.signing_in", "platform", name);
+                if (quickMatchButton != null) quickMatchButton.gameObject.SetActive(false);
+                if (findGamesButton != null) findGamesButton.gameObject.SetActive(false);
+                if (hostPlatformButton != null) hostPlatformButton.gameObject.SetActive(false);
+                if (visibilitySelector != null) visibilitySelector.gameObject.SetActive(false);
+            }
+            else if (usePlatform)
             {
                 bool lobbies = (platform.Features & PlatformFeatures.Lobbies) != 0;
                 if (platformTitle != null) platformTitle.text = Loc.Get("mp.platform_header", "platform", platform.DisplayName);
-                if (platformNote != null) platformNote.text = Loc.Get("mp.platform_note", "name", $"<color=#3DDBD9>{platform.LocalUser.Name}</color>");
+                if (platformNote != null)
+                    platformNote.text = Loc.Get(NetworkService.RelaySupported && settings.crossPlatformCodes ? "mp.platform_note_codes" : "mp.platform_note",
+                        "name", $"<color=#3DDBD9>{platform.LocalUser.Name}</color>", "platform", platform.DisplayName);
                 if (quickMatchButton != null) quickMatchButton.gameObject.SetActive((platform.Features & PlatformFeatures.QuickMatch) != 0);
                 if (findGamesButton != null) findGamesButton.gameObject.SetActive((platform.Features & PlatformFeatures.LobbySearch) != 0);
                 if (hostPlatformButton != null) hostPlatformButton.gameObject.SetActive(lobbies);
@@ -183,7 +209,7 @@ namespace DeckParty.UI
             var labels = new List<string>();
             foreach (var visibility in s_Visibilities) labels.Add(VisibilityLabel(visibility));
             int saved = AppSettings.LastLobbyVisibility;
-            var current = saved >= 0 ? (LobbyVisibility)saved : OnlinePlatformSettings.Current.steam.defaultVisibility;
+            var current = saved >= 0 ? (LobbyVisibility)saved : OnlinePlatformSettings.Current.DefaultVisibility(OnlinePlatforms.CurrentKind);
             visibilitySelector.SetOptions(labels, IndexOf(current));
         }
 
@@ -225,6 +251,7 @@ namespace DeckParty.UI
             if (findGamesButton != null) findGamesButton.interactable = !busy && platform;
             if (visibilitySelector != null) visibilitySelector.Interactable = !busy && platform;
             if (lobbyBrowser != null) lobbyBrowser.SetInteractable(!busy && platform);
+            if (platformJoinCodeButton != null) platformJoinCodeButton.interactable = !busy && NetworkService.RelaySupported;
             if (message != null) SetStatus(message, false);
         }
 
@@ -242,12 +269,12 @@ namespace DeckParty.UI
             return port;
         }
 
-        // ------------------------------------------------------------------ online platform (Steam)
+        // ------------------------------------------------------------------ online platform (Steam, Epic)
 
         async void HostPlatform()
         {
             if (m_Busy || !OnlinePlatforms.Active) return;
-            var visibility = visibilitySelector != null ? VisibilityAt(visibilitySelector.Index) : OnlinePlatformSettings.Current.steam.defaultVisibility;
+            var visibility = visibilitySelector != null ? VisibilityAt(visibilitySelector.Index) : OnlinePlatformSettings.Current.DefaultVisibility(OnlinePlatforms.CurrentKind);
             AppSettings.LastLobbyVisibility = (int)visibility;
             SetBusy(true, Loc.Get("platform.creating", "platform", OnlinePlatforms.Current.DisplayName));
             var result = await NetworkService.Instance.HostPlatformAsync(PlayerName(), visibility);
@@ -273,10 +300,17 @@ namespace DeckParty.UI
             else SetBusy(false, null);
         }
 
-        /// <summary>Joins a platform lobby: from Find Games, a pasted lobby id, or a friend's invite (the main menu calls this).</summary>
+        /// <summary>Joins a platform lobby: from Find Games, a pasted lobby id or code, or a friend's invite (the main menu calls this).</summary>
         public async void JoinPlatformLobby(string lobbyId)
         {
             if (m_Busy || string.IsNullOrEmpty(lobbyId)) return;
+            // Find Games' "join by id" box takes join codes too.
+            if (NetworkService.LooksLikeJoinCode(lobbyId))
+            {
+                if (lobbyBrowser != null) lobbyBrowser.Close();
+                JoinWithCode(lobbyId);
+                return;
+            }
             if (!OnlinePlatforms.Active)
             {
                 SetStatus("platform.offline", true);
@@ -307,13 +341,25 @@ namespace DeckParty.UI
             if (!result.Ok) SetStatus(result.Error, true);
         }
 
-        async void JoinOnline()
+        void JoinOnline() => JoinByCode(codeInput);
+
+        /// <summary>The code box on either card: any lobby's join code (or, on Steam / Epic, a pasted lobby id).</summary>
+        void JoinByCode(TMP_InputField input)
+        {
+            if (m_Busy || input == null) return;
+            JoinWithCode(input.text);
+        }
+
+        async void JoinWithCode(string text)
         {
             if (m_Busy) return;
-            var code = codeInput.text.Trim().ToUpperInvariant();
+            var code = (text ?? string.Empty).Trim();
+            if (NetworkService.LooksLikeJoinCode(code)) code = code.ToUpperInvariant();
             AppSettings.LastJoinCode = code;
+            if (codeInput != null) codeInput.text = code;
+            if (platformCodeInput != null) platformCodeInput.text = code;
             SetBusy(true, Loc.Get("mp.joining", "code", code));
-            var result = await NetworkService.Instance.JoinRelayAsync(code, PlayerName());
+            var result = await NetworkService.Instance.JoinWithCodeAsync(code, PlayerName());
             if (this == null) return;
             if (!result.Ok)
             {
@@ -321,7 +367,7 @@ namespace DeckParty.UI
                 SetStatus(result.Error, true);
                 return;
             }
-            SetStatus(Loc.Get("mp.connected_relay"), false);
+            SetStatus(Loc.Get(NetworkService.Instance.Mode == ConnectionMode.Platform ? "platform.connecting" : "mp.connected_relay"), false);
         }
 
         void HostLan()

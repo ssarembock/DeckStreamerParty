@@ -425,7 +425,8 @@ namespace DeckParty.Core
 
         static void ApplyPassive(GuestInstance g, int index, ScoreContext ctx, ref int cash, ref int influence)
         {
-            switch (g.Kind)
+            // Risky variants (Bunker Billionaire, Terminally Online...) score like the card they copy.
+            switch (GuestCatalog.BehavesAs(g.Kind))
             {
                 case GuestType.DegenDog:
                     cash += Math.Min(GameRules.DogeMaxBonus, ctx.CommunityCount);
@@ -526,7 +527,7 @@ namespace DeckParty.Core
             }
             var scores = CommunityScores(s);
             Communities.FixedRewards(scores, out int communityCash, out int communityInfluence);
-            cash += communityCash + TrollArmyCash(s, scores);
+            cash += communityCash + TrollArmyCash(s, scores) + LurkersCash(s, scores);
             influence += communityInfluence + Communities.StaffInfluence(scores[(int)Community.Staff]) + CheckoutCodesNow(s);
         }
 
@@ -535,6 +536,16 @@ namespace DeckParty.Core
         {
             scores = scores ?? CommunityScores(s);
             return Communities.TrollArmyCash(scores[(int)Community.Trolls], TroubleTotal(s));
+        }
+
+        /// <summary>
+        /// The Lurkers' Cash if the stream were scored now: +1 per empty space in chat per point (at most 2). The empty spaces
+        /// are the ones the Isolationists count (both sides of a team's chat).
+        /// </summary>
+        public static int LurkersCash(PlayerState s, int[] scores = null)
+        {
+            scores = scores ?? CommunityScores(s);
+            return Communities.LurkersCash(scores[(int)Community.Lurkers], s.EmptySpaces);
         }
 
         /// <summary>Influence the Affiliates' Checkout Codes would add to this stream if it were scored now (+1 each, while anyone can still grow).</summary>
@@ -2383,7 +2394,8 @@ namespace DeckParty.Core
         /// <summary>
         /// The stream-wide community rewards when a stream is scored (each flies from its Community Beats chip):
         /// Staff pays a flat +1 Influence per point (2026-11-10, it used to waive Staff fees), Troll Army +2 Cash per point of
-        /// Risk in the stream, cancelled Risk included (2026-11-10, it used to pay out when deplatformed). The retired
+        /// Risk in the stream, cancelled Risk included (2026-11-10, it used to pay out when deplatformed), Lurkers +1 Cash per
+        /// empty space per point (2026-11-18). The retired
         /// Zoomer still rolls (+6 Cash and -3 Influence, separately), though nobody is a Zoomer any more.
         /// </summary>
         static void ScoreCommunityRewards(PlayerState s, int[] scores, ref int cash, ref int influence, List<GameEvent> ev)
@@ -2400,6 +2412,14 @@ namespace DeckParty.Core
             {
                 cash += trollCash;
                 Emit(ev, GameEventType.CommunityReward, null, (int)Community.Trolls, trollCash, 0);
+            }
+
+            // Lurkers (2026-11-18): +1 Cash per empty space per point.
+            int lurkersCash = LurkersCash(s, scores);
+            if (lurkersCash > 0)
+            {
+                cash += lurkersCash;
+                Emit(ev, GameEventType.CommunityReward, null, (int)Community.Lurkers, lurkersCash, 0);
             }
 
             int chance = Communities.ZoomerChance(scores[(int)Community.Zoomer]);

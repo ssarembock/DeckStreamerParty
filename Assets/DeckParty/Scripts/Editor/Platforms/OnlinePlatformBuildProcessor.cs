@@ -21,6 +21,11 @@ namespace DeckParty.EditorTools
             var settings = OnlinePlatformSetup.GetOrCreate();
             if (settings == null || settings.platform == OnlinePlatformKind.Default) return;
 
+            if (settings.platform == OnlinePlatformKind.Epic)
+            {
+                CheckEpic(report);
+                return;
+            }
             if (settings.platform != OnlinePlatformKind.Steam)
             {
                 Debug.LogWarning($"[DeckParty] The online platform is {OnlinePlatforms.DisplayName(settings.platform)}, which isn't implemented yet: this build uses the Default multiplayer.");
@@ -64,6 +69,22 @@ namespace DeckParty.EditorTools
             }
         }
 
+        /// <summary>Epic builds stop early when the EOS plugin is missing (otherwise they'd quietly ship the Default multiplayer).</summary>
+        static void CheckEpic(BuildReport report)
+        {
+            if (!IsSteamTarget(report.summary.platform))
+            {
+                Debug.LogWarning($"[DeckParty] Epic runs on Windows, macOS and Linux here; this {report.summary.platform} build uses the Default multiplayer.");
+                return;
+            }
+            if (!OnlinePlatformSetup.EosInstalled)
+                throw new BuildFailedException("[DeckParty] The online platform is Epic Games but the EOS Plugin for Unity isn't installed. Install it from " +
+                                               "Project Settings > Deck Party > Online Platform, or set the platform to Default.");
+            if (!OnlinePlatformSetup.EpicSupportCompiled)
+                throw new BuildFailedException("[DeckParty] The online platform is Epic Games but DeckParty.Epic didn't compile. Check the Console for errors.");
+        }
+
+        /// <summary>Desktop targets (Steam and, here, Epic run on these).</summary>
         static bool IsSteamTarget(BuildTarget target) =>
             target == BuildTarget.StandaloneWindows || target == BuildTarget.StandaloneWindows64 ||
             target == BuildTarget.StandaloneOSX || target == BuildTarget.StandaloneLinux64;

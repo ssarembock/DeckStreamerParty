@@ -70,11 +70,21 @@ namespace DeckParty.EditorTools
 
         public static bool Installing => s_Install != null && !s_Install.IsCompleted;
 
-        public static void InstallSteamworks()
+        static string s_InstallName;
+        static string s_InstallUrl;
+        static string s_InstallAssembly;
+
+        public static void InstallSteamworks() =>
+            InstallPackage("Steamworks.NET", SteamworksGitUrl, "DeckParty.Steam", "Git");
+
+        static void InstallPackage(string name, string url, string assembly, string tools)
         {
             if (Installing) return;
-            Debug.Log($"[DeckParty] Installing Steamworks.NET from {SteamworksGitUrl} (needs Git on this PC)...");
-            s_Install = Client.Add(SteamworksGitUrl);
+            s_InstallName = name;
+            s_InstallUrl = url;
+            s_InstallAssembly = assembly;
+            Debug.Log($"[DeckParty] Installing {name} from {url} (needs {tools} on this PC)...");
+            s_Install = Client.Add(url);
             EditorApplication.update += WatchInstall;
         }
 
@@ -83,12 +93,37 @@ namespace DeckParty.EditorTools
             if (s_Install == null || !s_Install.IsCompleted) return;
             EditorApplication.update -= WatchInstall;
             if (s_Install.Status == StatusCode.Success)
-                Debug.Log($"[DeckParty] Installed Steamworks.NET {s_Install.Result.version}. Unity recompiles; DeckParty.Steam turns on for Windows / macOS / Linux builds.");
+                Debug.Log($"[DeckParty] Installed {s_InstallName} {s_Install.Result.version}. Unity recompiles; {s_InstallAssembly} turns on for Windows / macOS / Linux builds.");
             else
-                Debug.LogError($"[DeckParty] Couldn't install Steamworks.NET: {s_Install.Error?.message}. Is Git installed and on the PATH? " +
-                               $"You can also add it in Window > Package Manager > + > Install package from git URL: {SteamworksGitUrl}");
+                Debug.LogError($"[DeckParty] Couldn't install {s_InstallName}: {s_Install.Error?.message}. Is Git (and Git LFS for the EOS plugin) installed and on the PATH? " +
+                               $"You can also add it in Window > Package Manager > + > Install package from git URL: {s_InstallUrl}");
             s_Install = null;
         }
+
+        // ------------------------------------------------------------------ EOS Plugin for Unity (Epic)
+
+        /// <summary>The EOS Plugin for Unity (Epic's Unity plugin, from the EOS-Contrib project), which brings the EOS C# SDK and EOSManager.</summary>
+        public const string EosPackage = "com.playeveryware.eos";
+        /// <summary>Its Unity Package Manager repository, pinned to a release (the native libraries come through Git LFS).</summary>
+        public const string EosGitUrl = "https://github.com/EOS-Contrib/eos_plugin_for_unity_upm.git#v6.3.0";
+        /// <summary>The plugin's own settings window, where the product's ids and client credentials go.</summary>
+        public const string EosConfigurationMenu = "EOS Plugin/EOS Configuration";
+
+        public static PackageInfo EosPackageInfo =>
+            PackageInfo.GetAllRegisteredPackages().FirstOrDefault(p => p.name == EosPackage);
+
+        /// <summary>The EOS plugin's code is there (as a package, or imported into Assets).</summary>
+        public static bool EosInstalled =>
+            EosPackageInfo != null || FindType("PlayEveryWare.EpicOnlineServices.EOSManager") != null;
+
+        /// <summary>DeckParty.Epic compiled for the current build target (needs the EOS plugin and Windows / macOS / Linux).</summary>
+        public static bool EpicSupportCompiled => FindType("DeckParty.Platforms.Epic.EpicPlatform") != null;
+
+        public static void InstallEos() =>
+            InstallPackage("the EOS Plugin for Unity", EosGitUrl, "DeckParty.Epic", "Git and Git LFS");
+
+        /// <summary>Opens EOS Plugin > EOS Configuration (false when the plugin isn't there).</summary>
+        public static bool OpenEosConfiguration() => EditorApplication.ExecuteMenuItem(EosConfigurationMenu);
 
         static Type FindType(string fullName)
         {

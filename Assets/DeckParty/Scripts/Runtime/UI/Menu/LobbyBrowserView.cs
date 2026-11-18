@@ -42,6 +42,8 @@ namespace DeckParty.UI
             closeButton.onClick.AddListener(Close);
             joinIdButton.onClick.AddListener(JoinById);
             lobbyIdInput.onSubmit.AddListener(_ => JoinById());
+            // Scenes built before 2026-11-18 cap the box at 24 characters: EOS lobby ids are 32 (join codes work here too).
+            if (lobbyIdInput.characterLimit > 0 && lobbyIdInput.characterLimit < 64) lobbyIdInput.characterLimit = 64;
         }
 
         public void Open()

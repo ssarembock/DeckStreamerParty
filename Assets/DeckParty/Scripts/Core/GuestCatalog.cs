@@ -4,12 +4,38 @@ using System.Collections.Generic;
 namespace DeckParty.Core
 {
     /// <summary>
-    /// Every guest type: the 86 viewer cards (the 50 of the current roster plus the ones put aside, see <see cref="IsPutAside"/>)
+    /// Every guest type: the 91 viewer cards (the 55 of the current roster plus the ones put aside, see <see cref="IsPutAside"/>)
     /// and the Bot token. The English names and descriptions here are fallbacks: players see the localized text from the
     /// strings CSV (keys char.&lt;GuestType&gt;.name / .desc / .action).
     /// </summary>
     public static class GuestCatalog
     {
+        // ------------------------------------------------------------------ risky variants
+
+        /// <summary>
+        /// Risky variants (2026-11-18, user request): a copy of an existing card with +1 Risk, 3 Cash cheaper, a new name
+        /// and the original's communities. They follow the original's rules (passive scoring, action, joining effects): the
+        /// engine scores them through <see cref="BehavesAs"/>, and the presentation falls back to the original's art and
+        /// signature effect until they get their own.
+        /// </summary>
+        static readonly Dictionary<GuestType, GuestType> s_VariantOf = new Dictionary<GuestType, GuestType>
+        {
+            { GuestType.BunkerBillionaire, GuestType.BillionaireIsolationist },
+            { GuestType.TerminallyOnline, GuestType.ForeverAlone },
+            { GuestType.PowerTrippingMod, GuestType.TechAdmin },
+            { GuestType.DataBroker, GuestType.SocialMediaManager },
+            { GuestType.TabloidReporter, GuestType.OnlineJournalist },
+        };
+
+        /// <summary>How much cheaper a risky variant is than its original (in Cash).</summary>
+        public const int VariantDiscount = 3;
+
+        /// <summary>The card a risky variant copies (Bunker Billionaire -> Billionaire Isolationist), or false for any other card.</summary>
+        public static bool TryGetVariantOf(GuestType type, out GuestType original) => s_VariantOf.TryGetValue(type, out original);
+
+        /// <summary>The card whose rules this one follows: the original for a risky variant, the card itself otherwise.</summary>
+        public static GuestType BehavesAs(GuestType type) => s_VariantOf.TryGetValue(type, out var original) ? original : type;
+
         static readonly GuestInfo[] s_All = Build();
 
         /// <summary>
@@ -116,14 +142,17 @@ namespace DeckParty.Core
         const CommunityMask HypeMen = CommunityMask.HypeMen;
         const CommunityMask Mods = CommunityMask.Mods;
         const CommunityMask Voyeurs = CommunityMask.Voyeurs;
+        const CommunityMask Lurkers = CommunityMask.Lurkers;
 
         /// <summary>
         /// The communities each roster card starts with (2026-11-16: the viewer blocks of StreamersViewersCommunities.md;
         /// before that the 2026-11-10 version and the V5 card table). The Game Database copies these and you can change them
         /// there (Viewers > Communities); <see cref="SetCommunities"/> applies your edits. Cards not listed have no community
-        /// (Risky Orbiter, Affiliate, Internet Starpower and Degen Dog). Since 2026-11-16 the old Gatekeepers (extra removal
+        /// (Affiliate, Internet Starpower and Degen Dog). Since 2026-11-16 the old Gatekeepers (extra removal
         /// uses) are called Mods, and Gatekeepers are the random kickers (PR Manager, Distraught Cat). Content, Full Stream,
-        /// Marketers, Shop Control and Saboteurs left the game, so nobody carries them.
+        /// Marketers, Shop Control and Saboteurs left the game, so nobody carries them. 2026-11-18: the Lurkers (the two
+        /// Isolationists, Forever Alone, Risky Orbiter and two of the risky variants); each risky variant has its original's
+        /// communities.
         /// </summary>
         static readonly Dictionary<GuestType, CommunityMask> s_RosterCommunities = new Dictionary<GuestType, CommunityMask>
         {
@@ -138,8 +167,8 @@ namespace DeckParty.Core
             { GuestType.Normie, Core },
             { GuestType.CybersecurityEngineer, Staff | Voyeurs },
             { GuestType.PaidSponsorship, Boomer },
-            { GuestType.InfluentialIsolationist, Core },
-            { GuestType.BillionaireIsolationist, Core | Boomer },
+            { GuestType.InfluentialIsolationist, Core | Lurkers },
+            { GuestType.BillionaireIsolationist, Core | Boomer | Lurkers },
             { GuestType.MildlyRiskyCollaborator, Boomer },
             { GuestType.JuniorPrManager, Staff | GenZ },
             { GuestType.MarketingManager, Staff },
@@ -171,8 +200,15 @@ namespace DeckParty.Core
             { GuestType.SeniorMarketingManager, Staff | Millennial },
             { GuestType.Evangelist, HypeMen },
             { GuestType.DancingJen, Millennial },
-            { GuestType.ForeverAlone, Millennial },
+            { GuestType.ForeverAlone, Millennial | Lurkers },
             { GuestType.Doomer, Trolls | Millennial },
+            { GuestType.RiskyOrbiter, Lurkers },
+            // Risky variants (2026-11-18): the original's communities.
+            { GuestType.BunkerBillionaire, Core | Boomer | Lurkers },
+            { GuestType.TerminallyOnline, Millennial | Lurkers },
+            { GuestType.PowerTrippingMod, Mods },
+            { GuestType.DataBroker, Staff | Voyeurs },
+            { GuestType.TabloidReporter, HypeMen },
         };
 
         /// <summary>The communities the put-aside cards had when they left the roster, ready for when they come back.</summary>
@@ -513,6 +549,21 @@ namespace DeckParty.Core
                     "Lots of Cash, but trouble follows.", cash: 3, influence: 2, trouble: true),
                 new GuestInfo(GuestType.BillionaireIsolationist, "Billionaire Isolationist", 6, Tbd,
                     "You Shall Not Watch!: +1 Cash for every empty space in chat when scored.", cash: 1),
+
+                // --- Risky variants (2026-11-18): the original's stats, rules and communities, +1 Risk and 3 cheaper
+                //     (s_VariantOf). Keep them in step with the original when it changes. ---
+                new GuestInfo(GuestType.BunkerBillionaire, "Bunker Billionaire", 6 - VariantDiscount, Tbd,
+                    "Doomsday Bunker: +1 Cash for every empty space in chat when scored.", cash: 1, trouble: true),
+                new GuestInfo(GuestType.TerminallyOnline, "Terminally Online", 8 - VariantDiscount, Tbd,
+                    "Never Logs Off: +10 Cash if they're the only viewer in chat when scored. Otherwise +1 Cash per empty seat.", cash: 1, trouble: true),
+                new GuestInfo(GuestType.PowerTrippingMod, "Power-Tripping Mod", 9 - VariantDiscount, Tbd,
+                    "Action: remove one viewer for the rest of the stream (even the Power-Tripping Mod).",
+                    cash: 2, trouble: true, ability: AbilityKind.Boot, abilityName: "Ban Hammer"),
+                new GuestInfo(GuestType.DataBroker, "Data Broker", 8 - VariantDiscount, Tbd,
+                    "Action: look at the next viewer in the queue, then let them in or deny them for the rest of the stream.",
+                    cash: 3, influence: -1, trouble: true, ability: AbilityKind.Peek, abilityName: "Harvest Data"),
+                new GuestInfo(GuestType.TabloidReporter, "Tabloid Reporter", 11 - VariantDiscount, Tbd,
+                    "Exclusive Scoop: brings two random viewers along when joining. Can push chat over the Sub Cap.", cash: 2, influence: 3, trouble: true, brings: 2),
             };
 
             // Guard against an entry being out of order relative to the enum.

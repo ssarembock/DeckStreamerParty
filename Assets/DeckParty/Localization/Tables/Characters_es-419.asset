@@ -1196,6 +1196,59 @@ MonoBehaviour:
     m_Localized: Muchos {icon:cash}, pero trae problemas.
     m_Metadata:
       m_Items: []
+  - m_Id: 6380295349166080
+    m_Localized: "Multimillonario del b\xFAnker"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943296
+    m_Localized: "B\xFAnker del fin del mundo: +1 {icon:cash} por cada lugar libre
+      en el chat al puntuar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943297
+    m_Localized: "Cr\xF3nicamente online"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943298
+    m_Localized: "Nunca se desconecta: +10 {icon:cash} si es el \xFAnico espectador
+      cuando termina el stream. Si no, +1 {icon:cash} por lugar vac\xEDo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943299
+    m_Localized: Mod tirano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943300
+    m_Localized: "Acci\xF3n: saca a un espectador por el resto del stream (incluso
+      al Mod tirano)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943301
+    m_Localized: Martillo del ban
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943302
+    m_Localized: Vendedor de datos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943303
+    m_Localized: "Acci\xF3n: mira al pr\xF3ximo espectador de la fila y d\xE9jalo
+      entrar o rech\xE1zalo por el resto del stream."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943304
+    m_Localized: Cosecha de datos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943305
+    m_Localized: Reportero sensacionalista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943306
+    m_Localized: 'Exclusiva: al entrar trae a dos espectadores al azar. Puede hacer
+      que el chat pase el cupo.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

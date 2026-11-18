@@ -466,7 +466,9 @@ namespace DeckParty.EditorTools
                     using (new EditorGUILayout.VerticalScope())
                     {
                         var info = GuestCatalog.Get(art.type);
-                        string badge = art.IsAnimated ? "  [animated]" : art.portrait != null ? "  [sprite]" : "  [placeholder]";
+                        bool borrowsArt = GuestCatalog.TryGetVariantOf(art.type, out var original) && art.portrait == null && art.avatar == null && !art.IsAnimated;
+                        string badge = art.IsAnimated ? "  [animated]" : art.portrait != null ? "  [sprite]"
+                            : borrowsArt ? "  [shows " + GuestCatalog.Get(original).Name + "'s art]" : "  [placeholder]";
                         string kind = GuestCatalog.IsToken(art.type) ? "Bots token (never bought)" : info.HasAbility ? "action: " + info.AbilityName : "no action";
                         EditorGUILayout.LabelField(art.name + badge, kind, EditorStyles.boldLabel);
                         EditorGUILayout.PropertyField(element.FindPropertyRelative("portrait"), new GUIContent("Portrait (fallback)"));

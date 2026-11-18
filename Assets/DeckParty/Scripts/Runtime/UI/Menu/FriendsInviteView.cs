@@ -10,7 +10,7 @@ namespace DeckParty.UI
     /// <summary>
     /// The lobby's Invite Friends panel (online platforms only): your online friends, playing this game first, each with
     /// an Invite button, a name filter, and a button for the platform's own invite dialog (the Steam overlay). Works in
-    /// the Editor too, where the Steam overlay doesn't show.
+    /// the Editor too, where the Steam overlay doesn't show. On Epic the platform button opens the Epic overlay's friends list.
     /// </summary>
     public sealed class FriendsInviteView : MonoBehaviour
     {
@@ -26,7 +26,7 @@ namespace DeckParty.UI
 
         readonly List<FriendRowView> m_Rows = new List<FriendRowView>();
         /// <summary>Friends already invited to the current lobby (cleared when the lobby changes).</summary>
-        readonly HashSet<ulong> m_Invited = new HashSet<ulong>();
+        readonly HashSet<string> m_Invited = new HashSet<string>();
         string m_InvitedLobby;
         IOnlinePlatform m_Platform;
 
@@ -147,7 +147,7 @@ namespace DeckParty.UI
             Refresh();
         }
 
-        void OnAvatarLoaded(ulong id)
+        void OnAvatarLoaded(string id)
         {
             if (m_Platform == null) return;
             foreach (var row in m_Rows)

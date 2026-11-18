@@ -1197,6 +1197,59 @@ MonoBehaviour:
     m_Localized: Muitos {icon:cash}, mas o problema vem junto.
     m_Metadata:
       m_Items: []
+  - m_Id: 6380295349166080
+    m_Localized: "Bilion\xE1rio do bunker"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943296
+    m_Localized: "Bunker do fim do mundo: +1 {icon:cash} por vaga livre no chat na
+      pontua\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943297
+    m_Localized: Cronicamente online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943298
+    m_Localized: "Nunca fica offline: +10 {icon:cash} se for o \xFAnico espectador
+      quando a live acabar. Sen\xE3o, +1 {icon:cash} por vaga vazia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943299
+    m_Localized: Mod tirano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943300
+    m_Localized: "A\xE7\xE3o: tire um espectador at\xE9 o fim da live (at\xE9 o pr\xF3prio
+      Mod tirano)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943301
+    m_Localized: Martelo do ban
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943302
+    m_Localized: Corretor de dados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943303
+    m_Localized: "A\xE7\xE3o: veja o pr\xF3ximo espectador da fila e deixe entrar
+      ou barre at\xE9 o fim da live."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943304
+    m_Localized: Coleta de dados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943305
+    m_Localized: "Rep\xF3rter de fofoca"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943306
+    m_Localized: "Furo exclusivo: ao entrar traz dois espectadores aleat\xF3rios
+      junto. Pode fazer o chat passar do limite."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

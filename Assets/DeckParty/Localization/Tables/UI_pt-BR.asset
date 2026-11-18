@@ -2019,7 +2019,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3193502843887624
-    m_Localized: ID do lobby
+    m_Localized: "ID do lobby ou c\xF3digo"
     m_Metadata:
       m_Items: []
   - m_Id: 3193502843887625
@@ -2858,6 +2858,33 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6080839034691588
     m_Localized: Nunca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296867504128
+    m_Localized: /vaga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380297966411776
+    m_Localized: "Entrando na {platform}... Os c\xF3digos pra entrar j\xE1 funcionam."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380297966411777
+    m_Localized: "Conectado como {name}. Crie um lobby: amigos da {platform} entram
+      por convite e qualquer um com o c\xF3digo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380297966411778
+    m_Localized: "Lobby da {platform} ({visibility}). Convide amigos ou compartilhe
+      este c\xF3digo: funciona em qualquer plataforma."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380297966411779
+    m_Localized: "Compartilhe este c\xF3digo com qualquer pessoa: funciona em qualquer
+      plataforma."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380297966411780
+    m_Localized: "C\xF3digo ou ID do lobby"
     m_Metadata:
       m_Items: []
   references:

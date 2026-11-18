@@ -27,6 +27,7 @@ namespace DeckParty
                 case Community.Trolls: per = Communities.TrollArmyCashPerRisk; break;
                 case Community.Content: per = Communities.ContentPercentPerPoint; break;
                 case Community.HypeMen: per = Communities.HypeMenSeatsPerPoint; break;
+                case Community.Lurkers: per = Communities.LurkersCashPerSpace; break;
                 case Community.Boomer: per = Communities.BoomerDiscountPerPoint; break;
                 // Retired.
                 case Community.FinanceBros: per = Communities.FinancePercentPerPoint; break;
@@ -89,6 +90,9 @@ namespace DeckParty
                 // Troll Army: the Cash this stream's Risk would bring right now.
                 else if (community == Community.Trolls)
                     value = PartyEngine.TrollArmyCash(state);
+                // Lurkers: the Cash this stream's empty spaces would bring right now.
+                else if (community == Community.Lurkers)
+                    value = PartyEngine.LurkersCash(state);
                 // Hype Men: spare seats still free.
                 else if (community == Community.HypeMen)
                     value = PartyEngine.FreeHypeSeats(state);
@@ -131,6 +135,8 @@ namespace DeckParty
                 case Community.Staff: return $"+{Communities.StaffInfluence(Mathf.Max(1, points))}{influence}";
                 // Cash per point of Risk.
                 case Community.Trolls: return $"+{Communities.TrollArmyCashPerRisk}{cash}/{GameIcons.Tag(ResourceIcon.Risk)}";
+                // Cash per empty space (per point while nobody's here).
+                case Community.Lurkers: return $"+{Communities.LurkersPerSpace(Mathf.Max(1, points))}{cash}" + Loc.Get("beats.per_space");
                 case Community.ShopControl: return $"-{Communities.ShopControlDiscount(Mathf.Max(1, points))}{cash}";
                 case Community.Saboteurs: return $"+{Communities.SabotageAmount(Mathf.Max(1, points))}{cash}";
                 case Community.Millennial: return $"x{Communities.Inheritances(points)}";

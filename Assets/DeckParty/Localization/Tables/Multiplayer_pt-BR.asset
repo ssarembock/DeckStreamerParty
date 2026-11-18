@@ -406,8 +406,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3193499362615297
-    m_Localized: "A Steam n\xE3o est\xE1 dispon\xEDvel agora. Confira se a Steam
-      est\xE1 aberta e se voc\xEA entrou na conta."
+    m_Localized: "A plataforma online n\xE3o est\xE1 dispon\xEDvel agora. Confirme
+      que voc\xEA entrou e est\xE1 conectado."
     m_Metadata:
       m_Items: []
   - m_Id: 3193499362615298
@@ -557,6 +557,55 @@ MonoBehaviour:
   - m_Id: 6046006501793794
     m_Localized: "Dois jogadores dividem uma partida Infinita ({count} lives, limite
       de Risco {risk}). Aguentem o m\xE1ximo que puderem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294443196416
+    m_Localized: "Os servi\xE7os online da Epic n\xE3o est\xE3o configurados nesta
+      vers\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973632
+    m_Localized: "A biblioteca dos servi\xE7os online da Epic est\xE1 faltando ou
+      n\xE3o combina com esta vers\xE3o. Reinstale o jogo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973633
+    m_Localized: "Voc\xEA ainda n\xE3o entrou na Epic. Abra o Multijogador pra entrar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973634
+    m_Localized: "N\xE3o foi poss\xEDvel entrar na Epic. Verifique sua conex\xE3o
+      e tente de novo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362240
+    m_Localized: "Voc\xEA entrou na Epic, mas os servi\xE7os online n\xE3o responderam.
+      Tente de novo em instantes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362241
+    m_Localized: "Voc\xEA saiu da sua conta Epic."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362242
+    m_Localized: "N\xE3o foi poss\xEDvel conectar aos servi\xE7os online da Epic.
+      Verifique sua conex\xE3o com a internet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362243
+    m_Localized: "Esse lobby n\xE3o existe mais."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362244
+    m_Localized: "Voc\xEA n\xE3o pode entrar nesse lobby (talvez seja s\xF3 por convite)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362245
+    m_Localized: "A Epic est\xE1 ocupada. Espere um pouco e tente de novo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362246
+    m_Localized: 'Erro no lobby da Epic: {0}'
     m_Metadata:
       m_Items: []
   references:

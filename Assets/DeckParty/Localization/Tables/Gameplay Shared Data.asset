@@ -1971,6 +1971,26 @@ MonoBehaviour:
     m_Key: players.title_couch
     m_Metadata:
       m_Items: []
+  - m_Id: 6380295613407232
+    m_Key: stamp.PowerTrippingMod
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295638573056
+    m_Key: stamp.DataBroker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964864
+    m_Key: community.Lurkers.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964865
+    m_Key: community.Lurkers.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964866
+    m_Key: community.Lurkers.now
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

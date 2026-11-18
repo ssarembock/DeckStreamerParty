@@ -1676,10 +1676,11 @@ MonoBehaviour:
       nesta live.\\n{icon:Gatekeepers} <b>Porteiros</b>: a a\xE7\xE3o de um Porteiro
       manda 3 espectadores aleat\xF3rios de volta pra fila, 6 com 1 ponto e todos
       os outros com 2.\\n{icon:HypeMen} <b>Animadores</b>: 1 lugar extra acima do
-      limite por ponto (at\xE9 2) pros espectadores que eles trazem.\\n{icon:Trolls}
-      <b>Ex\xE9rcito troll</b>: quando a live pontua, +2 {icon:cash} por cada ponto
-      de {icon:risk} nela ({icon:risk} anulado conta).\\n{icon:Voyeurs} <b>Bisbilhoteiros</b>:
-      mais uma espiada por ponto nesta live (at\xE9 1)."
+      limite por ponto (at\xE9 2) pros espectadores que eles trazem.\\n{icon:Lurkers}
+      <b>Fantasmas</b>: quando a live pontua, +1 {icon:cash} por vaga livre por ponto
+      (at\xE9 2).\\n{icon:Trolls} <b>Ex\xE9rcito troll</b>: quando a live pontua,
+      +2 {icon:cash} por cada ponto de {icon:risk} nela ({icon:risk} anulado conta).\\n{icon:Voyeurs}
+      <b>Bisbilhoteiros</b>: mais uma espiada por ponto nesta live (at\xE9 1)."
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656
@@ -2139,6 +2140,28 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6046008489893904
     m_Localized: Local 1x1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295613407232
+    m_Localized: BANIDO!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295638573056
+    m_Localized: DADOS VENDIDOS!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964864
+    m_Localized: Fantasmas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964865
+    m_Localized: Assistem das sombras. Com {first} Fantasmas diferentes no chat,
+      a live que pontua ganha +{per} {icon:cash} por vaga livre, +{per} por vaga
+      por cada um a mais (+{top} por vaga com {maxv}).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964866
+    m_Localized: 'Agora: +{value} {icon:cash} se a live pontuar.'
     m_Metadata:
       m_Items: []
   references:

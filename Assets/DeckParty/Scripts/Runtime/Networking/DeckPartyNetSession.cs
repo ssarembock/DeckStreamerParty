@@ -673,7 +673,7 @@ namespace DeckParty.Networking
                     m_Players.RemoveAt(i);
                     continue;
                 }
-                var fresh = NetPlayer.Create(p.ClientId, p.DisplayName, p.ColorIndex, p.Streamer, p.PlatformUserId);
+                var fresh = NetPlayer.Create(p.ClientId, p.DisplayName, p.ColorIndex, p.Streamer, p.PlatformKind, p.PlatformId);
                 fresh.Team = p.Team;
                 m_Players[i] = fresh;
             }
@@ -971,11 +971,11 @@ namespace DeckParty.Networking
 
             string name = NetworkService.HasInstance ? NetworkService.Instance.TakePendingName(clientId) : null;
             byte streamer = NetworkService.HasInstance ? NetworkService.Instance.TakePendingStreamer(clientId) : (byte)0;
-            ulong platformUserId = NetworkService.HasInstance ? NetworkService.Instance.TakePendingPlatformId(clientId) : 0;
+            var platformUser = NetworkService.HasInstance ? NetworkService.Instance.TakePendingPlatformId(clientId) : default;
             if (string.IsNullOrEmpty(name)) name = "Player " + (m_Players.Count + 1);
             name = UniqueName(name);
 
-            var player = NetPlayer.Create(clientId, name, NextColorIndex(), streamer, platformUserId);
+            var player = NetPlayer.Create(clientId, name, NextColorIndex(), streamer, platformUser.Kind, platformUser.Id);
             // 2v2: newcomers join the smaller team (it can be changed in the lobby with Switch Team).
             player.Team = (byte)(CountTeam(0) <= CountTeam(1) ? 0 : 1);
             m_Players.Add(player);

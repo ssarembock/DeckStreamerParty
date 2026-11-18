@@ -225,3 +225,82 @@ Section 5 of `StreamersViewersCommunities.md` has the full lists and the stronge
    - Boomer Troll: 婴儿潮喷子 / Тролль-бумер / Trol boomer / Troll boomer.
    - Influential Isolationist: 大V孤立主义者 / Влиятельный изоляционист / Aislacionista influyente / Isolacionista influente.
    - Billionaire Isolationist: 亿万富翁孤立主义者 / Изоляционист-миллиардер / Aislacionista multimillonario / Isolacionista bilionário.
+
+## 8. The Lurkers and five risky variants (2026-11-18)
+
+### Do this first in Unity
+
+1. Let the scripts compile.
+2. Run **Deck Party > Setup > Rebuild Scenes and UI Prefabs**. This:
+   - adds the five new viewers to the Game Database;
+   - gives the Lurkers to the cards that have them by default (revision 8). It only adds Lurkers, so your other
+     community edits are kept;
+   - adds the **Lurkers** chip to Community Beats;
+   - re-imports the strings.
+3. Give the **Lurkers** an icon in Game Database > Communities. Until then they show a placeholder: two eyes peeking over
+   a wall.
+4. Optional: give the new viewers their own art. Until you do, each one shows its original's art; the Game Database
+   row says "[shows Billionaire Isolationist's art]" and so on. Files named after the card (for example
+   `BunkerBillionaire`) are picked up by **Deck Party > Art > Auto-Assign Sprites by Name**.
+5. Multiplayer needs every player on this build (protocol `deckparty-20`). Saves still load (state format unchanged).
+
+### The Lurkers
+
+| | |
+|---|---|
+| **Rule** | When the stream is scored, each point earns **+1 Cash for every empty seat** in chat. It flies from the Lurkers chip. |
+| **Cap** | 2 points, so at most +2 Cash per empty seat. |
+| **Example** | Sub Cap 8 with 5 viewers in chat leaves 3 empty seats. With 3 different Lurkers among them (2 points), the stream earns +6 Cash. |
+| **Members** | Influential Isolationist, Billionaire Isolationist, Forever Alone, Risky Orbiter, and the new Bunker Billionaire and Terminally Online. |
+
+Empty seats are the ones the Isolationists already count, so the two stack. In a team game both halves of the chat
+count. The tooltip shows the Cash the stream would earn right now. The chip shows "+1/space" or "+2/space", and the
+rules page has a Lurkers line.
+
+### Risky variants
+
+Each one is an existing card with no Risk, given **Risk 1**, a **3 lower cost** and a new name. It keeps its
+original's stats, rules and communities.
+
+| New card | Copies | Cost | Scores | Rule | Communities |
+|---|---|---|---|---|---|
+| **Bunker Billionaire** | Billionaire Isolationist | 3 | +1 Cash | Doomsday Bunker: +1 Cash per empty seat | Core Fanbase, Boomers, Lurkers |
+| **Terminally Online** | Forever Alone | 5 | +1 Cash | Never Logs Off: +10 Cash if alone, otherwise +1 Cash per empty seat | Millennials, Lurkers |
+| **Power-Tripping Mod** | Tech Admin | 6 | +2 Cash | Action Ban Hammer: remove one viewer (even itself) | Mods |
+| **Data Broker** | Social Media Manager | 5 | +3 Cash, −1 Influence | Action Harvest Data: peek at the next viewer, let them in or keep them out | Staff, Voyeurs |
+| **Tabloid Reporter** | Online Journalist | 8 | +2 Cash, +3 Influence | Exclusive Scoop: brings two viewers along when joining | Hype Men |
+
+They're in **Open Lobby** and can come up in **Random Mix**. They're not in any preset set yet; add them in
+`ScenarioCatalog` (or tell me which sets) if you want them there.
+
+### Where things are
+
+- **Lurkers numbers:** `Communities.LurkersCashPerSpace` / `LurkersMaxPoints` in `Core/Community.cs`.
+- **Lurkers payout:**
+  - `PartyEngine.LurkersCash`, paid in `ScoreCommunityRewards`;
+  - counted in `ProjectScore`.
+- **Variants:**
+  - `GuestCatalog.VariantDiscount` (3) and the `s_VariantOf` table. `GuestCatalog.BehavesAs` makes the engine score a
+    variant as its original.
+  - The cards themselves are at the end of `GuestCatalog.Build`. Keep them in step if you change an original.
+- **Art fallback:** `GameDatabase.GetGuestArt` falls back to the original. `GetGuestArtEntry` is the card's own entry,
+  which the art tools use. The action effect falls back to the original's in `SignatureFx.TryGet`.
+
+### Decisions I made (please check)
+
+1. **Which cards:**
+   - Only cards with no Risk and no Risk cancel could be copied.
+   - I left out group cards, Trophy viewers and very cheap cards (cost 5 or less), which would have cost 2 or less.
+   - Two of the five are Lurkers, so the new community has 6 members.
+2. **The Risky Orbiter is a Lurker.** It was the only Lurker candidate with no community.
+3. **Power-Tripping Mod** can remove itself, taking its Risk with it, like the Tech Admin.
+4. **Names and stamps:**
+   - New action names: Ban Hammer and Harvest Data.
+   - New stamps: BANNED! and DATA SOLD!
+   - Translations:
+     - Lurkers: 潜水党 / Молчуны / Fantasmas / Fantasmas.
+     - Bunker Billionaire: 地堡富豪 / Миллиардер из бункера / Multimillonario del búnker / Bilionário do bunker.
+     - Terminally Online: 网瘾晚期 / Хронически онлайн / Crónicamente online / Cronicamente online.
+     - Power-Tripping Mod: 滥权房管 / Мод-самодур / Mod tirano / Mod tirano.
+     - Data Broker: 数据贩子 / Торговец данными / Vendedor de datos / Corretor de dados.
+     - Tabloid Reporter: 八卦小报记者 / Репортёр жёлтой прессы / Reportero sensacionalista / Repórter de fofoca.

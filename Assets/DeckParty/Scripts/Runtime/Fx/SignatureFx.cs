@@ -68,7 +68,9 @@ namespace DeckParty
             { GuestType.ThisIsFineDog, S(null, CardPulse.Burn, 6f, UIPalette.Orange) },
         };
 
-        public static bool TryGet(GuestType type, out Signature signature) => s_Table.TryGetValue(type, out signature);
+        /// <summary>A card's signature; a risky variant without its own uses its original's (Power-Tripping Mod -> Tech Admin).</summary>
+        public static bool TryGet(GuestType type, out Signature signature) =>
+            s_Table.TryGetValue(type, out signature) || s_Table.TryGetValue(GuestCatalog.BehavesAs(type), out signature);
 
         /// <summary>Plays the signature for one engine event on the board being shown.</summary>
         public static void OnEvent(GameEvent e, HouseView house, EffectsView effects)

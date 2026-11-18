@@ -139,6 +139,7 @@ namespace DeckParty
                 case Community.Saboteurs: return new Color(0.78f, 0.20f, 0.32f);
                 case Community.ShopControl: return new Color(0.56f, 0.46f, 0.96f);
                 case Community.Voyeurs: return new Color(0.95f, 0.55f, 0.85f);
+                case Community.Lurkers: return new Color(0.50f, 0.54f, 0.70f);
                 default: return UIPalette.Red;
             }
         }
@@ -551,6 +552,15 @@ namespace DeckParty
                     bool iris = r < 0.24f;
                     bool pupil = r < 0.1f;
                     return (almond && !iris) || pupil;
+                }
+                case Community.Lurkers:
+                {
+                    // Two eyes peeking over a wall.
+                    bool wall = Mathf.Abs(x) < 0.62f && y > -0.56f && y < -0.06f;
+                    float lx = x + 0.24f, rx = x - 0.24f, ey = y - 0.18f;
+                    bool leftEye = lx * lx + ey * ey < 0.17f * 0.17f && !(lx * lx + (ey + 0.04f) * (ey + 0.04f) < 0.07f * 0.07f);
+                    bool rightEye = rx * rx + ey * ey < 0.17f * 0.17f && !(rx * rx + (ey + 0.04f) * (ey + 0.04f) < 0.07f * 0.07f);
+                    return wall || leftEye || rightEye;
                 }
                 default:
                 {

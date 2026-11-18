@@ -26,10 +26,16 @@ namespace DeckParty.Platforms
         [Tooltip("Keep the Direct IP / LAN card on the Multiplayer screen when a platform is active.")]
         public bool keepDirectIp = true;
 
+        [Tooltip("Steam and Epic lobbies also get a short join code (a Unity Relay code) that anyone can type in to join, from any " +
+                 "platform: Steam, Epic or a build without either. Players on the lobby's own platform still connect through it. " +
+                 "Needs Unity Gaming Services (the same setup as the Default join codes).")]
+        public bool crossPlatformCodes = true;
+
         public SteamPlatformSettings steam = new SteamPlatformSettings();
 
-        [Header("Placeholders (not implemented yet)")]
         public EpicPlatformSettings epic = new EpicPlatformSettings();
+
+        [Header("Placeholders (not implemented yet)")]
         public AppleGameCenterSettings appleGameCenter = new AppleGameCenterSettings();
         public GooglePlayGamesSettings googlePlayGames = new GooglePlayGamesSettings();
 
@@ -55,6 +61,10 @@ namespace DeckParty.Platforms
 
         /// <summary>Forgets the cached asset (the editor calls this after creating or replacing it).</summary>
         public static void ClearCache() => s_Current = null;
+
+        /// <summary>Who can join a new lobby on this platform unless the player picked something else.</summary>
+        public LobbyVisibility DefaultVisibility(OnlinePlatformKind kind) =>
+            kind == OnlinePlatformKind.Epic ? epic.defaultVisibility : steam.defaultVisibility;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetStatics() => s_Current = null;
@@ -93,16 +103,46 @@ namespace DeckParty.Platforms
         public bool richPresenceTokens;
     }
 
-    /// <summary>Placeholder for Epic Online Services: the values an EOS implementation will need.</summary>
+    /// <summary>
+    /// Epic Online Services options (the EOS Plugin for Unity, package com.playeveryware.eos). The product's ids and client
+    /// credentials (Product, Sandbox, Deployment, Client ID / Secret) are entered in the plugin's own window,
+    /// EOS Plugin > EOS Configuration, which stores them where its EOSManager reads them; these are the game's choices.
+    /// </summary>
     [Serializable]
     public sealed class EpicPlatformSettings
     {
-        public string productId;
-        public string sandboxId;
-        public string deploymentId;
-        public string clientId;
-        [Tooltip("Never commit a real client secret to a public repository.")]
-        public string clientSecret;
+        [Tooltip("Builds started by the Epic Games Launcher sign in with the launcher's exchange code (no login window). " +
+                 "This is how players from the Epic Games Store are signed in.")]
+        public bool useExchangeCode = true;
+
+        [Tooltip("Remember the player's Epic sign-in between runs (EOS persistent auth), so they only log in once.")]
+        public bool usePersistentLogin = true;
+
+        [Tooltip("When nothing else signs the player in, open Epic's account portal (a browser or overlay login window) " +
+                 "the first time the Multiplayer screen opens.")]
+        public bool useAccountPortal = true;
+
+        [Tooltip("Editor and development builds: sign in through Epic's Developer Authentication Tool (EOS SDK Tools). " +
+                 "Host and port the tool listens on.")]
+        public string devAuthHost = "localhost:6547";
+
+        [Tooltip("The credential name you created in the Developer Authentication Tool. Leave empty to skip it. A second copy " +
+                 "of the game can use another one with -epicdevauth=<name> on its command line.")]
+        public string devAuthCredential = "";
+
+        [Tooltip("Without an Epic account (no launcher, login cancelled), sign in with this device's id instead: lobbies, " +
+                 "join codes and matches work, but there are no Epic friends, invites or presence.")]
+        public bool allowDeviceIdFallback = true;
+
+        [Tooltip("Who can join when a player hosts (they can change it on the Multiplayer screen).")]
+        public LobbyVisibility defaultVisibility = LobbyVisibility.FriendsOnly;
+
+        [Tooltip("Players are named after their Epic display name (the name box is hidden on the Multiplayer screen).")]
+        public bool useEpicNames = true;
+
+        [Tooltip("EOS lobby bucket: games only find lobbies in the same bucket. The protocol version is added to it, so " +
+                 "incompatible builds never see each other.")]
+        public string lobbyBucket = "deckparty";
     }
 
     /// <summary>Placeholder for iOS Game Center.</summary>

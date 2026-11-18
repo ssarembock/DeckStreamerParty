@@ -410,8 +410,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3193499362615297
-    m_Localized: "Steam no est\xE1 disponible ahora. Aseg\xFArate de que Steam est\xE9
-      abierto y de haber iniciado sesi\xF3n."
+    m_Localized: "La plataforma en l\xEDnea no est\xE1 disponible ahora. Aseg\xFArate
+      de haber iniciado sesi\xF3n y tener conexi\xF3n."
     m_Metadata:
       m_Items: []
   - m_Id: 3193499362615298
@@ -560,6 +560,56 @@ MonoBehaviour:
   - m_Id: 6046006501793794
     m_Localized: "Dos jugadores comparten una partida Infinita ({count} streams,
       l\xEDmite de Riesgo {risk}). Aguanten todo lo que puedan."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294443196416
+    m_Localized: "Los servicios en l\xEDnea de Epic no est\xE1n configurados en esta
+      versi\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973632
+    m_Localized: "La biblioteca de los servicios en l\xEDnea de Epic falta o no coincide
+      con esta versi\xF3n. Reinstala el juego."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973633
+    m_Localized: "A\xFAn no iniciaste sesi\xF3n en Epic. Abre Multijugador para iniciar
+      sesi\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973634
+    m_Localized: "No se pudo iniciar sesi\xF3n en Epic. Revisa tu conexi\xF3n e int\xE9ntalo
+      de nuevo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362240
+    m_Localized: "Iniciaste sesi\xF3n en Epic, pero sus servicios en l\xEDnea no
+      respondieron. Int\xE9ntalo en un momento."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362241
+    m_Localized: "Se cerr\xF3 tu sesi\xF3n de Epic."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362242
+    m_Localized: "No se pudo conectar con los servicios en l\xEDnea de Epic. Revisa
+      tu conexi\xF3n a internet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362243
+    m_Localized: Ese lobby ya no existe.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362244
+    m_Localized: "No puedes unirte a ese lobby (puede que sea solo con invitaci\xF3n)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362245
+    m_Localized: "Epic est\xE1 ocupado. Espera un momento e int\xE9ntalo de nuevo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362246
+    m_Localized: 'Error del lobby de Epic: {0}'
     m_Metadata:
       m_Items: []
   references:

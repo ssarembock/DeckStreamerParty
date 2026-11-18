@@ -1,14 +1,18 @@
 # Streamworks Guidelines: online platforms and Steam
 
-Audience Capture's multiplayer can now run on more than one framework, chosen per project. Two are available:
+Audience Capture's multiplayer can now run on more than one framework, chosen per project. Three are available:
 
 - **Default**: the original setup. Unity Relay join codes plus Direct IP / LAN. Nothing about it changed.
 - **Steam**: built with Steamworks (Steamworks.NET). It adds Steam lobbies, inviting Steam friends, Join Game from the
   Steam friends list, Find Games (a lobby browser), Quick Match, Steam names and avatars, and status in the friends list.
   Matches run peer to peer over Steam's relay network.
+- **Epic Games** (since 18 November 2026): the same on Epic Online Services. See `EpicOnlineServices_Guidelines.md`.
 
-Epic, iOS (Game Center), Android (Google Play Games), Xbox, PlayStation and Switch have reserved slots, but nothing
-behind them yet. If one of them is selected, the game says so and uses Default.
+Since 18 November 2026 every Steam and Epic lobby also gets a **join code** (Unity Relay) that anyone can type in,
+from any platform; that guide explains it too. Player ids are strings now (`IOnlinePlatform` takes `string` user ids).
+
+iOS (Game Center), Android (Google Play Games), Xbox, PlayStation and Switch have reserved slots, but nothing behind
+them yet. If one of them is selected, the game says so and uses Default.
 
 Open this guide from **Deck Party > Open Steamworks Guidelines (online platforms)**.
 

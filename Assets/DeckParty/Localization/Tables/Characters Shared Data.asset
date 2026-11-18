@@ -1095,6 +1095,54 @@ MonoBehaviour:
     m_Key: char.BoomerTroll.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 6380295349166080
+    m_Key: char.BunkerBillionaire.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943296
+    m_Key: char.BunkerBillionaire.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943297
+    m_Key: char.TerminallyOnline.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943298
+    m_Key: char.TerminallyOnline.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943299
+    m_Key: char.PowerTrippingMod.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943300
+    m_Key: char.PowerTrippingMod.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943301
+    m_Key: char.PowerTrippingMod.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943302
+    m_Key: char.DataBroker.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943303
+    m_Key: char.DataBroker.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943304
+    m_Key: char.DataBroker.action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943305
+    m_Key: char.TabloidReporter.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943306
+    m_Key: char.TabloidReporter.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

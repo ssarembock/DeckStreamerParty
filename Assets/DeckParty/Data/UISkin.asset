@@ -1019,6 +1019,22 @@ MonoBehaviour:
     missing: 0
     overrideColor: 0
     color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Lurkers/Points
+    label: Community Beats > Beat_Lurkers > Points
+    group: Stream
+    sample: 0
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Lurkers/Effect
+    label: Community Beats > Beat_Lurkers > Effect
+    group: Stream
+    sample: '-'
+    source: Game scene
+    missing: 0
+    overrideColor: 0
+    color: {r: 0.7305882, g: 0.7305882, b: 0.7352941, a: 1}
   - id: Game/GameCanvas/Root/MainArea/Party/Channel/CommunityPanel/Fill/CommunityBeats/Beat_Trolls/Points
     label: Community Beats > Beat_Trolls > Points
     group: Stream

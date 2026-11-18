@@ -527,6 +527,50 @@ MonoBehaviour:
     m_Key: lobby.short_coop
     m_Metadata:
       m_Items: []
+  - m_Id: 6380294443196416
+    m_Key: epic.not_configured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973632
+    m_Key: epic.error_library
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973633
+    m_Key: epic.sign_in_needed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973634
+    m_Key: epic.sign_in_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362240
+    m_Key: epic.connect_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362241
+    m_Key: epic.signed_out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362242
+    m_Key: epic.no_connection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362243
+    m_Key: epic.lobby_gone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362244
+    m_Key: epic.not_allowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362245
+    m_Key: epic.too_many_lobbies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362246
+    m_Key: epic.lobby_failed
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

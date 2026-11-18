@@ -27,4 +27,4 @@ The project memory is kept in `.claude/memory/` and imported here, so every sess
 - All player-facing text goes through `Assets/DeckParty/Resources/Localization/AudienceCapture_Strings.csv`
   (5 languages). Never name the real streaming sites the platforms parody.
 - Guides for the user live in the repo root (`INSTRUCTIONS.md`, `UIGuide.md`, `ShopCardPrefab_Guidelines.md`, `GameModesGuide.md`, `BugFixReport.md`, `ControllerAndMultiplayerGuide.md`, `V1`-`V4Instructions.md`,
-  `NewUIGuidelines.md`).
+  `NewUIGuidelines.md`, `Streamworks_Guidelines.md` (Steam), `EpicOnlineServices_Guidelines.md` (Epic and cross-platform join codes)).

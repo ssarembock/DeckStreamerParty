@@ -26,7 +26,7 @@ namespace DeckParty.Platforms.Steam
                 if (!id.IsValid()) continue;
                 friends.Add(new PlatformFriend
                 {
-                    Id = id.m_SteamID,
+                    Id = id.m_SteamID.ToString(),
                     Name = SteamFriends.GetFriendPersonaName(id),
                     Status = FriendStatus(id),
                     InYourLobby = IsLobbyMember(id.m_SteamID),
@@ -57,7 +57,7 @@ namespace DeckParty.Platforms.Steam
         public string GetUserName(ulong userId)
         {
             if (!IsReady || userId == 0) return string.Empty;
-            if (userId == m_LocalUser.Id) return SteamFriends.GetPersonaName();
+            if (userId == m_LocalSteamId) return SteamFriends.GetPersonaName();
             var id = new CSteamID(userId);
             // Known for friends and anyone sharing a lobby with us; otherwise ask Steam (PersonaStateChange_t follows).
             string name = SteamFriends.GetFriendPersonaName(id);
@@ -177,7 +177,7 @@ namespace DeckParty.Platforms.Steam
         {
             try
             {
-                AvatarLoaded?.Invoke(id);
+                AvatarLoaded?.Invoke(id.ToString());
             }
             catch (Exception e)
             {

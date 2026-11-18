@@ -396,8 +396,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3193499362615297
-    m_Localized: Steam isn't available right now. Make sure Steam is running and
-      you're signed in.
+    m_Localized: The online platform isn't available right now. Make sure you're
+      signed in and online.
     m_Metadata:
       m_Items: []
   - m_Id: 3193499362615298
@@ -542,6 +542,52 @@ MonoBehaviour:
   - m_Id: 6046006501793794
     m_Localized: Two players share one Endless run ({count} streams, Risk limit {risk}).
       Last as long as you can.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294443196416
+    m_Localized: Epic Online Services isn't set up in this build.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973632
+    m_Localized: The Epic Online Services library is missing or doesn't match this
+      build. Reinstall the game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973633
+    m_Localized: Not signed in to Epic yet. Open Multiplayer to sign in.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294459973634
+    m_Localized: Couldn't sign in to Epic. Check your connection and try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362240
+    m_Localized: Signed in to Epic, but its online services didn't answer. Try again
+      in a moment.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362241
+    m_Localized: You were signed out of Epic.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362242
+    m_Localized: Couldn't reach Epic Online Services. Check your internet connection.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362243
+    m_Localized: That lobby doesn't exist anymore.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362244
+    m_Localized: You can't join that lobby (it may be invite only).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362245
+    m_Localized: Epic is busy. Wait a moment and try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380294468362246
+    m_Localized: 'Epic lobby error: {0}'
     m_Metadata:
       m_Items: []
   references:

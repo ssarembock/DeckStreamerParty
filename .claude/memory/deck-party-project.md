@@ -156,3 +156,38 @@ Key non-obvious decisions:
   - ActionColour (DefaultExecutionOrder 100, runtime only): lerps a Graphic's RGB to a colour on action viewers.
     - The user's card prefab (Prefabs/Custom/ShopCardTemplate.prefab = UI Skin card prefab) has one on Name, colour white, added by hand in the YAML.
     - ActionColour.cs.meta guid is fixed: 1186bb46e3ba4da0addcedd2fc053a21.
+- Lurkers + risky variants (2026-11-18, user request; guide ChangeSummaryAndGuideLines.md section 8, doc StreamersViewersCommunities.md sections 3.4 and 4):
+  - Community.Lurkers = 23 (Communities.Count 24; in Communities.All after HypeMen): +1 Cash per empty space (PlayerState.EmptySpaces, same as the Isolationists) per point, cap 2. PartyEngine.LurkersCash is paid in ScoreCommunityRewards (CommunityReward event, flies from the chip) and counted in ProjectScore.
+    - Members: both Isolationists, Forever Alone, Risky Orbiter and two variants.
+    - GameDatabase.CommunityDefaultsRevision 8 only merges Lurkers in (AddedInRevision 8), so other DB edits are kept. The Community Beats chip needs a Rebuild.
+  - Risky variants = GuestType 87-91: BunkerBillionaire (Billionaire Isolationist), TerminallyOnline (Forever Alone), PowerTrippingMod (Tech Admin, action Ban Hammer), DataBroker (Social Media Manager, action Harvest Data), TabloidReporter (Online Journalist).
+    - Rule: Risk 1, cost -3 (GuestCatalog.VariantDiscount), the original's stats and communities.
+    - GuestCatalog.s_VariantOf / TryGetVariantOf / BehavesAs; PartyEngine.ApplyPassive switches on BehavesAs.
+    - Art: GameDatabase.GetGuestArt falls back to the original's art while the variant has none; GetGuestArtEntry = the card's own entry (SpriteAutoAssigner uses it). SignatureFx.TryGet falls back too.
+    - Not in any preset (Open Lobby / Random Mix only). Roster 55.
+  - Protocol deckparty-20 (state format unchanged). CSV: char.<5>.*, stamp.PowerTrippingMod/DataBroker, community.Lurkers.*, beats.per_space, a Lurkers line in rules.communities.body.
+- Epic Online Services + cross-platform join codes (2026-11-18, user request; guide EpicOnlineServices_Guidelines.md, menu Deck Party > Open Epic Online Services Guidelines):
+  - **Epic** = DeckParty.Epic asmdef (Scripts/Platforms/Epic), on the EOS Plugin for Unity (package com.playeveryware.eos, UPM git https://github.com/EOS-Contrib/eos_plugin_for_unity_upm.git#v6.3.0, needs Git + Git LFS; EOS SDK 1.19).
+    - Version define DECKPARTY_EOS; every file is `#if DECKPARTY_EOS && UNITY_STANDALONE`. The asmdef references com.Epic.OnlineServices and com.playeveryware.eos.core.
+    - Inside namespace DeckParty.Platforms.Epic, SDK types must be written `global::Epic.OnlineServices...` (otherwise `Epic` resolves to our own namespace).
+    - EpicPlatform: StartSdk creates an EOSManager GameObject; product credentials live in the plugin's EOS Plugin > EOS Configuration. EpicPlatform.Sdk(m => m.GetEOS...Interface()) wraps every getter in try/catch, because the plugin's getter can throw.
+    - Sign-in is async (IOnlinePlatform gained IsSigningIn / LastError / ReadyChanged; OnlinePlatforms.SigningIn / Pending / CurrentKind).
+      - Silent at start-up: exchange code (-AUTH_PASSWORD), then persistent auth, then the Developer Auth Tool (settings or -epicdevauth=).
+      - The account portal only runs when the Multiplayer screen retries (m_InteractiveWanted chains it after a running silent attempt), then device-id fallback.
+      - Connect uses the EpicIdToken, or the device id; CreateUser on InvalidUser; AuthExpiration triggers a refresh.
+    - Lobbies:
+      - bucket `<lobbyBucket>:<protocol>`, EnableJoinById, DisableHostMigration, PresenceEnabled only with an Epic account;
+      - owner attributes and joinable are queued and flushed by FlushLobbyUpdates (at most every 0.5 s);
+      - member attribute dp_name, host id dp_hostid;
+      - invite / overlay-join notifications.
+    - Friends: Epic account ids; product user ids via QueryExternalAccountMappings for invites; overlay = UI.ShowFriends. No avatars or profiles.
+    - EpicP2PTransport: socket "DeckParty", channel 0 reliable ordered + 1 unreliable; 1-byte tags with 1170-byte fragmentation and reassembly; the host accepts only lobby members (6 s wait); goodbye packet + 1 s linger.
+  - **Join codes**: every Steam/Epic host also allocates Unity Relay (NetworkService.TryAllocateBridgeCodeAsync, setting OnlinePlatformSettings.crossPlatformCodes).
+    - BridgedTransport (Runtime/Networking) is a host-only multiplex: platform leg ids get bit 63; Unity Transport ids pass through unchanged, because UTP looks its ids up in NGO (a remapped id = its sends are dropped). On a Relay failure the bridge drops only the code players.
+    - The code is in lobby data dp_code (LobbyKeys.Code). NetworkService.JoinCode / HasCrossPlatformCode; JoinWithCodeAsync / LooksLikeJoinCode (4-12 alphanumerics, else the platform's LooksLikeLobbyId).
+    - Approval checks lobby membership only for players who came through the platform (CameThroughPlatform via Manager.GetTransportIdFromClientId + the bit).
+  - **Ids are strings now**: PlatformUser.Id, PlatformFriend.Id, PlatformLobby.HostUserId, and every IOnlinePlatform user-id parameter (Steam converts at the edge, keeping its ulong internals).
+    - NetPlayer has PlatformUserId FixedString64Bytes + PlatformKind byte (IsOn(kind)); the approval payload is protocol|name|streamer|kind|id.
+  - UI: the platform card has a code row (platformCodeRow / Input / JoinCodeButton; needs a Rebuild) and a signing-in note; LobbyScreen shows the code + Copy with Invite moved beside it; the LobbyBrowser id box is 64 characters.
+  - Versions: protocol deckparty-21 (state format unchanged).
+  - Compile check: the scratchpad's csc_check2.sh "epic" stage builds the EOS SDK + plugin core from a sparse clone (eos_repo; Core needs the asmref'd Windows/Android/iOS/Linux/macOS config files copied in).

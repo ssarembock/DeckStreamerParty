@@ -272,8 +272,13 @@ namespace DeckParty.Networking
         public byte LastOutcome;
         /// <summary>How many other players are looking at this player's stream right now.</summary>
         public byte Watchers;
-        /// <summary>The player's online platform id (their SteamID) for avatars and profiles; 0 off-platform.</summary>
-        public ulong PlatformUserId;
+        /// <summary>
+        /// The player's online platform id (a SteamID, an Epic product user id...) for avatars, names and profiles; empty
+        /// off-platform. Only meaningful on <see cref="PlatformKind"/>: a match can mix platforms (join codes).
+        /// </summary>
+        public FixedString64Bytes PlatformUserId;
+        /// <summary>The platform the player's id belongs to (an OnlinePlatformKind; 0 = none).</summary>
+        public byte PlatformKind;
         /// <summary>Team modes (2v2, co-op): the player's team (0 or 1). Picked in the lobby (2v2), always 0 in co-op.</summary>
         public byte Team;
         /// <summary>Team modes: the player's place in their team's season (member 0 or 1), set when the match starts.</summary>
@@ -283,8 +288,9 @@ namespace DeckParty.Networking
         /// <summary>The streamer pick before a match: this player has locked in (their pick is <see cref="Streamer"/>).</summary>
         public bool StreamerLocked;
 
-        public static NetPlayer Create(ulong clientId, string name, byte colorIndex, byte streamer = 0, ulong platformUserId = 0)
+        public static NetPlayer Create(ulong clientId, string name, byte colorIndex, byte streamer = 0, byte platformKind = 0, string platformUserId = null)
         {
+            bool hasId = !string.IsNullOrEmpty(platformUserId);
             return new NetPlayer
             {
                 ClientId = clientId,
@@ -293,9 +299,16 @@ namespace DeckParty.Networking
                 Streamer = streamer,
                 Connected = true,
                 Capacity = GameRules.StartingCapacity,
-                PlatformUserId = platformUserId,
+                PlatformUserId = NetStrings.Fs64(hasId ? platformUserId : string.Empty),
+                PlatformKind = hasId ? platformKind : (byte)0,
             };
         }
+
+        /// <summary>The player's platform id as a string ("" when none).</summary>
+        public string PlatformId => PlatformUserId.ToString();
+
+        /// <summary>Whether the player's platform id belongs to this platform (so its avatar, name and profile can be shown).</summary>
+        public bool IsOn(byte platformKind) => platformKind != 0 && PlatformKind == platformKind && PlatformUserId.Length > 0;
 
         public GamePhase GamePhase => (GamePhase)Phase;
         public bool Won => GamePhase == GamePhase.Victory;
@@ -328,6 +341,7 @@ namespace DeckParty.Networking
             serializer.SerializeValue(ref LastOutcome);
             serializer.SerializeValue(ref Watchers);
             serializer.SerializeValue(ref PlatformUserId);
+            serializer.SerializeValue(ref PlatformKind);
             serializer.SerializeValue(ref Team);
             serializer.SerializeValue(ref Member);
             serializer.SerializeValue(ref Trophies);
@@ -341,7 +355,7 @@ namespace DeckParty.Networking
                    Cash == o.Cash && Influence == o.Influence && Capacity == o.Capacity && Guests == o.Guests && DiamondsOwned == o.DiamondsOwned &&
                    DiamondsInHouse == o.DiamondsInHouse && BestDiamonds == o.BestDiamonds && Trouble == o.Trouble && TotalCash == o.TotalCash &&
                    WinNight == o.WinNight && Rank == o.Rank && LastOutcome == o.LastOutcome && Watchers == o.Watchers &&
-                   PlatformUserId == o.PlatformUserId && Team == o.Team && Member == o.Member && Trophies == o.Trophies && StreamerLocked == o.StreamerLocked;
+                   PlatformUserId.Equals(o.PlatformUserId) && PlatformKind == o.PlatformKind && Team == o.Team && Member == o.Member && Trophies == o.Trophies && StreamerLocked == o.StreamerLocked;
         }
 
         public override bool Equals(object obj) => obj is NetPlayer other && Equals(other);

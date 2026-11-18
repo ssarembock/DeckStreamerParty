@@ -89,7 +89,7 @@ namespace DeckParty.EditorTools
             {
                 guestKeys[Normalize(info.Type.ToString())] = info.Type;
                 guestKeys[Normalize(info.Name)] = info.Type;
-                var art = db.GetGuestArt(info.Type);
+                var art = db.GetGuestArtEntry(info.Type);
                 if (art != null && !string.IsNullOrWhiteSpace(art.displayNameOverride)) guestKeys[Normalize(art.displayNameOverride)] = info.Type;
             }
             foreach (var (alias, type) in s_Aliases)
@@ -119,7 +119,7 @@ namespace DeckParty.EditorTools
                     string strippedAvatar = StripPrefix(avatarKey, s_GuestPrefixes);
                     if (guestKeys.TryGetValue(strippedAvatar, out var avatarType) || guestKeys.TryGetValue(avatarKey, out avatarType))
                     {
-                        var avatarArt = db.GetGuestArt(avatarType);
+                        var avatarArt = db.GetGuestArtEntry(avatarType);
                         if (avatarArt != null)
                         {
                             if (avatarArt.avatar != sprite) avatars++;
@@ -132,7 +132,7 @@ namespace DeckParty.EditorTools
                 string guestKey = StripPrefix(key, s_GuestPrefixes);
                 if (guestKeys.TryGetValue(guestKey, out var guestType) || guestKeys.TryGetValue(key, out guestType))
                 {
-                    var art = db.GetGuestArt(guestType);
+                    var art = db.GetGuestArtEntry(guestType);
                     if (art != null)
                     {
                         if (art.portrait != sprite) guests++;
@@ -218,7 +218,7 @@ namespace DeckParty.EditorTools
 
             for (int i = 0; i < count; i++)
             {
-                var art = db.GetGuestArt(roster[i].Type);
+                var art = db.GetGuestArtEntry(roster[i].Type);
                 if (art != null) art.portrait = sprites[i];
             }
             EditorUtility.SetDirty(db);

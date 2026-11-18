@@ -1652,8 +1652,9 @@ MonoBehaviour:
       \u4F4D\u968F\u673A\u89C2\u4F17\u9001\u56DE\u6392\u961F\u533A\uFF0C1 \u70B9\u65F6
       6 \u4F4D\uFF0C2 \u70B9\u65F6\u9664\u81EA\u5DF1\u5916\u5168\u90E8\u3002\\n{icon:HypeMen}
       <b>\u6C14\u6C1B\u7EC4</b>\uFF1A\u6BCF\u70B9\u5728\u4EBA\u6570\u4E0A\u9650\u4E4B\u5916\u591A
-      1 \u4E2A\u5907\u7528\u5EA7\u4F4D\uFF08\u6700\u591A 2\uFF09\uFF0C\u7559\u7ED9\u4ED6\u4EEC\u5E26\u6765\u7684\u89C2\u4F17\u3002\\n{icon:Trolls}
-      <b>\u55B7\u5B50\u5927\u519B</b>\uFF1A\u76F4\u64AD\u7ED3\u7B97\u65F6\uFF0C\u76F4\u64AD\u91CC\u6BCF\u6709
+      1 \u4E2A\u5907\u7528\u5EA7\u4F4D\uFF08\u6700\u591A 2\uFF09\uFF0C\u7559\u7ED9\u4ED6\u4EEC\u5E26\u6765\u7684\u89C2\u4F17\u3002\\n{icon:Lurkers}
+      <b>\u6F5C\u6C34\u515A</b>\uFF1A\u76F4\u64AD\u7ED3\u7B97\u65F6\uFF0C\u6BCF\u70B9\u8BA9\u6BCF\u4E2A\u7A7A\u4F4D
+      +1 {icon:cash}\uFF08\u6700\u591A 2\uFF09\u3002\\n{icon:Trolls} <b>\u55B7\u5B50\u5927\u519B</b>\uFF1A\u76F4\u64AD\u7ED3\u7B97\u65F6\uFF0C\u76F4\u64AD\u91CC\u6BCF\u6709
       1 \u70B9 {icon:risk}\uFF08\u88AB\u62B5\u6D88\u7684\u4E5F\u7B97\uFF09+2 {icon:cash}\u3002\\n{icon:Voyeurs}
       <b>\u7AA5\u5C4F\u515A</b>\uFF1A\u672C\u573A\u76F4\u64AD\u6BCF\u70B9\u591A\u5077\u770B\u4E00\u6B21\uFF08\u6700\u591A
       1\uFF09\u3002"
@@ -2121,6 +2122,29 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6046008489893904
     m_Localized: "\u540C\u5C4F 1v1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295613407232
+    m_Localized: "\u5C01\u7981\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295638573056
+    m_Localized: "\u6570\u636E\u5DF2\u552E\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964864
+    m_Localized: "\u6F5C\u6C34\u515A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964865
+    m_Localized: "\u5728\u6697\u5904\u56F4\u89C2\u3002\u76F4\u64AD\u95F4\u91CC\u6709
+      {first} \u4F4D\u4E0D\u540C\u7684\u6F5C\u6C34\u515A\u65F6\uFF0C\u76F4\u64AD\u8BA1\u5206\u65F6\u6BCF\u4E2A\u7A7A\u4F4D
+      +{per} {icon:cash}\uFF0C\u6BCF\u591A\u4E00\u4F4D\uFF0C\u6BCF\u4E2A\u7A7A\u4F4D\u518D
+      +{per}\uFF08{maxv} \u4F4D\u65F6\u6BCF\u4E2A\u7A7A\u4F4D +{top}\uFF09\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964866
+    m_Localized: "\u5F53\u524D\uFF1A\u76F4\u64AD\u7ED3\u7B97\u65F6 +{value} {icon:cash}\u3002"
     m_Metadata:
       m_Items: []
   references:

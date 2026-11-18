@@ -1189,6 +1189,59 @@ MonoBehaviour:
     m_Localized: Lots of {icon:cash}, but trouble follows.
     m_Metadata:
       m_Items: []
+  - m_Id: 6380295349166080
+    m_Localized: Bunker Billionaire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943296
+    m_Localized: 'Doomsday Bunker: +1 {icon:cash} for every empty space in chat when
+      scored.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943297
+    m_Localized: Terminally Online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943298
+    m_Localized: 'Never Logs Off: +10 {icon:cash} if they''re the only viewer when
+      the stream ends. Otherwise +1 {icon:cash} per empty space.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943299
+    m_Localized: Power-Tripping Mod
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943300
+    m_Localized: 'Action: remove one viewer for the rest of the stream (even the
+      Power-Tripping Mod).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943301
+    m_Localized: Ban Hammer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943302
+    m_Localized: Data Broker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943303
+    m_Localized: 'Action: look at the next viewer in the queue, then let them in
+      or deny them for the rest of the stream.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943304
+    m_Localized: Harvest Data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943305
+    m_Localized: Tabloid Reporter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295365943306
+    m_Localized: 'Exclusive Scoop: brings two random viewers along when joining.
+      Can push chat over the Sub Cap.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

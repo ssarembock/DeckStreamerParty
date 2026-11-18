@@ -11,10 +11,10 @@ namespace DeckParty.Platforms
     /// implemented, or it couldn't start and <see cref="OnlinePlatformSettings.fallbackToDefault"/> is on.
     /// <para>
     /// Platform assemblies register themselves with <see cref="Register"/> from a
-    /// [RuntimeInitializeOnLoadMethod(SubsystemRegistration)] method (see DeckParty.Steam's SteamPlatform), so this
-    /// assembly never references Steamworks and the project compiles without it.
+    /// [RuntimeInitializeOnLoadMethod(SubsystemRegistration)] method (see SteamPlatform and EpicPlatform), so this
+    /// assembly never references Steamworks or the EOS SDK, and the project compiles without them.
     /// </para>
-    /// Command line override (any build): <c>-onlineplatform default</c> or <c>-onlineplatform steam</c>.
+    /// Command line override (any build): <c>-onlineplatform default</c>, <c>-onlineplatform steam</c> or <c>-onlineplatform epic</c>.
     /// </summary>
     public static class OnlinePlatforms
     {
@@ -26,6 +26,10 @@ namespace DeckParty.Platforms
         static IOnlinePlatform s_Platform;
         static string s_PendingJoin;
         static bool s_QuitHooked;
+        /// <summary>The platform's events are hooked (once per platform instance).</summary>
+        static bool s_Hooked;
+        /// <summary>"Ready" was handled for the current sign-in (launch join, presence, log line).</summary>
+        static bool s_ReadyHandled;
 
         /// <summary>The platform the project (or the command line) asked for.</summary>
         public static OnlinePlatformKind Selected { get; private set; }
@@ -33,25 +37,40 @@ namespace DeckParty.Platforms
         /// <summary>The running platform, or null when multiplayer uses the Default setup.</summary>
         public static IOnlinePlatform Current => s_Platform != null && s_Platform.IsReady ? s_Platform : null;
 
-        /// <summary>A platform is running multiplayer (Steam lobbies instead of join codes).</summary>
+        /// <summary>A platform is running multiplayer (Steam or Epic lobbies, plus join codes).</summary>
         public static bool Active => Current != null;
+
+        /// <summary>The selected platform has started and is still signing the player in (Epic): the menus wait for it.</summary>
+        public static bool SigningIn => s_Platform != null && !s_Platform.IsReady && s_Platform.IsSigningIn;
+
+        /// <summary>The platform object, even before it's ready (its name and sign-in state for the Multiplayer screen).</summary>
+        public static IOnlinePlatform Pending => s_Platform;
 
         /// <summary>Why the selected platform isn't running (a localization key), or null.</summary>
         public static string Problem { get; private set; }
 
         /// <summary>The selected platform isn't running and the Default setup isn't allowed to stand in: online play is off.</summary>
-        public static bool OnlineBlocked => Selected != OnlinePlatformKind.Default && Current == null && !OnlinePlatformSettings.Current.fallbackToDefault;
+        public static bool OnlineBlocked => Selected != OnlinePlatformKind.Default && Current == null && !SigningIn && !OnlinePlatformSettings.Current.fallbackToDefault;
 
-        /// <summary>Players are named after their platform account (Steam's "Use Steam names" option).</summary>
+        /// <summary>Players are named after their platform account (Steam's "Use Steam names", Epic's "Use Epic names").</summary>
         public static bool UsePlatformNames
         {
             get
             {
                 var platform = Current;
                 if (platform == null) return false;
-                return platform.Kind == OnlinePlatformKind.Steam && OnlinePlatformSettings.Current.steam.useSteamNames;
+                var settings = OnlinePlatformSettings.Current;
+                switch (platform.Kind)
+                {
+                    case OnlinePlatformKind.Steam: return settings.steam.useSteamNames;
+                    case OnlinePlatformKind.Epic: return settings.epic.useEpicNames;
+                    default: return false;
+                }
             }
         }
+
+        /// <summary>The kind of the running platform (Default when none): what players carry so others know whose id it is.</summary>
+        public static OnlinePlatformKind CurrentKind => Current != null ? Current.Kind : OnlinePlatformKind.Default;
 
         /// <summary>A platform started or stopped (the Multiplayer screen redraws).</summary>
         public static event Action StatusChanged;
@@ -81,6 +100,8 @@ namespace DeckParty.Platforms
             s_Platform = null;
             s_PendingJoin = null;
             s_QuitHooked = false;
+            s_Hooked = false;
+            s_ReadyHandled = false;
             Problem = null;
             Selected = OnlinePlatformKind.Default;
             StatusChanged = null;
@@ -101,7 +122,9 @@ namespace DeckParty.Platforms
                 Debug.LogWarning($"[DeckParty] The online platform is set to {Selected}, but this build has no {Selected} support. " +
                                  (Selected == OnlinePlatformKind.Steam
                                      ? "Install Steamworks.NET (Project Settings > Deck Party > Online Platform) and build for Windows, Mac or Linux."
-                                     : "Only Steam is implemented so far.") + " Multiplayer uses the Default setup.");
+                                     : Selected == OnlinePlatformKind.Epic
+                                         ? "Install the EOS Plugin for Unity (Project Settings > Deck Party > Online Platform) and build for Windows, Mac or Linux."
+                                         : "Only Steam and Epic are implemented so far.") + " Multiplayer uses the Default setup.");
                 return;
             }
 
@@ -143,29 +166,70 @@ namespace DeckParty.Platforms
             }
 
             Problem = null;
+            HookPlatform();
+            if (s_Platform.IsReady) OnPlatformReady();
+            else
+            {
+                // Epic signs in asynchronously (maybe through a browser window): ReadyChanged finishes the job.
+                Debug.Log($"[DeckParty] {s_Platform.DisplayName} started; signing in...");
+                RaiseStatusChanged();
+            }
+            return true;
+        }
+
+        static void HookPlatform()
+        {
+            if (s_Hooked || s_Platform == null) return;
+            s_Hooked = true;
             s_Platform.JoinRequested += OnJoinRequested;
+            s_Platform.ReadyChanged += OnReadyChanged;
             if (!s_QuitHooked)
             {
                 s_QuitHooked = true;
                 Application.quitting += Shutdown;
             }
+        }
 
+        /// <summary>The platform finished signing in, failed to, or signed the player out.</summary>
+        static void OnReadyChanged()
+        {
+            if (s_Platform == null) return;
+            if (s_Platform.IsReady)
+            {
+                OnPlatformReady();
+                return;
+            }
+            s_ReadyHandled = false;
+            if (!s_Platform.IsSigningIn)
+            {
+                Problem = string.IsNullOrEmpty(s_Platform.LastError) ? Core.Err.Of("platform.failed", s_Platform.DisplayName) : s_Platform.LastError;
+                Debug.LogWarning($"[DeckParty] {s_Platform.DisplayName} isn't signed in: {Problem}");
+            }
+            RaiseStatusChanged();
+        }
+
+        static void OnPlatformReady()
+        {
+            if (s_ReadyHandled || s_Platform == null) return;
+            s_ReadyHandled = true;
+            Problem = null;
             string launchJoin = s_Platform.TakeLaunchJoinRequest();
             if (!string.IsNullOrEmpty(launchJoin)) OnJoinRequested(launchJoin);
             SetPresence(PresenceState.Menu);
             Debug.Log($"[DeckParty] {s_Platform.DisplayName} is running multiplayer (signed in as {s_Platform.LocalUser.Name}).");
             RaiseStatusChanged();
-            return true;
         }
 
         /// <summary>
         /// The Multiplayer screen calls this when it opens: if the platform failed for a reason that can pass (Steam wasn't
-        /// running yet), it tries again so the player doesn't have to restart the game. Returns true when it's running now.
+        /// running yet, the Epic sign-in was cancelled), it tries again so the player doesn't have to restart the game.
+        /// Returns true when it's running (or signing in) now.
         /// </summary>
         public static bool RetryIfNeeded()
         {
             if (Current != null) return true;
             if (s_Platform == null || s_Platform.InitFailureIsFinal) return false;
+            if (s_Platform.IsSigningIn) return true;
             return TryInitialize(OnlinePlatformSettings.Current);
         }
 
@@ -174,6 +238,9 @@ namespace DeckParty.Platforms
             var platform = s_Platform;
             if (platform == null) return;
             platform.JoinRequested -= OnJoinRequested;
+            platform.ReadyChanged -= OnReadyChanged;
+            s_Hooked = false;
+            s_ReadyHandled = false;
             try
             {
                 platform.Shutdown();

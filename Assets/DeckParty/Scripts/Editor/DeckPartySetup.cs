@@ -80,6 +80,9 @@ namespace DeckParty.EditorTools
         [MenuItem("Deck Party/Open Steamworks Guidelines (online platforms)", priority = 66)]
         public static void OpenSteamworksGuidelines() => OpenDoc("Streamworks_Guidelines.md");
 
+        [MenuItem("Deck Party/Open Epic Online Services Guidelines (Epic, join codes)", priority = 67)]
+        public static void OpenEpicGuidelines() => OpenDoc("EpicOnlineServices_Guidelines.md");
+
         static void OpenDoc(string fileName)
         {
             var path = Path.GetFullPath(Path.Combine(Application.dataPath, "..", fileName));

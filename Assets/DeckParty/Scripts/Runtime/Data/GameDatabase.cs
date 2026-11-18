@@ -221,9 +221,11 @@ namespace DeckParty
         /// of 2026-11-10 (StreamersViewersCommunities.md: six communities retired, several cards moved, Fish / Whale, Degen Dog,
         /// Doomer and Forever Alone back); every roster card takes the new table once. 7: the card edits of 2026-11-16
         /// (StreamersViewersCommunities.md: the old Gatekeepers are Mods, new Gatekeepers, Boomer Troll and the Isolationists,
-        /// several cards moved); every roster card takes the new table once.
+        /// several cards moved); every roster card takes the new table once. 8: the Lurkers (2026-11-18) are merged into the
+        /// cards that have them by default (the Isolationists, Forever Alone, Risky Orbiter and two risky variants); your other
+        /// edits are kept.
         /// </summary>
-        public const int CommunityDefaultsRevision = 7;
+        public const int CommunityDefaultsRevision = 8;
 
         /// <summary>Whether a revision's built-in communities replace a roster card's (instead of merging into them).</summary>
         static bool IsRosterTableRevision(int revision) => revision == 3 || revision == 4 || revision == 6 || revision == 7;
@@ -237,6 +239,7 @@ namespace DeckParty
             switch (revision)
             {
                 case 2: return CommunityMask.Boomer | CommunityMask.Millennial | CommunityMask.Zoomer | CommunityMask.ArmchairActivists;
+                case 8: return CommunityMask.Lurkers;
                 default: return CommunityMask.None;
             }
         }
@@ -317,7 +320,20 @@ namespace DeckParty
             }
         }
 
+        /// <summary>
+        /// The art to show for a viewer. A risky variant with no art of its own yet (no portrait, avatar or animation) shows
+        /// its original's (Bunker Billionaire shows the Billionaire Isolationist) until you give it some.
+        /// </summary>
         public GuestArt GetGuestArt(GuestType type)
+        {
+            var result = GetGuestArtEntry(type);
+            if (HasOwnArt(result) || !GuestCatalog.TryGetVariantOf(type, out var original)) return result;
+            var fallback = GetGuestArtEntry(original);
+            return fallback ?? result;
+        }
+
+        /// <summary>The viewer's own entry, with no fallback (for tools that assign art).</summary>
+        public GuestArt GetGuestArtEntry(GuestType type)
         {
             if (m_GuestLookup == null)
             {
@@ -328,6 +344,8 @@ namespace DeckParty
             m_GuestLookup.TryGetValue(type, out var result);
             return result;
         }
+
+        static bool HasOwnArt(GuestArt art) => art != null && (art.portrait != null || art.avatar != null || art.IsAnimated);
 
         public Sprite GetCommunityIcon(Community community)
         {

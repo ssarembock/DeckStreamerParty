@@ -38,6 +38,9 @@ namespace DeckParty.Core
         Saboteurs = 20,         // retired 2026-11-10
         ShopControl = 21,       // retired 2026-11-10
         Voyeurs = 22,
+
+        // --- 2026-11-18 ---
+        Lurkers = 23,           // +1 Cash per empty space per point when the stream is scored
     }
 
     /// <summary>A set of communities (one bit per <see cref="Community"/>). Shown as a multi-select in the Game Database.</summary>
@@ -68,6 +71,7 @@ namespace DeckParty.Core
         Saboteurs = 1 << 20,
         ShopControl = 1 << 21,
         Voyeurs = 1 << 22,
+        Lurkers = 1 << 23,
     }
 
     /// <summary>
@@ -89,6 +93,7 @@ namespace DeckParty.Core
     /// <item>Mods: each point gives one more use of a Mod's removal action this stream (the old Gatekeepers rule).</item>
     /// <item>Troll Army (Trolls): +2 Cash per point of Risk in the stream when it's scored, cancelled Risk included.</item>
     /// <item>Voyeurs: each point (max 1) gives one more use of a Voyeur's peek action this stream.</item>
+    /// <item>Lurkers (2026-11-18): +1 Cash per empty space in chat per point (max 2) when the stream is scored.</item>
     /// </list>
     /// Retired 2026-11-10 (still in the code, nobody belongs): Content, Full Stream, Marketers, Shop Control and Saboteurs
     /// (and the old Mods rule, a chance to cancel 1 Risk next stream); retired in V5: Techspertise, Finance Bros,
@@ -104,7 +109,7 @@ namespace DeckParty.Core
         public const int MembersForFirstPoint = 2;
 
         /// <summary>Number of <see cref="Community"/> values (array size for scores). Not all of them are in the game.</summary>
-        public const int Count = 23;
+        public const int Count = 24;
 
         // --- V5 communities ---
         // Viewer card edits (2026-11-08, Communities.csv): Core Fanbase 20% a point up to 4, Staff and Content 30% up to 3.
@@ -141,6 +146,9 @@ namespace DeckParty.Core
         public const int SaboteurMaxPoints = 5;
         public const int ShopControlMaxPoints = 5;
         public const int VoyeursMaxPoints = 1;
+        /// <summary>Lurkers (2026-11-18): Cash per empty space in chat, per point, when the stream is scored.</summary>
+        public const int LurkersCashPerSpace = 1;
+        public const int LurkersMaxPoints = 2;
         /// <summary>Marketers: extra recruit uses this stream, at most (Communities.csv, 2026-11-08).</summary>
         public const int MarketersMaxPoints = 3;
 
@@ -176,7 +184,7 @@ namespace DeckParty.Core
         public static readonly Community[] All =
         {
             Community.CoreFanbase, Community.Staff, Community.Boomer, Community.Millennial, Community.GenZ,
-            Community.Mods, Community.Gatekeepers, Community.HypeMen, Community.Trolls, Community.Voyeurs,
+            Community.Mods, Community.Gatekeepers, Community.HypeMen, Community.Lurkers, Community.Trolls, Community.Voyeurs,
         };
 
         /// <summary>Every community value, retired ones included (art slots, saved masks).</summary>
@@ -251,6 +259,7 @@ namespace DeckParty.Core
                 case Community.Saboteurs: return SaboteurMaxPoints;
                 case Community.ShopControl: return ShopControlMaxPoints;
                 case Community.Voyeurs: return VoyeursMaxPoints;
+                case Community.Lurkers: return LurkersMaxPoints;
                 case Community.Marketers: return MarketersMaxPoints;
                 // Retired.
                 case Community.Techspertise: return TechspertiseMaxPoints;
@@ -308,6 +317,12 @@ namespace DeckParty.Core
 
         /// <summary>Troll Army: Cash a scored stream earns with this much Risk in it (cancelled Risk counts), once the community scores.</summary>
         public static int TrollArmyCash(int points, int risk) => points > 0 ? TrollArmyCashPerRisk * Math.Max(0, risk) : 0;
+
+        /// <summary>Lurkers: Cash per empty space at this score (+1 per point, at most 2).</summary>
+        public static int LurkersPerSpace(int points) => Clamp(points, LurkersMaxPoints) * LurkersCashPerSpace;
+
+        /// <summary>Lurkers: Cash a scored stream earns with this many empty spaces in chat.</summary>
+        public static int LurkersCash(int points, int emptySpaces) => LurkersPerSpace(points) * Math.Max(0, emptySpaces);
 
         /// <summary>The Mods' old rule (retired 2026-11-16): the chance to cancel 1 Risk next stream. Nothing rolls it any more.</summary>
         public static int ModsShieldChance(int points) => Clamp(points, ModsShieldMaxPoints) * ModsPercentPerPoint;
@@ -373,6 +388,7 @@ namespace DeckParty.Core
                     return sent == int.MaxValue ? 0 : sent;
                 }
                 case Community.HypeMen: return HypeSeats(points);
+                case Community.Lurkers: return LurkersPerSpace(points);
                 case Community.Trolls: return points > 0 ? TrollArmyCashPerRisk : 0;
                 case Community.FullStream: return FullStreamSlack(points);
                 case Community.Saboteurs: return SabotageAmount(points);

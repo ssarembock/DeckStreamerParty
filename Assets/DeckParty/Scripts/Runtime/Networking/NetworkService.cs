@@ -41,6 +41,8 @@ namespace DeckParty.Networking
         public const string Mode = "dp_mode";
         /// <summary>"1" for lobbies opened by Quick Match.</summary>
         public const string QuickMatch = "dp_qm";
+        /// <summary>The lobby's cross-platform join code (a Unity Relay code), so members who came in by invite can share it.</summary>
+        public const string Code = "dp_code";
 
         public const string PhaseOpen = "lobby";
         public const string PhasePlaying = "playing";
@@ -64,8 +66,14 @@ namespace DeckParty.Networking
     /// <summary>
     /// Owns the Netcode for GameObjects NetworkManager (created at runtime, so no scene setup is needed) and handles
     /// hosting/joining over Unity Relay (internet, join codes), direct IP (LAN / port forwarding) or an online platform's
-    /// lobbies (Steam: <see cref="HostPlatformAsync"/>, <see cref="JoinPlatformLobbyAsync"/>, <see cref="QuickMatchAsync"/>).
+    /// lobbies (Steam or Epic: <see cref="HostPlatformAsync"/>, <see cref="JoinPlatformLobbyAsync"/>, <see cref="QuickMatchAsync"/>).
     /// Every mode runs the same Netcode match; only the transport and how players find each other change.
+    /// <para>
+    /// Cross-platform join codes: a Steam or Epic host also opens a Unity Relay allocation and listens on both
+    /// (<see cref="BridgedTransport"/>). Lobby members connect through their platform; anyone else, on any platform or
+    /// none, types the lobby's code (<see cref="JoinWithCodeAsync"/>) and comes in through Relay. So every online lobby
+    /// has a short code, whoever made it.
+    /// </para>
     /// </summary>
     public sealed class NetworkService : MonoBehaviour
     {
@@ -87,8 +95,11 @@ namespace DeckParty.Networking
         /// deckparty-18: game modes (2026-11-16): 2v2 and co-op Endless (teams share a season; players carry a team and a
         /// member slot), Endless Trophies and shop purchases, state format v12.
         /// deckparty-19: team fixes (2026-11-17): a 4-Risk limit for teams, each member's own removal price (state format v13).
+        /// deckparty-20: the Lurkers community and five risky variant viewers (2026-11-18, GuestType 87-91).
+        /// deckparty-21: Epic Online Services and cross-platform join codes (2026-11-18): players carry a platform kind and a
+        /// string platform id (NetPlayer), the approval payload has five parts.
         /// </summary>
-        public const string ProtocolVersion = "deckparty-19";
+        public const string ProtocolVersion = "deckparty-21";
         public const ushort DefaultPort = 7777;
         public const int MaxPlayers = 6;
         const string SessionPrefabPath = "Network/DeckPartyNetSession";
@@ -100,11 +111,13 @@ namespace DeckParty.Networking
 
         readonly Dictionary<ulong, string> m_PendingNames = new Dictionary<ulong, string>();
         readonly Dictionary<ulong, byte> m_PendingStreamers = new Dictionary<ulong, byte>();
-        readonly Dictionary<ulong, ulong> m_PendingPlatformIds = new Dictionary<ulong, ulong>();
+        readonly Dictionary<ulong, (byte Kind, string Id)> m_PendingPlatformIds = new Dictionary<ulong, (byte Kind, string Id)>();
 
-        /// <summary>The online platform's transport (Steam), added to the NetworkManager's object the first time it's needed.</summary>
+        /// <summary>The online platform's transport (Steam, Epic), added to the NetworkManager's object the first time it's needed.</summary>
         NetworkTransport m_PlatformTransport;
         IOnlinePlatform m_TransportPlatform;
+        /// <summary>The host's platform + Relay transport (a platform lobby with a cross-platform join code).</summary>
+        BridgedTransport m_Bridge;
         DeckPartyNetSession m_WatchedSession;
 
         /// <summary>The streamer this player picked on the select screen; sent to the host when connecting.</summary>
@@ -150,8 +163,14 @@ namespace DeckParty.Networking
         public UnityTransport Transport { get; private set; }
         public ConnectionMode Mode { get; private set; }
 
-        /// <summary>Relay join code, "ip:port" for direct connections, or the platform lobby id. Shown in the lobby.</summary>
+        /// <summary>
+        /// What the lobby shows to share: the Relay join code (also for Steam and Epic lobbies that have one), "ip:port" for
+        /// direct connections, or the platform lobby id when a platform lobby has no code.
+        /// </summary>
         public string JoinCode { get; private set; }
+
+        /// <summary>The lobby has a cross-platform join code (<see cref="JoinCode"/> is a Unity Relay code anyone can type).</summary>
+        public bool HasCrossPlatformCode { get; private set; }
 
         /// <summary>The platform lobby this session runs in (null outside <see cref="ConnectionMode.Platform"/>).</summary>
         public string PlatformLobbyId { get; private set; }
@@ -241,7 +260,36 @@ namespace DeckParty.Networking
             return m_PlatformTransport;
         }
 
-        bool UsingPlatformTransport => m_PlatformTransport != null && Manager != null && Manager.NetworkConfig.NetworkTransport == m_PlatformTransport;
+        /// <summary>The bridge (platform + Relay host transport), created once and reused.</summary>
+        BridgedTransport Bridge()
+        {
+            if (m_Bridge == null) m_Bridge = Manager.gameObject.AddComponent<BridgedTransport>();
+            return m_Bridge;
+        }
+
+        /// <summary>The running session uses the platform's transport, alone or behind the bridge.</summary>
+        bool UsingPlatformTransport
+        {
+            get
+            {
+                if (Manager == null) return false;
+                var transport = Manager.NetworkConfig.NetworkTransport;
+                return transport != null && (transport == m_PlatformTransport || (m_Bridge != null && transport == m_Bridge));
+            }
+        }
+
+        /// <summary>
+        /// Server: whether a connecting client came in through the platform (as a lobby member) rather than through the
+        /// join code. A plain platform session has only the platform; behind the bridge, the transport id tells.
+        /// </summary>
+        bool CameThroughPlatform(ulong clientId)
+        {
+            if (Manager == null) return false;
+            var transport = Manager.NetworkConfig.NetworkTransport;
+            if (m_PlatformTransport != null && transport == m_PlatformTransport) return true;
+            if (m_Bridge != null && transport == m_Bridge) return BridgedTransport.IsPlatformClient(Manager.GetTransportIdFromClientId(clientId));
+            return false;
+        }
 
         /// <summary>Waits (a few frames at most) for the previous session to finish closing, e.g. after leaving to accept an invite.</summary>
         async Task WaitForShutdownAsync()
@@ -259,11 +307,18 @@ namespace DeckParty.Networking
             return error == null;
         }
 
-        /// <param name="platformUserId">The local player's platform id (their SteamID), or 0 off-platform.</param>
-        void PrepareConnection(string playerName, ulong platformUserId = 0)
+        /// <summary>
+        /// The approval payload: "protocol|name|streamer|platformKind|platformUserId". Whatever the connection (platform,
+        /// join code, Direct IP), a player signed in to a platform sends who they are there, so players on the same platform
+        /// see each other's avatars and names even in a mixed match.
+        /// </summary>
+        void PrepareConnection(string playerName)
         {
-            // Payload: "protocol|name|streamer|platformUserId"
-            Manager.NetworkConfig.ConnectionData = Encoding.UTF8.GetBytes(ProtocolVersion + "|" + AppSettings.SanitizeName(playerName) + "|" + LocalStreamer + "|" + platformUserId);
+            var platform = OnlinePlatforms.Current;
+            string id = platform != null ? PlatformIds.Clean(platform.LocalUser.Id) : string.Empty;
+            int kind = platform != null && id.Length > 0 ? (int)platform.Kind : 0;
+            Manager.NetworkConfig.ConnectionData = Encoding.UTF8.GetBytes(
+                ProtocolVersion + "|" + AppSettings.SanitizeName(playerName) + "|" + LocalStreamer + "|" + kind + "|" + id);
             m_LeavingOnPurpose = false;
             m_WasConnected = false;
             m_LastDisconnectReason = null;
@@ -331,18 +386,16 @@ namespace DeckParty.Networking
             IsBusy = true;
             try
             {
-                await EnsureSignedInAsync();
-                var allocation = await RelayService.Instance.CreateAllocationAsync(MaxPlayers - 1);
-                var code = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+                var code = await AllocateRelayAsync();
 
                 UseTransport(Transport);
-                Transport.SetRelayServerData(allocation.ToRelayServerData("dtls"));
                 PrepareConnection(playerName);
 
                 if (!Manager.StartHost()) return NetResult.Fail("net.relay_host_failed");
 
                 Mode = ConnectionMode.Relay;
                 JoinCode = code;
+                HasCrossPlatformCode = true;
                 m_WasConnected = true;
                 SpawnSession();
                 return NetResult.Success;
@@ -362,6 +415,35 @@ namespace DeckParty.Networking
 #endif
         }
 
+        /// <summary>
+        /// Joins with a code. Every online lobby has one (Unity Relay), whoever hosts it and on whatever platform, so this
+        /// works from any build. A Steam or Epic lobby id pasted in also works when that platform is running here.
+        /// </summary>
+        public async Task<NetResult> JoinWithCodeAsync(string code, string playerName)
+        {
+            string raw = (code ?? string.Empty).Trim();
+            if (raw.Length == 0) return NetResult.Fail("net.enter_code");
+            if (LooksLikeJoinCode(raw)) return await JoinRelayAsync(raw, playerName);
+
+            var platform = OnlinePlatforms.Current;
+            if (platform != null && platform.LooksLikeLobbyId(raw)) return await JoinPlatformLobbyAsync(raw, playerName);
+            return NetResult.Fail("net.code_not_found");
+        }
+
+        /// <summary>
+        /// A Unity Relay join code: a short run of letters and digits (6 today; a little slack either way). Steam lobby ids
+        /// (17+ digits) and EOS lobby ids (32 hex characters) are far longer, so they never look like one.
+        /// </summary>
+        public static bool LooksLikeJoinCode(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return false;
+            text = text.Trim();
+            if (text.Length < 4 || text.Length > 12) return false;
+            foreach (char c in text)
+                if (!char.IsLetterOrDigit(c) || c > 127) return false;
+            return true;
+        }
+
         public async Task<NetResult> JoinRelayAsync(string joinCode, string playerName)
         {
             EnsureManager();
@@ -378,12 +460,14 @@ namespace DeckParty.Networking
 
                 UseTransport(Transport);
                 Transport.SetRelayServerData(allocation.ToRelayServerData("dtls"));
-                PrepareConnection(playerName);
+                // On Steam or Epic, joining by code still says who we are there (avatars for players on the same platform).
+                PrepareConnection(OnlinePlatforms.Current != null ? PlatformPlayerName(playerName) : playerName);
 
                 if (!Manager.StartClient()) return NetResult.Fail("net.client_failed");
 
                 Mode = ConnectionMode.Relay;
                 JoinCode = joinCode;
+                HasCrossPlatformCode = true;
                 return NetResult.Success;
             }
             catch (Exception e)
@@ -416,7 +500,40 @@ namespace DeckParty.Networking
             if (!AuthenticationService.Instance.IsSignedIn)
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
+
+        /// <summary>Opens a Relay allocation for this host, points Unity Transport at it and returns its join code.</summary>
+        async Task<string> AllocateRelayAsync()
+        {
+            await EnsureSignedInAsync();
+            var allocation = await RelayService.Instance.CreateAllocationAsync(MaxPlayers - 1);
+            var code = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            Transport.SetRelayServerData(allocation.ToRelayServerData("dtls"));
+            return code;
+        }
 #endif
+
+        /// <summary>
+        /// A Steam or Epic host's cross-platform code: a Relay allocation that the bridge listens on next to the platform.
+        /// Returns null (and the lobby simply has no code) when Relay isn't set up or can't be reached.
+        /// </summary>
+        async Task<string> TryAllocateBridgeCodeAsync()
+        {
+            if (!OnlinePlatformSettings.Current.crossPlatformCodes) return null;
+#if DECKPARTY_RELAY
+            try
+            {
+                return await AllocateRelayAsync();
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[DeckParty] No cross-platform join code for this lobby (Unity Relay: {e.Message}). Platform players can still join.");
+                return null;
+            }
+#else
+            await Task.CompletedTask;
+            return null;
+#endif
+        }
 
         static string FriendlyServicesError(Exception e, bool hosting)
         {
@@ -431,9 +548,9 @@ namespace DeckParty.Networking
             return Core.Err.Of(hosting ? "net.host_failed" : "net.join_failed", message.Replace(Core.Err.Separator, '/'));
         }
 
-        // ------------------------------------------------------------------ online platform (Steam)
+        // ------------------------------------------------------------------ online platform (Steam, Epic)
 
-        /// <summary>The player's name for a platform session: their platform name (Steam name) when the settings ask for it.</summary>
+        /// <summary>The player's name for a platform session: their platform name (Steam or Epic name) when the settings ask for it.</summary>
         public static string PlatformPlayerName(string typedName)
         {
             var platform = OnlinePlatforms.Current;
@@ -443,8 +560,9 @@ namespace DeckParty.Networking
         }
 
         /// <summary>
-        /// Opens a platform lobby (Steam) and hosts the match in it. Friends join through invites or the friends list;
-        /// public lobbies also show up in Find Games and Quick Match.
+        /// Opens a platform lobby (Steam, Epic) and hosts the match in it. Friends join through invites or the friends list;
+        /// public lobbies also show up in Find Games and Quick Match. With cross-platform codes on, the lobby also gets a
+        /// Unity Relay join code that anyone can type in, whatever they play on (<see cref="BridgedTransport"/>).
         /// </summary>
         public async Task<NetResult> HostPlatformAsync(string playerName, LobbyVisibility visibility, bool quickMatch = false)
         {
@@ -471,17 +589,38 @@ namespace DeckParty.Networking
                 var lobby = await platform.CreateLobbyAsync(visibility, MaxPlayers, data);
                 if (!lobby.Ok) return NetResult.Fail(lobby.Error);
                 lobbyOpen = true;
+                if (OnlinePlatforms.Current != platform) return NetResult.Fail("platform.offline");
 
                 var transport = PlatformTransport(platform);
                 platform.PrepareHostTransport(transport);
-                UseTransport(transport);
-                PrepareConnection(name, platform.LocalUser.Id);
+
+                // The cross-platform code: a Relay allocation next to the platform lobby (null when Relay isn't available).
+                string code = await TryAllocateBridgeCodeAsync();
+                if (OnlinePlatforms.Current != platform) return NetResult.Fail("platform.offline");
+                NetworkTransport hostTransport = transport;
+                if (code != null)
+                {
+                    var bridge = Bridge();
+                    bridge.Configure(transport, Transport);
+                    hostTransport = bridge;
+                    platform.SetLobbyData(LobbyKeys.Code, code);
+                }
+                else
+                {
+                    platform.SetLobbyData(LobbyKeys.Code, string.Empty);
+                }
+
+                UseTransport(hostTransport);
+                PrepareConnection(name);
                 if (!Manager.StartHost()) return NetResult.Fail("platform.host_failed");
 
+                bool codeWorks = code != null && m_Bridge != null && m_Bridge.RelayRunning;
+                if (code != null && !codeWorks) platform.SetLobbyData(LobbyKeys.Code, string.Empty);
                 Mode = ConnectionMode.Platform;
                 PlatformLobbyId = lobby.Value.Id;
                 PlatformVisibility = visibility;
-                JoinCode = lobby.Value.Id;
+                JoinCode = codeWorks ? code : lobby.Value.Id;
+                HasCrossPlatformCode = codeWorks;
                 lobbyOpen = false;
                 m_WasConnected = true;
                 SpawnSession();
@@ -522,18 +661,22 @@ namespace DeckParty.Networking
                 var lobby = joined.Value;
                 if (lobby.Get(LobbyKeys.Protocol) != ProtocolVersion) return NetResult.Fail("net.version_mismatch");
                 if (lobby.Get(LobbyKeys.Phase) == LobbyKeys.PhasePlaying) return NetResult.Fail("net.already_started");
-                if (lobby.HostUserId == 0 || lobby.HostUserId == platform.LocalUser.Id) return NetResult.Fail("platform.no_host");
+                if (string.IsNullOrEmpty(lobby.HostUserId) || lobby.HostUserId == platform.LocalUser.Id) return NetResult.Fail("platform.no_host");
 
                 var transport = PlatformTransport(platform);
                 platform.PrepareClientTransport(transport, lobby.HostUserId);
                 UseTransport(transport);
-                PrepareConnection(PlatformPlayerName(playerName), platform.LocalUser.Id);
+                PrepareConnection(PlatformPlayerName(playerName));
                 if (!Manager.StartClient()) return NetResult.Fail("net.client_failed");
 
+                // Invited friends see the lobby's code too, so they can pass it on to someone on another platform.
+                string code = lobby.Get(LobbyKeys.Code);
+                bool hasCode = LooksLikeJoinCode(code);
                 Mode = ConnectionMode.Platform;
                 PlatformLobbyId = lobby.Id;
                 PlatformVisibility = lobby.Visibility;
-                JoinCode = lobby.Id;
+                JoinCode = hasCode ? code : lobby.Id;
+                HasCrossPlatformCode = hasCode;
                 lobbyOpen = false;
                 return NetResult.Success;
             }
@@ -656,22 +799,30 @@ namespace DeckParty.Networking
                 joinable && PlatformVisibility != LobbyVisibility.InviteOnly);
         }
 
-        /// <summary>Server: the platform user id (SteamID) a connecting client sent, checked against the lobby's members.</summary>
-        public ulong TakePendingPlatformId(ulong clientId)
+        /// <summary>
+        /// Server: the platform a connecting client is signed in to and their id there (checked against the lobby's members
+        /// when they came in through the platform). Kind 0 and an empty id when they have none.
+        /// </summary>
+        public (byte Kind, string Id) TakePendingPlatformId(ulong clientId)
         {
-            if (!m_PendingPlatformIds.TryGetValue(clientId, out var id)) return 0;
+            if (!m_PendingPlatformIds.TryGetValue(clientId, out var id)) return (0, string.Empty);
             m_PendingPlatformIds.Remove(clientId);
             return id;
         }
 
-        bool PlatformIdInUse(ulong platformId)
+        /// <summary>Someone connected (or connecting) is already signed in as this account: one account, one seat.</summary>
+        bool PlatformIdInUse(byte kind, string platformId)
         {
+            if (kind == 0 || string.IsNullOrEmpty(platformId)) return false;
             foreach (var pending in m_PendingPlatformIds.Values)
-                if (pending == platformId) return true;
+                if (pending.Kind == kind && pending.Id == platformId) return true;
             var session = DeckPartyNetSession.Instance;
             if (session == null || session.Players == null) return false;
             for (int i = 0; i < session.Players.Count; i++)
-                if (session.Players[i].Connected && session.Players[i].PlatformUserId == platformId) return true;
+            {
+                var p = session.Players[i];
+                if (p.Connected && p.PlatformKind == kind && p.PlatformId == platformId) return true;
+            }
             return false;
         }
 
@@ -707,28 +858,40 @@ namespace DeckParty.Networking
             response.CreatePlayerObject = false;
             response.Pending = false;
 
-            // Payload: "protocol|name|streamer|platformUserId"
+            // Payload: "protocol|name|streamer|platformKind|platformUserId"
             string payload = request.Payload != null ? Encoding.UTF8.GetString(request.Payload) : string.Empty;
             var parts = payload.Split('|');
             string version = parts.Length > 0 ? parts[0] : string.Empty;
             string name = AppSettings.SanitizeName(parts.Length > 1 ? parts[1] : string.Empty);
             byte streamer = parts.Length > 2 && byte.TryParse(parts[2], out var parsed) ? parsed : (byte)0;
-            ulong platformId = parts.Length > 3 && ulong.TryParse(parts[3], out var parsedId) ? parsedId : 0;
+            byte kind = parts.Length > 3 && byte.TryParse(parts[3], out var parsedKind) ? parsedKind : (byte)0;
+            string platformId = parts.Length > 4 ? PlatformIds.Clean(parts[4]) : string.Empty;
+            if (kind == 0 || platformId.Length == 0)
+            {
+                kind = 0;
+                platformId = string.Empty;
+            }
 
-            // On a platform the host names players from the platform (their Steam name), not from what the client typed.
             bool platformSession = UsingPlatformTransport;
             var platform = platformSession ? OnlinePlatforms.Current : null;
-            if (platform != null && platformId != 0 && OnlinePlatforms.UsePlatformNames)
+            byte hostKind = platform != null ? (byte)platform.Kind : (byte)0;
+            bool isHost = request.ClientNetworkId == NetworkManager.ServerClientId;
+            // Lobby members come in through the platform (checked here); everyone else through the join code (Relay).
+            bool viaPlatform = !isHost && platformSession && CameThroughPlatform(request.ClientNetworkId);
+
+            // Lobby members (and the host) are named from the platform (their Steam or Epic name), not from what was typed.
+            // A code player's id can't be checked, so their name is their own.
+            if (platform != null && (isHost || viaPlatform) && kind == hostKind && platformId.Length > 0 && OnlinePlatforms.UsePlatformNames)
             {
                 string platformName = platform.GetUserName(platformId);
                 if (!string.IsNullOrWhiteSpace(platformName)) name = AppSettings.SanitizeName(platformName);
             }
 
-            if (request.ClientNetworkId == NetworkManager.ServerClientId)
+            if (isHost)
             {
                 m_PendingNames[request.ClientNetworkId] = name;
                 m_PendingStreamers[request.ClientNetworkId] = streamer;
-                if (platformSession) m_PendingPlatformIds[request.ClientNetworkId] = platformId;
+                m_PendingPlatformIds[request.ClientNetworkId] = (kind, platformId);
                 response.Approved = true;
                 return;
             }
@@ -740,21 +903,23 @@ namespace DeckParty.Networking
                 return;
             }
 
-            if (platformSession)
+            if (viaPlatform)
             {
-                // The transport only lets lobby members connect; this also stops one account joining twice.
-                if (platform == null || platformId == 0 || !platform.IsLobbyMember(platformId))
+                // The transport only lets lobby members connect; this checks it again against the id they sent.
+                if (platform == null || kind != hostKind || platformId.Length == 0 || !platform.IsLobbyMember(platformId))
                 {
                     response.Approved = false;
                     response.Reason = "platform.not_in_lobby";
                     return;
                 }
-                if (PlatformIdInUse(platformId))
-                {
-                    response.Approved = false;
-                    response.Reason = "platform.already_connected";
-                    return;
-                }
+            }
+
+            // One account, one seat (whichever way they came in).
+            if (PlatformIdInUse(kind, platformId))
+            {
+                response.Approved = false;
+                response.Reason = "platform.already_connected";
+                return;
             }
 
             var session = DeckPartyNetSession.Instance;
@@ -774,7 +939,7 @@ namespace DeckParty.Networking
 
             m_PendingNames[request.ClientNetworkId] = name;
             m_PendingStreamers[request.ClientNetworkId] = streamer;
-            if (platformSession) m_PendingPlatformIds[request.ClientNetworkId] = platformId;
+            m_PendingPlatformIds[request.ClientNetworkId] = (kind, platformId);
             response.Approved = true;
         }
 
@@ -831,12 +996,13 @@ namespace DeckParty.Networking
 
             if (Mode == ConnectionMode.Platform)
             {
-                // Leave the platform lobby too (the host leaving lets Steam close it), and go back to "in the menus".
+                // Leave the platform lobby too (the host leaving lets Steam close it, Epic destroys it), and go back to "in the menus".
                 OnlinePlatforms.Current?.LeaveLobby();
                 OnlinePlatforms.SetPresence(PresenceState.Menu);
             }
             Mode = ConnectionMode.None;
             JoinCode = null;
+            HasCrossPlatformCode = false;
             PlatformLobbyId = null;
 
             SessionEnded?.Invoke(reason);

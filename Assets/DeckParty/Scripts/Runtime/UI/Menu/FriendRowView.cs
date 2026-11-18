@@ -17,7 +17,7 @@ namespace DeckParty.UI
         [SerializeField] internal Button inviteButton;
         [SerializeField] internal TMP_Text inviteLabel;
 
-        public ulong FriendId { get; private set; }
+        public string FriendId { get; private set; }
         public string FriendName { get; private set; }
         public event Action<FriendRowView> InviteClicked;
 

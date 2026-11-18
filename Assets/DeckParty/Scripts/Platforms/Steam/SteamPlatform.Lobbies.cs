@@ -59,7 +59,7 @@ namespace DeckParty.Platforms.Steam
                     SetLobbyData(pair.Key, pair.Value);
                     lobby.Data[pair.Key] = pair.Value;
                 }
-            SetLobbyData(HostIdKey, m_LocalUser.Id.ToString());
+            SetLobbyData(HostIdKey, m_LocalUser.Id);
             SetLobbyData(VisibilityKey, ((int)visibility).ToString());
             if (TryGetPingLocation(out var ping)) SetLobbyData(PingKey, ping);
             SetLobbyJoinable(true);
@@ -105,7 +105,7 @@ namespace DeckParty.Platforms.Steam
                 MaxMembers = SteamMatchmaking.GetLobbyMemberLimit(id),
             };
             ReadLobbyData(id, lobby.Data);
-            lobby.HostUserId = ulong.TryParse(lobby.Get(HostIdKey), out var host) ? host : SteamMatchmaking.GetLobbyOwner(id).m_SteamID;
+            lobby.HostUserId = (ulong.TryParse(lobby.Get(HostIdKey), out var host) ? host : SteamMatchmaking.GetLobbyOwner(id).m_SteamID).ToString();
             lobby.Visibility = int.TryParse(lobby.Get(VisibilityKey), out var visibility) && Enum.IsDefined(typeof(LobbyVisibility), visibility)
                 ? (LobbyVisibility)visibility
                 : LobbyVisibility.FriendsOnly;

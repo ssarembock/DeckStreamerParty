@@ -1668,10 +1668,12 @@ MonoBehaviour:
       <b>Mods</b>: one more removal per point this stream.\n{icon:Gatekeepers} <b>Gatekeepers</b>:
       a Gatekeeper''s action sends 3 random viewers back to the queue, 6 at 1 point,
       everyone else at 2.\n{icon:HypeMen} <b>Hype Men</b>: 1 spare seat past the
-      Sub Cap per point (up to 2) for the viewers they bring in.\n{icon:Trolls} <b>Troll
-      Army</b>: when the stream is scored, +2 {icon:cash} for every point of {icon:risk}
-      in it (cancelled {icon:risk} counts).\n{icon:Voyeurs} <b>Voyeurs</b>: one more
-      peek per point this stream (up to 1).'
+      Sub Cap per point (up to 2) for the viewers they bring in.\n{icon:Lurkers}
+      <b>Lurkers</b>: when the stream is scored, +1 {icon:cash} per empty space per
+      point (up to 2).\n{icon:Trolls} <b>Troll Army</b>: when the stream is scored,
+      +2 {icon:cash} for every point of {icon:risk} in it (cancelled {icon:risk}
+      counts).\n{icon:Voyeurs} <b>Voyeurs</b>: one more peek per point this stream
+      (up to 1).'
     m_Metadata:
       m_Items: []
   - m_Id: 736682300358656
@@ -2119,6 +2121,28 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6046008489893904
     m_Localized: Couch 1v1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295613407232
+    m_Localized: BANNED!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380295638573056
+    m_Localized: DATA SOLD!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964864
+    m_Localized: Lurkers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964865
+    m_Localized: They watch from the shadows. With {first} different Lurkers in chat,
+      a scored stream earns +{per} {icon:cash} for every empty space in chat, +{per}
+      more per space for every extra one (+{top} per space with {maxv}).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6380296380964866
+    m_Localized: 'Now: +{value} {icon:cash} if the stream is scored.'
     m_Metadata:
       m_Items: []
   references:
