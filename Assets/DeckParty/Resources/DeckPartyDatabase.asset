@@ -30,7 +30,7 @@ MonoBehaviour:
   - name: Fish
     key: Fish
     type: 1
-    portrait: {fileID: -1144078954, guid: be8983e799f3ca74eaea994305bffe85, type: 3}
+    portrait: {fileID: 461078690, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -44,7 +44,7 @@ MonoBehaviour:
   - name: Ineffective Troll
     key: IneffectiveTroll
     type: 2
-    portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    portrait: {fileID: 7193592329560644690, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -86,7 +86,7 @@ MonoBehaviour:
   - name: Normie
     key: Normie
     type: 5
-    portrait: {fileID: 667513976212898483, guid: 654255d8368643a4c98793560e591dc3, type: 3}
+    portrait: {fileID: 574309094, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -114,7 +114,7 @@ MonoBehaviour:
   - name: Junior PR Manager
     key: JuniorPrManager
     type: 7
-    portrait: {fileID: 785415261557809399, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    portrait: {fileID: 1769016926, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -128,7 +128,7 @@ MonoBehaviour:
   - name: Die Hard Fan
     key: DieHardFan
     type: 8
-    portrait: {fileID: -2119688159, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    portrait: {fileID: 667513976212898483, guid: 654255d8368643a4c98793560e591dc3, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -142,7 +142,7 @@ MonoBehaviour:
   - name: Marketing Manager
     key: MarketingManager
     type: 9
-    portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    portrait: {fileID: -1541254489, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -156,7 +156,7 @@ MonoBehaviour:
   - name: Degen Dog
     key: DegenDog
     type: 10
-    portrait: {fileID: -1928617000, guid: deee8d65d7fd591438c8a0740378f06d, type: 3}
+    portrait: {fileID: 1189930840, guid: b7509396e87136643b99a92a9f27d4a0, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -884,7 +884,7 @@ MonoBehaviour:
   - name: Promo Code User
     key: PromoCodeUser
     type: 62
-    portrait: {fileID: 21300000, guid: bbf4155401ecb5442a0d48111c7d9459, type: 3}
+    portrait: {fileID: -3718127073565431250, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1178,7 +1178,7 @@ MonoBehaviour:
   - name: Dancing Jen
     key: DancingJen
     type: 83
-    portrait: {fileID: -2131563699, guid: 82cf2943f65f3004aa31e26f52227cbc, type: 3}
+    portrait: {fileID: 21300000, guid: bed2fef12563aa041bfc732210e1d9ed, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1192,7 +1192,7 @@ MonoBehaviour:
   - name: Whale
     key: Whale
     type: 84
-    portrait: {fileID: 0}
+    portrait: {fileID: 2111982967, guid: 654255d8368643a4c98793560e591dc3, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1206,7 +1206,7 @@ MonoBehaviour:
   - name: Boomer Troll
     key: BoomerTroll
     type: 85
-    portrait: {fileID: 0}
+    portrait: {fileID: 126431310, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1220,7 +1220,7 @@ MonoBehaviour:
   - name: Billionaire Isolationist
     key: BillionaireIsolationist
     type: 86
-    portrait: {fileID: 0}
+    portrait: {fileID: 56396412, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1234,7 +1234,7 @@ MonoBehaviour:
   - name: Bunker Billionaire
     key: BunkerBillionaire
     type: 87
-    portrait: {fileID: 0}
+    portrait: {fileID: -1130492829, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1248,7 +1248,7 @@ MonoBehaviour:
   - name: Terminally Online
     key: TerminallyOnline
     type: 88
-    portrait: {fileID: 0}
+    portrait: {fileID: 766494317, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1262,7 +1262,7 @@ MonoBehaviour:
   - name: Power-Tripping Mod
     key: PowerTrippingMod
     type: 89
-    portrait: {fileID: 0}
+    portrait: {fileID: 1517275336, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1276,7 +1276,7 @@ MonoBehaviour:
   - name: Data Broker
     key: DataBroker
     type: 90
-    portrait: {fileID: 0}
+    portrait: {fileID: 376041355, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1290,7 +1290,7 @@ MonoBehaviour:
   - name: Tabloid Reporter
     key: TabloidReporter
     type: 91
-    portrait: {fileID: 0}
+    portrait: {fileID: 1644765464, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
@@ -1304,7 +1304,7 @@ MonoBehaviour:
   - name: Legacy Media Mogul
     key: LegacyMediaMogul
     type: 92
-    portrait: {fileID: 0}
+    portrait: {fileID: 1080145531, guid: a6a1db2030d44744ebf4e33be5085f94, type: 3}
     avatar: {fileID: 0}
     avatarZoom: 1.8
     avatarOffset: {x: 0, y: -0.32}
